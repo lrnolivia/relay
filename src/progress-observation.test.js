@@ -71,6 +71,14 @@ test('open and unmerged closed PRs cannot turn a provisional test merge into pub
     assert.equal(p.receipt.identities.merge_commit_sha,null);
   }
 });
+test('GitHub list response merged_at preserves verified publication without a merged boolean', () => {
+  const merge='c'.repeat(40),head='b'.repeat(40);
+  const p=deriveObservedProgress({project:'relay',claim,pullRequest:{number:12,state:'closed',merged_at:'2026-09-30T21:58:30Z',head:{sha:head},merge_commit_sha:merge},
+    cloud:{script:'relay',versions:[{id:'merged',annotations:{'workers/commit_sha':merge}}],deployments:[{id:'published',created_on:'2026-09-30T21:59:30Z',versions:[{version_id:'merged'}]}]},now});
+  assert.equal(p.identities.merge_commit_sha,merge);
+  assert.equal(p.identities.cloud_deployment_id,'published');
+  assert.ok(p.events.some(event=>event.type==='cloud-deployment'));
+});
 test('retirement dominates stale leases, failed checks and branch drift without claiming delivery', () => {
   for (const state of ['cancelled', 'superseded']) {
     const retirement = { at: '2026-09-30T21:00:00Z', intent: { reason: 'Abandoned', evidence: 'Preserved' } };
