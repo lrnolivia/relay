@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {appendEvent,replayFor,streamExpiry,mutationTopics,successfulRpc,operatorTopics,eventStream,publishInvalidation} from './relay-events.js';
 test('execution and context queries never invalidate live snapshots',()=>{
- for(const [name,read,writes] of [['relay_execution','status',['submit','cancel','lease','start','checkpoint','finish','recover']],['relay_context','read',['record','ack','retract']]]){
+ for(const [name,read,writes] of [['relay_execution','status',['submit','cancel','lease','start','checkpoint','finish','recover']],['relay_context','read',['record','ack','retract']],['relay_night_shift','read',['record','record_source','shift','oversight']]]){
   for(const args of [undefined,null,{}, {action:read},{action:'unknown'}])assert.equal(mutationTopics(name,args),null);
   for(const action of writes)assert.deepEqual(mutationTopics(name,{action}),['work','projects','evidence']);
  }

@@ -83,10 +83,14 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     } else throw Error('The job is not queued or safely recoverable');
     // These reads become context only; they never acknowledge feedback by implication.
     const context={resume:await rpc('relay_runner_resume',{project:config.project,assignment:config.assignment}),project_context:await rpc('relay_context',{action:'read',project:config.project,assignment:config.assignment,limit:20})};
-    if(job.origin?.kind==='night-shift'){
+    if(job.origin?.kind==='night-shift'&&job.origin.source_job_id){
       const source=(await rpc('relay_execution',{action:'status',project:config.project,assignment:job.origin.source_assignment,job_id:job.origin.source_job_id})).job;
       if(!source||source.id!==job.origin.source_job_id||source.repository!==job.origin.repository||source.result?.head_sha!==job.origin.commit_sha)throw Error('Shift source context cannot be verified; preserve the queued receipt for reconciliation');
       context.source_execution={assignment:source.assignment,owner:source.owner,branch:source.branch,objective:source.objective,request:source.request,result:source.result};
+    }else if(job.origin?.kind==='night-shift'){
+      const source=await rpc('relay_runner_resume',{project:config.project,assignment:job.origin.source_assignment});
+      if(source.latest?.assignment?.id!==job.origin.source_assignment)throw Error('Shift native-source context unavailable; reconcile without inventing a broker process');
+      context.source_assignment=source.latest;
     }
     const inbox=createExecutionInbox({directory:stateDir,rpc,project:config.project,assignment:config.assignment,clock});
     journal.inbox=await inbox.refresh();await save();

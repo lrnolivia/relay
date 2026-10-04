@@ -2,12 +2,13 @@
 const WINDOW=250,TTL=24*60*60*1000;
 const mutations=new Set(['relay_execution','relay_context','relay_runner_coordinate','relay_runner_action','relay_runner_feedback_submit','relay_runner_feedback_ack','relay_source_create_branch','relay_source_commit_files','relay_source_update_file','relay_source_edit_text','relay_source_append_text','relay_source_open_pull_request','relay_source_pull_request_action','relay_verify_browser_capture','relay_verify_browser_recipe','relay_cloud_upload_version','relay_cloud_deploy_version','relay_cloud_deploy_project_version']);
 export function mutationTopics(name,args={}){
+ if(name==='relay_night_shift')return ['record','record_source','shift','oversight'].includes(args?.action)?['work','projects','evidence']:null;
  if(name==='relay_execution'&&!['submit','cancel','lease','start','checkpoint','finish','recover'].includes(args?.action))return null;
  if(name==='relay_context'&&!['record','ack','retract'].includes(args?.action))return null;
  return mutations.has(name)?['work','projects','evidence']:null;
 }
 export function operatorTopics(path,body){
- if(path==='/api/execution/request'||path==='/api/feedback/submit')return ['work','evidence','reviews'];
+ if(path==='/api/execution/request'||path==='/api/night-shift/request'||path==='/api/feedback/submit')return ['work','evidence','reviews'];
  if(path==='/api/work-review')return body?.action==='set'?['reviews']:null;
  if(/^\/api\/visual\/vis_[a-zA-Z0-9-]+\/qa$/.test(path))return ['evidence','reviews'];
  if(/^\/api\/retained-preview\/rp_[a-f0-9]+\/review$/.test(path))return ['evidence','reviews'];
