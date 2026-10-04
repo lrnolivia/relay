@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-10-04T02:58:00.088Z",
+  "updated_at": "2026-10-04T02:59:43.689Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -610,8 +610,8 @@
       "id": "field-panel-fill-palette-20261004",
       "owner": "01a10405-82ff-72d5-aef4-535569d400de",
       "goal": "Audit all panel families and make tool rows fill usable inner width; correct Insert child palette placement and theme-native previews.",
-      "acceptance": "Lauren clarifies tools should take full usable inner panel width at all sizes, consistent edge padding and balanced spacing/reflow, normal glyph proportions. Actual screenshotlibfile_6dc024bd35b08191a608063ca5cb309a inspected(Layout W/H+Fill unusedstrips). Audit all panel families narrow/wide Docked/Float light/dark using shared primitives; readablecontrols/allactions/focus/state retained; reportcoverage/untestedexceptions. Actual screenshotlibfile_e53142af126c8191af9d81c09ab5a429 inspected: Insert Utility child overlapsparentboundary. Fix child-parent/viewportgeometry responsively. Scoped Insert/category glyphpreviews native-style theme-neutral SVG; animatedeffects retainanimation neutralicon/pill backgrounds/noaccent; Integrations recognizableflatSVGservice markswiththemecontrast. Preserve approvedcolors/type/bevel/shadows/search/Inspector corrections; no unrelatedglobaliconredesign/Canvasbehavior, noauditfixturewrites/nativeGUI/additionalworkers. Currentsearch/responsive release separate; normalprotectedreleasegates afterexactheadbuild/lint/tests/realprojectInspector/screenshots.",
-      "next_action": "After currentsearch/responsive release,claimfreshmain isolatedbranch and inspectallpanelrowgeometry/scopedpaletteprimitives;implement/testboundedsharedfixes/screenshots thennormalreleasegates.",
+      "acceptance": "Lauren clarifies tools should take full usable inner panel width at all sizes, consistent edge padding and balanced spacing/reflow, normal glyph proportions. Actual screenshotlibfile_6dc024bd35b08191a608063ca5cb309a inspected(Layout W/H+Fill unusedstrips). Audit all panel families narrow/wide Docked/Float light/dark using shared primitives; readablecontrols/allactions/focus/state retained; reportcoverage/untestedexceptions. Actual screenshotlibfile_e53142af126c8191af9d81c09ab5a429 inspected: Insert Utility child overlapsparentboundary. Fix child-parent/viewportgeometry responsively. Scoped Insert/category glyphpreviews native-style theme-neutral SVG; animatedeffects retainanimation neutralicon/pill backgrounds/noaccent; Integrations recognizableflatSVGservice markswiththemecontrast. Preserve approvedcolors/type/bevel/shadows/search/Inspector corrections; no unrelatedglobaliconredesign/Canvasbehavior, noauditfixturewrites/nativeGUI/additionalworkers. Currentsearch/responsive release separate; normalprotectedreleasegates afterexactheadbuild/lint/tests/realprojectInspector/screenshots. Add existing shared Appearance selector with Current(default approvednoinnerhighlight), Buttons only(subtle~0.5pxinnerhighlight), Everywhere(existingbeveledsurfaceswithsofterbuttons). Immediatepreview,editorpreferencepersistence/reload,sharedAppearance panel/menuentrypoints,both themes,concentric actualshapegeometry and accessibilityfocus/selectionpreserved. Keep approvedouterbevelstrength0.5/lightshadowreductions unchanged; no websitecontent changes. Allthreevariants expresslyauthorized forLaurentochoose later; no decisionapprovalblock.",
+      "next_action": "After independently releasedsearch/responsivebatch,claimfreshmain; auditallpanelwidths andpaletteposition/iconpreviews,addreversibleAppearanceCurrent/Buttons/Everywherevariants(defaultCurrent),testswitch/reload/bothmodes and normalprotectedrelease.",
       "paths": [
         "src/editor/",
         "src/design-system/",
@@ -641,9 +641,36 @@
             "id": "field-panel-fill-palette-20261004:acceptance:0",
             "text": "Lauren clarifies tools should take full usable inner panel width at all sizes, consistent edge padding and balanced spacing/reflow, normal glyph proportions. Actual screenshotlibfile_6dc024bd35b08191a608063ca5cb309a inspected(Layout W/H+Fill unusedstrips). Audit all panel families narrow/wide Docked/Float light/dark using shared primitives; readablecontrols/allactions/focus/state retained; reportcoverage/untestedexceptions. Actual screenshotlibfile_e53142af126c8191af9d81c09ab5a429 inspected: Insert Utility child overlapsparentboundary. Fix child-parent/viewportgeometry responsively. Scoped Insert/category glyphpreviews native-style theme-neutral SVG; animatedeffects retainanimation neutralicon/pill backgrounds/noaccent; Integrations recognizableflatSVGservice markswiththemecontrast. Preserve approvedcolors/type/bevel/shadows/search/Inspector corrections; no unrelatedglobaliconredesign/Canvasbehavior, noauditfixturewrites/nativeGUI/additionalworkers. Currentsearch/responsive release separate; normalprotectedreleasegates afterexactheadbuild/lint/tests/realprojectInspector/screenshots.",
             "at": "2026-10-04T02:58:00.088Z"
+          },
+          {
+            "id": "field-panel-fill-palette-20261004:acceptance:1",
+            "text": "Lauren clarifies tools should take full usable inner panel width at all sizes, consistent edge padding and balanced spacing/reflow, normal glyph proportions. Actual screenshotlibfile_6dc024bd35b08191a608063ca5cb309a inspected(Layout W/H+Fill unusedstrips). Audit all panel families narrow/wide Docked/Float light/dark using shared primitives; readablecontrols/allactions/focus/state retained; reportcoverage/untestedexceptions. Actual screenshotlibfile_e53142af126c8191af9d81c09ab5a429 inspected: Insert Utility child overlapsparentboundary. Fix child-parent/viewportgeometry responsively. Scoped Insert/category glyphpreviews native-style theme-neutral SVG; animatedeffects retainanimation neutralicon/pill backgrounds/noaccent; Integrations recognizableflatSVGservice markswiththemecontrast. Preserve approvedcolors/type/bevel/shadows/search/Inspector corrections; no unrelatedglobaliconredesign/Canvasbehavior, noauditfixturewrites/nativeGUI/additionalworkers. Currentsearch/responsive release separate; normalprotectedreleasegates afterexactheadbuild/lint/tests/realprojectInspector/screenshots. Add existing shared Appearance selector with Current(default approvednoinnerhighlight), Buttons only(subtle~0.5pxinnerhighlight), Everywhere(existingbeveledsurfaceswithsofterbuttons). Immediatepreview,editorpreferencepersistence/reload,sharedAppearance panel/menuentrypoints,both themes,concentric actualshapegeometry and accessibilityfocus/selectionpreserved. Keep approvedouterbevelstrength0.5/lightshadowreductions unchanged; no websitecontent changes. Allthreevariants expresslyauthorized forLaurentochoose later; no decisionapprovalblock.",
+            "at": "2026-10-04T02:59:43.689Z",
+            "reason": "Lauren finalizes reversible Appearance experimentation with three live selectable treatments, superseding tentative buttons-only/everywhere choice."
           }
         ]
-      }
+      },
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-04T02:59:43.689Z",
+          "by": "01a10405-82ff-72d5-aef4-535569d400de",
+          "reason": "Lauren finalizes reversible Appearance experimentation with three live selectable treatments, superseding tentative buttons-only/everywhere choice.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Lauren clarifies tools should take full usable inner panel width at all sizes, consistent edge padding and balanced spacing/reflow, normal glyph proportions. Actual screenshotlibfile_6dc024bd35b08191a608063ca5cb309a inspected(Layout W/H+Fill unusedstrips). Audit all panel families narrow/wide Docked/Float light/dark using shared primitives; readablecontrols/allactions/focus/state retained; reportcoverage/untestedexceptions. Actual screenshotlibfile_e53142af126c8191af9d81c09ab5a429 inspected: Insert Utility child overlapsparentboundary. Fix child-parent/viewportgeometry responsively. Scoped Insert/category glyphpreviews native-style theme-neutral SVG; animatedeffects retainanimation neutralicon/pill backgrounds/noaccent; Integrations recognizableflatSVGservice markswiththemecontrast. Preserve approvedcolors/type/bevel/shadows/search/Inspector corrections; no unrelatedglobaliconredesign/Canvasbehavior, noauditfixturewrites/nativeGUI/additionalworkers. Currentsearch/responsive release separate; normalprotectedreleasegates afterexactheadbuild/lint/tests/realprojectInspector/screenshots.",
+            "next_action": "After currentsearch/responsive release,claimfreshmain isolatedbranch and inspectallpanelrowgeometry/scopedpaletteprimitives;implement/testboundedsharedfixes/screenshots thennormalreleasegates."
+          },
+          "after": {
+            "acceptance": "Lauren clarifies tools should take full usable inner panel width at all sizes, consistent edge padding and balanced spacing/reflow, normal glyph proportions. Actual screenshotlibfile_6dc024bd35b08191a608063ca5cb309a inspected(Layout W/H+Fill unusedstrips). Audit all panel families narrow/wide Docked/Float light/dark using shared primitives; readablecontrols/allactions/focus/state retained; reportcoverage/untestedexceptions. Actual screenshotlibfile_e53142af126c8191af9d81c09ab5a429 inspected: Insert Utility child overlapsparentboundary. Fix child-parent/viewportgeometry responsively. Scoped Insert/category glyphpreviews native-style theme-neutral SVG; animatedeffects retainanimation neutralicon/pill backgrounds/noaccent; Integrations recognizableflatSVGservice markswiththemecontrast. Preserve approvedcolors/type/bevel/shadows/search/Inspector corrections; no unrelatedglobaliconredesign/Canvasbehavior, noauditfixturewrites/nativeGUI/additionalworkers. Currentsearch/responsive release separate; normalprotectedreleasegates afterexactheadbuild/lint/tests/realprojectInspector/screenshots. Add existing shared Appearance selector with Current(default approvednoinnerhighlight), Buttons only(subtle~0.5pxinnerhighlight), Everywhere(existingbeveledsurfaceswithsofterbuttons). Immediatepreview,editorpreferencepersistence/reload,sharedAppearance panel/menuentrypoints,both themes,concentric actualshapegeometry and accessibilityfocus/selectionpreserved. Keep approvedouterbevelstrength0.5/lightshadowreductions unchanged; no websitecontent changes. Allthreevariants expresslyauthorized forLaurentochoose later; no decisionapprovalblock.",
+            "next_action": "After independently releasedsearch/responsivebatch,claimfreshmain; auditallpanelwidths andpaletteposition/iconpreviews,addreversibleAppearanceCurrent/Buttons/Everywherevariants(defaultCurrent),testswitch/reload/bothmodes and normalprotectedrelease."
+          }
+        }
+      ],
+      "updated_at": "2026-10-04T02:59:43.689Z"
     }
   ],
   "claims": [
