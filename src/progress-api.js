@@ -1,14 +1,13 @@
 import { githubApiRequest } from "./source.js";
+import { readRunnerFile } from "./runner-control-core.js";
 import { cloudWorkerSummary } from "./cloud.js";
 import { deriveObservedProgress } from "./progress-observation.js";
 
 export const PROGRESS_CONTRACT_VERSION = "1.7.5";
 
-const decode = content => Buffer.from(String(content || "").replace(/\s/g, ""), "base64").toString("utf8");
 async function jsonFile(api, base, path) {
-  const file = await api(`${base}/contents/${path}?ref=main`);
-  if (file?.type !== "file" || file.encoding !== "base64" || file.truncated) throw new Error("Progress source file is incomplete");
-  return JSON.parse(decode(file.content));
+  const file = await readRunnerFile(api, base, path);
+  return JSON.parse(file.content);
 }
 async function pages(api, path) {
   const out = [];
