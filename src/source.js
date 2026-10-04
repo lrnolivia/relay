@@ -71,6 +71,10 @@ async function requestGitHub(path, token, options = {}, context = {}) {
       body: options.body === undefined ? undefined : JSON.stringify(options.body),
       signal: AbortSignal.timeout(10000)
     });
+    if (options.jobLog === true && response.ok) {
+      if (!/^\/repos\/[^/]+\/[^/]+\/actions\/jobs\/\d+\/logs$/.test(path)) throw new Error("Job log route required");
+      return await readBoundedJobLog(response);
+    }
     text = await response.text();
   } catch (error) {
     error.github = github;
@@ -259,7 +263,7 @@ export async function commitSourceFiles(env, { owner, repo, branch, files, messa
   };
 }
 
-export async function readSourceChecks(env, owner, repo, ref, api = path => githubApiRequest(env, path)) {
+export async function readSourceChecks(env, owner, repo, ref, api = (path, options) => githubApiRequest(env, path, options)) {
   const root = `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`;
   const checks = await api(`${root}/commits/${encodeURIComponent(ref)}/check-runs`);
   const failed = (checks.check_runs || []).filter(run => ["failure", "timed_out", "action_required"].includes(run.conclusion));
@@ -280,6 +284,45 @@ export async function readSourceChecks(env, owner, repo, ref, api = path => gith
       details.set(run.id, { available: false, annotations: [], reason: "Failure annotations unavailable" });
     }
   }
+
+  for (const run of failed.slice(0, 2)) {
+    let url;
+    try { url = new URL(run.html_url); } catch { continue; }
+    const prefix = `/${owner}/${repo}/actions/runs/`;
+    if (url.origin !== "https://github.com" || !url.pathname.toLowerCase().startsWith(prefix.toLowerCase())) continue;
+    const match = url.pathname.slice(prefix.length).match(/^\d+\/job\/(\d+)$/);
+    if (!match) continue;
+    const detail = details.get(run.id) || {available:false,annotations:[]};
+    try {
+      const job = await api(`${root}/actions/jobs/${match[1]}`);
+      detail.job = {id:job.id,name:job.name,conclusion:job.conclusion,steps:(job.steps||[]).slice(0,100).map(step=>({name:step.name,status:step.status,conclusion:step.conclusion}))};
+      detail.log = await api(`${root}/actions/jobs/${match[1]}/logs`, {jobLog:true});
+    } catch { detail.job_diagnostics_unavailable = true; }
+    details.set(run.id,detail);
+  }
   return { ...checks, check_runs: (checks.check_runs || []).map(run => details.has(run.id) ? {...run, failure_details: details.get(run.id)} : run),
     failure_details_truncated: failed.length > 5 };
+}
+
+export async function readBoundedJobLog(response) {
+  const reader=response.body?.getReader();
+  if(!reader)return {excerpt:"",available:false,truncated:false};
+  const decoder=new TextDecoder();
+  let text="",bytes=0,truncated=false;
+  try {
+    while(true){
+      const {done,value}=await reader.read();if(done)break;
+      bytes+=value.byteLength;
+      if(bytes>4*1024*1024){truncated=true;await reader.cancel();break;}
+      text+=decoder.decode(value,{stream:true});
+    }
+    text+=decoder.decode();
+  } finally {reader.releaseLock();}
+  const lines=text.split("\n"), indexes=new Set();
+  for(let i=0;i<lines.length;i++)if(/error|failed|failure|traceback|exception|no such|not found|permission denied|syntax|unrecognized|cannot|exit code/i.test(lines[i])){
+    for(let j=Math.max(0,i-3);j<=Math.min(lines.length-1,i+4);j++)indexes.add(j);
+    if(indexes.size>=120)break;
+  }
+  const excerpt=(indexes.size?[...indexes].sort((a,b)=>a-b).map(i=>lines[i]).join("\n"):lines.slice(-80).join("\n")).slice(0,24000);
+  return {available:true,excerpt,read_bytes:bytes,truncated:truncated||excerpt.length===24000,scope:"bounded failure-context excerpt; not the full log"};
 }
