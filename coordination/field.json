@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-10-04T03:05:28.479Z",
+  "updated_at": "2026-10-04T03:11:16.923Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1412,15 +1412,19 @@
         "src/design-system/",
         "src/styles/",
         "src/code/stores/",
-        "src/shared/"
+        "src/shared/",
+        "src/App.tsx",
+        "src/canvas/"
       ],
       "resources": [
         "field-workspace-chrome",
-        "field-document-navigation"
+        "field-document-navigation",
+        "field-insert-palette",
+        "field-mobile-ui"
       ],
       "goal": "Consolidate Field search, full-width responsive panels, palette/icons, reversible Appearance options and mobile UI finesse in one candidate and release.",
       "acceptance": "MediaSearchBarfirstabovefilters/actions preservingstate. OneconsistentPages/Layers topsearch groupedpage/layerresults,disambiguatingpagecontext, honestprojectwidedata,navigate/revealcorrectobject,crosspage/keyboard/Escape/clear/Back/loadingempty. Actualleft/rightouterchromethemecomparisonrightInspectorreference;correctequivalentoutertokenifactualmismatch,preserveinternalcontrast. Inspectorbuttons muststayreachableasPANELwidthnarrows:balancedfluiddouble rows,minwidth0,containerbreakpoints,readablelabels/values/hittargets/order/focus; nohiddenactions/overflowclipping/scaledtinytext workaround. Inspectsuppliedactualpixelsbeforeedits; testcontinuousnarrow/widenDocked+Floatlight/dark,andwide/narrowscreens. PreservePR142corners/bevel/shadows/gear/search;freshadmittedbranch,draftPR/exactheadbuild/tests/runtime,reportreadiness/releaseplan. Originalaudits/behaviorfindingsremainseparate,preservedsoleGUIoperator01a1046c;noauditfixturewrites/nativeUI/noadditionalworkers.\nLauren clarifies tools should take full usable inner panel width at all sizes, consistent edge padding and balanced spacing/reflow, normal glyph proportions. Actual screenshotlibfile_6dc024bd35b08191a608063ca5cb309a inspected(Layout W/H+Fill unusedstrips). Audit all panel families narrow/wide Docked/Float light/dark using shared primitives; readablecontrols/allactions/focus/state retained; reportcoverage/untestedexceptions. Actual screenshotlibfile_e53142af126c8191af9d81c09ab5a429 inspected: Insert Utility child overlapsparentboundary. Fix child-parent/viewportgeometry responsively. Scoped Insert/category glyphpreviews native-style theme-neutral SVG; animatedeffects retainanimation neutralicon/pill backgrounds/noaccent; Integrations recognizableflatSVGservice markswiththemecontrast. Preserve approvedcolors/type/bevel/shadows/search/Inspector corrections; no unrelatedglobaliconredesign/Canvasbehavior, noauditfixturewrites/nativeGUI/additionalworkers. Currentsearch/responsive release separate; normalprotectedreleasegates afterexactheadbuild/lint/tests/realprojectInspector/screenshots. Add existing shared Appearance selector with Current(default approvednoinnerhighlight), Buttons only(subtle~0.5pxinnerhighlight), Everywhere(existingbeveledsurfaceswithsofterbuttons). Immediatepreview,editorpreferencepersistence/reload,sharedAppearance panel/menuentrypoints,both themes,concentric actualshapegeometry and accessibilityfocus/selectionpreserved. Keep approvedouterbevelstrength0.5/lightshadowreductions unchanged; no websitecontent changes. Allthreevariants expresslyauthorized forLaurentochoose later; no decisionapprovalblock.\nLauren03:05 voice explicitlyrequiresONEcombinedUIcandidate/review/release preservingtestedPR143checkpoint53b0347; holdindependentpublication. Include separatepreviousmobilebrief: taptexttoedit/openOSkeyboardwithcaretvisible; compacttoolbarabove keyboard withhorizontallyscrollablesameactualtextInspectorcontrols,retainIME/caret/selection/undo,safeviewport/insets/clearDone. ActualiOSOSkeyboard needsrealdeviceevidence; syntheticviewporttestsnotproof. MobileToolsFABbecomescompactcurrenttoolselectorMove/defaultwithupwardverticalsameDesktoptoolset/order/icons; appropriateactualmobileflows/noinventedfeatures. Browsepurposepreservedandlayoutfinessed; FieldiconbesideHomeopensrealFieldmainmenudropdownBELOWtopbar;realProjectactionsseparatetopbarprojecttrigger/dropdownBELOWbar,notBrowse. UseLaurenapprovedmobilesettingsglyphsharedDesktop(subjectexistingincumbentcorrectglyphcomparison). InspectactualUIandcoherentplacement/sharedstores/actions;testtouch/focus/dismiss/safeareas/retainedstate; no auditfixture/nativeGUI/additionalworkers. Sevenmediumcanvasauditbehaviorfindingsremainseparatepending,matched-rootselection/marqueePASS androtationoverlaystaleinvalidationcorrectedreportpreserved. No merge/publicationuntilentirecombinedUIscopevalidated/reviewable.",
-      "next_action": "Keep PR143DRAFThead53b0347 as testedcheckpoint; rescopecombinedUIpaths/resources,retireincorporatedqueueassuperseded; implement/testremainingpanelwidth/palette/Appearance/mobile requirements on samebranch, realdevicekeyboardevidencehonesty, thenoneprotectedrelease.",
+      "next_action": "Implement combined UI on same PR143; identity proven by executor CODEX_SESSION_ID and CODEX_THREAD_ID both 01a10405-82ff-72d5-aef4-535569d400de, identical to canonical owner. Previous session-prefixed ID was a formatting mistake, no handoff or owner change.",
       "ledger_refs": [
         "field-concentric-highlights-outer-inset-20261004"
       ],
@@ -1459,8 +1463,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-04T03:05:28.479Z",
-      "lease_until": "2026-10-04T15:05:28.479Z",
+      "updated_at": "2026-10-04T03:11:16.923Z",
+      "lease_until": "2026-10-04T15:11:16.923Z",
       "amendment_count": 2,
       "amendments": [
         {
