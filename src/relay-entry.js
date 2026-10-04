@@ -16,7 +16,7 @@ import { QA_SKILL_URI, qaSkillCatalogEntry, qaSkillResourceDescriptor, qaSkillRe
 import { LOEW_NAMING_SKILL_URI, loewNamingSkillCatalogEntry, loewNamingSkillResourceDescriptor, loewNamingSkillResource } from "./loew-naming-skill.js";
 import { EXECUTIVE_COMMUNICATION_SKILL_URI, executiveCommunicationSkillCatalogEntry, executiveCommunicationSkillResourceDescriptor, executiveCommunicationSkillResource } from "./executive-communication-skill.js";
 import { isContextualRelayTool, contextualizeRelayTool, contextualPresentation } from "./relay-chat-ui.js";
-import { RELAY_V2_PROBE_URI, relayV2ProbeDescriptor, relayV2ProbeResource, contextualizeRelayV2ProbeTool } from "./relay-v2-probe.js";
+import { RELAY_V2_PROBE_URI, relayV2ProbeDescriptor, relayV2ProbeResource } from "./relay-v2-probe.js";
 
 export const RELAY_EXTENSION_VERSION = "1.9.9";
 
@@ -100,7 +100,7 @@ export function augmentToolList(tools) {
     .filter(tool => tool.name !== createBranch.name && !names.has(tool.name))
     .map(tool => sourceDescriptions[tool.name] ? { ...tool, description: sourceDescriptions[tool.name] } : tool)
     .map(contextualizeRelayTool)
-    .map(contextualizeRelayV2ProbeTool);
+    .map(tool => ['relay_runner_projects','relay_runner_progress','relay_runner_assignments'].includes(tool.name) ? {...tool,_meta:{...tool._meta,ui:{visibility:['model','app']},'openai/widgetAccessible':true}} : tool);
   return [
     ...kept,
     contextualizeRelayTool(replacement),

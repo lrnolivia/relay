@@ -965,9 +965,14 @@ async function mcp(request, access, env) {
       if (name === RELAY_CONTEXT_CARD_TOOL || name === RELAY_STATUS_CARD_TOOL) {
         const cardArgs = validateRelayContextCardArguments(args);
         const { evidence_id, show_qa, ...runnerArgs } = cardArgs;
-        const result = await callRunnerControl("relay_runner_assignments", runnerArgs, env);
+        if (!runnerArgs.project) {
+          const registry = await callRunnerControl("relay_runner_projects", {}, env);
+          return relayResult(id, { ...registry, kind: 'overview', schema:'relay-status-explorer/v1' });
+        }
+        const result = await callRunnerControl("relay_runner_progress", runnerArgs, env);
         return relayResult(id, {
-          ...compactContextCardResult(result),
+          ...result,
+          schema: 'relay-status-explorer/v1',
           ...(evidence_id ? { evidence_id } : {}),
           ...(show_qa === true ? { show_qa: true } : {})
         });

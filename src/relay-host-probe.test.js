@@ -38,8 +38,8 @@ test("authenticated endpoint preserves original tools and controls alongside the
   assert.deepEqual(tool.securitySchemes, [{ type: "oauth2", scopes: [] }]);
   assert.equal(tool.annotations.readOnlyHint, true);
   assert.equal(tool.annotations.destructiveHint, false);
-  assert.equal(tools.find(t => t.name === "relay_render_context_card")._meta.ui.resourceUri, "ui://relay/context-card/v14.html");
-  assert.equal(tools.find(t => t.name === "relay_runner_progress")._meta.ui.resourceUri, "ui://relay/context-card/v2.html");
+  assert.equal(tools.find(t => t.name === "relay_render_context_card")._meta.ui.resourceUri, "ui://relay/context-card/v15.html");
+  assert.equal(tools.find(t => t.name === "relay_runner_progress")._meta?.ui?.resourceUri, undefined);
   assert.equal(tools.find(t => t.name === "relay_show_legacy_bridge_card")._meta.ui.resourceUri, "ui://relay/status-card/v3-legacy-bridge.html");
   const { result: { resources } } = await rpc("resources/list");
   assert.equal(resources.filter(r => r.uri === HOST_PROBE_URI).length, 1);

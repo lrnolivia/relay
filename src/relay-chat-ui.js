@@ -1,7 +1,7 @@
 import { STAFF } from './staff-registry.js';
 import { contextCardBrandAssets } from '../apps/web/generated.js';
 import { styleContextCard } from './relay-context-card-style.js';
-export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v14.html';
+export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v15.html';
 export const RELAY_CONTEXT_CARD_TOOL = 'relay_render_context_card';
 export const RELAY_STATUS_CARD_URI = 'ui://relay/status-card/v3-legacy-bridge.html';
 export const RELAY_STATUS_CARD_TOOL = 'relay_show_legacy_bridge_card';
@@ -20,7 +20,7 @@ export function relayContextCardTool() {
   return {
     name: RELAY_CONTEXT_CARD_TOOL,
     title: 'Show Relay status card',
-    description: 'RENDER TOOL — visibly mount a compact Relay status card in ChatGPT for one managed project or assignment. Optionally show an existing Inspector QA screenshot by exact evidence id, or the latest stored QA screenshot for the project. Relay re-reads canonical Runner state server-side and reuses canonical Inspector evidence; it never invents progress or captures a second image. This is read-only and safe to retry.',
+    description: 'RENDER TOOL — visibly mount a compact Relay status card in ChatGPT. Omit project for the overall report; navigate projects and assignments inside the same card, without posting follow-up messages. Optionally show an existing Inspector QA screenshot by exact evidence id, or the latest stored QA screenshot for the project. Relay re-reads canonical Runner state server-side and reuses canonical Inspector evidence; it never invents progress or captures a second image. This is read-only and safe to retry.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -29,7 +29,7 @@ export function relayContextCardTool() {
         evidence_id: { type: 'string', minLength: 12, maxLength: 132, pattern: '^vis_[a-zA-Z0-9-]{8,128}$', description: 'Optional existing Inspector visual-evidence id to show inside the card.' },
         show_qa: { type: 'boolean', description: 'When true and no evidence_id is supplied, show the latest existing Inspector QA screenshot for the project when available.' }
       },
-      required: ['project'],
+      required: [],
       additionalProperties: false
     },
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
@@ -45,7 +45,8 @@ export function relayContextCardTool() {
 export function validateRelayContextCardArguments(args) {
   if (!args || typeof args !== 'object' || Array.isArray(args)) throw new Error('Card arguments must be an object');
   for (const key of Object.keys(args)) if (!['project','assignment','evidence_id','show_qa'].includes(key)) throw new Error('Unsupported card argument: '+key);
-  if (typeof args.project !== 'string' || !/^[a-z0-9-]{1,80}$/.test(args.project)) throw new Error('Invalid card project');
+  if (args.project !== undefined && (typeof args.project !== 'string' || !/^[a-z0-9-]{1,80}$/.test(args.project))) throw new Error('Invalid card project');
+  if (args.assignment !== undefined && !args.project) throw new Error('Assignment requires a project');
   if (args.assignment !== undefined && (typeof args.assignment !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,99}$/.test(args.assignment))) throw new Error('Invalid card assignment');
   if (args.evidence_id !== undefined && (typeof args.evidence_id !== 'string' || !/^vis_[a-zA-Z0-9-]{8,128}$/.test(args.evidence_id))) throw new Error('Invalid card evidence id');
   if (args.show_qa !== undefined && typeof args.show_qa !== 'boolean') throw new Error('Invalid card show_qa flag');
@@ -287,6 +288,41 @@ function replaceOnce(html, from, to) {
   if (!html.includes(from)) throw new Error('Relay card v9 patch target missing: ' + from.slice(0, 60));
   return html.replace(from, () => to);
 }
+function installStatusExplorer(){
+ const saved=window.openai?.widgetState?.statusExplorer;
+ let view={level:'overview',project:null,assignment:null};
+ if(saved&&['overview','project','assignment'].includes(saved.level)&&(!saved.project||/^[a-z0-9-]{1,80}$/.test(saved.project))&&(!saved.assignment||/^[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,99}$/.test(saved.assignment)))view={...view,...saved};
+ let registry=null,generation=0,overviewLoading=false,active=Boolean(saved);
+ const cache=new Map(),failures=new Map();
+ const originalRender=render;
+ const nav=document.createElement('nav');nav.className='status-navigation';nav.setAttribute('aria-label','Status navigation');el.card.prepend(nav);nav.hidden=!active;
+ const css=document.createElement('style');css.textContent='.status-navigation{display:flex;align-items:center;gap:8px;margin:0 4px 10px;font:inherit}.status-navigation button,.status-drilldown{font:inherit;color:var(--ink);background:var(--row);border:0;border-radius:12px;padding:10px 12px;cursor:pointer;text-align:left}.status-drilldown{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;margin-top:7px}.status-drilldown strong{overflow-wrap:anywhere}.status-drilldown span{color:var(--muted);font-size:12px}.status-navigation button:focus-visible,.status-drilldown:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.status-navigation small{color:var(--muted)}';document.head.append(css);
+ const terminal=new Set(['complete','completed','cancelled','superseded','retired']);
+ const current=data=>[...(data?.progress||[]),...(data?.queue||[])].filter(x=>!terminal.has(x.state)&&x.retirement==null);
+ const label=state=>({'active':'Active','working':'Working','queued':'Queued','held':'On hold','officially-stale':'Needs a fresh update','possibly-stale':'Update may be stale','waiting-for-human':'Needs review','waiting-on-external-system':'Waiting on system','reserved-but-idle':'Reserved','failed':'Failed','blocked':'Blocked','complete':'Completed','completed':'Completed'}[state]||state||'Unknown');
+ const persist=()=>{try{window.openai?.setWidgetState({...window.openai.widgetState,statusExplorer:view})}catch{}};
+ function button(title,detail,action){const b=document.createElement('button');b.type='button';b.className='status-drilldown';const t=document.createElement('strong'),d=document.createElement('span');t.textContent=title;d.textContent=detail+' ›';b.append(t,d);b.addEventListener('click',action);return b;}
+ function navigation(){nav.hidden=!active;nav.replaceChildren();if(view.level!=='overview'){const back=document.createElement('button');back.type='button';back.textContent=view.level==='assignment'?'‹ Project':'‹ Overall';back.addEventListener('click',()=>view.level==='assignment'?openProject(view.project):openOverview());nav.append(back)}const path=document.createElement('small');path.textContent=view.level==='overview'?'Overall status':view.project+(view.level==='assignment'?' / Assignment':' / Project');nav.append(path);}
+ function base(data){originalRender(data);navigation();el.refresh.hidden=false;el.staff.hidden=true;el.next.hidden=true;el.handoff.hidden=true;el.qa.hidden=true;el.meter.hidden=true;hideQaMedia();el.rows.replaceChildren();el.blocker.hidden=true;el.card.dataset.feature='relay';el['feature-title'].textContent='relay';el['feature-kicker'].textContent='status';}
+ function overview(){if(!registry)return;view={level:'overview',project:null,assignment:null};persist();base({project:'relay'});el.title.textContent='Your projects';const projects=registry.projects||[];let open=0,waiting=0,stale=0;for(const p of projects){const items=current(cache.get(p.id));open+=items.length;waiting+=items.filter(x=>['failed','blocked','waiting-for-human'].includes(x.state)).length;stale+=items.filter(x=>/stale/.test(x.state||'')).length;const detail=failures.has(p.id)?'Status unavailable':!cache.has(p.id)?(p.coordination==='enabled'?'Checking status…':'No coordination data'):items.length?items.length+' open · '+(items.some(x=>/stale/.test(x.state||''))?'update needed':label(items[0].state)):'No open work';el.rows.append(button(p.name||p.id,detail,()=>openProject(p.id)));}
+ const checked=projects.filter(p=>cache.has(p.id)||failures.has(p.id)||p.coordination!=='enabled').length;
+ el.metric.textContent=String(open);el['metric-label'].textContent='open assignments in checked projects';el['state-label'].textContent=checked<projects.length?'Checking '+checked+'/'+projects.length:waiting?'Needs attention':stale?'Updates needed':'Current snapshot';el.summary.textContent=waiting+' need attention · '+stale+' need a fresh update. Read-only status; an active reservation alone is not proof that code is running.';el.details.hidden=true;}
+ function project(data,assignment=null){base(data);const rows=current(data);el.title.textContent=view.project;el.metric.textContent=String(rows.length);el['metric-label'].textContent='open assignments';el.summary.textContent=data.generated_at?'Checked '+new Date(data.generated_at).toLocaleString():'Latest available project evidence';el['state-label'].textContent=rows.length?'Work in progress':'No open work';
+ if(assignment){const item=[...(data.progress||[]),...(data.queue||[])].find(x=>(x.assignment||x.id)===assignment);if(!item){el.blocker.hidden=false;el.blocker.textContent='This assignment is no longer in the current response. Return to the project to refresh.';return}el.title.textContent=item.goal||assignment;el.metric.textContent=label(item.state);el['metric-label'].textContent='evidence-derived state';el['state-label'].textContent=label(item.state);el.summary.textContent=item.waiting_reason||item.recovery_action||item.next_action||'No additional execution update was reported.';el.details.hidden=false;el.evidence.textContent=JSON.stringify({assignment,stage:item.stage,last_meaningful_progress_at:item.last_meaningful_progress_at,identities:item.identities,latest_event:item.latest_event},null,2);const event=item.latest_event;if(event){const p=document.createElement('p');p.textContent='Latest evidence: '+event.type+(event.at?' · '+new Date(event.at).toLocaleString():'');el.rows.append(p)}return;}
+ for(const item of rows)el.rows.append(button(item.goal||item.assignment||item.id,label(item.state),()=>openAssignment(item.assignment||item.id)));
+ if(!rows.length){const p=document.createElement('p');p.textContent='No open assignments in this snapshot.';el.rows.append(p)}el.details.hidden=true;}
+ async function fetchProject(id,force=false){if(!force&&cache.has(id))return cache.get(id);const data=unwrap(await callTool('relay_runner_progress',{project:id}));if(data.ok===false||!Array.isArray(data.progress))throw Error(data.error?.message||'Project status is unavailable.');cache.set(id,data);failures.delete(id);return data;}
+ function showError(error){el.blocker.hidden=false;el.blocker.textContent=error.message||'Unable to refresh status. The previous view is preserved.';}
+ async function openProject(id,force=false){if(!/^[a-z0-9-]{1,80}$/.test(id))return;const token=++generation;view={level:'project',project:id,assignment:null};persist();navigation();el['state-label'].textContent='Loading project…';try{const data=await fetchProject(id,force);if(token!==generation)return;project(data)}catch(error){if(token!==generation)return;failures.set(id,error.message);showError(error)}}
+ function openAssignment(id){if(!id)return;generation++;view={...view,level:'assignment',assignment:id};persist();project(cache.get(view.project),id);}
+ async function openOverview(force=false){const token=++generation;view={level:'overview',project:null,assignment:null};persist();try{if(!registry||force){const data=unwrap(await callTool('relay_runner_projects',{}));if(!Array.isArray(data.projects))throw Error('Project registry unavailable.');if(token!==generation)return;registry=data;if(force){cache.clear();failures.clear()}}if(token!==generation)return;overview();await loadOverview()}catch(error){showError(error)}}
+ async function loadOverview(){if(overviewLoading||!registry)return;overviewLoading=true;const todo=registry.projects.filter(p=>p.coordination==='enabled'&&!cache.has(p.id)&&!failures.has(p.id));async function run(){while(todo.length){const p=todo.shift();try{await fetchProject(p.id)}catch(error){failures.set(p.id,error.message)}if(view.level==='overview')overview();}}try{await Promise.all([run(),run()])}finally{overviewLoading=false}}
+ render=function(result){const data=unwrap(result);if(data.schema==='relay-status-explorer/v1')active=true;if(!active){originalRender(result);return}if(Array.isArray(data.projects)){registry=data;lastData=data;const restore={...view};overview();if(restore.project){void openProject(restore.project).then(()=>{if(restore.assignment&&view.project===restore.project&&view.level==='project')openAssignment(restore.assignment)})}void loadOverview();return}if(data.project&&Array.isArray(data.progress)){cache.set(data.project,data);if(view.level==='overview')view={level:toolInput.assignment?'assignment':'project',project:data.project,assignment:toolInput.assignment||null};lastData=data;persist();project(data,view.assignment);return}originalRender(result);navigation();};
+ // Navigation/refresh stay inside the mounted iframe; never send a follow-up message.
+ el.refresh.addEventListener('click',event=>{if(!active)return;event.preventDefault();event.stopImmediatePropagation();if(view.level==='overview')void openOverview(true);else{const assignment=view.assignment;void openProject(view.project,true).then(()=>{if(assignment&&view.level==='project')openAssignment(assignment)})}},true);
+ if(lastData)render(lastData);
+}
+
 function resilientCardHtml() {
   let html = cardHtml(CONTEXT_CARD_BROWSER_MODEL);
   html = replaceOnce(html, "function acceptToolInput(value){if(value&&typeof value==='object')toolInput=value.arguments||value}", "function acceptToolInput(value){if(value&&typeof value==='object'){toolInput=value.arguments||value;if(!lastData)queueMicrotask(()=>{void recoverCanonicalState()})}}");
@@ -310,6 +346,7 @@ function resilientCardHtml() {
 let screenshotDialog=null;function enlargeScreenshot(){if(!imageButton.src||screenshotDialog)return;const dialog=document.createElement('dialog');dialog.className='screenshot-dialog';dialog.setAttribute('aria-label','screenshot preview');const close=document.createElement('button');close.textContent='Close screenshot';close.type='button';const image=document.createElement('img');image.src=imageButton.src;image.alt=imageButton.alt;dialog.append(close,image);document.body.append(dialog);screenshotDialog=dialog;const finish=()=>{dialog.close();dialog.remove();screenshotDialog=null;imageButton.focus();if(window.openai?.requestDisplayMode)void window.openai.requestDisplayMode({mode:'inline'}).catch(()=>{});};close.addEventListener('click',finish);dialog.addEventListener('cancel',event=>{event.preventDefault();finish()});dialog.showModal();if(window.openai?.requestDisplayMode)void window.openai.requestDisplayMode({mode:'fullscreen'}).catch(()=>{});}
 imageButton.addEventListener('click',enlargeScreenshot);imageButton.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();enlargeScreenshot()}});
 </script></body>`);
+  html=replaceOnce(html,'</script></body>', '('+installStatusExplorer.toString()+')();</script></body>');
   return html;
 }
 
