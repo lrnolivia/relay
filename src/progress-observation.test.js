@@ -47,7 +47,7 @@ test("cloud identity ignores unrelated newer Relay deployments", () => {
   };
   const p=deriveObservedProgress({
     project:"relay",claim,
-    pullRequest:{number:60,head:{sha:prHead},merge_commit_sha:merge,created_at:"2026-09-30T21:58:30Z",updated_at:"2026-09-30T21:59:20Z"},
+    pullRequest:{number:60,merged:true,head:{sha:prHead},merge_commit_sha:merge,created_at:"2026-09-30T21:58:30Z",updated_at:"2026-09-30T21:59:20Z"},
     checks:[],cloud,now
   });
   assert.equal(p.identities.head_sha,prHead);
@@ -55,6 +55,21 @@ test("cloud identity ignores unrelated newer Relay deployments", () => {
   assert.equal(p.identities.cloud_version_id,"mine");
   assert.equal(p.identities.cloud_deployment_id,"deploy-mine");
   assert.equal(p.events.some(event=>event.deployment_id==="deploy-newer"),false);
+});
+test('open and unmerged closed PRs cannot turn a provisional test merge into publication evidence', () => {
+  const head='b'.repeat(40), provisional='c'.repeat(40);
+  for (const state of ['open','closed']) {
+    const p=deriveObservedProgress({project:'relay',claim:{...claim,merge_commit_sha:'d'.repeat(40)},
+      branch:{commit:{sha:head}},pullRequest:{number:147,state,merged:false,head:{sha:head},merge_commit_sha:provisional},
+      cloud:{script:'relay',versions:[{id:'test-merge',annotations:{'workers/commit_sha':provisional}}],
+        deployments:[{id:'test-deploy',created_on:'2026-09-30T21:59:30Z',versions:[{version_id:'test-merge'}]}]},now});
+    assert.equal(p.identities.head_sha,head);
+    assert.equal(p.identities.merge_commit_sha,null);
+    assert.equal(p.identities.cloud_version_id,null);
+    assert.equal(p.identities.cloud_deployment_id,null);
+    assert.equal(p.events.some(event=>event.type==='cloud-deployment'),false);
+    assert.equal(p.receipt.identities.merge_commit_sha,null);
+  }
 });
 test('retirement dominates stale leases, failed checks and branch drift without claiming delivery', () => {
   for (const state of ['cancelled', 'superseded']) {
