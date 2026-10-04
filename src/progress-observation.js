@@ -23,7 +23,11 @@ export function deriveObservedProgress({ project, claim, branch, commit, pullReq
   }
   const cloudDeployments = deployments(cloud);
   const cloudVersions = versions(cloud);
-  const sourceIdentity = pullRequest?.merge_commit_sha || claim?.merge_commit_sha || branch?.commit?.sha || claim?.merged_head_sha || null;
+  // GitHub supplies a provisional test-merge SHA even before a PR is merged.
+  const mergedIdentity = pullRequest
+    ? pullRequest.merged === true ? pullRequest.merge_commit_sha || null : null
+    : claim?.merge_commit_sha || null;
+  const sourceIdentity = mergedIdentity || branch?.commit?.sha || pullRequest?.head?.sha || claim?.merged_head_sha || null;
   const matchedVersion = sourceIdentity
     ? cloudVersions.find(version => version?.annotations?.["workers/commit_sha"] === sourceIdentity) || null
     : null;
@@ -65,7 +69,7 @@ export function deriveObservedProgress({ project, claim, branch, commit, pullReq
     head_sha: branch?.commit?.sha || pullRequest?.head?.sha || claim?.merged_head_sha || null,
     pr: pullRequest?.number || claim?.pr || null,
     pr_head_sha: pullRequest?.head?.sha || claim?.merged_head_sha || null,
-    merge_commit_sha: pullRequest?.merge_commit_sha || claim?.merge_commit_sha || null,
+    merge_commit_sha: mergedIdentity,
     cloud_worker: cloud?.script || null, cloud_version_id: matchedVersion?.id || null,
     cloud_deployment_id: matchedDeployment?.id || null
   };
