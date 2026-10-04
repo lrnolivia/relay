@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-10-04T01:52:42.852Z",
+  "updated_at": "2026-10-04T01:56:47.817Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1353,8 +1353,8 @@
         "field-document-navigation"
       ],
       "goal": "Put Media search first and add grouped Pages/Layers search with correct navigation; reconcile equivalent outer left/right chrome surfaces.",
-      "acceptance": "MoveMediaSearchBar firstabovefilters/actions, preservequeryandGalleryreturn. Single top consistentPages/Layers search withseparateddropdownpage/layergroups,disambiguatingpagecontext, keyboardarrows/Enter/Escape/clear/Backloadingempty; honestprojectwidescopeusingexistingmodel,nofakecoverage. Pageclicknavigates,layerclickswitchespageifneededthenreveals/selectscorrectobject, noCanvasshortcutleak orsourcewrites. Compareactualcomputed/compositedequivalentouterleft/rightchromeinbothmodes;rightInspectorreference,sharedsemanticsurfaceremediationifactualmismatch, preserveinternalcontrastandapprovedPR142shape/bevel/shadows/gear. Newfreshmainisolatedcheckout,actualheadlessscreens/tests/build/draftPR,reportreadinessandreleaseplan. Historicalauditsremainseparate; nativeGUIexclusivelyauditworker01a1046c,nevereditauditfixtures; noworkers.",
-      "next_action": "Freshmain admittedbranch,inspectsource-backedcross-pageindexandnavigation APIs plusouterbackgroundownership; implementboundedsearch/UIandverifyexacthead.",
+      "acceptance": "MediaSearchBarfirstabovefilters/actions preservingstate. OneconsistentPages/Layers topsearch groupedpage/layerresults,disambiguatingpagecontext, honestprojectwidedata,navigate/revealcorrectobject,crosspage/keyboard/Escape/clear/Back/loadingempty. Actualleft/rightouterchromethemecomparisonrightInspectorreference;correctequivalentoutertokenifactualmismatch,preserveinternalcontrast. Inspectorbuttons muststayreachableasPANELwidthnarrows:balancedfluiddouble rows,minwidth0,containerbreakpoints,readablelabels/values/hittargets/order/focus; nohiddenactions/overflowclipping/scaledtinytext workaround. Inspectsuppliedactualpixelsbeforeedits; testcontinuousnarrow/widenDocked+Floatlight/dark,andwide/narrowscreens. PreservePR142corners/bevel/shadows/gear/search;freshadmittedbranch,draftPR/exactheadbuild/tests/runtime,reportreadiness/releaseplan. Originalaudits/behaviorfindingsremainseparate,preservedsoleGUIoperator01a1046c;noauditfixturewrites/nativeUI/noadditionalworkers.",
+      "next_action": "Materialize/inspectNarrowInspector screenshot;source-backedPages/Layersindexandnavigation,Mediafirstsearch,measuredouterchrome parityandcontainer-responsiveInspectorcontrols implementation/verification.",
       "ledger_refs": [
         "field-concentric-highlights-outer-inset-20261004"
       ],
@@ -1378,11 +1378,37 @@
             "id": "field-document-media-search-20261004:acceptance:0",
             "text": "MoveMediaSearchBar firstabovefilters/actions, preservequeryandGalleryreturn. Single top consistentPages/Layers search withseparateddropdownpage/layergroups,disambiguatingpagecontext, keyboardarrows/Enter/Escape/clear/Backloadingempty; honestprojectwidescopeusingexistingmodel,nofakecoverage. Pageclicknavigates,layerclickswitchespageifneededthenreveals/selectscorrectobject, noCanvasshortcutleak orsourcewrites. Compareactualcomputed/compositedequivalentouterleft/rightchromeinbothmodes;rightInspectorreference,sharedsemanticsurfaceremediationifactualmismatch, preserveinternalcontrastandapprovedPR142shape/bevel/shadows/gear. Newfreshmainisolatedcheckout,actualheadlessscreens/tests/build/draftPR,reportreadinessandreleaseplan. Historicalauditsremainseparate; nativeGUIexclusivelyauditworker01a1046c,nevereditauditfixtures; noworkers.",
             "at": "2026-10-04T01:52:42.852Z"
+          },
+          {
+            "id": "field-document-media-search-20261004:acceptance:1",
+            "text": "MediaSearchBarfirstabovefilters/actions preservingstate. OneconsistentPages/Layers topsearch groupedpage/layerresults,disambiguatingpagecontext, honestprojectwidedata,navigate/revealcorrectobject,crosspage/keyboard/Escape/clear/Back/loadingempty. Actualleft/rightouterchromethemecomparisonrightInspectorreference;correctequivalentoutertokenifactualmismatch,preserveinternalcontrast. Inspectorbuttons muststayreachableasPANELwidthnarrows:balancedfluiddouble rows,minwidth0,containerbreakpoints,readablelabels/values/hittargets/order/focus; nohiddenactions/overflowclipping/scaledtinytext workaround. Inspectsuppliedactualpixelsbeforeedits; testcontinuousnarrow/widenDocked+Floatlight/dark,andwide/narrowscreens. PreservePR142corners/bevel/shadows/gear/search;freshadmittedbranch,draftPR/exactheadbuild/tests/runtime,reportreadiness/releaseplan. Originalaudits/behaviorfindingsremainseparate,preservedsoleGUIoperator01a1046c;noauditfixturewrites/nativeUI/noadditionalworkers.",
+            "at": "2026-10-04T01:56:47.817Z",
+            "reason": "Lauren explicitly extends current correction with container-width Inspector balanced double-row responsive controls, screenshotlibfile_d8a5fa3daa708191a7171dca2689f70d."
           }
         ]
       },
-      "updated_at": "2026-10-04T01:52:42.852Z",
-      "lease_until": "2026-10-04T13:52:42.852Z"
+      "updated_at": "2026-10-04T01:56:47.817Z",
+      "lease_until": "2026-10-04T13:56:47.817Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-04T01:56:47.817Z",
+          "by": "01a10405-82ff-72d5-aef4-535569d400de",
+          "reason": "Lauren explicitly extends current correction with container-width Inspector balanced double-row responsive controls, screenshotlibfile_d8a5fa3daa708191a7171dca2689f70d.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "MoveMediaSearchBar firstabovefilters/actions, preservequeryandGalleryreturn. Single top consistentPages/Layers search withseparateddropdownpage/layergroups,disambiguatingpagecontext, keyboardarrows/Enter/Escape/clear/Backloadingempty; honestprojectwidescopeusingexistingmodel,nofakecoverage. Pageclicknavigates,layerclickswitchespageifneededthenreveals/selectscorrectobject, noCanvasshortcutleak orsourcewrites. Compareactualcomputed/compositedequivalentouterleft/rightchromeinbothmodes;rightInspectorreference,sharedsemanticsurfaceremediationifactualmismatch, preserveinternalcontrastandapprovedPR142shape/bevel/shadows/gear. Newfreshmainisolatedcheckout,actualheadlessscreens/tests/build/draftPR,reportreadinessandreleaseplan. Historicalauditsremainseparate; nativeGUIexclusivelyauditworker01a1046c,nevereditauditfixtures; noworkers.",
+            "next_action": "Freshmain admittedbranch,inspectsource-backedcross-pageindexandnavigation APIs plusouterbackgroundownership; implementboundedsearch/UIandverifyexacthead."
+          },
+          "after": {
+            "acceptance": "MediaSearchBarfirstabovefilters/actions preservingstate. OneconsistentPages/Layers topsearch groupedpage/layerresults,disambiguatingpagecontext, honestprojectwidedata,navigate/revealcorrectobject,crosspage/keyboard/Escape/clear/Back/loadingempty. Actualleft/rightouterchromethemecomparisonrightInspectorreference;correctequivalentoutertokenifactualmismatch,preserveinternalcontrast. Inspectorbuttons muststayreachableasPANELwidthnarrows:balancedfluiddouble rows,minwidth0,containerbreakpoints,readablelabels/values/hittargets/order/focus; nohiddenactions/overflowclipping/scaledtinytext workaround. Inspectsuppliedactualpixelsbeforeedits; testcontinuousnarrow/widenDocked+Floatlight/dark,andwide/narrowscreens. PreservePR142corners/bevel/shadows/gear/search;freshadmittedbranch,draftPR/exactheadbuild/tests/runtime,reportreadiness/releaseplan. Originalaudits/behaviorfindingsremainseparate,preservedsoleGUIoperator01a1046c;noauditfixturewrites/nativeUI/noadditionalworkers.",
+            "next_action": "Materialize/inspectNarrowInspector screenshot;source-backedPages/Layersindexandnavigation,Mediafirstsearch,measuredouterchrome parityandcontainer-responsiveInspectorcontrols implementation/verification."
+          }
+        }
+      ]
     }
   ]
 }
