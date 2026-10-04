@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-10-04T01:04:23.832Z",
+  "updated_at": "2026-10-04T01:12:19.770Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1283,7 +1283,7 @@
       ],
       "goal": "Correct outer project-title gap, shared concentric selection geometry and classified light-mode shadow opacity.",
       "acceptance": "Actual production Media title bottom52/cardtop54 proves missed outer2pxgap; inner12px already deployed. Fix shared outer breathing room. Apply concentric highlights globally respecting actual outerradius minus x/y inset, pills and varied radii; no blanket6x7. Preserve approvedshape/colors/type/bevel0.5 and focuscontrast. Light embedded sidebar section shadow alpha75%, outer docked panel shadows50%, menus50%; floating-mode and darkshadows unchanged. Actual light/dark selected/focus/menu/panel screenshots and regression tests required. Protected publication authorized after checks; historical Figma and later consistency audits pending,separate. No nativeGUI/auditdocument edits/no workers.",
-      "next_action": "Fresh-main isolated branch; inspect shared geometry and shadow ownership, implement/test/screenshots then draftPR.",
+      "next_action": "Complete outer12pxgap, parameterized concentric toolbar/shared tabs/flush segments and keyboard propagation, classified lightshadow alpha75%sections/50%docked+menus withfloatingunchanged; remove collapsedlayoutpill and refinegear. Check light/dark/menus/floating/pills and exacthead runtime; draftthenprotectedpublicationauthorized. Preserve pendingaudits; no nativeUI.",
       "ledger_refs": [
         "field-left-panel-title-inset-20261004",
         "field-radius-panel-corrections-20261003"
@@ -1311,8 +1311,25 @@
           }
         ]
       },
-      "updated_at": "2026-10-04T01:04:23.832Z",
-      "lease_until": "2026-10-04T13:04:23.832Z"
+      "updated_at": "2026-10-04T01:12:19.770Z",
+      "lease_until": "2026-10-04T13:12:19.770Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-04T01:12:19.770Z",
+          "by": "01a10405-82ff-72d5-aef4-535569d400de",
+          "reason": "Lauren adds layout chooser extra pill removal and recognizable small settings gear; preserve action/hit-target/focus. Authorizes same correction batch through Julian.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Fresh-main isolated branch; inspect shared geometry and shadow ownership, implement/test/screenshots then draftPR."
+          },
+          "after": {
+            "next_action": "Complete outer12pxgap, parameterized concentric toolbar/shared tabs/flush segments and keyboard propagation, classified lightshadow alpha75%sections/50%docked+menus withfloatingunchanged; remove collapsedlayoutpill and refinegear. Check light/dark/menus/floating/pills and exacthead runtime; draftthenprotectedpublicationauthorized. Preserve pendingaudits; no nativeUI."
+          }
+        }
+      ]
     }
   ]
 }
