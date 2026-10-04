@@ -119,7 +119,25 @@ jobs:
       - name: Run workspace, contract, API, browser and React tests
         env:
           RELAY_QA_OUTPUT: ${{ github.workspace }}/qa-evidence/relay-motion
-        run: npm test
+        run: |
+          set +e
+          npm test > relay-test-output.log 2>&1
+          status=$?
+          cat relay-test-output.log
+          if [ "$status" -ne 0 ]; then
+            python3 - <<'PY'
+          import re
+          from pathlib import Path
+          lines=Path('relay-test-output.log').read_text(errors='replace').splitlines()
+          starts=[i for i,line in enumerate(lines) if re.match(r'\s*not ok \d+',line)]
+          if not starts: starts=[max(0,len(lines)-40)]
+          for i in starts[:3]:
+              message='\n'.join(lines[i:i+40])[:7000]
+              message=message.replace('%','%25').replace('\r','%0D').replace('\n','%0A')
+              print('::error title=Exact failing test context::'+message)
+          PY
+          fi
+          exit "$status"
       - name: Preserve Relay motion and layout evidence
         if: always() && github.head_ref == 'relay/mcp-rebuild-20261003'
         uses: actions/upload-artifact@v4
