@@ -198,13 +198,42 @@ export async function commitSourceFiles(env, { owner, repo, branch, files, messa
   if (expectedHeadSha && expectedHeadSha !== headSha) throw new Error("Branch head changed; refresh before committing");
 
   const parent = await githubApiRequest(env, repoBase + "/git/commits/" + headSha);
+  const treeCache = new Map();
+  async function entries(sha) {
+    if (!treeCache.has(sha)) {
+      treeCache.set(sha, githubApiRequest(env, repoBase + "/git/trees/" + sha).then(tree => {
+        if (tree.truncated || !Array.isArray(tree.tree)) throw new Error("Cannot preserve modes from an incomplete source tree");
+        return tree.tree;
+      }));
+    }
+    return treeCache.get(sha);
+  }
+  async function existingMode(path) {
+    const parts = path.split("/");
+    if (parts.some(part => !part || part === ".")) throw new Error("Invalid repository path");
+    let treeSha = parent?.tree?.sha;
+    if (!treeSha) throw new Error("Missing parent source tree");
+    for (let index = 0; index < parts.length; index++) {
+      const entry = (await entries(treeSha)).find(item => item.path === parts[index]);
+      if (!entry) return "100644";
+      if (index < parts.length - 1) {
+        if (entry.type !== "tree") throw new Error("Source path parent is not a directory");
+        treeSha = entry.sha;
+      } else {
+        if (entry.type !== "blob" || !["100644", "100755"].includes(entry.mode)) throw new Error("Text batches cannot replace symlinks or submodules");
+        return entry.mode;
+      }
+    }
+  }
+  // Validate every path before creating blobs; retain executable entrypoints.
+  const modes = await Promise.all(normalized.map(file => existingMode(file.path)));
   const blobs = [];
-  for (const file of normalized) {
+  for (const [index, file] of normalized.entries()) {
     const blob = await githubApiRequest(env, repoBase + "/git/blobs", {
       method: "POST",
       body: { content: file.content, encoding: "utf-8" }
     });
-    blobs.push({ path: file.path, mode: "100644", type: "blob", sha: blob.sha });
+    blobs.push({ path: file.path, mode: modes[index], type: "blob", sha: blob.sha });
   }
 
   const tree = await githubApiRequest(env, repoBase + "/git/trees", {
