@@ -326,3 +326,25 @@ export async function readBoundedJobLog(response) {
   const excerpt=(indexes.size?[...indexes].sort((a,b)=>a-b).map(i=>lines[i]).join("\n"):lines.slice(-80).join("\n")).slice(0,24000);
   return {available:true,excerpt,read_bytes:bytes,truncated:truncated||excerpt.length===24000,scope:"bounded failure-context excerpt; not the full log"};
 }
+
+export async function syncIdenticalSourceBranch(env, {owner,repo,branch,expectedHeadSha,expectedBaseSha}, api=(path,options)=>githubApiRequest(env,path,options)) {
+  if(!/^[a-f0-9]{40}$/.test(expectedHeadSha||"") || !/^[a-f0-9]{40}$/.test(expectedBaseSha||""))throw new Error("Exact source and base identities required");
+  const root=`/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`;
+  const metadata=await api(root);
+  if(!metadata.default_branch || branch===metadata.default_branch)throw new Error("Default branch synchronization is prohibited");
+  const branchPath=branch.split("/").map(encodeURIComponent).join("/");
+  const basePath=metadata.default_branch.split("/").map(encodeURIComponent).join("/");
+  const head=await api(`${root}/git/ref/heads/${branchPath}`),base=await api(`${root}/git/ref/heads/${basePath}`);
+  if(head.object?.sha!==expectedHeadSha || base.object?.sha!==expectedBaseSha)throw new Error("Branch identity changed; refresh before synchronization");
+  if(expectedHeadSha===expectedBaseSha)return {ok:true,unchanged:true,head_sha:expectedHeadSha};
+  const a=await api(`${root}/git/commits/${expectedHeadSha}`),b=await api(`${root}/git/commits/${expectedBaseSha}`);
+  if(!/^[a-f0-9]{40}$/.test(a.tree?.sha||"") || a.tree.sha!==b.tree?.sha)throw new Error("Trees differ; source changes require explicit resolution before synchronization");
+  const commit=await api(`${root}/git/commits`,{method:"POST",body:{message:"Synchronize identical reviewed source with default-branch ancestry",tree:a.tree.sha,parents:[expectedHeadSha,expectedBaseSha]}});
+  if(!/^[a-f0-9]{40}$/.test(commit.sha||""))throw new Error("Invalid synchronization commit receipt");
+  const current=await api(`${root}/git/ref/heads/${branchPath}`);
+  if(current.object?.sha!==expectedHeadSha)throw new Error("Branch changed before synchronization; no ref update performed");
+  await api(`${root}/git/refs/heads/${branchPath}`,{method:"PATCH",body:{sha:commit.sha,force:false}});
+  const verified=await api(`${root}/git/ref/heads/${branchPath}`);
+  if(verified.object?.sha!==commit.sha)throw new Error("Synchronization readback did not match; inspect before retrying");
+  return {ok:true,repository:`${owner}/${repo}`,branch,previous_head_sha:expectedHeadSha,base_sha:expectedBaseSha,head_sha:commit.sha,tree_sha:a.tree.sha,files_changed:false};
+}
