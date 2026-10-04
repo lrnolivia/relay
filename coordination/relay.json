@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-04T04:38:21.120Z",
+  "updated_at": "2026-10-04T04:41:36.844Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -7763,6 +7763,41 @@
             "id": "relay-coordination-cleanup-audit-20261003:acceptance:0",
             "text": "Trace actual scheduled Field workflow and canonical Relay cleanup engine, exact failing receipts and current lifecycle records. Separate operational cleanup errors from retained coordination findings; preserve strict PR/preflight gates, merge/head/ownership deletion guards, original acceptance and unknown verification. Reconcile stale records only with verified authority and accounted work; never mark unverified work complete. Add meaningful regression tests for held/expired/missing/legacy branches, scope drift, post-merge commits, owner races and operation failure reporting. Produce clear receipts and ensure genuine operational failures remain failures. No new credentials or permissions. Source changes stay in reviewed draft until publication is authorized.",
             "at": "2026-10-03T22:23:47.801Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "arc-tv-launcher-relay-registration-20261004",
+      "owner": "01a0a348-4d7b-7c00-bc67-66bcf0d03b03",
+      "goal": "Register Arc TV Launcher as a tracking-only Relay project tied to its public upstream source.",
+      "acceptance": "Relay project discovery lists Arc TV Launcher as unmanaged/tracking-only; the entry identifies the public upstream repo and explicitly prevents implementation claims or writes to upstream. No private TV details or local filesystem paths are published.",
+      "next_action": "Claim the queued task when capacity and ownership permit, add the minimal registry record on a non-default branch, and verify Relay project discovery.",
+      "paths": [
+        "projects/arc-tv-launcher.json"
+      ],
+      "resources": [
+        "relay-project-registry"
+      ],
+      "category": "coordination",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-04T04:41:36.844Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Register Arc TV Launcher as a tracking-only Relay project tied to its public upstream source.",
+          "acceptance": "Relay project discovery lists Arc TV Launcher as unmanaged/tracking-only; the entry identifies the public upstream repo and explicitly prevents implementation claims or writes to upstream. No private TV details or local filesystem paths are published.",
+          "at": "2026-10-04T04:41:36.844Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "arc-tv-launcher-relay-registration-20261004:acceptance:0",
+            "text": "Relay project discovery lists Arc TV Launcher as unmanaged/tracking-only; the entry identifies the public upstream repo and explicitly prevents implementation claims or writes to upstream. No private TV details or local filesystem paths are published.",
+            "at": "2026-10-04T04:41:36.844Z"
           }
         ]
       }
