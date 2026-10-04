@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { generateKeyPairSync } from 'node:crypto';
-import { sourceAuthStatus, githubApiRequest } from "./source.js";
+import { sourceAuthStatus, githubApiRequest, readSourceChecks } from "./source.js";
 
 test("relay.SOURCE status prefers GitHub App auth", () => {
   assert.equal(sourceAuthStatus({}).auth_mode, "public_read");
@@ -129,4 +129,38 @@ test('source batches reject symlink replacement before creating remote objects',
  });
  await assert.rejects(commitSourceFiles({RELAY_GITHUB_TOKEN:'synthetic-test-token'},{owner:'owner',repo:'repo',branch:'work',message:'test',files:[{path:'linked',content:'replacement'}]}),/symlinks or submodules/);
  assert.equal(writes,0);
+});
+
+test("source checks expose bounded failure annotations without querying successful jobs", async () => {
+  const routes=[];
+  const checks=await readSourceChecks({}, "lrnolivia", "rtxForge", "main", async route => {
+    routes.push(route);
+    return route.includes("/annotations?")
+      ? [{path:"workflow",start_line:1,end_line:1,annotation_level:"failure",message:"Packaging failed"}]
+      : {total_count:2,check_runs:[{id:42,conclusion:"failure",output:{annotations_count:1}},{id:43,conclusion:"success"}]};
+  });
+  assert.equal(routes.length,2);
+  assert.equal(routes[1],"/repos/lrnolivia/rtxForge/check-runs/42/annotations?per_page=50");
+  assert.equal(checks.check_runs[0].failure_details.annotations[0].message,"Packaging failed");
+  assert.equal(checks.check_runs[1].failure_details,undefined);
+});
+test("annotation read failure never fabricates successful diagnostic evidence", async () => {
+  const checks=await readSourceChecks({}, "lrnolivia", "rtxForge", "main", async route => {
+    if(route.includes("/annotations?"))throw new Error("unavailable");
+    return {check_runs:[{id:42,conclusion:"failure"}]};
+  });
+  assert.equal(checks.check_runs[0].conclusion,"failure");
+  assert.equal(checks.check_runs[0].failure_details.available,false);
+});
+test("source check annotations remain bounded and report incomplete coverage", async () => {
+  let calls=0;
+  const checks=await readSourceChecks({}, "lrnolivia", "rtxForge", "main", async route => {
+    calls++;
+    return route.includes("/annotations?")?[{message:"x".repeat(9000)}]:
+      {check_runs:Array.from({length:7},(_,id)=>({id:id+1,conclusion:"failure",output:{annotations_count:75}}))};
+  });
+  assert.equal(calls,6);
+  assert.equal(checks.failure_details_truncated,true);
+  assert.equal(checks.check_runs[0].failure_details.truncated,true);
+  assert.equal(checks.check_runs[0].failure_details.annotations[0].message.length,8000);
 });

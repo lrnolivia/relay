@@ -258,3 +258,28 @@ export async function commitSourceFiles(env, { owner, repo, branch, files, messa
     files: normalized.map((file) => file.path)
   };
 }
+
+export async function readSourceChecks(env, owner, repo, ref, api = path => githubApiRequest(env, path)) {
+  const root = `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`;
+  const checks = await api(`${root}/commits/${encodeURIComponent(ref)}/check-runs`);
+  const failed = (checks.check_runs || []).filter(run => ["failure", "timed_out", "action_required"].includes(run.conclusion));
+  const details = new Map();
+  for (const run of failed.slice(0, 5)) {
+    if (!Number.isSafeInteger(run.id) || run.id < 1) continue;
+    try {
+      const rows = await api(`${root}/check-runs/${run.id}/annotations?per_page=50`);
+      if (!Array.isArray(rows)) throw new Error("Invalid annotation response");
+      details.set(run.id, { available: true, truncated: (run.output?.annotations_count || 0) > rows.length, annotations: rows.slice(0, 50).map(row => ({
+        path: String(row.path || "").slice(0, 1024),
+        start_line: row.start_line, end_line: row.end_line,
+        annotation_level: row.annotation_level,
+        title: String(row.title || "").slice(0, 1024),
+        message: String(row.message || "").slice(0, 8000)
+      })) });
+    } catch {
+      details.set(run.id, { available: false, annotations: [], reason: "Failure annotations unavailable" });
+    }
+  }
+  return { ...checks, check_runs: (checks.check_runs || []).map(run => details.has(run.id) ? {...run, failure_details: details.get(run.id)} : run),
+    failure_details_truncated: failed.length > 5 };
+}
