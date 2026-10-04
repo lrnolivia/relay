@@ -1,5 +1,6 @@
 import { contextTool, callContext } from '../packages/runner/src/context-service.mjs';
 import { jobsTool, callJobs } from '../packages/runner/src/job-control.mjs';
+import { nightShiftTool, callNightShift } from '../packages/runner/src/night-shift.mjs';
 import { skillsTool, callSkills } from './skills-service.js';
 import {LOEW_INTERFACE_SKILL_URI,loewInterfaceSkillCatalogEntry,loewInterfaceSkillResourceDescriptor,loewInterfaceSkillResource} from "./loew-interface-skill.js";
 import { uiApiTool, callUiApi } from "../apps/web/api.js";
@@ -84,7 +85,7 @@ export function augmentToolList(tools) {
     securitySchemes: schemes,
     _meta: { ...(old?._meta || {}), securitySchemes: schemes }
   };
-  const extensionTools = [contextTool, jobsTool, skillsTool, ...lifecycle, ...sourceTextMutationTools, staffDirectoryTool, runnerCleanupTool, cloudUploadTool, uiApiTool];
+  const extensionTools = [contextTool, jobsTool, nightShiftTool, skillsTool, ...lifecycle, ...sourceTextMutationTools, staffDirectoryTool, runnerCleanupTool, cloudUploadTool, uiApiTool];
   const names = new Set(extensionTools.map(tool => tool.name));
   const sourceDescriptions = {
     relay_source_file: "QUERY — read one UTF-8 repository file through relay.SOURCE. Safe to retry. Use its blob SHA as the expected identity before exact text mutation when applicable.",
@@ -195,7 +196,7 @@ function patchVersion(payload) {
 }
 
 function isExtensionTool(name) {
-  return name === contextTool.name || name === jobsTool.name || name === skillsTool.name || name === uiApiTool.name || name === createBranch.name || lifecycle.some(tool => tool.name === name) || isSourceTextMutationTool(name) || name === staffDirectoryTool.name || name === runnerCleanupTool.name || name === cloudUploadTool.name;
+  return name === contextTool.name || name === jobsTool.name || name === nightShiftTool.name || name === skillsTool.name || name === uiApiTool.name || name === createBranch.name || lifecycle.some(tool => tool.name === name) || isSourceTextMutationTool(name) || name === staffDirectoryTool.name || name === runnerCleanupTool.name || name === cloudUploadTool.name;
 }
 async function authProbe(request, message, env) {
   const headers = new Headers(request.headers);
@@ -314,6 +315,8 @@ export default {
           result = await callContext(message.params?.arguments || {}, env);
         } else if (name === jobsTool.name) {
           result = await callJobs(message.params?.arguments || {}, env);
+        } else if (name === nightShiftTool.name) {
+          result = await callNightShift(message.params?.arguments || {}, env);
         } else if (name === skillsTool.name) {
           result = await callSkills(message.params?.arguments || {}, undefined, env);
         } else if (name === runnerCleanupTool.name) {
@@ -390,4 +393,3 @@ export default {
     return response;
   }
 };
-

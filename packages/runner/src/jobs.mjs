@@ -30,7 +30,7 @@ export async function operateJob(bucket,args,target,{now=Date.now(),uuid=randomU
     if(!snapshot.goal||!snapshot.acceptance||!snapshot.paths?.length)fail('Assignment objective, acceptance and scope must be explicit');
     job={id:'job_'+digest({project:args.project,assignment:args.assignment,operation}),project:args.project,assignment:args.assignment,owner:target.owner,branch:target.branch,repository:target.repository,
       initial_head_sha:target.head_sha,objective:snapshot,objective_digest:digest(snapshot),request:args.prompt,required_capabilities:args.required_capabilities||['codex-cli'],
-      state:'queued',revision:0,created_at:iso(now),attempt:0,events:[],operations:[]};
+      ...(args.origin?{origin:args.origin}:{}),state:'queued',revision:0,created_at:iso(now),attempt:0,events:[],operations:[]};
     document.jobs.push(job);
     if(document.jobs.length>20)fail('Execution history capacity reached; archive accounted receipts before creating more jobs');
   } else {

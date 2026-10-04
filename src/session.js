@@ -303,18 +303,10 @@ export async function interactBrowserSession(binding, bucket, args) {
   const chosenTarget = assertTargetId(args.targetId) || meta.target_id;
   validateInteractionShape(args);
 
-  if (args.action === "wait") {
-    const ms = Math.min(10000, Math.max(0, Number(args.waitMs) || 500));
-    await delay(ms);
-    appendTrace(meta, { action: "wait", ms });
-    await writeSession(bucket, meta);
-    return { ok: true, session_id: meta.session_id, target_id: chosenTarget, action: args.action, trace_length: meta.trace.length };
-  }
-
   const connected = await connectTarget(binding, meta.session_id, chosenTarget, args.accessJwt, meta.viewport);
   try {
     let found = null;
-    if (args.action !== "scroll" || args.locator) found = await locate(connected.client, connected.pageSessionId, args.locator);
+    if (!['scroll','wait'].includes(args.action) || args.locator) found = await locate(connected.client, connected.pageSessionId, args.locator);
 
     if (["click","double_click","hover"].includes(args.action)) {
       const clickCount = args.action === "double_click" ? 2 : 1;
@@ -347,13 +339,17 @@ export async function interactBrowserSession(binding, bucket, args) {
       }
     }
 
-    await delay(150);
+    // Keep Network credentials attached while the action's asynchronous requests
+    // settle. A detached sleep cannot authenticate those later requests.
+    const settleMs=args.waitMs ?? (args.action==='wait'?500:150);
+    await delay(settleMs);
     const identity = await enforceTopLevelLoewNavigation(connected.client, connected.pageSessionId, meta.current_url);
     meta.current_url = identity?.url || meta.current_url;
     meta.title = identity?.title || meta.title;
     meta.target_id = chosenTarget;
     appendTrace(meta, {
       action: args.action,
+      settle_ms: settleMs,
       locator: args.locator || null,
       value: args.action === "type" || args.action === "select" ? boundedText(args.value, 120) : undefined,
       key: args.action === "press" ? normalizeKey(args.key) : undefined,
@@ -443,7 +439,7 @@ export function validateInteractionShape(args) {
   if (args.action === "scroll") {
     if (Math.abs(Number(args.deltaX) || 0) > 5000 || Math.abs(Number(args.deltaY) || 0) > 5000) throw new Error("Scroll delta out of range");
   }
-  if (args.action === "wait" && (Number(args.waitMs) < 0 || Number(args.waitMs) > 10000)) throw new Error("Wait out of range");
+  if (args.waitMs!==undefined&&(!Number.isInteger(args.waitMs)||args.waitMs<0||args.waitMs>10000)) throw new Error("Wait out of range");
   return true;
 }
 

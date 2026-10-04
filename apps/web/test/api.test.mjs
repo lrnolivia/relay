@@ -12,6 +12,9 @@ test("UI transport limits methods, routes, inputs and cannot carry trusted ident
     { path: "/api/workers", authenticatedMcp: true }, { path: "/api/workers?token=secret" }
   ]) assert.throws(() => validateUiRequest(args));
   assert.equal(validateUiRequest({ path: "/api/workers/field/toggle", method: "POST", body: { enabled: false } }).method, "POST");
+  assert.equal(validateUiRequest({ path: "/api/night-shift/items?project=relay&assignment=fixture&cursor=0&limit=20" }).method, "GET");
+  assert.equal(validateUiRequest({ path: "/api/feedback/binding?project=relay&assignment=fixture&head_sha="+'a'.repeat(40) }).method, "GET");
+  assert.throws(()=>validateUiRequest({path:'/api/night-shift/items',method:'POST'}));
 });
 
 test("web API fails closed without a verified identity and rejects cross-origin writes", async () => {

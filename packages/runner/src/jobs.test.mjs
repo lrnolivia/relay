@@ -1,4 +1,5 @@
 import test from 'node:test';
+import './night-shift.test.mjs';
 import assert from 'node:assert/strict';
 import { operateJob } from './jobs.mjs';
 function fixture(){
