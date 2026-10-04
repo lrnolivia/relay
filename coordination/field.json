@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-10-04T03:11:16.923Z",
+  "updated_at": "2026-10-04T03:12:19.730Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -627,7 +627,7 @@
       "supporting_teams": [],
       "primary_staff": "julian",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "superseded",
       "created_at": "2026-10-04T02:58:00.088Z",
       "objective_history": {
         "baseline": {
@@ -670,7 +670,20 @@
           }
         }
       ],
-      "updated_at": "2026-10-04T02:59:43.689Z"
+      "updated_at": "2026-10-04T03:12:19.730Z",
+      "retirement": {
+        "at": "2026-10-04T03:12:19.730Z",
+        "intent": {
+          "operation_id": "field-combine-ui-20261004-01",
+          "owner": "01a10405-82ff-72d5-aef4-535569d400de",
+          "disposition": "superseded",
+          "reason": "Lauren explicitly requires one combined UI candidate and release in PR143.",
+          "evidence": "All queued work accounted for: acceptance incorporated into active assignment record783b75ec; tested checkpoint53b0347 retained, no source work lost.",
+          "superseded_by": "field-document-media-search-20261004",
+          "branch": null,
+          "head_sha": null
+        }
+      }
     }
   ],
   "claims": [
