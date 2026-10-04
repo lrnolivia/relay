@@ -1,4 +1,5 @@
 import { githubApiRequest } from './source.js';
+import { createHash } from 'node:crypto';
 import { transition, evaluate, occupying, normalizeScope } from './coordination-engine.js';
 
 export const RUNNER_ENGINE_SHA = '591d0155555a74db4769fda289e5212b07609e65';
@@ -27,7 +28,24 @@ export function runnerControlBase(env = {}) {
 const decode = content => Buffer.from(String(content || '').replace(/\s/g, ''), 'base64').toString('utf8');
 
 async function read(api, control, path, ref = 'main') {
-  const file = await api(`${control}/contents/${path}?ref=${encodeURIComponent(ref)}`);
+  let file = await api(`${control}/contents/${path}?ref=${encodeURIComponent(ref)}`);
+  // GitHub's Contents endpoint omits bytes for files above 1 MiB. Resolve
+  // that exact immutable blob, retaining the original CAS identity.
+  if (file?.type === 'file' && file.encoding === 'none' && !file.truncated &&
+      /^[a-f0-9]{40}$/.test(file.sha) && Number.isSafeInteger(file.size) &&
+      file.size > 0 && file.size <= 8 * 1024 * 1024) {
+    const blob = await api(`${control}/git/blobs/${file.sha}`);
+    if (blob?.encoding !== 'base64' || blob.sha !== file.sha || blob.truncated ||
+        typeof blob.content !== 'string' || blob.content.length > 12 * 1024 * 1024) {
+      throw new ControlError('provider', 'Runner blob response is incomplete');
+    }
+    const bytes = Buffer.from(blob.content.replace(/\s/g, ''), 'base64');
+    const hash = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+    if (bytes.length !== file.size || blob.size !== file.size || hash !== file.sha) {
+      throw new ControlError('provider', 'Runner blob identity verification failed');
+    }
+    file = { ...file, encoding: 'base64', content: blob.content };
+  }
   if (file?.type !== 'file' || file.encoding !== 'base64' || !file.sha || file.truncated) {
     throw new ControlError('provider', 'Runner file response is incomplete');
   }
