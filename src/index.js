@@ -1,3 +1,4 @@
+import {transferTools,transferRead,transferWrite} from './file-transfer.js';
 import { readMcpBody, mcpBodyErrorResponse } from "./mcp-request-body.js";
 import { handleApi as runnerApi } from "../packages/runner/src/cloudflare-worker.mjs";
 import { browserRequestOptions, runQuickAction } from "./browser.js";
@@ -433,6 +434,7 @@ async function mcp(request, access, env) {
     const securitySchemes = [{ type: "oauth2", scopes: [] }];
     const tools = [
       ...runnerControlTools,
+      ...transferTools,
 
         {
           name: "relay_ui_control_center",
@@ -944,6 +946,8 @@ async function mcp(request, access, env) {
       const rawName = message.params?.name;
       const name = relayToolName(rawName);
       const args = message.params?.arguments || {};
+      if(name==='relay_transfer_read')return relayResult(id,await transferRead(args,env.EVIDENCE,access.claims));
+      if(name==='relay_transfer_write')return relayResult(id,await transferWrite(args,env.EVIDENCE,access.claims));
 
       if (isCardVariantTool(name)) return rpc(id, cardVariantResult(name, message.params?.arguments ?? {}));
       if (name === HOST_PROBE_TOOL) return rpc(id, hostProbeResult(message.params?.arguments ?? {}, request, message.params?._meta));
