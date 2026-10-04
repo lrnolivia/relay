@@ -1,7 +1,7 @@
 import { STAFF } from './staff-registry.js';
 import { contextCardBrandAssets } from '../apps/web/generated.js';
 import { styleContextCard } from './relay-context-card-style.js';
-export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v13.html';
+export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v14.html';
 export const RELAY_CONTEXT_CARD_TOOL = 'relay_render_context_card';
 export const RELAY_STATUS_CARD_URI = 'ui://relay/status-card/v3-legacy-bridge.html';
 export const RELAY_STATUS_CARD_TOOL = 'relay_show_legacy_bridge_card';
@@ -298,11 +298,23 @@ function resilientCardHtml() {
   html = replaceOnce(html, "const ready=rpc('ui/initialize',{appInfo:{name:'relay-context-card',version:'1.9.9'},appCapabilities:{},protocolVersion:'2026-01-26'}).then(()=>{window.parent.postMessage({jsonrpc:'2.0',method:'ui/notifications/initialized',params:{}},'*');hydrateOpenAiGlobals();setTimeout(()=>{void recoverCanonicalState()},350)});", BOOTSTRAP_V9);
   html = replaceOnce(html, "ready.catch(error=>{hydrateOpenAiGlobals();if(!lastData){", "ready.catch(error=>{diag.init='timeout';showDiag();hydrateOpenAiGlobals();setTimeout(()=>{void recoverCanonicalState()},350);if(!lastData){");
   html = replaceOnce(html, '<details id="details" hidden>', '<p class="micro" id="diag" style="grid-column:1/-1;margin:0 4px"></p><details id="details" hidden>');
+  html = replaceOnce(html, "async function callTool(name,args){if(window.openai?.callTool)return window.openai.callTool(name,args);await ready;return rpc('tools/call',{name,arguments:args})}", `async function callTool(name,args){
+ const checked=result=>{const data=unwrap(result);if(result?.isError||data?.ok===false||data?.error){const error=Error(typeof data?.error==='string'?data.error:data?.error?.message||'Relay could not complete this action.');error.providerResult=true;throw error;}return result};
+ const timed=promise=>{let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('The chat connection did not answer.')),12000)})]).finally(()=>clearTimeout(timer))};
+ if(window.openai?.callTool){try{return checked(await timed(window.openai.callTool(name,args)))}catch(error){if(error.providerResult||!['relay_runner_progress','relay_runner_assignments','relay_ui_request'].includes(name))throw error;}}
+ await ready;return checked(await rpc('tools/call',{name,arguments:args}));
+}`);
+  html = replaceOnce(html, "el.refresh.addEventListener('click',async()=>{el.refresh.disabled=true;try{const project=toolInput.project||lastData?.project;if(project)render(await callTool('relay_runner_progress',{project,...(toolInput.assignment?{assignment:toolInput.assignment}:{})}))}catch(error){el.blocker.hidden=false;el.blocker.textContent=error.message}finally{el.refresh.disabled=false}});", `el.refresh.addEventListener('click',async()=>{clearTimeout(el.refresh._resetTimer);el.refresh.disabled=true;el.refresh.textContent='Refreshing…';el.blocker.hidden=true;try{const project=toolInput.project||lastData?.project;if(!project)throw Error('Project identity is unavailable. Request a new card.');const result=await callTool('relay_runner_progress',{project,...(toolInput.assignment?{assignment:toolInput.assignment}:{})});const data=unwrap(result);if(!Array.isArray(data?.progress))throw Error('Relay did not return current progress. The previous view is preserved.');render(result);el.refresh.textContent='Updated';el.refresh._resetTimer=setTimeout(()=>{if(el.refresh.textContent==='Updated')el.refresh.textContent='Refresh'},1600)}catch(error){el.blocker.hidden=false;el.blocker.textContent=error.message;el.refresh.textContent='Try refresh again'}finally{el.refresh.disabled=false}});`);
+  html = replaceOnce(html, "el['open-relay'].addEventListener('click',async()=>{try{if(window.openai?.requestModal){await window.openai.requestModal({template:"+JSON.stringify(CONTROL_URI)+"});return}if(window.openai?.callTool){await window.openai.callTool('relay_ui_control_center',{});return}await ready;await rpc('ui/open-link',{url:'https://relay.loew.fi/'})}catch(error){el.blocker.hidden=false;el.blocker.textContent=error.message}});", `el['open-relay'].addEventListener('click',async()=>{try{if(window.openai?.openExternal){const result=await window.openai.openExternal({href:'https://relay.loew.fi/',redirectUrl:false});if(result?.isError||result?.ok===false)throw Error('The chat could not open Relay.');return}await ready;await rpc('ui/open-link',{url:'https://relay.loew.fi/'});}catch(error){el.blocker.hidden=false;el.blocker.replaceChildren(document.createTextNode('Open Relay in your browser: '));const link=document.createElement('a');link.href='https://relay.loew.fi/';link.target='_blank';link.rel='noopener noreferrer';link.textContent='relay.loew.fi';el.blocker.append(link);}});`);
+  html = replaceOnce(html, '</script></body>', `const imageButton=el['qa-media-image'];imageButton.tabIndex=0;imageButton.setAttribute('role','button');imageButton.setAttribute('aria-label','enlarge screenshot');
+let screenshotDialog=null;function enlargeScreenshot(){if(!imageButton.src||screenshotDialog)return;const dialog=document.createElement('dialog');dialog.className='screenshot-dialog';dialog.setAttribute('aria-label','screenshot preview');const close=document.createElement('button');close.textContent='Close screenshot';close.type='button';const image=document.createElement('img');image.src=imageButton.src;image.alt=imageButton.alt;dialog.append(close,image);document.body.append(dialog);screenshotDialog=dialog;const finish=()=>{dialog.close();dialog.remove();screenshotDialog=null;imageButton.focus();if(window.openai?.requestDisplayMode)void window.openai.requestDisplayMode({mode:'inline'}).catch(()=>{});};close.addEventListener('click',finish);dialog.addEventListener('cancel',event=>{event.preventDefault();finish()});dialog.showModal();if(window.openai?.requestDisplayMode)void window.openai.requestDisplayMode({mode:'fullscreen'}).catch(()=>{});}
+imageButton.addEventListener('click',enlargeScreenshot);imageButton.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();enlargeScreenshot()}});
+</script></body>`);
   return html;
 }
 
 export function relayContextCardResource() {
-  return { uri:RELAY_CONTEXT_CARD_URI, mimeType:'text/html;profile=mcp-app', text:styleContextCard(resilientCardHtml(), contextCardBrandAssets), _meta:{ui:{prefersBorder:false,csp:{connectDomains:['https://relay.loew.fi'],resourceDomains:['https://relay.loew.fi']}},'openai/widgetDescription':'Compact staff-aware Relay context. Can reuse existing Inspector QA screenshots when requested. Open Relay for the full control center.','openai/ui':{availableDisplayModes:['inline']}} };
+  return { uri:RELAY_CONTEXT_CARD_URI, mimeType:'text/html;profile=mcp-app', text:styleContextCard(resilientCardHtml(), contextCardBrandAssets), _meta:{ui:{prefersBorder:false,csp:{connectDomains:['https://relay.loew.fi'],resourceDomains:['https://relay.loew.fi']}},'openai/widgetDescription':'Compact staff-aware Relay context. Can reuse existing Inspector QA screenshots when requested. Open Relay for the full control center.','openai/widgetCSP':{connect_domains:['https://relay.loew.fi'],resource_domains:['https://relay.loew.fi'],redirect_domains:['https://relay.loew.fi','https://ctrl.loew.fi']},'openai/ui':{availableDisplayModes:['inline','fullscreen']}} };
 }
 
 // Fresh cache identities: rotate whenever card HTML, JS, or CSS changes.
@@ -320,5 +332,5 @@ export function relayStatusCardTool() {
 }
 export function relayStatusCardResource() {
   const resource = relayContextCardResource();
-  return { ...resource, uri: RELAY_STATUS_CARD_URI, text: legacyBridgeCardHtml(), _meta: { ...resource._meta, 'openai/widgetDescription':'Temporary Relay consumer bisect: current card UI with the known-good v3 ChatGPT host bridge.' } };
+  return { ...resource, uri: RELAY_STATUS_CARD_URI, text: legacyBridgeCardHtml(), _meta: { ...resource._meta, 'openai/ui':{availableDisplayModes:['inline']}, 'openai/widgetDescription':'Temporary Relay consumer bisect: current card UI with the known-good v3 ChatGPT host bridge.' } };
 }

@@ -9,10 +9,22 @@ const response = (value, status = 200) => new Response(JSON.stringify(value), {
 // Never accept a claimed actor, owner, or authentication flag from the JSON body.
 export async function handleFeedbackBrowser(request, env, { authenticated = false, api } = {}) {
   const url = new URL(request.url);
-  if (!['/api/feedback/submit', '/api/feedback/status'].includes(url.pathname)) return null;
+  if (!['/api/feedback/submit', '/api/feedback/status', '/api/feedback/binding'].includes(url.pathname)) return null;
   if (!authenticated) return response({ error: { class: 'auth', message: 'Authenticated feedback is required' } }, 403);
   try {
     let args, name;
+    if (url.pathname.endsWith('/binding')) {
+      if (request.method !== 'GET') return response({error:{class:'validation',message:'GET required'}},405);
+      const scope={project:url.searchParams.get('project'),assignment:url.searchParams.get('assignment')};
+      const head=url.searchParams.get('head_sha');
+      if (![...url.searchParams.keys()].every(key=>['project','assignment','head_sha'].includes(key)) || !/^[a-z0-9-]{1,80}$/.test(scope.project||'') || !/^[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,99}$/.test(scope.assignment||'') || !/^[a-f0-9]{40}$/.test(head||''))
+        return response({error:{class:'validation',message:'An exact project, assignment and displayed source version are required'}},400);
+      let target=await resolveFeedbackTarget(scope,env,api);
+      if(target.terminal)target=await resolveFeedbackTarget({...scope,review_mode:'historical'},env,api);
+      if(target.historical?!target.completed_commits.includes(head):target.commit_sha!==head)
+        return response({available:false,reason:'Work changed since this view loaded. Refresh before replying.'},409);
+      return response({available:true,args:{...scope,expected_owner:target.owner,expected_branch:target.branch,...(target.historical?{review_mode:'historical'}:{}),artifact:{repository:target.repository,commit_sha:head,kind:'source',...(target.pr?{pr:target.pr}:{})}}});
+    }
     if (url.pathname.endsWith('/submit')) {
       if (request.method !== 'POST') return response({ error: { class: 'validation', message: 'POST required' } }, 405);
       if (request.headers.get('Origin') !== url.origin) return response({ error: { class: 'permission', message: 'Same-origin feedback required' } }, 403);

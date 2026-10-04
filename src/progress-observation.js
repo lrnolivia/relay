@@ -32,9 +32,10 @@ export function deriveObservedProgress({ project, claim, branch, commit, pullReq
     : null;
   if (matchedDeployment?.created_on) events.push(progressEvent("cloud-deployment", matchedDeployment.created_on, { deployment_id: matchedDeployment.id }));
   const ordered = dedupeProgressEvents(events);
-  const latest = ordered[0] || null;
+  // A lease renewal proves worker liveness, not source or delivery progress.
+  const latest = ordered.find(event => !["runner-heartbeat", "claim-created"].includes(event.type)) || null;
   const workerFreshness = freshness(claim?.updated_at || claim?.created_at, now, policy);
-  const progressFreshness = freshness(latest?.at || claim?.updated_at || claim?.created_at, now, policy);
+  const progressFreshness = freshness(latest?.at || claim?.created_at, now, policy);
   const runningCheck = checks.find(check => check?.status && check.status !== "completed");
   const failedCheck = checks.find(check => check?.status === "completed" && !["success","neutral","skipped"].includes(check?.conclusion));
   const reconciliation = reconcileExecution(claim, findings);

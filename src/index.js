@@ -403,7 +403,7 @@ async function mcp(request, access, env) {
     if (uri === RELAY_CONTROL_CENTER_URI) {
       return rpc(id, { contents: [relayControlCenterResource()] });
     }
-    if (uri === RELAY_CONTEXT_CARD_URI || uri === 'ui://relay/context-card/v12.html' || uri === 'ui://relay/context-card/v11.html') {
+    if (uri === RELAY_CONTEXT_CARD_URI || uri === 'ui://relay/context-card/v13.html' || uri === 'ui://relay/context-card/v12.html' || uri === 'ui://relay/context-card/v11.html') {
       return rpc(id, { contents: [{...relayContextCardResource(), uri}] });
     }
     if (uri === RELAY_STATUS_CARD_URI) {
@@ -934,7 +934,7 @@ async function mcp(request, access, env) {
       tools: tools.map((tool) => ({
         ...tool,
         securitySchemes,
-        _meta: { ...(tool._meta || {}), securitySchemes }
+        _meta: { ...(tool._meta || {}), ...(['relay_runner_progress','relay_runner_assignments','relay_ui_request'].includes(tool.name)?{ui:{...(tool._meta?.ui||{}),visibility:['model','app']},'openai/widgetAccessible':true}:{}), securitySchemes }
       }))
     });
   }

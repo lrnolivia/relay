@@ -32,7 +32,8 @@ try {
    if(window.parent===window)return;
    window.__calls=[];
    window.openai={toolInput:fixture?{project:'relay'}:{},toolOutput:fixture,
-    callTool:async(name,args)=>{window.__calls.push({name,args});return name==='relay_runner_progress'?{structuredContent:{project:'relay',claim:{id:'sample-refreshed',primary_team:'runner',primary_staff:'ellis',state:'active',goal:'Refreshed canonical state',progress_percent:70}}}:{}},
+    callTool:async(name,args)=>{window.__calls.push({name,args});return name==='relay_runner_progress'?{structuredContent:{project:'relay',progress:[{assignment:'sample-refreshed',primary_team:'runner',primary_staff:'ellis',state:'working',goal:'Refreshed canonical state',progress_percent:70}]}}:{}},
+    openExternal:async({href})=>{window.__calls.push({name:"openExternal",href})},
     notifyIntrinsicHeight:height=>{window.__reportedHeight=height}
    };
   },{fixture:fixtures[name]});
@@ -65,7 +66,7 @@ try {
   captures.push(capture);
   if(name==='runner'){
    await frame.locator('#refresh').click();await frame.locator('#title').filter({hasText:'Refreshed canonical state'}).waitFor();await frame.locator('#open-relay').click();
-   const calls=await frame.locator('body').evaluate(()=>window.__calls);assert.deepEqual(calls.map(call=>call.name),['relay_runner_progress','relay_ui_control_center']);
+   const calls=await frame.locator('body').evaluate(()=>window.__calls);assert.deepEqual(calls.map(call=>call.name),['relay_runner_progress','openExternal']);
    await page.keyboard.press('Shift+Tab');
    assert.equal(await frame.locator('#refresh').evaluate(el=>document.activeElement===el),true);
    assert.equal(await frame.locator('#refresh').evaluate(el=>getComputedStyle(el).outlineStyle),'solid');

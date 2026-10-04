@@ -1,3 +1,4 @@
+import { coordinationOutcome } from './coordination-report.mjs';
 import fs from 'node:fs/promises';
 import { callRunnerControl } from '../src/runner-control.js';
 import { execFileSync } from 'node:child_process';
@@ -139,6 +140,9 @@ if (['retire', 'reconcile', 'handoff', 'complete'].includes(action)) {
       report.deleted.push(claim.branch);
     }
   }
-  console.log(JSON.stringify(report, null, 2));
-  if (['audit', 'cleanup'].includes(action) && report.findings.length) process.exitCode = 2;
+  if (['audit', 'cleanup'].includes(action)) {
+    const outcome = coordinationOutcome(action, report);
+    console.log(JSON.stringify(outcome.report, null, 2));
+    process.exitCode = outcome.exitCode;
+  } else console.log(JSON.stringify(report, null, 2));
 }
