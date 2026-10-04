@@ -69,7 +69,7 @@ try {
     assert.equal(await page.locator('.relay-home').evaluate(node=>getComputedStyle(node).backgroundColor),'rgb(25, 23, 20)');
     await page.getByRole('button',{name:'Check connection',exact:true}).click();
     await page.getByText('MCP connected',{exact:true}).waitFor();
-    await page.getByRole('button',{name:'Refresh tools',exact:true}).click();
+    await page.getByRole('button',{name:'refresh tools',exact:true}).click();
     await page.getByText(/Your AI client’s loaded schema is not verified/).waitFor();
     await page.getByLabel('Refresh tools result').getByRole('button',{name:'Close',exact:true}).click();
     const destinations=await page.locator('.live-telemetry a,.relay-current-work').evaluateAll(nodes=>nodes.map(node=>node.href));

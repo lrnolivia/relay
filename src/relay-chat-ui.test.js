@@ -497,3 +497,49 @@ test("job-focused card never turns a missing completion value into zero percent"
     assert.equal(model.percent,null); assert.equal(model.metric,'1');
   }
 });
+
+test('context card actions validate native and browser results, preserve failed refresh and enlarge thumbnails',async()=>{
+ const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
+ try{
+  for(const native of [false,true]){
+   const page=await browser.newPage({viewport:{width:390,height:1000}});
+   const initial={project:'relay',progress:[{assignment:'card-actions',state:'working',goal:'Original canonical work'}]};
+   await page.addInitScript(({initial,native})=>{
+    if(parent===window)return;
+    window.calls=[];window.mode='initial';
+    const result=(name)=>{if(name==='relay_ui_request')return {base64:'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/lV8AAAAASUVORK5CYII=',content_type:'image/png'};
+     if(window.mode==='initial')return {structuredContent:initial};
+     if(window.mode==='provider-error')return {structuredContent:{ok:false,error:{message:'Exact source could not be read'}}};
+     if(window.mode==='malformed')return {};
+     return {structuredContent:{project:'relay',progress:[{assignment:'card-actions',state:'working',goal:'Refreshed canonical work'}]}};};
+    window.actionResult=result;
+    if(native)window.openai={toolInput:{project:'relay',evidence_id:'vis_abcdefgh'},toolOutput:initial,callTool:async(name,args)=>{window.calls.push({name,args});return result(name);},openExternal:async({href})=>{window.calls.push({name:'openExternal',href});},requestDisplayMode:async({mode})=>{window.calls.push({name:'display',mode});}};
+   },{initial,native});
+   const origin='https://relay-card-actions.test';
+   await page.route(origin+'/**',route=>route.fulfill({contentType:'text/html',body:route.request().url().endsWith('/card')?relayContextCardResource().text:`<!doctype html><iframe id="widget" src="/card" style="width:100%;height:950px;border:0"></iframe><script>window.opened=[];addEventListener('message',event=>{const frame=document.querySelector('iframe'),m=event.data;if(event.source!==frame.contentWindow||m?.jsonrpc!=='2.0')return;if(m.method==='ui/initialize'){frame.contentWindow.postMessage({jsonrpc:'2.0',id:m.id,result:{}},'*');frame.contentWindow.postMessage({jsonrpc:'2.0',method:'ui/notifications/tool-input',params:{arguments:{project:'relay',evidence_id:'vis_abcdefgh'}}},'*');frame.contentWindow.postMessage({jsonrpc:'2.0',method:'ui/notifications/tool-result',params:${JSON.stringify(initial)}},'*');}else if(m.method==='tools/call'){frame.contentWindow.calls.push(m.params);frame.contentWindow.postMessage({jsonrpc:'2.0',id:m.id,result:frame.contentWindow.actionResult(m.params.name)},'*');}else if(m.method==='ui/open-link'){window.opened.push(m.params.url);frame.contentWindow.postMessage({jsonrpc:'2.0',id:m.id,result:{}},'*');}});</script>`}));
+   await page.goto(origin+'/host');const frame=page.frameLocator('#widget');
+   await frame.locator('#title').filter({hasText:'Original canonical work'}).waitFor();
+   await frame.locator('body').evaluate(()=>{window.mode='success';});
+   await frame.locator('#refresh').click();await frame.locator('#title').filter({hasText:'Refreshed canonical work'}).waitFor();
+   for(const mode of ['provider-error','malformed']){
+    await frame.locator('body').evaluate((_,mode)=>{window.mode=mode;},mode);
+    const before=await frame.locator('body').evaluate(()=>window.calls.filter(call=>call.name==='relay_runner_progress').length);
+    await frame.locator('#refresh').click();await frame.locator('#refresh').filter({hasText:'Try refresh again'}).waitFor({timeout:5000});
+    assert.equal(await frame.locator('#title').textContent(),'Refreshed canonical work');
+    assert.equal(await frame.locator('#blocker').isVisible(),true);
+    assert.equal(await frame.locator('body').evaluate(()=>window.calls.filter(call=>call.name==='relay_runner_progress').length),before+1,'a provider failure is not replayed through another host');
+   }
+   await frame.locator('#open-relay').click();
+   if(native)assert.equal(await frame.locator('body').evaluate(()=>window.calls.find(call=>call.name==='openExternal').href),'https://relay.loew.fi/');
+   else {await page.waitForFunction(()=>window.opened.length===1);assert.deepEqual(await page.evaluate(()=>window.opened),['https://relay.loew.fi/']);}
+   await frame.locator('#qa-media-image').waitFor();await frame.locator('#qa-media-image').click();
+   await frame.getByRole('dialog',{name:'screenshot preview'}).waitFor();
+   assert.equal(await frame.locator('.screenshot-dialog img').getAttribute('src'),await frame.locator('#qa-media-image').getAttribute('src'));
+   await frame.getByRole('button',{name:'Close screenshot'}).click();
+   assert.equal(await frame.getByRole('dialog').count(),0);
+   assert.equal(await frame.locator('#qa-media-image').evaluate(node=>document.activeElement===node),true);
+   assert.equal(await frame.locator('#details').evaluate(node=>node.open),false);
+   await page.close();
+  }
+ }finally{await browser.close();}
+});

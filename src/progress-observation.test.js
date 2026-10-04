@@ -16,6 +16,21 @@ test("stale work becomes officially stale without external activity", () => {
   const p=deriveObservedProgress({project:"relay",claim:old,branch:{name:"relay/x",commit:{sha:"b".repeat(40)}},commit:{commit:{committer:{date:"2026-09-30T21:30:00Z"}}},checks:[],now});
   assert.equal(p.state,"officially-stale");
 });
+test('fresh heartbeat preserves stale progress and its exact source receipt', () => {
+  const p=deriveObservedProgress({project:'relay',claim:{...claim,created_at:'2026-09-30T21:00:00Z'},branch:{commit:{sha:'b'.repeat(40)}},commit:{commit:{committer:{date:'2026-09-30T21:30:00Z'}}},now});
+  assert.equal(p.worker.freshness,'fresh');
+  assert.equal(p.progress_freshness,'stale');
+  assert.equal(p.state,'officially-stale');
+  assert.equal(p.last_meaningful_progress_at,'2026-09-30T21:30:00.000Z');
+  assert.equal(p.latest_event.type,'source-commit');
+  assert.equal(p.receipt.last_meaningful_progress_at,p.last_meaningful_progress_at);
+});
+test('a reservation and heartbeat alone never create a meaningful-progress receipt', () => {
+  const p=deriveObservedProgress({project:'relay',claim,branch:{commit:{sha:claim.base_sha}},now});
+  assert.equal(p.last_meaningful_progress_at,null);
+  assert.equal(p.latest_event,null);
+  assert.equal(p.state,'reserved-but-idle');
+});
 
 test("cloud identity ignores unrelated newer Relay deployments", () => {
   const merge="c".repeat(40), prHead="b".repeat(40);

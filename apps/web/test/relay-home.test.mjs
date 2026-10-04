@@ -25,31 +25,54 @@ test('populated Relay connection page works at desktop and mobile sizes without 
   await page.waitForFunction(()=>[...document.querySelectorAll('.telemetry-feature-badge img')].every(image=>image.complete&&image.naturalWidth>0));
   assert.equal(await page.locator('.telemetry-feature-badge img').count(),2,'contextual brands are real loaded assets');
   assert.equal(await page.locator('.relay-home').evaluate(node=>getComputedStyle(node).backgroundColor),'rgb(25, 23, 20)');
-  assert.match(await page.locator('.relay-current-work').getAttribute('href'),/^https:\/\/ctrl.loew.fi\//);
+  assert.match(await page.locator('.telemetry-focus-project>a').getAttribute('href'),/^https:\/\/ctrl.loew.fi\//);
   await page.getByRole('button',{name:'Check connection',exact:true}).click();await page.getByText('MCP connected',{exact:true}).waitFor();assert.match(await page.getByRole('status').first().textContent(),/17 ms/);
-  await page.getByRole('button',{name:'Refresh tools',exact:true}).click();await page.getByRole('heading',{name:'Refresh tools'}).waitFor();assert.match(await page.getByLabel('Refresh tools result').textContent(),/not verified/);
+  await page.getByRole('button',{name:'refresh tools',exact:true}).click();await page.getByRole('heading',{name:'Refresh tools'}).waitFor();assert.match(await page.getByLabel('Refresh tools result').textContent(),/not verified/);
   assert.equal(await page.locator('.presentation-menu #app-settings').count(),0);
-  await page.getByRole('button',{name:'Add to AI'}).click();await page.getByRole('heading',{name:'Connect your AI'}).waitFor();
+  await page.getByRole('button',{name:'connect your AI'}).click();await page.getByRole('heading',{name:'Connect your AI'}).waitFor();
   assert.match(await page.getByLabel('Add Relay to AI').textContent(),/does not install or connect/);
   await page.getByLabel('Add Relay to AI').getByRole('button',{name:'Close',exact:true}).click();await page.getByLabel('Refresh tools result').getByRole('button',{name:'Close',exact:true}).click();
   await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.locator('.relay-main-panel').evaluate(node=>getComputedStyle(node).backgroundImage),'none');
   if(process.env.RELAY_QA_OUTPUT){await fs.mkdir(process.env.RELAY_QA_OUTPUT,{recursive:true});for(const width of [1440,320]){await page.setViewportSize({width,height:1100});await page.screenshot({path:process.env.RELAY_QA_OUTPUT+'/relay-status-'+width+'.png',fullPage:true});}}
-  await page.getByRole('button',{name:'arrange',exact:true}).click();
+  await page.getByRole('button',{name:'edit layout',exact:true}).click();
   await page.getByRole('button',{name:'move activity earlier',exact:true}).click();
   await page.getByRole('button',{name:'done',exact:true}).click();
   assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('relay.telemetry.order.v1'))),['progress','needs','activity','motion']);
   await page.reload();await page.getByText('MCP connected',{exact:true}).waitFor();assert.equal(connectionRequests,3,'reload checks again after one manual recheck');await page.locator('.live-telemetry[data-complete=true]').waitFor();
-  assert.equal(await page.locator('[data-card=activity]').evaluate(el=>getComputedStyle(el).order),'2','saved layout restored');
+  assert.deepEqual(await page.locator('.telemetry-mosaic>[data-card]').evaluateAll(nodes=>nodes.map(node=>node.dataset.card)),['progress','needs','activity','motion'],'saved layout restored');
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.setViewportSize({width:1440,height:1000});
   const start=await page.locator('.telemetry-progress h3').boundingBox();
   await page.mouse.move(start.x+10,start.y+10);await page.mouse.down();await page.waitForTimeout(550);
   assert.equal(await page.locator('.telemetry-mosaic').getAttribute('data-arranging'),'true','long press enters arranging');
   await page.mouse.up();
+  // dnd-kit consumes the release click until its 50 ms sensor teardown completes.
+  await page.waitForTimeout(60);
   if(process.env.RELAY_QA_OUTPUT)await page.screenshot({path:process.env.RELAY_QA_OUTPUT+'/relay-arranging-1440.png',fullPage:true});
 
   await page.getByRole('button',{name:'done',exact:true}).click();
+  await page.locator('.telemetry-mosaic[data-arranging=false]').waitFor();
   assert.equal(await page.locator('.telemetry-mosaic').getAttribute('data-arranging'),'false');
+  // Exercise actual transform-based dragging, not only the step buttons.
+  await page.getByRole('button',{name:'edit layout',exact:true}).click();
+  const source=await page.locator('[data-card=progress] header').boundingBox();
+  const target=await page.locator('[data-card=needs]').boundingBox();
+  const frames=page.evaluate(()=>new Promise(resolve=>{const intervals=[];let prior=performance.now(),start=prior;function tick(now){intervals.push(now-prior);prior=now;if(now-start<700)requestAnimationFrame(tick);else resolve(intervals);}requestAnimationFrame(tick);}));
+  await page.mouse.move(source.x+30,source.y+20);await page.mouse.down();
+  await page.mouse.move(source.x+40,source.y+20);await page.locator('[data-card=progress][data-dragging=true]').waitFor();
+  await page.mouse.move(target.x+target.width/2,target.y+target.height/2,{steps:18});
+  assert.notEqual(await page.locator('[data-card=progress]').evaluate(node=>getComputedStyle(node).transform),'none','the dragged card follows the pointer');
+  await page.mouse.up();await page.waitForTimeout(60);
+  await page.getByRole('button',{name:'done',exact:true}).click();
+  await page.locator('.telemetry-mosaic[data-arranging=false]').waitFor();
+  assert.deepEqual(await page.locator('.telemetry-mosaic>[data-card]').evaluateAll(nodes=>nodes.map(node=>node.dataset.card)),['needs','progress','activity','motion']);
+  const frameIntervals=await frames;
+  if(process.env.RELAY_QA_OUTPUT)await fs.writeFile(process.env.RELAY_QA_OUTPUT+'/mosaic-drag-frame-intervals.json',JSON.stringify({viewport:1440,harness:'private Chromium; physical device smoothness remains unverified',intervals_ms:frameIntervals}));
+  // Cancelling a move never changes the saved order; keyboard step buttons remain usable.
+  await page.getByRole('button',{name:'edit layout',exact:true}).click();
+  await page.getByRole('button',{name:'drag needs card'}).focus();await page.keyboard.press('Space');await page.keyboard.press('ArrowRight');await page.keyboard.press('Escape');
+  await page.getByRole('button',{name:'done',exact:true}).click();
+  assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('relay.telemetry.order.v1'))),['needs','progress','activity','motion']);
   assert.deepEqual(errors,[]);
   partial=true;await page.getByRole('button',{name:'Refresh workspace telemetry'}).click();
   await page.locator('.live-telemetry[data-loading=false][data-complete=false]').waitFor();

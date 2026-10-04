@@ -32,7 +32,7 @@ try {
    if(window.parent===window)return;
    window.__calls=[];
    window.openai={toolInput:fixture?{project:'relay'}:{},toolOutput:fixture,
-    callTool:async(name,args)=>{window.__calls.push({name,args});return name==='relay_runner_progress'?{structuredContent:{project:'relay',claim:{id:'sample-refreshed',primary_team:'runner',primary_staff:'ellis',state:'active',goal:'Refreshed canonical state',progress_percent:70}}}:{}},
+    callTool:async(name,args)=>{window.__calls.push({name,args});return name==='relay_runner_progress'?{structuredContent:{project:'relay',progress:[{assignment:'sample-refreshed',primary_team:'runner',primary_staff:'ellis',state:'working',goal:'Refreshed canonical state',progress_percent:70}]}}:{}},
     openExternal:async({href})=>{window.__calls.push({name:"openExternal",href})},
     notifyIntrinsicHeight:height=>{window.__reportedHeight=height}
    };
