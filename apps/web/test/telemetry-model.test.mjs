@@ -14,3 +14,24 @@ test('workspace links preserve exact project and review identity on ctrl',()=>{
  assert.equal(ctrlHref('/#/today?project=field'),'https://ctrl.loew.fi/#/now?project=field');
  assert.throws(()=>ctrlHref('https://elsewhere.example/runner'));assert.equal(workspaceLink('https://relay.loew.fi/mcp'),'https://relay.loew.fi/mcp');
 });
+
+test('telemetry accounts for canonical waiting states without inventing moving work',()=>{
+ const states=['waiting-for-human','blocked','waiting-on-external-system','failed','possibly-stale','officially-stale','reserved-but-idle'];
+ const progress=states.map((state,i)=>({assignment:'work-'+i,state}));
+ const model=telemetryModel({workload:{field:states.map(()=>({state:'active'}))},progress:{field:{progress}}});
+ assert.equal(model.waiting.length,states.length);
+ assert.equal(model.needs.length,1);
+ assert.equal(model.moving.length,0);
+ assert.equal(model.projects.length,0);
+ assert.equal(model.events,0);
+});
+test('running external checks remain waiting while implementation alone is moving',()=>{
+ const model=telemetryModel({progress:{field:{progress:[
+  {assignment:'build',state:'waiting-on-external-system'},
+  {assignment:'implementation',state:'working'},
+  {assignment:'done',state:'complete'}
+ ]}}});
+ assert.deepEqual(model.waiting.map(x=>x.assignment),['build']);
+ assert.deepEqual(model.moving.map(x=>x.assignment),['implementation']);
+ assert.equal(model.projects[0].count,1);
+});
