@@ -1,3 +1,4 @@
+import { readRunnerFile } from '../../../src/runner-control-core.js';
 import { executionBrowser } from './execution-browser.mjs';
 import { nightShiftBrowser } from './night-shift-browser.mjs';
 import { handleFeedbackBrowser, feedbackBindingForEvidence } from '../../../src/feedback-browser.js';
@@ -110,17 +111,10 @@ function safeWorkerId(value) {
   return /^[a-z0-9][a-z0-9._-]*$/i.test(value ?? "");
 }
 
-async function readJsonFile(env, path) {
+export async function readJsonFile(env, path, api = route => githubRequest(env, route)) {
   const encoded = path.split("/").map(encodeURIComponent).join("/");
-  const data = await githubRequest(
-    env,
-    `/repos/${OWNER}/${REPOSITORY}/contents/${encoded}?ref=${encodeURIComponent(BRANCH)}`
-  );
-  if (data?.type !== "file" || !data.content) throw new Error(`${path} is not a readable repository file.`);
-  return {
-    sha: data.sha,
-    value: JSON.parse(decodeBase64Utf8(data.content))
-  };
+  const file = await readRunnerFile(api, `/repos/${OWNER}/${REPOSITORY}`, encoded, BRANCH);
+  return { sha: file.sha, value: JSON.parse(file.content) };
 }
 
 async function writeJsonFile(env, path, value, sha, message) {

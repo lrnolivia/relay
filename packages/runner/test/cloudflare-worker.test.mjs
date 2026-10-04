@@ -1,6 +1,7 @@
+import { createHash } from "node:crypto";
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildProjectAuthority } from "../src/cloudflare-worker.mjs";
+import { buildProjectAuthority, readJsonFile } from "../src/cloudflare-worker.mjs";
 
 test("managed project authority is distinct from the read-only automation target", () => {
   const config = {
@@ -63,4 +64,26 @@ test("unmanaged or mismatched projects do not become authority", () => {
   const config = { id: "field", target: { write_mode: "read_only" } };
   assert.equal(buildProjectAuthority(config, { value: { id: "field", managed: false } }, null), null);
   assert.equal(buildProjectAuthority(config, { value: { id: "other", managed: true } }, null), null);
+});
+
+test("browser project metadata reads the exact large ledger blob", async () => {
+  const value = {project:"relay",claims:[{id:"current",state:"active"}],padding:"x".repeat(1024*1024)};
+  const bytes = Buffer.from(JSON.stringify(value));
+  const sha = createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");
+  const calls=[];
+  const file = await readJsonFile({}, "coordination/relay.json", async route => {
+    calls.push(route);
+    if(route.includes("/contents/"))return {type:"file",encoding:"none",sha,size:bytes.length};
+    assert.equal(route, `/repos/lrnolivia/relay/git/blobs/${sha}`);
+    return {encoding:"base64",sha,size:bytes.length,content:bytes.toString("base64")};
+  });
+  assert.equal(file.sha,sha);
+  assert.equal(file.value.claims[0].id,"current");
+  assert.equal(calls.length,2);
+});
+test("browser metadata refuses a substituted large ledger blob", async () => {
+  const bytes=Buffer.from('{"project":"relay"}'),sha=createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");
+  await assert.rejects(readJsonFile({}, "coordination/relay.json", async route => route.includes("/contents/")
+    ? {type:"file",encoding:"none",sha,size:bytes.length}
+    : {encoding:"base64",sha,size:bytes.length,content:Buffer.from('{"project":"other"}').toString("base64")}),/identity verification failed/);
 });
