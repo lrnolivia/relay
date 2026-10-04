@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { coordinationOutcome } from './coordination-report.mjs';
 import fs from 'node:fs/promises';
 import { callRunnerControl } from '../src/runner-control.js';
@@ -25,7 +26,19 @@ async function pages(endpoint) {
 const control = process.env.RELAY_RUNNER_CONTROL_REPOSITORY || 'lrnolivia/relay';
 const recordPath = `coordination/${project}.json`;
 function read(file) {
-  const remote = api(`repos/${control}/contents/${file}?ref=main`);
+  let remote = api(`repos/${control}/contents/${file}?ref=main`);
+  if (remote?.type === 'file' && remote.encoding === 'none' && !remote.truncated &&
+      /^[a-f0-9]{40}$/.test(remote.sha) && Number.isSafeInteger(remote.size) &&
+      remote.size > 0 && remote.size <= 8 * 1024 * 1024) {
+    const blob = api(`repos/${control}/git/blobs/${remote.sha}`);
+    if (blob?.encoding !== 'base64' || blob.sha !== remote.sha || blob.truncated ||
+        typeof blob.content !== 'string' || blob.content.length > 12 * 1024 * 1024) throw new Error('Runner blob response is incomplete');
+    const bytes = Buffer.from(blob.content.replace(/\s/g, ''), 'base64');
+    const hash = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+    if (bytes.length !== remote.size || blob.size !== remote.size || hash !== remote.sha) throw new Error('Runner blob identity verification failed');
+    remote = { ...remote, encoding: 'base64', content: blob.content };
+  }
+  if (remote?.type !== 'file' || remote.encoding !== 'base64' || !remote.sha || remote.truncated) throw new Error('Runner file response is incomplete');
   return { sha: remote.sha, value: JSON.parse(Buffer.from(remote.content, 'base64').toString('utf8')) };
 }
 const registration = read(`projects/${project}.json`).value;

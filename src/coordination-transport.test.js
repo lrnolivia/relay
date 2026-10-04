@@ -125,7 +125,7 @@ const path = process.argv[3], method = process.argv[process.argv.indexOf('--meth
 const head = '${sha}', merge = '${revision}';
 const old = { id:'old', owner:'old-owner', state:'completed', branch:'relay/reused', work_accounted:true, pr:9, merged_head_sha:head, merge_commit_sha:merge };
 const retired = { id:'new', owner:'new-owner', state:s.disposition, branch:'relay/reused', paths:['src/file.js'],resources:[] };
-const blob = value => ({sha:head,content:Buffer.from(JSON.stringify(value)).toString('base64')});
+const blob = value => ({type:'file',encoding:'base64',sha:head,content:Buffer.from(JSON.stringify(value)).toString('base64')});
 let result;
 if(path.includes('projects/relay.json')) result=blob({repository:'lrnolivia/relay',default_branch:'main',implementation:{branch_prefixes:['relay/'],excluded_branches:['main']},coordination:{max_active_branches:4,lease_hours:12}});
 else if(path.includes('coordination/relay.json')) { s.reads++; result=blob({claims:s.phase==='initial'||s.reads>1?[old,retired]:[old],queue:[],legacy_branches:['main']}); }
@@ -187,4 +187,22 @@ test('CLI completion now requires explicit revision and synchronizes the queue t
   assert.equal(completed.status, 0, completed.stderr);
   assert.equal((await f.read()).record.queue[0].state, 'completed');
   assert.equal((await f.read()).record.queue[0].acceptance, 'Full scope');
+});
+
+test('CLI read resolves large immutable blobs and rejects identity drift before admission', async () => {
+  const source=await readFile(new URL('../scripts/coordinate.mjs',import.meta.url),'utf8');
+  const code=source.slice(source.indexOf('function read(file) {'),source.indexOf('\nconst registration = read('));
+  const bytes=Buffer.from(JSON.stringify({project:'relay',padding:'x'.repeat(1024*1024)}));
+  const sha=createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+  const metadata={type:'file',encoding:'none',sha,size:bytes.length};
+  const blob={encoding:'base64',sha,size:bytes.length,content:bytes.toString('base64')};
+  const calls=[];
+  const api=path=>{calls.push(path);return path.includes('/git/blobs/')?blob:metadata;};
+  const read=new Function('api','control','createHash','Buffer',`${code}; return read;`)(api,'lrnolivia/relay',createHash,Buffer);
+  assert.equal(read('coordination/relay.json').value.project,'relay');
+  assert.equal(calls[1],`repos/lrnolivia/relay/git/blobs/${sha}`);
+  blob.content=Buffer.from('{}').toString('base64');
+  assert.throws(()=>read('coordination/relay.json'),/identity verification/);
+  metadata.size=9*1024*1024;
+  assert.throws(()=>read('coordination/relay.json'),/response is incomplete/);
 });
