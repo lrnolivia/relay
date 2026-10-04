@@ -6,7 +6,7 @@ export function telemetryModel(snapshot, now=Date.now()) {
  const open=work.filter(x=>['active','held'].includes(x.state));
  const completed=work.filter(x=>x.state==='completed'&&Date.parse(x.completed_at)>=day.getTime()&&Date.parse(x.completed_at)<=now);
  const total=open.length+completed.length;
- const moving=items.filter(x=>x.state==='working'),waiting=items.filter(x=>['waiting-for-human','blocked','external-wait','stalled'].includes(x.state));
+ const moving=items.filter(x=>x.state==='working'),waiting=items.filter(x=>['waiting-for-human','blocked','waiting-on-external-system','failed','possibly-stale','officially-stale','reserved-but-idle','external-wait','stalled'].includes(x.state));
  const needs=items.filter(x=>x.state==='waiting-for-human');
  const bins=Array(12).fill(0),seen=new Set();
  for(const item of items)for(const event of item.events||[]) {
