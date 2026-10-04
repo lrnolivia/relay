@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-10-04T04:12:07.370Z",
+  "updated_at": "2026-10-04T07:50:02.163Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1432,7 +1432,8 @@
         "src/backend/",
         "cloudflare/worker.js",
         "public/_headers",
-        "vite.config.ts"
+        "vite.config.ts",
+        ".github/workflows/inspector-visual-qa.yml"
       ],
       "resources": [
         "field-workspace-chrome",
@@ -1444,7 +1445,7 @@
       ],
       "goal": "Consolidate Field search, full-width responsive panels, palette/icons, reversible Appearance options and mobile UI finesse in one candidate and release.",
       "acceptance": "One combined PR143 candidate/release; preserve tested53b0347 checkpoint and approved PR142 colors/type/concentric bevels/outerstrength0.5/light shadows. Media SearchBar first preserving query/Gallery return/one Add. Single canonical Pages/Layers top search with grouped project pages/layers, context, correct crosspage selection/reveal, honest imported-master scope, keyboard/loading/error/empty/Escape/clear/back and no source writes. Match equivalent outer chrome both themes. All tool rows fill usable inner panel width, consistent edge/content padding, balanced container reflow; normal glyph proportions and readable controls/actions/focus at narrow/wide Docked/Float. Audit all panel families, report exceptions. Insert child palette follows measured parent without overlap or viewport overflow; inline fallback when necessary; theme-neutral native glyphs and neutral animated previews; recognizable flat service SVG marks. Shared Appearance Current(default approved no extra edge)/Buttons only(~0.5px subtle inner highlight)/Everywhere(softer buttons), immediate live preview, editor-only persistence/reload and shape/focus preservation. Mobile first text tap opens canonical editor/OS keyboard, caret visible; compact keyboard-safe horizontally scrollable SAME real text controls, IME/selection/undo/Done. Current-tool selector Move default upward vertical same desktop tool modes/order/icons. Browse purpose preserved; actual Field logo menu and project actions separate topbar dropdowns below bar, shared approved mobile settings glyph desktop. Actual iOS keyboard requires realdevice evidence. Lauren DIRECTLY approved added Safari caching/canvas-fill investigations including backend/Cloudflare/sandbox/headers/Vite: verify loaded versus deployed version, headers/assets/BFCache and safe update when dirty; never clear documents/preferences/offline edits. Reproduce all frame/Desktop name-header jiggle with subpixel pan/zoom; preserve dynamic readable sizing/stable anchors, fix established shared timing/rounding only. Reproduce frame image fill actual pick/upload/render/decode/source/save/reload/undo in disposable fixture. Patterns source browses existing pattern collection first, applies active fill, upload/create secondary, anchor/back/preview/persistence/undo. Image Position mode drags image directly on canvas INSIDE fixed frame with camera-aware pointer/touch, fit/fill/scale model, Done/Escape/cancel, one undo/persistence, no frame drag. No native Mac input, no protected audit/current Lauren document writes, no additional workers. Seven broader historical canvas findings separate; matched-root selection/marquee passed, rotation overlay stale until reselection. Build/lint/regression/unit-baseline comparison/exacthead readonly Inspector/screenshots/livepreview; PR143draft and no merge/publication until entire combined scope validated/reviewable. Original Figma audit findings remain separately tracked.",
-      "next_action": "Lauren requested Julian direct takeover and all coding workers stopped. Prior owner confirmed writer quiescence and then performed her separately approved one-time Library export only. Exact archive and payload hashes verified in root cloud workspace; original Mac checkout preserved. Continue same branch/assignment with exported WIP; inspect baseline and full diff, validate before publication, preserve open acceptance. Do not resume prior worker or push synthetic local history.",
+      "next_action": "Validate the preserved combined UI handoff, mobile text interaction and Inspector layouts through current-head CI, then finish the admitted cache and fill fixes.",
       "ledger_refs": [
         "field-concentric-highlights-outer-inset-20261004"
       ],
@@ -1489,8 +1490,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-04T04:12:07.370Z",
-      "lease_until": "2026-10-04T16:12:07.370Z",
+      "updated_at": "2026-10-04T07:50:02.163Z",
+      "lease_until": "2026-10-04T19:50:02.163Z",
       "amendment_count": 3,
       "amendments": [
         {
