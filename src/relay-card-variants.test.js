@@ -50,7 +50,7 @@ test("authenticated production endpoint preserves variant metadata, output schem
     assert.equal(response.status,200);return(await response.json()).result;
   };
   const {tools}=await rpc("tools/list");
-  assert.equal(tools.length,66);
+  assert.equal(tools.length,68);
   for(const expected of cardVariantTools()){
     const actual=tools.find(t=>t.name===expected.name);
     assert.deepEqual(actual.outputSchema,expected.outputSchema);

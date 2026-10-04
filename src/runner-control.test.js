@@ -381,3 +381,24 @@ test('queued handoff returns actual assignment without branches, PRs or an execu
   assert.equal(f.calls.some(path => /\/branches|\/pulls|\/git\/ref/.test(path)), false);
   await assert.rejects(coordinate(f, 'handoff', { id: 'task', owner: 'worker', successor: 'other', next_action: 'Steal' }, newSha), /another owner/);
 });
+
+test('large coordination reads resolve an immutable verified blob without changing ownership gates', async () => {
+  const f=fixture({claims:[claim()]});
+  const bytes=Buffer.from(JSON.stringify({...f.record,padding:'x'.repeat(1024*1024)}));
+  const digest=createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+  const contents={type:'file',sha:digest,size:bytes.length,encoding:'none',content:''};
+  const blob={sha:digest,size:bytes.length,encoding:'base64',content:bytes.toString('base64')};
+  const api=async(path,options)=>path.includes('/contents/coordination/relay.json')?contents:path.endsWith('/git/blobs/'+digest)?blob:f.api(path,options);
+  const read=await callRunnerControl('relay_runner_assignments',{project:'relay'}, {},api);
+  assert.equal(read.record_sha,digest);
+  assert.equal(read.claims[0].owner,'worker');
+  const request={project:'relay',id:'task',owner:'worker',paths:['src/a.js']};
+  assert.equal((await callRunnerControl('relay_runner_preflight',request,{},api)).admitted,'task');
+  await assert.rejects(callRunnerControl('relay_runner_preflight',{...request,owner:'intruder'}, {},api),/live active owner/);
+  await assert.rejects(callRunnerControl('relay_runner_preflight',{...request,paths:['elsewhere/a.js']}, {},api),/exceed the claim/);
+  assert.equal(f.writes.length,0);
+  for (const bad of [{...blob,content:Buffer.from('wrong').toString('base64')},{...blob,sha:'0'.repeat(40)},{...blob,truncated:true},{...blob,size:1}]) {
+    const broken=async(path,options)=>path.endsWith('/git/blobs/'+digest)?bad:api(path,options);
+    await assert.rejects(callRunnerControl('relay_runner_assignments',{project:'relay'}, {},broken),/blob/);
+  }
+});

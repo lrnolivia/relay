@@ -5,7 +5,7 @@ import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI,
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v14.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v15.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -542,4 +542,31 @@ test('context card actions validate native and browser results, preserve failed 
    await page.close();
   }
  }finally{await browser.close();}
+});
+
+test('overall status expands projects and assignments within one mounted card', async () => {
+ const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
+ try {
+  const page=await browser.newPage({viewport:{width:390,height:1000}});
+  await page.addInitScript(()=>{
+   window.calls=[];
+   window.openai={toolOutput:{schema:'relay-status-explorer/v1',projects:[{id:'field',name:'Field',coordination:'enabled'},{id:'arc',name:'Arc',coordination:'tracking-only'}]},widgetState:{},setWidgetState(state){this.widgetState=state;},callTool:async(name,args)=>{
+    window.calls.push({name,args});
+    return {structuredContent:{project:args.project,generated_at:'2026-10-04T08:00:00Z',progress:[{assignment:'field-editor',goal:'Finish the editor',state:'working',next_action:'Verify touch input'}],queue:[]}};
+   }};
+  });
+  await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
+  await page.locator('#title').filter({hasText:'Your projects'}).waitFor();
+  await page.getByRole('button',{name:/Field.*1 open/}).waitFor();
+  await page.getByRole('button',{name:/Field.*1 open/}).click();
+  await page.getByRole('button',{name:/Finish the editor.*Working/}).click();
+  assert.equal(await page.locator('#title').textContent(),'Finish the editor');
+  assert.equal(await page.locator('#summary').textContent(),'Verify touch input');
+  await page.getByRole('button',{name:'‹ Project',exact:true}).click();
+  await page.getByRole('button',{name:'‹ Overall',exact:true}).click();
+  await page.locator('#title').filter({hasText:'Your projects'}).waitFor();
+  assert.equal(await page.locator('.status-navigation').count(),1);
+  assert.deepEqual(await page.evaluate(()=>window.calls),[{name:'relay_runner_progress',args:{project:'field'}}]);
+  assert.equal(await page.evaluate(()=>window.openai.widgetState.statusExplorer.level),'overview');
+ } finally {await browser.close();}
 });

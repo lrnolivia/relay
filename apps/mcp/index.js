@@ -1,3 +1,4 @@
+import {expireTransfers} from '../../src/file-transfer.js';
 import { relayPanelResponse } from '../web/panel-api.js';
 import {eventStream,publishInvalidation,mutationTopics,successfulRpc,operatorTopics} from '../../src/relay-events.js';
 export {RelayEvents} from '../../src/relay-events.js';
@@ -7,6 +8,9 @@ import runner from "../../packages/runner/src/cloudflare-worker.mjs";
 import { webAssets, webBuildId, webSourceSha } from "../web/generated.js";
 
 export default {
+  async scheduled(event,env,ctx) {
+    ctx.waitUntil(expireTransfers(env.EVIDENCE));
+  },
   async fetch(request, env) {
     const url = new URL(request.url);
     const websiteRoutes = { "/today": "/#/today", "/runner": "/#/runner", "/night-shift": "/#/night-shift", "/inspector": "/inspector" };

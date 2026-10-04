@@ -98,3 +98,35 @@ test('upstream rate-limit provenance is explicit while provider payloads stay ou
     return true;
   });
 });
+
+test('source batches retain executable modes and safely default new files',async t=>{
+ const {commitSourceFiles}=await import('./source.js');let submitted;
+ t.mock.method(globalThis,'fetch',async(url,options)=>{
+  const path=String(url).replace('https://api.github.com','');const method=options.method||'GET';
+  if(path==='/repos/owner/repo')return Response.json({default_branch:'main'});
+  if(path.endsWith('/git/ref/heads/work'))return Response.json({object:{sha:'a'.repeat(40)}});
+  if(path.endsWith('/git/commits/'+'a'.repeat(40)))return Response.json({tree:{sha:'b'.repeat(40)}});
+  if(path.endsWith('/git/trees/'+'b'.repeat(40)))return Response.json({tree:[{path:'scripts',type:'tree',mode:'040000',sha:'c'.repeat(40)}]});
+  if(path.endsWith('/git/trees/'+'c'.repeat(40)))return Response.json({tree:[{path:'run.sh',type:'blob',mode:'100755',sha:'d'.repeat(40)}]});
+  if(path.endsWith('/git/blobs'))return Response.json({sha:'e'.repeat(40)});
+  if(path.endsWith('/git/trees')&&method==='POST'){submitted=JSON.parse(options.body);return Response.json({sha:'f'.repeat(40)});}
+  if(path.endsWith('/git/commits'))return Response.json({sha:'1'.repeat(40)});
+  if(path.endsWith('/git/refs/heads/work'))return Response.json({object:{sha:'1'.repeat(40)}});
+  throw Error('Unexpected fixture path '+path);
+ });
+ await commitSourceFiles({RELAY_GITHUB_TOKEN:'synthetic-test-token'},{owner:'owner',repo:'repo',branch:'work',expectedHeadSha:'a'.repeat(40),message:'test',files:[{path:'scripts/run.sh',content:'#!/bin/sh\ntrue\n'},{path:'scripts/new.txt',content:'new'}]});
+ assert.deepEqual(submitted.tree.map(x=>[x.path,x.mode]),[['scripts/run.sh','100755'],['scripts/new.txt','100644']]);
+});
+test('source batches reject symlink replacement before creating remote objects',async t=>{
+ const {commitSourceFiles}=await import('./source.js');let writes=0;
+ t.mock.method(globalThis,'fetch',async(url,options)=>{
+  const path=String(url).replace('https://api.github.com','');if(options.method&&options.method!=='GET')writes++;
+  if(path==='/repos/owner/repo')return Response.json({default_branch:'main'});
+  if(path.includes('/git/ref/'))return Response.json({object:{sha:'a'.repeat(40)}});
+  if(path.includes('/git/commits/'))return Response.json({tree:{sha:'b'.repeat(40)}});
+  if(path.includes('/git/trees/'))return Response.json({tree:[{path:'linked',type:'blob',mode:'120000',sha:'c'.repeat(40)}]});
+  throw Error('Unexpected fixture path');
+ });
+ await assert.rejects(commitSourceFiles({RELAY_GITHUB_TOKEN:'synthetic-test-token'},{owner:'owner',repo:'repo',branch:'work',message:'test',files:[{path:'linked',content:'replacement'}]}),/symlinks or submodules/);
+ assert.equal(writes,0);
+});
