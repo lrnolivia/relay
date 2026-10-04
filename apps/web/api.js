@@ -30,7 +30,7 @@ export function validateUiRequest(args) {
   if (method === "GET" && args.body !== undefined) throw new Error("GET cannot contain a body");
   if (args.body !== undefined && (!args.body || typeof args.body !== "object" || Array.isArray(args.body))) throw new Error("Invalid UI body");
   if (JSON.stringify(args.body || {}).length > 16384) throw new Error("UI body exceeds limit");
-  for (const key of url.searchParams.keys()) if (!["project", "environment", "pr", "run", "base", "current", "assignment", "report_id", "review_mode", "cursor", "limit", "head_sha"].includes(key)) throw new Error("Unsupported UI filter");
+  for (const key of url.searchParams.keys()) if (!["project", "environment", "pr", "run", "base", "current", "assignment", "report_id", "review_mode", "cursor", "source_cursor", "limit", "head_sha"].includes(key)) throw new Error("Unsupported UI filter");
   return { path, method, body: args.body };
 }
 
