@@ -11,7 +11,7 @@ import { getRecipe, listRecipes, saveRecipeFromSession } from "./recipe-store.js
 import { RELAY_CONTROL_CENTER_URI, relayControlCenterResource } from "./relay-ui.js";
 import { RELAY_STATUS_CARD_URI, RELAY_STATUS_CARD_TOOL, relayStatusCardDescriptor, relayStatusCardResource, relayStatusCardTool, RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, relayContextCardDescriptor, relayContextCardResource, relayContextCardTool, validateRelayContextCardArguments, compactContextCardResult } from "./relay-chat-ui.js";
 import { RELAY_SKILL_EXTENSION, relaySkillCatalog, relaySkillByUri, relaySkillResourceDescriptors, relaySkillResource } from "./skills.js";
-import { sourceAuthStatus, githubApiRequest as sourceGithubApiRequest, commitSourceFiles } from "./source.js";
+import { sourceAuthStatus, githubApiRequest as sourceGithubApiRequest, commitSourceFiles, readSourceChecks } from "./source.js";
 import { runnerControlTools, callRunnerControl, runnerControlError } from "./runner-control.js";
 import { cloudStatus, listCloudScripts, cloudWorkerSummary, cloudBuilds, deployCloudVersion } from "./cloud.js";
 import { HOST_PROBE_URI, HOST_PROBE_TOOL, hostProbeDescriptor, hostProbeResource, hostProbeTool, hostProbeResult } from "./relay-host-probe.js";
@@ -1113,10 +1113,7 @@ async function mcp(request, access, env) {
         const owner = configuredSourceOwner(env, args.owner);
         const repo = validateIdentifier(args.repo, "repository");
         const ref = validateBranch(args.ref, "ref");
-        const result = await githubApiRequest(
-          env,
-          `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/commits/${encodeURIComponent(ref)}/check-runs`
-        );
+        const result = await readSourceChecks(env, owner, repo, ref);
         return relayResult(id, { ok: true, checks: result });
       }
 
