@@ -1,21 +1,10 @@
 import { githubApiRequest } from "./source.js";
+import { readRunnerFile as read } from "./runner-control-core.js";
 import { occupying, retired } from "./coordination-engine.js";
 import { RUNNER_ENGINE_SHA, runnerControlBase } from "./runner-control.js";
 
 const SHA = /^[a-f0-9]{40}$/;
 const PROJECT = /^[a-z0-9-]+$/;
-
-function decode(content) {
-  return Buffer.from(String(content || "").replace(/\s/g, ""), "base64").toString("utf8");
-}
-
-async function read(api, control, path, ref = "main") {
-  const file = await api(`${control}/contents/${path}?ref=${encodeURIComponent(ref)}`);
-  if (file?.type !== "file" || file.encoding !== "base64" || !file.sha || file.truncated) {
-    throw new Error("Runner file response is incomplete");
-  }
-  return { sha: file.sha, content: decode(file.content) };
-}
 
 async function jsonFile(api, control, path) {
   const file = await read(api, control, path);

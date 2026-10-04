@@ -403,3 +403,6 @@ export async function callRunnerControlCore(name, args, env = {}, apiOverride) {
   }
   return null;
 }
+
+// Share the same verified transport across read-only consumers.
+export { read as readRunnerFile };
