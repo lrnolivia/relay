@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-10-04T01:42:15.449Z",
+  "updated_at": "2026-10-04T01:52:42.852Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1336,6 +1336,53 @@
       "evidence": "Relaycontextrevision9 operationfield142-production-delivered,ctx_fd03d483:protectedmerge2b5e1052/prodworker5621e3a5,WorkersBuild e11c4384success,realprodlight/darkouter12+inner12shadowmetrics/pixelsverified. Finalhead2e908195 all3builds/lint0errors/3desktop+phonepass/full13239pass56baselinefailzeroaddedremoved. ExactheadInspectorGH37167951192 run_cab6be48 fourcapturesvis_4ac3f071/vis_d8bff396/vis_b60a044b/vis_71a156a4 allpass. ProductionLibscreenslightlibfile_9b89d33cd9d0819194b255739577142c/darklibfile_ac8e90918b288191a3fe064ddadc92c7 version0. Boundedsourcecorrectiondone;originalFigma/laterconsistencyaudits,newbehaviorfindings,SettingsproposalremainpendingseparatewithJulian/auditowner01a1046c. No nativeUI/auditdocumentwrites; sourcesclean,rollbackpriorceab5a1e preserved.",
       "work_accounted": true,
       "completed_at": "2026-10-04T01:42:15.449Z"
+    },
+    {
+      "id": "field-document-media-search-20261004",
+      "owner": "01a10405-82ff-72d5-aef4-535569d400de",
+      "branch": "field/document-media-search-20261004",
+      "paths": [
+        "src/editor/",
+        "src/design-system/",
+        "src/styles/",
+        "src/code/stores/",
+        "src/shared/"
+      ],
+      "resources": [
+        "field-workspace-chrome",
+        "field-document-navigation"
+      ],
+      "goal": "Put Media search first and add grouped Pages/Layers search with correct navigation; reconcile equivalent outer left/right chrome surfaces.",
+      "acceptance": "MoveMediaSearchBar firstabovefilters/actions, preservequeryandGalleryreturn. Single top consistentPages/Layers search withseparateddropdownpage/layergroups,disambiguatingpagecontext, keyboardarrows/Enter/Escape/clear/Backloadingempty; honestprojectwidescopeusingexistingmodel,nofakecoverage. Pageclicknavigates,layerclickswitchespageifneededthenreveals/selectscorrectobject, noCanvasshortcutleak orsourcewrites. Compareactualcomputed/compositedequivalentouterleft/rightchromeinbothmodes;rightInspectorreference,sharedsemanticsurfaceremediationifactualmismatch, preserveinternalcontrastandapprovedPR142shape/bevel/shadows/gear. Newfreshmainisolatedcheckout,actualheadlessscreens/tests/build/draftPR,reportreadinessandreleaseplan. Historicalauditsremainseparate; nativeGUIexclusivelyauditworker01a1046c,nevereditauditfixtures; noworkers.",
+      "next_action": "Freshmain admittedbranch,inspectsource-backedcross-pageindexandnavigation APIs plusouterbackgroundownership; implementboundedsearch/UIandverifyexacthead.",
+      "ledger_refs": [
+        "field-concentric-highlights-outer-inset-20261004"
+      ],
+      "category": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "2b5e10524a5fae1ed72e4cfc6dd4202f4d5a481a",
+      "state": "active",
+      "created_at": "2026-10-04T01:52:42.852Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Put Media search first and add grouped Pages/Layers search with correct navigation; reconcile equivalent outer left/right chrome surfaces.",
+          "acceptance": "MoveMediaSearchBar firstabovefilters/actions, preservequeryandGalleryreturn. Single top consistentPages/Layers search withseparateddropdownpage/layergroups,disambiguatingpagecontext, keyboardarrows/Enter/Escape/clear/Backloadingempty; honestprojectwidescopeusingexistingmodel,nofakecoverage. Pageclicknavigates,layerclickswitchespageifneededthenreveals/selectscorrectobject, noCanvasshortcutleak orsourcewrites. Compareactualcomputed/compositedequivalentouterleft/rightchromeinbothmodes;rightInspectorreference,sharedsemanticsurfaceremediationifactualmismatch, preserveinternalcontrastandapprovedPR142shape/bevel/shadows/gear. Newfreshmainisolatedcheckout,actualheadlessscreens/tests/build/draftPR,reportreadinessandreleaseplan. Historicalauditsremainseparate; nativeGUIexclusivelyauditworker01a1046c,nevereditauditfixtures; noworkers.",
+          "at": "2026-10-04T01:52:42.852Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-document-media-search-20261004:acceptance:0",
+            "text": "MoveMediaSearchBar firstabovefilters/actions, preservequeryandGalleryreturn. Single top consistentPages/Layers search withseparateddropdownpage/layergroups,disambiguatingpagecontext, keyboardarrows/Enter/Escape/clear/Backloadingempty; honestprojectwidescopeusingexistingmodel,nofakecoverage. Pageclicknavigates,layerclickswitchespageifneededthenreveals/selectscorrectobject, noCanvasshortcutleak orsourcewrites. Compareactualcomputed/compositedequivalentouterleft/rightchromeinbothmodes;rightInspectorreference,sharedsemanticsurfaceremediationifactualmismatch, preserveinternalcontrastandapprovedPR142shape/bevel/shadows/gear. Newfreshmainisolatedcheckout,actualheadlessscreens/tests/build/draftPR,reportreadinessandreleaseplan. Historicalauditsremainseparate; nativeGUIexclusivelyauditworker01a1046c,nevereditauditfixtures; noworkers.",
+            "at": "2026-10-04T01:52:42.852Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-04T01:52:42.852Z",
+      "lease_until": "2026-10-04T13:52:42.852Z"
     }
   ]
 }
