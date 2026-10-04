@@ -10,12 +10,19 @@ const checkpoint=object({session_id:string(100),head_sha:sha,summary:string(2000
 export const jobsTool={name:'relay_execution',title:'Manage durable coding execution',description:'COMMAND / QUERY — request, inspect, cancel, or report an admitted coding job. A queued request is not a running process. Executor start/checkpoint/exit receipts remain attributed reports, never automatic proof of objective completion, deployment or native chat delivery. Expired leases require explicit recovery after the old process has stopped.',
   inputSchema:object({action:{type:'string',enum:['submit','status','cancel','lease','start','checkpoint','finish','recover']},project:string(80,'^[a-z0-9-]+$'),assignment:id,job_id:string(68,'^job_[a-f0-9]{64}$'),
     operation_id:id,expected_owner:id,expected_branch:string(240),expected_head_sha:sha,expected_revision:{type:'integer',minimum:0},prompt:string(12000),required_capabilities:strings,capabilities:strings,executor_id:id,lease_token:string(100),previous_process_stopped:{type:'boolean'},checkpoint,
+    origin:object({kind:{type:'string',enum:['night-shift']},item_id:string(67,'^ns_[a-f0-9]{64}$'),source_assignment:id,source_job_id:string(68,'^job_[a-f0-9]{64}$'),repository:string(200),commit_sha:sha,summary:string(2000)},['kind','item_id','source_assignment','source_job_id','repository','commit_sha','summary']),
     process:object({pid:{type:'integer',minimum:1},host:string(200),version:string(200),adapter:{type:'string',enum:['codex-cli']}},['pid','host','version','adapter']),
     result:object({state:{type:'string',enum:['succeeded','failed','cancelled']},exit_code:{type:['integer','null']},session_id:string(100),head_sha:sha,summary:string(2000),evidence:string(1000)},['state','exit_code','summary'])
   },['action','project','assignment']),annotations:{readOnlyHint:false,destructiveHint:false,idempotentHint:true,openWorldHint:false}};
 export async function callJobs(args,env,apiOverride){
   validateControlArguments(args,jobsTool.inputSchema);
   if(args.action==='submit'&&!args.prompt)throw Error('Execution request requires prompt');
+  if(args.origin){
+    if(args.action!=='submit')throw Error('Execution origin is immutable submit context');
+    const stored=await env.EVIDENCE?.get(`night-shift/v1/${args.project}.json`),ledger=stored?await stored.json():null;
+    const prepared=ledger?.operations?.find(x=>x.job_args?.operation_id===args.operation_id);
+    if(!prepared||Object.keys(prepared.job_args).some(key=>JSON.stringify(prepared.job_args[key])!==JSON.stringify(args[key])))throw Error('Night Shift origin requires its exact prepared ledger request');
+  }
   if(!['submit','status'].includes(args.action)&&!args.job_id)throw Error('Execution mutation requires an exact job_id');
   const api=apiOverride||((path,options)=>githubApiRequest(env,path,options));
   const project=await callRunnerControlCore('relay_runner_project',{project:args.project},env,api);

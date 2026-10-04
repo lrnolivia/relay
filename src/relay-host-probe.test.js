@@ -29,7 +29,7 @@ test("authenticated endpoint preserves original tools and controls alongside the
   };
   const { result: { tools } } = await rpc("tools/list");
   // Discovery exposes 51 model tools plus the existing app-only bridge.
-  assert.deepEqual(tools.filter(tool => tool.name !== HOST_PROBE_TOOL).map(tool => tool.name).sort(), [...originalTools, "relay_context", "relay_execution", "relay_skills", "relay_ui_request", "relay_test_card_action", "relay_card_action_sample", "relay_runner_feedback_submit", "relay_runner_feedback_peek", "relay_runner_feedback_status", "relay_runner_feedback_ack", "relay_test_card_static_standard", "relay_test_card_static_compat", "relay_test_card_lifecycle_standard"].sort());
+  assert.deepEqual(tools.filter(tool => tool.name !== HOST_PROBE_TOOL).map(tool => tool.name).sort(), [...originalTools, "relay_context", "relay_execution", "relay_night_shift", "relay_skills", "relay_ui_request", "relay_test_card_action", "relay_card_action_sample", "relay_runner_feedback_submit", "relay_runner_feedback_peek", "relay_runner_feedback_status", "relay_runner_feedback_ack", "relay_test_card_static_standard", "relay_test_card_static_compat", "relay_test_card_lifecycle_standard"].sort());
   assert.deepEqual(tools.find(tool => tool.name === "relay_ui_request")._meta.ui.visibility, ["app"]);
   assert.equal(tools.filter(tool => tool.name === HOST_PROBE_TOOL).length, 1);
   const tool = tools.find(tool => tool.name === HOST_PROBE_TOOL);

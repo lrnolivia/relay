@@ -1,4 +1,5 @@
 import test from 'node:test';
+import './relay-executor-inbox.test.mjs';
 import assert from 'node:assert/strict';
 import { codexArguments,executionPrompt,assertScope,createMcpClient } from './relay-executor.mjs';
 test('executor uses supported sandboxed CLI and exact-session recovery, with bounded source scope',()=>{
@@ -30,12 +31,15 @@ test('actual subprocess lifecycle persists broker start, session, exit and exact
     const bucket={get:async()=>value?{etag:String(etag),json:async()=>JSON.parse(value)}:null,put:async(k,text,{onlyIf})=>{if(onlyIf instanceof Headers?Boolean(value):onlyIf.etagMatches!==String(etag))return null;value=text;return {etag:String(++etag)};}};
     const target={state:'active',owner:'fixture',branch:'relay/fixture',repository:'lrnolivia/fixture',lease_until:'2099-01-01T00:00:00Z',head_sha:git(['rev-parse','HEAD']),goal:'Synthetic process proof',acceptance:['Process receipts verified'],paths:['README.md']};
     await operateJob(bucket,{action:'submit',project:'fixture',assignment:'fixture',expected_owner:'fixture',expected_branch:target.branch,expected_head_sha:target.head_sha,prompt:'Synthetic test only',operation_id:'submit'},target);
-    const rpc=async(name,args)=>['relay_runner_resume','relay_context'].includes(name)?{ok:true,synthetic:true}:operateJob(bucket,args,target);
-    const result=await runExecution({workspace,stateDir,config:{project:'fixture',assignment:'fixture',owner:'fixture',branch:'relay/fixture',executor_id:'fixture'},rpc,getVersion:()=> 'synthetic adapter test',
-      spawnProcess:(_cmd,_args,options)=>spawn(process.execPath,['-e',`process.stdin.resume(); process.stdin.on('end',()=>{console.log(JSON.stringify({type:'thread.started',thread_id:'synthetic-session'}));console.log(JSON.stringify({type:'turn.completed'}));});`],options)});
+    let reads=0;
+    const rpc=async(name,args)=>name==='relay_context'?{ok:true,entries:[{content:++reads>2?'new in-run context':'startup context'}],revision:reads}:name==='relay_runner_feedback_peek'?{ok:true,feedback:{available:true,events:[],conflicts:[],truncated:false}}:name==='relay_runner_resume'?{ok:true,synthetic:true}:operateJob(bucket,args,target);
+    const result=await runExecution({workspace,stateDir,config:{project:'fixture',assignment:'fixture',owner:'fixture',branch:'relay/fixture',executor_id:'fixture'},rpc,pollMs:20,getVersion:()=> 'synthetic adapter test',
+      spawnProcess:(_cmd,_args,options)=>spawn(process.execPath,['-e',`let prompt='';process.stdin.on('data',chunk=>prompt+=chunk);process.stdin.on('end',()=>{const data=JSON.parse(prompt.split('\\n\\n')[1]);console.log(JSON.stringify({type:'thread.started',thread_id:'synthetic-session'}));setTimeout(()=>{const inbox=JSON.parse(require('fs').readFileSync(data.context.inbox.path,'utf8'));console.log(JSON.stringify({type:'synthetic.inbox-read',content:inbox.context.entries[0].content}));console.log(JSON.stringify({type:'turn.completed'}));},100);});`],options)});
     assert.equal(result.state,'succeeded');assert.equal(result.objective_completed,false);
     const journal=JSON.parse(await fs.readFile(result.receipt,'utf8'));
     assert.equal(journal.pid,null);assert.equal(journal.session_id,'synthetic-session');assert.equal(journal.job.result.exit_code,0);assert.equal(journal.job.events[2].action,'start');
     assert.equal((await fs.stat(result.receipt)).mode&0o777,0o600);
+    assert.match(await fs.readFile(path.join(stateDir,'events-1.jsonl'),'utf8'),/new in-run context/);
+    assert.equal(journal.inbox.consumption_verified,false);
   } finally {await fs.rm(root,{recursive:true,force:true});}
 });

@@ -2,6 +2,7 @@ import { operateJob } from './jobs.mjs';
 import { callJobs } from './job-control.mjs';
 import { callRunnerControlCore } from '../../../src/runner-control-core.js';
 import { githubApiRequest } from '../../../src/source.js';
+import { readNightShift, oversightView } from './night-shift.mjs';
 // Access/OAuth authentication is established by the gateway, never by a body field.
 export async function executionBrowser(request,env,{authenticated=false,api,run}={}) {
  const url=new URL(request.url);
@@ -21,7 +22,8 @@ export async function executionBrowser(request,env,{authenticated=false,api,run}
     const job=(await (run?run(statusArgs,env,source):operateJob(env.EVIDENCE,statusArgs,null))).job;
     if(job||['active','held'].includes(claim.state))rows.push({assignment:claim.id,owner:claim.owner,branch:claim.branch,goal:claim.goal,state:claim.state,lease_until:claim.lease_until,job});
    }
-   return Response.json({ok:true,rows,record_sha:state.record_sha,next_cursor:cursor+20<claims.length?cursor+20:null,checked_at:new Date().toISOString(),executor_online_verified:false,oversight_assignment:null},{headers:{'Cache-Control':'no-store'}});
+   const {record}=await readNightShift(env.EVIDENCE,project),oversight=oversightView(record,claims);
+   return Response.json({ok:true,rows,record_sha:state.record_sha,next_cursor:cursor+20<claims.length?cursor+20:null,checked_at:new Date().toISOString(),executor_online_verified:false,oversight_assignment:oversight.available?oversight.binding.assignment:null,oversight},{headers:{'Cache-Control':'no-store'}});
   }
   if(request.method!=='POST'||url.pathname!=='/api/execution/request')return Response.json({error:'Execution route not found'},{status:404});
   if(request.headers.get('Origin')!==url.origin)return Response.json({error:'Same-origin execution request required'},{status:403});

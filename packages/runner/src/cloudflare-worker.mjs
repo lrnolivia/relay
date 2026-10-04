@@ -1,4 +1,5 @@
 import { executionBrowser } from './execution-browser.mjs';
+import { nightShiftBrowser } from './night-shift-browser.mjs';
 import { handleFeedbackBrowser, feedbackBindingForEvidence } from '../../../src/feedback-browser.js';
 import { handleRetainedPreview, getRetainedBundle, retainedMetadata } from "../../../src/retained-preview.js";
 import { githubApiRequest, sourceAuthStatus } from "../../../src/source.js";
@@ -258,6 +259,10 @@ export async function handleApi(request, env, { authenticatedMcp = false } = {})
     const guard=humanQaGuard(request,authenticatedMcp);if(guard)return guard;
     return executionBrowser(request,env,{authenticated:true});
   }
+  if(url.pathname.startsWith('/api/night-shift/')) {
+    const guard=humanQaGuard(request,authenticatedMcp);if(guard)return guard;
+    return nightShiftBrowser(request,env,{authenticated:true});
+  }
   if(url.pathname.startsWith('/api/retained-preview')) {
     const guard=humanQaGuard(request,authenticatedMcp);if(guard)return guard;
     return await handleRetainedPreview(request,env.EVIDENCE)||json({error:'Retained build route not found'},404);
@@ -473,4 +478,3 @@ export default {
     }
   }
 };
-
