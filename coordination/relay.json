@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-04T04:42:15.052Z",
+  "updated_at": "2026-10-04T04:44:39.015Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -13026,14 +13026,14 @@
       "owner": "01a0a348-4d7b-7c00-bc67-66bcf0d03b03",
       "branch": "relay/arc-tv-launcher-register-20261004",
       "paths": [
-        "projects/arc-tv-launcher.json"
+        "projects/arc.json"
       ],
       "resources": [
         "relay-project-registry"
       ],
       "goal": "Register Arc TV Launcher as a tracking-only Relay project tied to its public upstream source.",
       "acceptance": "Relay project discovery lists Arc TV Launcher as unmanaged/tracking-only; the entry identifies the public upstream repo and explicitly prevents implementation claims or writes to upstream. No private TV details or local filesystem paths are published.",
-      "next_action": "Preflight the exact registry file, then create the non-default branch and add only the tracking-only Arc project record.",
+      "next_action": "Preflight the exact registry file and branch, then open the draft registration PR.",
       "category": "coordination",
       "primary_team": "night-shift",
       "supporting_teams": [],
@@ -13057,8 +13057,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-04T04:42:15.052Z",
-      "lease_until": "2026-10-04T16:42:15.052Z"
+      "updated_at": "2026-10-04T04:44:39.015Z",
+      "lease_until": "2026-10-04T16:44:39.015Z"
     }
   ],
   "migrated_from": "loew-inspector"
