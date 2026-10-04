@@ -21,7 +21,7 @@ const intentTags = {
   'performance.performance-budgets': ['profiling', 'assets', 'fonts', 'hydration', 'network', 'cache'],
   'performance.visual-performance': ['rendering', 'compositor', 'animation'],
   'planning.caught-up-recovery': ['resume', 'amendment'],
-  'planning.planning-routing': ['resume', 'findings'],
+  'planning.planning-routing': ['resume', 'findings', 'dependencies', 'multitasking'],
   'planning.workflow-telemetry': ['timing', 'bottlenecks'],
   'platforms.android-material': ['compose', 'tv'],
   'platforms.figma': ['handoff'],
@@ -69,7 +69,7 @@ export async function buildSkills({ root = defaultRoot, write = true } = {}) {
     const id = 'relay.' + name;
     const platform = ['macos','windows','android','gnome','web'].find(x=>name.includes(x));
     const title = text.split('\n').find(line=>line.startsWith('# '))?.slice(2);
-    const manifest = { id, name: title || name.replaceAll('.',' '), version: newPacks.has(name) ? '1.0.0' : '1.1.0', origin: 'relay', license: 'LicenseRef-Relay-Private',
+    const manifest = { id, name: title || name.replaceAll('.',' '), version: name === 'planning.planning-routing' ? '1.2.0' : newPacks.has(name) ? '1.0.0' : '1.1.0', origin: 'relay', license: 'LicenseRef-Relay-Private',
       provenance: { source: 'https://github.com/lrnolivia/relay/' + file, revision: 'sha256:' + hash(text) },
       integrity: 'sha256:' + hash(text), entrypoint: 'SKILL.md', context_budget: Math.max(256, Math.ceil(Buffer.byteLength(text)/4)),
       tags: [...new Set([...name.split(/[.-]/), ...(intentTags[name] || [])])], dependencies: name === 'supporting.regression-protection' ? ['relay.supporting.qa', 'relay.supporting.release'] : [], required_capabilities: name.includes('figma') ? ['figma'] : [],
