@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { generateKeyPairSync } from 'node:crypto';
-import { sourceAuthStatus, githubApiRequest, readSourceChecks } from "./source.js";
+import { sourceAuthStatus, githubApiRequest, readSourceChecks, readBoundedJobLog } from "./source.js";
 
 test("relay.SOURCE status prefers GitHub App auth", () => {
   assert.equal(sourceAuthStatus({}).auth_mode, "public_read");
@@ -163,4 +163,23 @@ test("source check annotations remain bounded and report incomplete coverage", a
   assert.equal(checks.failure_details_truncated,true);
   assert.equal(checks.check_runs[0].failure_details.truncated,true);
   assert.equal(checks.check_runs[0].failure_details.annotations[0].message.length,8000);
+});
+
+test("job log diagnostics extract failure context with bounded output", async()=>{
+ const r=await readBoundedJobLog(new Response("setup\nstart\nTraceback: missing module\nModuleNotFoundError: absent\nexit code 2\ncleanup\n"));
+ assert.equal(r.available,true);assert.match(r.excerpt,/ModuleNotFoundError/);assert.equal(r.truncated,false);
+});
+test("source checks read only the matching repository job",async()=>{
+ const routes=[];
+ const checks=await readSourceChecks({}, "lrnolivia","rtxForge","main", async (route,options)=>{
+  routes.push(route);
+  if(route.endsWith("/logs")){assert.equal(options.jobLog,true);return {available:true,excerpt:"failed build"};}
+  if(route.includes("/actions/jobs/"))return {id:77,steps:[{name:"Build",conclusion:"failure"}]};
+  if(route.includes("/annotations?"))return [];
+  return {check_runs:[{id:1,conclusion:"failure",html_url:"https://github.com/lrnolivia/rtxForge/actions/runs/22/job/77"},
+   {id:2,conclusion:"failure",html_url:"https://github.com/other/private/actions/runs/22/job/88"}]};
+ });
+ assert.equal(checks.check_runs[0].failure_details.job.steps[0].name,"Build");
+ assert.equal(checks.check_runs[0].failure_details.log.excerpt,"failed build");
+ assert.equal(routes.some(path=>path.includes("/88")),false);
 });
