@@ -11,7 +11,7 @@ import { getRecipe, listRecipes, saveRecipeFromSession } from "./recipe-store.js
 import { RELAY_CONTROL_CENTER_URI, relayControlCenterResource } from "./relay-ui.js";
 import { RELAY_STATUS_CARD_URI, RELAY_STATUS_CARD_TOOL, relayStatusCardDescriptor, relayStatusCardResource, relayStatusCardTool, RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, relayContextCardDescriptor, relayContextCardResource, relayContextCardTool, validateRelayContextCardArguments, compactContextCardResult } from "./relay-chat-ui.js";
 import { RELAY_SKILL_EXTENSION, relaySkillCatalog, relaySkillByUri, relaySkillResourceDescriptors, relaySkillResource } from "./skills.js";
-import { sourceAuthStatus, githubApiRequest as sourceGithubApiRequest, commitSourceFiles, readSourceChecks } from "./source.js";
+import { sourceAuthStatus, githubApiRequest as sourceGithubApiRequest, commitSourceFiles, readSourceChecks, syncIdenticalSourceBranch } from "./source.js";
 import { runnerControlTools, callRunnerControl, runnerControlError } from "./runner-control.js";
 import { cloudStatus, listCloudScripts, cloudWorkerSummary, cloudBuilds, deployCloudVersion } from "./cloud.js";
 import { HOST_PROBE_URI, HOST_PROBE_TOOL, hostProbeDescriptor, hostProbeResource, hostProbeTool, hostProbeResult } from "./relay-host-probe.js";
@@ -546,6 +546,13 @@ async function mcp(request, access, env) {
             additionalProperties: false
           },
           annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: true }
+        },
+        {
+          name: "relay_source_sync_branch",
+          title: "Synchronize identical branch ancestry",
+          description: "COMMAND — synchronize a non-default branch after a squash merge only when its complete Git tree exactly matches the current default branch. Requires exact expected branch and base SHAs. Creates a two-parent ancestry commit without changing files and advances only the source branch with force=false. Refuses differing trees, default-branch writes and stale identities. Preserve pending edits before restoring an identical checkpoint; this tool does not resolve source conflicts.",
+          inputSchema: {type:"object",properties:{owner:{type:"string"},repo:{type:"string"},branch:{type:"string"},expected_head_sha:{type:"string"},expected_base_sha:{type:"string"}},required:["repo","branch","expected_head_sha","expected_base_sha"],additionalProperties:false},
+          annotations: {readOnlyHint:false,destructiveHint:false,openWorldHint:true}
         },
         {
           name: "relay_source_checks",
@@ -1107,6 +1114,13 @@ async function mcp(request, access, env) {
           `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/pulls/${number}`
         );
         return relayResult(id, { ok: true, pull_request: result });
+      }
+
+      if (name === "relay_source_sync_branch") {
+        const owner = configuredSourceOwner(env, args.owner);
+        const repo = validateIdentifier(args.repo, "repository");
+        const branch = validateBranch(args.branch);
+        return relayResult(id, await syncIdenticalSourceBranch(env, {owner,repo,branch,expectedHeadSha:args.expected_head_sha,expectedBaseSha:args.expected_base_sha}));
       }
 
       if (name === "relay_source_checks") {

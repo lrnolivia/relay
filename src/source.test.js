@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { generateKeyPairSync } from 'node:crypto';
-import { sourceAuthStatus, githubApiRequest, readSourceChecks, readBoundedJobLog } from "./source.js";
+import { sourceAuthStatus, githubApiRequest, readSourceChecks, readBoundedJobLog, syncIdenticalSourceBranch } from "./source.js";
 
 test("relay.SOURCE status prefers GitHub App auth", () => {
   assert.equal(sourceAuthStatus({}).auth_mode, "public_read");
@@ -182,4 +182,29 @@ test("source checks read only the matching repository job",async()=>{
  assert.equal(checks.check_runs[0].failure_details.job.steps[0].name,"Build");
  assert.equal(checks.check_runs[0].failure_details.log.excerpt,"failed build");
  assert.equal(routes.some(path=>path.includes("/88")),false);
+});
+
+test("identical-tree synchronization preserves files and uses a non-force ancestry commit", async()=>{
+ const head="a".repeat(40),base="b".repeat(40),tree="c".repeat(40),next="d".repeat(40),writes=[];
+ let current=head;
+ const result=await syncIdenticalSourceBranch({}, {owner:"lrnolivia",repo:"rtxForge",branch:"rtxforge/work",expectedHeadSha:head,expectedBaseSha:base},async(path,options)=>{
+  if(options?.method){writes.push({path,...options});if(options.method==="POST"){assert.equal(options.body.tree,tree);assert.deepEqual(options.body.parents,[head,base]);return {sha:next};}assert.equal(options.body.force,false);current=next;return {};}
+  if(path.endsWith("/rtxForge"))return {default_branch:"main"};
+  if(path.includes("/git/commits/"))return {tree:{sha:tree}};
+  return {object:{sha:path.endsWith("/heads/main")?base:current}};
+ });
+ assert.equal(result.files_changed,false);assert.equal(result.head_sha,next);assert.equal(writes.length,2);
+});
+test("different-tree synchronization refuses to overwrite pending changes",async()=>{
+ let writes=0;
+ await assert.rejects(syncIdenticalSourceBranch({}, {owner:"lrnolivia",repo:"rtxForge",branch:"rtxforge/work",expectedHeadSha:"a".repeat(40),expectedBaseSha:"b".repeat(40)},async(path,options)=>{
+  if(options?.method){writes++;throw Error("Unexpected write");}
+  if(path.endsWith("/rtxForge"))return {default_branch:"main"};
+  if(path.includes("/git/commits/"))return {tree:{sha:(path.endsWith("a".repeat(40))?"c":"d").repeat(40)}};
+  return {object:{sha:(path.endsWith("/heads/main")?"b":"a").repeat(40)}};
+ }),/Trees differ/);
+ assert.equal(writes,0);
+});
+test("default branch synchronization is prohibited",async()=>{
+ await assert.rejects(syncIdenticalSourceBranch({}, {owner:"lrnolivia",repo:"rtxForge",branch:"main",expectedHeadSha:"a".repeat(40),expectedBaseSha:"b".repeat(40)},async()=>({default_branch:"main"})),/prohibited/);
 });
