@@ -25,7 +25,7 @@ export function deriveObservedProgress({ project, claim, branch, commit, pullReq
   const cloudVersions = versions(cloud);
   // GitHub supplies a provisional test-merge SHA even before a PR is merged.
   const mergedIdentity = pullRequest
-    ? pullRequest.merged === true ? pullRequest.merge_commit_sha || null : null
+    ? (pullRequest.merged === true || ts(pullRequest.merged_at)) ? pullRequest.merge_commit_sha || null : null
     : claim?.merge_commit_sha || null;
   const sourceIdentity = mergedIdentity || branch?.commit?.sha || pullRequest?.head?.sha || claim?.merged_head_sha || null;
   const matchedVersion = sourceIdentity
