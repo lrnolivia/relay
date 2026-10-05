@@ -29,3 +29,13 @@ Every read/write denies expired access immediately. The deployed Worker runs sco
 Automated tests cover multi-chunk round trips, incomplete upload, immutable retry, checksums, limits, path/identity rejection, account isolation, expiry, prefix-isolated cleanup, explicit receipts and real authenticated MCP entry. They do not upload user files. Reverting this feature disables its tools and schedule without altering the evidence service. End-to-end acceptance still requires a real authorized same-account sender/recipient transfer and receipt readback.
 
 [Cloudflare R2 Workers API](https://developers.cloudflare.com/r2/api/workers/workers-api-reference/) specifies conditional put, metadata and paginated listing behavior.
+
+## Browser file manager (candidate)
+
+The shared Files icon opens the same modal in CTRL and Relay. Upload one compressed package at a time, up to 512 MiB. Browser uploads hash incrementally, send immutable 4 MiB chunks with individual checksums, and verify the whole package on completion. Interrupted files appear with Resume: reselect the identical file, including on another device signed into the same account. Closing the modal does not stop an upload; Pause stops before the next chunk. Navigation warns while an upload is active. Downloads stream as attachments rather than rendering uploaded HTML or scripts. Files expire after 72 hours; no delete or public-sharing control is introduced.
+
+The browser API /api/files reuses the verified Access issuer/subject and private EVIDENCE binding. Writes require the approved browser Origin and an explicit non-simple request header. It creates no credentials and has no anonymous route. Browser packages live in file-manager/v1, separate from older temporary MCP transfers and QA evidence. Cleanup is bounded and prefix-scoped.
+
+MCP relay_transfer_read adds files, file-status and file-chunk actions. Browser package IDs start fl_. File chunks returned through MCP stay at 256 KiB, even though storage uses 4 MiB. Callers must reconstruct and verify the full SHA-256 before use. This is same-account access, not cross-account sharing or execution permission. Files shown through browser and MCP belong to the verified issuer/subject namespace; a different identity is not silently mapped by email.
+
+Candidate tests cover a 33 MiB package, streamed byte-identical download, logical MCP slices, resume and immutable conflicts, incomplete reads, wrong checksum, cross-account isolation, CSRF guards, size/path limits, and expiry without touching QA evidence. Full UI/browser and deployed same-account acceptance remain separate gates.

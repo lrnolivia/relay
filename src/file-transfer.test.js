@@ -80,6 +80,9 @@ test('real MCP entry authenticates transfer calls and exposes the two tools with
  t.mock.method(globalThis,'fetch',async url=>{assert.equal(String(url),'https://loewfi.cloudflareaccess.com/cdn-cgi/access/certs');return Response.json({keys:[{...publicKey.export({format:'jwk'}),kid}]});});
  const bucket=new Bucket();const rpc=async(method,params={},authorized=true)=>worker.fetch(new Request('https://relay.loew.fi/mcp',{method:'POST',headers:{'content-type':'application/json',...(authorized?{'cf-access-jwt-assertion':token}:{})},body:JSON.stringify({jsonrpc:'2.0',id:1,method,params})}),{EVIDENCE:bucket});
  assert.equal((await rpc('tools/call',{name:'relay_transfer_write',arguments:begin(Buffer.from('a'))},false)).status,401);
+ const {default:entry}=await import('../apps/mcp/index.js');
+ assert.equal((await entry.fetch(new Request('https://relay.loew.fi/api/files'),{EVIDENCE:bucket})).status,401);
+ const listed=await entry.fetch(new Request('https://relay.loew.fi/api/files',{headers:{'cf-access-jwt-assertion':token}}),{EVIDENCE:bucket});assert.equal(listed.status,200);assert.deepEqual((await listed.json()).files,[]);
  const discovery=await (await rpc('tools/list')).json();for(const name of ['relay_transfer_read','relay_transfer_write'])assert.ok(discovery.result.tools.some(tool=>tool.name===name));
  const response=await(await rpc('tools/call',{name:'relay_transfer_write',arguments:begin(Buffer.from('a'))})).json();assert.equal(response.result.structuredContent.ok,true);assert.equal(response.result.structuredContent.transfer.bytes,1);assert.equal(response.result.structuredContent.transfer.url,undefined);
 });
@@ -94,4 +97,34 @@ test('whole-file verification rejects checksum mismatch and receipts cannot targ
 });
 test('concurrent begin calls converge on the first immutable manifest',async()=>{
  const bucket=new Bucket(),args=begin(Buffer.from('x'));const [a,b]=await Promise.all([transferWrite(args,bucket,account,now),transferWrite(args,bucket,account,now+1)]);assert.equal(a.transfer.id,b.transfer.id);assert.equal(a.transfer.expires_at,b.transfer.expires_at);assert.equal(bucket.objects.size,1);
+});
+
+import {browserFileResponse,readBrowserFiles,expireBrowserFiles,FILE_CHUNK_BYTES,MAX_FILE_BYTES} from './file-transfer.js';
+const fileReq=(path='',method='GET',body,headers={})=>new Request('https://relay.loew.fi/api/files'+path,{method,headers:{Origin:'https://relay.loew.fi','X-Relay-File-Request':'1',...headers},...(body===undefined?{}:{body})});
+async function browserBegin(bucket,data,extra={}){const r=await browserFileResponse(fileReq('','POST',JSON.stringify({request_id:'package-test',filename:'work.tar.gz',bytes:data.length,sha256:hash(data),...extra}),{'Content-Type':'application/json'}),bucket,account,now);return {response:r,value:await r.json()}}
+async function browserUpload(bucket,data){const {value}=await browserBegin(bucket,data);const f=value.file;for(let i=0;i<f.chunks;i++){const bytes=data.subarray(i*FILE_CHUNK_BYTES,(i+1)*FILE_CHUNK_BYTES);const r=await browserFileResponse(fileReq('/'+f.id+'/chunks/'+i,'PUT',bytes,{'X-Content-Sha256':hash(bytes)}),bucket,account,now);assert.equal(r.status,200)}const complete=await browserFileResponse(fileReq('/'+f.id+'/complete','POST'),bucket,account,now);assert.equal(complete.status,200);return f}
+test('browser accepts a package above the old 32 MiB limit and streams exact downloads',async()=>{
+ const bucket=new Bucket(),data=Buffer.alloc(33*1024*1024+17,19),file=await browserUpload(bucket,data);
+ const result=await browserFileResponse(fileReq('/'+file.id+'/download'),bucket,account,now);assert.equal(result.status,200);assert.match(result.headers.get('content-disposition'),/attachment/);assert.equal(result.headers.get('cache-control'),'private, no-store');assert.equal(hash(Buffer.from(await result.arrayBuffer())),file.sha256);
+ const list=await readBrowserFiles({action:'files'},bucket,account,now);assert.equal(list.files[0].id,file.id);assert.equal(list.files[0].state,'ready');
+ const logicalChunks=Math.ceil(data.length/CHUNK_BYTES);for(const i of [0,15,16,logicalChunks-1]){const part=await transferRead({action:'file-chunk',id:file.id,index:i},bucket,account,now);assert.ok(part.bytes<=CHUNK_BYTES);assert.deepEqual(Buffer.from(part.base64,'base64'),data.subarray(i*CHUNK_BYTES,(i+1)*CHUNK_BYTES));assert.equal(part.file_sha256,file.sha256)}
+});
+test('browser immutable resume rejects changed bytes, missing chunks and wrong files',async()=>{
+ const bucket=new Bucket(),data=Buffer.alloc(FILE_CHUNK_BYTES+11,3),first=await browserBegin(bucket,data),id=first.value.file.id;
+ const bytes=data.subarray(0,FILE_CHUNK_BYTES),put=()=>browserFileResponse(fileReq('/'+id+'/chunks/0','PUT',bytes,{'X-Content-Sha256':hash(bytes)}),bucket,account,now);
+ assert.equal((await put()).status,200);assert.equal((await put()).status,200);assert.deepEqual((await browserBegin(bucket,data)).value.file.uploaded_chunks,[0]);
+ assert.equal((await browserFileResponse(fileReq('/'+id+'/complete','POST'),bucket,account,now)).status,400);
+ assert.equal((await browserFileResponse(fileReq('/'+id+'/download'),bucket,account,now)).status,400);
+ const changed=Buffer.alloc(FILE_CHUNK_BYTES,4);assert.equal((await browserFileResponse(fileReq('/'+id+'/chunks/0','PUT',changed,{'X-Content-Sha256':hash(changed)}),bucket,account,now)).status,400);
+ assert.equal((await browserBegin(bucket,data,{filename:'other.zip'})).response.status,400);
+});
+test('browser files preserve authentication namespace, CSRF guards, bounds, and private expiry',async()=>{
+ const bucket=new Bucket(),file=await browserUpload(bucket,Buffer.from('private package'));
+ assert.equal((await browserFileResponse(fileReq('/'+file.id+'/download'),bucket,{...account,sub:'other'},now)).status,400);
+ assert.equal((await readBrowserFiles({action:'files'},bucket,{...account,sub:'other'},now)).files.length,0);
+ assert.equal((await browserFileResponse(fileReq('/'+file.id+'/complete','POST',undefined,{Origin:'https://evil.example'}),bucket,account,now)).status,400);
+ assert.equal((await browserFileResponse(fileReq('/'+file.id+'/complete','POST',undefined,{'X-Relay-File-Request':''}),bucket,account,now)).status,400);
+ for(const extra of [{bytes:MAX_FILE_BYTES+1},{bytes:0},{filename:'../work'},{sha256:'bad'}])assert.equal((await browserBegin(bucket,Buffer.from('x'),extra)).response.status,400);
+ const expiry=now+72*3600000;assert.equal((await browserFileResponse(fileReq('/'+file.id+'/download'),bucket,account,expiry)).status,400);
+ await bucket.put('evidence/keep','stay',{customMetadata:{expires_at:String(now)}});await expireBrowserFiles(bucket,expiry);assert.ok(bucket.objects.has('evidence/keep'));assert.equal([...bucket.objects.keys()].filter(k=>k.startsWith('file-manager/')).length,0);
 });

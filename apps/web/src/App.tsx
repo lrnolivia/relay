@@ -1,3 +1,5 @@
+import {bindFileManager} from '../../../packages/shared-ui/file-manager.js';
+import '../../../packages/shared-ui/file-manager.css';
 import { RelayPage } from './pages/RelayPage';
 import { bindMotion } from "../../../packages/shared-ui/motion.js";
 import { useEffect } from "react";
@@ -19,6 +21,7 @@ const navItems = [
 ];
 
 function Shell() {
+  useEffect(()=>bindFileManager(),[]);
   useEffect(() => { const presentation = bindPresentation(); const theme = bindTheme(); const motion = bindMotion(); return () => { presentation(); theme?.(); motion(); }; }, []);
   const { state, project } = useLiveRelay();
   const location = useLocation();

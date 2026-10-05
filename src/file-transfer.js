@@ -82,6 +82,7 @@ export async function transferWrite(args,bucket,claims,now=Date.now()){
  throw Error('Unknown transfer write action');
 }
 export async function transferRead(args,bucket,claims,now=Date.now()){
+ if(['files','file-status','file-chunk'].includes(args.action))return readBrowserFiles(args,bucket,claims,now);
  requireValue(bucket&&typeof bucket.get==='function','Temporary storage is unavailable');const owner=principal(claims);
  if(['inbox','outbox'].includes(args.action)){
   requireValue(isLabel(args.address),'A routing address is required');requireValue(args.cursor==null||(typeof args.cursor==='string'&&args.cursor.length<=4096),'Invalid inbox cursor');
@@ -118,5 +119,104 @@ export async function expireTransfers(bucket,now=Date.now()){
 const properties={action:{type:'string'},id:{type:'string',pattern:'^tr_[a-f0-9]{32}$'},index:{type:'integer',minimum:0,maximum:127},request_id:{type:'string',maxLength:128},sender:{type:'string',maxLength:128},recipient:{type:'string',maxLength:128},filename:{type:'string',maxLength:180},bytes:{type:'integer',minimum:1,maximum:MAX_TRANSFER_BYTES},sha256:{type:'string',pattern:'^[a-f0-9]{64}$'},ttl_hours:{type:'integer',minimum:1,maximum:72},base64:{type:'string',maxLength:Math.ceil(CHUNK_BYTES/3)*4},address:{type:'string',maxLength:128},cursor:{type:'string',maxLength:4096}};
 export const transferTools=[
  {name:'relay_transfer_write',title:'Send or acknowledge a temporary file',description:'Private same-account inbox/outbox. Begin with a stable request_id, sender/recipient routing labels, filename, bytes and SHA-256. Upload fixed 256 KiB chunks (last may be shorter), then complete to verify the entire file. Acknowledge only after downloading and independently verifying the whole file checksum. Retries are immutable and bounded. Labels do not grant access across accounts. Expires after 24 hours by default, up to 72 hours. Never send credentials.',inputSchema:{type:'object',properties:{...properties,action:{type:'string',enum:['begin','chunk','complete','ack']}},required:['action'],additionalProperties:false},annotations:{readOnlyHint:false,destructiveHint:false,idempotentHint:true,openWorldHint:false}},
- {name:'relay_transfer_read',title:'Read temporary files and transfer receipts',description:'Read same-authenticated-account temporary transfers. Inbox/outbox require an address routing label; paginate with cursor until null. Status reports uploaded chunks for resume. Chunk returns bounded base64 only after complete verification. Download every chunk, verify chunk and whole-file SHA-256 before acknowledging. Transfer IDs are not public download links.',inputSchema:{type:'object',properties:{action:{type:'string',enum:['inbox','outbox','status','chunk']},id:properties.id,index:properties.index,address:properties.address,cursor:properties.cursor},required:['action'],additionalProperties:false},annotations:{readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:false}}
+ {name:'relay_transfer_read',title:'Read temporary files and transfer receipts',description:'Read same-authenticated-account temporary transfers. Browser file manager uploads: action files lists private files with cursor; file-status uses fl_ ID; file-chunk downloads fixed 256 KiB indexed slices and whole-file checksum (up to 512 MiB). Verify the complete checksum before using downloaded content. Inbox/outbox require an address routing label; paginate with cursor until null. Status reports uploaded chunks for resume. Chunk returns bounded base64 only after complete verification. Download every chunk, verify chunk and whole-file SHA-256 before acknowledging. Transfer IDs are not public download links.',inputSchema:{type:'object',properties:{action:{type:'string',enum:['inbox','outbox','status','chunk','files','file-status','file-chunk']},id:{type:'string',pattern:'^(tr|fl)_[a-f0-9]{32}$'},index:{type:'integer',minimum:0,maximum:2047},address:properties.address,cursor:properties.cursor},required:['action'],additionalProperties:false},annotations:{readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:false}}
 ];
+
+// Browser packages are streamed in bounded chunks, separately from the MCP envelopes.
+export const FILE_CHUNK_BYTES=4*1024*1024;
+export const MAX_FILE_BYTES=512*1024*1024;
+const FILE_PREFIX='file-manager/v1/';
+const fileId=value=>typeof value==='string'&&/^fl_[a-f0-9]{32}$/.test(value);
+const fileRoot=(owner,id)=>FILE_PREFIX+owner+'/'+id+'/';
+async function fileMeta(bucket,owner,id,now){
+ requireValue(fileId(id),'Invalid file ID');
+ const meta=await readJson(bucket,fileRoot(owner,id)+'manifest.json');
+ requireValue(meta&&meta.owner===owner&&meta.expires_at>now,'File not found or expired');return meta;
+}
+async function fileStatus(bucket,meta,details=false){
+ const root=fileRoot(meta.owner,meta.id),ready=await readJson(bucket,root+'ready.json');
+ const out={...publicManifest(meta),state:ready?'ready':'uploading'};
+ if(details){out.uploaded_chunks=[];for(let i=0;i<meta.chunks;i++)if(await bucket.head(root+'chunks/'+i))out.uploaded_chunks.push(i)}
+ return out;
+}
+async function limitedBytes(request,max){
+ const length=Number(request.headers.get('content-length'));
+ requireValue(!length||length<=max,'Request is too large');
+ const reader=request.body?.getReader();if(!reader)return new Uint8Array();
+ const chunks=[];let size=0;
+ try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>max){await reader.cancel();throw Error('Request is too large')}chunks.push(value)}}finally{reader.releaseLock()}
+ const out=new Uint8Array(size);let offset=0;for(const chunk of chunks){out.set(chunk,offset);offset+=chunk.length}return out;
+}
+export async function readBrowserFiles(args,bucket,claims,now=Date.now()){
+ const owner=principal(claims);requireValue(bucket,'File storage unavailable');
+ if(args.action==='files'){
+  requireValue(args.cursor==null||(typeof args.cursor==='string'&&args.cursor.length<=4096),'Invalid cursor');
+  const page=await bucket.list({prefix:FILE_PREFIX+owner+'/',limit:300,...(args.cursor?{cursor:args.cursor}:{})});const files=[];
+  for(const item of page.objects){if(!item.key.endsWith('/manifest.json'))continue;const meta=await readJson(bucket,item.key);if(meta?.owner===owner&&meta.expires_at>now)files.push(await fileStatus(bucket,meta));}
+  return {ok:true,files,cursor:page.truncated?page.cursor:null,max_bytes:MAX_FILE_BYTES,chunk_bytes:FILE_CHUNK_BYTES};
+ }
+ const meta=await fileMeta(bucket,owner,args.id,now);
+ if(args.action==='file-status')return {ok:true,file:await fileStatus(bucket,meta,true)};
+ requireValue(args.action==='file-chunk','Unknown file read action');
+ requireValue(await readJson(bucket,fileRoot(owner,args.id)+'ready.json'),'File is not ready');
+ // MCP downloads always remain 256 KiB even for large browser-uploaded packages.
+ const total=Math.ceil(meta.bytes/CHUNK_BYTES);requireValue(Number.isInteger(args.index)&&args.index>=0&&args.index<total,'Invalid chunk index');
+ const offset=args.index*CHUNK_BYTES,storageIndex=Math.floor(offset/FILE_CHUNK_BYTES),start=offset%FILE_CHUNK_BYTES;
+ const item=await bucket.get(fileRoot(owner,args.id)+'chunks/'+storageIndex);requireValue(item,'Chunk missing');
+ const data=Buffer.from(await item.arrayBuffer()).subarray(start,start+Math.min(CHUNK_BYTES,meta.bytes-offset));
+ return {ok:true,id:meta.id,index:args.index,chunks:total,chunk_bytes:CHUNK_BYTES,bytes:data.length,base64:data.toString('base64'),sha256:digest(data),file_sha256:meta.sha256};
+}
+export async function browserFileResponse(request,bucket,claims,now=Date.now()){
+ const url=new URL(request.url),path=url.pathname; if(!path.startsWith('/api/files'))return null;
+ const headers={'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer'};
+ const json=(body,status=200)=>Response.json(body,{status,headers});
+ try{
+  requireValue(bucket,'File storage unavailable');const owner=principal(claims);
+  if(!['GET','HEAD'].includes(request.method)){
+   const origin=request.headers.get('origin');requireValue(['https://relay.loew.fi','https://ctrl.loew.fi'].includes(origin),'Same-origin request required');
+   requireValue(request.headers.get('x-relay-file-request')==='1','Explicit file request required');
+  }
+  if(path==='/api/files'&&request.method==='GET')return json(await readBrowserFiles({action:'files',cursor:url.searchParams.get('cursor')},bucket,claims,now));
+  if(path==='/api/files'&&request.method==='POST'){
+   requireValue(request.headers.get('content-type')?.startsWith('application/json'),'JSON required');
+   const args=JSON.parse(new TextDecoder().decode(await limitedBytes(request,4096)));
+   requireValue(isLabel(args.request_id),'Stable request ID required');
+   requireValue(typeof args.filename==='string'&&args.filename.length>0&&args.filename.length<=180&&!/[\x00-\x1f\x7f/\\]/.test(args.filename)&&!['.','..'].includes(args.filename),'Invalid filename');
+   requireValue(Number.isSafeInteger(args.bytes)&&args.bytes>0&&args.bytes<=MAX_FILE_BYTES,'File must be 1 byte–512 MiB');
+   requireValue(hashPattern.test(args.sha256||''),'File checksum required');
+   const id='fl_'+digest(owner+'\0'+args.request_id).slice(0,32),key=fileRoot(owner,id)+'manifest.json';
+   const props={id,owner,filename:args.filename,bytes:args.bytes,sha256:args.sha256,chunk_bytes:FILE_CHUNK_BYTES,chunks:Math.ceil(args.bytes/FILE_CHUNK_BYTES)};
+   const previous=await readJson(bucket,key);
+   if(previous){requireValue(previous.expires_at>now,'File expired; start a new upload');requireValue(Object.entries(props).every(([k,v])=>previous[k]===v),'Request ID conflicts with another file');return json({ok:true,file:await fileStatus(bucket,previous,true),resumed:true})}
+   const meta={...props,created_at:now,expires_at:now+72*3600000};
+   const stored=await bucket.put(key,JSON.stringify(meta),{onlyIf:{etagDoesNotMatch:'*'},customMetadata:{expires_at:String(meta.expires_at)}});
+   if(!stored){const found=await fileMeta(bucket,owner,id,now);requireValue(Object.entries(props).every(([k,v])=>found[k]===v),'Request ID conflicts with another file');return json({ok:true,file:await fileStatus(bucket,found,true),resumed:true})}
+   return json({ok:true,file:{...publicManifest(meta),state:'uploading',uploaded_chunks:[]}},201);
+  }
+  const match=path.match(/^\/api\/files\/(fl_[a-f0-9]{32})(?:\/(status|complete|download|chunks\/\d+))?$/);requireValue(match,'Unknown file route');
+  const meta=await fileMeta(bucket,owner,match[1],now),root=fileRoot(owner,meta.id),action=match[2]||'status';
+  if(action==='status'&&request.method==='GET')return json({ok:true,file:await fileStatus(bucket,meta,true)});
+  if(action.startsWith('chunks/')&&request.method==='PUT'){
+   const index=Number(action.slice(7));requireValue(Number.isInteger(index)&&index>=0&&index<meta.chunks,'Invalid chunk index');
+   const bytes=await limitedBytes(request,FILE_CHUNK_BYTES),expected=Math.min(FILE_CHUNK_BYTES,meta.bytes-index*FILE_CHUNK_BYTES);
+   requireValue(bytes.length===expected,'Wrong chunk size');requireValue(hashPattern.test(request.headers.get('x-content-sha256')||'')&&digest(bytes)===request.headers.get('x-content-sha256'),'Chunk checksum mismatch');
+   await immutable(bucket,root+'chunks/'+index,bytes,meta.expires_at);return json({ok:true,index,bytes:bytes.length});
+  }
+  if(action==='complete'&&request.method==='POST'){
+   const hash=createHash('sha256');let size=0;
+   for(let i=0;i<meta.chunks;i++){const item=await bucket.get(root+'chunks/'+i);requireValue(item,'Missing chunk '+i);const bytes=Buffer.from(await item.arrayBuffer());requireValue(bytes.length===Math.min(FILE_CHUNK_BYTES,meta.bytes-i*FILE_CHUNK_BYTES),'Wrong stored chunk size');hash.update(bytes);size+=bytes.length}
+   requireValue(size===meta.bytes&&hash.digest('hex')===meta.sha256,'Whole-file checksum mismatch');
+   await immutable(bucket,root+'ready.json',JSON.stringify({id:meta.id,sha256:meta.sha256,bytes:meta.bytes}),meta.expires_at);return json({ok:true,file:{...publicManifest(meta),state:'ready'}});
+  }
+  if(action==='download'&&['GET','HEAD'].includes(request.method)){
+   requireValue(await readJson(bucket,root+'ready.json'),'File is not ready');let index=0;
+   const stream=new ReadableStream({async pull(controller){try{if(index===meta.chunks){controller.close();return}const item=await bucket.get(root+'chunks/'+index++);requireValue(item,'Chunk unavailable');controller.enqueue(new Uint8Array(await item.arrayBuffer()))}catch(e){controller.error(e)}}});
+   return new Response(request.method==='HEAD'?null:stream,{headers:{...headers,'Content-Type':'application/octet-stream','Content-Length':String(meta.bytes),'Content-Disposition':`attachment; filename="download"; filename*=UTF-8''${encodeURIComponent(meta.filename).replace(/['()*]/g,c=>'%'+c.charCodeAt(0).toString(16))}`,'X-File-Sha256':meta.sha256}});
+  }
+  return json({error:'Method not allowed'},405);
+ }catch(e){return json({error:e.message||'File operation failed'},400)}
+}
+export async function expireBrowserFiles(bucket,now=Date.now()){
+ if(!bucket)return;const key='transfer-maintenance/v1/file-cursor.json';let cursor=(await readJson(bucket,key))?.cursor;
+ for(let pageNumber=0;pageNumber<8;pageNumber++){const page=await bucket.list({prefix:FILE_PREFIX,limit:1000,include:['customMetadata'],...(cursor?{cursor}:{})});const expired=page.objects.filter(o=>Number(o.customMetadata?.expires_at)>0&&Number(o.customMetadata.expires_at)<=now).map(o=>o.key);for(let i=0;i<expired.length;i+=100)await bucket.delete(expired.slice(i,i+100));cursor=page.truncated?page.cursor:null;await bucket.put(key,JSON.stringify({cursor}));if(!cursor)break}
+}
