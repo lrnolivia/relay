@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "thetake",
-  "updated_at": "2026-09-30T09:12:58.076Z",
+  "updated_at": "2026-10-05T18:31:08.131Z",
   "legacy_branches": [
     "docs/move-to-runner",
     "main",
@@ -33,6 +33,55 @@
       "evidence": "https://github.com/lrnolivia/thetake/pull/3",
       "work_accounted": true,
       "completed_at": "2026-09-30T09:12:58.076Z"
+    },
+    {
+      "id": "thetake-inventory-20261005",
+      "owner": "01a10d01-eb49-71e1-9403-3a14f65bf0e1",
+      "branch": "thetake/inventory-20261005",
+      "paths": [
+        "index.html",
+        "public/inventory/",
+        "src/",
+        "worker/",
+        "migrations/",
+        "package.json",
+        "package-lock.json",
+        "wrangler.jsonc",
+        ".github/workflows/",
+        "scripts/"
+      ],
+      "resources": [
+        "thetake-inventory",
+        "thetake-auth",
+        "thetake-production"
+      ],
+      "goal": "Publish CHOP inventory using The Take design, with app switch, authentication and private cross-device persistence.",
+      "acceptance": "Phone-friendly counting and reorder export; authenticated cross-device count history; private account isolation; existing calculator preserved; browser and exact-SHA checks pass; deployment verified with rollback.",
+      "next_action": "Inspect hosting and authentication resources, implement and verify directly.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "3645a887b75d1a83ade5969ab2bdc8e45936b2cc",
+      "state": "active",
+      "created_at": "2026-10-05T18:31:08.131Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish CHOP inventory using The Take design, with app switch, authentication and private cross-device persistence.",
+          "acceptance": "Phone-friendly counting and reorder export; authenticated cross-device count history; private account isolation; existing calculator preserved; browser and exact-SHA checks pass; deployment verified with rollback.",
+          "at": "2026-10-05T18:31:08.131Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "thetake-inventory-20261005:acceptance:0",
+            "text": "Phone-friendly counting and reorder export; authenticated cross-device count history; private account isolation; existing calculator preserved; browser and exact-SHA checks pass; deployment verified with rollback.",
+            "at": "2026-10-05T18:31:08.131Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-05T18:31:08.131Z",
+      "lease_until": "2026-10-06T06:31:08.131Z"
     }
   ]
 }
