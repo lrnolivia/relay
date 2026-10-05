@@ -1,4 +1,4 @@
-import {expireTransfers} from '../../src/file-transfer.js';
+import {expireTransfers,expireBrowserFiles} from '../../src/file-transfer.js';
 import { relayPanelResponse } from '../web/panel-api.js';
 import {eventStream,publishInvalidation,mutationTopics,successfulRpc,operatorTopics} from '../../src/relay-events.js';
 export {RelayEvents} from '../../src/relay-events.js';
@@ -10,6 +10,7 @@ import { webAssets, webBuildId, webSourceSha } from "../web/generated.js";
 export default {
   async scheduled(event,env,ctx) {
     ctx.waitUntil(expireTransfers(env.EVIDENCE));
+    ctx.waitUntil(expireBrowserFiles(env.EVIDENCE));
   },
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -19,6 +20,9 @@ export default {
       return Response.redirect("https://ctrl.loew.fi" + destination + url.search, 308);
     }
     if (url.pathname.startsWith("/api/")) {
+      // File transport validates the same JWT in the gateway, without copying a
+      // multi-megabyte Content-Length onto the small JSON authentication probe.
+      if(url.pathname.startsWith('/api/files'))return gateway.fetch(request,env);
       // Verify the same identity as native MCP before exposing operator API routes.
       const auth = await gateway.fetch(new Request(url.origin + "/mcp", {
         method: "POST", headers: new Headers({ ...Object.fromEntries(request.headers), "Content-Type": "application/json" }),

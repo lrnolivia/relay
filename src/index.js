@@ -1,4 +1,4 @@
-import {transferTools,transferRead,transferWrite} from './file-transfer.js';
+import {transferTools,transferRead,transferWrite,browserFileResponse} from './file-transfer.js';
 import { readMcpBody, mcpBodyErrorResponse } from "./mcp-request-body.js";
 import { handleApi as runnerApi } from "../packages/runner/src/cloudflare-worker.mjs";
 import { browserRequestOptions, runQuickAction } from "./browser.js";
@@ -1449,6 +1449,8 @@ export default {
         }
       );
     }
+
+    if(url.pathname.startsWith('/api/files'))return browserFileResponse(request,env.EVIDENCE,access.claims);
 
     const recipeMatch = url.pathname.match(/^\/recipe\/([a-z0-9][a-z0-9._-]{2,80})$/);
     if (request.method === "GET" && recipeMatch) {

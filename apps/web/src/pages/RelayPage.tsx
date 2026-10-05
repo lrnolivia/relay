@@ -1,3 +1,4 @@
+import {fileManagerIcon} from '../../../../packages/shared-ui/file-manager.js';
 import { LiveTelemetry } from '../components/LiveTelemetry';
 import { useState, useEffect, useRef } from 'react';
 import { useLiveRelay } from '../live';
@@ -28,7 +29,7 @@ export function RelayPage() {
   }
   async function copy(value:string){try{await navigator.clipboard.writeText(value);setMessage('Copied. Complete the connection in your AI client.');}catch{setMessage('Copy the displayed address manually; clipboard access is unavailable.');}}
   return <main className="relay-home" data-feature="relay">
-    <div className="relay-home-top"><span>loew.fi / relay</span><a href="https://ctrl.loew.fi">open ctrl <span aria-hidden="true">↗</span></a></div>
+    <div className="relay-home-top"><span>loew.fi / relay</span><button type="button" data-file-manager aria-label="Open files" title="Files" dangerouslySetInnerHTML={{__html:fileManagerIcon}}/><a href="https://ctrl.loew.fi">open ctrl <span aria-hidden="true">↗</span></a></div>
     <section className="relay-main-panel" aria-labelledby="relay-title">
       <header className="relay-identity">
         <div className="relay-wordmark"><img src="/brand/relay.png" alt="" width="144" height="144"/><div><h1 id="relay-title">relay</h1><p>your tools, connected.</p></div></div>
