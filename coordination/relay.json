@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-05T00:21:51.564Z",
+  "updated_at": "2026-10-05T08:40:14.880Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -7803,6 +7803,40 @@
       },
       "completed_at": "2026-10-04T04:50:49.142Z",
       "updated_at": "2026-10-04T04:50:49.142Z"
+    },
+    {
+      "id": "gwfamily-registry-name-repair-20261005",
+      "owner": "01a10a77-b85b-708c-ad94-825767c76005",
+      "goal": "Correct one stale repository name after the user-requested rename to gwfamily.",
+      "acceptance": "Change only projects/grnwht.json repository from lrnolivia/grnwht to verified lrnolivia/gwfamily; preserve project ID, all permissions, scope, security, branches and other settings. Verify readback and GW Family preflight. This task does not resume or queue the broad Relay rebuild.",
+      "next_action": "Check path ownership before changing this single registry field; preserve original Relay rebuild as blocked and unmodified.",
+      "paths": [
+        "projects/grnwht.json"
+      ],
+      "resources": [
+        "gwfamily-registry-name"
+      ],
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-05T08:40:14.880Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Correct one stale repository name after the user-requested rename to gwfamily.",
+          "acceptance": "Change only projects/grnwht.json repository from lrnolivia/grnwht to verified lrnolivia/gwfamily; preserve project ID, all permissions, scope, security, branches and other settings. Verify readback and GW Family preflight. This task does not resume or queue the broad Relay rebuild.",
+          "at": "2026-10-05T08:40:14.880Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "gwfamily-registry-name-repair-20261005:acceptance:0",
+            "text": "Change only projects/grnwht.json repository from lrnolivia/grnwht to verified lrnolivia/gwfamily; preserve project ID, all permissions, scope, security, branches and other settings. Verify readback and GW Family preflight. This task does not resume or queue the broad Relay rebuild.",
+            "at": "2026-10-05T08:40:14.880Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
