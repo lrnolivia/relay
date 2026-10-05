@@ -1,0 +1,54 @@
+{
+  "id": "grnwht",
+  "name": "grnwht · Green & White",
+  "repository": "lrnolivia/grnwht",
+  "managed": true,
+  "default_branch": "main",
+  "implementation": {
+    "branch_prefixes": [
+      "grnwht/"
+    ],
+    "excluded_branches": [
+      "main"
+    ],
+    "draft_pr_required": true,
+    "merge_method": "squash"
+  },
+  "runtime": {
+    "kind": "node",
+    "node_version": "22"
+  },
+  "validation": {
+    "build": "node --check dist/app.js",
+    "test": "node --test tests/*.test.mjs",
+    "required": [
+      "build",
+      "test"
+    ]
+  },
+  "promotion": {
+    "automatic": false,
+    "exact_sha_gate": true
+  },
+  "safety": {
+    "force_push": false,
+    "bypass_required_checks": false,
+    "semantic_conflict_resolution": "block"
+  },
+  "guidance": {
+    "universal_authority": "lrnolivia/relay@main/LOEW_CHAT_BIBLE.md",
+    "local_bootstrap": "AGENTS.md"
+  },
+  "coordination": {
+    "contract": "docs/WORK_COORDINATION.md",
+    "record": "coordination/grnwht.json",
+    "max_active_branches": 2,
+    "lease_hours": 12,
+    "one_active_branch_per_owner": true,
+    "resume_existing_assignment": true,
+    "atomic_claim_required": true,
+    "expired_claim_retains_ownership": true,
+    "status": "enabled",
+    "cleanup": "merged-managed-branches-only"
+  }
+}
