@@ -5,7 +5,7 @@ export const fileManagerIcon='<svg viewBox="0 0 24 24" width="20" height="20" fi
 export function bindFileManager(root=document){
  let dialog=null,opener=null,files=[],working=false,paused=false,current=null,message='',refreshing=false,disposed=false;
  const controller=new AbortController();
- async function request(path='',options={}){const r=await fetch('/api/files'+path,{credentials:'same-origin',cache:'no-store',redirect:'error',...options,headers:{'X-Relay-File-Request':'1',...options.headers}});let value;try{value=await r.json()}catch{throw Error('Sign in again, then reopen Files. Your upload can be resumed.')}if(!r.ok)throw Error(value.error||'File request failed');return value;}
+ async function request(path='',options={}){const r=await fetch('/api/files'+path,{credentials:'same-origin',cache:'no-store',redirect:'error',signal:AbortSignal.timeout(120000),...options,headers:{'X-Relay-File-Request':'1',...options.headers}});let value;try{value=await r.json()}catch{throw Error('Sign in again, then reopen Files. Your upload can be resumed.')}if(!r.ok)throw Error(value.error||'File request failed');return value;}
  function el(tag,cls,text){const node=document.createElement(tag);if(cls)node.className=cls;if(text!=null)node.textContent=text;return node}
  function status(text){message=text;if(dialog)dialog.querySelector('[data-file-status]').textContent=text;}
  function render(){if(!dialog)return;const list=dialog.querySelector('[data-file-list]');list.replaceChildren();
