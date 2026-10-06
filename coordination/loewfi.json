@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "loewfi",
-  "updated_at": "2026-09-30T09:12:55.911Z",
+  "updated_at": "2026-10-06T02:13:29.036Z",
   "legacy_branches": [
     "main",
     "runner/universal-authority"
@@ -32,6 +32,45 @@
       "evidence": "https://github.com/lrnolivia/loewfi/pull/3",
       "work_accounted": true,
       "completed_at": "2026-09-30T09:12:55.911Z"
+    },
+    {
+      "id": "loewfi-canonical-workflow-20261006",
+      "owner": "01a10d01-eb49-71e1-9403-3a14f65bf0e1",
+      "branch": "loewfi/canonical-workflow-20261006",
+      "paths": [
+        ".github/workflows/runner-coordination.yml"
+      ],
+      "resources": [
+        "loewfi-coordination-workflow"
+      ],
+      "goal": "Repair stale workflow checkout to canonical Relay without changing permissions or admission and cleanup safeguards.",
+      "acceptance": "Exact workflow diff changes retired loew-runner repository to relay; existing actions and permissions preserved; exact-head coordination check passes; publish only under authorized guarded merge with rollback.",
+      "next_action": "Create exact-base branch, change two checkout references, open draft PR and verify.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "82cf4225187ba63cd5f69e819149f208a5db5bb1",
+      "state": "active",
+      "created_at": "2026-10-06T02:13:29.036Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Repair stale workflow checkout to canonical Relay without changing permissions or admission and cleanup safeguards.",
+          "acceptance": "Exact workflow diff changes retired loew-runner repository to relay; existing actions and permissions preserved; exact-head coordination check passes; publish only under authorized guarded merge with rollback.",
+          "at": "2026-10-06T02:13:29.036Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "loewfi-canonical-workflow-20261006:acceptance:0",
+            "text": "Exact workflow diff changes retired loew-runner repository to relay; existing actions and permissions preserved; exact-head coordination check passes; publish only under authorized guarded merge with rollback.",
+            "at": "2026-10-06T02:13:29.036Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-06T02:13:29.036Z",
+      "lease_until": "2026-10-06T14:13:29.036Z"
     }
   ]
 }
