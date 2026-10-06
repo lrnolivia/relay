@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-06T14:41:09.426Z",
+  "updated_at": "2026-10-06T20:29:25.959Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -11307,10 +11307,23 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "a79bc74350e003b53f39cac066cd044e27651a07",
-      "state": "held",
+      "state": "superseded",
       "created_at": "2026-10-01T16:38:20.309Z",
-      "updated_at": "2026-10-01T16:48:32.059Z",
-      "lease_until": "2026-10-02T04:48:32.059Z"
+      "updated_at": "2026-10-06T20:29:25.959Z",
+      "lease_until": "2026-10-02T04:48:32.059Z",
+      "retirement": {
+        "at": "2026-10-06T20:29:25.959Z",
+        "intent": {
+          "operation_id": "retire-minimal-probe-superseded-20261006-1911-e4080bbb",
+          "owner": "relay-mcp-minimal-probe-20261001",
+          "disposition": "superseded",
+          "reason": "The user explicitly approved retiring this old unfinished probe reservation as superseded so the current Relay rebuild and shared-language update can proceed, while keeping its branch and PR intact.",
+          "evidence": "Fresh canonical reads at 2026-10-06T19:08-19:11Z confirm unchanged held claim last updated 2026-10-01T16:48:32.059Z, sole path src/relay-v2-probe.js, and exact branch relay/mcp-minimal-probe-20261001 head e4080bbb2ac30b7f51fb5716fd685d9d4683c8b2 matching the earlier inspection. PR96 https://github.com/lrnolivia/relay/pull/96 remains open, draft, unmerged, last updated Oct1; all 14 exact-head checks are completed since Oct1. Broker execution status has job:null, revision:0; live Runner registry contains no Relay writer. Parent's earlier 65-task scan found no verified active owner thread. These are observations of no new writer activity, not a claim to have stopped an unknown process or inspected external unsaved files; no additional owner-cessation confirmation exists. Existing canonical retirements preserve earlier writer-cutover evidence. Current canonical engine and byte-exact runtime mirror both equal 591d0155555a74db4769fda289e5212b07609e65, matching deployed Runner engine and core pin. All unpublished committed probe work stays at the exact retained branch/PR; original goal, acceptance, history, and outstanding cross-client mounting test remain preserved in this assignment and PR96, not marked delivered. Dependency PR97 was merged Oct1. Existing nonterminal successor relay-mcp-rebuild-continuation-20261003 retains ongoing rebuild, shared-model integration, and actual client-rendering verification; this disposition releases only the old reservation. No source edits, ownership transfer, PR close/merge, branch deletion, temporary deployment, or successful-delivery claim.",
+          "superseded_by": "relay-mcp-rebuild-continuation-20261003",
+          "branch": "relay/mcp-minimal-probe-20261001",
+          "head_sha": "e4080bbb2ac30b7f51fb5716fd685d9d4683c8b2"
+        }
+      }
     },
     {
       "id": "relay-pipeline-unclog-20261001",
