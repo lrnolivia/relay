@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-06T20:34:04.188Z",
+  "updated_at": "2026-10-06T20:40:36.641Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -7851,7 +7851,7 @@
       "owner": "01a10d01-eb49-71e1-9403-3a14f65bf0e1",
       "goal": "Audit historical manual approvals and establish a durable intake of future approval friction, including the ChatGPT GitHub connector versus Relay artifact-access mismatch.",
       "acceptance": "Produce an evidence-linked inventory of manual approval requests since work began: source message IDs/times, action/data/destination, reason asked, actual blocker versus redundant asking, approval/denial/cancellation/outcome, safe automation or bounded preauthorization or secure handoff proposal, rollback, permission boundary and priority. Record coverage limits honestly. Distinguish technical/schema/provider failures from missing authorization and respect later cancellation. Create a project-owned append-only intake deduped by action/target/reason with reviewed, deferred and automated states plus occurrence and outcome history. Every future manual approval must add a sanitized entry without secrets, family-private content or raw conversation dumps. Prefer source-native artifact retrieval to extra file copies; investigate built-in ChatGPT GitHub artifact 404 while Relay source/check reads work, without inferring root cause or broadening grants. No automatic approvals, policy bypass, credential creation/configuration, new access or custom-rule changes. Retain required action-time confirmation and secure handoff. Queueing does not claim occupied source paths or start code/deploy work. User authority: Sentinel_acf3007236e481918666145e9fc468f3 at 2026-10-06T20:27:04Z, clarification Sentinel_813ea8e19c308191b83401d797719287 at 20:27:23Z.",
-      "next_action": "Research and seed the evidence inventory and intake contract. Use current canonical record/CAS and preserve all unrelated queue rows and claims. Before implementation, admit an isolated scope after coordinating with the existing Relay owner; implement no code or deployment as part of this queued research assignment.",
+      "next_action": "Audit first pass: 694 messages, Oct 5–6; older history needs exact-source backfill. Prioritize source-native artifact retrieval, cancellation provenance, action-specific schemas and a dedicated durable intake store. No automation is implemented.\n\nRunning intake v1 (R=reviewed, D=deferred; automated requires tested implementation):\nAF-001 R P1 GW preview deploy\nAF-002 R P0 Inventory owner correction\nAF-003 R P0 Inventory live/test isolation\nAF-004 R P0 GW auth/database bootstrap\nAF-005 R P1 CTRL PR20 release\nAF-006 R P0 Manual CI reruns\nAF-007 R P0 GW Google provider setup\nAF-008 D P2 Apple prerequisite\nAF-009 R P0 GW organizer mismatch\nAF-010 R P1 Signed-in QA gap\nAF-011 R P1 Lost-tab code resend\nAF-012 R P1 CTRL PR22 release receipt\nAF-013 R P0 GitHub release permission\nAF-014 R P1 Cloudflare screenshot transfer\nAF-015 R P0 Screenshot cancellation\nAF-016 R P0 Probe retirement\nAF-017 R P0 GitHub artifact mismatch\nAF-018 R P0 Denied external artifact copy\nAF-019 R P0 Private Actions log export\nAF-020 R P0 Queue action schema drift\nAF-021 R P0 Queue cancellation/retry\nAF-022 D P1 Opaque native confirmations\nAF-023 D P0 VAPID setup remains gated\nAF-024 R P1 Queued context read error\nAF-025 R P1 Checkpoint transfer gap\nAF-026 R P1 Intake storage capacity\n\nCapture every manual approval/handoff request and outcome. Dedupe by action+target+reason; preserve source IDs, scope/data/destination, reason, approval/cancellation/error and rollback in the full ledger. Never log secrets/private records. Prior entries grant no new permission; preserve mandatory confirmation/handoff. Amend only this row via fresh CAS; do not claim code paths. Full ledger is prepared; queued context read and 2,000-character limit currently prevent full storage here. Preserve this index pending dedicated-store implementation.",
       "paths": [
         "docs/relay/approval-friction/"
       ],
@@ -7881,7 +7881,25 @@
             "at": "2026-10-06T20:34:04.188Z"
           }
         ]
-      }
+      },
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-06T20:40:36.641Z",
+          "by": "01a10d01-eb49-71e1-9403-3a14f65bf0e1",
+          "reason": "Preserve a compact sanitized approval-friction intake index within the connector's size limit while full durable-storage implementation remains queued.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Research and seed the evidence inventory and intake contract. Use current canonical record/CAS and preserve all unrelated queue rows and claims. Before implementation, admit an isolated scope after coordinating with the existing Relay owner; implement no code or deployment as part of this queued research assignment."
+          },
+          "after": {
+            "next_action": "Audit first pass: 694 messages, Oct 5–6; older history needs exact-source backfill. Prioritize source-native artifact retrieval, cancellation provenance, action-specific schemas and a dedicated durable intake store. No automation is implemented.\n\nRunning intake v1 (R=reviewed, D=deferred; automated requires tested implementation):\nAF-001 R P1 GW preview deploy\nAF-002 R P0 Inventory owner correction\nAF-003 R P0 Inventory live/test isolation\nAF-004 R P0 GW auth/database bootstrap\nAF-005 R P1 CTRL PR20 release\nAF-006 R P0 Manual CI reruns\nAF-007 R P0 GW Google provider setup\nAF-008 D P2 Apple prerequisite\nAF-009 R P0 GW organizer mismatch\nAF-010 R P1 Signed-in QA gap\nAF-011 R P1 Lost-tab code resend\nAF-012 R P1 CTRL PR22 release receipt\nAF-013 R P0 GitHub release permission\nAF-014 R P1 Cloudflare screenshot transfer\nAF-015 R P0 Screenshot cancellation\nAF-016 R P0 Probe retirement\nAF-017 R P0 GitHub artifact mismatch\nAF-018 R P0 Denied external artifact copy\nAF-019 R P0 Private Actions log export\nAF-020 R P0 Queue action schema drift\nAF-021 R P0 Queue cancellation/retry\nAF-022 D P1 Opaque native confirmations\nAF-023 D P0 VAPID setup remains gated\nAF-024 R P1 Queued context read error\nAF-025 R P1 Checkpoint transfer gap\nAF-026 R P1 Intake storage capacity\n\nCapture every manual approval/handoff request and outcome. Dedupe by action+target+reason; preserve source IDs, scope/data/destination, reason, approval/cancellation/error and rollback in the full ledger. Never log secrets/private records. Prior entries grant no new permission; preserve mandatory confirmation/handoff. Amend only this row via fresh CAS; do not claim code paths. Full ledger is prepared; queued context read and 2,000-character limit currently prevent full storage here. Preserve this index pending dedicated-store implementation."
+          }
+        }
+      ],
+      "updated_at": "2026-10-06T20:40:36.641Z"
     }
   ],
   "claims": [
