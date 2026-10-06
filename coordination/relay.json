@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-05T20:49:46.508Z",
+  "updated_at": "2026-10-06T02:25:33.270Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -12918,6 +12918,50 @@
       "completed_at": "2026-10-04T04:50:49.142Z"
     },
     {
+      "id": "gwfamily-registry-name-repair-20261005",
+      "owner": "01a10a77-b85b-708c-ad94-825767c76005",
+      "branch": "relay/gwfamily-registry-name-20261005",
+      "paths": [
+        "projects/grnwht.json"
+      ],
+      "resources": [
+        "gwfamily-registry-name"
+      ],
+      "goal": "Correct one stale repository name after the user-requested rename to gwfamily.",
+      "acceptance": "Change only projects/grnwht.json repository from lrnolivia/grnwht to verified lrnolivia/gwfamily; preserve project ID, all permissions, scope, security, branches and other settings. Verify readback and GW Family preflight. This task does not resume or queue the broad Relay rebuild.",
+      "next_action": "Change only the verified renamed-repository field, validate it and restore GW Family preflight.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "5d8426dcf6b3b4138576141cdec70c87b157f403",
+      "state": "completed",
+      "created_at": "2026-10-05T09:35:07.738Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Correct one stale repository name after the user-requested rename to gwfamily.",
+          "acceptance": "Change only projects/grnwht.json repository from lrnolivia/grnwht to verified lrnolivia/gwfamily; preserve project ID, all permissions, scope, security, branches and other settings. Verify readback and GW Family preflight. This task does not resume or queue the broad Relay rebuild.",
+          "at": "2026-10-05T08:40:14.880Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "gwfamily-registry-name-repair-20261005:acceptance:0",
+            "text": "Change only projects/grnwht.json repository from lrnolivia/grnwht to verified lrnolivia/gwfamily; preserve project ID, all permissions, scope, security, branches and other settings. Verify readback and GW Family preflight. This task does not resume or queue the broad Relay rebuild.",
+            "at": "2026-10-05T08:40:14.880Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-05T09:43:13.034Z",
+      "lease_until": "2026-10-05T21:43:13.034Z",
+      "pr": 162,
+      "merged_head_sha": "aa560f2513e3d3b4e7f199a7a1ffd583c2aeedf0",
+      "merge_commit_sha": "cf52269f4785acadfa4cef1007f2814eafa36bb7",
+      "evidence": "PR162 merged cf52269f4785acadfa4cef1007f2814eafa36bb7. Exact one-field diff and valid JSON verified; admission succeeded. GW Family preflight now passes with no findings against its renamed repository. No other project fields, source files, security permissions or paused Relay acceptance changed.",
+      "work_accounted": true,
+      "completed_at": "2026-10-05T09:43:13.034Z"
+    },
+    {
       "id": "relay-mcp-rebuild-continuation-20261003",
       "owner": "01a10d01-eb49-71e1-9403-3a14f65bf0e1",
       "branch": "relay/mcp-rebuild-20261003",
@@ -12996,7 +13040,10 @@
         "src/progress-api.js",
         "src/progress-api.test.js",
         "src/runner-cleanup.js",
-        "coordination/grnwht.json"
+        "coordination/grnwht.json",
+        "src/source-lifecycle.js",
+        "src/source-lifecycle.test.js",
+        "docs/relay/WORKFLOW_AUDIT_20261006.md"
       ],
       "resources": [
         "relay-mcp-rebuild-program",
@@ -13007,7 +13054,7 @@
       ],
       "goal": "Continue the existing unfinished full Relay MCP rebuild, restoring original1.9 promised capabilities and integrating approved Relay live-panel/site/card work. Archival assignment closure is not proof of functional delivery.",
       "acceptance": "Preserve working tools and provenance. Restore the original 1.9 acceptance at commit 434541358d6bfd25e67af5d8e689ba49a5378b91 and all seven stages of the Research and Reflow Plan. Track source implementation, publication, host installation and runtime verification separately. Preserve original objectives and stable acceptance IDs through additive amendments and full-task resume. Separate scope completion from verification; reconcile stale ownership without restarting paused or cancelled work. Repurpose the hourly workflow as a model-free sync safeguard comparing registered tasks, PRs, checks and deployment evidence, with deduplicated continuation recommendations and honest unavailable-evidence states. Complete skill catalog, search, read, resolve, install/vendor, update and audit; pinned licensed portable bundles; integrity and dependency enforcement; all originally promised creative, platform and supporting packs. Prove durable jobs, a real coding executor, capability-based local/remote routing, worker communication and full capability parity. Fold the Relay website, live panel, approved telemetry, Refresh Tools fallback chain, Add MCP to AI actions and compact MCP cards into this same rebuild. Verify actual client rendering/actions. Integrate review-first cards, evidence and device-specific frames, saved answers/replies, project icons and useful workspace overview. Use flat surfaces with shadows/glows. Night Shift records actual autonomous away-time work, with an unused staff lead for oversight, preserved executor provenance, evidence-supported backfill and an idempotent Shift handoff. No new credentials or spending inferred. Documentation-only PRs, fixtures and transferred defects do not establish full delivery.\nFull execution handoff, source recovery and original contract evidence: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RELAY-MCP.md . All latest site/live-panel/telemetry/refresh/add-to-AI, review delivery, NightShift/Shift, canonical asset discovery, lifecycle and original skills/executor goals preserved. Original1.9 verbatim and41 stale queue pairs in sibling documents. Current engine cannot normalize completed queue pairs or handoff queued-only owner; do not bypass. Actual user-started Mac Codex identity pending; parent stops MCP implementation. ctrlfrontend remains separate heldPR7, recovery8WIPfiles preserved. New Relay site concept is not implementation; current plugin ID protected.\n2026-10-03 15:38 motion acceptance: preserve the approved Relay visual language; tighten in-motion card padding and text grouping; retain last good live data during refresh, skeletons only for initial unavailable content, clear loading indicators and animated updates without flicker. Each mosaic block supports touch long press into wiggle/reorder mode, drag, explicit Done and saved order; keep normal scrolling and taps, keyboard/reduced-motion accessibility. User says all these are part of the motion pass. Desktop normal ChatGPT card mount/read-only check now screenshot-proven; iOS user-reported working; browser regression remains open.\n2026-10-03 18:27 card acceptance: Lauren confirms the real iOS status card now loads data (screenshot libfile_4bab4a18f8ac81918f490d8135752922). Active panel must list active jobs, not staff. Present concise itemized job titles/status, readable visual hierarchy and glanceable information; expand full technical details on demand. Preserve established card identity and approved flat surfaces. Native iOS data hydration is evidenced; actions and browser parity remain separate checks.",
-      "next_action": "Lauren explicitly requests direct root implementation with no workers of a compact file-manager icon and shared large upload/download modal on CTRL and Relay. Work only on this newly authorized file-manager slice; all other broad Relay program work remains paused and unfinished, with original acceptance and retained source preserved. Previous owner was verified interrupted. Current claimed branch is absent in complete live inventory; recover from verified main only after ownership admission, without discarding any retained work or claiming old scope complete.",
+      "next_action": "Lauren requested outdated-workflow repairs and private CTRL audit. Add exact-head read-only workflow inventory using existing source access. No permissions change; broader unfinished program remains paused.",
       "ledger_refs": [
         "relay-mcp-rebuild-20261001",
         "relay-mcp-host-proof-20261001",
@@ -13054,8 +13101,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-05T20:49:46.508Z",
-      "lease_until": "2026-10-06T08:49:46.508Z",
+      "updated_at": "2026-10-06T02:25:33.270Z",
+      "lease_until": "2026-10-06T14:25:33.270Z",
       "handoffs": [
         {
           "at": "2026-10-03T08:00:10.297Z",
@@ -13125,50 +13172,6 @@
           }
         }
       ]
-    },
-    {
-      "id": "gwfamily-registry-name-repair-20261005",
-      "owner": "01a10a77-b85b-708c-ad94-825767c76005",
-      "branch": "relay/gwfamily-registry-name-20261005",
-      "paths": [
-        "projects/grnwht.json"
-      ],
-      "resources": [
-        "gwfamily-registry-name"
-      ],
-      "goal": "Correct one stale repository name after the user-requested rename to gwfamily.",
-      "acceptance": "Change only projects/grnwht.json repository from lrnolivia/grnwht to verified lrnolivia/gwfamily; preserve project ID, all permissions, scope, security, branches and other settings. Verify readback and GW Family preflight. This task does not resume or queue the broad Relay rebuild.",
-      "next_action": "Change only the verified renamed-repository field, validate it and restore GW Family preflight.",
-      "primary_team": "night-shift",
-      "supporting_teams": [],
-      "primary_staff": "julian",
-      "supporting_staff": [],
-      "base_sha": "5d8426dcf6b3b4138576141cdec70c87b157f403",
-      "state": "completed",
-      "created_at": "2026-10-05T09:35:07.738Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Correct one stale repository name after the user-requested rename to gwfamily.",
-          "acceptance": "Change only projects/grnwht.json repository from lrnolivia/grnwht to verified lrnolivia/gwfamily; preserve project ID, all permissions, scope, security, branches and other settings. Verify readback and GW Family preflight. This task does not resume or queue the broad Relay rebuild.",
-          "at": "2026-10-05T08:40:14.880Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "gwfamily-registry-name-repair-20261005:acceptance:0",
-            "text": "Change only projects/grnwht.json repository from lrnolivia/grnwht to verified lrnolivia/gwfamily; preserve project ID, all permissions, scope, security, branches and other settings. Verify readback and GW Family preflight. This task does not resume or queue the broad Relay rebuild.",
-            "at": "2026-10-05T08:40:14.880Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-05T09:43:13.034Z",
-      "lease_until": "2026-10-05T21:43:13.034Z",
-      "pr": 162,
-      "merged_head_sha": "aa560f2513e3d3b4e7f199a7a1ffd583c2aeedf0",
-      "merge_commit_sha": "cf52269f4785acadfa4cef1007f2814eafa36bb7",
-      "evidence": "PR162 merged cf52269f4785acadfa4cef1007f2814eafa36bb7. Exact one-field diff and valid JSON verified; admission succeeded. GW Family preflight now passes with no findings against its renamed repository. No other project fields, source files, security permissions or paused Relay acceptance changed.",
-      "work_accounted": true,
-      "completed_at": "2026-10-05T09:43:13.034Z"
     }
   ],
   "migrated_from": "loew-inspector"
