@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createSourceBranch, sourceInventory, sourcePullRequestAction } from "./source-lifecycle.js";
+import { createSourceBranch, sourceInventory, sourcePullRequestAction, workflowInventory } from "./source-lifecycle.js";
 
 test("inventory returns exact default, branch and open PR heads", async () => {
   const main = "a".repeat(40), branch = "b".repeat(40), pr = "c".repeat(40);
@@ -115,4 +115,17 @@ test("merge binds provider mutation to the expected green SHA", async () => {
   assert.equal(mergeBody.sha, head);
   assert.equal(mergeBody.merge_method, "squash");
   assert.equal(got.merge.merged, true);
+});
+
+
+test("workflow discovery reads only the exact authorized repository commit", async()=>{
+ const calls=[],sha="a".repeat(40);const result=await workflowInventory({},async(_env,path,options)=>{calls.push({path,options});return [{type:"file",name:"ci.yml",path:".github/workflows/ci.yml",sha:"b".repeat(40),size:42}]},"/repos/lrnolivia/ctrl",sha);
+ assert.equal(result.status,"available");assert.equal(result.ref,sha);assert.equal(result.files[0].path,".github/workflows/ci.yml");assert.deepEqual(calls,[{path:"/repos/lrnolivia/ctrl/contents/.github/workflows?ref="+sha,options:undefined}]);
+});
+test("workflow discovery distinguishes absence, denied access and provider failure",async()=>{
+ for(const [status,expected] of [[404,"absent"],[403,"unavailable"],[429,"unavailable"],[500,"unavailable"]]){const got=await workflowInventory({},async()=>{throw Object.assign(new Error("sensitive provider detail"),{status})},"/repos/lrnolivia/ctrl","a".repeat(40));assert.equal(got.status,expected);assert.ok(!JSON.stringify(got).includes("sensitive"));if(status===403)assert.equal(got.error_class,"access_denied")}
+});
+test("workflow discovery rejects escaped file identities and bounds directory size",async()=>{
+ const invalid=await workflowInventory({},async()=>[{type:"file",name:"ci.yml",path:"../../secret.yml",sha:"a".repeat(40)}],"/repos/lrnolivia/ctrl","b".repeat(40));assert.equal(invalid.status,"unavailable");assert.equal(invalid.files.length,0);
+ const many=await workflowInventory({},async()=>Array.from({length:201},(_,i)=>({type:"file",name:`ci-${i}.yml`,path:`.github/workflows/ci-${i}.yml`,sha:"a".repeat(40)})),"/repos/lrnolivia/ctrl","b".repeat(40));assert.equal(many.files.length,200);assert.equal(many.truncated,true);
 });
