@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-06T20:29:25.959Z",
+  "updated_at": "2026-10-06T20:34:04.188Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -7845,6 +7845,43 @@
       },
       "completed_at": "2026-10-05T09:43:13.034Z",
       "updated_at": "2026-10-05T09:43:13.034Z"
+    },
+    {
+      "id": "relay-approval-friction-audit-20261006",
+      "owner": "01a10d01-eb49-71e1-9403-3a14f65bf0e1",
+      "goal": "Audit historical manual approvals and establish a durable intake of future approval friction, including the ChatGPT GitHub connector versus Relay artifact-access mismatch.",
+      "acceptance": "Produce an evidence-linked inventory of manual approval requests since work began: source message IDs/times, action/data/destination, reason asked, actual blocker versus redundant asking, approval/denial/cancellation/outcome, safe automation or bounded preauthorization or secure handoff proposal, rollback, permission boundary and priority. Record coverage limits honestly. Distinguish technical/schema/provider failures from missing authorization and respect later cancellation. Create a project-owned append-only intake deduped by action/target/reason with reviewed, deferred and automated states plus occurrence and outcome history. Every future manual approval must add a sanitized entry without secrets, family-private content or raw conversation dumps. Prefer source-native artifact retrieval to extra file copies; investigate built-in ChatGPT GitHub artifact 404 while Relay source/check reads work, without inferring root cause or broadening grants. No automatic approvals, policy bypass, credential creation/configuration, new access or custom-rule changes. Retain required action-time confirmation and secure handoff. Queueing does not claim occupied source paths or start code/deploy work. User authority: Sentinel_acf3007236e481918666145e9fc468f3 at 2026-10-06T20:27:04Z, clarification Sentinel_813ea8e19c308191b83401d797719287 at 20:27:23Z.",
+      "next_action": "Research and seed the evidence inventory and intake contract. Use current canonical record/CAS and preserve all unrelated queue rows and claims. Before implementation, admit an isolated scope after coordinating with the existing Relay owner; implement no code or deployment as part of this queued research assignment.",
+      "paths": [
+        "docs/relay/approval-friction/"
+      ],
+      "resources": [
+        "relay-approval-friction-audit",
+        "relay-approval-friction-intake",
+        "relay-source-native-artifact-retrieval"
+      ],
+      "category": "research",
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-06T20:34:04.188Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Audit historical manual approvals and establish a durable intake of future approval friction, including the ChatGPT GitHub connector versus Relay artifact-access mismatch.",
+          "acceptance": "Produce an evidence-linked inventory of manual approval requests since work began: source message IDs/times, action/data/destination, reason asked, actual blocker versus redundant asking, approval/denial/cancellation/outcome, safe automation or bounded preauthorization or secure handoff proposal, rollback, permission boundary and priority. Record coverage limits honestly. Distinguish technical/schema/provider failures from missing authorization and respect later cancellation. Create a project-owned append-only intake deduped by action/target/reason with reviewed, deferred and automated states plus occurrence and outcome history. Every future manual approval must add a sanitized entry without secrets, family-private content or raw conversation dumps. Prefer source-native artifact retrieval to extra file copies; investigate built-in ChatGPT GitHub artifact 404 while Relay source/check reads work, without inferring root cause or broadening grants. No automatic approvals, policy bypass, credential creation/configuration, new access or custom-rule changes. Retain required action-time confirmation and secure handoff. Queueing does not claim occupied source paths or start code/deploy work. User authority: Sentinel_acf3007236e481918666145e9fc468f3 at 2026-10-06T20:27:04Z, clarification Sentinel_813ea8e19c308191b83401d797719287 at 20:27:23Z.",
+          "at": "2026-10-06T20:34:04.188Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-approval-friction-audit-20261006:acceptance:0",
+            "text": "Produce an evidence-linked inventory of manual approval requests since work began: source message IDs/times, action/data/destination, reason asked, actual blocker versus redundant asking, approval/denial/cancellation/outcome, safe automation or bounded preauthorization or secure handoff proposal, rollback, permission boundary and priority. Record coverage limits honestly. Distinguish technical/schema/provider failures from missing authorization and respect later cancellation. Create a project-owned append-only intake deduped by action/target/reason with reviewed, deferred and automated states plus occurrence and outcome history. Every future manual approval must add a sanitized entry without secrets, family-private content or raw conversation dumps. Prefer source-native artifact retrieval to extra file copies; investigate built-in ChatGPT GitHub artifact 404 while Relay source/check reads work, without inferring root cause or broadening grants. No automatic approvals, policy bypass, credential creation/configuration, new access or custom-rule changes. Retain required action-time confirmation and secure handoff. Queueing does not claim occupied source paths or start code/deploy work. User authority: Sentinel_acf3007236e481918666145e9fc468f3 at 2026-10-06T20:27:04Z, clarification Sentinel_813ea8e19c308191b83401d797719287 at 20:27:23Z.",
+            "at": "2026-10-06T20:34:04.188Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
