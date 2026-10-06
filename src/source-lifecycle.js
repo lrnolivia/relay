@@ -37,6 +37,25 @@ async function pages(env, request, path, max = 10) {
   return { items, truncated: true };
 }
 
+// Read-only workflow discovery uses the same repository installation and exact
+// default-branch commit as the inventory. No token or permission changes.
+export async function workflowInventory(env, request, base, headSha) {
+  try {
+    const entries = await request(env, `${base}/contents/.github/workflows?ref=${headSha}`);
+    if (!Array.isArray(entries)) throw new Error("Invalid workflow directory response");
+    const files = [];
+    for (const entry of entries.slice(0, 200)) {
+      if (entry?.type !== "file" || !/\.ya?ml$/i.test(entry.name || "")) continue;
+      if (!/^[A-Za-z0-9._-]+\.ya?ml$/i.test(entry.name) || entry.path !== `.github/workflows/${entry.name}` || !SHA.test(entry.sha || "")) throw new Error("Invalid workflow file identity");
+      files.push({path:entry.path, blob_sha:entry.sha.toLowerCase(), size_bytes:Number.isSafeInteger(entry.size) ? entry.size : null});
+    }
+    return {status:"available", ref:headSha, files, truncated:entries.length >= 200};
+  } catch (error) {
+    if (error?.status === 404) return {status:"absent", ref:headSha, files:[], truncated:false};
+    return {status:"unavailable", ref:headSha, files:[], truncated:false, error_class:error?.status === 403 ? "access_denied" : error?.status === 429 ? "rate_limited" : "provider_error"};
+  }
+}
+
 export async function sourceInventory(env, args, request = githubApiRequest) {
   const o = owner(env, args.owner), repo = ident(args.repo, "repository"), base = root(o, repo);
   const meta = await request(env, base);
@@ -44,9 +63,11 @@ export async function sourceInventory(env, args, request = githubApiRequest) {
   const head = await request(env, `${base}/git/ref/heads/${refName(defaultBranch)}`);
   const branches = await pages(env, request, base + "/branches");
   const pulls = await pages(env, request, base + "/pulls?state=open");
+  const defaultHead = commit(head?.object?.sha, "default branch SHA");
+  const workflows = await workflowInventory(env, request, base, defaultHead);
   return {
     ok: true, repository: `${o}/${repo}`, default_branch: defaultBranch,
-    default_head_sha: commit(head?.object?.sha, "default branch SHA"),
+    default_head_sha: defaultHead, workflows,
     branches: branches.items.map(x => ({ name: x?.name || null, head_sha: x?.commit?.sha || null, protected: Boolean(x?.protected) })),
     open_pull_requests: pulls.items.map(x => ({
       number: x?.number || null, title: x?.title || "", draft: Boolean(x?.draft),
