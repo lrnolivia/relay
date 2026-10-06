@@ -319,12 +319,12 @@ export async function readBoundedJobLog(response) {
     text+=decoder.decode();
   } finally {reader.releaseLock();}
   const lines=text.split("\n"), indexes=new Set();
-  for(let i=0;i<lines.length;i++)if(/error|failed|failure|traceback|exception|no such|not found|permission denied|syntax|unrecognized|cannot|exit code/i.test(lines[i])){
+  for(let i=lines.length-1;i>=0;i--)if(/error|failed|failure|traceback|exception|no such|not found|permission denied|syntax|unrecognized|cannot|exit code/i.test(lines[i])){
     for(let j=Math.max(0,i-3);j<=Math.min(lines.length-1,i+4);j++)indexes.add(j);
     if(indexes.size>=120)break;
   }
   const excerpt=(indexes.size?[...indexes].sort((a,b)=>a-b).map(i=>lines[i]).join("\n"):lines.slice(-80).join("\n")).slice(0,24000);
-  return {available:true,excerpt,read_bytes:bytes,truncated:truncated||excerpt.length===24000,scope:"bounded failure-context excerpt; not the full log"};
+  return {available:true,excerpt,read_bytes:bytes,truncated:truncated||excerpt.length===24000,scope:"bounded latest failure-context excerpt; not the full log"};
 }
 
 export async function syncIdenticalSourceBranch(env, {owner,repo,branch,expectedHeadSha,expectedBaseSha}, api=(path,options)=>githubApiRequest(env,path,options)) {

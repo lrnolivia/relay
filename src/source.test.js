@@ -208,3 +208,5 @@ test("different-tree synchronization refuses to overwrite pending changes",async
 test("default branch synchronization is prohibited",async()=>{
  await assert.rejects(syncIdenticalSourceBranch({}, {owner:"lrnolivia",repo:"rtxForge",branch:"main",expectedHeadSha:"a".repeat(40),expectedBaseSha:"b".repeat(40)},async()=>({default_branch:"main"})),/prohibited/);
 });
+
+test("job diagnostics retain the terminal failure after noisy expected test errors",async()=>{const noise=Array.from({length:250},(_,i)=>`expected fixture failure ${i}\nfixture passed`).join("\n");const r=await readBoundedJobLog(new Response(noise+"\nPublish release\nERROR: cannot update release asset\nProcess completed with exit code 1\ncleanup complete"));assert.match(r.excerpt,/cannot update release asset/);assert.ok(r.excerpt.length<=24000)});
