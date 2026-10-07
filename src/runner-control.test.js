@@ -21,6 +21,7 @@ function fixture(options = {}) {
       if (request?.method === 'PUT') {
         writes.push(request);
         if (options.conflict) { revision = newSha; throw Object.assign(new Error('Conflict'), { status: 409 }); }
+        if (options.writeError) throw options.writeError;
         record = JSON.parse(Buffer.from(request.body.content, 'base64').toString('utf8'));
         revision = newSha;
         if (options.timeout) throw Object.assign(new Error('Timed out'), { name: 'TimeoutError' });
@@ -135,6 +136,47 @@ test('unavailable readback reports uncertainty instead of success or retry', asy
   const f = fixture({ timeout: true, readbackUnavailable: true });
   await assert.rejects(coordinate(f, 'claim'), error => error.code === 'uncertain_write');
   assert.equal(f.writes.length, 1);
+});
+test('unconfirmed coordinator writes retain bounded provider facts without changing uncertainty or replay policy', async () => {
+  for (const status of [401, 403, 429, 500]) {
+    const writeError = Object.assign(new Error('Bearer private-token raw provider body'), { status,
+      github: { provider: 'github', status, method: 'PUT', endpoint: '/repos/lrnolivia/relay/contents/coordination/relay.json', phase: 'resource_request', auth_mode: 'github_app_installation', installation_id: 123, rate_limit_remaining: 0, retry_after_seconds: 60, token: 'private-token', headers: { authorization: 'Bearer private-token' } } });
+    const f = fixture({ claims: [claim()], writeError });
+    await assert.rejects(coordinate(f, 'rescope', { id: 'task', owner: 'worker', paths: ['src/', 'apps/web/vite.config.ts'], resources: ['relay-control'], next_action: 'Verify scope' }), error => {
+      const result = runnerControlError(error);
+      assert.equal(result.error.class, 'uncertain_write');
+      assert.equal(result.error.record_sha, sha);
+      assert.equal(result.error.retryable, false);
+      assert.match(result.error.recovery, /never replay blindly/);
+      assert.equal(result.error.upstream.status, status);
+      assert.equal(result.error.upstream.method, 'PUT');
+      assert.equal(result.error.upstream.retry_after_seconds, 60);
+      assert.equal(result.error.upstream.auth_mode, 'github_app_installation');
+      assert.doesNotMatch(JSON.stringify(result), /private-token|authorization|raw provider body/);
+      return true;
+    });
+    assert.equal(f.writes.length, 1);assert.deepEqual(f.record.claims[0].paths, ['src/']);
+    const read = await callRunnerControl('relay_runner_assignments', { project: 'relay' }, {}, f.api);
+    assert.equal(read.ok, true);assert.equal(read.error, undefined);
+  }
+});
+test('transport-only write failures do not invent an HTTP status or expose arbitrary exception text', async () => {
+  const writeError=Object.assign(new Error('Private timeout detail'), { name:'TimeoutError',github:{provider:'github',method:'PUT',endpoint:'/repos/lrnolivia/relay/contents/coordination/relay.json',phase:'resource_request',auth_mode:'github_app_installation'} });
+  const f=fixture({writeError});
+  await assert.rejects(coordinate(f,'claim'),error=>{
+    const result=runnerControlError(error);assert.equal(result.error.class,'uncertain_write');assert.equal(result.error.upstream.status,undefined);assert.doesNotMatch(JSON.stringify(result),/Private timeout/);return true;
+  });
+  assert.equal(f.writes.length,1);
+});
+test('verified matching readback wins over captured write diagnostics without a duplicate mutation', async () => {
+  const f=fixture();
+  const api=async(path,options)=>{
+    const value=await f.api(path,options);
+    if(options?.method==='PUT')throw Object.assign(new Error('Response lost after write'),{status:500,github:{provider:'github',status:500,method:'PUT',endpoint:'/repos/lrnolivia/relay/contents/coordination/relay.json',phase:'resource_request',auth_mode:'github_app_installation'}});
+    return value;
+  };
+  const result=await callRunnerControl('relay_runner_coordinate',{project:'relay',action:'claim',request:defaultRequest,expected_record_sha:sha},{},api);
+  assert.equal(result.ok,true);assert.equal(result.receipt.reconciled_after_transport_error,true);assert.equal(result.error,undefined);assert.equal(f.writes.length,1);
 });
 test('changed canonical engine fails closed before write', async () => {
   const f = fixture({ engineSha: newSha });
