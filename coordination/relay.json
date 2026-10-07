@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-07T04:56:52.708Z",
+  "updated_at": "2026-10-07T05:01:59.769Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -8011,6 +8011,64 @@
       "ledger_refs": [
         "libfile_045057b7366c8191a81b1cecfc7b1fcb"
       ]
+    },
+    {
+      "id": "relay-screenshot-evidence-plan-20261007",
+      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
+      "goal": "Plan automatic screenshot evidence: extend canonical Runner Visuals so every eligible capture observed through supported Relay-connected adapters is accounted for and organized in Inspector by project, feature and run.",
+      "acceptance": "Planning/queued only; no implementation claim, worker launch, source patch, deployment or screenshot collection is authorized. Reviewable 8070-word plan saved as Library libfile_ec0bb87065dc819184bcd26d008cd68a, Relay screenshot evidence plan.md, SHA256 2da2c8407f24945e2926e0c582c5e8851fe45c7c27f65af48f3ce91ef10753cf. (1) Extend one canonical Runner Visuals index/artifact system; Relay backend and CTRL-hosted Inspector consume shared IDs without duplicate uploads. (2) Preserve every observed intermediate capture event independently of image-byte deduplication; advertise exact provider coverage and unavailable/withheld/lost states. (3) Specify stable project/feature/task/run/build/commit and dirty-source provenance, Unassigned/reclassification, chronological contact sheets, before/after matching, annotations/review/feedback, stale-target states and screenshots separate from test pass claims. (4) Concrete proposed adapter/MCP schemas, idempotent intake/finalize, durable outbox, bounded retries, safe byte validation, privacy exclusion/redaction/audience/retention/storage budgets and no model polling loops. (5) Backward-compatible migration, no invented legacy provenance, kill switches and deterministic security/failure/recovery/usability/performance tests. (6) Verify current downstream ingest/auth and actual CTRL UI before implementation; review composite-key dedup in pinned Relay operator-review.js without assuming its copy is deployed CTRL code. (7) Bounded refresh-limit diagnostic: determine actual current timers/quotas, units, config/source, owner and layer, exhaustion behavior and redundant consumers across CTRL/Relay/provider; no arbitrary window change. Observed upstream GitHub403 rate_limit reset04:56:01 is evidence of provider exhaustion, not proof of a Relay-configured window. (8) Reconcile current live claims and PR166 before any future admitted work; preserve existing designs, policies and owners. Final architecture review and explicit implementation approval required.",
+      "next_action": "Await Lauren's review of the attached plan and recommended defaults; complete Gate0 current ingest/CTRL/provider verification and refresh-limit diagnostic within read-only planning scope before proposing implementation admission. Do not auto-claim or start engineering. Coordinate with current Relay/CTRL owners without changing their assignments.",
+      "paths": [
+        "docs/relay/SCREENSHOT_EVIDENCE_PLAN_20261007.md"
+      ],
+      "resources": [
+        "relay-screenshot-evidence-planning",
+        "runner-visuals-capture-contract",
+        "inspector-project-feature-run-browsing"
+      ],
+      "task_class": "architecture",
+      "category": "architecture",
+      "labels": [
+        {
+          "key": "implementation",
+          "value": "not-authorized"
+        },
+        {
+          "key": "plan-library-id",
+          "value": "libfile_ec0bb87065dc819184bcd26d008cd68a"
+        }
+      ],
+      "tags": [
+        "planning-only",
+        "awaiting-review",
+        "screenshots",
+        "inspector",
+        "runner-visuals"
+      ],
+      "primary_role": "architecture",
+      "primary_team": "inspector",
+      "supporting_teams": [
+        "runner"
+      ],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-07T05:01:59.769Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Plan automatic screenshot evidence: extend canonical Runner Visuals so every eligible capture observed through supported Relay-connected adapters is accounted for and organized in Inspector by project, feature and run.",
+          "acceptance": "Planning/queued only; no implementation claim, worker launch, source patch, deployment or screenshot collection is authorized. Reviewable 8070-word plan saved as Library libfile_ec0bb87065dc819184bcd26d008cd68a, Relay screenshot evidence plan.md, SHA256 2da2c8407f24945e2926e0c582c5e8851fe45c7c27f65af48f3ce91ef10753cf. (1) Extend one canonical Runner Visuals index/artifact system; Relay backend and CTRL-hosted Inspector consume shared IDs without duplicate uploads. (2) Preserve every observed intermediate capture event independently of image-byte deduplication; advertise exact provider coverage and unavailable/withheld/lost states. (3) Specify stable project/feature/task/run/build/commit and dirty-source provenance, Unassigned/reclassification, chronological contact sheets, before/after matching, annotations/review/feedback, stale-target states and screenshots separate from test pass claims. (4) Concrete proposed adapter/MCP schemas, idempotent intake/finalize, durable outbox, bounded retries, safe byte validation, privacy exclusion/redaction/audience/retention/storage budgets and no model polling loops. (5) Backward-compatible migration, no invented legacy provenance, kill switches and deterministic security/failure/recovery/usability/performance tests. (6) Verify current downstream ingest/auth and actual CTRL UI before implementation; review composite-key dedup in pinned Relay operator-review.js without assuming its copy is deployed CTRL code. (7) Bounded refresh-limit diagnostic: determine actual current timers/quotas, units, config/source, owner and layer, exhaustion behavior and redundant consumers across CTRL/Relay/provider; no arbitrary window change. Observed upstream GitHub403 rate_limit reset04:56:01 is evidence of provider exhaustion, not proof of a Relay-configured window. (8) Reconcile current live claims and PR166 before any future admitted work; preserve existing designs, policies and owners. Final architecture review and explicit implementation approval required.",
+          "at": "2026-10-07T05:01:59.769Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-screenshot-evidence-plan-20261007:acceptance:0",
+            "text": "Planning/queued only; no implementation claim, worker launch, source patch, deployment or screenshot collection is authorized. Reviewable 8070-word plan saved as Library libfile_ec0bb87065dc819184bcd26d008cd68a, Relay screenshot evidence plan.md, SHA256 2da2c8407f24945e2926e0c582c5e8851fe45c7c27f65af48f3ce91ef10753cf. (1) Extend one canonical Runner Visuals index/artifact system; Relay backend and CTRL-hosted Inspector consume shared IDs without duplicate uploads. (2) Preserve every observed intermediate capture event independently of image-byte deduplication; advertise exact provider coverage and unavailable/withheld/lost states. (3) Specify stable project/feature/task/run/build/commit and dirty-source provenance, Unassigned/reclassification, chronological contact sheets, before/after matching, annotations/review/feedback, stale-target states and screenshots separate from test pass claims. (4) Concrete proposed adapter/MCP schemas, idempotent intake/finalize, durable outbox, bounded retries, safe byte validation, privacy exclusion/redaction/audience/retention/storage budgets and no model polling loops. (5) Backward-compatible migration, no invented legacy provenance, kill switches and deterministic security/failure/recovery/usability/performance tests. (6) Verify current downstream ingest/auth and actual CTRL UI before implementation; review composite-key dedup in pinned Relay operator-review.js without assuming its copy is deployed CTRL code. (7) Bounded refresh-limit diagnostic: determine actual current timers/quotas, units, config/source, owner and layer, exhaustion behavior and redundant consumers across CTRL/Relay/provider; no arbitrary window change. Observed upstream GitHub403 rate_limit reset04:56:01 is evidence of provider exhaustion, not proof of a Relay-configured window. (8) Reconcile current live claims and PR166 before any future admitted work; preserve existing designs, policies and owners. Final architecture review and explicit implementation approval required.",
+            "at": "2026-10-07T05:01:59.769Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
