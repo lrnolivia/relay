@@ -128,6 +128,13 @@ export const MAX_FILE_BYTES=512*1024*1024;
 const FILE_PREFIX='file-manager/v1/';
 const fileId=value=>typeof value==='string'&&/^fl_[a-f0-9]{32}$/.test(value);
 const fileRoot=(owner,id)=>FILE_PREFIX+owner+'/'+id+'/';
+function filePrincipal(claims){
+ // The gateway already verifies signature/issuer/audience/expiry. Access service
+ // application tokens have an empty sub and a signed common_name client ID.
+ // svc_ cannot collide with any existing 64-hex human-account namespace.
+ if(claims?.sub===''&&claims.type==='app'&&/^[a-f0-9]{32}\.access$/.test(claims.common_name||''))return 'svc_'+digest(claims.iss+'\0'+claims.common_name);
+ return principal(claims);
+}
 const validFilename=value=>typeof value==='string'&&value.length>0&&value.length<=180&&!/[\x00-\x1f\x7f/\\]/.test(value)&&!['.','..'].includes(value);
 const fileError=(status,code,message)=>Object.assign(Error(message),{status,code});
 async function fileMetadata(bucket,meta){
@@ -176,7 +183,7 @@ async function limitedBytes(request,max){
  const out=new Uint8Array(size);let offset=0;for(const chunk of chunks){out.set(chunk,offset);offset+=chunk.length}return out;
 }
 export async function readBrowserFiles(args,bucket,claims,now=Date.now()){
- const owner=principal(claims);requireValue(bucket,'File storage unavailable');
+ const owner=filePrincipal(claims);requireValue(bucket,'File storage unavailable');
  if(args.action==='files'){
   requireValue(args.cursor==null||(typeof args.cursor==='string'&&args.cursor.length<=4096),'Invalid cursor');
   const page=await bucket.list({prefix:FILE_PREFIX+owner+'/',limit:300,...(args.cursor?{cursor:args.cursor}:{})});const files=[];
@@ -199,7 +206,7 @@ export async function browserFileResponse(request,bucket,claims,now=Date.now()){
  const headers={'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer'};
  const json=(body,status=200)=>Response.json(body,{status,headers});
  try{
-  requireValue(bucket,'File storage unavailable');const owner=principal(claims);
+  requireValue(bucket,'File storage unavailable');const owner=filePrincipal(claims);
   if(!['GET','HEAD'].includes(request.method)){
    const origin=request.headers.get('origin');requireValue(['https://relay.loew.fi','https://ctrl.loew.fi'].includes(origin),'Same-origin request required');
    requireValue(request.headers.get('x-relay-file-request')==='1','Explicit file request required');

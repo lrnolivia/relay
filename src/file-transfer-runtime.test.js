@@ -13,11 +13,12 @@ test('actual local workerd/R2 conditional writes preserve soft deletion and rest
  const main=join(directory,'worker.js'),source=fileURLToPath(new URL('./file-transfer.js',import.meta.url));
  // Synthetic principal only. Signed Access and cross-account authorization are
  // tested through the real gateway separately; no production credentials here.
- await writeFile(main,`import {browserFileResponse} from ${JSON.stringify(source)};export default {fetch(request,env){return browserFileResponse(request,env.EVIDENCE,{iss:'local-runtime-fixture',sub:request.headers.get('X-Fixture-Owner')||'fixture-owner'})}};`);
+ await writeFile(main,`import {browserFileResponse} from ${JSON.stringify(source)};export default {fetch(request,env){const service=request.headers.get('X-Fixture-Service');return browserFileResponse(request,env.EVIDENCE,service?{iss:'local-runtime-fixture',type:'app',sub:'',common_name:service}:{iss:'local-runtime-fixture',sub:request.headers.get('X-Fixture-Owner')||'fixture-owner'})}};`);
  const harness=createTestHarness({workers:[{config:{name:'relay-files-runtime',main,compatibility_date:'2026-10-01',compatibility_flags:['nodejs_compat'],r2_buckets:[{binding:'EVIDENCE',bucket_name:'local-files-fixture',remote:false}]}}]});
  try{
   await harness.listen();
   const receipt=await verifyFileLifecycle((path,options)=>harness.fetch(path,options),{requestId:'local-runtime-lifecycle'});assert.equal(receipt.ok,true);assert.equal(receipt.cleanup.status,200);
+  const serviceReceipt=await verifyFileLifecycle((path,options)=>harness.fetch(path,{...options,headers:{...options.headers,'X-Fixture-Service':'a'.repeat(32)+'.access'}}),{requestId:'local-service-lifecycle'});assert.equal(serviceReceipt.ok,true);
   const list=await harness.fetch('/api/files');assert.deepEqual((await list.json()).files,[]);
   const other=await harness.fetch('/api/files',{headers:{'X-Fixture-Owner':'another-owner'}});assert.deepEqual((await other.json()).files,[]);
   const bytes='race',sha256=createHash('sha256').update(bytes).digest('hex'),headers={Origin:'https://relay.loew.fi','X-Relay-File-Request':'1','Content-Type':'application/json'};

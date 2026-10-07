@@ -93,6 +93,12 @@ test('real MCP entry authenticates transfer calls and exposes the two tools with
  }
  const upload=await entry.fetch(new Request('https://relay.loew.fi/api/files/'+file.id+'/chunks/0',{method:'PUT',headers:{Origin:'https://relay.loew.fi','X-Relay-File-Request':'1','X-Content-Sha256':hash('a'),'cf-access-jwt-assertion':token},body:'a'}),{EVIDENCE:bucket});assert.equal(upload.status,200);
  assert.equal((await browser('/'+file.id+'/complete','POST')).status,200);assert.equal((await browser('/'+file.id,'PATCH',{filename:'new.txt'})).status,200);assert.equal((await browser('/'+file.id,'DELETE')).status,200);assert.equal((await browser('/'+file.id+'/restore','POST')).status,200);
+ const serviceClaims={...claims,type:'app',sub:'',common_name:'a'.repeat(32)+'.access'},servicePayload=encode({alg:'RS256',kid})+'.'+encode(serviceClaims),serviceToken=servicePayload+'.'+sign('RSA-SHA256',Buffer.from(servicePayload),privateKey).toString('base64url');
+ assert.deepEqual((await(await browser('','GET',undefined,serviceToken)).json()).files,[]);
+ assert.equal((await browser('/'+file.id,'DELETE',undefined,serviceToken)).status,400);
+ const serviceCreated=await browser('','POST',{request_id:'signed-service',filename:'service.txt',bytes:1,sha256:hash('a')},serviceToken),serviceFile=(await serviceCreated.json()).file;assert.equal(serviceCreated.status,201);
+ assert.equal((await browser('/'+serviceFile.id,'DELETE')).status,400);assert.equal((await browser('/'+serviceFile.id,'DELETE',undefined,serviceToken)).status,200);assert.equal((await browser('/'+serviceFile.id+'/restore','POST',undefined,serviceToken)).status,200);
+ const forged=servicePayload+'.'+token.split('.')[2];assert.equal((await browser('','GET',undefined,forged)).status,401);
  const discovery=await (await rpc('tools/list')).json();for(const name of ['relay_transfer_read','relay_transfer_write'])assert.ok(discovery.result.tools.some(tool=>tool.name===name));
  const response=await(await rpc('tools/call',{name:'relay_transfer_write',arguments:begin(Buffer.from('a'))})).json();assert.equal(response.result.structuredContent.ok,true);assert.equal(response.result.structuredContent.transfer.bytes,1);assert.equal(response.result.structuredContent.transfer.url,undefined);
 });
@@ -199,4 +205,15 @@ test('CAS reconciles a concurrent rename on delete and stops after three conflic
  let attempts=0;bucket.put=async(key,data,options)=>{if(key.endsWith('/metadata.json')){attempts++;return null}return put(key,data,options)};
  const conflict=await change(bucket,file.id,'DELETE');assert.equal(conflict.status,409);assert.equal((await conflict.json()).code,'file_conflict');assert.equal(attempts,3);
  assert.equal((await readBrowserFiles({action:'files'},bucket,account,now)).files[0].filename,'concurrent.zip');
+});
+test('verified service file namespaces remain disjoint from humans and other services; legacy transfers still require a user',async()=>{
+ const bucket=new Bucket(),human=await browserUpload(bucket,Buffer.from('human'));
+ const service={iss:account.iss,type:'app',sub:'',common_name:'a'.repeat(32)+'.access'},other={...service,common_name:'b'.repeat(32)+'.access'},data=Buffer.from('service');
+ const request=fileReq('','POST',JSON.stringify({request_id:'service-fixture',filename:'service.txt',bytes:data.length,sha256:hash(data)}),{'Content-Type':'application/json'}),r=await browserFileResponse(request,bucket,service,now);assert.equal(r.status,201);const {file}=await r.json();
+ assert.equal((await change(bucket,human.id,'DELETE',undefined,now,service)).status,400);
+ for(const identity of [account,other,{...account,sub:'service\0'+service.common_name}, {...account,sub:service.common_name}])assert.equal((await change(bucket,file.id,'DELETE',undefined,now,identity)).status,400);
+ assert.equal((await readBrowserFiles({action:'files'},bucket,service,now)).files[0].id,file.id);assert.equal((await readBrowserFiles({action:'files'},bucket,other,now)).files.length,0);
+ assert.ok([...bucket.objects.keys()].some(key=>key.startsWith('file-manager/v1/svc_')));
+ for(const invalid of [{...service,type:'org'},{...service,sub:undefined},{...service,common_name:'../spoof'},{...service,common_name:undefined}])assert.equal((await browserFileResponse(fileReq(),bucket,invalid,now)).status,400);
+ await assert.rejects(transferWrite(begin(Buffer.from('x')),bucket,service,now),/subject/);
 });
