@@ -14,11 +14,13 @@ export default {
   },
   async fetch(request, env) {
     const url = new URL(request.url);
-    const websiteRoutes = { "/today": "/#/today", "/runner": "/#/runner", "/night-shift": "/#/night-shift", "/inspector": "/inspector" };
-    const destination = websiteRoutes[url.pathname.replace(/\/$/, "")];
-    if (destination && ["GET", "HEAD"].includes(request.method)) {
-      return Response.redirect("https://ctrl.loew.fi" + destination + url.search, 308);
+    const legacyPath=url.pathname.replace(/\/$/,"");
+    const workspaceRoute=/^\/(?:today|now|runner|night-shift|inspector)(?:\/|$)/.test(legacyPath);
+    if(workspaceRoute&&["GET","HEAD"].includes(request.method)){
+      const destination=legacyPath.replace(/^\/today(?=\/|$)/,'/now');
+      return Response.redirect("https://ctrl.loew.fi/#"+destination+url.search,308);
     }
+    if(url.pathname==='/relay-app.js'&&['GET','HEAD'].includes(request.method))return new Response(request.method==='HEAD'?null:'This legacy Relay interface is retired. Open https://ctrl.loew.fi/',{status:410,headers:{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
     if (url.pathname.startsWith("/api/")) {
       // File transport validates the same JWT in the gateway, without copying a
       // multi-megabyte Content-Length onto the small JSON authentication probe.
