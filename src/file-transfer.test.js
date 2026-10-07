@@ -214,6 +214,6 @@ test('verified service file namespaces remain disjoint from humans and other ser
  for(const identity of [account,other,{...account,sub:'service\0'+service.common_name}, {...account,sub:service.common_name}])assert.equal((await change(bucket,file.id,'DELETE',undefined,now,identity)).status,400);
  assert.equal((await readBrowserFiles({action:'files'},bucket,service,now)).files[0].id,file.id);assert.equal((await readBrowserFiles({action:'files'},bucket,other,now)).files.length,0);
  assert.ok([...bucket.objects.keys()].some(key=>key.startsWith('file-manager/v1/svc_')));
- for(const invalid of [{...service,type:'org'},{...service,sub:undefined},{...service,common_name:'../spoof'},{...service,common_name:undefined}])assert.equal((await browserFileResponse(fileReq(),bucket,invalid,now)).status,400);
+ for(const invalid of [{...service,type:'org'},{...service,sub:undefined},{...service,common_name:'../spoof'},{...service,common_name:undefined},{...service,common_name:[service.common_name]},{...service,common_name:{client:service.common_name}}])assert.equal((await browserFileResponse(fileReq(),bucket,invalid,now)).status,400);
  await assert.rejects(transferWrite(begin(Buffer.from('x')),bucket,service,now),/subject/);
 });

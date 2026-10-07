@@ -132,7 +132,7 @@ function filePrincipal(claims){
  // The gateway already verifies signature/issuer/audience/expiry. Access service
  // application tokens have an empty sub and a signed common_name client ID.
  // svc_ cannot collide with any existing 64-hex human-account namespace.
- if(claims?.sub===''&&claims.type==='app'&&/^[a-f0-9]{32}\.access$/.test(claims.common_name||''))return 'svc_'+digest(claims.iss+'\0'+claims.common_name);
+ if(claims?.sub===''&&claims.type==='app'&&typeof claims.common_name==='string'&&/^[a-f0-9]{32}\.access$/.test(claims.common_name))return 'svc_'+digest(claims.iss+'\0'+claims.common_name);
  return principal(claims);
 }
 const validFilename=value=>typeof value==='string'&&value.length>0&&value.length<=180&&!/[\x00-\x1f\x7f/\\]/.test(value)&&!['.','..'].includes(value);
