@@ -5,9 +5,9 @@ import { contextCardModel as sharedContextCardModel } from './relay-context-card
 import { CONTEXT_CARD_BROWSER_MODEL } from './relay-context-card-browser.js';
 import { withHumanPresentation } from './communication-presentation.js';
 export function contextCardModel(data = {}, directory = DIRECTORY, options = {}) { return sharedContextCardModel(data, directory, options); }
-export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v16.html';
+export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v17.html';
 export const RELAY_CONTEXT_CARD_TOOL = 'relay_render_context_card';
-export const RELAY_STATUS_CARD_URI = 'ui://relay/status-card/v4-legacy-bridge.html';
+export const RELAY_STATUS_CARD_URI = 'ui://relay/status-card/v5-legacy-bridge.html';
 export const RELAY_STATUS_CARD_TOOL = 'relay_show_legacy_bridge_card';
 const CONTROL_URI = 'ui://relay/control-center/v2.html';
 const DIRECTORY = Object.fromEntries(STAFF.map(p => [p.id, p.display_name]));

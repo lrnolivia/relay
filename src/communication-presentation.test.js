@@ -6,6 +6,24 @@ import { HUMAN_CATALOG, normalizeCommunicationResult, formatRelay, presentationO
 
 const present=(data,operation={kind:'query',name:'relay_source_checks'},options={})=>formatRelay(normalizeCommunicationResult(data,{operation,...options}),options);
 
+test('unrecognized reads and command receipts make no claim about saved changes or freshness',()=>{
+  const operations=[presentationOperation('relay_source_file'),presentationOperation('relay_source_inventory'),presentationOperation('relay_context',{action:'read'}),presentationOperation('relay_context',{action:'record'}),{name:'unregistered_operation',kind:'unknown'}];
+  for(const operation of operations)for(const data of [{ok:true,revision:36},{ok:true,branches:[]},{ok:true,content:'same content'},{ok:true,state:'new-provider-state'},{ok:true,human_v1:{label:'Saved',summary:'A fresh update was recorded.'}}]){
+    const before=structuredClone(data),normalized=normalizeCommunicationResult(data,{operation}),out=formatRelay(normalized);
+    assert.equal(out.message_id,'data.unrecognized');assert.equal(out.label,'Response received');
+    assert.equal(out.summary,'Relay returned a response without a recognized status.');assert.equal(out.severity,'neutral');
+    assert.doesNotMatch(out.label+' '+out.summary,/recorded|saved|updated|fresh|latest|new information|succeeded|complete/i);
+    assert.equal(normalized.mutation,operation.kind==='query'?'not_applicable':'unknown');assert.equal(normalized.outcome,'observed');
+    assert.equal(normalized.retry.policy,'none');assert.equal(normalized.retry.scheduled_at,null);assert.equal(out.next_step,null);assert.equal(out.timestamp,undefined);
+    const formatted=withHumanPresentation(data,{operation});const {human_v1,presentation_mode,...machine}=formatted;
+    const {human_v1:untrusted,...expectedMachine}=before;assert.deepEqual(machine,expectedMachine);assert.deepEqual(data,before);
+  }
+  for(const mutation of ['not_attempted','confirmed_applied','confirmed_not_applied','unknown']){
+    const normalized=normalizeCommunicationResult({ok:true,mutation},{operation:presentationOperation('relay_context',{action:'record'})});
+    assert.equal(normalized.mutation,mutation);assert.equal(formatRelay(normalized).label,'Response received');
+  }
+});
+
 test('human_v1 catalog is closed, deterministic and conservative for unknown input',()=>{
   for(const message_id of Object.keys(HUMAN_CATALOG)){
     const input={...normalizeCommunicationResult(),message_id};

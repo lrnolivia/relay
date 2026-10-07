@@ -5,7 +5,7 @@ import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI,
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v16.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v17.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -28,7 +28,7 @@ test("legacy bridge bisect keeps v8 as the control and uses a fresh tool/resourc
   const legacy = relayStatusCardResource();
   const descriptor = relayStatusCardDescriptor();
   const tool = relayStatusCardTool();
-  assert.equal(RELAY_STATUS_CARD_URI, "ui://relay/status-card/v4-legacy-bridge.html");
+  assert.equal(RELAY_STATUS_CARD_URI, "ui://relay/status-card/v5-legacy-bridge.html");
   assert.equal(RELAY_STATUS_CARD_TOOL, "relay_show_legacy_bridge_card");
   assert.equal(descriptor.uri, RELAY_STATUS_CARD_URI);
   assert.equal(tool.name, RELAY_STATUS_CARD_TOOL);
@@ -595,6 +595,9 @@ test('human_v1 generated current and legacy bridge resources share exact server 
   const built=await build({entryPoints:[new URL('./relay-chat-ui.js',import.meta.url).pathname],bundle:true,write:false,format:'esm',platform:'neutral',keepNames:true});
   const module=await import('data:text/javascript;base64,'+Buffer.from(built.outputFiles[0].text).toString('base64'));
   const cases=[
+    {ok:true,content:'unchanged file',presentation_operation:{kind:'query',name:'relay_source_file'}},
+    {ok:true,revision:36,presentation_operation:{kind:'command',name:'relay_context'}},
+    {ok:true,state:'unknown-provider-state',presentation_operation:{kind:'unknown',name:'new_tool'}},
     {ok:false,error:{class:'rate_limit',retry_at:'2026-10-07T11:00:00Z'},checked_at:'2026-10-07T10:00:00Z'},
     {ok:false,presentation_operation:{kind:'command',name:'relay_execution'},error:{class:'uncertain_write'}},
     {partial:true,claim:{state:'working',goal:'Keep the last update'}},
@@ -639,4 +642,13 @@ test('human_v1 mobile shows the complete warning and next step without duplicate
    await page.close();
   }
  }finally{await browser.close();}
+});
+
+// Resource versions change with generated copy; existing client identities remain readable.
+test('neutral fallback cache rotation preserves the preceding current and legacy resource aliases',async()=>{
+ const {readFile}=await import('node:fs/promises');const source=await readFile(new URL('./index.js',import.meta.url),'utf8');
+ assert.ok(source.includes("uri === 'ui://relay/context-card/v16.html'"));
+ assert.ok(source.includes("uri === 'ui://relay/status-card/v4-legacy-bridge.html'"));
+ assert.notEqual(RELAY_CONTEXT_CARD_URI,'ui://relay/context-card/v16.html');
+ assert.notEqual(RELAY_STATUS_CARD_URI,'ui://relay/status-card/v4-legacy-bridge.html');
 });
