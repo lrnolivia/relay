@@ -9,6 +9,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
+import { execFileSync } from 'node:child_process';
+
+execFileSync(process.execPath,[fileURLToPath(new URL('../../scripts/build-context-card-model.mjs',import.meta.url)),'--check'],{stdio:'inherit'});
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const source = async name => fs.readFile(path.join(here, "public", name), "utf8");
@@ -156,4 +159,3 @@ await Promise.all([
   fs.writeFile(path.join(here, "generated.js"), generated)
 ]);
 console.log("Built split Relay React/MCP + preserved Inspector payloads");
-

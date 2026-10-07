@@ -38,8 +38,8 @@ test("Relay extension publishes source inventory and exact-head PR action", () =
   assert.ok(names.includes("relay_staff_directory"));
   assert.ok(names.includes("relay_render_context_card"));
   const renderer=tools.find(tool=>tool.name==="relay_render_context_card");
-  assert.equal(renderer._meta.ui.resourceUri,"ui://relay/context-card/v15.html");
-  assert.equal(renderer._meta["openai/outputTemplate"],"ui://relay/context-card/v15.html");
+  assert.equal(renderer._meta.ui.resourceUri,"ui://relay/context-card/v16.html");
+  assert.equal(renderer._meta["openai/outputTemplate"],"ui://relay/context-card/v16.html");
   const progress=tools.find(tool=>tool.name==="relay_runner_progress");
   assert.equal(progress._meta?.ui?.resourceUri,undefined);
   assert.equal(progress._meta?.["openai/outputTemplate"],undefined);
@@ -88,6 +88,15 @@ test("extension errors classify retry and readback boundaries", () => {
   assert.equal(uncertain.class, "uncertain_write");
   assert.equal(uncertain.retryable, false);
   assert.match(uncertain.recovery, /read back/i);
+});
+
+test('mixed extension operations preserve query versus unknown-write timeout semantics',()=>{
+  const error=Object.assign(new Error('provider timed out'),{name:'TimeoutError'});
+  assert.equal(classifyExtensionError(error,'relay_execution',{action:'status'}).class,'timeout');
+  assert.equal(classifyExtensionError(error,'relay_execution',{action:'submit'}).class,'uncertain_write');
+  assert.equal(classifyExtensionError(error,'relay_night_shift',{action:'shift'}).class,'uncertain_write');
+  assert.equal(classifyExtensionError(error,'relay_ui_request',{method:'POST'}).class,'uncertain_write');
+  assert.equal(classifyExtensionError(error,'unknown_read_tool').class,'uncertain_write');
 });
 
 test("server validation accepts exact-head merge input", () => {
@@ -165,7 +174,7 @@ test("fresh inline status card is listed and readable through the authenticated 
     assert.equal(body.error, undefined);
     return body.result;
   };
-  const uri = "ui://relay/status-card/v3-legacy-bridge.html";
+  const uri = "ui://relay/status-card/v4-legacy-bridge.html";
   const { tools } = await rpc("tools/list");
   const fresh = tools.filter(tool => tool.name === "relay_show_legacy_bridge_card");
   assert.equal(fresh.length, 1);
@@ -180,7 +189,7 @@ test("fresh inline status card is listed and readable through the authenticated 
   assert.equal(tool._meta["openai/ui"], undefined);
   assert.deepEqual(tool.inputSchema, old.inputSchema);
   assert.deepEqual(tool.annotations, old.annotations);
-  assert.equal(old._meta.ui.resourceUri, "ui://relay/context-card/v15.html");
+  assert.equal(old._meta.ui.resourceUri, "ui://relay/context-card/v16.html");
   const { resources } = await rpc("resources/list");
   assert.equal(resources.filter(resource => resource.uri === uri).length, 1);
   assert.equal(resources.find(resource => resource.uri === uri).mimeType, "text/html;profile=mcp-app");
@@ -196,6 +205,10 @@ test("fresh inline status card is listed and readable through the authenticated 
   assert.equal(contents[0]._meta["openai/ui"].entrypoints, undefined);
   const oldResource = await rpc("resources/read", { uri: RELAY_CONTEXT_CARD_URI });
   assert.deepEqual(oldResource.contents[0], relayContextCardResource());
+  for(const [alias,current] of [['ui://relay/context-card/v15.html',relayContextCardResource()],['ui://relay/status-card/v3-legacy-bridge.html',relayStatusCardResource()]]){
+    const response=await rpc('resources/read',{uri:alias});
+    assert.equal(response.contents[0].uri,alias);assert.equal(response.contents[0].text,current.text);
+  }
   const invalid = await rpc("tools/call", { name: "relay_show_legacy_bridge_card", arguments: { project: "../relay" } });
   assert.equal(invalid.isError, true);
   assert.match(invalid.content[0].text, /Invalid card project/);
@@ -215,9 +228,15 @@ test("fresh inline status card is listed and readable through the authenticated 
       assert.equal(result.isError,true);assert.equal(result.structuredContent.namespace,'relay.SOURCE');
       assert.equal(result.structuredContent.error.class,'rate_limit');assert.equal(result.structuredContent.error.retry_at,retryAt);
       assert.equal(result.structuredContent.error.upstream.rate_limit_used,5000);assert.equal(result.structuredContent.error.retryable,false);
+      assert.equal(result.structuredContent.human_v1.message_id,'error.rate_limit');
+      assert.match(result.structuredContent.human_v1.summary,/resume after/);
+      const legacyText=JSON.parse(result.content[0].text);
+      assert.equal(legacyText.error.class,'rate_limit');assert.equal(legacyText.human_v1,undefined);
       assert.equal(result.structuredContent.reason,undefined);assert.doesNotMatch(JSON.stringify(result),/browser_capacity|github-chromium|mcp-quota-fixture/);
       const blocked=await rpc('tools/call',params,{RELAY_GITHUB_TOKEN:'mcp-quota-fixture'});
       assert.equal(blocked.structuredContent.error.upstream.request_attempted,false);assert.equal(calls,1);
+      const rollback=await rpc('tools/call',params,{RELAY_GITHUB_TOKEN:'mcp-quota-fixture',RELAY_HUMAN_PRESENTATION:'legacy'});
+      assert.equal(rollback.structuredContent.presentation_mode,'legacy');assert.equal(rollback.structuredContent.human_v1,undefined);assert.equal(calls,1);
       quota=false;const denied=await rpc('tools/call',params,{RELAY_GITHUB_TOKEN:'mcp-permission-fixture'});
       assert.equal(denied.structuredContent.error.class,'permission');assert.equal(denied.structuredContent.error.retry_at,undefined);
       const unauthenticated=await worker.fetch(new Request('https://relay.loew.fi/mcp',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/call',params})}),{RELAY_GITHUB_TOKEN:'mcp-permission-fixture'});

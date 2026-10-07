@@ -18,6 +18,7 @@ import { LOEW_NAMING_SKILL_URI, loewNamingSkillCatalogEntry, loewNamingSkillReso
 import { EXECUTIVE_COMMUNICATION_SKILL_URI, executiveCommunicationSkillCatalogEntry, executiveCommunicationSkillResourceDescriptor, executiveCommunicationSkillResource } from "./executive-communication-skill.js";
 import { isContextualRelayTool, contextualizeRelayTool, contextualPresentation } from "./relay-chat-ui.js";
 import { RELAY_V2_PROBE_URI, relayV2ProbeDescriptor, relayV2ProbeResource } from "./relay-v2-probe.js";
+import { presentationOperation, withHumanPresentation } from './communication-presentation.js';
 
 export const RELAY_EXTENSION_VERSION = "1.9.9";
 
@@ -220,8 +221,10 @@ async function readMcp(request) {
   const raw = await readMcpBody(request);
   try { return JSON.parse(raw); } catch { return null; }
 }
-function toolResult(id, result, name) {
-  if (isContextualRelayTool(name)) result = contextualPresentation(result);
+function toolResult(id, result, name, args = {}, mode) {
+  const options={operation:presentationOperation(name,args),now:new Date().toISOString(),mode};
+  if (isContextualRelayTool(name)) result = contextualPresentation(result,options);
+  else result=withHumanPresentation(result,options);
   return responseJson({
     jsonrpc: "2.0",
     id,
@@ -231,11 +234,11 @@ function toolResult(id, result, name) {
     }
   });
 }
-export function classifyExtensionError(error, toolName = "") {
+export function classifyExtensionError(error, toolName = "", args = {}) {
   const message = error instanceof Error ? error.message : "Relay extension action failed";
   const status = Number(error?.status || 0);
   const lower = message.toLowerCase();
-  const mutation = /(_create_|_update_|_edit_|_append_|_open_|_action$|_cleanup$|_upload_|_deploy_)/.test(toolName);
+  const mutation = !['query','discovery'].includes(presentationOperation(toolName,args).kind);
   let errorClass = "provider";
   if (error?.code === 'rate_limit') errorClass = 'rate_limit';
   else if (status === 401 || /auth|credential|token/.test(lower)) errorClass = "auth";
@@ -284,9 +287,9 @@ export function classifyExtensionError(error, toolName = "") {
     ...(retryAt?{retry_at:retryAt}:{})
   };
 }
-function toolError(id, error, toolName = "") {
-  const classified = classifyExtensionError(error, toolName);
-  const structured = { ok: false, namespace: "relay", tool: toolName || null, error: classified, checked_at: new Date().toISOString() };
+function toolError(id, error, toolName = "", args = {}, mode) {
+  const classified = classifyExtensionError(error, toolName,args);
+  const structured = withHumanPresentation({ ok: false, namespace: "relay", tool: toolName || null, error: classified, checked_at: new Date().toISOString() },{operation:presentationOperation(toolName,args),now:new Date().toISOString(),mode});
   return responseJson({
     jsonrpc: "2.0",
     id,
@@ -346,9 +349,9 @@ export default {
           const args = validateLifecycleArguments(name, message.params?.arguments || {});
           result = await callSourceLifecycleTool(name, args, env);
         }
-        return toolResult(message.id ?? null, result, name);
+        return toolResult(message.id ?? null, result, name, message.params?.arguments || {},env.RELAY_HUMAN_PRESENTATION);
       } catch (error) {
-        return toolError(message.id ?? null, error, message.params?.name || "");
+        return toolError(message.id ?? null, error, message.params?.name || "",message.params?.arguments || {},env.RELAY_HUMAN_PRESENTATION);
       }
     }
 
@@ -391,10 +394,13 @@ export default {
         if (payload?.result?.tools) payload.result.tools = augmentToolList(payload.result.tools);
       });
     }
-    if (message.method === "tools/call" && isContextualRelayTool(message.params?.name)) {
+    if (message.method === "tools/call") {
       return rewrite(response, payload => {
         const data = payload?.result?.structuredContent;
-        if (data) payload.result.structuredContent = contextualPresentation(data);
+        const options={operation:presentationOperation(message.params?.name,message.params?.arguments||{}),now:new Date().toISOString(),mode:env.RELAY_HUMAN_PRESENTATION};
+        if (data) payload.result.structuredContent = isContextualRelayTool(message.params?.name)?contextualPresentation(data,options):withHumanPresentation(data,options);
+        // Retain all legacy content, JSON-RPC/isError fields, and auth headers.
+        if(["relay_control_status", "relay_ui_control_center"].includes(message.params?.name))patchVersion(payload);
       });
     }
     if (message.method === "tools/call" && ["relay_control_status", "relay_ui_control_center"].includes(message.params?.name)) {
