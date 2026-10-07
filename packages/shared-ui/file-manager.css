@@ -34,10 +34,10 @@
 .relay-file-controls .work-control-summary{width:100%;min-width:0}.relay-file-controls .work-control-menu>summary{box-sizing:border-box;width:100%}
 .relay-files-identity{display:flex;align-items:center;gap:14px;min-width:0}.relay-files-identity>div{min-width:0}.relay-files-identity .relay-files-mark{flex:none}.relay-files-header .relay-files-identity p{margin:6px 0 0}
 /* Relay adapts CTRL's shared controls to its Sienna product accent. */
-.relay-file-manager .work-view-controls{--work-control-accent:var(--feature-relay);--work-control-on-accent:#fff}
-.relay-file-controls .work-search-compact{display:block;min-width:0;margin:0 0 12px}
-.relay-file-controls .work-search-compact input{box-sizing:border-box;width:100%;min-height:46px;padding:12px 14px;border:0;border-radius:12px;background:var(--color-surface);color:var(--color-text-primary);font:inherit;font-size:15px;box-shadow:none}
-.relay-file-controls .work-search-compact input::placeholder{color:var(--color-text-secondary);opacity:1}
+.relay-file-manager .work-view-controls{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;--work-control-accent:var(--feature-relay);--work-control-on-accent:#fff}
+.relay-file-controls .work-search-compact{display:block;min-width:0;margin:0}
+.relay-file-controls .work-search-compact input{box-sizing:border-box;width:100%;min-height:46px;padding:12px 14px;border:0;border-radius:12px;background:var(--color-panel-cap);color:var(--color-text-primary);font:inherit;font-size:15px;box-shadow:none}
+.relay-file-controls .work-search-compact input::placeholder{color:color-mix(in srgb,var(--color-text-primary) 20%,var(--color-text-secondary));opacity:1}
 .relay-file-controls .work-view-switch:empty{display:none}
 .relay-file-controls .work-control-menu>summary{display:flex;align-items:center;gap:8px;min-height:44px;padding:12px 14px;border-radius:12px;background:var(--color-surface);list-style:none;cursor:pointer;font-size:14px}
 .relay-file-controls .work-control-menu>summary::-webkit-details-marker{display:none}
