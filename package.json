@@ -14,7 +14,8 @@
     "test:workflow": "node --test test/test-workflow-contract.test.mjs",
     "check:toolchain": "node scripts/release-toolchain.mjs check",
     "test:toolchain": "node --test test/release-toolchain-contract.test.mjs test/worker-runtime-contract.test.mjs",
-    "verify:runtime": "node scripts/verify-worker-runtime.mjs"
+    "verify:runtime": "node scripts/verify-worker-runtime.mjs",
+    "test:source-contracts": "node scripts/source-test-contracts.mjs"
   },
   "devDependencies": {
     "playwright": "1.60.0",

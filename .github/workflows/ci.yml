@@ -136,6 +136,12 @@ jobs:
       - name: Install workspace
         id: setup-install
         run: npm ci
+      - name: Audit source contracts and run named nonbrowser tests
+        id: setup-contracts
+        env:
+          RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          RELAY_CONTRACT_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: npm run test:source-contracts
       - name: Build exact web and MCP payloads
         id: setup-build
         run: WORKERS_CI_COMMIT_SHA=${{ github.event.pull_request.head.sha || github.sha }} npm run build
@@ -156,12 +162,13 @@ jobs:
           RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: npm test
       - name: Account for suites blocked by setup
-        if: always() && (steps.setup-toolchain.outcome != 'success' || steps.setup-focused.outcome != 'success' || steps.setup-install.outcome != 'success' || steps.setup-browser.outcome != 'success' || steps.setup-build.outcome != 'success' || steps.setup-typecheck.outcome != 'success' || steps.setup-runtime.outcome != 'success')
+        if: always() && (steps.setup-toolchain.outcome != 'success' || steps.setup-focused.outcome != 'success' || steps.setup-install.outcome != 'success' || steps.setup-contracts.outcome != 'success' || steps.setup-browser.outcome != 'success' || steps.setup-build.outcome != 'success' || steps.setup-typecheck.outcome != 'success' || steps.setup-runtime.outcome != 'success')
         env:
           RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           RELAY_SETUP_TOOLCHAIN: ${{ steps.setup-toolchain.outcome }}
           RELAY_SETUP_FOCUSED: ${{ steps.setup-focused.outcome }}
           RELAY_SETUP_INSTALL: ${{ steps.setup-install.outcome }}
+          RELAY_SETUP_CONTRACTS: ${{ steps.setup-contracts.outcome }}
           RELAY_SETUP_BROWSER: ${{ steps.setup-browser.outcome }}
           RELAY_SETUP_BUILD: ${{ steps.setup-build.outcome }}
           RELAY_SETUP_RUNTIME: ${{ steps.setup-runtime.outcome }}
@@ -173,6 +180,13 @@ jobs:
         with:
           name: relay-toolchain-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: qa-evidence/toolchain/
+          if-no-files-found: error
+      - name: Preserve source and named-test contract mapping
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-source-test-contracts-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qa-evidence/source-test-contracts/
           if-no-files-found: error
       - name: Preserve Worker bundle and local runtime evidence
         if: always()
