@@ -23,7 +23,8 @@ test("production entrypoint exposes a separate app-only data callback and preser
     assert.equal(response.status, 200); const body = await response.json(); assert.equal(body.id, id); return body.result;
   };
   const { tools } = await rpc("tools/list");
-  assert.equal(tools.length, 69);
+  assert.equal(new Set(tools.map(t => t.name)).size, tools.length);
+  assert.equal(tools.filter(t => t.name === "relay_source_tree").length, 1);
   assert.deepEqual(tools.filter(t => t.name.startsWith('relay_runner_feedback_')).map(t => t.name).sort(),
     ['relay_runner_feedback_ack', 'relay_runner_feedback_peek', 'relay_runner_feedback_status', 'relay_runner_feedback_submit']);
   const control = tools.find(t => t.name === "relay_test_card_connection");

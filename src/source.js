@@ -85,7 +85,7 @@ async function requestGitHub(path, token, options = {}, context = {}) {
       if (!/^\/repos\/[^/]+\/[^/]+\/actions\/jobs\/\d+\/logs$/.test(path)) throw new Error("Job log route required");
       return {status:response.status,value:await readBoundedJobLog(response)};
     }
-    text = await response.text();
+    text = options.maxResponseBytes === undefined ? await response.text() : await boundedSourceText(response, options.maxResponseBytes);
   } catch (error) {
     error.github = github;
     throw error;
@@ -368,4 +368,81 @@ export async function syncIdenticalSourceBranch(env, {owner,repo,branch,expected
   const verified=await api(`${root}/git/ref/heads/${branchPath}`);
   if(verified.object?.sha!==commit.sha)throw new Error("Synchronization readback did not match; inspect before retrying");
   return {ok:true,repository:`${owner}/${repo}`,branch,previous_head_sha:expectedHeadSha,base_sha:expectedBaseSha,head_sha:commit.sha,tree_sha:a.tree.sha,files_changed:false};
+}
+
+export const SOURCE_TREE_LIMITS = Object.freeze({ response_bytes: 4 * 1024 * 1024, entries: 20000, page_entries: 500, page_bytes: 128 * 1024 });
+const treeFailure = (message, code = 'validation') => Object.assign(new Error(message), { code });
+async function boundedSourceText(response, limit) {
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > SOURCE_TREE_LIMITS.response_bytes) throw treeFailure('Invalid source response limit');
+  if (Number(response.headers.get('content-length')) > limit) {
+    await response.body?.cancel();
+    throw treeFailure('Source manifest response exceeds the bounded read limit; completeness is unverified', 'capacity');
+  }
+  const reader = response.body?.getReader();
+  if (!reader) return '';
+  const chunks = []; let length = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read(); if (done) break;
+      length += value.byteLength;
+      if (length > limit) { await reader.cancel(); throw treeFailure('Source manifest response exceeds the bounded read limit; completeness is unverified', 'capacity'); }
+      chunks.push(value);
+    }
+  } finally { reader.releaseLock(); }
+  const bytes = new Uint8Array(length); let offset = 0;
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+  return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+}
+
+// This is a metadata manifest, never a source-byte checkpoint or an auth grant.
+// Pagination is Relay-owned; GitHub's recursive tree response has no page API.
+export async function readSourceTree(env, args, api = (path, options) => githubApiRequest(env, path, options)) {
+  if (!args || typeof args !== 'object' || Array.isArray(args) || Object.keys(args).some(key => !['owner','repo','commitSha','cursor','limit'].includes(key))) throw treeFailure('Unsupported source tree arguments');
+  const { owner, repo, commitSha } = args, limit = args.limit === undefined ? 200 : args.limit;
+  for (const value of [owner, repo]) if (typeof value !== 'string' || !/^[A-Za-z0-9_.-]{1,100}$/.test(value) || ['.','..'].includes(value)) throw treeFailure('Invalid source repository identity');
+  if (!/^[a-f0-9]{40}$/.test(commitSha || '')) throw treeFailure('Source tree requires an exact lowercase 40-character commit SHA');
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > SOURCE_TREE_LIMITS.page_entries) throw treeFailure('Source tree page limit must be between 1 and 500');
+  const repository = `${owner}/${repo}`;
+  let cursor = null;
+  if (args.cursor !== undefined) {
+    if (typeof args.cursor !== 'string' || args.cursor.length > 1200 || !/^[A-Za-z0-9_-]+$/.test(args.cursor)) throw treeFailure('Invalid source tree cursor');
+    try {
+      const decoded = Buffer.from(args.cursor, 'base64url');
+      if (decoded.toString('base64url') !== args.cursor) throw Error();
+      cursor = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(decoded));
+      if (!cursor || typeof cursor !== 'object' || Array.isArray(cursor) || Object.keys(cursor).sort().join(',') !== 'commit_sha,manifest_sha256,offset,repository,tree_sha,v' || cursor.v !== 1 || cursor.repository !== repository || cursor.commit_sha !== commitSha || !/^[a-f0-9]{40}$/.test(cursor.tree_sha || '') || !/^[a-f0-9]{64}$/.test(cursor.manifest_sha256 || '') || !Number.isSafeInteger(cursor.offset) || cursor.offset < 1) throw Error();
+    } catch { throw treeFailure('Source tree cursor does not match this exact repository and commit'); }
+  }
+  const root = `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`;
+  const readOptions = { requireAuthenticated: true, maxResponseBytes: SOURCE_TREE_LIMITS.response_bytes };
+  const commit = await api(`${root}/git/commits/${commitSha}`, readOptions);
+  if (commit?.sha !== commitSha || !/^[a-f0-9]{40}$/.test(commit?.tree?.sha || '')) throw treeFailure('Commit identity could not be verified', 'provider');
+  const treeSha = commit.tree.sha;
+  const tree = await api(`${root}/git/trees/${treeSha}?recursive=1`, readOptions);
+  if (tree?.sha !== treeSha || typeof tree.truncated !== 'boolean' || !Array.isArray(tree.tree)) throw treeFailure('Source tree identity or completeness could not be verified', 'provider');
+  if (tree.tree.length > SOURCE_TREE_LIMITS.entries || Buffer.byteLength(JSON.stringify(tree)) > SOURCE_TREE_LIMITS.response_bytes) throw treeFailure('Source tree exceeds bounded manifest limits; completeness is unverified', 'capacity');
+  const modes = { '100644': 'blob', '100755': 'blob', '120000': 'blob', '040000': 'tree', '160000': 'commit' };
+  const seen = new Set();
+  const entries = tree.tree.map(entry => {
+    const path = entry?.path;
+    if (typeof path !== 'string' || !path || path.length > 4096 || path.includes('\0') || path.startsWith('/') || path.split('/').some(part => !part || part === '.' || part === '..') || seen.has(path) || !Object.hasOwn(modes, entry?.mode) || modes[entry.mode] !== entry.type || !/^[a-f0-9]{40}$/.test(entry.sha || '')) throw treeFailure('Source tree contains an invalid or duplicate entry; completeness is unverified', 'provider');
+    seen.add(path);
+    return { path, mode: entry.mode, type: entry.type, sha: entry.sha };
+  }).sort((a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : 0);
+  const digest = createHash('sha256').update(JSON.stringify(entries)).digest('hex');
+  if (cursor && (cursor.tree_sha !== treeSha || cursor.manifest_sha256 !== digest || cursor.offset >= entries.length)) throw treeFailure('Source tree cursor does not match this exact manifest');
+  const offset = cursor?.offset || 0, page = []; let bytes = 2;
+  for (let index = offset; index < entries.length && page.length < limit; index++) {
+    const size = Buffer.byteLength(JSON.stringify(entries[index])) + 1;
+    if (bytes + size > SOURCE_TREE_LIMITS.page_bytes) break;
+    page.push(entries[index]); bytes += size;
+  }
+  const nextOffset = offset + page.length;
+  const next = nextOffset < entries.length ? base64url(JSON.stringify({ v: 1, repository, commit_sha: commitSha, tree_sha: treeSha, manifest_sha256: digest, offset: nextOffset })) : null;
+  return { ok: true, repository, commit_sha: commitSha, tree_sha: treeSha, manifest_sha256: digest,
+    digest_format: 'sha256-json-entries-v1', manifest_complete: !tree.truncated, truncated: tree.truncated,
+    ...(tree.truncated ? { incomplete_reason: 'GitHub returned a truncated recursive tree; this is not a complete repository manifest.' } : {}),
+    observed_entry_count: entries.length, page_offset: offset, returned_entry_count: page.length, next_cursor: next, entries: page,
+    limits: SOURCE_TREE_LIMITS,
+    recovery: 'Collect the entire cursor chain from offset 0 and verify count/digest before claiming a complete manifest. Paths and object IDs do not prove source bytes were restored. Symlinks and submodules are metadata only; never follow them implicitly.' };
 }
