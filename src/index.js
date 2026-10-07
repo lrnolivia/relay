@@ -404,10 +404,10 @@ async function mcp(request, access, env) {
     if (uri === RELAY_CONTROL_CENTER_URI || uri === "ui://relay/control-center/v4.html") {
       return rpc(id, { contents: [{...relayControlCenterResource(), uri}] });
     }
-    if (uri === RELAY_CONTEXT_CARD_URI || uri === 'ui://relay/context-card/v15.html' || uri === 'ui://relay/context-card/v13.html' || uri === 'ui://relay/context-card/v12.html' || uri === 'ui://relay/context-card/v11.html') {
+    if (uri === RELAY_CONTEXT_CARD_URI || uri === 'ui://relay/context-card/v16.html' || uri === 'ui://relay/context-card/v15.html' || uri === 'ui://relay/context-card/v13.html' || uri === 'ui://relay/context-card/v12.html' || uri === 'ui://relay/context-card/v11.html') {
       return rpc(id, { contents: [{...relayContextCardResource(), uri}] });
     }
-    if (uri === RELAY_STATUS_CARD_URI || uri === 'ui://relay/status-card/v3-legacy-bridge.html') {
+    if (uri === RELAY_STATUS_CARD_URI || uri === 'ui://relay/status-card/v4-legacy-bridge.html' || uri === 'ui://relay/status-card/v3-legacy-bridge.html') {
       return rpc(id, { contents: [{...relayStatusCardResource(), uri}] });
     }
     const skillResource = relaySkillResource(uri);
