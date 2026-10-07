@@ -13,6 +13,7 @@ test('executor uses supported sandboxed CLI and exact-session recovery, with bou
 test('executor fails honestly without connection identity and never sends it to another endpoint',async()=>{
   assert.throws(()=>createMcpClient({}),/existing authorized/);
   assert.throws(()=>createMcpClient({token:'fixture',url:'https://evil.example/mcp'}),/canonical/);
+  for(const timeoutMs of [0,30001,Infinity,'30'])assert.throws(()=>createMcpClient({token:'fixture',timeoutMs}),/bounded/);
   const rpc=createMcpClient({token:'fixture',fetchImpl:async(_url,options)=>Response.json({jsonrpc:'2.0',id:JSON.parse(options.body).id,result:{structuredContent:{ok:true,job:{state:'queued'}}}})});
   assert.equal((await rpc('relay_execution',{})).job.state,'queued');
 });
@@ -69,6 +70,17 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { execFileSync, spawn } from 'node:child_process';
+import { createServer } from 'node:http';
+test('executor real fetch body deadline remains a timeout with unknown upstream outcome',async()=>{
+  let requests=0;const server=createServer((_request,response)=>{requests++;response.writeHead(200,{'Content-Type':'application/json'});response.flushHeaders();response.write('{');});
+  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  try{
+    const origin='http://127.0.0.1:'+server.address().port;
+    const rpc=createMcpClient({token:'synthetic fixture only',timeoutMs:200,fetchImpl:(url,options)=>{assert.equal(url,'https://relay.loew.fi/mcp');return fetch(origin,options);}});
+    await assert.rejects(rpc('relay_execution',{}),error=>{assert.equal(error.transport_failure.category,'timeout');assert.equal(error.transport_failure.stage,'decode');assert.equal(error.transport_failure.response_received,true);assert.equal(error.transport_failure.side_effects,'unknown');return true;});
+    assert.equal(requests,1);
+  }finally{server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}
+});
 test('failed executor lease preserves the exact pending operation and classified private receipt without spawning',async()=>{
   const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-executor-denial-')),workspace=path.join(root,'checkout'),stateDir=path.join(root,'receipts');
   await fs.mkdir(workspace);const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8'}).trim();

@@ -176,11 +176,12 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
   }
 }
 
-export function createMcpClient({token,url='https://relay.loew.fi/mcp',fetchImpl=fetch}) {
+export function createMcpClient({token,url='https://relay.loew.fi/mcp',fetchImpl=fetch,timeoutMs=30000}) {
   if(typeof token!=='string'||!token)throw Error('RELAY_MCP_TOKEN is required from an existing authorized Relay connection; no new credential is created');
   if(url!=='https://relay.loew.fi/mcp')throw Error('Executor uses the canonical Relay MCP endpoint');
+  if(!Number.isInteger(timeoutMs)||timeoutMs<1||timeoutMs>30000)throw Error('Executor transport timeout must be bounded to 30 seconds');
   return async(name,args)=>{
-    const evidence={schema:1,tool:typeof name==='string'&&/^relay_[a-z0-9_]{1,90}$/.test(name)?name:null,request_id:randomUUID(),stage:'encode',request_attempted:false,response_received:false,remote_result:'unknown',side_effects:'not_dispatched',cause:'undetermined',cancellation_actor:'unknown',retry_policy:'refresh-and-reconcile'};
+    const evidence={schema:1,tool:typeof name==='string'&&/^relay_[a-z0-9_]{1,90}$/.test(name)?name:null,request_id:randomUUID(),timeout_ms:timeoutMs,stage:'encode',request_attempted:false,response_received:false,remote_result:'unknown',side_effects:'not_dispatched',cause:'undetermined',cancellation_actor:'unknown',retry_policy:'refresh-and-reconcile'};
     let payload;
     try{
       if(!evidence.tool||!args||typeof args!=='object'||Array.isArray(args))throw Error();
@@ -188,7 +189,7 @@ export function createMcpClient({token,url='https://relay.loew.fi/mcp',fetchImpl
     }catch{throw transportError('local_validation',evidence);}
     evidence.stage='request';evidence.request_attempted=true;evidence.side_effects='unknown';
     let response;
-    try{response=await fetchImpl(url,{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json',Accept:'application/json, text/event-stream'},body:payload,signal:AbortSignal.timeout(30000)});}
+    try{response=await fetchImpl(url,{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json',Accept:'application/json, text/event-stream'},body:payload,signal:AbortSignal.timeout(timeoutMs)});}
     catch(error){throw transportError(error?.name==='TimeoutError'?'timeout':error?.name==='AbortError'?'cancellation_observed':'transport',evidence);}
     evidence.response_received=true;evidence.http_status=response.status;
     evidence.stage='http';
