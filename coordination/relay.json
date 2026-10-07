@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-07T06:12:40.796Z",
+  "updated_at": "2026-10-07T06:24:17.889Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -13250,7 +13250,17 @@
         "src/relay-entry.test.js",
         "src/index.js",
         "src/controller.js",
-        "src/controller.test.js"
+        "src/controller.test.js",
+        "apps/web/src/pages/RelayPage.tsx",
+        "apps/web/src/styles.css",
+        "apps/web/src/App.tsx",
+        "apps/web/test/react.test.mjs",
+        "packages/shared-ui/file-manager.js",
+        "packages/shared-ui/file-manager.css",
+        "packages/shared-ui/file-manager.d.ts",
+        "packages/shared-ui/work-controls.js",
+        "packages/shared-ui/work-controls.css",
+        "docs/relay/FILES_SIENNA_REFINEMENT_20261007.md"
       ],
       "resources": [
         "relay-mcp-rebuild-program",
@@ -13265,7 +13275,7 @@
       ],
       "goal": "Continue the existing unfinished full Relay MCP rebuild, restoring original1.9 promised capabilities and integrating approved Relay live-panel/site/card work. Archival assignment closure is not proof of functional delivery.",
       "acceptance": "Preserve working tools and provenance. Restore the original 1.9 acceptance at commit 434541358d6bfd25e67af5d8e689ba49a5378b91 and all seven stages of the Research and Reflow Plan. Track source implementation, publication, host installation and runtime verification separately. Preserve original objectives and stable acceptance IDs through additive amendments and full-task resume. Separate scope completion from verification; reconcile stale ownership without restarting paused or cancelled work. Repurpose the hourly workflow as a model-free sync safeguard comparing registered tasks, PRs, checks and deployment evidence, with deduplicated continuation recommendations and honest unavailable-evidence states. Complete skill catalog, search, read, resolve, install/vendor, update and audit; pinned licensed portable bundles; integrity and dependency enforcement; all originally promised creative, platform and supporting packs. Prove durable jobs, a real coding executor, capability-based local/remote routing, worker communication and full capability parity. Fold the Relay website, live panel, approved telemetry, Refresh Tools fallback chain, Add MCP to AI actions and compact MCP cards into this same rebuild. Verify actual client rendering/actions. Integrate review-first cards, evidence and device-specific frames, saved answers/replies, project icons and useful workspace overview. Use flat surfaces with shadows/glows. Night Shift records actual autonomous away-time work, with an unused staff lead for oversight, preserved executor provenance, evidence-supported backfill and an idempotent Shift handoff. No new credentials or spending inferred. Documentation-only PRs, fixtures and transferred defects do not establish full delivery.\nFull execution handoff, source recovery and original contract evidence: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RELAY-MCP.md . All latest site/live-panel/telemetry/refresh/add-to-AI, review delivery, NightShift/Shift, canonical asset discovery, lifecycle and original skills/executor goals preserved. Original1.9 verbatim and41 stale queue pairs in sibling documents. Current engine cannot normalize completed queue pairs or handoff queued-only owner; do not bypass. Actual user-started Mac Codex identity pending; parent stops MCP implementation. ctrlfrontend remains separate heldPR7, recovery8WIPfiles preserved. New Relay site concept is not implementation; current plugin ID protected.\n2026-10-03 15:38 motion acceptance: preserve the approved Relay visual language; tighten in-motion card padding and text grouping; retain last good live data during refresh, skeletons only for initial unavailable content, clear loading indicators and animated updates without flicker. Each mosaic block supports touch long press into wiggle/reorder mode, drag, explicit Done and saved order; keep normal scrolling and taps, keyboard/reduced-motion accessibility. User says all these are part of the motion pass. Desktop normal ChatGPT card mount/read-only check now screenshot-proven; iOS user-reported working; browser regression remains open.\n2026-10-03 18:27 card acceptance: Lauren confirms the real iOS status card now loads data (screenshot libfile_4bab4a18f8ac81918f490d8135752922). Active panel must list active jobs, not staff. Present concise itemized job titles/status, readable visual hierarchy and glanceable information; expand full technical details on demand. Preserve established card identity and approved flat surfaces. Native iOS data hydration is evidenced; actions and browser parity remain separate checks.",
-      "next_action": "PR167 merged6ed5a2f normal exact-head gh squash after green2fc gates. WorkersBuildsadbf9330 successful; deployment e577bd6d/version61328fd4 at100%. Main CI37579872298 pending. LiveAppheaders5000limit,3424used/1576remaining06:09:21/reset06:24:27 then5000used/0remaining06:10:10/reset06:56:25. Stop upstreamGitHub untilactualdeadline; preserve two observations without assuming singleconsistentwindow. Actuallegacy source read revealed browser_capacity misrouting in index catch before typedquota wrapper. Add narrow controllerguard/index typedGitHuberror response and authenticatedMCP endpoint regression; sameassignment/branch restoredfromverified6ed. CTRLuserconfirmsreviewPOST403quota and postreset22assignment200nullrecords; separate404unreproduced, missinginitialrecords notcause. Fullscope/reviewstore/CTRLrefresh/screenshotplan retained.",
+      "next_action": "Quota PR168 merged e709fc1127d750804c9c865342c96d5bbd9c86f3 after hosted37580716851 quality/37580716902 admission passed, 87 focused/authenticated mock error regressions,10 contextcards and9 retainedloghashes; five incremental files independent remote restore verified. Workers Build4ced0e2c success, production verification37581167172 running. Rollback last fully verified e8076bb; prior6ed production telemetry loading timeout75s remains open. No App upstreamGitHub before06:56:25Z. CTRL review403 confirmed installation166454233 exhausted; same22assignment read200/nullcorrect afterreset;404separateunreproduced. User now requests Files icon in Relay main body, reuse CTRL shared file manager, Sienna main accent; separate next candidate using committed CTRL2fc343285f41894096e0c488b6181bee61025979, preserve original full rebuild acceptance and active ownership. Inspect/admit then move launcher into connection actions, sync shared Files filters/search/sort/keyboard preserving upload/API/auth, replace hardcoded primary coral with existing#b5471f Sienna token. Capture rendered desktop/mobile fixture and required exacthead gates; no CTRL edits.",
       "ledger_refs": [
         "relay-mcp-rebuild-20261001",
         "relay-mcp-host-proof-20261001",
@@ -13312,8 +13322,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-07T06:12:40.796Z",
-      "lease_until": "2026-10-07T18:12:40.796Z",
+      "updated_at": "2026-10-07T06:24:17.889Z",
+      "lease_until": "2026-10-07T18:24:17.889Z",
       "handoffs": [
         {
           "at": "2026-10-03T08:00:10.297Z",
