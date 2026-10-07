@@ -1,8 +1,12 @@
-import { createSign } from "node:crypto";
+import { createSign, createHash } from "node:crypto";
+import { createGitHubReadCache } from './github-read-cache.js';
 
 const GITHUB_API = "https://api.github.com";
 const GITHUB_API_VERSION = "2022-11-28";
 const TOKEN_CACHE = new Map();
+const TOKEN_INFLIGHT = new Map();
+const READ_CACHE = createGitHubReadCache();
+const credentialScope = value => createHash('sha256').update(value).digest('hex');
 
 function base64url(value) {
   return Buffer.from(value).toString("base64url");
@@ -30,7 +34,8 @@ export function sourceAuthStatus(env) {
     app_configured: app,
     legacy_token_configured: legacy,
     write_enabled: app || legacy,
-    required_app_bindings: app ? [] : ["RELAY_GITHUB_APP_ID", "RELAY_GITHUB_APP_PRIVATE_KEY"]
+    required_app_bindings: app ? [] : ["RELAY_GITHUB_APP_ID", "RELAY_GITHUB_APP_PRIVATE_KEY"],
+    read_transport: READ_CACHE.metrics()
   };
 }
 
@@ -63,6 +68,11 @@ async function requestGitHub(path, token, options = {}, context = {}) {
 
   const github = { provider: 'github', method: options.method || 'GET', endpoint: path.split('?')[0].slice(0, 500),
     phase: context.phase || 'resource_request', auth_mode: context.auth_mode || (token ? 'authenticated' : 'public_read') };
+  const scope=context.scope||credentialScope(token||'public-read');
+  try { return await READ_CACHE.request({scope,budget:context.budget||scope,resource:path==='/graphql'?'graphql':'core',path,
+    method:options.method||'GET',mode:options.jobLog||options.body!==undefined?'none':options.readCache||'revalidate',onObservation:options.onReadObservation,
+    execute:async etag=>{
+  if(etag)headers['If-None-Match']=etag;
   let response, text;
   try {
     response = await fetch(GITHUB_API + path, {
@@ -73,7 +83,7 @@ async function requestGitHub(path, token, options = {}, context = {}) {
     });
     if (options.jobLog === true && response.ok) {
       if (!/^\/repos\/[^/]+\/[^/]+\/actions\/jobs\/\d+\/logs$/.test(path)) throw new Error("Job log route required");
-      return await readBoundedJobLog(response);
+      return {status:response.status,value:await readBoundedJobLog(response)};
     }
     text = await response.text();
   } catch (error) {
@@ -81,6 +91,13 @@ async function requestGitHub(path, token, options = {}, context = {}) {
     throw error;
   }
   let body = null;
+  const quota={auth_mode:github.auth_mode,...(Number.isSafeInteger(context.installation_id)?{installation_id:context.installation_id}:{})};
+  for(const [header,field]of [['x-ratelimit-limit','rate_limit_limit'],['x-ratelimit-used','rate_limit_used'],['x-ratelimit-remaining','rate_limit_remaining'],['x-ratelimit-reset','rate_limit_reset'],['retry-after','retry_after_seconds']]){
+    const value=response.headers.get(header);if(/^\d{1,10}$/.test(value||''))quota[field]=Number(value);
+  }
+  const resource=response.headers.get('x-ratelimit-resource');if(/^[a-z_]{1,40}$/.test(resource||''))quota.rate_limit_resource=resource;
+  const cacheable=!/\bno-store\b/i.test(response.headers.get('cache-control')||'');
+  if(response.status===304)return {status:304,etag:response.headers.get('etag'),quota,cacheable};
   if (text) {
     try { body = JSON.parse(text); }
     catch { body = { message: text.slice(0, 1000) }; }
@@ -88,15 +105,13 @@ async function requestGitHub(path, token, options = {}, context = {}) {
   if (!response.ok) {
     const error = new Error(body?.message || ("GitHub request failed with " + response.status));
     error.status = response.status;
-    error.github = { ...github, status: response.status };
-    for (const [header, field] of [['x-ratelimit-remaining', 'rate_limit_remaining'], ['x-ratelimit-reset', 'rate_limit_reset'], ['retry-after', 'retry_after_seconds']]) {
-      const value = response.headers.get(header);
-      if (/^\d{1,10}$/.test(value || '')) error.github[field] = Number(value);
-    }
-    if (response.status === 429 || (response.status === 403 && error.github.rate_limit_remaining === 0)) error.code = 'rate_limit';
+    error.github = { ...github, status: response.status, ...quota };
+    if (response.status === 429 || (response.status === 403 && (quota.rate_limit_remaining === 0 || quota.retry_after_seconds !== undefined || /secondary rate limit|API rate limit exceeded/i.test(body?.message||'')))) error.code = 'rate_limit';
     throw error;
   }
-  return body;
+  return {status:response.status,value:body,etag:response.headers.get('etag'),quota,cacheable};
+    }
+  }); }catch(error){error.github={...github,...error.github};throw error;}
 }
 
 function repositoryFromPath(path) {
@@ -105,26 +120,32 @@ function repositoryFromPath(path) {
   return { owner: decodeURIComponent(match[1]), repo: decodeURIComponent(match[2]) };
 }
 
-async function installationToken(env, owner, repo) {
-  const cacheKey = owner.toLowerCase() + "/" + repo.toLowerCase();
+async function installationToken(env, owner, repo, onReadObservation) {
+  const appScope=credentialScope(String(env.RELAY_GITHUB_APP_ID)+'\0'+normalizePrivateKey(env.RELAY_GITHUB_APP_PRIVATE_KEY));
+  const cacheKey = appScope+'\0'+owner.toLowerCase() + "/" + repo.toLowerCase();
   const cached = TOKEN_CACHE.get(cacheKey);
-  if (cached && cached.expiresAt > Date.now() + 60000) return cached.token;
+  if (cached && cached.expiresAt > Date.now() + 60000) return cached;
+  if(TOKEN_INFLIGHT.has(cacheKey))return TOKEN_INFLIGHT.get(cacheKey);
+  const pending=(async()=>{
 
   const jwt = createAppJwt(env);
   const installation = await requestGitHub(
     "/repos/" + encodeURIComponent(owner) + "/" + encodeURIComponent(repo) + "/installation",
-    jwt, {}, { phase: 'installation_discovery', auth_mode: 'github_app_jwt' }
+    jwt, {onReadObservation}, { phase: 'installation_discovery', auth_mode: 'github_app_jwt',scope:'jwt:'+appScope }
   );
   if (!installation?.id) throw new Error("Relay GitHub App is not installed on " + owner + "/" + repo);
   const created = await requestGitHub(
     "/app/installations/" + installation.id + "/access_tokens",
     jwt,
-    { method: "POST", body: {} }, { phase: 'token_mint', auth_mode: 'github_app_jwt' }
+    { method: "POST", body: {}, onReadObservation }, { phase: 'token_mint', auth_mode: 'github_app_jwt',scope:'jwt:'+appScope }
   );
   if (!created?.token) throw new Error("GitHub App installation token was not returned");
   const expiresAt = created.expires_at ? Date.parse(created.expires_at) : Date.now() + 50 * 60 * 1000;
-  TOKEN_CACHE.set(cacheKey, { token: created.token, expiresAt });
-  return created.token;
+  const result={token:created.token,expiresAt,installation_id:installation.id,scope:'installation:'+installation.id+':'+appScope,budget:'installation:'+installation.id+':'+String(env.RELAY_GITHUB_APP_ID)};
+  TOKEN_CACHE.set(cacheKey,result);return result;
+  })();
+  TOKEN_INFLIGHT.set(cacheKey,pending);
+  try{return await pending;}finally{if(TOKEN_INFLIGHT.get(cacheKey)===pending)TOKEN_INFLIGHT.delete(cacheKey);}
 }
 
 export async function githubApiRequest(env, path, options = {}) {
@@ -135,7 +156,7 @@ export async function githubApiRequest(env, path, options = {}) {
   if (appConfigured(env) && repo) {
     let token;
     try {
-      token = await installationToken(env, repo.owner, repo.repo);
+      token = await installationToken(env, repo.owner, repo.repo, options.onReadObservation);
     } catch (error) {
       // Public discovery remains available for an uninstalled repository.
       // Acquisition failure can never establish absence for a guarded lookup.
@@ -143,7 +164,7 @@ export async function githubApiRequest(env, path, options = {}) {
     }
     // Once selected, preserve this authenticated identity and its response.
     // A missing resource is not an invitation to ask another identity.
-    if (token) return requestGitHub(path, token, options, { auth_mode: 'github_app_installation' });
+    if (token) return requestGitHub(path, token.token, options, { auth_mode: 'github_app_installation',scope:token.scope,budget:token.budget,installation_id:token.installation_id });
   }
 
   if (legacyTokenConfigured(env)) return requestGitHub(path, env.RELAY_GITHUB_TOKEN, options, { auth_mode: 'legacy_token' });
@@ -155,9 +176,9 @@ export async function githubApiRequest(env, path, options = {}) {
 }
 
 export async function githubGraphqlRequest(env, owner, repo, query, variables = {}) {
-  let token = null;
+  let token = null,context={};
   if (appConfigured(env)) {
-    token = await installationToken(env, owner, repo);
+    const installation=await installationToken(env, owner, repo);token=installation.token;context={auth_mode:'github_app_installation',scope:installation.scope,budget:installation.budget,installation_id:installation.installation_id};
   } else if (legacyTokenConfigured(env)) {
     token = env.RELAY_GITHUB_TOKEN;
   } else {
@@ -167,7 +188,7 @@ export async function githubGraphqlRequest(env, owner, repo, query, variables = 
   const result = await requestGitHub("/graphql", token, {
     method: "POST",
     body: { query, variables }
-  });
+  },context);
   if (Array.isArray(result?.errors) && result.errors.length) {
     throw new Error(result.errors[0]?.message || "GitHub GraphQL request failed");
   }

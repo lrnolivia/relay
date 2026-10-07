@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { buildProjectAuthority, readJsonFile } from "../src/cloudflare-worker.mjs";
+import worker from '../src/cloudflare-worker.mjs';
 
 test("managed project authority is distinct from the read-only automation target", () => {
   const config = {
@@ -86,4 +87,19 @@ test("browser metadata refuses a substituted large ledger blob", async () => {
   await assert.rejects(readJsonFile({}, "coordination/relay.json", async route => route.includes("/contents/")
     ? {type:"file",encoding:"none",sha,size:bytes.length}
     : {encoding:"base64",sha,size:bytes.length,content:Buffer.from('{"project":"other"}').toString("base64")}),/identity verification failed/);
+});
+test('browser quota errors expose the actual retry deadline and block repeated upstream reads, preserving Runner identity',async t=>{
+  const reset=Math.floor(Date.now()/1000)+120;let calls=0;
+  t.mock.method(globalThis,'fetch',async(url,options)=>{calls++;assert.equal(options.headers.Authorization,'Bearer synthetic-worker-quota');return Response.json({message:'API rate limit exceeded'},{status:403,headers:{'x-ratelimit-remaining':'0','x-ratelimit-reset':String(reset),'x-ratelimit-resource':'core'}});});
+  const env={RUNNER_GITHUB_TOKEN:'synthetic-worker-quota',RELAY_GITHUB_TOKEN:'synthetic-unused-other',RELAY_GITHUB_APP_ID:'configured-but-not-selected',RELAY_GITHUB_APP_PRIVATE_KEY:'not-used'};
+  const request=()=>new Request('https://relay.loew.fi/api/projects',{headers:{'Cf-Access-Jwt-Assertion':'synthetic-authenticated-fixture'}});
+  const first=await worker.fetch(request(),env);assert.equal(first.status,403);assert.equal((await first.json()).retry_at,new Date(reset*1000).toISOString());assert.ok(Number(first.headers.get('Retry-After'))>0);
+  const second=await worker.fetch(request(),env);assert.equal((await second.json()).code,'rate_limit');assert.equal(calls,1);
+});
+test('browser permission403 is distinct from quota and Access rejection performs no GitHub call',async t=>{
+  let calls=0;t.mock.method(globalThis,'fetch',async()=>{calls++;return Response.json({message:'Resource not accessible by integration'},{status:403});});
+  const env={RELAY_GITHUB_TOKEN:'synthetic-worker-permission'};
+  const response=await worker.fetch(new Request('https://relay.loew.fi/api/projects',{headers:{'Cf-Access-Jwt-Assertion':'synthetic-authenticated-fixture'}}),env);
+  const body=await response.json();assert.equal(response.status,403);assert.equal(body.code,undefined);assert.equal(body.retry_at,undefined);assert.equal(calls,1);
+  const locked=await worker.fetch(new Request('https://relay.loew.fi/api/projects'),env);assert.equal(locked.status,403);assert.equal(calls,1);
 });
