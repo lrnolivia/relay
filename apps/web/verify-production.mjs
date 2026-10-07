@@ -4,6 +4,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
 import { webBuildId } from "./generated.js";
 import { readback } from "./readback.mjs";
+import { productionMcpRead } from './production-mcp-readback.mjs';
 import { verifyFileLifecycle } from './verify-file-lifecycle.mjs';
 
 const expected = process.env.EXPECTED_SOURCE_SHA;
@@ -35,10 +36,7 @@ assert.ok(ready, "production must serve this exact source SHA and built website 
 if(!diagnoseOnly){
  // Exercise the explicit authenticated read tool using only this public repository.
  // Private project paths/content must never enter public CI artifacts.
- const mcpRead=async(method,params)=>{
-  const {response,value}=await readback(origin+'/mcp',{method:'POST',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method,params})});
-  assert.equal(response.status,200,'authenticated MCP discovery/read');assert.equal(value?.error,undefined);return value.result;
- };
+ const mcpRead=(method,params)=>productionMcpRead(method,params,{headers,commitSha:expected});
  const discovered=await mcpRead('tools/list',{}),tool=discovered.tools?.find(tool=>tool.name==='relay_source_tree');
  assert.ok(tool,'source manifest capability must be discoverable');assert.equal(tool.annotations.readOnlyHint,true);assert.equal(tool.annotations.destructiveHint,false);
  assert.deepEqual(tool.inputSchema.required,['repo','commit_sha']);assert.equal(tool.inputSchema.additionalProperties,false);
