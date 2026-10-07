@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { generateKeyPairSync } from 'node:crypto';
-import { sourceAuthStatus, githubApiRequest, readSourceChecks, readBoundedJobLog, syncIdenticalSourceBranch } from "./source.js";
+import { sourceAuthStatus, githubApiRequest, readSourceChecks, readBoundedJobLog, readSourceTree, SOURCE_TREE_LIMITS, syncIdenticalSourceBranch } from "./source.js";
 
 test("relay.SOURCE status prefers GitHub App auth", () => {
   assert.equal(sourceAuthStatus({}).auth_mode, "public_read");
@@ -234,3 +234,77 @@ test("default branch synchronization is prohibited",async()=>{
 });
 
 test("job diagnostics retain the terminal failure after noisy expected test errors",async()=>{const noise=Array.from({length:250},(_,i)=>`expected fixture failure ${i}\nfixture passed`).join("\n");const r=await readBoundedJobLog(new Response(noise+"\nPublish release\nERROR: cannot update release asset\nProcess completed with exit code 1\ncleanup complete"));assert.match(r.excerpt,/cannot update release asset/);assert.ok(r.excerpt.length<=24000)});
+
+const manifestCommit = 'a'.repeat(40), manifestTree = 'b'.repeat(40);
+const manifestArgs = { owner: 'lrnolivia', repo: 'manifest-fixture', commitSha: manifestCommit };
+const manifestEntry = (path, mode='100644', type='blob') => ({path,mode,type,sha:'c'.repeat(40),url:'https://api.example/ignored',content:'must-not-leak'});
+function manifestFixture(entries, {truncated=false, commit={}, tree={}}={}) {
+ const calls=[];
+ const api=async(path,options)=>{
+  calls.push({path,options});assert.equal(options.requireAuthenticated,true);assert.equal(options.maxResponseBytes,SOURCE_TREE_LIMITS.response_bytes);assert.equal(options.method,undefined);
+  if(path.endsWith('/git/commits/'+manifestCommit))return {sha:manifestCommit,tree:{sha:manifestTree},...commit};
+  assert.equal(path,'/repos/lrnolivia/manifest-fixture/git/trees/'+manifestTree+'?recursive=1');return {sha:manifestTree,truncated,tree:entries,...tree};
+ };
+ return {api,calls};
+}
+test('source tree returns exact immutable metadata with stable bounded pages and no file contents',async()=>{
+ const entries=[manifestEntry('z.test.js'),manifestEntry('a'),manifestEntry('folder','040000','tree'),manifestEntry('folder/run','100755'),manifestEntry('link','120000'),manifestEntry('module','160000','commit')];
+ const f=manifestFixture(entries);const all=[];let cursor,first;let offset=0;
+ do{
+  const page=await readSourceTree({}, {...manifestArgs,limit:2,...(cursor?{cursor}:{})},f.api);first ||= page;
+  assert.equal(page.repository,'lrnolivia/manifest-fixture');assert.equal(page.commit_sha,manifestCommit);assert.equal(page.tree_sha,manifestTree);
+  assert.equal(page.manifest_complete,true);assert.equal(page.truncated,false);assert.equal(page.page_offset,offset);assert.equal(page.returned_entry_count,2);
+  assert.equal(page.manifest_sha256,first.manifest_sha256);assert.equal(page.observed_entry_count,6);
+  assert.doesNotMatch(JSON.stringify(page),/must-not-leak|api\.example/);
+  for(const row of page.entries)assert.deepEqual(Object.keys(row),['path','mode','type','sha']);
+  all.push(...page.entries);offset+=page.entries.length;cursor=page.next_cursor;
+ }while(cursor);
+ assert.deepEqual(all.map(x=>x.path),['a','folder','folder/run','link','module','z.test.js']);
+ const {createHash}=await import('node:crypto');assert.equal(createHash('sha256').update(JSON.stringify(all)).digest('hex'),first.manifest_sha256);
+ assert.equal(f.calls.length,6);assert.equal(entries[0].path,'z.test.js','never mutate the provider object');
+});
+test('empty and provider-truncated manifests remain distinct from complete delivered source',async()=>{
+ let f=manifestFixture([]),page=await readSourceTree({},manifestArgs,f.api);assert.equal(page.observed_entry_count,0);assert.equal(page.manifest_complete,true);assert.equal(page.next_cursor,null);
+ f=manifestFixture([manifestEntry('partial.test.js')],{truncated:true});page=await readSourceTree({},manifestArgs,f.api);
+ assert.equal(page.ok,true);assert.equal(page.manifest_complete,false);assert.equal(page.truncated,true);assert.match(page.incomplete_reason,/not a complete repository manifest/);assert.equal(page.next_cursor,null);assert.match(page.recovery,/do not prove source bytes/);
+});
+test('source manifest refuses branch refs, invalid paging and repository traversal before any request',async()=>{
+ for(const args of [{...manifestArgs,commitSha:'main'},{...manifestArgs,repo:'..'},{...manifestArgs,owner:'else/where'},{...manifestArgs,limit:0},{...manifestArgs,limit:501},{...manifestArgs,limit:'2'},{...manifestArgs,cursor:'not!base64'},{...manifestArgs,extra:true}]){
+  let calls=0;await assert.rejects(readSourceTree({},args,async()=>{calls++;}),error=>error.code==='validation');assert.equal(calls,0);
+ }
+});
+test('source manifest cursor cannot cross repository, commit, tree, digest or range',async()=>{
+ const f=manifestFixture([manifestEntry('a'),manifestEntry('b'),manifestEntry('c')]);const first=await readSourceTree({}, {...manifestArgs,limit:1},f.api);const raw=JSON.parse(Buffer.from(first.next_cursor,'base64url').toString());
+ for(const change of [{repository:'lrnolivia/other'},{commit_sha:'d'.repeat(40)},{tree_sha:'d'.repeat(40)},{manifest_sha256:'d'.repeat(64)},{offset:3},{offset:-1},{offset:1.5},{unexpected:true}]){
+  const cursor=Buffer.from(JSON.stringify({...raw,...change})).toString('base64url');await assert.rejects(readSourceTree({}, {...manifestArgs,cursor},f.api),error=>error.code==='validation');
+ }
+ const changed=manifestFixture([manifestEntry('a'),manifestEntry('changed'),manifestEntry('c')]);await assert.rejects(readSourceTree({}, {...manifestArgs,cursor:first.next_cursor},changed.api),/exact manifest/);
+});
+test('source manifest rejects unverifiable identities, malformed entries and ambiguous completeness',async()=>{
+ for(const f of [manifestFixture([],{commit:{sha:'d'.repeat(40)}}),manifestFixture([],{tree:{sha:'d'.repeat(40)}}),manifestFixture([],{tree:{truncated:undefined}}),manifestFixture([manifestEntry('x'),manifestEntry('x')]),manifestFixture([manifestEntry('../x')]),manifestFixture([manifestEntry('/absolute')]),manifestFixture([manifestEntry('folder//x')]),manifestFixture([manifestEntry('bad\0name')]),manifestFixture([manifestEntry('bad','100644','tree')]),manifestFixture([{...manifestEntry('bad'),sha:'main'}])])await assert.rejects(readSourceTree({},manifestArgs,f.api),error=>error.code==='provider');
+});
+test('source manifest limits entries and page bytes without dropping an entry or inventing completeness',async()=>{
+ const tooMany=manifestFixture(Array.from({length:SOURCE_TREE_LIMITS.entries+1},(_,i)=>manifestEntry(String(i))));await assert.rejects(readSourceTree({},manifestArgs,tooMany.api),error=>error.code==='capacity');
+ const entries=Array.from({length:80},(_,i)=>manifestEntry(String(i).padStart(3,'0')+'x'.repeat(4000))),f=manifestFixture(entries);let cursor,seen=0;
+ do {const page=await readSourceTree({}, {...manifestArgs,limit:500,...(cursor?{cursor}:{})},f.api);assert.ok(Buffer.byteLength(JSON.stringify(page.entries))<=SOURCE_TREE_LIMITS.page_bytes);assert.ok(page.entries.length>0);seen+=page.entries.length;cursor=page.next_cursor;}while(cursor);
+ assert.equal(seen,80);
+});
+test('source manifest requires existing authenticated transport and preserves provider denials',async t=>{
+ let external=0;t.mock.method(globalThis,'fetch',async()=>{external++;throw Error('No external request expected');});
+ await assert.rejects(readSourceTree({},manifestArgs),/Authenticated GitHub transport/);assert.equal(external,0);
+ for(const status of [401,403,404,429,500]){
+  const expected=Object.assign(new Error('synthetic denial'),{status});let calls=0;
+  await assert.rejects(readSourceTree({},manifestArgs,async()=>{calls++;throw expected;}),error=>error===expected);assert.equal(calls,1);
+ }
+});
+test('bounded manifest transport cancels oversized streams without changing ordinary reads',async t=>{
+ let cancelled=false;
+ t.mock.method(globalThis,'fetch',async()=>new Response(new ReadableStream({start(controller){controller.enqueue(new TextEncoder().encode('{"too_large":true}'));},cancel(){cancelled=true;}})));
+ await assert.rejects(githubApiRequest({RELAY_GITHUB_TOKEN:'synthetic-manifest-limit'},'/repos/lrnolivia/manifest-limit/git/trees/'+manifestTree,{requireAuthenticated:true,maxResponseBytes:8}),error=>error.code==='capacity'&&error.github.method==='GET');assert.equal(cancelled,true);
+});
+test('bounded manifest transport validates size headers and exact-cap successful JSON',async t=>{
+ t.mock.method(globalThis,'fetch',async()=>new Response('{"ok":true}',{headers:{'content-length':'100'}}));
+ await assert.rejects(githubApiRequest({RELAY_GITHUB_TOKEN:'synthetic-manifest-header'},'/repos/lrnolivia/manifest-header/git/trees/'+manifestTree,{requireAuthenticated:true,maxResponseBytes:20}),error=>error.code==='capacity');
+ t.mock.method(globalThis,'fetch',async()=>new Response('{"ok":true}'));
+ assert.deepEqual(await githubApiRequest({RELAY_GITHUB_TOKEN:'synthetic-manifest-exact'},'/repos/lrnolivia/manifest-exact/git/trees/'+manifestTree,{requireAuthenticated:true,maxResponseBytes:11}),{ok:true});
+});

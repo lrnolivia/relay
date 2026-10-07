@@ -57,7 +57,7 @@ const QUERY_TOOLS = new Set([
   'relay_runner_projects','relay_runner_project','relay_runner_assignments','relay_runner_progress',
   'relay_runner_resume','relay_runner_updates','relay_runner_preflight','relay_runner_feedback_status',
   'relay_runner_feedback_peek','relay_source_status','relay_source_repo','relay_source_file',
-  'relay_source_inventory','relay_source_pull_request','relay_source_checks','relay_cloud_status',
+  'relay_source_tree','relay_source_inventory','relay_source_pull_request','relay_source_checks','relay_cloud_status',
   'relay_cloud_scripts','relay_cloud_worker','relay_cloud_builds','relay_cloud_project',
   'relay_staff_directory','relay_render_context_card','relay_show_legacy_bridge_card',
   'relay_control_status','relay_ui_control_center','relay_verify_evidence_plan',

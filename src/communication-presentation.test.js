@@ -180,3 +180,10 @@ test('quota times use the supplied display timezone without changing eligibility
   assert.notEqual(utc.summary,tokyo.summary);assert.deepEqual(utc.details,tokyo.details);
   assert.equal(input.retry.not_before,'2026-10-07T11:00:00.000Z');
 });
+
+test('source tree reads keep query error semantics and explicit partial manifests',()=>{
+ const operation=presentationOperation('relay_source_tree');assert.equal(operation.kind,'query');
+ const failed=normalizeCommunicationResult({ok:false,error:{class:'timeout'}},{operation});
+ assert.equal(failed.mutation,'not_applicable');assert.equal(formatRelay(failed).message_id,'error.timeout_read');
+ assert.equal(present({ok:true,truncated:true,manifest_complete:false},operation).message_id,'data.partial');
+});

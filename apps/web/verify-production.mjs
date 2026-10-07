@@ -33,6 +33,33 @@ for (let attempt = 0; attempt < 12; attempt++) {
 }
 assert.ok(ready, "production must serve this exact source SHA and built website artifact");
 if(!diagnoseOnly){
+ // Exercise the explicit authenticated read tool using only this public repository.
+ // Private project paths/content must never enter public CI artifacts.
+ const mcpRead=async(method,params)=>{
+  const {response,value}=await readback(origin+'/mcp',{method:'POST',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method,params})});
+  assert.equal(response.status,200,'authenticated MCP discovery/read');assert.equal(value?.error,undefined);return value.result;
+ };
+ const discovered=await mcpRead('tools/list',{}),tool=discovered.tools?.find(tool=>tool.name==='relay_source_tree');
+ assert.ok(tool,'source manifest capability must be discoverable');assert.equal(tool.annotations.readOnlyHint,true);assert.equal(tool.annotations.destructiveHint,false);
+ assert.deepEqual(tool.inputSchema.required,['repo','commit_sha']);assert.equal(tool.inputSchema.additionalProperties,false);
+ const entries=[],cursors=new Set();let cursor,first,pages=0;
+ do{
+  assert.ok(pages++<40,'manifest pagination must be bounded');
+  const result=await mcpRead('tools/call',{name:'relay_source_tree',arguments:{repo:'relay',commit_sha:expected,limit:500,...(cursor?{cursor}:{})}});
+  assert.notEqual(result.isError,true);const page=result.structuredContent;assert.equal(page.ok,true);assert.equal(page.repository,'lrnolivia/relay');assert.equal(page.commit_sha,expected);
+  assert.equal(page.manifest_complete,true);assert.equal(page.truncated,false);assert.equal(page.page_offset,entries.length);assert.equal(page.returned_entry_count,page.entries.length);
+  first ||= page;assert.equal(page.tree_sha,first.tree_sha);assert.equal(page.manifest_sha256,first.manifest_sha256);assert.equal(page.observed_entry_count,first.observed_entry_count);
+  for(const row of page.entries){assert.deepEqual(Object.keys(row),['path','mode','type','sha']);assert.match(row.sha,/^[a-f0-9]{40}$/);}
+  entries.push(...page.entries);cursor=page.next_cursor;
+  if(cursor){assert.equal(typeof cursor,'string');assert.ok(!cursors.has(cursor),'cursor must advance');cursors.add(cursor);}
+ }while(cursor);
+ assert.equal(entries.length,first.observed_entry_count);assert.equal(new Set(entries.map(row=>row.path)).size,entries.length);
+ assert.equal(createHash('sha256').update(JSON.stringify(entries)).digest('hex'),first.manifest_sha256);
+ for(const path of ['AGENTS.md','src/index.js','src/source.js','package.json'])assert.ok(entries.some(entry=>entry.path===path&&entry.mode==='100644'),'manifest includes '+path);
+ const proof={ok:true,kind:'authenticated-source-tree-manifest',repository:'lrnolivia/relay',commit_sha:expected,tree_sha:first.tree_sha,manifest_sha256:first.manifest_sha256,entry_count:entries.length,pages,manifest_complete:true,content_included:false,source_bytes_restored:false};
+ await writeFile('qa-evidence/production/source-tree.json',JSON.stringify(proof,null,2));console.log('SOURCE_TREE_PROOF='+JSON.stringify(proof));
+}
+if(!diagnoseOnly){
  const runIdentity=[expected,process.env.GITHUB_RUN_ID||Date.now(),process.env.GITHUB_RUN_ATTEMPT||'1'].join('-');
  try{
   const files=await verifyFileLifecycle((path,options)=>fetch(origin+path,{...options,headers:{...headers,...options.headers}}),{requestId:'verify-'+createHash('sha256').update(runIdentity).digest('hex'),unauthenticatedFetcher:(path,options)=>fetch(origin+path,options)});

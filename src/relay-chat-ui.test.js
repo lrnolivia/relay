@@ -595,6 +595,7 @@ test('human_v1 generated current and legacy bridge resources share exact server 
   const built=await build({entryPoints:[new URL('./relay-chat-ui.js',import.meta.url).pathname],bundle:true,write:false,format:'esm',platform:'neutral',keepNames:true});
   const module=await import('data:text/javascript;base64,'+Buffer.from(built.outputFiles[0].text).toString('base64'));
   const cases=[
+    {ok:true,manifest_complete:false,truncated:true,presentation_operation:{kind:'query',name:'relay_source_tree'}},
     {ok:true,content:'unchanged file',presentation_operation:{kind:'query',name:'relay_source_file'}},
     {ok:true,revision:36,presentation_operation:{kind:'command',name:'relay_context'}},
     {ok:true,state:'unknown-provider-state',presentation_operation:{kind:'unknown',name:'new_tool'}},
