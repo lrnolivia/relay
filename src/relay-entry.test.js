@@ -200,6 +200,31 @@ test("fresh inline status card is listed and readable through the authenticated 
   assert.equal(invalid.isError, true);
   assert.match(invalid.content[0].text, /Invalid card project/);
 
+  await t.test('authenticated source reads preserve GitHub quota deadlines and never offer a browser fallback',async()=>{
+    const priorFetch=globalThis.fetch;let calls=0,quota=true;
+    const reset=Math.floor(Date.now()/1000)+600,retryAt=new Date(reset*1000).toISOString();
+    t.mock.method(globalThis,'fetch',async(url,options)=>{
+      if(!String(url).startsWith('https://api.github.com/'))return priorFetch(url,options);
+      calls++;assert.equal(String(url),'https://api.github.com/repos/lrnolivia/relay/pulls/167');
+      return Response.json({message:quota?'API rate limit exceeded for installation ID166454233':'Resource not accessible by integration'},
+        {status:403,headers:quota?{'x-ratelimit-limit':'5000','x-ratelimit-used':'5000','x-ratelimit-remaining':'0','x-ratelimit-reset':String(reset)}:{}});
+    });
+    try{
+      const params={name:'relay_source_pull_request',arguments:{repo:'relay',number:167}};
+      const result=await rpc('tools/call',params,{RELAY_GITHUB_TOKEN:'mcp-quota-fixture'});
+      assert.equal(result.isError,true);assert.equal(result.structuredContent.namespace,'relay.SOURCE');
+      assert.equal(result.structuredContent.error.class,'rate_limit');assert.equal(result.structuredContent.error.retry_at,retryAt);
+      assert.equal(result.structuredContent.error.upstream.rate_limit_used,5000);assert.equal(result.structuredContent.error.retryable,false);
+      assert.equal(result.structuredContent.reason,undefined);assert.doesNotMatch(JSON.stringify(result),/browser_capacity|github-chromium|mcp-quota-fixture/);
+      const blocked=await rpc('tools/call',params,{RELAY_GITHUB_TOKEN:'mcp-quota-fixture'});
+      assert.equal(blocked.structuredContent.error.upstream.request_attempted,false);assert.equal(calls,1);
+      quota=false;const denied=await rpc('tools/call',params,{RELAY_GITHUB_TOKEN:'mcp-permission-fixture'});
+      assert.equal(denied.structuredContent.error.class,'permission');assert.equal(denied.structuredContent.error.retry_at,undefined);
+      const unauthenticated=await worker.fetch(new Request('https://relay.loew.fi/mcp',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/call',params})}),{RELAY_GITHUB_TOKEN:'mcp-permission-fixture'});
+      assert.equal(unauthenticated.status,401);assert.equal(calls,2);
+    }finally{t.mock.method(globalThis,'fetch',priorFetch);}
+  });
+
   await t.test('feedback tools enforce the existing authentication and preserve readable receipts', async () => {
     const priorFetch = globalThis.fetch;
     const file = value => Response.json({ type: 'file', sha: 'b'.repeat(40), encoding: 'base64', content: Buffer.from(JSON.stringify(value)).toString('base64') });
