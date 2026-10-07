@@ -53,3 +53,51 @@ Publication was initially parked when Relay GitHub App reads returned `rate_limi
 The combined candidate adds Bible section 4.1, the corresponding WORK_COORDINATION guidance and Runner rate-limit recovery wording. These make independent authorized machine transports explicit while preserving canonical ownership, admission, CAS, uncertain-write reconciliation and normal required checks. Publish the exact new source through local Git, verify its remote bytes/restoration, open a draft PR through the GitHub connector and run one full Linux pipeline. Record the resulting head/checks in the same Relay control record through the supported local adapter. PR 166's completed main production evidence does not validate this later candidate.
 
 Rollback this transport slice to `e8076bb7fbcb6d979ffee065b19fdecc5aa5a3c2`. Large/native source checkpoint transport, approval-evidence continuity, immutable release freezes and remaining original rebuild acceptance stay open. The user's push/merge/continue instruction authorized PR 166 integration and continued source repair; this next candidate has separate exact-source evidence and review state.
+
+## October 7 reliability batch: platform admission
+
+The candidate-only labels above are historical. The checkpoint and transport
+foundations are in the current verified release `db6e0e2f1c54b0e6f21ed91ed8005dc3198cc9ea`;
+its main workflow `37590411802` passed quality and authenticated production.
+This does not establish universal/native source protection or real executor use.
+
+Current source still advertised `source-byte-checkpoints-v1` when enabled on
+macOS, even though capture and restoration require Linux descriptor identity
+checks. A clean synthetic Git checkout reproduced an attempted lease before
+the unsupported configuration was rejected. The bounded repair checks the
+actual host platform and descriptor availability before advertising protection
+or requesting a new lease. Unsupported protected execution stops without
+reading the coding CLI version, starting a process or creating an uncertain
+lease write. Existing uncertain operations are still reconciled first; this
+repair does not discard receipts or change recovery/idempotency rules.
+
+Two negative fixtures exercise macOS and Windows platform admission through
+the existing executor dependency injection. They prove no lease/start or CLI
+version lookup, no pending-operation receipt and released local lock. They do
+not establish native Windows process behavior. The actual Mac legacy process
+fixture remains required locally; the complete Linux pipeline retains its
+protected capture/readback/restoration/process lifecycle assertions unchanged.
+Linux descriptor protection is not replaced by a weaker Mac capture path.
+
+The source-to-test audit includes the executor callers, its imported inbox and
+checkpoint fixtures, broker jobs and generated build consumers. Imported
+Linux-only tests are an environment constraint on a Mac, not obsolete product
+expectations. Local checks name the supported cases explicitly; the canonical
+Linux run must execute the complete required suites. No assertion is removed,
+baseline blessed or broader gate skipped. Exact toolchain, source/test mapping,
+suite aggregation and stage accounting already exist; this batch extends them
+with a meaningful admission regression rather than another testing system.
+
+Focused verification on Node 22.23.3/npm 10.9.9 passed all 13 selected executor
+and actual Mac legacy lifecycle tests, plus all 15 source/test mapping tests.
+The two unsupported-platform fixtures first failed on the unmodified executor
+with `Unexpected mutation: lease`, then passed after the admission repair.
+The complete Linux protected lifecycle and required suites remain hosted gates.
+
+This slice requires exact source publication/restoration and hosted gates
+before acceptance. Its rollback is a reviewed revert to the verified `db6e0e2`
+source; preserve existing source checkpoint objects and Files metadata/tombstone
+readers. Lauren's inbox amendment makes Relay Files interface work the final
+batch; the next workflow batch is the human-language foundation unless a current
+quota failure actively blocks work. Original execution/recovery and client
+acceptance remain open.

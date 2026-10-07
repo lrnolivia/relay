@@ -37,7 +37,7 @@ export async function stopProcess(child, graceMs=2000) {
   if(child.exitCode===null&&child.signalCode===null)await new Promise(resolve=>child.once('exit',resolve));
 }
 
-export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=spawn,pollMs=30000,getVersion=()=>execFileSync('codex',['--version'],{encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim(),clock=()=>new Date().toISOString()}) {
+export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=spawn,pollMs=30000,getPlatform=()=>os.platform(),getVersion=()=>execFileSync('codex',['--version'],{encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim(),clock=()=>new Date().toISOString()}) {
   workspace=await fs.realpath(workspace);stateDir=path.resolve(stateDir);
   if(stateDir===workspace||stateDir.startsWith(workspace+path.sep))throw Error('Execution receipts must live outside the checkout');
   await fs.mkdir(stateDir,{recursive:true,mode:0o700});
@@ -70,6 +70,13 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     if(!job)throw Error('No durable execution request exists for this assignment');
     if(job.owner!==config.owner||job.branch!==config.branch)throw Error('Execution does not match the configured owner and branch');
     const protectionEnabled=config.source_checkpoints===true;
+    const platform=getPlatform();
+    // The capture/restore helper uses Linux descriptor identity checks. Reject
+    // unsupported protection before advertising it or taking a remote lease.
+    if(protectionEnabled){
+      if(platform!=='linux')throw Error('Source checkpoints require Linux descriptor identity verification in this version');
+      await fs.access('/proc/self/fd');
+    }
     const protectSource=async(session,summary)=>{
       const previous=journal.source_checkpoint?.state==='restore_verified'?journal.source_checkpoint:journal.source_checkpoint?.last_verified_source||null;
       journal.source_checkpoint={state:'local_only',head_sha:git(['rev-parse','HEAD']),last_verified_source:previous};await save();
@@ -90,7 +97,7 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     const head=git(['rev-parse','HEAD']);
     if(job.state==='queued'&&(head!==job.initial_head_sha||changedPaths(workspace).length))throw Error('New execution requires a clean checkout at the admitted head');
     assertScope(changedPaths(workspace),job.objective.paths);
-    const capabilities=['codex-cli',os.platform()==='darwin'?'macos':os.platform()==='win32'?'windows':'linux',...(protectionEnabled?['source-byte-checkpoints-v1']:[])];
+    const capabilities=['codex-cli',platform==='darwin'?'macos':platform==='win32'?'windows':'linux',...(protectionEnabled?['source-byte-checkpoints-v1']:[])];
     if(job.required_capabilities?.includes('source-byte-checkpoints-v1')&&!protectionEnabled)throw Error('Job requires source checkpoints; explicitly configure source_checkpoints before execution');
     const version=getVersion();
     if(job.state==='queued')job=(await call('lease',{job_id:job.id,expected_revision:job.revision,expected_head_sha:head,executor_id:config.executor_id,capabilities})).job;
