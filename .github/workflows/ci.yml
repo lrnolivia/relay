@@ -13,6 +13,7 @@ on:
       - 'scripts/**'
       - 'test/**'
       - 'package.json'
+      - '.node-version'
       - 'wrangler.jsonc'
       - '.github/workflows/**'
   push:
@@ -27,11 +28,15 @@ on:
       - 'scripts/**'
       - 'test/**'
       - 'package.json'
+      - '.node-version'
       - 'wrangler.jsonc'
       - '.github/workflows/**'
 
 permissions:
   contents: read
+
+env:
+  RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
 
 concurrency:
   group: relay-ci-${{ github.event.pull_request.number || github.ref }}
@@ -45,22 +50,54 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
+      RELAY_CI_JOB: website-production
       CF_ACCESS_CLIENT_ID: ${{ vars.CF_ACCESS_CLIENT_ID }}
       CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF }}
       EXPECTED_SOURCE_SHA: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+        id: source-checkout
         with:
-          node-version: '22'
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        id: node-setup
+        with:
+          node-version-file: '.node-version'
           cache: npm
-      - run: npm ci
-      - run: npx playwright install --with-deps chromium
-      - run: WORKERS_CI_COMMIT_SHA=${{ github.event.pull_request.head.sha || github.sha }} npm run build
+          cache-dependency-path: |
+            package-lock.json
+            package.json
+            .node-version
+      - name: Verify exact toolchain and lock before install
+        id: setup-toolchain
+        env:
+          RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node scripts/ci-stage.mjs toolchain -- npm run check:toolchain
+      - id: setup-install
+        run: node scripts/ci-stage.mjs install -- npm ci
+      - id: setup-build
+        run: WORKERS_CI_COMMIT_SHA=${{ github.event.pull_request.head.sha || github.sha }} node scripts/ci-stage.mjs build -- npm run build
+      - id: setup-browser
+        run: node scripts/ci-stage.mjs browser -- npx playwright install --with-deps chromium
       - name: Verify exact live source and capture actual website pages
-        run: node apps/web/verify-production.mjs
+        id: verify-production
+        run: node scripts/ci-stage.mjs production -- node apps/web/verify-production.mjs
       - name: Retain and verify exact interactive sample build
-        run: node scripts/retain-web-preview.mjs
+        id: verify-retained
+        run: node scripts/ci-stage.mjs retained -- node scripts/retain-web-preview.mjs
+      - name: Summarize observed CI stage outcomes
+        if: always()
+        env:
+          RELAY_STAGE_OUTCOMES: >-
+            {"toolchain":"${{ steps.setup-toolchain.outcome }}","install":"${{ steps.setup-install.outcome }}","build":"${{ steps.setup-build.outcome }}","browser":"${{ steps.setup-browser.outcome }}","source-checkout":"${{ steps.source-checkout.outcome }}","node-setup":"${{ steps.node-setup.outcome }}","production":"${{ steps.verify-production.outcome }}","retained":"${{ steps.verify-retained.outcome }}"}
+        run: node scripts/ci-stage.mjs --summary website-production
+      - name: Preserve redacted CI stage evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-ci-stages-website-production-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qa-evidence/ci-stages/
+          if-no-files-found: error
       - name: Preserve production screenshots and receipt
         if: always()
         uses: actions/upload-artifact@v4
@@ -82,15 +119,23 @@ jobs:
     runs-on: ubuntu-latest
     # Five required suites each have a 15-minute cap; leave setup/upload margin.
     timeout-minutes: 95
+    env:
+      RELAY_CI_JOB: quality
     steps:
       - uses: actions/checkout@v4
+        id: source-checkout
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-node@v4
+        id: node-setup
         with:
-          node-version: '22'
+          node-version-file: '.node-version'
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            package.json
+            .node-version
       - name: Resolve deploying source scope
         id: production-scope
         env:
@@ -111,32 +156,77 @@ jobs:
           }
           appendFileSync(process.env.GITHUB_OUTPUT,'required='+required+'\n');
           JS
+      - name: Verify exact toolchain and lock before install
+        id: setup-toolchain
+        env:
+          RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node scripts/ci-stage.mjs toolchain -- npm run check:toolchain
+      - name: Run cheap toolchain contract tests before browser setup
+        id: setup-focused
+        run: node scripts/ci-stage.mjs focused -- npm run test:toolchain
       - name: Install workspace
         id: setup-install
-        run: npm ci
-      - name: Install browser runtime once
-        id: setup-browser
-        run: npx playwright install --with-deps chromium
+        run: node scripts/ci-stage.mjs install -- npm ci
+      - name: Audit source contracts and run named nonbrowser tests
+        id: setup-contracts
+        env:
+          RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          RELAY_CONTRACT_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: node scripts/ci-stage.mjs contracts -- npm run test:source-contracts
       - name: Build exact web and MCP payloads
         id: setup-build
-        run: WORKERS_CI_COMMIT_SHA=${{ github.event.pull_request.head.sha || github.sha }} npm run build
+        run: WORKERS_CI_COMMIT_SHA=${{ github.event.pull_request.head.sha || github.sha }} node scripts/ci-stage.mjs build -- npm run build
+      - name: Verify bundled Worker in local workerd
+        id: setup-runtime
+        env:
+          RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node scripts/ci-stage.mjs runtime -- npm run verify:runtime
+      - name: Install browser runtime once
+        id: setup-browser
+        run: node scripts/ci-stage.mjs browser -- npx playwright install --with-deps chromium
       - name: Typecheck Relay 2.0
         id: setup-typecheck
-        run: npm run typecheck:2.0 --workspace @relay/web
+        run: node scripts/ci-stage.mjs typecheck -- npm run typecheck:2.0 --workspace @relay/web
       - name: Run workspace, contract, API, browser and React tests
+        id: verify-suites
         env:
           RELAY_QA_OUTPUT: ${{ github.workspace }}/qa-evidence/relay-motion
           RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: npm test
       - name: Account for suites blocked by setup
-        if: always() && (steps.setup-install.outcome != 'success' || steps.setup-browser.outcome != 'success' || steps.setup-build.outcome != 'success' || steps.setup-typecheck.outcome != 'success')
+        if: always() && (steps.setup-toolchain.outcome != 'success' || steps.setup-focused.outcome != 'success' || steps.setup-install.outcome != 'success' || steps.setup-contracts.outcome != 'success' || steps.setup-browser.outcome != 'success' || steps.setup-build.outcome != 'success' || steps.setup-typecheck.outcome != 'success' || steps.setup-runtime.outcome != 'success')
         env:
           RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          RELAY_SETUP_TOOLCHAIN: ${{ steps.setup-toolchain.outcome }}
+          RELAY_SETUP_FOCUSED: ${{ steps.setup-focused.outcome }}
           RELAY_SETUP_INSTALL: ${{ steps.setup-install.outcome }}
+          RELAY_SETUP_CONTRACTS: ${{ steps.setup-contracts.outcome }}
           RELAY_SETUP_BROWSER: ${{ steps.setup-browser.outcome }}
           RELAY_SETUP_BUILD: ${{ steps.setup-build.outcome }}
+          RELAY_SETUP_RUNTIME: ${{ steps.setup-runtime.outcome }}
           RELAY_SETUP_TYPECHECK: ${{ steps.setup-typecheck.outcome }}
         run: node scripts/ci-test-orchestrator.mjs --blocked
+      - name: Preserve exact toolchain and build identities
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-toolchain-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qa-evidence/toolchain/
+          if-no-files-found: error
+      - name: Preserve source and named-test contract mapping
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-source-test-contracts-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qa-evidence/source-test-contracts/
+          if-no-files-found: error
+      - name: Preserve Worker bundle and local runtime evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-worker-runtime-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qa-evidence/worker-runtime/
+          if-no-files-found: error
       - name: Preserve required-suite accounting
         if: always()
         uses: actions/upload-artifact@v4
@@ -152,13 +242,27 @@ jobs:
           path: qa-evidence/relay-motion/
           if-no-files-found: error
       - name: Verify contextual card visuals and preserve Inspector evidence
+        id: verify-context-card
         if: github.head_ref == 'relay/mcp-rebuild-20261003' || startsWith(github.head_ref, 'relay/context-card-visual-parity-') || (github.event_name == 'push' && contains(github.event.head_commit.message, 'contextual card visual parity'))
         env:
           CF_ACCESS_CLIENT_ID: ${{ vars.CF_ACCESS_CLIENT_ID }}
           CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF }}
           EXPECTED_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           PREVIEW_PR: ${{ github.event.pull_request.number }}
-        run: node scripts/verify-context-card-visuals.mjs
+        run: node scripts/ci-stage.mjs context-card -- node scripts/verify-context-card-visuals.mjs
+      - name: Summarize observed CI stage outcomes
+        if: always()
+        env:
+          RELAY_STAGE_OUTCOMES: >-
+            {"toolchain":"${{ steps.setup-toolchain.outcome }}","install":"${{ steps.setup-install.outcome }}","build":"${{ steps.setup-build.outcome }}","browser":"${{ steps.setup-browser.outcome }}","source-checkout":"${{ steps.source-checkout.outcome }}","node-setup":"${{ steps.node-setup.outcome }}","focused":"${{ steps.setup-focused.outcome }}","contracts":"${{ steps.setup-contracts.outcome }}","runtime":"${{ steps.setup-runtime.outcome }}","typecheck":"${{ steps.setup-typecheck.outcome }}","suites":"${{ steps.verify-suites.outcome }}","context-card":"${{ steps.verify-context-card.outcome }}","production-scope":"${{ steps.production-scope.outcome }}"}
+        run: node scripts/ci-stage.mjs --summary quality
+      - name: Preserve redacted CI stage evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-ci-stages-quality-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qa-evidence/ci-stages/
+          if-no-files-found: error
       - name: Preserve contextual card captures
         if: always() && (github.head_ref == 'relay/mcp-rebuild-20261003' || startsWith(github.head_ref, 'relay/context-card-visual-parity-') || (github.event_name == 'push' && contains(github.event.head_commit.message, 'contextual card visual parity')))
         uses: actions/upload-artifact@v4
@@ -179,6 +283,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
+      RELAY_CI_JOB: visual-review-preview
       CF_ACCESS_CLIENT_ID: ${{ vars.CF_ACCESS_CLIENT_ID }}
       CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF }}
       PREVIEW_COMMIT: ${{ github.event.pull_request.head.sha }}
@@ -186,26 +291,55 @@ jobs:
       PREVIEW_BRANCH: ${{ github.head_ref }}
     steps:
       - uses: actions/checkout@v4
+        id: source-checkout
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-node@v4
+        id: node-setup
         with:
-          node-version: '22'
+          node-version-file: '.node-version'
           cache: npm
-      - run: npm ci
-      - run: npx playwright install --with-deps chromium
+          cache-dependency-path: |
+            package-lock.json
+            package.json
+            .node-version
+      - name: Verify exact toolchain and lock before install
+        id: setup-toolchain
+        env:
+          RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node scripts/ci-stage.mjs toolchain -- npm run check:toolchain
+      - id: setup-install
+        run: node scripts/ci-stage.mjs install -- npm ci
       - name: Check out the exact draft PR head
-        run: git checkout "$PREVIEW_COMMIT"
+        id: setup-checkout
+        run: node scripts/ci-stage.mjs checkout -- git checkout "$PREVIEW_COMMIT"
       - name: Build exact Relay web assets
-        run: WORKERS_CI_COMMIT_SHA="$PREVIEW_COMMIT" npm run build --workspace @relay/web
+        id: setup-build
+        run: WORKERS_CI_COMMIT_SHA="$PREVIEW_COMMIT" node scripts/ci-stage.mjs build -- npm run build
+      - id: setup-browser
+        run: node scripts/ci-stage.mjs browser -- npx playwright install --with-deps chromium
       - name: Capture and ingest Inspector preview evidence
+        id: verify-visual-review
         run: |
           if [[ "$PREVIEW_BRANCH" == relay/website-notifications-review-* ]]; then
-            node apps/web/test/notifications-visual-review.mjs
+            node scripts/ci-stage.mjs visual-review -- node apps/web/test/notifications-visual-review.mjs
           else
-            node apps/web/test/visual-review.mjs
+            node scripts/ci-stage.mjs visual-review -- node apps/web/test/visual-review.mjs
           fi
+      - name: Summarize observed CI stage outcomes
+        if: always()
+        env:
+          RELAY_STAGE_OUTCOMES: >-
+            {"toolchain":"${{ steps.setup-toolchain.outcome }}","install":"${{ steps.setup-install.outcome }}","build":"${{ steps.setup-build.outcome }}","browser":"${{ steps.setup-browser.outcome }}","source-checkout":"${{ steps.source-checkout.outcome }}","node-setup":"${{ steps.node-setup.outcome }}","checkout":"${{ steps.setup-checkout.outcome }}","visual-review":"${{ steps.verify-visual-review.outcome }}"}
+        run: node scripts/ci-stage.mjs --summary visual-review-preview
+      - name: Preserve redacted CI stage evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-ci-stages-visual-review-preview-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qa-evidence/ci-stages/
+          if-no-files-found: error
       - name: Preserve preview captures
         if: always()
         uses: actions/upload-artifact@v4
@@ -213,4 +347,5 @@ jobs:
           name: relay-visual-review-${{ github.event.pull_request.number }}
           path: qa-evidence/
           if-no-files-found: ignore
+
 

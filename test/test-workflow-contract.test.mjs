@@ -3,10 +3,36 @@ import assert from 'node:assert/strict';
 import {readFile,mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {spawnSync} from 'node:child_process';
+import {spawnSync,spawn} from 'node:child_process';
 import {REQUIRED_SUITES,redact,runSuites} from '../scripts/ci-test-orchestrator.mjs';
 
 const suite=(id,code,dependsOn=[])=>({id,command:process.execPath,args:['-e',code],required:true,dependsOn});
+
+// SIGKILL delivery is asynchronous. Observe this exact fixture PID for a bounded
+// interval; only absence or zombie state proves it no longer executes.
+async function waitForStopped(pid,{read=readFile,now=()=>performance.now(),sleep=ms=>new Promise(done=>setTimeout(done,ms)),timeoutMs=500}={}){
+  const deadline=now()+timeoutMs;
+  for(;;){
+    try{const stat=await read('/proc/'+pid+'/stat','utf8');if(/\) Z /.test(stat))return true;}
+    catch(error){if(error.code==='ENOENT')return true;throw error;}
+    const remaining=deadline-now();if(remaining<=0)return false;
+    await sleep(Math.min(10,remaining));
+  }
+}
+
+test('termination observation waits for actual exit after signal delivery',async()=>{
+  let time=0,reads=0;const stopped=await waitForStopped(123,{read:async()=>++reads<3?'123 (fixture) R 1':'123 (fixture) Z 1',now:()=>time,sleep:async ms=>{time+=ms;}});
+  assert.equal(stopped,true);assert.equal(reads,3);assert.equal(time,20);
+});
+test('a genuinely surviving descendant fails the bounded termination observation',async()=>{
+  let time=0,reads=0;const stopped=await waitForStopped(123,{read:async()=>{reads++;return '123 (fixture) R 1';},now:()=>time,sleep:async ms=>{time+=ms;}});
+  assert.equal(stopped,false);assert.equal(time,500);assert.equal(reads,51);
+});
+test('termination observation accepts only disappearance and propagates unreadable state',async()=>{
+  assert.equal(await waitForStopped(123,{read:async()=>{throw Object.assign(Error('gone'),{code:'ENOENT'});}}),true);
+  await assert.rejects(waitForStopped(123,{read:async()=>{throw Object.assign(Error('denied'),{code:'EACCES'});}}),{code:'EACCES'});
+});
+
 
 test('all original five suite commands remain required and none is filtered',()=>{
   assert.deepEqual(REQUIRED_SUITES.map(s=>[s.id,s.command,...s.args]),[
@@ -124,8 +150,7 @@ test('POSIX timeout kills uncooperative same-group descendants even after leader
   let output='',pid;const code="const c=require('node:child_process').spawn(process.execPath,['-e',\"process.on('SIGTERM',()=>{});setInterval(()=>{},100)\"],{stdio:'ignore'});console.log('descendant='+c.pid);setInterval(()=>{},100)";
   try{
     const report=await runSuites([suite('ignored-pipes',code)],{timeoutMs:300,onOutput:t=>output+=t});pid=Number(/descendant=(\d+)/.exec(output)?.[1]);assert.ok(pid>0);
-    let live=false;try{const stat=await readFile('/proc/'+pid+'/stat','utf8');live=!/\) Z /.test(stat);}catch{}
-    assert.equal(live,false,'same-process-group descendant must not survive timeout');assert.equal(report.results[0].status,'timed_out');
+    assert.equal(await waitForStopped(pid),true,'same-process-group descendant must stop within the bounded observation after timeout');assert.equal(report.results[0].status,'timed_out');
   }finally{if(pid)try{process.kill(pid,'SIGKILL');}catch{}}
 });
 
@@ -165,4 +190,13 @@ test('root command and CI retain the real gate and always upload suite accountin
   assert.match(workflow,/Account for suites blocked by setup/);assert.match(workflow,/ci-test-orchestrator.mjs --blocked/);
   assert.match(workflow,/timeout-minutes: 95/);
   assert.doesNotMatch(workflow,/continue-on-error:/);
+});
+
+test('a deliberately running fixture is rejected by real PID termination observation',{skip:process.platform!=='linux'},async()=>{
+  const child=spawn(process.execPath,['-e',"console.log('ready');setInterval(()=>{},100)"],{stdio:['ignore','pipe','ignore']});
+  const closed=new Promise(done=>child.once('close',done));
+  try{
+    await new Promise((done,reject)=>{const timer=setTimeout(()=>reject(Error('Live negative-control fixture did not become ready')),2000);child.stdout.once('data',()=>{clearTimeout(timer);done();});child.once('error',error=>{clearTimeout(timer);reject(error);});});
+    assert.ok(child.pid>0);assert.equal(await waitForStopped(child.pid),false,'An executing process must not be mistaken for a successful teardown');
+  }finally{child.kill('SIGKILL');await closed;}
 });
