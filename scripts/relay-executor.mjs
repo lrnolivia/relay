@@ -161,6 +161,11 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
       evidence:'sha256:'+createHash('sha256').update(await fs.readFile(path.join(stateDir,'events-'+job.attempt+'.jsonl'))).digest('hex')};
     job=(await call('finish',{job_id:job.id,expected_revision:job.revision,executor_id:config.executor_id,lease_token:journal.lease_token,result})).job;
     return {job_id:job.id,state:job.state,objective_completed:false,receipt:journalPath};
+  } catch(error) {
+    // Keep the original uncertain operation for reconciliation. A failed HTTP
+    // request or tool response never proves that its side effects did not run.
+    if(error instanceof ExecutorTransportError){journal.last_transport_failure={...error.transport_failure,observed_at:clock()};await save();}
+    throw error;
   } finally {
     if(timer)clearInterval(timer);
     if(signalHandler){process.removeListener('SIGINT',signalHandler);process.removeListener('SIGTERM',signalHandler);}
@@ -171,16 +176,68 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
   }
 }
 
-export function createMcpClient({token,url='https://relay.loew.fi/mcp',fetchImpl=fetch}) {
-  if(!token)throw Error('RELAY_MCP_TOKEN is required from an existing authorized Relay connection; no new credential is created');
+export function createMcpClient({token,url='https://relay.loew.fi/mcp',fetchImpl=fetch,timeoutMs=30000}) {
+  if(typeof token!=='string'||!token)throw Error('RELAY_MCP_TOKEN is required from an existing authorized Relay connection; no new credential is created');
   if(url!=='https://relay.loew.fi/mcp')throw Error('Executor uses the canonical Relay MCP endpoint');
+  if(!Number.isInteger(timeoutMs)||timeoutMs<1||timeoutMs>30000)throw Error('Executor transport timeout must be bounded to 30 seconds');
   return async(name,args)=>{
-    const response=await fetchImpl(url,{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json',Accept:'application/json, text/event-stream'},body:JSON.stringify({jsonrpc:'2.0',id:randomUUID(),method:'tools/call',params:{name,arguments:args}}),signal:AbortSignal.timeout(30000)});
-    if(!response.ok)throw Error('Relay executor transport returned HTTP '+response.status);
-    const body=await response.json();const result=body.result?.structuredContent;
-    if(body.error||body.result?.isError||!result||result.ok===false)throw Error(result?.error?.message||body.error?.message||'Relay operation was not confirmed');
+    const evidence={schema:1,tool:typeof name==='string'&&/^relay_[a-z0-9_]{1,90}$/.test(name)?name:null,request_id:randomUUID(),timeout_ms:timeoutMs,stage:'encode',request_attempted:false,response_received:false,remote_result:'unknown',side_effects:'not_dispatched',cause:'undetermined',cancellation_actor:'unknown',retry_policy:'refresh-and-reconcile'};
+    let payload;
+    try{
+      if(!evidence.tool||!args||typeof args!=='object'||Array.isArray(args))throw Error();
+      payload=JSON.stringify({jsonrpc:'2.0',id:evidence.request_id,method:'tools/call',params:{name,arguments:args}});
+    }catch{throw transportError('local_validation',evidence);}
+    evidence.stage='request';evidence.request_attempted=true;evidence.side_effects='unknown';
+    let response;
+    try{response=await fetchImpl(url,{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json',Accept:'application/json, text/event-stream'},body:payload,signal:AbortSignal.timeout(timeoutMs)});}
+    catch(error){throw transportError(error?.name==='TimeoutError'?'timeout':error?.name==='AbortError'?'cancellation_observed':'transport',evidence);}
+    evidence.response_received=true;evidence.http_status=response.status;
+    evidence.stage='http';
+    for(const [header,field] of [['retry-after','retry_after_seconds'],['x-ratelimit-reset','rate_limit_reset'],['x-ratelimit-remaining','rate_limit_remaining']]){
+      const value=response.headers.get(header);if(/^\d{1,10}$/.test(value||''))evidence[field]=Number(value);
+    }
+    if(!response.ok)throw transportError(response.status===401?'auth':response.status===429||(response.status===403&&evidence.rate_limit_remaining===0)?'rate_limit':response.status===403?'permission':response.status>=500?'provider':'http',evidence);
+    evidence.stage='decode';
+    let body;
+    try{body=JSON.parse(await boundedResponse(response));}
+    catch(error){throw transportError(error?.code==='response_limit'?'response_limit':error?.name==='TimeoutError'?'timeout':error?.name==='AbortError'?'cancellation_observed':'invalid_response',evidence);}
+    if(!body||typeof body!=='object'||Array.isArray(body)||body.jsonrpc!=='2.0'||body.id!==evidence.request_id)throw transportError('invalid_response',evidence);
+    const result=body.result?.structuredContent;
+    evidence.stage='tool-result';
+    if(body.error||body.result?.isError||!result||typeof result!=='object'||Array.isArray(result)||result.ok!==true){
+      if(body.error||body.result?.isError||result?.ok===false)evidence.remote_result='rejected';
+      const remoteClass=result?.error?.class;
+      const classes=['auth','permission','rate_limit','capacity','provider','timeout','validation','conflict','ownership','scope','uncertain_write','policy_drift'];
+      const category=classes.includes(remoteClass)?remoteClass:body.error?.code===-32602?'validation':body.error?'jsonrpc_error':'unconfirmed_result';
+      if(Number.isInteger(body.error?.code))evidence.jsonrpc_code=body.error.code;
+      // Only numeric retry evidence crosses this boundary. Remote messages,
+      // headers, prompts, tokens and raw provider errors are never journalled.
+      for(const field of ['retry_after_seconds','rate_limit_reset','rate_limit_remaining']){
+        const value=result?.error?.upstream?.[field];if(Number.isSafeInteger(value)&&value>=0&&value<=9999999999)evidence[field]=value;
+      }
+      throw transportError(category,evidence);
+    }
     return result;
   };
+}
+
+class ExecutorTransportError extends Error {
+  constructor(category,evidence){
+    super(`Relay executor ${category} failure during ${evidence.stage}${evidence.http_status?'; HTTP '+evidence.http_status:''}. Refresh the current state and reconcile before retrying.`);
+    this.code='relay_executor_'+category;this.transport_failure={...evidence,category};
+  }
+}
+const transportError=(category,evidence)=>new ExecutorTransportError(category,evidence);
+async function boundedResponse(response){
+  if(!response.body)throw Error('Missing response body');
+  const reader=response.body.getReader(),bytes=Buffer.alloc(1024*1024);let size=0;
+  try{
+    while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;
+      if(size>1024*1024){const error=Error('Response limit');error.code='response_limit';throw error;}
+      bytes.set(value,size-value.byteLength);
+    }
+    return bytes.subarray(0,size).toString('utf8');
+  }catch(error){try{await reader.cancel();}catch{}throw error;}finally{reader.releaseLock();}
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
   const [command,configFile,workspace,stateDir]=process.argv.slice(2);

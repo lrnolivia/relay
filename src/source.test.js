@@ -17,14 +17,15 @@ const appEnv = { RELAY_GITHUB_APP_ID: 'synthetic', RELAY_GITHUB_APP_PRIVATE_KEY:
 let fixtureNumber = 0;
 function githubFixture(t, config = {}) {
   const repo = 'synthetic-transport-' + (++fixtureNumber);
+  const installationId=123+fixtureNumber;
   const path = `/repos/lrnolivia/${repo}/git/ref/heads/fixture%2Fabsent`;
   const calls = [];
   t.mock.method(globalThis, 'fetch', async (url, options) => {
     const endpoint = String(url).replace('https://api.github.com', '');
     const authenticated = Boolean(options.headers.Authorization);
     calls.push({ endpoint, method: options.method, authenticated });
-    if (endpoint.endsWith('/installation')) return Response.json({ id: 123 }, { status: config.discoveryStatus || 200 });
-    if (endpoint === '/app/installations/123/access_tokens') return Response.json({ token: 'synthetic-token', expires_at: '2099-01-01T00:00:00Z' }, { status: config.mintStatus || 200 });
+    if (endpoint.endsWith('/installation')) return Response.json({ id: installationId }, { status: config.discoveryStatus || 200 });
+    if (endpoint === '/app/installations/'+installationId+'/access_tokens') return Response.json({ token: 'synthetic-token', expires_at: '2099-01-01T00:00:00Z' }, { status: config.mintStatus || 200 });
     if (endpoint.split('?')[0] === path) {
       if (config.timeout) throw Object.assign(new Error('Synthetic timeout with private text'), { name: 'TimeoutError' });
       return Response.json({ message: 'Synthetic provider-private-text', object: { sha: 'a'.repeat(40) } },
@@ -54,6 +55,29 @@ test('authenticated denial, rate limit, outage and timeout never switch identity
   const f = githubFixture(t, { timeout: true });
   await assert.rejects(githubApiRequest(appEnv, f.path), error => error.name === 'TimeoutError' && error.github.phase === 'resource_request');
   assert.equal(f.calls.some(x => !x.authenticated), false);
+});
+
+test('real transport preserves authenticated304 bytes and captures successful quota headers',async t=>{
+  const endpoint='/repos/fixture/conditional/get',env={RELAY_GITHUB_TOKEN:'synthetic-etag-credential'};let calls=0;
+  t.mock.method(globalThis,'fetch',async(url,options)=>{
+    assert.equal(String(url),'https://api.github.com'+endpoint);assert.equal(options.headers.Authorization,'Bearer synthetic-etag-credential');calls++;
+    if(calls===1){assert.equal(options.headers['If-None-Match'],undefined);return Response.json({revision:7},{headers:{ETag:'"v7"','x-ratelimit-limit':'5000','x-ratelimit-used':'22','x-ratelimit-remaining':'4978','x-ratelimit-reset':'2000000000','x-ratelimit-resource':'core'}});}
+    assert.equal(options.headers['If-None-Match'],'"v7"');return new Response(null,{status:304,headers:{'x-ratelimit-remaining':'4978'}});
+  });
+  const first=await githubApiRequest(env,endpoint),second=await githubApiRequest(env,endpoint);
+  assert.deepEqual(second,first);assert.equal(calls,2);assert.ok(sourceAuthStatus(env).read_transport.not_modified>0);
+  assert.doesNotMatch(JSON.stringify(sourceAuthStatus(env).read_transport),/synthetic-etag-credential|revision/);
+});
+test('cold concurrent installation reads mint one token and coalesce explicit display requests',async t=>{
+  const repo='cold-display-'+(++fixtureNumber),endpoint='/repos/lrnolivia/'+repo+'/branches';const calls=[];
+  t.mock.method(globalThis,'fetch',async(url,options)=>{
+    const path=String(url).replace('https://api.github.com','');calls.push(path);
+    if(path.endsWith('/installation'))return Response.json({id:900000+fixtureNumber});
+    if(path.endsWith('/access_tokens'))return Response.json({token:'synthetic-display-token',expires_at:'2099-01-01T00:00:00Z'});
+    assert.equal(path,endpoint);return Response.json([{name:'main'}],{headers:{ETag:'"branches"'}});
+  });
+  const results=await Promise.all(Array.from({length:20},()=>githubApiRequest(appEnv,endpoint,{readCache:'display'})));
+  assert.equal(results.length,20);assert.equal(calls.filter(p=>p.endsWith('/installation')).length,1);assert.equal(calls.filter(p=>p.endsWith('/access_tokens')).length,1);assert.equal(calls.filter(p=>p===endpoint).length,1);
 });
 
 test('ordinary uninstalled-repository discovery retains public reads while guarded lookups fail closed', async t => {

@@ -44,7 +44,15 @@ export function progressResponse(project, progress = [], queue = []) {
 }
 
 export async function callProgress(args, env = {}, apiOverride, cloudOverride) {
-  const api = apiOverride || ((path, options) => githubApiRequest(env, path, options));
+  const counts={logical_requests:0,network_requests:0,cache_hits:0,coalesced:0,not_modified:0,blocked:0};
+  let oldest=null,latestQuota=null,observed=false;
+  const onReadObservation=event=>{
+    observed=true;if(Object.hasOwn(counts,event.event))counts[event.event]++;
+    if(event.observed_at&&(!oldest||event.observed_at<oldest))oldest=event.observed_at;
+    if(event.quota)latestQuota={...event.quota,observed_at:event.observed_at};
+  };
+  const transport=apiOverride || ((path, options) => githubApiRequest(env, path, options));
+  const api=(path,options={})=>{counts.logical_requests++;return transport(path,{...options,readCache:args.display_cache===true?'display':'revalidate',onReadObservation});};
   const controlRepository = String(env?.RELAY_RUNNER_CONTROL_REPOSITORY || "lrnolivia/relay");
   const control = `/repos/${controlRepository}`;
   const registration = await jsonFile(api, control, `projects/${args.project}.json`);
@@ -90,5 +98,7 @@ export async function callProgress(args, env = {}, apiOverride, cloudOverride) {
   const queue = record.queue
     .filter(item => item.state === "queued" && (!args.assignment || item.id === args.assignment))
     .map(queuedProgress);
-  return progressResponse(args.project, progress, queue);
+  return {...progressResponse(args.project, progress, queue),github_reads:{...counts,network_observed:observed,
+    mode:args.display_cache===true?'display-cache':'upstream-revalidated',max_display_age_ms:args.display_cache===true?15000:0,
+    oldest_observed_at:oldest,last_quota:latestQuota}};
 }

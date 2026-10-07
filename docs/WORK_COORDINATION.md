@@ -60,6 +60,14 @@ If connected GitHub tools support Contents reads/updates, a relay client may per
 
 Runner’s scheduled audit and Field’s scheduled cleanup run every 30 minutes, independent of the existing model scheduler. Runner uses its built-in repository token for atomic record writes; Field uses its own built-in token for branch deletion. Public cross-repository reads need no copied personal credential. Its summary and retained JSON receipt expose drift and cleanup results. GitHub Actions availability, scheduling delay and credentials can still block it; clients must read the live record and obey admission while that path is unavailable. Findings do not send messages to chats or create new workers.
 
+### Machine-hosted Codex transport
+
+Bible section 4.1 applies when Codex has an authorized machine checkout. Local Git, `gh`, the GitHub connector and an available native client can publish source and inspect PRs/checks; the canonical Runner CLI or adapter updates the same Relay coordination records. An integration-specific API rate limit does not disable these independently authorized tools. Respect the limited connection's window instead of repeatedly calling it or asking the user to refresh tools.
+
+Before using the alternate path, read fresh canonical project policy, engine and ownership, compare the checkout with the intended remote, and run preflight with the complete changed paths. For control mutations, use the supported SHA-checked operation against the live record and verify its readback. Never push a stale checkout's `coordination/<project>.json` as a source change. Preserve the assignment, branch, acceptance, pending operation identities and original authorization; record the transport actually used and exact published SHA/check receipts in Relay.
+
+This is a transport choice within existing authority. Authentication, permission, approval and security denials remain binding; new credentials, unauthorized identities, quota evasion and protection bypass are not fallbacks. A lost response requires reconciliation before another write. If current ownership/admission cannot be established through any authorized path, retain the local checkpoint and stop only dependent publication.
+
 ## Enforcement and adoption
 
 Atomic claims enforce the budget/ownership for clients using the protocol. Deterministic audits expose branches created outside it. Field’s PR workflow runs `pr-gate` against the current claim and exact PR changed paths. Install `Runner coordination admission` as a required main check after the workflow’s own setup PR passes. This blocks unregistered new task PRs from merging; frozen legacy recovery PRs retain an explicit exemption. It does not block GitHub branch creation globally or impersonate arbitrary chats. A later infrastructure integration can expose these same rules in Runner’s UI/API. Preserve existing GitHub required checks.

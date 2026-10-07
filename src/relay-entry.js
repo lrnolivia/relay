@@ -10,6 +10,7 @@ import { callSourceLifecycleTool } from "./source-lifecycle.js";
 import { sourceTextMutationTools, isSourceTextMutationTool, validateSourceTextMutationArguments, callSourceTextMutationTool } from "./source-text-mutation.js";
 import { staffDirectoryTool, callStaffDirectory, validateStaffDirectoryArguments } from "./staff-registry.js";
 import { callRunnerControlCore } from "./runner-control-core.js";
+import { runnerControlError } from "./runner-control.js";
 import { runnerCleanupTool, callRunnerCleanup, validateRunnerCleanupArguments } from "./runner-cleanup.js";
 import { cloudUploadTool, callCloudUpload, validateCloudUploadArguments } from "./cloud-upload.js";
 import { QA_SKILL_URI, qaSkillCatalogEntry, qaSkillResourceDescriptor, qaSkillResource } from "./qa-skill.js";
@@ -236,7 +237,8 @@ export function classifyExtensionError(error, toolName = "") {
   const lower = message.toLowerCase();
   const mutation = /(_create_|_update_|_edit_|_append_|_open_|_action$|_cleanup$|_upload_|_deploy_)/.test(toolName);
   let errorClass = "provider";
-  if (status === 401 || /auth|credential|token/.test(lower)) errorClass = "auth";
+  if (error?.code === 'rate_limit') errorClass = 'rate_limit';
+  else if (status === 401 || /auth|credential|token/.test(lower)) errorClass = "auth";
   else if (status === 403 || /permission|restricted|not authorized|refuses direct/.test(lower)) errorClass = "permission";
   else if (status === 404 || /not found|does not exist/.test(lower)) errorClass = "not_found";
   else if (status === 409 || /changed; refresh|differs from|reconcile before retry|expected .* but found/.test(lower)) errorClass = "conflict";
@@ -245,8 +247,14 @@ export function classifyExtensionError(error, toolName = "") {
   else if (/invalid |missing required|unsupported |does not accept|requires title|must be /.test(lower)) errorClass = "validation";
   else if (mutation && /outcome cannot be verified|readback/.test(lower)) errorClass = "uncertain_write";
 
+  const upstream=errorClass==='rate_limit'?runnerControlError(error).error.upstream:undefined;
+  const retryAt=upstream?.retry_at||(Number.isSafeInteger(upstream?.rate_limit_reset)?new Date(upstream.rate_limit_reset*1000).toISOString():
+    Number.isSafeInteger(upstream?.retry_after_seconds)?new Date(Date.now()+upstream.retry_after_seconds*1000).toISOString():null);
   const retryable = ["capacity", "timeout"].includes(errorClass);
-  const recovery = errorClass === "validation"
+  const recovery = errorClass === 'rate_limit'
+    ? (retryAt?'Wait until '+retryAt+' before sending another request through this GitHub connection.':'Respect the provider quota deadline before sending another request through this GitHub connection.')+
+      ' A tool refresh does not reset quota. Reconcile the affected resource before retrying a mutation.'
+    : errorClass === "validation"
     ? "Correct the arguments from the tool schema; do not retry unchanged."
     : errorClass === "auth"
       ? "Restore/refresh the authorized Relay connection, then retry."
@@ -271,7 +279,9 @@ export function classifyExtensionError(error, toolName = "") {
     retryable,
     requires_auth: errorClass === "auth",
     requires_user: false,
-    recovery
+    recovery,
+    ...(upstream?{upstream}:{}),
+    ...(retryAt?{retry_at:retryAt}:{})
   };
 }
 function toolError(id, error, toolName = "") {

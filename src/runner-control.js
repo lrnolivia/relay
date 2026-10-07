@@ -264,7 +264,7 @@ export function runnerControlError(error) {
       recovery: code === 'uncertain_write'
         ? 'Inspect the current record and claim; never replay blindly.'
         : code === 'rate_limit'
-          ? 'Wait for the recorded GitHub rate-limit window, then refresh canonical state and reconcile any uncertain write before another operation. Do not switch identity.'
+          ? 'Respect this connection\'s recorded GitHub rate-limit window. On an authorized Codex machine, existing local Git/gh or another already-authorized transport may refresh canonical policy, ownership and admission and update the same Relay record through its supported CAS operation. Reconcile uncertain writes first; do not bypass authentication, permission or approval denials, create credentials, use unauthorized identities or evade an account-wide quota.'
         : code === 'capacity'
           ? 'Retry after provider capacity clears; refresh canonical state first if a mutation may have started.'
           : code === 'auth'
@@ -286,8 +286,11 @@ function safeGithubFailure(value) {
       /^\/[A-Za-z0-9._%\/-]+$/.test(value.endpoint)) result.endpoint = value.endpoint;
   if (['resource_request', 'installation_discovery', 'token_mint', 'auth_selection'].includes(value.phase)) result.phase = value.phase;
   if (['github_app_installation', 'github_app_jwt', 'legacy_token', 'authenticated', 'public_read', 'none'].includes(value.auth_mode)) result.auth_mode = value.auth_mode;
-  for (const key of ['rate_limit_remaining', 'rate_limit_reset', 'retry_after_seconds']) {
+  for (const key of ['rate_limit_limit', 'rate_limit_used', 'rate_limit_remaining', 'rate_limit_reset', 'retry_after_seconds','installation_id']) {
     if (Number.isSafeInteger(value[key]) && value[key] >= 0 && value[key] <= 9999999999) result[key] = value[key];
   }
+  if(/^[a-z_]{1,40}$/.test(value.rate_limit_resource||''))result.rate_limit_resource=value.rate_limit_resource;
+  if(typeof value.retry_at==='string'&&value.retry_at.length<=30&&Number.isFinite(Date.parse(value.retry_at)))result.retry_at=new Date(Date.parse(value.retry_at)).toISOString();
+  if(value.request_attempted===false)result.request_attempted=false;
   return result;
 }

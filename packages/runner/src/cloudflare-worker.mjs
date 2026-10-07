@@ -12,11 +12,9 @@ import { getQaReview, saveQaReview, qaQuestionsForEvidence, inspectLivePreview }
 import { reviewBatch } from "./work-review.mjs";
 import { workerSource } from "../../shared-ui/work-view-model.js";
 import { recordQaFeedback } from "./qa-feedback.mjs";
-const GITHUB_API = "https://api.github.com";
 const OWNER = "lrnolivia";
 const REPOSITORY = "relay";
 const BRANCH = "main";
-const API_VERSION = "2022-11-28";
 
 function json(value, status = 200, headers = {}) {
   return new Response(JSON.stringify(value), {
@@ -52,41 +50,14 @@ function tokenGuard(env) {
   }, 503);
 }
 
-function githubHeaders(env, extra = {}) {
-  return {
-    Accept: "application/vnd.github+json",
-    Authorization: `Bearer ${env.RUNNER_GITHUB_TOKEN}`,
-    "X-GitHub-Api-Version": API_VERSION,
-    "User-Agent": "relay-cloudflare",
-    ...extra
-  };
-}
-
 async function githubRequest(env, path, options = {}) {
-  if (!env.RUNNER_GITHUB_TOKEN) return githubApiRequest(env, path, {
+  // Preserve this handler's existing explicit Runner-token selection while
+  // sharing the bounded reader, conditional requests and quota classification.
+  const selected=env.RUNNER_GITHUB_TOKEN?{...env,RELAY_GITHUB_APP_ID:undefined,RELAY_GITHUB_APP_PRIVATE_KEY:undefined,RELAY_GITHUB_TOKEN:env.RUNNER_GITHUB_TOKEN}:env;
+  return githubApiRequest(selected, path, {
     ...options,
     body: typeof options.body === "string" ? JSON.parse(options.body) : options.body
   });
-  const response = await fetch(`${GITHUB_API}${path}`, {
-    ...options,
-    headers: githubHeaders(env, options.headers)
-  });
-
-  const text = await response.text();
-  let body = null;
-  if (text) {
-    try { body = JSON.parse(text); }
-    catch { body = { message: text.slice(0, 500) }; }
-  }
-
-  if (!response.ok) {
-    const message = body?.message ?? `GitHub request failed with ${response.status}`;
-    const error = new Error(message);
-    error.status = response.status;
-    throw error;
-  }
-
-  return body;
 }
 
 function decodeBase64Utf8(value) {
@@ -297,7 +268,7 @@ export async function handleApi(request, env, { authenticatedMcp = false } = {})
   const progressMatch = url.pathname.match(/^\/api\/progress\/([a-zA-Z0-9._-]+)$/);
   if (request.method === "GET" && progressMatch) {
     const assignment = url.searchParams.get("assignment") || undefined;
-    return json(await callProgress({ project: progressMatch[1], assignment }, env));
+    return json(await callProgress({ project: progressMatch[1], assignment, display_cache:true }, env));
   }
 
   const iconMatch = url.pathname.match(/^\/api\/projects\/([a-zA-Z0-9._-]+)\/icon$/);
@@ -468,7 +439,11 @@ export default {
       return env.ASSETS.fetch(request);
     } catch (error) {
       const status = Number(error?.status) || 500;
-      return json({ error: error?.message ?? "Unexpected runner error." }, status);
+      const limited=error?.code==='rate_limit';
+      const reset=error?.github?.rate_limit_reset,delay=error?.github?.retry_after_seconds;
+      const retryAt=error?.github?.retry_at||(Number.isSafeInteger(reset)?new Date(reset*1000).toISOString():Number.isSafeInteger(delay)?new Date(Date.now()+delay*1000).toISOString():null);
+      return json({ error: error?.message ?? "Unexpected runner error.",...(limited?{code:'rate_limit',retry_at:retryAt}: {}) }, status,
+        limited&&retryAt?{'Retry-After':String(Math.max(0,Math.ceil((Date.parse(retryAt)-Date.now())/1000)))}:{});
     }
   }
 };
