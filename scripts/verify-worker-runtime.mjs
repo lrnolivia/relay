@@ -19,6 +19,13 @@ export function validateWrangler(manifest,lock,installed){
   return pin;
 }
 
+export function validateWorkerd(installed,locked,compatibilityDate){
+  const date=/^1\.(\d{8})\.\d+$/.exec(installed||'')?.[1];
+  if(installed!==locked||!date||date<compatibilityDate.replaceAll('-',''))
+    fail('workerd_mismatch','Installed workerd must match the lock and support the exact compatibility date');
+  return installed;
+}
+
 // Deliberate local projection: production vars, secrets, routes and remote browser
 // binding are not part of this startup smoke. R2 and DO are local simulations.
 export function localRuntimeConfig(config,bundle){
@@ -69,13 +76,19 @@ async function bundleRecords(directory){
 
 async function childProbe(){
   const {createTestHarness}=await import('wrangler');
+  const nativeFetch=globalThis.fetch;
+  globalThis.fetch=(input,init)=>{
+    const url=new URL(typeof input==='string'||input instanceof URL?input:input.url);
+    if(!['127.0.0.1','localhost','[::1]'].includes(url.hostname))fail('outbound_blocked','Runtime smoke cannot access external network resources');
+    return nativeFetch(input,init);
+  };
   const config=await readJson('wrangler.jsonc');
   const harness=createTestHarness({workers:[{config:localRuntimeConfig(config,resolve(output,'bundle/index.js'))}]});
   try{
     await harness.listen();
     const checks=await probeResponses((...args)=>harness.fetch(...args),process.env.RELAY_SOURCE_SHA);
     await writeFile(resolve(output,'probe.json'),JSON.stringify({checks})+'\n');
-  }finally{await harness.close();}
+  }finally{try{await harness.close();}finally{globalThis.fetch=nativeFetch;}}
 }
 
 export async function verifyWorkerRuntime({root=process.cwd(),env=process.env,signal}={}){
@@ -89,8 +102,10 @@ export async function verifyWorkerRuntime({root=process.cwd(),env=process.env,si
     const require=createRequire(resolve(root,'package.json'));
     const wranglerPath=require.resolve('wrangler/package.json'),installed=await readJson(wranglerPath);
     receipt.wrangler=validateWrangler(await readJson(resolve(root,'package.json')),await readJson(resolve(root,'package-lock.json')),installed.version);
-    receipt.workerd=require(require.resolve('workerd/package.json',{paths:[wranglerPath]})).version;
     const config=await readJson(resolve(root,'wrangler.jsonc'));
+    const workerdPath=require.resolve('workerd/package.json',{paths:[wranglerPath]});
+    const lock=await readJson(resolve(root,'package-lock.json'));
+    receipt.workerd=validateWorkerd(require(workerdPath).version,lock.packages[relative(root,workerdPath).replaceAll('\\','/').replace(/\/package.json$/,'')]?.version,config.compatibility_date);
     localRuntimeConfig(config,resolve(directory,'bundle/index.js'));
     const childEnv={...isolatedEnvironment(env),RELAY_SOURCE_SHA:receipt.identity.source_sha};
     const cli=resolve(wranglerPath,'..','bin/wrangler.js');

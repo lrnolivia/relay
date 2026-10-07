@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {validateWrangler,localRuntimeConfig,probeResponses,isolatedEnvironment} from '../scripts/verify-worker-runtime.mjs';
+import {validateWrangler,validateWorkerd,localRuntimeConfig,probeResponses,isolatedEnvironment} from '../scripts/verify-worker-runtime.mjs';
 
 const sha='a'.repeat(40);
 const config={compatibility_date:'2026-09-29',compatibility_flags:['nodejs_compat'],vars:{PRIVATE_TOKEN:'fixture'},browser:{binding:'BROWSER',remote:true},r2_buckets:[{binding:'EVIDENCE',bucket_name:'production',remote:true}],durable_objects:{bindings:[{name:'RELAY_EVENTS',class_name:'RelayEvents'}]},migrations:[{tag:'v1',new_sqlite_classes:['RelayEvents']}],routes:[{pattern:'example.invalid',custom_domain:true}]};
@@ -10,6 +10,10 @@ const lock={packages:{'node_modules/wrangler':{version:'4.148.0'}}};
 test('Wrangler must be exact and match installed and lock versions',()=>{
   assert.equal(validateWrangler(manifest,lock,'4.148.0'),'4.148.0');
   for(const [m,l,v] of [[{devDependencies:{wrangler:'^4.148.0'}},lock,'4.148.0'],[manifest,lock,'4.147.0'],[manifest,{packages:{}},'4.148.0']])assert.throws(()=>validateWrangler(m,l,v),{code:'wrangler_mismatch'});
+});
+test('runtime date fallback or installed workerd drift cannot pass',()=>{
+  assert.equal(validateWorkerd('1.20261006.1','1.20261006.1','2026-09-29'),'1.20261006.1');
+  for(const [installed,locked] of [['1.20260903.1','1.20260903.1'],['1.20261006.1','1.20261005.1'],['unknown','unknown']])assert.throws(()=>validateWorkerd(installed,locked,'2026-09-29'),{code:'workerd_mismatch'});
 });
 test('local projection preserves compatibility and DO schema without production resources',()=>{
   const local=localRuntimeConfig(config,'/tmp/fixture/index.js');
