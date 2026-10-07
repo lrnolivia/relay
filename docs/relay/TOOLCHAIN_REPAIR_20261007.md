@@ -39,3 +39,19 @@ The existing web builder now consumes the same explicit RELAY_SOURCE_SHA accepte
 Remote restoration exposed an inherited test observation race after SIGKILL delivery. The teardown assertion now observes only that exact fixture PID for at most 500 ms: ENOENT or zombie state passes; a surviving process fails and other read errors propagate. New delayed-exit, perpetual-survivor and unreadable-state fixtures verify this bounded observation. No product timeout, suite command, process signal, or required assertion was removed.
 
 Final local validation after the bounded observation correction: 51 passed, 0 failed, with a real running-process negative control. Prior parallel startup-pressure and immediate-teardown-observation failures remain retained as evidence.
+
+## Resumed local Worker gate — October 7
+
+The user resumed the synced PR166 candidate in Mac chat `01a11484-a484-7191-baa7-5e64f424f68b`. Runner transferred the existing assignment to this chat; the original acceptance remains open. The canonical Mac checkout and its handoff archive remain untouched. Implementation continues in the managed `relay-runtime-reliability` worktree from PR head `4e1c38e0f178849a53d20b073d743aff9b4a0752`; its parent remains the rollback for this added slice.
+
+Wrangler is now an exact root development dependency, 4.148.0, with workerd 1.20261006.1 resolved in the lock. Previously installed Wrangler 4.129.0 bundled a September 3 runtime, older than the configured September 29 compatibility date. Existing dependency versions are retained. The toolchain stays Node 22.23.3 / npm 10.9.9.
+
+`npm run verify:runtime` first verifies the existing exact-source web build receipt, then checks installed Wrangler against its manifest and lock pin. It produces a dry-run Worker bundle, hashes every emitted file, and executes those exact bytes without rebundling through Wrangler's official `createTestHarness` API. It requires health JSON, the website's exact source header, and 401/auth-challenge responses from unauthenticated MCP and operator API requests. Bundle and source identity are checked again afterward. Each subprocess has a 60-second bound using the existing process-group and diagnostic accounting. Failed startup, missing evidence, mismatched identity and cancellation stay nonpassing.
+
+The gate deliberately uses local R2 and Durable Object simulations and omits the remote Browser binding, production vars, secrets and routes. It does not prove authenticated success, remote storage, Browser Run, Cloudflare deployment acceptance or production correctness. An unfamiliar configuration field requires explicit review rather than silently losing runtime coverage. The generated payload receipt remains distinct from the new bundle/runtime receipt.
+
+Quality CI runs this gate after building and before installing Chromium. Its result and bundle are retained even on failure, and required-suite blocked accounting includes the runtime prerequisite. The existing five suites remain mandatory. Focused contract tests exercise stale identity, wrong health, open MCP/API, missing auth challenge, exact dependency pins and isolated configuration. Local Mac testing does not replace hosted Linux CI; two pre-existing Linux-only process observations are skipped on macOS.
+
+Official API and dry-run references: https://developers.cloudflare.com/workers/wrangler/api/ and https://developers.cloudflare.com/workers/wrangler/commands/workers/ .
+
+Remaining broader scope remains source-to-test mapping, universal/large/native source preservation, full failure-stage taxonomy, approval-evidence continuity and durable release freezes. No merge or deployment is authorized by the resume.

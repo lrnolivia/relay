@@ -5,7 +5,7 @@ import {dirname,resolve,relative} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 export const BUILD_OUTPUTS=Object.freeze(['apps/web/generated.js','apps/web/generated-react.js','apps/web/generated-inspector.js']);
-export const BUILD_INPUTS=Object.freeze(['package.json','package-lock.json','.node-version','wrangler.jsonc','apps/web/build.mjs','scripts/release-toolchain.mjs']);
+export const BUILD_INPUTS=Object.freeze(['package.json','package-lock.json','.node-version','wrangler.jsonc','apps/web/build.mjs','scripts/release-toolchain.mjs','scripts/verify-worker-runtime.mjs']);
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const stable=value=>Array.isArray(value)?value.map(stable):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,stable(value[key])])):value;
 const digest=value=>hash(JSON.stringify(stable(value)));

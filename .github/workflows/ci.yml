@@ -139,6 +139,11 @@ jobs:
       - name: Build exact web and MCP payloads
         id: setup-build
         run: WORKERS_CI_COMMIT_SHA=${{ github.event.pull_request.head.sha || github.sha }} npm run build
+      - name: Verify bundled Worker in local workerd
+        id: setup-runtime
+        env:
+          RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: npm run verify:runtime
       - name: Install browser runtime once
         id: setup-browser
         run: npx playwright install --with-deps chromium
@@ -151,7 +156,7 @@ jobs:
           RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: npm test
       - name: Account for suites blocked by setup
-        if: always() && (steps.setup-toolchain.outcome != 'success' || steps.setup-focused.outcome != 'success' || steps.setup-install.outcome != 'success' || steps.setup-browser.outcome != 'success' || steps.setup-build.outcome != 'success' || steps.setup-typecheck.outcome != 'success')
+        if: always() && (steps.setup-toolchain.outcome != 'success' || steps.setup-focused.outcome != 'success' || steps.setup-install.outcome != 'success' || steps.setup-browser.outcome != 'success' || steps.setup-build.outcome != 'success' || steps.setup-typecheck.outcome != 'success' || steps.setup-runtime.outcome != 'success')
         env:
           RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           RELAY_SETUP_TOOLCHAIN: ${{ steps.setup-toolchain.outcome }}
@@ -159,6 +164,7 @@ jobs:
           RELAY_SETUP_INSTALL: ${{ steps.setup-install.outcome }}
           RELAY_SETUP_BROWSER: ${{ steps.setup-browser.outcome }}
           RELAY_SETUP_BUILD: ${{ steps.setup-build.outcome }}
+          RELAY_SETUP_RUNTIME: ${{ steps.setup-runtime.outcome }}
           RELAY_SETUP_TYPECHECK: ${{ steps.setup-typecheck.outcome }}
         run: node scripts/ci-test-orchestrator.mjs --blocked
       - name: Preserve exact toolchain and build identities
@@ -167,6 +173,13 @@ jobs:
         with:
           name: relay-toolchain-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: qa-evidence/toolchain/
+          if-no-files-found: error
+      - name: Preserve Worker bundle and local runtime evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-worker-runtime-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qa-evidence/worker-runtime/
           if-no-files-found: error
       - name: Preserve required-suite accounting
         if: always()
