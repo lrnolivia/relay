@@ -58,7 +58,10 @@ test('populated Relay connection page works at desktop and mobile sizes without 
   for(const width of [320,768,1024,1440]){await page.setViewportSize({width,height:1000});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'no overflow at '+width);assert.equal(await page.locator('.telemetry-ring>div,.telemetry-orbits>div').evaluateAll(nodes=>nodes.every(node=>{const bounds=node.getBoundingClientRect();return [...node.children].every(child=>{const box=child.getBoundingClientRect();return box.left>=bounds.left-1&&box.right<=bounds.right+1&&box.top>=bounds.top-1&&box.bottom<=bounds.bottom+1;});})),true,'ring text stays inside its clear center at '+width);}
   assert.equal(await page.locator('.telemetry-card').count(),4);
   assert.equal(await page.locator('.relay-home-top [data-file-manager]').count(),0);
-  assert.equal(await page.locator('.relay-main-panel .relay-connection-actions [data-file-manager]').count(),1);
+  assert.equal(await page.locator('.relay-main-panel .relay-utility-actions [data-file-manager]').count(),1);
+  assert.equal(await page.getByRole('group',{name:'Connection actions',exact:true}).getByRole('button').count(),2);
+  assert.equal(await page.getByRole('group',{name:'Setup and files',exact:true}).getByRole('button').count(),2);
+  assert.equal(await page.getByRole('button',{name:'refresh tools',exact:true}).textContent(),'Refresh tools');
   assert.equal(await page.getByRole('button',{name:'Open files',exact:true}).textContent(),'Files');
   assert.equal(await page.getByRole('button',{name:'Check connection',exact:true}).evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(181, 71, 31)');
   await page.waitForFunction(()=>[...document.querySelectorAll('.telemetry-feature-badge img')].every(image=>image.complete&&image.naturalWidth>0));
@@ -72,7 +75,7 @@ test('populated Relay connection page works at desktop and mobile sizes without 
   assert.match(await page.getByLabel('Add Relay to AI').textContent(),/does not install or connect/);
   await page.getByLabel('Add Relay to AI').getByRole('button',{name:'Close',exact:true}).click();await page.getByLabel('Refresh tools result').getByRole('button',{name:'Close',exact:true}).click();
   await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.locator('.relay-main-panel').evaluate(node=>getComputedStyle(node).backgroundImage),'none');
-  if(process.env.RELAY_QA_OUTPUT){await fs.mkdir(process.env.RELAY_QA_OUTPUT,{recursive:true});for(const width of [1440,320]){await page.setViewportSize({width,height:1100});await page.screenshot({path:process.env.RELAY_QA_OUTPUT+'/relay-status-'+width+'.png',fullPage:true});}}
+  if(process.env.RELAY_QA_OUTPUT){await fs.mkdir(process.env.RELAY_QA_OUTPUT,{recursive:true});for(const width of [1440,390,320]){await page.setViewportSize({width,height:1100});await page.screenshot({path:process.env.RELAY_QA_OUTPUT+'/relay-status-'+width+'.png',fullPage:true});await page.locator('.relay-connection-panel').screenshot({path:process.env.RELAY_QA_OUTPUT+'/connection-actions-'+width+'.png'});}}
   await page.getByRole('button',{name:'edit layout',exact:true}).click();
   await page.getByRole('button',{name:'move activity earlier',exact:true}).click();
   await page.getByRole('button',{name:'done',exact:true}).click();
