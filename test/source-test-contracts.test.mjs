@@ -89,7 +89,7 @@ test('real source range selects and executes a failing caller test with its orig
   assert.equal(r.state,'failed');assert.equal(r.exit_code,1);assert.equal(r.tests.results[0].exit_code,1);assert.deepEqual(r.plan.selected_tests,['named.test.mjs']);assert.deepEqual(r.range.changed_paths,['lib.js']);assert.equal(r.range.head_sha,head);assert.match(r.tests.results[0].diagnostic,/caller contract|Assertion/);assert.equal(r.full_acceptance,false);
 });
 test('CI maps exact source range before build/browser and preserves mapping/blocking evidence',async()=>{
-  const workflow=await readFile(new URL('../.github/workflows/ci.yml',import.meta.url),'utf8');
+  const workflow=(await readFile(new URL('../.github/workflows/ci.yml',import.meta.url),'utf8')).split('  quality:')[1].split('  visual-review-preview:')[0];
   assert.ok(workflow.indexOf('id: setup-contracts')>workflow.indexOf('id: setup-install'));
   assert.ok(workflow.indexOf('id: setup-contracts')<workflow.indexOf('id: setup-build'));assert.ok(workflow.indexOf('id: setup-contracts')<workflow.indexOf('id: setup-browser'));
   assert.match(workflow,/RELAY_CONTRACT_BASE_SHA: \$\{\{ github.event.pull_request.base.sha \|\| github.event.before \}\}/);

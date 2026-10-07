@@ -49,7 +49,7 @@ for(const [name,path,response] of [
   ['missing challenge','/mcp',()=>Response.json({error:'invalid_token'},{status:401})]
 ])test(name+' cannot pass the runtime gate',async()=>assert.rejects(probeResponses(fetcher({[path]:response}),sha)));
 test('CI runtime prerequisite precedes browser and retains failure accounting',async()=>{
-  const workflow=await readFile(new URL('../.github/workflows/ci.yml',import.meta.url),'utf8');
+  const workflow=(await readFile(new URL('../.github/workflows/ci.yml',import.meta.url),'utf8')).split('  quality:')[1].split('  visual-review-preview:')[0];
   assert.ok(workflow.indexOf('id: setup-runtime')>workflow.indexOf('id: setup-build'));
   assert.ok(workflow.indexOf('id: setup-runtime')<workflow.indexOf('id: setup-browser'));
   assert.match(workflow,/steps\.setup-runtime\.outcome != 'success'/);
