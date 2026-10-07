@@ -69,6 +69,16 @@ Local availability does not disable Composio. Composio may still be used for rem
 
 Before treating a local clone as current truth, compare it with the relevant remote branch and preserve unrelated local changes.
 
+### 4.1 Codex on an authorized machine
+
+Use the machine's existing authorized tools to finish admitted work: inspect, edit, test and commit locally; push with Git; read checks and manage PRs with `gh`, the GitHub connector or an available native GitHub client. Relay remains the canonical coordination record, not a requirement that every GitHub operation pass through the Relay MCP connection.
+
+If the Relay GitHub App or another integration reaches its own API rate limit or is temporarily unavailable, respect that connection's retry window and use an independently available, already-authorized local or connected transport when it can perform the same operation. Do not park ready work solely because one integration is unavailable. A tool refresh does not reset a provider's rate limit.
+
+Refresh the same canonical project registration, policy, engine, ownership, branch/PR and exact source through the chosen transport. Use the supported Runner CLI or adapter with fresh revisions and compare-and-swap to update the existing Relay record. Run the normal admission and verification gates, read writes back, and record the actual transport, source identity, results and next action. Keep the existing assignment and branch; do not create a competing coordination system or treat local source as proof of remote publication.
+
+An alternate transport does not override an authentication, permission, approval or security denial. Do not create or rotate credentials, switch to an unauthorized identity, evade an account-wide quota, weaken protection or replay an uncertain mutation to bypass a blocked path. Reconcile uncertain writes before retrying. If no authorized path can refresh the required state, preserve local work and park only the dependent action.
+
 Do not invent tool availability. Discover and use the exact available capability.
 
 Do not fall back to stale memory when live Git state is available.

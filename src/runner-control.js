@@ -264,7 +264,7 @@ export function runnerControlError(error) {
       recovery: code === 'uncertain_write'
         ? 'Inspect the current record and claim; never replay blindly.'
         : code === 'rate_limit'
-          ? 'Wait for the recorded GitHub rate-limit window, then refresh canonical state and reconcile any uncertain write before another operation. Do not switch identity.'
+          ? 'Respect this connection\'s recorded GitHub rate-limit window. On an authorized Codex machine, existing local Git/gh or another already-authorized transport may refresh canonical policy, ownership and admission and update the same Relay record through its supported CAS operation. Reconcile uncertain writes first; do not bypass authentication, permission or approval denials, create credentials, use unauthorized identities or evade an account-wide quota.'
         : code === 'capacity'
           ? 'Retry after provider capacity clears; refresh canonical state first if a mutation may have started.'
           : code === 'auth'

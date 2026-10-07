@@ -191,6 +191,12 @@ test('Runner exposes allowlisted upstream provenance and distinguishes evidenced
   assert.equal(result.error.upstream.status, 403);
   assert.equal(result.error.upstream.phase, 'resource_request');
   assert.equal(result.error.upstream.retry_after_seconds, 60);
+  assert.match(result.error.recovery, /existing local Git\/gh/);
+  assert.match(result.error.recovery, /canonical policy, ownership and admission/);
+  assert.match(result.error.recovery, /supported CAS operation/);
+  assert.match(result.error.recovery, /do not bypass authentication, permission or approval denials/);
+  assert.match(result.error.recovery, /account-wide quota/);
+  assert.doesNotMatch(runnerControlError(Object.assign(new Error('hidden'), {status:403})).error.recovery, /another already-authorized transport/);
   assert.equal(JSON.stringify(result).includes('secret'), false);
   assert.equal(runnerControlError(Object.assign(new Error('hidden'), { github: { ...input.github, endpoint: '/path?secret=query' } })).error.upstream.endpoint, undefined);
 });
