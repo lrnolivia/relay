@@ -113,7 +113,7 @@ const reactHtml = String(htmlAsset.source).replace("</head>", () => "<script>(" 
 const reactJs = inlineBrandUrls(jsChunk.code);
 const reactCss = String(cssAsset.source);
 const webBuildId = createHash("sha256").update(JSON.stringify([reactHtml, reactJs, reactCss, inspectorHtml, legacyScript])).digest("hex");
-const webSourceSha = process.env.WORKERS_CI_COMMIT_SHA || process.env.GITHUB_SHA || "";
+const webSourceSha = process.env.WORKERS_CI_COMMIT_SHA || process.env.RELAY_SOURCE_SHA || process.env.GITHUB_SHA || "";
 const cssTag = reactHtml.match(/<link rel="stylesheet"[^>]*href="\/assets\/[^"]+\.css"[^>]*>/)?.[0];
 const scriptTag = reactHtml.match(/<script type="module"[^>]*src="\/assets\/[^"]+\.js"><\/script>/)?.[0];
 if (!cssTag || !scriptTag) throw new Error("Relay 2.0 HTML did not reference the expected Vite JS/CSS assets.");

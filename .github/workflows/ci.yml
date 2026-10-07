@@ -13,6 +13,7 @@ on:
       - 'scripts/**'
       - 'test/**'
       - 'package.json'
+      - '.node-version'
       - 'wrangler.jsonc'
       - '.github/workflows/**'
   push:
@@ -27,6 +28,7 @@ on:
       - 'scripts/**'
       - 'test/**'
       - 'package.json'
+      - '.node-version'
       - 'wrangler.jsonc'
       - '.github/workflows/**'
 
@@ -52,11 +54,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version-file: '.node-version'
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            package.json
+            .node-version
+      - name: Verify exact toolchain and lock before install
+        env:
+          RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: npm run check:toolchain
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
       - run: WORKERS_CI_COMMIT_SHA=${{ github.event.pull_request.head.sha || github.sha }} npm run build
+      - run: npx playwright install --with-deps chromium
       - name: Verify exact live source and capture actual website pages
         run: node apps/web/verify-production.mjs
       - name: Retain and verify exact interactive sample build
@@ -89,8 +99,12 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version-file: '.node-version'
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            package.json
+            .node-version
       - name: Resolve deploying source scope
         id: production-scope
         env:
@@ -111,15 +125,23 @@ jobs:
           }
           appendFileSync(process.env.GITHUB_OUTPUT,'required='+required+'\n');
           JS
+      - name: Verify exact toolchain and lock before install
+        id: setup-toolchain
+        env:
+          RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: npm run check:toolchain
+      - name: Run cheap toolchain contract tests before browser setup
+        id: setup-focused
+        run: npm run test:toolchain
       - name: Install workspace
         id: setup-install
         run: npm ci
-      - name: Install browser runtime once
-        id: setup-browser
-        run: npx playwright install --with-deps chromium
       - name: Build exact web and MCP payloads
         id: setup-build
         run: WORKERS_CI_COMMIT_SHA=${{ github.event.pull_request.head.sha || github.sha }} npm run build
+      - name: Install browser runtime once
+        id: setup-browser
+        run: npx playwright install --with-deps chromium
       - name: Typecheck Relay 2.0
         id: setup-typecheck
         run: npm run typecheck:2.0 --workspace @relay/web
@@ -129,14 +151,23 @@ jobs:
           RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: npm test
       - name: Account for suites blocked by setup
-        if: always() && (steps.setup-install.outcome != 'success' || steps.setup-browser.outcome != 'success' || steps.setup-build.outcome != 'success' || steps.setup-typecheck.outcome != 'success')
+        if: always() && (steps.setup-toolchain.outcome != 'success' || steps.setup-focused.outcome != 'success' || steps.setup-install.outcome != 'success' || steps.setup-browser.outcome != 'success' || steps.setup-build.outcome != 'success' || steps.setup-typecheck.outcome != 'success')
         env:
           RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          RELAY_SETUP_TOOLCHAIN: ${{ steps.setup-toolchain.outcome }}
+          RELAY_SETUP_FOCUSED: ${{ steps.setup-focused.outcome }}
           RELAY_SETUP_INSTALL: ${{ steps.setup-install.outcome }}
           RELAY_SETUP_BROWSER: ${{ steps.setup-browser.outcome }}
           RELAY_SETUP_BUILD: ${{ steps.setup-build.outcome }}
           RELAY_SETUP_TYPECHECK: ${{ steps.setup-typecheck.outcome }}
         run: node scripts/ci-test-orchestrator.mjs --blocked
+      - name: Preserve exact toolchain and build identities
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-toolchain-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qa-evidence/toolchain/
+          if-no-files-found: error
       - name: Preserve required-suite accounting
         if: always()
         uses: actions/upload-artifact@v4
@@ -191,14 +222,22 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version-file: '.node-version'
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            package.json
+            .node-version
+      - name: Verify exact toolchain and lock before install
+        env:
+          RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: npm run check:toolchain
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
       - name: Check out the exact draft PR head
         run: git checkout "$PREVIEW_COMMIT"
       - name: Build exact Relay web assets
-        run: WORKERS_CI_COMMIT_SHA="$PREVIEW_COMMIT" npm run build --workspace @relay/web
+        run: WORKERS_CI_COMMIT_SHA="$PREVIEW_COMMIT" npm run build
+      - run: npx playwright install --with-deps chromium
       - name: Capture and ingest Inspector preview evidence
         run: |
           if [[ "$PREVIEW_BRANCH" == relay/website-notifications-review-* ]]; then
@@ -213,4 +252,5 @@ jobs:
           name: relay-visual-review-${{ github.event.pull_request.number }}
           path: qa-evidence/
           if-no-files-found: ignore
+
 
