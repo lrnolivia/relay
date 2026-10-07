@@ -101,6 +101,20 @@ test("server validation accepts exact-head merge input", () => {
   assert.equal(validateLifecycleArguments("relay_source_pull_request_action", args), args);
 });
 
+test('typed GitHub quota403 preserves its retry deadline instead of requesting an authority refresh',()=>{
+  const failure=classifyExtensionError(Object.assign(new Error('GitHub quota exhausted'),{status:403,code:'rate_limit',github:{
+    provider:'github',status:403,phase:'resource_request',auth_mode:'github_app_installation',rate_limit_remaining:0,
+    rate_limit_limit:5000,rate_limit_used:5000,rate_limit_reset:1791356400,installation_id:166454233,
+    private_token:'must-not-be-returned',private_payload:{secret:'must-not-be-returned'}
+  }}),'relay_source_pull_request_action');
+  assert.equal(failure.class,'rate_limit');assert.equal(failure.retryable,false);assert.equal(failure.requires_auth,false);
+  assert.equal(failure.retry_at,'2026-10-07T07:00:00.000Z');assert.equal(failure.upstream.rate_limit_used,5000);
+  assert.match(failure.recovery,/Wait until 2026-10-07T07:00:00/);assert.doesNotMatch(failure.recovery,/Refresh Relay authority/);
+  assert.doesNotMatch(JSON.stringify(failure),/must-not-be-returned|private_token|private_payload/);
+  const denied=classifyExtensionError(Object.assign(new Error('Resource not accessible by integration'),{status:403}),'relay_source_pull_request_action');
+  assert.equal(denied.class,'permission');assert.equal(denied.retry_at,undefined);
+});
+
 
 test("Relay extension preserves native card resources and appends skills once", () => {
   const resources = augmentResourceList([{ uri: "skill://relay/existing/SKILL.md" }, relayContextCardDescriptor()]);
