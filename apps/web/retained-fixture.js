@@ -36,7 +36,7 @@ let challenge='';
 window.addEventListener('message',event=>{
  if(event.source!==parent||event.origin!==location.origin||event.data?.type!=='relay-preview-check'||typeof event.data.nonce!=='string'||event.data.nonce.length>100)return;
  challenge=event.data.nonce;const nonce=challenge;let attempts=0;
- const ready=()=>{if(challenge!==nonce||++attempts>200)return;if(!document.querySelector('.signal-card')||document.querySelector('[data-progress-notice] strong')?.textContent?.includes('Loading'))return setTimeout(ready,25);parent.postMessage({type:'relay-preview-ready',nonce:challenge,retained:true},event.origin);};ready();
+ const ready=()=>{if(challenge!==nonce||++attempts>200)return;if(!document.querySelector('.relay-home,[data-relay-ctrl-handoff]')||document.querySelector('.live-telemetry')?.getAttribute('data-loading')==='true')return setTimeout(ready,25);parent.postMessage({type:'relay-preview-ready',nonce:challenge,retained:true},event.origin);};ready();
 });
 function announce(message){let node=document.querySelector('#retained-notice');if(!node){node=document.createElement('div');node.id='retained-notice';node.setAttribute('role','status');node.style.cssText='position:fixed;bottom:8px;right:8px;max-width:280px;padding:8px 12px;border-radius:12px;background:#292621;color:#f6f2ed;font:12px/1.4 sans-serif;z-index:2147483647;pointer-events:none';document.body.append(node);}node.textContent=message;}
 function changeDocument(entry,hash){

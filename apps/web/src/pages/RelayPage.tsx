@@ -9,6 +9,7 @@ import { RELAY_PLUGIN_SETTINGS } from '../../public/relay-connection.js';
 type Check = { ok: boolean; checked_at: string; elapsed_ms: number; server?: { version: string }; tools?: { count: number; schema_sha256: string }; error?: string; refresh?: { message: string } };
 const endpoint = 'https://relay.loew.fi/mcp';
 export function RelayPage() {
+  const preview=Boolean((window as Window & {__retainedFixture?:{data_mode?:string}}).__retainedFixture?.data_mode==='synthetic');
   const { allSnapshot: snapshot, refresh } = useLiveRelay();
   const [check,setCheck]=useState<Check|null>(null),[busy,setBusy]=useState('check'),[message,setMessage]=useState(''),[showConnect,setShowConnect]=useState(false),[showRefresh,setShowRefresh]=useState(false);
   const items=Object.entries(snapshot?.progress||{}).flatMap(([project,payload])=>(payload.progress||[]).map(item=>({...item,project})));
@@ -21,6 +22,7 @@ export function RelayPage() {
   const checkInFlight=useRef(false);
   useEffect(()=>{void checkConnection('check',false);},[]);
   async function checkConnection(action='check',refreshWorkspace=true) {
+    if(preview){setBusy('');setMessage('This preview uses sample data. Connection checks and tool refreshes are unavailable here.');return;}
     if(checkInFlight.current)return;checkInFlight.current=true;setBusy(action);setMessage('');if(action==='refresh')setShowRefresh(true);
     const start=performance.now();
     try{const response=await fetch('/api/relay/'+action,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}',signal:AbortSignal.timeout(20000)});const data=await response.json();if(!response.ok)throw Error(data.error||'Connection check failed');setCheck(data);if(action==='refresh')setMessage(data.refresh.message);else if(refreshWorkspace)void refresh();}
@@ -33,10 +35,10 @@ export function RelayPage() {
     <section className="relay-main-panel" aria-labelledby="relay-title">
       <header className="relay-identity">
         <div className="relay-wordmark"><img src="/brand/relay.png" alt="" width="144" height="144"/><div><h1 id="relay-title">relay</h1><p>your tools, connected.</p></div></div>
-        <StatusLight tone={busy?'wait':check?.ok?'good':check?'bad':'quiet'} label={busy?'checking connection':check?.ok?'MCP connected':check?'connection unavailable':'connection not checked'}/>
+        <StatusLight tone={preview?'quiet':busy?'wait':check?.ok?'good':check?'bad':'quiet'} label={preview?'sample preview':busy?'checking connection':check?.ok?'MCP connected':check?'connection unavailable':'connection not checked'}/>
       </header>
       <div className="relay-connection-panel" aria-busy={Boolean(busy)}>
-        <div className="relay-connection-copy"><span className="relay-eyebrow">connection</span><strong>{busy?'Checking the connection…':check?.ok?'Relay is responding.':check?'Let’s reconnect.':'Ready when you are.'}</strong><p role="status">{check ? `${check.ok?'Authenticated MCP handshake':check.error} · ${check.elapsed_ms} ms · ${new Date(check.checked_at).toLocaleTimeString()}` : 'Check the live MCP service, then use your connected tools in your AI client.'}</p></div>
+        <div className="relay-connection-copy"><span className="relay-eyebrow">connection</span><strong>{preview?'Preview only':busy?'Checking the connection…':check?.ok?'Relay is responding.':check?'Let’s reconnect.':'Ready when you are.'}</strong><p role="status">{preview?'Sample data is shown below. This preview cannot check or change your real connection.':check ? `${check.ok?'Authenticated MCP handshake':check.error} · ${check.elapsed_ms} ms · ${new Date(check.checked_at).toLocaleTimeString()}` : 'Check the live MCP service, then use your connected tools in your AI client.'}</p></div>
         <div className="relay-connection-actions">
           <div className="relay-service-actions" role="group" aria-label="Connection actions">
             <button type="button" className="relay-primary-action" disabled={Boolean(busy)} onClick={()=>void checkConnection()}><span className={busy?'relay-check-pulse':''} aria-hidden="true">●</span> Check connection</button>
@@ -44,7 +46,7 @@ export function RelayPage() {
           </div>
           <div className="relay-utility-actions" role="group" aria-label="Setup and files">
             <button type="button" className="relay-connect-action" onClick={()=>setShowConnect(value=>!value)} aria-expanded={showConnect}>connect your AI <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
-            <button type="button" data-file-manager aria-label="Open files" title="Files"><span aria-hidden="true" dangerouslySetInnerHTML={{__html:fileManagerIcon}}/>Files</button>
+            <button type="button" data-file-manager aria-label="Open files" title={preview?'Files are unavailable in this sample preview':'Files'} disabled={preview}><span aria-hidden="true" dangerouslySetInnerHTML={{__html:fileManagerIcon}}/>Files</button>
           </div>
         </div>
       </div>
