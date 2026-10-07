@@ -99,6 +99,21 @@ test('failed executor lease preserves the exact pending operation and classified
     assert.equal((await fs.stat(path.join(stateDir,'receipt.json'))).mode&0o777,0o600);await assert.rejects(fs.stat(path.join(stateDir,'executor.lock')),error=>error.code==='ENOENT');
   }finally{await fs.rm(root,{recursive:true,force:true});}
 });
+for(const platform of ['darwin','win32']) test('executor rejects source protection on '+platform+' before lease or process start',async()=>{
+  const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-executor-platform-')),workspace=path.join(root,'checkout'),stateDir=path.join(root,'receipts');
+  await fs.mkdir(workspace);const actions=[];let spawned=false,versionRead=false;
+  try{
+    const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim();
+    git(['init','-b','relay/fixture']);git(['config','user.name','Fixture']);git(['config','user.email','fixture@example.invalid']);git(['remote','add','origin','https://github.com/lrnolivia/fixture.git']);await fs.writeFile(path.join(workspace,'README.md'),'Synthetic platform fixture\n');git(['add','README.md']);git(['commit','-m','fixture']);
+    const job={id:'fixture',state:'queued',owner:'fixture',branch:'relay/fixture',repository:'lrnolivia/fixture',initial_head_sha:git(['rev-parse','HEAD']),revision:1,objective:{paths:['README.md']},required_capabilities:['codex-cli','source-byte-checkpoints-v1']};
+    const rpc=async(name,args)=>{assert.equal(name,'relay_execution');actions.push(args.action);if(args.action!=='status')throw Error('Unexpected mutation: '+args.action);return {job};};
+    await assert.rejects(runExecution({config:{project:'fixture',assignment:'fixture',owner:'fixture',branch:'relay/fixture',source_checkpoints:true},workspace,stateDir,rpc,getPlatform:()=>platform,getVersion:()=>{versionRead=true;return 'synthetic';},spawnProcess:()=>{spawned=true;throw Error('must not spawn');}}),/source checkpoints require Linux/i);
+    assert.deepEqual(actions,['status']);assert.equal(versionRead,false);assert.equal(spawned,false);
+    await assert.rejects(fs.stat(path.join(stateDir,'executor.lock')),error=>error.code==='ENOENT');
+    await assert.rejects(fs.stat(path.join(stateDir,'receipt.json')),error=>error.code==='ENOENT');
+  }finally{await fs.rm(root,{recursive:true,force:true});}
+});
+
 for (const source_checkpoints of [false,true]) test((source_checkpoints?'source-protected ':'legacy ')+'actual subprocess lifecycle persists broker start, session, exit and exact receipt without claiming objective completion',async()=>{
   const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-executor-fixture-')),workspace=path.join(root,'checkout'),stateDir=path.join(root,'receipts');
   await fs.mkdir(workspace);const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8'}).trim();
