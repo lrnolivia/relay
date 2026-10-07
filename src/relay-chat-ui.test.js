@@ -5,7 +5,7 @@ import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI,
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v15.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v16.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -28,7 +28,7 @@ test("legacy bridge bisect keeps v8 as the control and uses a fresh tool/resourc
   const legacy = relayStatusCardResource();
   const descriptor = relayStatusCardDescriptor();
   const tool = relayStatusCardTool();
-  assert.equal(RELAY_STATUS_CARD_URI, "ui://relay/status-card/v3-legacy-bridge.html");
+  assert.equal(RELAY_STATUS_CARD_URI, "ui://relay/status-card/v4-legacy-bridge.html");
   assert.equal(RELAY_STATUS_CARD_TOOL, "relay_show_legacy_bridge_card");
   assert.equal(descriptor.uri, RELAY_STATUS_CARD_URI);
   assert.equal(tool.name, RELAY_STATUS_CARD_TOOL);
@@ -152,9 +152,9 @@ test('only the dedicated render tool owns the compact resource', () => {
 test('cards show named teams blockers handoffs QA and subordinate exact evidence', async () => {
   const {contextCardModel}=await import('./relay-chat-ui.js');
   const m=contextCardModel({project:'relay',action:'handoff',claim:{id:'exact-task',owner:'next-owner',primary_staff:'julian',supporting_staff:['roman'],state:'blocked',goal:'Connect the release',next_action:'Fix the failing gate',waiting_reason:'Client still has old schema',branch:'relay/exact'},qa:{intended_result:'New card renders',checks:['Card is compact']}});
-  assert.equal(m.team,'Julian with Roman');assert.equal(m.blocker,'Client still has old schema');assert.match(m.handoff,/next-owner/);assert.equal(m.evidence.owner,'next-owner');assert.equal(m.qa.checks[0],'Card is compact');
-  assert.equal(contextCardModel({ok:false,error:{message:'Authorization required'}}).label,'Blocked');
-  assert.equal(contextCardModel({check_runs:[]}).label,'No checks recorded');
+  assert.equal(m.team,'Julian with Roman');assert.equal(m.blocker,'Client still has old schema');assert.equal(m.handoff,'The assignment was transferred.');assert.equal(m.evidence.owner,'next-owner');assert.equal(m.qa.checks[0],'Card is compact');
+  assert.equal(contextCardModel({ok:false,error:{message:'Authorization required'}}).label,'Could not load updates');
+  assert.equal(contextCardModel({check_runs:[]}).label,'Checks unconfirmed');
 });
 test('card initializes the standard MCP Apps bridge even when window.openai exists', async () => {
   const {chromium}=await import('playwright');
@@ -486,7 +486,7 @@ test("job-focused card rows show work rather than staff and collapse long copy",
   assert.deepEqual(model.rows.map(x=>x.label),['relay card polish','relay skills completion']);
   assert.equal(model.metric,'7'); assert.equal(model.metric_label,'active jobs');
   assert.ok(model.title.length<=72); assert.ok(model.summary.length<=150);
-  assert.equal(model.next_step,null); assert.equal(model.evidence.goal,detail);
+  assert.equal(model.next_step,null); assert.equal(model.evidence.goal,detail.trim());
   assert.equal(model.primary_staff,'Ellis');
 });
 
@@ -559,9 +559,11 @@ test('overall status expands projects and assignments within one mounted card', 
   await page.locator('#title').filter({hasText:'Your projects'}).waitFor();
   await page.getByRole('button',{name:/Field.*1 open/}).waitFor();
   await page.getByRole('button',{name:/Field.*1 open/}).click();
-  await page.getByRole('button',{name:/Finish the editor.*Working/}).click();
+  await page.getByRole('button',{name:/Finish the editor.*In progress/}).click();
   assert.equal(await page.locator('#title').textContent(),'Finish the editor');
-  assert.equal(await page.locator('#summary').textContent(),'Verify touch input');
+  assert.equal(await page.locator('#summary').textContent(),'');
+  assert.match(await page.locator('#next').textContent(),/Verify touch input/);
+  assert.match(await page.locator('#evidence').textContent(),/Verify touch input/);
   await page.getByRole('button',{name:'‹ Project',exact:true}).click();
   await page.getByRole('button',{name:'‹ Overall',exact:true}).click();
   await page.locator('#title').filter({hasText:'Your projects'}).waitFor();
@@ -569,4 +571,72 @@ test('overall status expands projects and assignments within one mounted card', 
   assert.deepEqual(await page.evaluate(()=>window.calls),[{name:'relay_runner_progress',args:{project:'field'}}]);
   assert.equal(await page.evaluate(()=>window.openai.widgetState.statusExplorer.level),'overview');
  } finally {await browser.close();}
+});
+
+test('human_v1 card preserves error facts and pending release steps without guessing a chat fix',async()=>{
+  const {contextCardModel,compactContextCardResult}=await import('./relay-chat-ui.js');
+  const data={ok:false,checked_at:'2026-10-07T10:00:00Z',error:{class:'rate_limit',message:'Bearer secret-value',retry_at:'2026-10-07T11:00:00Z',upstream:{provider:'github',private_token:'secret-value'}}};
+  const compact=compactContextCardResult(data);
+  assert.equal(compact.error.class,'rate_limit');assert.equal(compact.error.retry_at,data.error.retry_at);
+  assert.equal(compact.error.upstream.private_token,undefined);
+  const error=contextCardModel({...compact,pull_request:{merged:true,number:9}});
+  assert.equal(error.human_v1.message_id,'error.rate_limit');assert.equal(error.tone,'wait');
+  assert.match(error.summary,/resume after/);assert.doesNotMatch(JSON.stringify(error),/secret-value/);
+  const pending=contextCardModel({pull_request:{merged:true,number:9},claim:{next_action:'Verify the deployment'},next_action:{code:'verify_release',actor:'relay',availability:'unavailable'}});
+  assert.match(pending.next_step,/live checks/);
+  const technical=contextCardModel({claim:{state:'working',next_action:'Check commit_sha aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa before deployment'}});
+  assert.doesNotMatch(technical.next_step,/refreshed chat connection/);
+  const partial=contextCardModel({partial:true,pull_request:{merged:true,number:9}});
+  assert.equal(partial.human_v1.message_id,'data.partial');assert.equal(partial.tone,'wait');
+});
+
+test('human_v1 generated current and legacy bridge resources share exact server semantics',async()=>{
+  const {build}=await import('esbuild');const {runInNewContext}=await import('node:vm');
+  const built=await build({entryPoints:[new URL('./relay-chat-ui.js',import.meta.url).pathname],bundle:true,write:false,format:'esm',platform:'neutral',keepNames:true});
+  const module=await import('data:text/javascript;base64,'+Buffer.from(built.outputFiles[0].text).toString('base64'));
+  const cases=[
+    {ok:false,error:{class:'rate_limit',retry_at:'2026-10-07T11:00:00Z'},checked_at:'2026-10-07T10:00:00Z'},
+    {ok:false,presentation_operation:{kind:'command',name:'relay_execution'},error:{class:'uncertain_write'}},
+    {partial:true,claim:{state:'working',goal:'Keep the last update'}},
+    {pull_request:{merged:true,number:9},next_action:{code:'verify_release',actor:'relay',availability:'unavailable'}},
+    {check_runs:[{name:'test',status:'completed',conclusion:'cancelled'}]},
+    {presentation_mode:'legacy',claim:{state:'working',goal:'Rollback renderer'}},
+    {human_v1:{summary:'forged success',severity:'success'},ok:false,error:{class:'permission'}}
+  ];
+  for(const resource of [module.relayContextCardResource(),module.relayStatusCardResource()]){
+    const script=resource.text.match(/<script>([\s\S]*?)<\/script>/)[1];
+    const prefix=script.slice(0,script.indexOf('const FEATURES='));
+    assert.doesNotMatch(prefix,/\b__name\b/);
+    for(const input of cases){
+      const actual=runInNewContext(prefix+';model(input,DIRECTORY)',{input});
+      assert.deepEqual(JSON.parse(JSON.stringify(actual)),JSON.parse(JSON.stringify(module.contextCardModel(input,undefined,{timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone}))));
+    }
+  }
+});
+
+test('human_v1 removal of duplicate error text does not turn legacy health healthy',async()=>{
+ const {contextualPresentation}=await import('./relay-chat-ui.js');
+ const result=contextualPresentation({ok:false,error:{class:'permission'}});
+ assert.equal(result.human.health,'blocked');assert.equal(result.human_v1.severity,'error');
+});
+
+test('human_v1 mobile shows the complete warning and next step without duplicate error text',async()=>{
+ const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
+ try{
+  for(const error of [{class:'uncertain_write'},{class:'rate_limit',retry_at:'2026-10-07T11:00:00Z',upstream:{provider:'github'}}]){
+   const page=await browser.newPage({viewport:{width:320,height:900}});
+   await page.addInitScript(({error})=>{window.openai={toolInput:{project:'relay'},toolOutput:{project:'relay',ok:false,checked_at:'2026-10-07T10:00:00Z',error}};},{error});
+   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
+   await page.locator('#summary').filter({hasText:error.class==='uncertain_write'?'whether or not':'GitHub says requests can resume'}).waitFor();
+   assert.equal(await page.locator('#blocker').isVisible(),false);
+   assert.equal(await page.locator('.telemetry-stat').isVisible(),false);
+   assert.ok(await page.locator('#summary').evaluate(node=>node.scrollHeight<=node.clientHeight+1),'material explanation is not clamped');
+   if(error.class==='uncertain_write'){
+    assert.equal(await page.locator('#next').isVisible(),true);
+    assert.match(await page.locator('#next').textContent(),/Check the latest status before trying again/);
+   }
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+   await page.close();
+  }
+ }finally{await browser.close();}
 });

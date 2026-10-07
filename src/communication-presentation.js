@@ -75,3 +75,5 @@ export function renderHumanFirst(result){
   if(h.needs_user) parts.push("You need to act on this.");
   return parts.join(" ").replace(/\s+/g," ").trim();
 }
+
+export { HUMAN_CATALOG_VERSION, HUMAN_CATALOG, presentationOperation, safePresentationText, normalizeCommunicationResult, formatRelay, withHumanPresentation } from './human-presentation.js';

@@ -1,0 +1,271 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relay.loew.fi/contracts/presentation/human-v1.schema.json",
+  "title": "Relay additive human_v1 presentation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "catalog_version",
+    "message_id",
+    "locale",
+    "label",
+    "summary",
+    "severity",
+    "next_step",
+    "details"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "catalog_version": {
+      "const": 1
+    },
+    "message_id": {
+      "enum": [
+        "data.unknown",
+        "data.unrecognized",
+        "data.partial",
+        "work.queued",
+        "work.assigned",
+        "work.working",
+        "work.reserved",
+        "work.held",
+        "work.blocked",
+        "work.failed",
+        "work.wait_user",
+        "work.wait_external",
+        "work.completed",
+        "work.cancelled",
+        "work.superseded",
+        "progress.possibly_stale",
+        "progress.stale",
+        "release.checks_running",
+        "release.check_failed",
+        "release.check_cancelled",
+        "release.check_skipped",
+        "release.check_neutral",
+        "release.observed_checks_complete",
+        "release.checks_unverified",
+        "release.draft_open",
+        "release.in_review",
+        "release.merged",
+        "error.validation",
+        "error.auth",
+        "error.permission",
+        "error.not_found",
+        "error.conflict",
+        "error.capacity",
+        "error.rate_limit",
+        "error.timeout_read",
+        "error.uncertain_write",
+        "error.provider_read",
+        "error.unknown_read",
+        "error.unknown_write",
+        "verify.browser_capacity",
+        "file.upload_unknown"
+      ]
+    },
+    "locale": {
+      "const": "en"
+    },
+    "label": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "neutral",
+        "info",
+        "success",
+        "warning",
+        "error"
+      ]
+    },
+    "next_step": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "timestamp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observed_at"
+      ],
+      "properties": {
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "details": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "items"
+      ],
+      "properties": {
+        "label": {
+          "const": "Technical details"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "key",
+              "value"
+            ],
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "message_id",
+        "params",
+        "operation",
+        "outcome",
+        "mutation",
+        "next_action",
+        "evidence",
+        "retry",
+        "technical"
+      ],
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "message_id": {
+          "enum": [
+            "data.unknown",
+            "data.unrecognized",
+            "data.partial",
+            "work.queued",
+            "work.assigned",
+            "work.working",
+            "work.reserved",
+            "work.held",
+            "work.blocked",
+            "work.failed",
+            "work.wait_user",
+            "work.wait_external",
+            "work.completed",
+            "work.cancelled",
+            "work.superseded",
+            "progress.possibly_stale",
+            "progress.stale",
+            "release.checks_running",
+            "release.check_failed",
+            "release.check_cancelled",
+            "release.check_skipped",
+            "release.check_neutral",
+            "release.observed_checks_complete",
+            "release.checks_unverified",
+            "release.draft_open",
+            "release.in_review",
+            "release.merged",
+            "error.validation",
+            "error.auth",
+            "error.permission",
+            "error.not_found",
+            "error.conflict",
+            "error.capacity",
+            "error.rate_limit",
+            "error.timeout_read",
+            "error.uncertain_write",
+            "error.provider_read",
+            "error.unknown_read",
+            "error.unknown_write",
+            "verify.browser_capacity",
+            "file.upload_unknown"
+          ]
+        },
+        "params": {
+          "type": "object",
+          "additionalProperties": false
+        },
+        "operation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "name"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "query",
+                "command",
+                "discovery",
+                "recipe",
+                "unknown"
+              ]
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "outcome": {
+          "enum": [
+            "observed",
+            "accepted",
+            "succeeded",
+            "failed",
+            "deferred",
+            "unknown"
+          ]
+        },
+        "mutation": {
+          "enum": [
+            "not_attempted",
+            "confirmed_applied",
+            "confirmed_not_applied",
+            "unknown",
+            "not_applicable"
+          ]
+        },
+        "next_action": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "object"
+        },
+        "retry": {
+          "type": "object"
+        },
+        "technical": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

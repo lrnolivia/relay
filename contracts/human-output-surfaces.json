@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "catalog_version": 1,
+  "reviewed_base": "995705af5014663808a0438c4d409861363ae662",
+  "scope": "First bounded presentation slice; not a repository-wide migration",
+  "surfaces": [
+    {
+      "source": "src/communication-presentation.js",
+      "symbols": [
+        "normalizeCommunicationResult",
+        "formatRelay",
+        "withHumanPresentation"
+      ],
+      "audience": "human",
+      "surface": "common-error-and-state",
+      "status": "covered",
+      "fixtures": [
+        "human_v1 catalog",
+        "quota deadline",
+        "unknown mutation",
+        "failure, partial coverage",
+        "additive metadata"
+      ],
+      "reason": "Closed typed catalog; unknown outputs remain unconfirmed. English first; unknown locale falls back to English."
+    },
+    {
+      "source": "src/relay-entry.js",
+      "symbols": [
+        "toolResult",
+        "toolError",
+        "fetch"
+      ],
+      "audience": "agent-and-human",
+      "surface": "MCP-structuredContent",
+      "status": "covered",
+      "fixtures": [
+        "mixed extension operations",
+        "authenticated source reads"
+      ],
+      "reason": "Additive human_v1 on structured results. Legacy JSON/prose text, JSON-RPC codes, isError, auth and raw machine facts retained. Mixed operations use explicit action metadata."
+    },
+    {
+      "source": "src/relay-chat-ui.js",
+      "symbols": [
+        "contextualPresentation",
+        "compactContextCardResult",
+        "resilientCardHtml",
+        "legacyBridgeCardHtml",
+        "STATUS_EXPLORER_SCRIPT"
+      ],
+      "audience": "human",
+      "surface": "current-and-legacy-card",
+      "status": "covered",
+      "fixtures": [
+        "human_v1 card preserves",
+        "human_v1 generated current",
+        "overall status expands"
+      ],
+      "reason": "Shared generated model, typed error compaction, drill-down state/summary and partial overview; established styling and host protocols retained."
+    },
+    {
+      "source": "src/relay-context-card-legacy-model.js",
+      "symbols": [
+        "legacyContextCardModel"
+      ],
+      "audience": "human",
+      "surface": "presentation-rollback",
+      "status": "internal-only",
+      "reason": "Explicit RELAY_HUMAN_PRESENTATION=legacy escape hatch preserves the prior canonical renderer; not a newly hardened surface."
+    },
+    {
+      "source": "src/index.js",
+      "symbols": [
+        "rpcError",
+        "generic exception boundary",
+        "OAuth HTTP routes"
+      ],
+      "audience": "agent",
+      "surface": "legacy-protocol-only",
+      "status": "migration-pending",
+      "reason": "Unstructured legacy errors and protocol/auth bodies remain unchanged. No claim that every MCP default text is human-v1 prose."
+    },
+    {
+      "source": "packages/shared-ui/",
+      "symbols": [
+        "presentation-copy",
+        "work-viewer",
+        "notifications",
+        "file-manager"
+      ],
+      "audience": "human",
+      "surface": "website",
+      "status": "migration-pending",
+      "reason": "Website, review and Files surfaces require their later bounded migrations. Existing Files backend is preserved."
+    },
+    {
+      "source": "src/",
+      "symbols": [
+        "provider-specific throw sites",
+        "unregistered success families"
+      ],
+      "audience": "human",
+      "surface": "remaining-producers",
+      "status": "migration-pending",
+      "reason": "Unknown success shapes receive a neutral unrecognized result. Existing legacy error classifier text adapters are retained outside explicit operation typing; further producers need stable codes and fixtures."
+    }
+  ],
+  "release_gates": [
+    "all five required suites",
+    "source-test contracts",
+    "exact pinned build",
+    "workerd runtime",
+    "actual bundled browser card and explorer",
+    "authenticated exact-source main runtime"
+  ],
+  "rollback": "Set RELAY_HUMAN_PRESENTATION to legacy through an authorized configuration change, or revert this bounded presentation PR. Preserve all task/file state and existing machine guards."
+}
