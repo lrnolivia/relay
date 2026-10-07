@@ -28,3 +28,8 @@ test("exposes explicit engine capabilities", () => {
   const engines = evidenceEngines();
   assert.equal(engines.some(engine => engine.id === "github-chromium" && engine.capabilities.includes("recipe")), true);
 });
+
+test('GitHub quota and permission failures are never Browser Run capacity',()=>{
+  for(const code of ['rate_limit',undefined])assert.equal(normalizeBrowserCapacityError(Object.assign(
+    new Error('API rate limit exceeded for installation ID166454233'),{status:403,code,github:{provider:'github'}})),null);
+});

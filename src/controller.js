@@ -116,6 +116,7 @@ export function planEvidenceRequest(input = {}) {
 }
 
 export function normalizeBrowserCapacityError(error) {
+  if(error?.github?.provider==='github')return null;
   const message = error instanceof Error ? error.message : String(error ?? "");
   const status = Number(message.match(/status\s*=\s*(\d{3})/i)?.[1] ?? message.match(/\b(429)\b/)?.[1] ?? 0);
   if (status !== 429 && !/rate limit exceeded/i.test(message)) return null;

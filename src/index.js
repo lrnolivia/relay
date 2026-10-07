@@ -1406,6 +1406,15 @@ async function mcp(request, access, env) {
 
       return rpcError(id, -32602, "Unknown tool");
     } catch (error) {
+      if(error?.github?.provider==='github'){
+        const failure=runnerControlError(error);
+        failure.namespace='relay.SOURCE';
+        failure.tool=relayToolName(message.params?.name);
+        failure.error.message=error.code==='rate_limit'?'GitHub request quota exhausted':'GitHub source request failed';
+        const retryAt=failure.error.upstream?.retry_at;
+        if(retryAt){failure.error.retry_at=retryAt;failure.error.recovery='Wait until '+retryAt+' before sending another request through this GitHub connection. A tool refresh does not reset quota. Reconcile the affected resource before retrying a mutation.';}
+        return rpc(id,{content:[{type:'text',text:JSON.stringify(failure)}],structuredContent:failure,isError:true});
+      }
       const capacity = normalizeBrowserCapacityError(error);
       if (capacity) {
         return rpc(id, {
