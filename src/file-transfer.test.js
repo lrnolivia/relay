@@ -7,8 +7,9 @@ const account={iss:'https://access.example',sub:'account-owner'};
 const now=1791100000000;
 class Bucket {
  objects=new Map();
- async put(key,data,options={}){if(options.onlyIf?.etagDoesNotMatch==='*'&&this.objects.has(key))return null;this.objects.set(key,{bytes:Buffer.from(data),customMetadata:options.customMetadata});return {key};}
- async get(key){const o=this.objects.get(key);return o?{text:async()=>o.bytes.toString(),arrayBuffer:async()=>o.bytes,customMetadata:o.customMetadata}:null;}
+ revision=0;
+ async put(key,data,options={}){const current=this.objects.get(key);if(options.onlyIf?.etagDoesNotMatch==='*'&&current)return null;if(options.onlyIf?.etagMatches&&current?.etag!==options.onlyIf.etagMatches)return null;const etag=String(++this.revision);this.objects.set(key,{bytes:Buffer.from(data),etag,customMetadata:options.customMetadata});return {key,etag};}
+ async get(key){const o=this.objects.get(key);return o?{etag:o.etag,text:async()=>o.bytes.toString(),arrayBuffer:async()=>o.bytes,customMetadata:o.customMetadata}:null;}
  async head(key){return this.objects.has(key)?{key}:null;}
  async delete(keys){for(const key of Array.isArray(keys)?keys:[keys])this.objects.delete(key);}
  async list({prefix='',limit=1000,cursor}){const entries=[...this.objects].filter(([key])=>key.startsWith(prefix)&&(!cursor||key>cursor)).sort(([a],[b])=>a.localeCompare(b));const rows=entries.slice(0,limit);return {objects:rows.map(([key,o])=>({key,customMetadata:o.customMetadata})),truncated:entries.length>limit,cursor:entries.length>limit?rows.at(-1)[0]:undefined};}
@@ -83,6 +84,15 @@ test('real MCP entry authenticates transfer calls and exposes the two tools with
  const {default:entry}=await import('../apps/mcp/index.js');
  assert.equal((await entry.fetch(new Request('https://relay.loew.fi/api/files'),{EVIDENCE:bucket})).status,401);
  const listed=await entry.fetch(new Request('https://relay.loew.fi/api/files',{headers:{'cf-access-jwt-assertion':token}}),{EVIDENCE:bucket});assert.equal(listed.status,200);assert.deepEqual((await listed.json()).files,[]);
+ const otherPayload=encode({alg:'RS256',kid})+'.'+encode({...claims,sub:'other-owner'}),otherToken=otherPayload+'.'+sign('RSA-SHA256',Buffer.from(otherPayload),privateKey).toString('base64url');
+ const browser=async(path,method='GET',body,identity=token)=>entry.fetch(new Request('https://relay.loew.fi/api/files'+path,{method,headers:{Origin:'https://relay.loew.fi','X-Relay-File-Request':'1','Content-Type':'application/json',...(identity?{'cf-access-jwt-assertion':identity}:{})},...(body===undefined?{}:{body:typeof body==='string'?body:JSON.stringify(body)})}),{EVIDENCE:bucket});
+ const created=await browser('','POST',{request_id:'signed-browser',filename:'signed.txt',bytes:1,sha256:hash('a')}),file=(await created.json()).file;assert.equal(created.status,201);
+ for(const [suffix,method] of [['','PATCH'],['','DELETE'],['/restore','POST']]){
+  assert.equal((await browser('/'+file.id+suffix,method,method==='PATCH'?{filename:'new.txt'}:undefined,null)).status,401);
+  assert.equal((await browser('/'+file.id+suffix,method,method==='PATCH'?{filename:'new.txt'}:undefined,otherToken)).status,400);
+ }
+ const upload=await entry.fetch(new Request('https://relay.loew.fi/api/files/'+file.id+'/chunks/0',{method:'PUT',headers:{Origin:'https://relay.loew.fi','X-Relay-File-Request':'1','X-Content-Sha256':hash('a'),'cf-access-jwt-assertion':token},body:'a'}),{EVIDENCE:bucket});assert.equal(upload.status,200);
+ assert.equal((await browser('/'+file.id+'/complete','POST')).status,200);assert.equal((await browser('/'+file.id,'PATCH',{filename:'new.txt'})).status,200);assert.equal((await browser('/'+file.id,'DELETE')).status,200);assert.equal((await browser('/'+file.id+'/restore','POST')).status,200);
  const discovery=await (await rpc('tools/list')).json();for(const name of ['relay_transfer_read','relay_transfer_write'])assert.ok(discovery.result.tools.some(tool=>tool.name===name));
  const response=await(await rpc('tools/call',{name:'relay_transfer_write',arguments:begin(Buffer.from('a'))})).json();assert.equal(response.result.structuredContent.ok,true);assert.equal(response.result.structuredContent.transfer.bytes,1);assert.equal(response.result.structuredContent.transfer.url,undefined);
 });
@@ -127,4 +137,66 @@ test('browser files preserve authentication namespace, CSRF guards, bounds, and 
  for(const extra of [{bytes:MAX_FILE_BYTES+1},{bytes:0},{filename:'../work'},{sha256:'bad'}])assert.equal((await browserBegin(bucket,Buffer.from('x'),extra)).response.status,400);
  const expiry=now+72*3600000;assert.equal((await browserFileResponse(fileReq('/'+file.id+'/download'),bucket,account,expiry)).status,400);
  await bucket.put('evidence/keep','stay',{customMetadata:{expires_at:String(now)}});await expireBrowserFiles(bucket,expiry);assert.ok(bucket.objects.has('evidence/keep'));assert.equal([...bucket.objects.keys()].filter(k=>k.startsWith('file-manager/')).length,0);
+});
+
+const change=(bucket,id,method,body,at=now,claims=account,headers={})=>browserFileResponse(fileReq('/'+id,method,body===undefined?undefined:JSON.stringify(body),{'Content-Type':'application/json',...headers}),bucket,claims,at);
+const restore=(bucket,id,at=now)=>browserFileResponse(fileReq('/'+id+'/restore','POST'),bucket,account,at);
+test('ready rename changes the displayed/download filename while immutable bytes, resume identity and expiry survive',async()=>{
+ const bucket=new Bucket(),data=Buffer.from('verified package'),file=await browserUpload(bucket,data);
+ const immutableBefore=[...bucket.objects].map(([key,o])=>[key,hash(o.bytes)]);
+ const list=await readBrowserFiles({action:'files'},bucket,account,now);assert.deepEqual(list.capabilities,{rename:true,delete:true,restore:true});assert.deepEqual(list.file_policy,{rename:'ready_only',deletion:'soft',restore_until:'original_expiry'});
+ const renamed=await change(bucket,file.id,'PATCH',{filename:'Sienna résumé.zip'},now+1000);assert.equal(renamed.status,200);const value=(await renamed.json()).file;
+ assert.equal(value.filename,'Sienna résumé.zip');for(const key of ['id','sha256','bytes','created_at','expires_at','chunk_bytes','chunks'])assert.equal(value[key],file[key]);
+ assert.equal((await browserBegin(bucket,data)).value.file.filename,value.filename);
+ assert.equal((await readBrowserFiles({action:'file-status',id:file.id},bucket,account,now)).file.filename,value.filename);
+ const download=await browserFileResponse(fileReq('/'+file.id+'/download'),bucket,account,now);assert.ok(download.headers.get('Content-Disposition').includes(encodeURIComponent(value.filename)));assert.equal(hash(Buffer.from(await download.arrayBuffer())),file.sha256);
+ for(const [key,sha] of immutableBefore)assert.equal(hash(bucket.objects.get(key).bytes),sha);
+ const revision=bucket.revision;assert.equal((await change(bucket,file.id,'PATCH',{filename:value.filename})).status,200);assert.equal(bucket.revision,revision);
+});
+test('soft delete hides every new read/write and restore recovers the same ready file until its original expiry',async()=>{
+ const bucket=new Bucket(),data=Buffer.from('restore original bytes'),file=await browserUpload(bucket,data);
+ const deleted=await change(bucket,file.id,'DELETE',undefined,now+1000);assert.equal(deleted.status,200);const tombstone=await deleted.json();assert.deepEqual(tombstone,{ok:true,id:file.id,deleted_at:now+1000,recoverable_until:file.expires_at,delete_mode:'soft'});
+ const revision=bucket.revision;assert.deepEqual(await(await change(bucket,file.id,'DELETE',undefined,now+2000)).json(),tombstone);assert.equal(bucket.revision,revision);
+ assert.deepEqual((await readBrowserFiles({action:'files'},bucket,account,now)).files,[]);
+ for(const [path,method,body,headers] of [[file.id,'GET'],[file.id+'/status','GET'],[file.id+'/download','GET'],[file.id+'/download','HEAD'],[file.id+'/complete','POST'],[file.id+'/chunks/0','PUT',data,{'X-Content-Sha256':hash(data)}]]){
+  const r=await browserFileResponse(fileReq('/'+path,method,body,headers),bucket,account,now);assert.equal(r.status,410);assert.equal((await r.json()).code,'file_deleted');
+ }
+ for(const action of ['file-status','file-chunk'])await assert.rejects(readBrowserFiles({action,id:file.id,index:0},bucket,account,now),e=>e.code==='file_deleted');
+ assert.equal((await browserBegin(bucket,data)).response.status,410);assert.equal((await change(bucket,file.id,'PATCH',{filename:'new.zip'})).status,410);
+ assert.equal((await restore(bucket,file.id,now+3000)).status,200);const restored=(await readBrowserFiles({action:'files'},bucket,account,now)).files[0];assert.equal(restored.expires_at,file.expires_at);assert.equal(restored.sha256,file.sha256);
+ const restoredRevision=bucket.revision;assert.equal((await restore(bucket,file.id)).status,200);assert.equal(bucket.revision,restoredRevision);
+ const download=await browserFileResponse(fileReq('/'+file.id+'/download'),bucket,account,now);assert.deepEqual(Buffer.from(await download.arrayBuffer()),data);
+ await change(bucket,file.id,'DELETE');assert.equal((await restore(bucket,file.id,file.expires_at)).status,400);
+ await expireBrowserFiles(bucket,file.expires_at);assert.equal([...bucket.objects.keys()].filter(k=>k.startsWith('file-manager/')).length,0);
+});
+test('incomplete uploads cannot rename, can be hidden and resume unchanged after restore',async()=>{
+ const bucket=new Bucket(),data=Buffer.from('incomplete'),{value:{file}}=await browserBegin(bucket,data);
+ const rename=await change(bucket,file.id,'PATCH',{filename:'changed.zip'});assert.equal(rename.status,409);assert.equal((await rename.json()).code,'file_incomplete');
+ await change(bucket,file.id,'DELETE');assert.equal((await browserBegin(bucket,data)).response.status,410);
+ assert.equal((await restore(bucket,file.id)).status,200);assert.equal((await browserBegin(bucket,data)).value.file.filename,file.filename);
+ await browserUpload(bucket,data);assert.equal((await change(bucket,file.id,'PATCH',{filename:'completed.zip'})).status,200);
+});
+test('new mutations keep private account namespace and actual Origin/request guards and bounded filename-only JSON',async()=>{
+ const bucket=new Bucket(),file=await browserUpload(bucket,Buffer.from('isolation')),initial=bucket.revision;
+ for(const claims of [{...account,sub:'another-account'},{...account,iss:'https://another-issuer'},{}])for(const method of ['PATCH','DELETE'])assert.equal((await change(bucket,file.id,method,method==='PATCH'?{filename:'intrusion.zip'}:undefined,now,claims)).status,400);
+ const crossRestore=await browserFileResponse(fileReq('/'+file.id+'/restore','POST'),bucket,{...account,sub:'another-account'},now);assert.equal(crossRestore.status,400);
+ for(const suffix of ['', '/restore'])for(const method of suffix?['POST']:['PATCH','DELETE'])for(const headers of [{Origin:'https://evil.example'},{Origin:''},{'X-Relay-File-Request':''}])assert.equal((await browserFileResponse(fileReq('/'+file.id+suffix,method,method==='PATCH'?JSON.stringify({filename:'safe.zip'}):undefined,{'Content-Type':'application/json',...headers}),bucket,account,now)).status,400);
+ for(const body of [null,[],{filename:'safe.zip',expires_at:now+1},{filename:'../file'},{filename:'a\\b'},{filename:'\u0000file'},{filename:'..'},{filename:''},{filename:'x'.repeat(181)}])assert.equal((await change(bucket,file.id,'PATCH',body)).status,400);
+ for(const [body,type] of [[JSON.stringify({filename:'safe.zip'}),'text/plain'],['x'.repeat(4097),'application/json'],['{broken','application/json']])assert.equal((await browserFileResponse(fileReq('/'+file.id,'PATCH',body,{'Content-Type':type}),bucket,account,now)).status,400);
+ assert.equal(bucket.revision,initial);
+ assert.equal((await change(bucket,file.id,'PATCH',{filename:'ctrl-authorized.zip'},now,account,{Origin:'https://ctrl.loew.fi'})).status,200);
+});
+test('metadata CAS re-reads a concurrent delete instead of resurrecting stale rename state',async()=>{
+ const bucket=new Bucket(),file=await browserUpload(bucket,Buffer.from('race')),put=bucket.put.bind(bucket);let raced=false;
+ bucket.put=async(key,data,options)=>{if(key.endsWith('/metadata.json')&&!raced){raced=true;await put(key,JSON.stringify({deleted_at:now+123}),{customMetadata:options.customMetadata});}return put(key,data,options)};
+ const response=await change(bucket,file.id,'PATCH',{filename:'stale.zip'});assert.equal(response.status,410);assert.deepEqual((await readBrowserFiles({action:'files'},bucket,account,now)).files,[]);
+ const restored=await restore(bucket,file.id);assert.equal(restored.status,200);assert.equal((await restored.json()).file.filename,file.filename);
+});
+test('CAS reconciles a concurrent rename on delete and stops after three conflicts',async()=>{
+ const bucket=new Bucket(),file=await browserUpload(bucket,Buffer.from('race')),put=bucket.put.bind(bucket);let raced=false;
+ bucket.put=async(key,data,options)=>{if(key.endsWith('/metadata.json')&&!raced){raced=true;await put(key,JSON.stringify({filename:'concurrent.zip'}),{customMetadata:options.customMetadata});}return put(key,data,options)};
+ assert.equal((await change(bucket,file.id,'DELETE')).status,200);const restored=await restore(bucket,file.id);assert.equal((await restored.json()).file.filename,'concurrent.zip');
+ let attempts=0;bucket.put=async(key,data,options)=>{if(key.endsWith('/metadata.json')){attempts++;return null}return put(key,data,options)};
+ const conflict=await change(bucket,file.id,'DELETE');assert.equal(conflict.status,409);assert.equal((await conflict.json()).code,'file_conflict');assert.equal(attempts,3);
+ assert.equal((await readBrowserFiles({action:'files'},bucket,account,now)).files[0].filename,'concurrent.zip');
 });

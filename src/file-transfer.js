@@ -128,16 +128,44 @@ export const MAX_FILE_BYTES=512*1024*1024;
 const FILE_PREFIX='file-manager/v1/';
 const fileId=value=>typeof value==='string'&&/^fl_[a-f0-9]{32}$/.test(value);
 const fileRoot=(owner,id)=>FILE_PREFIX+owner+'/'+id+'/';
-async function fileMeta(bucket,owner,id,now){
+const validFilename=value=>typeof value==='string'&&value.length>0&&value.length<=180&&!/[\x00-\x1f\x7f/\\]/.test(value)&&!['.','..'].includes(value);
+const fileError=(status,code,message)=>Object.assign(Error(message),{status,code});
+async function fileMetadata(bucket,meta){
+ const object=await bucket.get(fileRoot(meta.owner,meta.id)+'metadata.json');
+ return {etag:object?.etag,value:object?JSON.parse(await object.text()):{}};
+}
+function activeFile(meta,metadata){
+ if(metadata.deleted_at!=null)throw fileError(410,'file_deleted','File is deleted; restore it before its original expiry');
+ return {...meta,filename:metadata.filename??meta.filename};
+}
+async function fileMeta(bucket,owner,id,now,allowDeleted=false){
  requireValue(fileId(id),'Invalid file ID');
  const meta=await readJson(bucket,fileRoot(owner,id)+'manifest.json');
- requireValue(meta&&meta.owner===owner&&meta.expires_at>now,'File not found or expired');return meta;
+ requireValue(meta&&meta.owner===owner&&meta.expires_at>now,'File not found or expired');
+ return allowDeleted?meta:activeFile(meta,(await fileMetadata(bucket,meta)).value);
 }
-async function fileStatus(bucket,meta,details=false){
+async function fileStatus(bucket,meta,details=false,metadata){
+ meta=activeFile(meta,metadata??(await fileMetadata(bucket,meta)).value);
  const root=fileRoot(meta.owner,meta.id),ready=await readJson(bucket,root+'ready.json');
  const out={...publicManifest(meta),state:ready?'ready':'uploading'};
  if(details){out.uploaded_chunks=[];for(let i=0;i<meta.chunks;i++)if(await bucket.head(root+'chunks/'+i))out.uploaded_chunks.push(i)}
  return out;
+}
+async function mutateFileMetadata(bucket,meta,action,filename,now){
+ const key=fileRoot(meta.owner,meta.id)+'metadata.json';
+ if(action==='rename'&&!await readJson(bucket,fileRoot(meta.owner,meta.id)+'ready.json'))throw fileError(409,'file_incomplete','Complete the upload before renaming it');
+ // Every conflict re-reads and reconciles the latest state. Never replace a
+ // concurrent tombstone/name with a stale metadata snapshot.
+ for(let attempt=0;attempt<3;attempt++){
+  const current=await fileMetadata(bucket,meta),next={...current.value};
+  if(action==='rename'){activeFile(meta,next);next.filename=filename;}
+  else if(action==='delete'){if(next.deleted_at==null)next.deleted_at=now;}
+  else delete next.deleted_at;
+  if(JSON.stringify(next)===JSON.stringify(current.value))return next;
+  const written=await bucket.put(key,JSON.stringify(next),{onlyIf:current.etag?{etagMatches:current.etag}:{etagDoesNotMatch:'*'},customMetadata:{expires_at:String(meta.expires_at)}});
+  if(written)return next;
+ }
+ throw fileError(409,'file_conflict','File changed concurrently; reload its current state before trying again');
 }
 async function limitedBytes(request,max){
  const length=Number(request.headers.get('content-length'));
@@ -152,8 +180,8 @@ export async function readBrowserFiles(args,bucket,claims,now=Date.now()){
  if(args.action==='files'){
   requireValue(args.cursor==null||(typeof args.cursor==='string'&&args.cursor.length<=4096),'Invalid cursor');
   const page=await bucket.list({prefix:FILE_PREFIX+owner+'/',limit:300,...(args.cursor?{cursor:args.cursor}:{})});const files=[];
-  for(const item of page.objects){if(!item.key.endsWith('/manifest.json'))continue;const meta=await readJson(bucket,item.key);if(meta?.owner===owner&&meta.expires_at>now)files.push(await fileStatus(bucket,meta));}
-  return {ok:true,files,cursor:page.truncated?page.cursor:null,max_bytes:MAX_FILE_BYTES,chunk_bytes:FILE_CHUNK_BYTES};
+  for(const item of page.objects){if(!item.key.endsWith('/manifest.json'))continue;const meta=await readJson(bucket,item.key);if(meta?.owner===owner&&meta.expires_at>now){const {value}=await fileMetadata(bucket,meta);if(value.deleted_at==null)files.push(await fileStatus(bucket,meta,false,value));}}
+  return {ok:true,files,cursor:page.truncated?page.cursor:null,max_bytes:MAX_FILE_BYTES,chunk_bytes:FILE_CHUNK_BYTES,capabilities:{rename:true,delete:true,restore:true},file_policy:{rename:'ready_only',deletion:'soft',restore_until:'original_expiry'}};
  }
  const meta=await fileMeta(bucket,owner,args.id,now);
  if(args.action==='file-status')return {ok:true,file:await fileStatus(bucket,meta,true)};
@@ -181,7 +209,7 @@ export async function browserFileResponse(request,bucket,claims,now=Date.now()){
    requireValue(request.headers.get('content-type')?.startsWith('application/json'),'JSON required');
    const args=JSON.parse(new TextDecoder().decode(await limitedBytes(request,4096)));
    requireValue(isLabel(args.request_id),'Stable request ID required');
-   requireValue(typeof args.filename==='string'&&args.filename.length>0&&args.filename.length<=180&&!/[\x00-\x1f\x7f/\\]/.test(args.filename)&&!['.','..'].includes(args.filename),'Invalid filename');
+   requireValue(validFilename(args.filename),'Invalid filename');
    requireValue(Number.isSafeInteger(args.bytes)&&args.bytes>0&&args.bytes<=MAX_FILE_BYTES,'File must be 1 byte–512 MiB');
    requireValue(hashPattern.test(args.sha256||''),'File checksum required');
    const id='fl_'+digest(owner+'\0'+args.request_id).slice(0,32),key=fileRoot(owner,id)+'manifest.json';
@@ -190,11 +218,23 @@ export async function browserFileResponse(request,bucket,claims,now=Date.now()){
    if(previous){requireValue(previous.expires_at>now,'File expired; start a new upload');requireValue(Object.entries(props).every(([k,v])=>previous[k]===v),'Request ID conflicts with another file');return json({ok:true,file:await fileStatus(bucket,previous,true),resumed:true})}
    const meta={...props,created_at:now,expires_at:now+72*3600000};
    const stored=await bucket.put(key,JSON.stringify(meta),{onlyIf:{etagDoesNotMatch:'*'},customMetadata:{expires_at:String(meta.expires_at)}});
-   if(!stored){const found=await fileMeta(bucket,owner,id,now);requireValue(Object.entries(props).every(([k,v])=>found[k]===v),'Request ID conflicts with another file');return json({ok:true,file:await fileStatus(bucket,found,true),resumed:true})}
+   if(!stored){const found=await fileMeta(bucket,owner,id,now,true);requireValue(Object.entries(props).every(([k,v])=>found[k]===v),'Request ID conflicts with another file');return json({ok:true,file:await fileStatus(bucket,found,true),resumed:true})}
    return json({ok:true,file:{...publicManifest(meta),state:'uploading',uploaded_chunks:[]}},201);
   }
-  const match=path.match(/^\/api\/files\/(fl_[a-f0-9]{32})(?:\/(status|complete|download|chunks\/\d+))?$/);requireValue(match,'Unknown file route');
-  const meta=await fileMeta(bucket,owner,match[1],now),root=fileRoot(owner,meta.id),action=match[2]||'status';
+  const match=path.match(/^\/api\/files\/(fl_[a-f0-9]{32})(?:\/(status|complete|download|restore|chunks\/\d+))?$/);requireValue(match,'Unknown file route');
+  const mutation=(!match[2]&&['PATCH','DELETE'].includes(request.method))||(match[2]==='restore'&&request.method==='POST');
+  const meta=await fileMeta(bucket,owner,match[1],now,mutation),root=fileRoot(owner,meta.id),action=match[2]||'status';
+  if(mutation){
+   let filename;const operation=request.method==='PATCH'?'rename':request.method==='DELETE'?'delete':'restore';
+   if(operation==='rename'){
+    requireValue(request.headers.get('content-type')?.startsWith('application/json'),'JSON required');
+    const args=JSON.parse(new TextDecoder().decode(await limitedBytes(request,4096)));
+    requireValue(args&&typeof args==='object'&&!Array.isArray(args)&&Object.keys(args).length===1&&Object.hasOwn(args,'filename')&&validFilename(args.filename),'Only a valid filename is allowed');filename=args.filename;
+   }
+   const value=await mutateFileMetadata(bucket,meta,operation,filename,now);
+   if(operation==='delete')return json({ok:true,id:meta.id,deleted_at:value.deleted_at,recoverable_until:meta.expires_at,delete_mode:'soft'});
+   return json({ok:true,file:await fileStatus(bucket,meta)});
+  }
   if(action==='status'&&request.method==='GET')return json({ok:true,file:await fileStatus(bucket,meta,true)});
   if(action.startsWith('chunks/')&&request.method==='PUT'){
    const index=Number(action.slice(7));requireValue(Number.isInteger(index)&&index>=0&&index<meta.chunks,'Invalid chunk index');
@@ -206,7 +246,7 @@ export async function browserFileResponse(request,bucket,claims,now=Date.now()){
    const hash=createHash('sha256');let size=0;
    for(let i=0;i<meta.chunks;i++){const item=await bucket.get(root+'chunks/'+i);requireValue(item,'Missing chunk '+i);const bytes=Buffer.from(await item.arrayBuffer());requireValue(bytes.length===Math.min(FILE_CHUNK_BYTES,meta.bytes-i*FILE_CHUNK_BYTES),'Wrong stored chunk size');hash.update(bytes);size+=bytes.length}
    requireValue(size===meta.bytes&&hash.digest('hex')===meta.sha256,'Whole-file checksum mismatch');
-   await immutable(bucket,root+'ready.json',JSON.stringify({id:meta.id,sha256:meta.sha256,bytes:meta.bytes}),meta.expires_at);return json({ok:true,file:{...publicManifest(meta),state:'ready'}});
+   await immutable(bucket,root+'ready.json',JSON.stringify({id:meta.id,sha256:meta.sha256,bytes:meta.bytes}),meta.expires_at);return json({ok:true,file:await fileStatus(bucket,meta)});
   }
   if(action==='download'&&['GET','HEAD'].includes(request.method)){
    requireValue(await readJson(bucket,root+'ready.json'),'File is not ready');let index=0;
@@ -214,7 +254,7 @@ export async function browserFileResponse(request,bucket,claims,now=Date.now()){
    return new Response(request.method==='HEAD'?null:stream,{headers:{...headers,'Content-Type':'application/octet-stream','Content-Length':String(meta.bytes),'Content-Disposition':`attachment; filename="download"; filename*=UTF-8''${encodeURIComponent(meta.filename).replace(/['()*]/g,c=>'%'+c.charCodeAt(0).toString(16))}`,'X-File-Sha256':meta.sha256}});
   }
   return json({error:'Method not allowed'},405);
- }catch(e){return json({error:e.message||'File operation failed'},400)}
+ }catch(e){return json({error:e.message||'File operation failed',...(e.code?{code:e.code}:{})},e.status||400)}
 }
 export async function expireBrowserFiles(bucket,now=Date.now()){
  if(!bucket)return;const key='transfer-maintenance/v1/file-cursor.json';let cursor=(await readJson(bucket,key))?.cursor;
