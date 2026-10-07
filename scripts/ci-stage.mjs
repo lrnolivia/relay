@@ -16,6 +16,7 @@ const MAX_LOG=1024*1024,HALF_LOG=MAX_LOG/2;
 const escaped=value=>String(value).replaceAll('%','%25').replaceAll('\r','%0D').replaceAll('\n','%0A');
 const error=(code,message)=>Object.assign(Error(message),{code});
 const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
+const hostedLog=env=>/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(env.GITHUB_REPOSITORY||'')&&/^\d+$/.test(env.GITHUB_RUN_ID||'')?'https://github.com/'+env.GITHUB_REPOSITORY+'/actions/runs/'+env.GITHUB_RUN_ID:null;
 function rule(job,id){const value=STAGE_JOBS[job]?.find(stage=>stage.id===id);if(!value||id==='suites')throw error('invalid_stage','Unknown command stage; the five-suite orchestrator retains its own time bounds');return value;}
 async function save(path,data){await writeFile(path+'.tmp',JSON.stringify(data,null,2)+'\n');await rename(path+'.tmp',path);}
 async function identity(root,env){
@@ -45,10 +46,13 @@ export async function runStage({job,id,command,args=[],root=process.cwd(),env=pr
   if(timeoutMs!==undefined&&(!Number.isInteger(timeoutMs)||timeoutMs<1||timeoutMs>definition.timeout_ms))throw error('invalid_timeout','Stage timeout may only be shortened for a bounded check');
   const directory=resolve(root,'qa-evidence/ci-stages');await mkdir(directory,{recursive:true});
   const path=join(directory,job+'-'+id+'.json'),log=join(directory,job+'-'+id+'.log');
-  const receipt={schema:1,kind:'ci-command-stage',job,stage:id,state:'running',started_at:new Date().toISOString(),identity:await identity(root,env),command:[command,...args].map(redact),result:null,exit_code:1,classification:{category:'incomplete',cause:'undetermined',cancellation_actor:'unknown'}};
-  const firstChunks=[];let firstBytes=0,tailChunks=[],tailStart=0,tailBytes=0,total=0;
+  const receipt={schema:1,kind:'ci-command-stage',job,stage:id,state:'running',started_at:new Date().toISOString(),identity:await identity(root,env),hosted_log_url:hostedLog(env),command:[command,...args].map(redact),result:null,exit_code:1,classification:{category:'incomplete',cause:'undetermined',cancellation_actor:'unknown'}};
+  const firstChunks=[],firstFailures=[],lastFailures=[];let firstBytes=0,tailChunks=[],tailStart=0,tailBytes=0,total=0;
   const output=text=>{
     const bytes=Buffer.from(text);total+=bytes.length;
+    for(const line of text.split('\n'))if(!/^\s*(?:#\s*)?(?:ok\b|Subtest:)/.test(line)&&/\b(?:not ok\b|[A-Za-z]*Error:|error TS\d+|npm ERR!|npm error|E[A-Z]{3,}\b|error:|failureType:|AssertionError)/i.test(line)){
+      const excerpt=line.slice(0,400);if(firstFailures.length<8)firstFailures.push(excerpt);lastFailures.push(excerpt);if(lastFailures.length>8)lastFailures.shift();
+    }
     if(firstBytes<HALF_LOG){const chunk=bytes.subarray(0,HALF_LOG-firstBytes);firstChunks.push(chunk);firstBytes+=chunk.length;}
     tailChunks.push(bytes);tailBytes+=bytes.length;
     while(tailBytes>HALF_LOG){const remove=Math.min(tailBytes-HALF_LOG,tailChunks[tailStart].length);tailBytes-=remove;if(remove===tailChunks[tailStart].length)tailStart++;else tailChunks[tailStart]=tailChunks[tailStart].subarray(remove);}
@@ -69,6 +73,7 @@ export async function runStage({job,id,command,args=[],root=process.cwd(),env=pr
   const truncated=total>MAX_LOG;
   const first=Buffer.concat(firstChunks),tail=Buffer.concat(tailChunks.slice(tailStart));
   const bytes=truncated?Buffer.concat([first,Buffer.from('\n[stage output truncated; complete redacted output is in the job log]\n'),tail]):total<=HALF_LOG?first:Buffer.concat([first,tail.subarray(HALF_LOG-(total-HALF_LOG))]);
+  receipt.failure_excerpt=[...new Set([...firstFailures,...lastFailures])].join('\n');
   await writeFile(log,bytes);receipt.log={path:'qa-evidence/ci-stages/'+job+'-'+id+'.log',bytes:bytes.length,total_redacted_bytes:total,truncated,sha256:digest(bytes)};receipt.finished_at=new Date().toISOString();await save(path,receipt);
   return receipt;
 }
@@ -86,7 +91,7 @@ export function summarizeStages({job,outcomes,receipts,suites,identity}){
     }
     if(outcome==='skipped')return {id,outcome,status:definition.optional?'skipped':'blocked',optional:definition.optional};
     if(!receipt||receipt.job!==job||receipt.stage!==id||receipt.identity?.source_sha!==identity.source_sha||receipt.identity?.run_id!==identity.run_id||receipt.identity?.run_attempt!==identity.run_attempt)return {id,outcome,status:outcome==='cancelled'?'cancelled':'evidence_missing'};
-    return {id,outcome,status:outcome==='success'&&receipt.state==='passed'&&receipt.exit_code===0&&receipt.result?.status==='passed'&&receipt.result?.exit_code===0?'passed':receipt.state==='passed'?'outcome_mismatch':receipt.state,original_exit_code:receipt.result?.exit_code??null,signal:receipt.result?.signal??null,classification:receipt.classification,diagnostic:receipt.result?.diagnostic||receipt.error?.message||'See retained stage receipt'};
+    return {id,outcome,status:outcome==='success'&&receipt.state==='passed'&&receipt.exit_code===0&&receipt.result?.status==='passed'&&receipt.result?.exit_code===0?'passed':receipt.state==='passed'?'outcome_mismatch':receipt.state,original_exit_code:receipt.result?.exit_code??null,signal:receipt.result?.signal??null,classification:receipt.classification,diagnostic:receipt.failure_excerpt||receipt.result?.diagnostic||receipt.error?.message||'See retained stage receipt'};
   });
   const external=Object.entries(outcomes).filter(([id])=>!STAGE_JOBS[job].some(stage=>stage.id===id)).map(([id,outcome])=>({id,outcome,status:outcome==='success'?'passed':outcome==='skipped'?'skipped':outcome==='cancelled'?'cancelled':'failed',evidence:'workflow-outcome',cause:'undetermined',cancellation_actor:'unknown'}));
   const complete=results.every(result=>result.status==='passed'||result.optional&&result.status==='skipped')&&external.every(result=>result.status==='passed'||result.status==='skipped');
@@ -97,6 +102,7 @@ export async function finalizeStages({job,root=process.cwd(),env=process.env}){
   const receipts={};for(const stage of STAGE_JOBS[job]||[]){try{receipts[stage.id]=JSON.parse(await readFile(join(directory,job+'-'+stage.id+'.json')));}catch{}}
   let suites;try{suites=JSON.parse(await readFile(resolve(root,'qa-evidence/test-workflow/result.json')));}catch{}
   const summary=summarizeStages({job,outcomes:JSON.parse(env.RELAY_STAGE_OUTCOMES||'{}'),receipts,suites,identity:await identity(root,env)});
+  summary.hosted_log_url=hostedLog(env);
   await save(join(directory,job+'-summary.json'),summary);return summary;
 }
 async function main(){
@@ -106,7 +112,7 @@ async function main(){
     if(process.argv[2]==='--summary'&&process.argv.length===4)receipt=await finalizeStages({job:process.argv[3]});
     else if(process.argv[3]==='--'&&process.argv.length>=5)receipt=await runStage({job:process.env.RELAY_CI_JOB,id:process.argv[2],command:process.argv[4],args:process.argv.slice(5),signal:controller.signal,onOutput:text=>process.stdout.write(text)});
     else throw error('invalid_cli','Use ci-stage.mjs <stage> -- <command> [arguments], or --summary <job>');
-    if(receipt.exit_code!==0)process.stderr.write('::error title=CI stage '+escaped(receipt.stage||receipt.job)+' '+escaped(receipt.state)+'::'+escaped(receipt.result?.diagnostic||receipt.error?.message||'Stage evidence is incomplete; see retained summary and hosted job log')+'\n');
+    if(receipt.exit_code!==0)process.stderr.write('::error title=CI stage '+escaped(receipt.stage||receipt.job)+' '+escaped(receipt.state)+'::'+escaped((receipt.failure_excerpt||receipt.result?.diagnostic||receipt.error?.message||'Stage evidence is incomplete; see retained summary and hosted job log')+(receipt.hosted_log_url?'\nRetained run log: '+receipt.hosted_log_url:''))+'\n');
     process.exitCode=receipt.exit_code;
   }finally{process.removeListener('SIGINT',stop);process.removeListener('SIGTERM',stop);}
 }

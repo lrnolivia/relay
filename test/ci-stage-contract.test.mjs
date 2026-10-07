@@ -34,6 +34,10 @@ test('large logs retain bounded head/tail with failure and secrets removed',asyn
 test('medium log reconstruction neither omits nor duplicates overlapping chunks',async t=>{
   const dir=await root(t),text=('abcd'.repeat(1000)+'\n').repeat(180),r=await runStage({...command("process.stdout.write(('abcd'.repeat(1000)+'\\n').repeat(180))"),root:dir});assert.equal(r.log.truncated,false);const actual=await readFile(join(dir,r.log.path));assert.equal(actual.length,Buffer.byteLength(text));assert.equal(createHash('sha256').update(actual).digest('hex'),createHash('sha256').update(text).digest('hex'));
 });
+test('middle failure survives truncation and later passing test titles containing Error',async t=>{
+  const dir=await root(t),r=await runStage({...command("const noise=('normal '.repeat(100)+'\\n').repeat(1000);process.stdout.write(noise+'Error: middle-cause token=SYNTHETIC_MIDDLE\\n'+noise+'ok 1 - Error: expected passing fixture\\n'.repeat(40),()=>process.exit(9));"),root:dir});
+  const log=await readFile(join(dir,r.log.path),'utf8');assert.equal(r.log.truncated,true);assert.doesNotMatch(log,/middle-cause/);assert.match(r.failure_excerpt,/middle-cause/);assert.doesNotMatch(r.failure_excerpt,/SYNTHETIC_MIDDLE|passing fixture/);assert.ok(r.failure_excerpt.length<8192);assert.equal(r.exit_code,9);
+});
 test('canonical identity failure executes no command and saves nonpassing evidence',async t=>{
   const dir=await root(t),r=await runStage({...command("throw Error('MUST_NOT_RUN')"),root:dir,env:{...process.env,GITHUB_ACTIONS:'true',RELAY_SOURCE_SHA:'a'.repeat(40)}});assert.equal(r.state,'evidence_failed');assert.equal(r.error.code,'source_identity_missing');assert.equal(r.exit_code,1);assert.doesNotMatch(r.error.message,/MUST_NOT_RUN/);
 });
@@ -41,8 +45,8 @@ test('successful command cannot retain stale lock identity after changing its by
   const dir=await root(t);await writeFile(join(dir,'package-lock.json'),'before');const r=await runStage({...command("require('node:fs').writeFileSync('package-lock.json','after')"),root:dir});assert.equal(r.state,'identity_changed');assert.equal(r.exit_code,1);assert.equal(r.result.exit_code,0);assert.equal(r.classification.category,'source-identity-change');
 });
 test('stage CLI returns original exit and escaped annotation with retained receipt',async t=>{
-  const dir=await root(t),env={...process.env,GITHUB_ACTIONS:'false',RELAY_CI_JOB:'quality'};delete env.NODE_TEST_CONTEXT;
-  const r=spawnSync(process.execPath,[new URL('../scripts/ci-stage.mjs',import.meta.url).pathname,'install','--',process.execPath,'-e',"console.error('Error: token=SYNTHETIC_TOKEN');process.exit(11)"],{cwd:dir,env,encoding:'utf8'});assert.equal(r.status,11);assert.match(r.stderr,/::error title=CI stage install failed::/);assert.doesNotMatch(r.stdout+r.stderr,/SYNTHETIC_TOKEN/);
+  const dir=await root(t),env={...process.env,GITHUB_ACTIONS:'false',RELAY_CI_JOB:'quality',GITHUB_REPOSITORY:'example/fixture',GITHUB_RUN_ID:'123'};delete env.NODE_TEST_CONTEXT;
+  const r=spawnSync(process.execPath,[new URL('../scripts/ci-stage.mjs',import.meta.url).pathname,'install','--',process.execPath,'-e',"console.error('Error: token=SYNTHETIC_TOKEN');process.exit(11)"],{cwd:dir,env,encoding:'utf8'});assert.equal(r.status,11);assert.match(r.stderr,/::error title=CI stage install failed::/);assert.doesNotMatch(r.stdout+r.stderr,/SYNTHETIC_TOKEN/);assert.match(r.stderr,/Retained run log: https:\/\/github.com\/example\/fixture\/actions\/runs\/123/);
 });
 const identity={source_sha:'a'.repeat(40),run_id:'fixture',run_attempt:'1'};
 function passing(){const job='quality',outcomes={},receipts={};for(const {id} of STAGE_JOBS[job]){outcomes[id]='success';if(id!=='suites')receipts[id]={job,stage:id,state:'passed',exit_code:0,identity:{...identity},result:{status:'passed',exit_code:0},classification:{category:'passed'}};}
