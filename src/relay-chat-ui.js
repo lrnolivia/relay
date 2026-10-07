@@ -198,8 +198,15 @@ imageButton.addEventListener('click',enlargeScreenshot);imageButton.addEventList
   return html;
 }
 
+function compactCardBrandAssets(html) {
+  // The initial image keeps the exact canonical bytes and still works without
+  // JavaScript. Reuse its src instead of embedding the same 64 KiB a second time.
+  const marker='const CARD_BRAND_ASSETS={"relay":'+JSON.stringify(contextCardBrandAssets.relay);
+  if(!html.includes(marker))throw Error('Initial card brand deduplication target missing');
+  return html.replace(marker,'const CARD_BRAND_ASSETS={"relay":document.querySelector("#feature-mark img").getAttribute("src")');
+}
 export function relayContextCardResource() {
-  return { uri:RELAY_CONTEXT_CARD_URI, mimeType:'text/html;profile=mcp-app', text:styleContextCard(resilientCardHtml(), contextCardBrandAssets), _meta:{ui:{prefersBorder:false,csp:{connectDomains:['https://relay.loew.fi'],resourceDomains:['https://relay.loew.fi']}},'openai/widgetDescription':'Compact staff-aware Relay context. Can reuse existing Inspector QA screenshots when requested. Open Relay for the full control center.','openai/widgetCSP':{connect_domains:['https://relay.loew.fi'],resource_domains:['https://relay.loew.fi'],redirect_domains:['https://relay.loew.fi','https://ctrl.loew.fi']},'openai/ui':{availableDisplayModes:['inline','fullscreen']}} };
+  return { uri:RELAY_CONTEXT_CARD_URI, mimeType:'text/html;profile=mcp-app', text:compactCardBrandAssets(styleContextCard(resilientCardHtml(), contextCardBrandAssets)), _meta:{ui:{prefersBorder:false,csp:{connectDomains:['https://relay.loew.fi'],resourceDomains:['https://relay.loew.fi']}},'openai/widgetDescription':'Compact staff-aware Relay context. Can reuse existing Inspector QA screenshots when requested. Open Relay for the full control center.','openai/widgetCSP':{connect_domains:['https://relay.loew.fi'],resource_domains:['https://relay.loew.fi'],redirect_domains:['https://relay.loew.fi','https://ctrl.loew.fi']},'openai/ui':{availableDisplayModes:['inline','fullscreen']}} };
 }
 
 // Fresh cache identities: rotate whenever card HTML, JS, or CSS changes.

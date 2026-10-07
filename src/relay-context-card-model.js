@@ -1,4 +1,4 @@
-import { normalizeCommunicationResult, formatRelay, safePresentationText } from './communication-presentation.js';
+import { normalizeCommunicationResult, formatRelay, safePresentationText } from './human-presentation.js';
 import { legacyContextCardModel } from './relay-context-card-legacy-model.js';
 
 export function contextCardModel(data = {}, directory = {}, options = {}) {

@@ -5,8 +5,12 @@ import { relayContextCardResource, relayStatusCardResource, contextCardModel } f
 import { styleContextCard } from './relay-context-card-style.js';
 import { contextCardBrandAssets } from '../apps/web/generated.js';
 
-test('context styling preserves the byte-exact legacy consumer control', () => {
-  assert.equal(createHash('sha256').update(relayStatusCardResource().text).digest('hex'), 'b6ac2036387ead1d9e9bd861c510752ec6c6fc9d0ae112e793932075fb0b332b');
+test('versioned legacy bridge preserves the byte-exact host and style shell', () => {
+  // The v4 presentation program intentionally changes. Its generated model has
+  // separate server/browser parity tests; all surrounding v3 host/style bytes
+  // remain bound to the independently verified pre-migration shell hash.
+  const shell=relayStatusCardResource().text.replace(/const DIRECTORY=[\s\S]*?(?=const FEATURES=)/,'');
+  assert.equal(createHash('sha256').update(shell).digest('hex'), '7f4696e724d991398f6def4dc5b34006f580c59415aec3b478643fec9b37d40c');
   assert.doesNotMatch(relayStatusCardResource().text, /data-context-card-parity|CARD_BRAND_ASSETS/);
 });
 test('context card embeds canonical artwork and Momo without external fonts', () => {
@@ -19,6 +23,8 @@ test('context card embeds canonical artwork and Momo without external fonts', ()
   assert.ok(html.indexOf('id="diag"') > html.indexOf('<details id="details"'));
   assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/);
   assert.ok(Buffer.byteLength(html) < 512 * 1024, 'self-contained card remains bounded');
+  assert.equal(html.split(contextCardBrandAssets.relay).length-1,1,'canonical initial icon bytes are embedded once');
+  assert.match(html,/CARD_BRAND_ASSETS=\{"relay":document\.querySelector\("#feature-mark img"\)\.getAttribute\("src"\)/);
   assert.match(html, /prefers-reduced-motion/);
   assert.match(html, /visibilitychange/);
 });
