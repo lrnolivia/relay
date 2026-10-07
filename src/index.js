@@ -382,8 +382,8 @@ async function mcp(request, access, env) {
         {
           uri: RELAY_CONTROL_CENTER_URI,
           name: "relay-control-center",
-          title: "Relay control center",
-          description: "Interactive control surface for relay.CONTROL, relay.RUNNER, relay.SOURCE, relay.CLOUD, and relay.VERIFY.",
+          title: "Open CTRL",
+          description: "Compatibility handoff to CTRL, the canonical workspace interface. Relay supplies backend tools and compact status cards.",
           mimeType: "text/html;profile=mcp-app"
         },
         relayContextCardDescriptor(),
@@ -401,8 +401,8 @@ async function mcp(request, access, env) {
     if (uri === HOST_PROBE_URI) return rpc(id, { contents: [hostProbeResource()] });
     if (uri === ACTION_PROBE_URI) return rpc(id, { contents: [actionProbeResource()] });
     if (isCardVariantUri(uri)) return rpc(id, { contents: [cardVariantResource(uri)] });
-    if (uri === RELAY_CONTROL_CENTER_URI) {
-      return rpc(id, { contents: [relayControlCenterResource()] });
+    if (uri === RELAY_CONTROL_CENTER_URI || uri === "ui://relay/control-center/v4.html") {
+      return rpc(id, { contents: [{...relayControlCenterResource(), uri}] });
     }
     if (uri === RELAY_CONTEXT_CARD_URI || uri === 'ui://relay/context-card/v15.html' || uri === 'ui://relay/context-card/v13.html' || uri === 'ui://relay/context-card/v12.html' || uri === 'ui://relay/context-card/v11.html') {
       return rpc(id, { contents: [{...relayContextCardResource(), uri}] });
@@ -438,8 +438,8 @@ async function mcp(request, access, env) {
 
         {
           name: "relay_ui_control_center",
-          title: "Open Relay control center",
-          description: "Render Relay's interactive control center for inspecting namespaces, Runner state, source/cloud readiness, and verification engines. Use this when a visual Relay overview or control surface would help.",
+          title: "Open CTRL",
+          description: "Show a compatibility link to CTRL, the canonical interface for workspace activity, Runner, Inspector and Night Shift. Relay keeps its backend tools, connection page and compact status cards.",
           inputSchema: { type: "object", properties: {}, additionalProperties: false },
           annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
           _meta: {

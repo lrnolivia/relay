@@ -1,3 +1,21 @@
+# Retirement continuation after the verified diagnostic release
+
+This continuation is based on `9dc999c02f595923eca93d51abb6f1b5f41e7c17`, which includes verified PR179 diagnostic release `9171f6d3ad229ae86a59b6e77f91c97d4e165b39`. The entire earlier proposal and exact pending patch below are preserved as historical recovery evidence.
+
+Current bounded work removes duplicate Relay control-panel entrypoints and programs. It keeps Relay's landing, Files, authenticated APIs, compact MCP context cards, backend execution/review capabilities, and CTRL intact. Both build entrypoints set `publicDir: false` so the old public Inspector assets cannot be copied into a standalone Vite build. The compatibility control-center tool and old resource URI become an inert CTRL handoff; the compact status card remains functional and is not redirected.
+
+The six old full-panel test filenames are retained and rewritten as product-retirement gates: bundle exposure, auth/mutation boundaries, mobile inert-handoff accessibility, reduced-motion landing behavior, responsive landing layout, and exact context-preserving redirects. Camera mathematics, notes preservation, presentation/group/count models and the new diagnostic/presentation regression tests remain. React, website and retained-preview tests cover the actual replacement surfaces. All five full suites, toolchain/build/workerd checks, compact-card checks, draft preview and post-merge production verification remain required.
+
+Historical retained bundles are not rewritten or deleted. They remain accessible only by their immutable retained-build identities under the existing authenticated sandbox, with their existing exact-source/sample-data labels. No historical full panel is served by current product entrypoints. New retained builds show only the legitimate landing and inert compatibility handoff.
+
+At preparation, local build and TypeScript checks passed. Local browser execution was unavailable: the Playwright download returned invalid archives; the installed Chromium could not create required sockets under the sandbox; the permitted escalation failed during environment setup before launching tests. These are harness limitations, not product passes. Hosted exact-head Chromium and all ordinary gates must pass before any merge or deployment. No gate is weakened for the local limitation.
+
+The existing shared-code wording changes are not copied from the stale full-panel candidate. They remain recorded in the historical patch for separate reconciliation against the actual active consumer. The stopped full-panel wording is not claimed delivered. Files UI redesign and the separate favicon patch remain outside this batch.
+
+Rollback is the verified diagnostic release: source `9171f6d3ad229ae86a59b6e77f91c97d4e165b39`, Worker `2205b129-a9e9-449f-850f-dc3330a3cdb1`. Prefer isolating a failing landing/backend component rather than reactivating the rejected panel. No stored tasks, reviews, files or evidence are removed.
+
+---
+
 # Retire the obsolete Relay control panels
 
 ## Owner correction and exact boundary
