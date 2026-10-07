@@ -5,7 +5,7 @@ import { RELAY_EXTENSION_VERSION, augmentToolList, augmentResourceList, augmentS
 import { QA_SKILL_URI } from "./qa-skill.js";
 import { LOEW_NAMING_SKILL_URI } from "./loew-naming-skill.js";
 import { EXECUTIVE_COMMUNICATION_SKILL_URI } from "./executive-communication-skill.js";
-import { RELAY_CONTEXT_CARD_URI, relayContextCardTool, relayContextCardDescriptor } from "./relay-chat-ui.js";
+import { RELAY_CONTEXT_CARD_URI, RELAY_STATUS_CARD_URI, relayContextCardTool, relayContextCardDescriptor } from "./relay-chat-ui.js";
 import { RELAY_V2_PROBE_URI, relayV2ProbeDescriptor } from "./relay-v2-probe.js";
 
 test("Relay extension publishes source inventory and exact-head PR action", () => {
@@ -38,8 +38,8 @@ test("Relay extension publishes source inventory and exact-head PR action", () =
   assert.ok(names.includes("relay_staff_directory"));
   assert.ok(names.includes("relay_render_context_card"));
   const renderer=tools.find(tool=>tool.name==="relay_render_context_card");
-  assert.equal(renderer._meta.ui.resourceUri,"ui://relay/context-card/v16.html");
-  assert.equal(renderer._meta["openai/outputTemplate"],"ui://relay/context-card/v16.html");
+  assert.equal(renderer._meta.ui.resourceUri,RELAY_CONTEXT_CARD_URI);
+  assert.equal(renderer._meta["openai/outputTemplate"],RELAY_CONTEXT_CARD_URI);
   const progress=tools.find(tool=>tool.name==="relay_runner_progress");
   assert.equal(progress._meta?.ui?.resourceUri,undefined);
   assert.equal(progress._meta?.["openai/outputTemplate"],undefined);
@@ -174,7 +174,7 @@ test("fresh inline status card is listed and readable through the authenticated 
     assert.equal(body.error, undefined);
     return body.result;
   };
-  const uri = "ui://relay/status-card/v4-legacy-bridge.html";
+  const uri = RELAY_STATUS_CARD_URI;
   const { tools } = await rpc("tools/list");
   const fresh = tools.filter(tool => tool.name === "relay_show_legacy_bridge_card");
   assert.equal(fresh.length, 1);
@@ -189,7 +189,7 @@ test("fresh inline status card is listed and readable through the authenticated 
   assert.equal(tool._meta["openai/ui"], undefined);
   assert.deepEqual(tool.inputSchema, old.inputSchema);
   assert.deepEqual(tool.annotations, old.annotations);
-  assert.equal(old._meta.ui.resourceUri, "ui://relay/context-card/v16.html");
+  assert.equal(old._meta.ui.resourceUri, RELAY_CONTEXT_CARD_URI);
   const { resources } = await rpc("resources/list");
   assert.equal(resources.filter(resource => resource.uri === uri).length, 1);
   assert.equal(resources.find(resource => resource.uri === uri).mimeType, "text/html;profile=mcp-app");
@@ -205,6 +205,13 @@ test("fresh inline status card is listed and readable through the authenticated 
   assert.equal(contents[0]._meta["openai/ui"].entrypoints, undefined);
   const oldResource = await rpc("resources/read", { uri: RELAY_CONTEXT_CARD_URI });
   assert.deepEqual(oldResource.contents[0], relayContextCardResource());
+  for(const [previousUri,current] of [['ui://relay/context-card/v16.html',relayContextCardResource()],['ui://relay/status-card/v4-legacy-bridge.html',relayStatusCardResource()]]){
+    const alias=await rpc('resources/read',{uri:previousUri});
+    assert.equal(alias.contents[0].uri,previousUri);
+    assert.equal(alias.contents[0].text,current.text);
+    assert.deepEqual(alias.contents[0]._meta,current._meta);
+  }
+
   for(const [alias,current] of [['ui://relay/context-card/v15.html',relayContextCardResource()],['ui://relay/status-card/v3-legacy-bridge.html',relayStatusCardResource()]]){
     const response=await rpc('resources/read',{uri:alias});
     assert.equal(response.contents[0].uri,alias);assert.equal(response.contents[0].text,current.text);
