@@ -6,6 +6,18 @@ import { HUMAN_CATALOG, normalizeCommunicationResult, formatRelay, presentationO
 
 const present=(data,operation={kind:'query',name:'relay_source_checks'},options={})=>formatRelay(normalizeCommunicationResult(data,{operation,...options}),options);
 
+test('unrecognized queries and commands do not claim an update was recorded',()=>{
+  for(const action of ['read','record']){
+    const operation=presentationOperation('relay_context',{action});
+    const data={ok:true,revision:36};
+    const normalized=normalizeCommunicationResult(data,{operation});
+    assert.equal(formatRelay(normalized).label,'Update available');
+    assert.equal(normalized.mutation,action==='read'?'not_applicable':'unknown');
+    assert.deepEqual(data,{ok:true,revision:36});
+  }
+  assert.equal(present({ok:true,branches:[]},presentationOperation('relay_source_inventory')).label,'Update available');
+});
+
 test('human_v1 catalog is closed, deterministic and conservative for unknown input',()=>{
   for(const message_id of Object.keys(HUMAN_CATALOG)){
     const input={...normalizeCommunicationResult(),message_id};

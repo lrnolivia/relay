@@ -270,6 +270,13 @@ jobs:
           name: relay-context-cards-${{ github.event.pull_request.number || github.sha }}
           path: qa-evidence/context-cards/
           if-no-files-found: error
+      - name: Preserve review language recovery captures
+        if: always() && github.head_ref == 'relay/mcp-rebuild-20261003'
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-review-language-${{ github.event.pull_request.head.sha || github.sha }}
+          path: apps/web/qa-evidence/review-language/
+          if-no-files-found: error
       - name: Preserve actual website route screenshots
         if: always() && (startsWith(github.head_ref, 'relay/retained-interactive-previews-') || startsWith(github.head_ref, 'relay/website-work-queue-views-') || startsWith(github.head_ref, 'relay/website-post-release-polish-') || startsWith(github.head_ref, 'relay/website-2.0-repair-') || startsWith(github.head_ref, 'relay/website-project-context-polish-') || startsWith(github.head_ref, 'relay/website-notifications-review-'))
         uses: actions/upload-artifact@v4
@@ -279,7 +286,7 @@ jobs:
           if-no-files-found: error
   visual-review-preview:
     needs: quality
-    if: github.event_name == 'pull_request' && github.event.pull_request.draft == true && (startsWith(github.head_ref, 'relay/retained-interactive-previews-') || startsWith(github.head_ref, 'relay/website-work-queue-views-') || startsWith(github.head_ref, 'relay/2.0-approved-visual-port-') || startsWith(github.head_ref, 'relay/website-project-context-polish-') || startsWith(github.head_ref, 'relay/website-notifications-review-'))
+    if: github.event_name == 'pull_request' && github.event.pull_request.draft == true && ((github.head_ref == 'relay/mcp-rebuild-20261003' && github.event.pull_request.head.repo.full_name == github.repository) || startsWith(github.head_ref, 'relay/retained-interactive-previews-') || startsWith(github.head_ref, 'relay/website-work-queue-views-') || startsWith(github.head_ref, 'relay/2.0-approved-visual-port-') || startsWith(github.head_ref, 'relay/website-project-context-polish-') || startsWith(github.head_ref, 'relay/website-notifications-review-'))
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -322,7 +329,9 @@ jobs:
       - name: Capture and ingest Inspector preview evidence
         id: verify-visual-review
         run: |
-          if [[ "$PREVIEW_BRANCH" == relay/website-notifications-review-* ]]; then
+          if [[ "$PREVIEW_BRANCH" == relay/mcp-rebuild-20261003 ]]; then
+            EXPECTED_SOURCE_SHA="$PREVIEW_COMMIT" node scripts/ci-stage.mjs visual-review -- node scripts/retain-web-preview.mjs
+          elif [[ "$PREVIEW_BRANCH" == relay/website-notifications-review-* ]]; then
             node scripts/ci-stage.mjs visual-review -- node apps/web/test/notifications-visual-review.mjs
           else
             node scripts/ci-stage.mjs visual-review -- node apps/web/test/visual-review.mjs

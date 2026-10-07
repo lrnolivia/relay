@@ -2,7 +2,7 @@
   "schema": 1,
   "catalog_version": 1,
   "reviewed_base": "995705af5014663808a0438c4d409861363ae662",
-  "scope": "First bounded presentation slice; not a repository-wide migration",
+  "scope": "Bounded common presentation, website status labels and review-action migration; remaining producers are explicitly open",
   "surfaces": [
     {
       "source": "src/communication-presentation.js",
@@ -83,15 +83,14 @@
     {
       "source": "packages/shared-ui/",
       "symbols": [
-        "presentation-copy",
-        "work-viewer",
         "notifications",
-        "file-manager"
+        "file-manager",
+        "remaining execution and provider outcomes"
       ],
       "audience": "human",
       "surface": "website",
       "status": "migration-pending",
-      "reason": "Website, review and Files surfaces require their later bounded migrations. Existing Files backend is preserved."
+      "reason": "Website state/event labels and review actions are covered separately below. Notifications, Files and remaining execution/provider outcomes require later bounded migrations."
     },
     {
       "source": "src/",
@@ -103,6 +102,39 @@
       "surface": "remaining-producers",
       "status": "migration-pending",
       "reason": "Unknown success shapes receive a neutral unrecognized result. Existing legacy error classifier text adapters are retained outside explicit operation typing; further producers need stable codes and fixtures."
+    },
+    {
+      "source": "packages/shared-ui/presentation-copy.js",
+      "symbols": [
+        "statusLabel",
+        "phaseLabel",
+        "eventLabel"
+      ],
+      "audience": "human",
+      "surface": "website-state-and-event-labels",
+      "status": "covered",
+      "fixtures": [
+        "website labels distinguish observed facts",
+        "prototype-like unknown values"
+      ],
+      "reason": "Reuses the typed common state catalog; reservations, enabled workers, PR events and deployment receipts do not imply readiness, scheduling or verification. Existing summaryText diagnostic filtering remains a legacy adapter."
+    },
+    {
+      "source": "packages/shared-ui/work-viewer.js",
+      "symbols": [
+        "render",
+        "loadRecords",
+        "apply"
+      ],
+      "audience": "human",
+      "surface": "review-actions-and-save-outcomes",
+      "status": "covered",
+      "fixtures": [
+        "actual generated review UI preserves an uncertain save",
+        "review partial receipts give confirmed counts",
+        "shared viewer keeps selection and source identity"
+      ],
+      "reason": "Actions explicitly name review metadata/archive semantics. Incomplete or lost receipts stay unconfirmed across readback; confirmed counts and Undo use only verified per-item receipts. Raw diagnostics are sanitized in expandable detail. Review quota/backoff and broad provider classification remain open."
     }
   ],
   "release_gates": [
