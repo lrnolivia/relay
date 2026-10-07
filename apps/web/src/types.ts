@@ -83,4 +83,5 @@ export type DashboardSnapshot = {
   workers: RunnerWorker[];
   loadingProgress?: string[];
   failedProgress?: string[];
+  quotaRetryAt?: string;
 };

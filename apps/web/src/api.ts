@@ -1,8 +1,24 @@
 import type { DashboardSnapshot, ProgressPayload, ProjectRegistration, RunnerWorker, WorkloadItem } from "./types";
 
+export class RelayQuotaError extends Error {
+  constructor(public retryAt: number) {
+    super(`GitHub quota exhausted. Retry after ${new Date(retryAt).toLocaleTimeString()}.`);
+  }
+}
+
 async function json<T>(path: string, timeout = 15000): Promise<T> {
   const response = await fetch(path, { headers: { Accept: "application/json" }, signal: AbortSignal.timeout(timeout) });
-  if (!response.ok) throw new Error(`Relay returned ${response.status} for ${path}`);
+  if (!response.ok) {
+    const detail = await response.json().catch(() => null);
+    if ([403,429].includes(response.status) && detail?.code === 'rate_limit') {
+      const deadline = typeof detail.retry_at === 'string' ? Date.parse(detail.retry_at) : NaN;
+      const retry = response.headers.get('Retry-After');
+      const header = retry && /^\d+$/.test(retry) ? Date.now()+Number(retry)*1000 : retry ? Date.parse(retry) : NaN;
+      const candidates = [deadline,header].filter(value => Number.isFinite(value) && value > Date.now());
+      throw new RelayQuotaError(candidates.length ? Math.max(...candidates) : Date.now()+60000);
+    }
+    throw new Error(`Relay returned ${response.status} for ${path}`);
+  }
   return response.json() as Promise<T>;
 }
 
@@ -38,13 +54,15 @@ export async function loadDashboard(onSnapshot?: (snapshot: DashboardSnapshot) =
           snapshot = { ...snapshot, progress: { ...snapshot.progress, [project.id]: {
             ...current, progress: [...(current.progress || []).filter(item => item.assignment !== claim.id), ...(payload.progress || []).filter(item => item.assignment === claim.id)]
           } } };
-        } catch {
+        } catch (cause) {
           snapshot = { ...snapshot, failedProgress: [...new Set([...snapshot.failedProgress!, project.id])] };
+          if (cause instanceof RelayQuotaError) snapshot.quotaRetryAt = new Date(Math.max(Date.parse(snapshot.quotaRetryAt || '') || 0,cause.retryAt)).toISOString();
         }
         onSnapshot?.(snapshot);
       }));
-    } catch {
+    } catch (cause) {
       snapshot = { ...snapshot, failedProgress: [...new Set([...snapshot.failedProgress!, project.id])] };
+      if (cause instanceof RelayQuotaError) snapshot.quotaRetryAt = new Date(Math.max(Date.parse(snapshot.quotaRetryAt || '') || 0,cause.retryAt)).toISOString();
     }
     snapshot = { ...snapshot, loadingProgress: snapshot.loadingProgress!.filter(id => id !== project.id) };
     onSnapshot?.(snapshot);
@@ -69,4 +87,3 @@ export function projectLabel(project: ProjectRegistration | string): string {
   };
   return known[id] || raw.replace(/[-_]+/g, " ");
 }
-

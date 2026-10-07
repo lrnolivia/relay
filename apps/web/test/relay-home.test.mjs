@@ -5,6 +5,41 @@ import fs from 'node:fs/promises';
 import { chromium } from 'playwright';
 import { webAssets, contextCardBrandAssets } from '../generated.js';
 
+test('quota deadlines pause root and partial refreshes, survive reload and preserve permission errors',async()=>{
+ const server=http.createServer((req,res)=>{const asset=webAssets[new URL(req.url,'http://localhost').pathname];res.writeHead(asset?200:404,{'Content-Type':asset?.type||'text/plain'});res.end(asset?.text||'Not found');});
+ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const origin=`http://127.0.0.1:${server.address().port}`;
+ const browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:390,height:900}});
+ let mode='good',projectsRead=0,retryAt='';
+ const quota=route=>route.fulfill({status:403,headers:{'Retry-After':'90'},json:{code:'rate_limit',retry_at:retryAt,error:'Synthetic GitHub quota exhausted'}});
+ const progress={project:'relay',progress:[{assignment:'quota-fixture',goal:'QUOTA TEST: keep the last request visible',state:'waiting-for-human',waiting_reason:'Review fixture',identities:{head_sha:'a'.repeat(40)},events:[]}]};
+ try{
+  await page.addInitScript(()=>{window.__retainedFixture=true;});
+  await page.route('https://fonts.googleapis.com/**',route=>route.fulfill({body:'',contentType:'text/css'}));await page.route('https://fonts.gstatic.com/**',route=>route.abort());
+  await page.route('**/api/projects',route=>{projectsRead++;return mode==='quota-root'?quota(route):mode==='permission'?route.fulfill({status:403,json:{error:'Synthetic permission denied'}}):route.fulfill({json:{projects:[{id:'relay',managed:true}]}});});
+  await page.route('**/api/workers',route=>route.fulfill({json:[]}));
+  await page.route('**/api/projects/relay',route=>route.fulfill({json:{coordination:{claims:[{id:'quota-fixture',state:'active'}]}}}));
+  await page.route('**/api/projects/relay/icon',route=>route.fulfill({json:{status:'unavailable'}}));
+  await page.route('**/api/progress/relay*',route=>mode==='quota-progress'?quota(route):route.fulfill({json:progress}));
+  await page.route('**/api/relay/*',route=>route.fulfill({json:{ok:true,checked_at:new Date().toISOString(),elapsed_ms:1}}));
+  await page.goto(origin+'/');await page.getByText(progress.progress[0].goal,{exact:true}).waitFor();
+  await page.clock.install();
+  retryAt=await page.evaluate(()=>new Date(Date.now()+90000).toISOString());mode='quota-root';
+  await page.getByRole('button',{name:'Refresh workspace telemetry'}).click();await page.locator('.telemetry-quota-status').waitFor();const pausedReads=projectsRead;
+  assert.equal(await page.getByText(progress.progress[0].goal,{exact:true}).count(),1,'last good work remains visible');
+  assert.equal(await page.getByRole('button',{name:'Refresh workspace telemetry'}).isDisabled(),true);
+  await page.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));await page.clock.fastForward(60000);
+  assert.equal(projectsRead,pausedReads,'visibility and timer refreshes do not request upstream during cooldown');
+  await page.reload();await page.locator('.telemetry-quota-status').waitFor();assert.equal(projectsRead,pausedReads,'reload honors the saved deadline');
+  mode='good';await page.clock.fastForward(30001);await page.locator('.live-telemetry[data-complete=true]').waitFor();await page.locator('.telemetry-quota-status').waitFor({state:'detached'});assert.equal(projectsRead,pausedReads+1,'one refresh resumes at reset');
+  mode='permission';await page.getByRole('button',{name:'Refresh workspace telemetry'}).click();
+  await page.waitForFunction(()=>JSON.parse(sessionStorage.getItem('relay.notifications.v1')||'[]').some(item=>item.id==='dashboard:connection'&&!item.resolved&&item.message==='The connection is unavailable. Previously loaded information stays visible; Relay will retry.'));
+  assert.equal(await page.locator('.telemetry-quota-status').count(),0,'plain permission 403 is not a quota failure');assert.equal(await page.getByRole('button',{name:'Refresh workspace telemetry'}).isDisabled(),false);
+  mode='quota-progress';retryAt=await page.evaluate(()=>new Date(Date.now()+90000).toISOString());await page.getByRole('button',{name:'Refresh workspace telemetry'}).click();await page.locator('.telemetry-quota-status').waitFor();assert.equal(await page.getByText(progress.progress[0].goal,{exact:true}).count(),1,'partial quota failure retains the assignment');const partialReads=projectsRead;
+  await page.clock.fastForward(60000);assert.equal(projectsRead,partialReads,'partial errors carry their retry deadline to the refresh gate');
+  if(process.env.RELAY_QA_OUTPUT){await fs.mkdir(process.env.RELAY_QA_OUTPUT,{recursive:true});await page.screenshot({path:process.env.RELAY_QA_OUTPUT+'/quota-paused-390.png',fullPage:true});}
+ }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
+});
+
 test('populated Relay connection page works at desktop and mobile sizes without overflow or false refresh claims',async()=>{
  const server=http.createServer((req,res)=>{const asset=webAssets[new URL(req.url,'http://localhost').pathname];res.writeHead(asset?200:404,{'Content-Type':asset?.type||'text/plain'});res.end(asset?.text||'Not found');});
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const origin=`http://127.0.0.1:${server.address().port}`;
