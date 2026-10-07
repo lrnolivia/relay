@@ -3,7 +3,7 @@
 export const HUMAN_CATALOG_VERSION = 1;
 export const HUMAN_CATALOG = Object.freeze({
   'data.unknown': ['Status unavailable', "The current status isn't available yet.", 'neutral'],
-  'data.unrecognized': ['Update available', "Relay returned an update, but its status isn't recognized yet.", 'neutral'],
+  'data.unrecognized': ['Update recorded', "Relay returned an update, but its status isn't recognized yet.", 'neutral'],
   'data.partial': ['Some updates unavailable', "Relay couldn't load all the updates. This view may be incomplete.", 'warning'],
   'work.queued': ['Queued', 'This task is waiting to start.', 'neutral'],
   'work.assigned': ['Assigned', 'A worker is assigned to this task.', 'info'],

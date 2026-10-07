@@ -11,6 +11,7 @@ import { callResume } from './resume-checkpoints.js';
 import { feedbackToolDefinitions, callFeedbackControl } from './feedback-control.js';
 import { callAssignmentUpdates } from './amendment-sync.js';
 import { projectCloudStatus, deployProjectCloudVersion } from './project-cloud.js';
+import { githubApiRequest } from './source.js';
 
 const MUTATIONS = ['queue', 'claim', 'amend', 'rescope', 'heartbeat', 'hold', 'handoff', 'complete', 'retire', 'reconcile'];
 const text = (max = 500) => ({ type: 'string', minLength: 1, maxLength: max });
@@ -236,6 +237,27 @@ export async function callRunnerControl(name, args, env, apiOverride) {
   if (name === 'relay_cloud_project') return projectCloudStatus(env, args.project, apiOverride);
   if (name === 'relay_cloud_deploy_project_version') {
     return deployProjectCloudVersion(env, args.project, args.version_id, args.message, { github: apiOverride });
+  }
+  if (name === 'relay_runner_coordinate') {
+    const api = apiOverride || ((path, options) => githubApiRequest(env, path, options));
+    const control = runnerControlBase(env);
+    const project = control === '/repos/lrnolivia/relay' && ['loew-inspector', 'loew-runner'].includes(args.project) ? 'relay' : args.project;
+    const writePath = `${control}/contents/coordination/${project}.json`;
+    let writeFailure = null;
+    const observedApi = async (path, options) => {
+      try { return await api(path, options); }
+      catch (error) {
+        if (path === writePath && options?.method === 'PUT') writeFailure = safeGithubFailure(error?.github);
+        throw error;
+      }
+    };
+    try { return await callRunnerControlCore(name, args, env, observedApi); }
+    catch (error) {
+      // Exact readback still owns the outcome. Retain only existing allowlisted
+      // transport facts when the core cannot confirm the proposed transaction.
+      if (error?.code === 'uncertain_write' && !error.github && writeFailure) error.github = writeFailure;
+      throw error;
+    }
   }
   return callRunnerControlCore(name, args, env, apiOverride);
 }

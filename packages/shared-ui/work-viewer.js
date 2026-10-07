@@ -4,23 +4,19 @@ import {projectInGroup} from "./project-groups.js";
 import {glyph} from './glyphs.js';
 import {reviewKey,effectiveReview,selectWork,reviewTransition} from './work-view-model.js';
 import {iconSlot,hydrateProjectIcons} from '../../apps/web/public/project-icons.js';
-import {statusLabel} from './presentation-copy.js';
-import {formatRelay,normalizeCommunicationResult,safePresentationText} from '../../src/human-presentation.js';
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const labels={pending:'Need review',completed:'Completed',stale:'Out of date',archived:'Archived',all:'All'};
-const unknownSave=formatRelay(normalizeCommunicationResult({ok:false,error:{class:'uncertain_write'}},{operation:{name:'review_update',kind:'command'}})).summary;
-const reviewCount=count=>count+' review'+(count===1?'':'s');
+const labels={pending:'Need review',completed:'Completed',stale:'Stale',archived:'Archived',all:'All'};
 const names={relay:'relay',field:'field',loewfi:'loew.fi',rtxforge:'rtxForge','bazzite-custom':'loewOS',gamebridge:'GameBridge'};
 const name=id=>names[id]||id.replace(/[-_]+/g,' ');
 export function projectBadge(project){return '<span class="work-project-badge">'+iconSlot(project)+'<strong>'+escape(name(project))+'</strong></span>';}
 function safeHref(value){try{const url=new URL(value,location.origin);return url.origin===CTRL_ORIGIN?url.href:url.origin===location.origin?url.pathname+url.search+url.hash:'';}catch{return '';}}
 async function request(action,items){
  const response=await fetch('/api/work-review',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({action,items}),signal:AbortSignal.timeout(45000)});
- if(!response.ok)throw new Error('Review storage returned HTTP '+response.status+'.');
+ if(!response.ok)throw new Error('Review storage returned '+response.status+'. Refresh before trying again.');
  return response.json();
 }
 export function bindWorkViewer(root,{id,defaultView='list',onOpen,initialFilter='pending',predicates={},extensionControls=[]}={}){
- let items=[],records={},loaded=false,incomplete=true,project='',view=defaultView,query={filter:initialFilter,search:'',sort:'time',direction:'desc',extensions:{}},selection=new Set(),scope='selected',pending=null,undo=[],busy=false,message='',messageDetails='',uncertainSave=false,generation=0,disposed=false;
+ let items=[],records={},loaded=false,incomplete=true,project='',view=defaultView,query={filter:initialFilter,search:'',sort:'time',direction:'desc',extensions:{}},selection=new Set(),scope='selected',pending=null,undo=[],busy=false,message='',generation=0,disposed=false;
  const storageKey='relay.work-view.'+id;let anchorRestored=false;const fresh=new Set();
  try{const saved=JSON.parse(sessionStorage.getItem(storageKey)||'null');if(saved){view=['list','visual'].includes(saved.view)?saved.view:defaultView;const prior=saved.query||{};query={...query,filter:Object.hasOwn(labels,prior.filter)?prior.filter:initialFilter,search:typeof prior.search==='string'?prior.search:'',sort:['time','importance'].includes(prior.sort)?prior.sort:'time',direction:['asc','desc'].includes(prior.direction)?prior.direction:'desc',extensions:prior.extensions&&typeof prior.extensions==='object'&&!Array.isArray(prior.extensions)?prior.extensions:{}};}}catch{}
  const save=()=>{try{sessionStorage.setItem(storageKey,JSON.stringify({view,query}));}catch{}};
@@ -45,11 +41,10 @@ export function bindWorkViewer(root,{id,defaultView='list',onOpen,initialFilter=
    <p class="work-query-help">Time follows source activity. Importance uses reported priority; missing values stay unranked. Review status never changes the source task.</p>
    <div class="work-selection-bar"><label><input type="checkbox" data-select-visible data-focus="select-visible" ${rows.length&&rows.every(item=>selection.has(reviewKey(item)))?'checked':''}>Select these ${rows.length} items</label><span>${selection.size} selected${hidden?' · '+hidden+' outside these results':''}</span><button type="button" data-clear-selection ${!selection.size?'disabled':''}>Clear selection</button></div>
    <div class="work-bulk-bar"><label>Action scope<select name="scope" data-focus="scope"><option value="selected" ${scope==='selected'?'selected':''}>Selected items</option><option value="filtered" ${scope==='filtered'?'selected':''}>Current filtered results</option><option value="all-projects" ${scope==='all-projects'?'selected':''}>All projects · matching loaded results</option></select></label>
-   ${[['pending','Reopen review'],['completed','Mark review complete'],['stale','Mark out of date'],['clear-complete','Archive completed reviews'],['clear-stale','Archive out-of-date reviews'],['restore','Restore to review list']].map(([action,label])=>`<button type="button" data-bulk="${action}" ${busy||!loaded||!changedTargets(action).length?'disabled':''}>${label}</button>`).join('')}</div>
+   ${[['pending','Reopen'],['completed','Mark complete'],['stale','Mark stale'],['clear-complete','Clear complete'],['clear-stale','Clear stale'],['restore','Restore']].map(([action,label])=>`<button type="button" data-bulk="${action}" ${busy||!loaded||!changedTargets(action).length?'disabled':''}>${label}</button>`).join('')}</div>
    ${incomplete?'<p class="work-query-help">Some source results are unavailable or this feed is bounded. Actions affect only the exact loaded items shown in the confirmation.</p>':''}
    ${pending?`<div class="work-confirm" role="group" aria-label="Confirm review changes"><strong>${escape(pending.label)}: ${pending.items.length} item${pending.items.length===1?'':'s'} in ${new Set(pending.items.map(item=>item.project)).size} project(s)</strong><p>${escape(pending.scope)}. ${escape(query.search?'Search: '+query.search+'. ':'')}Source tasks and PRs remain unchanged.</p><button type="button" data-confirm ${busy?'disabled':''}>Apply to these ${pending.items.length} items</button><button type="button" data-cancel ${busy?'disabled':''}>Cancel</button></div>`:''}
    <div class="work-message" role="status">${escape(message)}${!loaded&&!busy?'<button type="button" data-refresh>Refresh review state</button>':''}${undo.length?'<button type="button" data-undo '+(busy?'disabled':'')+'>Undo last change</button>':''}</div>
-   ${messageDetails?'<details class="work-message-details"><summary>Technical details</summary><p>'+escape(messageDetails)+'</p></details>':''}
   </div>
   <div class="work-results" aria-label="Work items">${rows.length?rows.map(item=>{
    const key=reviewKey(item),review=effectiveReview(item,records[key]),url=safeHref(item.href||'');
@@ -58,8 +53,8 @@ export function bindWorkViewer(root,{id,defaultView='list',onOpen,initialFilter=
    return `<article class="work-item${item.kind==='evidence'?' review-row':''}" data-work-key="${escape(key)}" data-new-work="${fresh.has(key)}" tabindex="-1"><label class="work-select"><input type="checkbox" data-select="${escape(key)}" data-focus="select-${escape(key)}" ${selection.has(key)?'checked':''} aria-label="Select ${escape(item.title)} in ${escape(name(item.project))}"></label>
     <div class="work-item-visual" aria-hidden="true">${image?`<img src="${escape(image)}" alt="" loading="lazy">`:glyph(item.kind==='check'?'moon':item.sourceState==='blocked'?'repair':'play')}</div>
     <div class="work-item-copy">${projectBadge(item.project)}<h3>${title}</h3><p>${escape(item.detail)}</p><p class="work-next"><span>${item.detail&&['blocked','failed'].includes(item.sourceState)?'Blocked':'Next'}</span> ${escape(item.next)}</p>
-    <div class="work-item-meta"><span>Review: ${review.archived?'Archived · ':''}${labels[review.status]}</span><span>Source: ${escape(statusLabel(item.sourceState))}</span><time ${item.time==null?'':`datetime="${new Date(item.time).toISOString()}"`}>${item.time==null?'Time unknown':new Date(item.time).toLocaleString()}</time><span>${escape(item.priority||'Unranked')}</span></div>
-    <details><summary>Details</summary><div class="work-source-detail"><code>${escape(item.id)}</code><p>Source state: ${escape(item.sourceState)}</p>${item.source?.identities?.branch?`<p>Branch: ${escape(item.source.identities.branch)}</p>`:''}${item.source?.identities?.head_sha?`<p>Head: ${escape(item.source.identities.head_sha)}</p>`:''}${item.source?.identities?.pr?`<p>PR: ${escape(item.source.identities.pr)}</p>`:''}<p>${escape(item.source?.next_action||item.source?.runtime?.last_summary||'')}</p></div></details></div></article>`;
+    <div class="work-item-meta"><span>Review: ${review.archived?'Archived · ':''}${labels[review.status]}</span><span>Source: ${escape(item.sourceState)}</span><time ${item.time==null?'':`datetime="${new Date(item.time).toISOString()}"`}>${item.time==null?'Time unknown':new Date(item.time).toLocaleString()}</time><span>${escape(item.priority||'Unranked')}</span></div>
+    <details><summary>Details</summary><div class="work-source-detail"><code>${escape(item.id)}</code>${item.source?.identities?.branch?`<p>Branch: ${escape(item.source.identities.branch)}</p>`:''}${item.source?.identities?.head_sha?`<p>Head: ${escape(item.source.identities.head_sha)}</p>`:''}${item.source?.identities?.pr?`<p>PR: ${escape(item.source.identities.pr)}</p>`:''}<p>${escape(item.source?.next_action||item.source?.runtime?.last_summary||'')}</p></div></details></div></article>`;
   }).join(''):`<div class="empty-card"><strong>${items.length?'No matching work.':incomplete?'Waiting for source results.':'No work to show yet.'}</strong><p>${items.length?'Try All or change your search.':'Work appears when Relay receives source activity.'}</p></div>`}</div>`;
   settleMotionLayout(root,motionBefore);
   for(const item of rows)fresh.delete(reviewKey(item));
@@ -72,19 +67,18 @@ export function bindWorkViewer(root,{id,defaultView='list',onOpen,initialFilter=
   const gen=++generation;loaded=false;render();
   try{
    const found={};
-   for(let start=0;start<items.length;start+=100){const batch=items.slice(start,start+100);const response=await request('read',batch.map(({project,kind,id})=>({project,kind,id})));if(!Array.isArray(response.results)||response.results.length!==batch.length||new Set(response.results.map(row=>row?.key)).size!==batch.length||response.results.some(row=>!batch.some(item=>reviewKey(item)===row?.key)||typeof row.ok!=='boolean'||row.ok&&(row.record!==null&&(!row.record||typeof row.record!=='object'||Array.isArray(row.record))||row.etag!==null&&typeof row.etag!=='string')))throw Error('Review status receipt is incomplete.');if(response.results.some(row=>!row.ok))throw new Error('Some review states could not load. Refresh before changing them.');for(const row of response.results){const item=items.find(candidate=>reviewKey(candidate)===row.key),legacy=item?.source?.qaReview;found[row.key]=row.record?{...row.record,etag:row.etag}:legacy?{etag:null,source_revision:item.revision,status:legacy.disposition==='archived'?'stale':['completed','stale'].includes(legacy.disposition)?legacy.disposition:legacy.overall?'completed':'pending',archived:legacy.disposition==='archived'}:{etag:null};}}
-   if(disposed||gen!==generation)return;records=found;loaded=true;message=uncertainSave?unknownSave+' The latest review statuses are shown below. Check them before trying again.':'';if(!uncertainSave)messageDetails='';render();
-  }catch(error){if(!disposed&&gen===generation){message=(uncertainSave?unknownSave+' ':'')+"Relay couldn't load the review statuses. Changes are paused until the statuses can be checked.";messageDetails=safePresentationText(error.message);render();}}
+   for(let start=0;start<items.length;start+=100){const response=await request('read',items.slice(start,start+100).map(({project,kind,id})=>({project,kind,id})));if(response.results.some(row=>!row.ok))throw new Error('Some review states could not load. Refresh before changing them.');for(const row of response.results){const item=items.find(candidate=>reviewKey(candidate)===row.key),legacy=item?.source?.qaReview;found[row.key]=row.record?{...row.record,etag:row.etag}:legacy?{etag:null,source_revision:item.revision,status:legacy.disposition==='archived'?'stale':['completed','stale'].includes(legacy.disposition)?legacy.disposition:legacy.overall?'completed':'pending',archived:legacy.disposition==='archived'}:{etag:null};}}
+   if(disposed||gen!==generation)return;records=found;loaded=true;message='';render();
+  }catch(error){if(!disposed&&gen===generation){message=error.message;render();}}
  }
  async function apply(changes,isUndo=false){
-  if(busy)return;busy=true;pending=null;uncertainSave=false;messageDetails='';message='Saving review changes…';render();const accepted=[],errors=[];
+  if(busy)return;busy=true;pending=null;message='Saving review changes…';render();const accepted=[],errors=[];
   try{
    for(let start=0;start<changes.length;start+=100){const batch=changes.slice(start,start+100);const response=await request('set',batch.map(change=>change.payload));
-    if(!Array.isArray(response.results)||response.results.length!==batch.length||new Set(response.results.map(row=>row?.key)).size!==batch.length||response.results.some(row=>!batch.some(entry=>entry.key===row?.key)||typeof row.ok!=='boolean'||row.ok&&(!row.record||typeof row.record!=='object'||Array.isArray(row.record)||typeof row.etag!=='string'||['source_revision','status','archived'].some(key=>row.record[key]!==batch.find(entry=>entry.key===row.key).payload[key]))))throw Error('Review update receipt is incomplete.');
     for(const row of response.results){const change=batch.find(entry=>entry.key===row.key);if(row.ok){records[row.key]={...row.record,etag:row.etag};accepted.push({key:row.key,item:change.item,before:change.before,after:records[row.key]});}else errors.push(row.error);}
    }
-   undo=isUndo?[]:accepted;message=reviewCount(accepted.length)+' updated.'+(errors.length?' '+reviewCount(errors.length)+' not updated.':'');messageDetails=errors.length?safePresentationText(errors.join('; ')):'';
-  }catch(error){loaded=false;uncertainSave=true;message=unknownSave+' Check the latest review statuses before trying again.';messageDetails=safePresentationText(error.message);undo=isUndo?[]:accepted;}
+   undo=isUndo?[]:accepted;message=`${accepted.length} review item(s) updated.`+(errors.length?' '+errors.length+' not changed: '+errors[0]:'');
+  }catch(error){loaded=false;message='The save result is uncertain. Refresh review state before trying again. '+error.message;undo=isUndo?[]:accepted;}
   finally{busy=false;render();if(!loaded)void loadRecords();}
  }
  function newWork(event){for(const item of event.detail||[])fresh.add(reviewKey(item));}
@@ -101,7 +95,7 @@ export function bindWorkViewer(root,{id,defaultView='list',onOpen,initialFilter=
   if(button.dataset.view){view=button.dataset.view;save();render();}
   if(button.hasAttribute('data-clear-selection')){selection.clear();pending=null;render();}
   if(button.dataset.bulk){const action=button.dataset.bulk;pending={action,label:button.textContent,items:changedTargets(action).map(item=>({...item})),scope:scope==='selected'?`${selection.size} selected, including ${[...selection].filter(key=>!visible().some(item=>reviewKey(item)===key)).length} outside these results`:scope==='all-projects'?'All projects, matching loaded results':`Current results in ${project?name(project):'all projects'}`};render();root.querySelector('[data-confirm]')?.focus();}
-  if(button.hasAttribute('data-cancel')){const action=pending?.action;pending=null;render();if(action)root.querySelector('[data-bulk="'+action+'"]')?.focus();}
+  if(button.hasAttribute('data-cancel')){pending=null;render();}
   if(button.hasAttribute('data-confirm')&&pending){const action=pending.action.startsWith('clear-')?'archive':pending.action;void apply(pending.items.map(item=>{const key=reviewKey(item),before=effectiveReview(item,records[key]),after=reviewTransition(before,action);return {key,item,before,payload:{project:item.project,kind:item.kind,id:item.id,source_revision:item.revision,expected_etag:records[key]?.etag??null,operation_id:crypto.randomUUID(),...after}};}));}
   if(button.hasAttribute('data-undo'))void apply(undo.map(entry=>({key:entry.key,item:entry.item,before:effectiveReview(entry.item,entry.after),payload:{project:entry.item.project,kind:entry.item.kind,id:entry.item.id,source_revision:entry.item.revision,expected_etag:entry.after.etag,operation_id:crypto.randomUUID(),...entry.before}})),true);
   if(button.dataset.open)onOpen?.(items.find(item=>reviewKey(item)===button.dataset.open));
