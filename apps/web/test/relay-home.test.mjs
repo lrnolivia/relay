@@ -22,6 +22,10 @@ test('populated Relay connection page works at desktop and mobile sizes without 
   await page.goto(origin+'/');await page.getByRole('heading',{name:'relay',exact:true}).waitFor();await page.locator('.relay-connection-panel[aria-busy=true]').waitFor();releaseInitialCheck();await page.getByText('MCP connected',{exact:true}).waitFor();assert.equal(connectionRequests,1,'automatically checks once on initial load');await page.getByText(progress.progress[0].goal,{exact:true}).waitFor();
   for(const width of [320,768,1024,1440]){await page.setViewportSize({width,height:1000});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'no overflow at '+width);assert.equal(await page.locator('.telemetry-ring>div,.telemetry-orbits>div').evaluateAll(nodes=>nodes.every(node=>{const bounds=node.getBoundingClientRect();return [...node.children].every(child=>{const box=child.getBoundingClientRect();return box.left>=bounds.left-1&&box.right<=bounds.right+1&&box.top>=bounds.top-1&&box.bottom<=bounds.bottom+1;});})),true,'ring text stays inside its clear center at '+width);}
   assert.equal(await page.locator('.telemetry-card').count(),4);
+  assert.equal(await page.locator('.relay-home-top [data-file-manager]').count(),0);
+  assert.equal(await page.locator('.relay-main-panel .relay-connection-actions [data-file-manager]').count(),1);
+  assert.equal(await page.getByRole('button',{name:'Open files',exact:true}).textContent(),'Files');
+  assert.equal(await page.getByRole('button',{name:'Check connection',exact:true}).evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(181, 71, 31)');
   await page.waitForFunction(()=>[...document.querySelectorAll('.telemetry-feature-badge img')].every(image=>image.complete&&image.naturalWidth>0));
   assert.equal(await page.locator('.telemetry-feature-badge img').count(),2,'contextual brands are real loaded assets');
   assert.equal(await page.locator('.relay-home').evaluate(node=>getComputedStyle(node).backgroundColor),'rgb(25, 23, 20)');

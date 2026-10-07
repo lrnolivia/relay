@@ -6,6 +6,15 @@ import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {webAssets} from '../generated.js';
 import {browserFileResponse} from '../../../src/file-transfer.js';
+import {filterFiles} from '../../../packages/shared-ui/file-manager.js';
+test('shared file queries combine name, readiness, type and ordering without changing the inventory',()=>{
+ const files=[{filename:'ZETA.zip',state:'ready',bytes:30,created_at:1},{filename:'photo.png',state:'uploading',bytes:90,created_at:3},{filename:'notes.pdf',state:'ready',bytes:60,created_at:2}];
+ assert.deepEqual(filterFiles(files,{search:'zeta',state:'ready',kind:'packages'}).map(x=>x.filename),['ZETA.zip']);
+ assert.deepEqual(filterFiles(files,{state:'incomplete',kind:'images'}).map(x=>x.filename),['photo.png']);
+ assert.deepEqual(filterFiles(files,{sort:'size'}).map(x=>x.filename),['photo.png','notes.pdf','ZETA.zip']);
+ assert.deepEqual(filterFiles(files,{sort:'name'}).map(x=>x.filename),['notes.pdf','photo.png','ZETA.zip']);
+ assert.deepEqual(files.map(x=>x.filename),['ZETA.zip','photo.png','notes.pdf']);
+});
 class Bucket{
  objects=new Map();
  async put(key,value,options={}){if(options.onlyIf&&this.objects.has(key))return null;this.objects.set(key,{bytes:Buffer.from(value),customMetadata:options.customMetadata});return {key}}
@@ -37,11 +46,19 @@ test('shared file manager uploads, resumes, downloads, closes and stays inside m
   const chooser=page.waitForEvent('filechooser');await modal.getByRole('button',{name:'Resume',exact:true}).click();await(await chooser).setFiles(file);
   await modal.getByText('test-work-package.zip is ready to download.',{exact:true}).waitFor();
   const download=page.waitForEvent('download');await modal.getByRole('link',{name:'Download',exact:true}).click();const delivered=await download;await delivered.saveAs(output+'/file-roundtrip.zip');assert.equal(createHash('sha256').update(await fs.readFile(output+'/file-roundtrip.zip')).digest('hex'),createHash('sha256').update(data).digest('hex'));
+  await modal.getByRole('searchbox',{name:'search files'}).fill('missing');assert.equal(await modal.getByRole('link',{name:'Download',exact:true}).count(),0);
+  await modal.getByRole('searchbox',{name:'search files'}).fill('');await modal.locator('[data-control-menu=filters]>summary').click();
+  await modal.getByRole('radio',{name:'images',exact:true}).click();assert.equal(await modal.getByRole('link',{name:'Download',exact:true}).count(),0);
+  await page.keyboard.press('ArrowRight');await modal.getByRole('link',{name:'Download',exact:true}).waitFor();assert.equal(await modal.getByRole('radio',{name:'packages',exact:true}).getAttribute('aria-checked'),'true');
+  await modal.getByRole('button',{name:'upload incomplete',exact:true}).click();assert.equal(await modal.getByRole('link',{name:'Download',exact:true}).count(),0);
+  await modal.getByRole('button',{name:'ready to download',exact:true}).click();await modal.getByRole('link',{name:'Download',exact:true}).waitFor();
+  assert.equal(await modal.getByRole('radio',{name:'packages',exact:true}).evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(181, 71, 31)');
   for(const theme of ['light','dark']){await page.evaluate(theme=>{document.documentElement.dataset.theme=theme},theme);const ratios=await modal.locator('button:not([hidden]),a').evaluateAll(nodes=>{const lum=value=>{const rgb=value.match(/[\d.]+/g).slice(0,3).map(Number).map(x=>x/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4);return rgb[0]*.2126+rgb[1]*.7152+rgb[2]*.0722};return nodes.filter(n=>n.offsetWidth>0).map(n=>{const s=getComputedStyle(n),a=lum(s.color),b=lum(s.backgroundColor);return {text:n.textContent,ratio:(Math.max(a,b)+.05)/(Math.min(a,b)+.05)}})});for(const r of ratios)assert.ok(r.ratio>=4.5,theme+' readable action '+JSON.stringify(r));await modal.screenshot({path:output+'/files-'+theme+'.png'})}
   await page.evaluate(()=>{document.documentElement.dataset.theme='light'});
   await modal.screenshot({path:output+'/files-desktop.png'});await page.keyboard.press('Escape');await modal.waitFor({state:'hidden'});assert.equal(await page.getByRole('button',{name:'Open files',exact:true}).evaluate(el=>el===document.activeElement),true);
   await page.getByRole('button',{name:'Open files',exact:true}).click();await modal.getByRole('link',{name:'Download',exact:true}).waitFor();
-  await page.setViewportSize({width:320,height:844});const box=await modal.boundingBox();assert.ok(box.x>=0&&box.width<=320&&box.height<=844);assert.ok(await modal.evaluate(el=>el.scrollWidth<=el.clientWidth+1));await modal.screenshot({path:output+'/files-mobile.png'});
+  for(const width of [768,390,320]){await page.setViewportSize({width,height:844});const box=await modal.boundingBox();assert.ok(box.x>=0&&box.width<=width&&box.height<=844);assert.ok(await modal.evaluate(el=>el.scrollWidth<=el.clientWidth+1));}
+  await modal.screenshot({path:output+'/files-mobile.png'});
   await modal.getByRole('button',{name:'Close files',exact:true}).click();await modal.waitFor({state:'hidden'});
  }finally{await browser.close();await new Promise(resolve=>server.close(resolve))}
 });

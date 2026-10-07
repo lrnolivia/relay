@@ -1,5 +1,6 @@
 import {bindFileManager} from '../../../packages/shared-ui/file-manager.js';
 import '../../../packages/shared-ui/file-manager.css';
+import '../../../packages/shared-ui/work-controls.css';
 import { RelayPage } from './pages/RelayPage';
 import { bindMotion } from "../../../packages/shared-ui/motion.js";
 import { useEffect } from "react";
