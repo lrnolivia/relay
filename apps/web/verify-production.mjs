@@ -4,6 +4,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
 import { webBuildId } from "./generated.js";
 import { readback } from "./readback.mjs";
+import { verifyFileLifecycle } from './verify-file-lifecycle.mjs';
 
 const expected = process.env.EXPECTED_SOURCE_SHA;
 const clientId = process.env.CF_ACCESS_CLIENT_ID;
@@ -31,6 +32,13 @@ for (let attempt = 0; attempt < 12; attempt++) {
   await new Promise(resolve => setTimeout(resolve, 10000));
 }
 assert.ok(ready, "production must serve this exact source SHA and built website artifact");
+if(!diagnoseOnly){
+ const runIdentity=[expected,process.env.GITHUB_RUN_ID||Date.now(),process.env.GITHUB_RUN_ATTEMPT||'1'].join('-');
+ try{
+  const files=await verifyFileLifecycle((path,options)=>fetch(origin+path,{...options,headers:{...headers,...options.headers}}),{requestId:'verify-'+createHash('sha256').update(runIdentity).digest('hex'),unauthenticatedFetcher:(path,options)=>fetch(origin+path,options)});
+  await writeFile('qa-evidence/production/files.json',JSON.stringify({...files,source_sha:expected},null,2));
+ }catch(error){await writeFile('qa-evidence/production/files.json',JSON.stringify({...error.receipt,source_sha:expected},null,2));throw error;}
+}
 // Exercise an existing capture before adding new evidence so legacy lookup is
 // verified independently of the new direct index.
 const {response:previousResponse,value:previousPayload}=await readback(origin+"/api/visual?limit=1",{headers});
@@ -79,6 +87,14 @@ try {
       assert.equal(response.status,308);assert.equal(new URL(response.headers.get('Location')).origin,'https://ctrl.loew.fi');
     }
     await capture(page,'relay',viewport);
+    await page.getByRole('button',{name:'Open files',exact:true}).click();
+    const filesDialog=page.getByRole('dialog',{name:'Files',exact:true});await filesDialog.waitFor();
+    await filesDialog.getByText('Private to your signed-in account. Files expire after 3 days.',{exact:true}).waitFor();
+    assert.equal(await filesDialog.locator('.work-control-pair').evaluate(pair=>pair.getBoundingClientRect().top-pair.previousElementSibling.getBoundingClientRect().bottom),8);
+    assert.equal(await filesDialog.evaluate(node=>node.scrollWidth>node.clientWidth+1),false);
+    await capture(page,'files',viewport);
+    await filesDialog.getByRole('button',{name:'Close files',exact:true}).click();
+    assert.equal(await page.getByRole('button',{name:'Open files',exact:true}).evaluate(node=>node===document.activeElement),true);
     assert.deepEqual(errors, []);
     await page.close();
   }
