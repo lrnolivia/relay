@@ -1,3 +1,4 @@
+import './source-checkpoints.test.mjs';
 import test from 'node:test';
 import './night-shift.test.mjs';
 import assert from 'node:assert/strict';

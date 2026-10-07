@@ -1,3 +1,4 @@
+import { readSourceRecoveryHints } from '../packages/runner/src/jobs.mjs';
 import { readPendingFeedback } from "./feedback-control.js";
 import { retired } from "./coordination-engine.js";
 import { createHash } from "node:crypto";
@@ -69,7 +70,7 @@ function qaContext(progress, assignment) {
   return { required: false };
 }
 
-function checkpointCore({ project, assignment, progress, changedPaths, changedPathsTruncated, recentCommits, recordSha, policySha, pendingFeedback }) {
+function checkpointCore({ project, assignment, progress, changedPaths, changedPathsTruncated, recentCommits, recordSha, policySha, pendingFeedback, sourceCheckpoints }) {
   const terminal = retired(assignment) || retired(progress);
   return {
     contract_version: RESUME_CONTRACT_VERSION,
@@ -108,7 +109,8 @@ function checkpointCore({ project, assignment, progress, changedPaths, changedPa
     source: {
       changed_paths: changedPaths || [],
       changed_paths_truncated: Boolean(changedPathsTruncated),
-      recent_commits: recentCommits || []
+      recent_commits: recentCommits || [],
+      checkpoints: sourceCheckpoints || {available:false,state:"unavailable",reason:"not-observed"}
     },
     activity: {
       worker: progress?.worker ? {
@@ -250,9 +252,10 @@ export async function callResume(args, env = {}, apiOverride, cloudOverride, now
 
   for (const claim of assignments.claims || []) {
     const progress = (observed.progress || []).find(item => item.assignment === claim.id) || null;
-    const [paths, commits] = await Promise.all([
+    const [paths, commits, sourceCheckpoints] = await Promise.all([
       changedPaths(api, repoBase, claim, progress),
-      recentCommits(api, repoBase, claim)
+      recentCommits(api, repoBase, claim),
+      readSourceRecoveryHints(env.EVIDENCE, args.project, claim)
     ]);
     checkpoints.push(deriveResumeCheckpoint({
       project: args.project,
@@ -261,6 +264,7 @@ export async function callResume(args, env = {}, apiOverride, cloudOverride, now
       changedPaths: paths.paths,
       changedPathsTruncated: paths.truncated,
       recentCommits: commits,
+      sourceCheckpoints,
       recordSha: assignments.record_sha,
       policySha: assignments.policy_sha,
       pendingFeedback

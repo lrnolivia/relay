@@ -271,3 +271,10 @@ test('live resume route returns terminal queue-only work once and does not dupli
   }
   assert.equal(result.checkpoints.find(item => item.assignment.id === 'queue-only').state, 'superseded');
 });
+
+test('source proof changes invalidate resume identity without implying objective completion',()=>{
+ const input={project:'relay',assignment,progress:progress(),recordSha:'a',policySha:'b'};
+ const a=deriveResumeCheckpoint({...input,sourceCheckpoints:{available:true,state:'local_only',snapshots:[]}});
+ const b=deriveResumeCheckpoint({...input,sourceCheckpoints:{available:true,state:'restore_verified',snapshots:[{job_id:'job_fixture',source:{state:'restore_verified',host_execution_verified:false}}]}});
+ assert.equal(sameCheckpoint(a,b),false);assert.equal(b.source.checkpoints.state,'restore_verified');assert.equal(b.state,a.state);assert.equal(b.source.checkpoints.snapshots[0].source.host_execution_verified,false);
+});

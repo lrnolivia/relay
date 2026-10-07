@@ -1,0 +1,37 @@
+# Bounded private source checkpoints
+
+Status: new candidate on the existing draft PR 165, not merged, deployed or enabled in the live Relay connector. Existing assignment is relay-mcp-rebuild-continuation-20261003. The previously reviewed commit 53de286d49c274fc02ef408361e43b00d95142f7 and successful workflow run 37559814874 are retained as immutable prior-candidate evidence. The internal freeze was explicitly lifted for this continuing reliability repair; all required hosted gates must rerun on the new head. The cumulative admitted PR scope is the original five test-workflow files plus this twelve-file checkpoint slice.
+
+## Contract
+
+The existing executor/job lifecycle gains an explicitly enabled `source-byte-checkpoints-v1` capability. Configure `source_checkpoints: true` for this bounded executor mode and include that capability in jobs that require protection. Legacy jobs retain metadata-only behavior, clearly labeled `local_only`. This avoids silently disabling broad existing workloads with a new 128 KiB / 64-entry limit. It is not yet universal automatic source protection.
+
+A complete admitted-scope snapshot includes tracked and untracked regular files, binary and zero-byte content, executable modes, explicit deletions, repository, branch, initial head, scope, size and SHA256. The helper accounts for the HEAD tree, index, working tree and exact selected absent paths. Selected ignored/control/secret paths, known credential patterns, symbolic links, hardlinks, case collisions, path traversal, unsupported special files and oversize captures fail the complete capture. No partial archive is promoted.
+
+Filename/content filters are defensive exclusions; they cannot establish that arbitrary source contains no sensitive material. Only the already-authorized private EVIDENCE store is used, with no new grant or public source upload. This first format permits 192 KiB serialized / 128 KiB decoded / 64 entries. Snapshot baseline and capture remain tied to the job's unchanged initial head. Larger scopes, native/root work outside the executor, and commit-changing captures remain explicit unfinished cases.
+
+Storage keys are immutable content identities. The server independently reads the object and validates every digest before deriving `remote_verified`. A client then independently reads the exact snapshot, restores into a fresh private directory, compares complete bytes/modes/deletions and sends an exact restoration receipt. `restore_verified` is explicitly attributed to the authenticated executor; it does not claim independently observed host execution. A write acknowledgement alone is never promoted. An uncertain write retains the operation ID for reconciliation rather than duplicate mutation.
+
+Required jobs cannot start before restoration proof. Success also requires a post-start restoration receipt and a result head matching the saved snapshot. An identical snapshot remains valid for a fresh read/restore cycle. Metadata-only updates invalidate current source-proof labeling while retaining the prior verified snapshot.
+
+## Recovery and failure behavior
+
+Source reads require exact job/revision, original executor identity/token, current active assignment owner/branch and unchanged admitted scope. Read-only recovery works after a job completes, its executor lease expires, the remote source advances, or a newer job begins. It does not renew/recover execution or modify a completed job.
+
+The `restore` CLI takes config, the retained private executor receipt and a fresh output directory; the original checkout is unnecessary. It restores the scoped snapshot only, not a full repository, dependencies, Git database or credentials. It never overlays a working tree. The original private receipt and existing connection are still needed. Recovery after assignment retirement, scope/owner changes or branch deletion is not established by this slice and remains blocked rather than relaxing ownership.
+
+Linux descriptor identity validation is required in this version. Capture validates the opened descriptor before reading, so a parent-directory swap cannot redirect outside source bytes. Restore walks anchored directory descriptors, rejects symlinks and checks the opened file before writing. Unsupported platforms fail before creating the destination. This is not a claim of containment against a privileged or same-identity hostile process manipulating open inodes; execute within the existing isolated task boundaries.
+
+Checkpoint failures preserve the working copy, original manifest, previous verified snapshot and local receipt. The executor records `checkpoint_blocked` and stops dependent work. A failed capture before launch creates no child process. Cancellation does not start new preservation work after an explicit stop. Resume output exposes safe recovery identities and proof summaries, never source bytes or executor tokens. Proof changes invalidate the deterministic resume checkpoint identity.
+
+## Validation
+
+Focused Node 22.23.3 checks cover the broker, source format, executor and resume contract. Tests exercise real synthetic Git repositories and child processes without a browser, server, external network, installed third-party dependencies or live storage writes. Cases include destroying the producing checkout, tracked/untracked/binary/deleted/mode recovery, repeated unchanged snapshots, malformed/partial/wrong identities, corrupt or missing readback, old/terminal/expired jobs, wrong owner/token/revision, metadata-only history, proof-gated start/finish, duplicate-operation reconciliation, secret paths, hardlinks, forced parent swaps and legacy executor compatibility.
+
+All 75 focused test executions passed on official Node 22.23.3, then passed again after an independent private durable download and isolated restoration with all twelve source hashes verified. The exact test receipt and source hashes travel with the private recovery archive. Fixture success is not live EVIDENCE ACL, Cloudflare runtime, native Mac/Windows recovery or full canonical repository CI proof. These remain separate release gates. PR 165's complete five-suite hosted result is evidence for PR 165 only, not this changed candidate.
+
+## Rollback and remaining work
+
+The archive retains exact baseline bytes for all previously existing edited files from PR 165 head plus canonical dependency files and provenance. Revert only this source-checkpoint slice if necessary, preserving the earlier five-file test repair. Do not overwrite shared coordination. No merge/deployment is authorized by this candidate transition.
+
+Remaining broader reliability scope includes universal capture policy/large-source transport, external/root-work adoption, exact toolchain enforcement, source-to-focused-test discovery, complete failure-stage taxonomy, immutable release-candidate records, actual Worker startup gates and approval-evidence continuity. No claim that this checkpoint slice closes the full nine-item repair plan.

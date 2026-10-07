@@ -8,6 +8,7 @@ import { pathToFileURL } from 'node:url';
 import { createInterface } from 'node:readline';
 import { callSkills } from '../src/skills-service.js';
 import { createExecutionInbox } from './relay-executor-inbox.mjs';
+import { captureSourceBundle, verifyRemoteSourceCheckpoint, recoverSourceCheckpoint } from './relay-source-checkpoint.mjs';
 
 export function codexArguments({workspace,session_id}) {
   if(!path.isAbsolute(workspace))throw Error('Executor workspace must be absolute');
@@ -68,13 +69,29 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     let job=(await call('status',{...(config.job_id?{job_id:config.job_id}:{})})).job;
     if(!job)throw Error('No durable execution request exists for this assignment');
     if(job.owner!==config.owner||job.branch!==config.branch)throw Error('Execution does not match the configured owner and branch');
+    const protectionEnabled=config.source_checkpoints===true;
+    const protectSource=async(session,summary)=>{
+      const previous=journal.source_checkpoint?.state==='restore_verified'?journal.source_checkpoint:journal.source_checkpoint?.last_verified_source||null;
+      journal.source_checkpoint={state:'local_only',head_sha:git(['rev-parse','HEAD']),last_verified_source:previous};await save();
+      try{
+        const identity={repository:job.repository,branch:job.branch,head_sha:job.initial_head_sha,scope:job.objective.paths};
+        const bundle=await captureSourceBundle({workspace,...identity});
+        const result=await verifyRemoteSourceCheckpoint({bundle,identity,restoreParent:path.join(stateDir,'source-restores'),
+          write:async source_bundle=>{const result=await call('checkpoint',{job_id:job.id,expected_revision:job.revision,executor_id:config.executor_id,lease_token:journal.lease_token,checkpoint:{...(session?{session_id:session}:{}),head_sha:identity.head_sha,summary,source_bundle}});job=result.job;return result;},
+          read:()=>rpc('relay_execution',{...common,action:'source_read',job_id:job.id,expected_revision:job.revision,executor_id:config.executor_id,lease_token:journal.lease_token}),
+          ack:async source_restore=>{const result=await call('checkpoint',{job_id:job.id,expected_revision:job.revision,executor_id:config.executor_id,lease_token:journal.lease_token,checkpoint:{...(session?{session_id:session}:{}),head_sha:identity.head_sha,summary,source_restore}});job=result.job;return result;}
+        });
+        journal.source_checkpoint={state:result.state,digest:result.digest,file_count:result.file_count,restored_directory:result.directory,verified_at:clock()};await save();
+      }catch(error){journal.source_checkpoint={state:'checkpoint_blocked',reason:String(error.message).slice(0,500),last_verified_source:previous};await save();throw error;}
+    };
     if(git(['branch','--show-current'])!==job.branch)throw Error('Checkout branch does not match the admitted job');
     const remote=git(['remote','get-url','origin']).replace(/\.git$/,'');
     if(!["https://github.com/"+job.repository,"git@github.com:"+job.repository].includes(remote))throw Error('Checkout repository does not match the job');
     const head=git(['rev-parse','HEAD']);
     if(job.state==='queued'&&(head!==job.initial_head_sha||changedPaths(workspace).length))throw Error('New execution requires a clean checkout at the admitted head');
     assertScope(changedPaths(workspace),job.objective.paths);
-    const capabilities=['codex-cli',os.platform()==='darwin'?'macos':os.platform()==='win32'?'windows':'linux'];
+    const capabilities=['codex-cli',os.platform()==='darwin'?'macos':os.platform()==='win32'?'windows':'linux',...(protectionEnabled?['source-byte-checkpoints-v1']:[])];
+    if(job.required_capabilities?.includes('source-byte-checkpoints-v1')&&!protectionEnabled)throw Error('Job requires source checkpoints; explicitly configure source_checkpoints before execution');
     const version=getVersion();
     if(job.state==='queued')job=(await call('lease',{job_id:job.id,expected_revision:job.revision,expected_head_sha:head,executor_id:config.executor_id,capabilities})).job;
     else if(job.observed_state==='recovery_required'||['failed','cancelled'].includes(job.state)) {
@@ -102,6 +119,8 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     const packDirectory=path.join(await fs.realpath(stateDir),'skills');
     if(uniqueSkills.length)journal.skills=await installSkills({bundles:uniqueSkills,selection:uniqueSkills.map(x=>({id:x.manifest.id})),context:{project:config.project,capabilities,max_context:4096},directory:packDirectory,admit:async()=>{const latest=await call('status',{job_id:job.id});if(latest.job.state!=='leased'||latest.job.owner!==config.owner)throw Error('Execution admission changed before skill installation');}});
     await save();
+    // Complete bounded capture/readback/restoration before starting a child.
+    if(protectionEnabled)await protectSource(journal.session_id||null,'Initial admitted source snapshot verified before work');
     const transcript=await fs.open(path.join(stateDir,'events-'+job.attempt+'.jsonl'),'a',0o600);
     let session=journal.session_id||null,turnCompleted=false,parseFailed=false;
     const childEnv={...process.env};delete childEnv.RELAY_MCP_TOKEN;
@@ -124,9 +143,9 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
         job=(await call('status',{job_id:job.id})).job;
         if(job.state==='cancel_requested'){stop();return;}
         journal.inbox=await inbox.refresh();
-        const checkpoint={...(session?{session_id:session}:{}),head_sha:git(['rev-parse','HEAD']),summary:'Codex process is running; outcome remains unverified.',changed_paths:changedPaths(workspace).slice(0,32)};
         assertScope(changedPaths(workspace),job.objective.paths);
-        job=(await call('checkpoint',{job_id:job.id,expected_revision:job.revision,executor_id:config.executor_id,lease_token:journal.lease_token,checkpoint})).job;
+        if(protectionEnabled)await protectSource(session,'Running source snapshot; process outcome remains unverified');
+        else job=(await call('checkpoint',{job_id:job.id,expected_revision:job.revision,executor_id:config.executor_id,lease_token:journal.lease_token,checkpoint:{...(session?{session_id:session}:{}),head_sha:git(['rev-parse','HEAD']),summary:'Codex process running; source-byte protection not enabled.',changed_paths:changedPaths(workspace).slice(0,32)}})).job;
       }catch(error){heartbeatError=error;stop();}finally{polling=false;}
     };
     timer=setInterval(()=>void poll(),pollMs);
@@ -136,6 +155,7 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     if(heartbeatError)throw heartbeatError;
     job=(await call('status',{job_id:job.id})).job;
     let scopeError=null;try{assertScope(changedPaths(workspace),job.objective.paths);}catch(error){scopeError=error;}
+    if(protectionEnabled&&job.state!=='cancel_requested'&&!stopping&&!scopeError)await protectSource(session,'Final source bytes saved, read back and restored before exit accounting');
     const result={state:job.state==='cancel_requested'?'cancelled':ended.code===0&&turnCompleted&&session&&!parseFailed&&!scopeError&&!stopping?'succeeded':'failed',exit_code:ended.code,
       ...(session?{session_id:session}:{}),head_sha:git(['rev-parse','HEAD']),summary:scopeError?.message || (stopping?'Process stopped; preserve checkpoint for explicit recovery.':'Codex process exited. Review source changes and verification evidence before completing the assignment.'),
       evidence:'sha256:'+createHash('sha256').update(await fs.readFile(path.join(stateDir,'events-'+job.attempt+'.jsonl'))).digest('hex')};
@@ -164,9 +184,10 @@ export function createMcpClient({token,url='https://relay.loew.fi/mcp',fetchImpl
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
   const [command,configFile,workspace,stateDir]=process.argv.slice(2);
-  if(command!=='run'||!configFile||!workspace||!stateDir)throw Error('Usage: node scripts/relay-executor.mjs run config.json /absolute/task-checkout /absolute/receipt-directory');
+  if(!['run','restore'].includes(command)||!configFile||!workspace||!stateDir)throw Error('Usage: node scripts/relay-executor.mjs run config.json /absolute/task-checkout /absolute/receipt-directory OR restore config.json /absolute/original-receipt.json /absolute/new-restore-directory');
   const config=JSON.parse(await fs.readFile(configFile,'utf8'));
   for(const key of ['project','assignment','owner','branch','executor_id'])if(typeof config[key]!=='string'||!config[key])throw Error('Missing executor configuration: '+key);
   const rpc=createMcpClient({token:process.env.RELAY_MCP_TOKEN});
-  console.log(JSON.stringify(await runExecution({config,workspace,stateDir,rpc}),null,2));
+  const result=command==='restore'?await recoverSourceCheckpoint({config,receipt:JSON.parse(await fs.readFile(workspace,'utf8')),directory:stateDir,rpc}):await runExecution({config,workspace,stateDir,rpc});
+  console.log(JSON.stringify(result,null,2));
 }

@@ -2,7 +2,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "npm run test:inspector && npm run test:runner && npm run test:layout && npm run test:contracts && npm test --workspace @relay/web",
+    "test": "node scripts/ci-test-orchestrator.mjs",
     "test:inspector": "npm test --workspace @relay/inspector",
     "test:runner": "npm test --workspace @relay/runner",
     "test:layout": "node --test packages/runner/layout.test.mjs",
@@ -10,7 +10,8 @@
     "build": "npm run build --workspace @relay/web && npm run check",
     "tick": "node packages/runner/src/cli.mjs tick",
     "run": "node packages/runner/src/cli.mjs run",
-    "test:contracts": "node --test test/*.test.mjs"
+    "test:contracts": "node --test test/*.test.mjs",
+    "test:workflow": "node --test test/test-workflow-contract.test.mjs"
   },
   "devDependencies": {
     "playwright": "1.60.0"
