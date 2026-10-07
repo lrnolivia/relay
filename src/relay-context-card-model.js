@@ -48,7 +48,7 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
     rows = checks.slice(0,3).map(x=>({label:x.name,text:checkLabels[x.conclusion||x.status]||'Unconfirmed'}));
   }
   if (pr) { title=safePresentationText(pr.title)||'Source change'; }
-  const blocker = error || (status==='blocked' ? safePresentationText(first.waiting_reason) || presentation.summary : null);
+  const blocker = error ? null : (status==='blocked' ? safePresentationText(first.waiting_reason) || null : null);
   const rawQa = human.qa || checkpoint.qa_context || data.qa || null;
   const qa = rawQa&&typeof rawQa==='object'?{intended_result:safePresentationText(rawQa.intended_result),reason:safePresentationText(rawQa.reason),...(Array.isArray(rawQa.checks)?{checks:rawQa.checks.slice(0,5).map(x=>safePresentationText(x))}:{})}:null;
   const handoff = data.action === 'handoff' ? 'The assignment was transferred.' : safePresentationText(data.handoff?.summary)||null;
@@ -75,5 +75,6 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   if (pr?.number) { metric='#'+pr.number; metric_label=pr.merged?'merged pull request':pr.draft?'draft pull request':'pull request'; }
   // Keep uncertainty/deadlines intact instead of clipping the only explanation.
   summary=presentation.summary;
-  return { title:safePresentationText(title), feature, primary_staff:safePresentationText(primary), team:safePresentationText(team), label, tone, signal, summary, rows:rows.map(row=>({label:safePresentationText(row.label,100),text:safePresentationText(row.text,100)})), blocker, qa, handoff, next_step:nextStep, metric, metric_label, percent, evidence:Object.fromEntries(Object.entries(evidence).filter(([,v])=>['string','number','boolean'].includes(typeof v)).map(([key,value])=>[key,typeof value==='string'?safePresentationText(value,2000):value])), refresh:Boolean(data.project), human_v1:presentation };
+  const has_metric=percent!==null||Boolean(checks?.length)||Boolean(pr?.number)||(!checks&&!pr&&jobs.length>0);
+  return { title:safePresentationText(title), feature, primary_staff:safePresentationText(primary), team:safePresentationText(team), label, tone, signal, summary, rows:rows.map(row=>({label:safePresentationText(row.label,100),text:safePresentationText(row.text,100)})), blocker, qa, handoff, next_step:nextStep, metric, metric_label, has_metric, percent, evidence:Object.fromEntries(Object.entries(evidence).filter(([,v])=>['string','number','boolean'].includes(typeof v)).map(([key,value])=>[key,typeof value==='string'?safePresentationText(value,2000):value])), refresh:Boolean(data.project), human_v1:presentation };
 }

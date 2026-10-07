@@ -613,3 +613,30 @@ test('human_v1 generated current and legacy bridge resources share exact server 
     }
   }
 });
+
+test('human_v1 removal of duplicate error text does not turn legacy health healthy',async()=>{
+ const {contextualPresentation}=await import('./relay-chat-ui.js');
+ const result=contextualPresentation({ok:false,error:{class:'permission'}});
+ assert.equal(result.human.health,'blocked');assert.equal(result.human_v1.severity,'error');
+});
+
+test('human_v1 mobile shows the complete warning and next step without duplicate error text',async()=>{
+ const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
+ try{
+  for(const error of [{class:'uncertain_write'},{class:'rate_limit',retry_at:'2026-10-07T11:00:00Z',upstream:{provider:'github'}}]){
+   const page=await browser.newPage({viewport:{width:320,height:900}});
+   await page.addInitScript(({error})=>{window.openai={toolInput:{project:'relay'},toolOutput:{project:'relay',ok:false,checked_at:'2026-10-07T10:00:00Z',error}};},{error});
+   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
+   await page.locator('#summary').filter({hasText:error.class==='uncertain_write'?'whether or not':'GitHub says requests can resume'}).waitFor();
+   assert.equal(await page.locator('#blocker').isVisible(),false);
+   assert.equal(await page.locator('.telemetry-stat').isVisible(),false);
+   assert.ok(await page.locator('#summary').evaluate(node=>node.scrollHeight<=node.clientHeight+1),'material explanation is not clamped');
+   if(error.class==='uncertain_write'){
+    assert.equal(await page.locator('#next').isVisible(),true);
+    assert.match(await page.locator('#next').textContent(),/Check the latest status before trying again/);
+   }
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+   await page.close();
+  }
+ }finally{await browser.close();}
+});

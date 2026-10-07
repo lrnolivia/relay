@@ -41,3 +41,16 @@ test('asset omissions fail the build instead of shipping broken brand images', (
   assert.throws(() => styleContextCard('',{}), /Missing bundled card brand/);
   assert.throws(() => styleContextCard('',{...contextCardBrandAssets,relay:'https://untrusted.example/icon.png'}), /Missing bundled card brand/);
 });
+
+test('material explanations and actionable next steps remain visible without duplicated status metrics',()=>{
+  const html=relayContextCardResource().text;
+  assert.match(html,/data-signal="danger".*summary[\s\S]*?-webkit-line-clamp:unset!important/);
+  assert.match(html,/#next:not\(\[hidden\]\)\{display:block!important\}/);
+  assert.match(html,/m\.has_metric===false\?'none':''/);
+  const failure=contextCardModel({ok:false,error:{class:'uncertain_write'}});
+  assert.equal(failure.blocker,null);assert.equal(failure.has_metric,false);
+  assert.match(failure.summary,/whether or not/);assert.match(failure.next_step,/status before/);
+  const assigned=contextCardModel({claim:{state:'active'}});
+  assert.equal(assigned.has_metric,false);
+  assert.equal(contextCardModel({claims:[{state:'active'}]}).has_metric,true);
+});

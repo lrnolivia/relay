@@ -106,7 +106,7 @@ export function compactContextCardResult(result = {}) {
 
 export function contextualPresentation(data, options = {}) {
   const m=contextCardModel({...data,presentation_mode:options.mode==='legacy'?'legacy':'human_v1'});
-  return withHumanPresentation({ ...data, human: data.human || { outcome:m.title, health:m.blocker?'blocked':m.tone==='wait'||m.label==='recorded'?'waiting':'healthy', staff:m.team, what_changed:m.summary, next_step:m.next_step, blocker:m.blocker, qa:m.qa } }, options);
+  return withHumanPresentation({ ...data, human: data.human || { outcome:m.title, health:data.ok===false||data.isError||m.tone==='bad'||m.blocker?'blocked':m.tone==='wait'||m.label==='recorded'?'waiting':'healthy', staff:m.team, what_changed:m.summary, next_step:m.next_step, blocker:m.blocker, qa:m.qa } }, options);
 }
 // Stable browser model source: Worker bundlers must never serialize their transformed functions into an iframe.
 // Parity with contextCardModel is verified on actual bundled resources in relay-chat-ui.test.js.
