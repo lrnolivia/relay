@@ -325,7 +325,7 @@ export default {
         if (name === autonomyTool.name) {
           const args=message.params?.arguments||{};
           if (args.scope!=='global') await callRunnerControlCore('relay_runner_project',{project:args.scope},env);
-          result=await callAutonomyControl(env,args,{accessJwt:request.headers.get('Cf-Access-Jwt-Assertion')});
+          result=await callAutonomyControl(env,args,{accessJwt:request.headers.get('Cf-Access-Jwt-Assertion'),...(args.action==='configure_build_guard'?{buildIdentity:{CF_ACCESS_CLIENT_ID:request.headers.get('CF-Access-Client-Id'),CF_ACCESS_CLIENT_SECRET:request.headers.get('CF-Access-Client-Secret')}}:{})});
         } else if (name === uiApiTool.name) {
           result = await callUiApi(message.params?.arguments || {}, env, { accessJwt:request.headers.get('Cf-Access-Jwt-Assertion'), rpc: async method => {
             if(!['initialize','ping','tools/list'].includes(method))throw Error('Unsupported panel discovery method');

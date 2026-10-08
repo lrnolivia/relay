@@ -56,8 +56,24 @@ test('release verification request options work in the actual pinned edge runtim
   const config=JSON.parse(await readFile(new URL('../wrangler.jsonc',import.meta.url),'utf8'));
   const directory=await mkdtemp(join(tmpdir(),'relay-release-runtime-'));
   const main=join(directory,'worker.mjs');
-  await writeFile(main, `import {verifyReleaseTarget} from ${JSON.stringify(new URL('./project-cloud.js',import.meta.url).pathname)};
-    export default {async fetch(){try{
+  await writeFile(main, `import {verifyReleaseTarget,callAutonomyControl,RELAY_GUARDED_DEPLOY_COMMAND} from ${JSON.stringify(new URL('./project-cloud.js',import.meta.url).pathname)};
+    export {RelayEvents} from ${JSON.stringify(new URL('./relay-events.js',import.meta.url).pathname)};
+    export default {async fetch(request,env){try{
+      if(new URL(request.url).pathname==='/setup'){
+        const tag='a'.repeat(32),trigger={trigger_uuid:'364453c2-c933-447a-9b19-451dff930e90',external_script_id:tag,root_directory:'/',branch_includes:['main'],branch_excludes:[],build_command:'npm run build',deploy_command:'npx wrangler deploy',repo_connection:{provider_type:'github',provider_account_name:'lrnolivia',repo_name:'relay'}};
+        const variables={};
+        const result=await callAutonomyControl({...env,CLOUDFLARE_ACCOUNT_ID:'fixture',CLOUDFLARE_BUILDS_API_TOKEN:'fixture-builds',RELAY_AUTONOMY_GUARD:'enforced'},{action:'configure_build_guard',scope:'relay',expected_revision:0,operation_id:'runtime-build-guard',reason:'Synthetic runtime test',authorization:'Synthetic test resume'}, {
+          accessJwt:'synthetic-private-identity',buildIdentity:{CF_ACCESS_CLIENT_ID:'synthetic-id',CF_ACCESS_CLIENT_SECRET:'synthetic-secret'},
+          github:async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,transport:'workers-builds',production_branch:'main',build_command:'npm run build',deploy_command:'npx wrangler deploy'}})).toString('base64')}),
+          identityFetch:async(url,options)=>{const probe=new Request(url,options);if(probe.redirect!=='manual'||probe.headers.get('CF-Access-Client-Secret')!=='synthetic-secret')throw Error('Runtime identity confinement failed');return Response.json({schema:1,scope:new URL(url).searchParams.get('scope'),revision:0,held:false,enforced:true});},
+          buildApi:async(path,options={})=>{
+            if(path.endsWith('/workers/scripts'))return [{id:'relay',tag}];
+            if(path.endsWith('/triggers'))return [trigger];
+            if(path.endsWith('/environment_variables')){if(options.method==='PATCH')for(const key of Object.keys(options.body))variables[key]={is_secret:true,value:null,created_on:new Date().toISOString()};return variables;}
+            if(options.method!=='PATCH'||options.body.deploy_command!==RELAY_GUARDED_DEPLOY_COMMAND)throw Error('Unexpected provider write');trigger.deploy_command=options.body.deploy_command;return trigger;
+          }
+        });return Response.json(result);
+      }
       const target={worker:'relay',version_id:'11111111-2222-3333-4444-555555555555',source_sha:'a'.repeat(40),compatibility_id:'relay-v1'};
       const status={worker:'relay',writable:true,rollback:{identity_url:'https://relay.loew.fi/',health_url:'https://relay.loew.fi/health',source_header:'X-Relay-Source-Sha',compatibility_header:'X-Relay-Release-Compatibility',compatibility_id:'relay-v1'}};
       const proof=await verifyReleaseTarget({},status,target,{
@@ -67,7 +83,10 @@ test('release verification request options work in the actual pinned edge runtim
         fetch:async(url,options)=>{const request=new Request(url,options);if(request.redirect!=='manual'||request.headers.get('Cf-Access-Token')!=='synthetic-verified-identity')throw Error('Authenticated redirect policy changed');return url.endsWith('/health')?Response.json({ok:true,service:'relay'}):new Response('fixture',{headers:{'X-Relay-Source-Sha':target.source_sha,'X-Relay-Release-Compatibility':target.compatibility_id}});}
       });return Response.json({ok:true,proof});
     }catch(error){return Response.json({error:error.message},{status:500});}}};`);
-  const harness=createTestHarness({root:directory,workers:[{config:{name:'relay-release-runtime',main,compatibility_date:config.compatibility_date,compatibility_flags:config.compatibility_flags}}]});
-  try{await harness.listen();const response=await harness.fetch('/');const body=await response.json();assert.equal(response.status,200,JSON.stringify(body));assert.equal(body.proof.source_sha,'a'.repeat(40));}
+  const harness=createTestHarness({root:directory,workers:[{config:{name:'relay-release-runtime',main,compatibility_date:config.compatibility_date,compatibility_flags:config.compatibility_flags,durable_objects:config.durable_objects,migrations:config.migrations}}]});
+  try{
+    await harness.listen();const response=await harness.fetch('/');const body=await response.json();assert.equal(response.status,200,JSON.stringify(body));assert.equal(body.proof.source_sha,'a'.repeat(40));
+    const setup=await harness.fetch('/setup'),result=await setup.json();assert.equal(setup.status,200,JSON.stringify(result));assert.equal(result.state.revision,2);assert.equal(result.state.held,false);assert.equal(result.build_guard.configuration_readback_verified,true);assert.doesNotMatch(JSON.stringify(result),/synthetic-secret|synthetic-id|synthetic-private-identity/);
+  }
   finally{await harness.close();await rm(directory,{recursive:true,force:true});}
 });

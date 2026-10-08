@@ -104,8 +104,14 @@ export async function verifyApprovedTarget(env,status,target,deps={}){
   if(retained?.id!==target.version_id)throw Error('Requested approved version is not retained');
   const hostname=new URL(profile.identity_url).hostname;
   if(!snapshot.domains?.some(d=>d.service===status.worker&&d.hostname===hostname&&d.enabled!==false))throw Error('Recovery endpoint is not bound to this Worker');
+  if(!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(status.repository||''))throw Error('Invalid registered source repository');
+  const api=(path)=>githubApiRequest(env,path),root='/repos/'+status.repository;
+  const file=await (deps.sourceProfile||(()=>api(root+'/contents/projects/'+status.project+'.json?ref='+target.source_sha)))();
+  if(file?.type!=='file'||file.encoding!=='base64'||file.truncated)throw Error('Historical source profile is incomplete');
+  const registration=JSON.parse(decode(file.content)),historic=validateRegistration(registration,status.project);
+  if(registration.repository!==status.repository||historic?.worker!==status.worker||historic.write!==true||historic.transport!=='workers-builds'||historic.rollback?.compatibility_id!==profile.compatibility_id||!historic.production_branch||!historic.deploy_command)throw Error('Historical source recovery compatibility is not established');
   const history=await (deps.builds||((worker)=>cloudBuilds(env,worker)))(status.worker);
-  const builds=(Array.isArray(history)?history:history?.builds||[]).filter(b=>b.build_outcome==='success'&&b.build_trigger_metadata?.commit_hash===target.source_sha&&b.build_trigger_metadata.branch===status.production_branch&&b.build_trigger_metadata.deploy_command===status.deploy_command);
+  const builds=(Array.isArray(history)?history:history?.builds||[]).filter(b=>b.build_outcome==='success'&&b.build_trigger_metadata?.commit_hash===target.source_sha&&b.build_trigger_metadata.branch===historic.production_branch&&b.build_trigger_metadata.deploy_command===historic.deploy_command);
   if(builds.length!==1)throw Error('Historical approval requires one exact successful canonical provider build');
   const build=builds[0];
   if(!/^[a-f0-9-]{36}$/.test(build.build_uuid||''))throw Error('Invalid provider build identity');
@@ -124,12 +130,6 @@ export async function verifyApprovedTarget(env,status,target,deps={}){
     if(typeof cursor!=='string'||cursor.length>4096||cursors.has(cursor))throw Error('Invalid provider deployment evidence cursor');cursors.add(cursor);
   }
   if(!complete||ids.size!==1||!ids.has(target.version_id))throw Error('Provider build does not prove this exact retained version');
-  if(!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(status.repository||''))throw Error('Invalid registered source repository');
-  const api=(path)=>githubApiRequest(env,path),root='/repos/'+status.repository;
-  const file=await (deps.sourceProfile||(()=>api(root+'/contents/projects/'+status.project+'.json?ref='+target.source_sha)))();
-  if(file?.type!=='file'||file.encoding!=='base64'||file.truncated)throw Error('Historical source profile is incomplete');
-  const historic=validateRegistration(JSON.parse(decode(file.content)),status.project);
-  if(historic?.worker!==status.worker||historic.rollback?.compatibility_id!==profile.compatibility_id)throw Error('Historical source recovery compatibility is not established');
   const checks=await (deps.checks||(()=>api(root+'/commits/'+target.source_sha+'/check-runs?per_page=100')))();
   if(checks.total_count>checks.check_runs?.length)throw Error('Historical production checks are incomplete');
   const quality=checks.check_runs?.filter(c=>c.name==='quality'&&c.app?.slug==='github-actions').sort((a,b)=>b.id-a.id)[0];
@@ -142,7 +142,103 @@ export async function verifyApprovedTarget(env,status,target,deps={}){
   return {version_id:target.version_id,source_sha:target.source_sha,build_id:build.build_uuid,production_job_id:jobId,currently_active:false,verification:'retained-provider-deployment+exact-source-production-ci'};
 }
 
+export const RELAY_GUARDED_DEPLOY_COMMAND='node scripts/autonomy-gate.mjs relay && npx wrangler deploy';
+const RELAY_BUILD_TRIGGER='364453c2-c933-447a-9b19-451dff930e90';
+const BUILD_IDENTITY_KEYS=['CF_ACCESS_CLIENT_ID','CF_ACCESS_CLIENT_SECRET'];
+
+// Called only after MCP authentication. Credentials come from private request
+// headers, never tool arguments or durable operation intent. Revalidate that
+// pair at the fixed Access-protected origin before giving it to Workers Builds.
+async function verifyBuildIdentity(identity,request){
+  if(BUILD_IDENTITY_KEYS.some(key=>typeof identity?.[key]!=='string'||!identity[key]||identity[key].length>5000||/[\r\n]/.test(identity[key])))throw Error('Existing authenticated CI service identity is required');
+  for(const scope of ['global','relay']){
+    let response;
+    try{response=await request('https://relay.loew.fi/autonomy-status?scope='+scope,{headers:{'CF-Access-Client-Id':identity.CF_ACCESS_CLIENT_ID,'CF-Access-Client-Secret':identity.CF_ACCESS_CLIENT_SECRET},redirect:'manual',cache:'no-store',signal:AbortSignal.timeout(5000)});}
+    catch{throw Error('CI service identity verification failed');}
+    if(!response.ok||response.redirected||!response.headers.get('content-type')?.includes('application/json')){await response.body?.cancel();throw Error('CI service identity verification failed');}
+    let body;
+    try{
+      const reader=response.body.getReader(),chunks=[];let size=0;
+      try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>16384){await reader.cancel();throw Error('Oversized identity response');}chunks.push(value);}}
+      finally{reader.releaseLock();}
+      const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.byteLength;}
+      body=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));
+    }catch{throw Error('CI service identity verification failed');}
+    if(body?.schema!==1||body.scope!==scope||body.enforced!==true||typeof body.held!=='boolean'||!Number.isSafeInteger(body.revision)||body.revision<0)throw Error('CI service identity verification failed');
+  }
+}
+
+export async function configureRelayBuildGuard(env,input,deps={}){
+  if(input.scope!=='relay'||env.RELAY_AUTONOMY_GUARD!=='enforced'||!deps.accessJwt)throw Error('Build guard setup requires authenticated Relay with enforced safety control');
+  if(input.operation_id.length>100)throw Error('Build guard operation identity exceeds 100 characters');
+  const status=await projectCloudStatus(env,'relay',deps.github);
+  if(!status.writable||status.repository!=='lrnolivia/relay'||status.worker!=='relay'||status.transport!=='workers-builds'||status.production_branch!=='main'||status.build_command!=='npm run build'||!['npx wrangler deploy',RELAY_GUARDED_DEPLOY_COMMAND].includes(status.deploy_command))throw Error('Canonical Relay Workers Builds registration is required');
+  await verifyBuildIdentity(deps.buildIdentity,deps.identityFetch||fetch);
+  const hold={action:'hold',scope:'relay',expected_revision:input.expected_revision,operation_id:input.operation_id+'-hold',reason:input.reason};
+  const resume={action:'resume',scope:'relay',expected_revision:input.expected_revision+1,operation_id:input.operation_id+'-resume',reason:input.reason,authorization:input.authorization};
+  const before=(await autonomyRequest(env,{action:'status',scope:'relay'})).state;
+  if(before.rollback?.state==='pending')throw Error('Reconcile pending rollback before configuring build safety');
+  if(!before.operations.some(op=>op.id===hold.operation_id))await guardAutonomy(env,['relay']);
+  const reserved=(await autonomyRequest(env,hold)).state;
+  const completed=reserved.operations.some(op=>op.id===resume.operation_id);
+  const assertReservation=async()=>{
+    await guardAutonomy(env);
+    const latest=(await autonomyRequest(env,{action:'status',scope:'relay'})).state;
+    if(latest.revision!==input.expected_revision+1||!latest.held||latest.rollback?.state==='pending')throw Error('Safety revision changed; setup remains stopped until reconciled');
+  };
+  if(!completed)await assertReservation();
+  const api=async(path,options={},stage='read')=>{
+    try{return await (deps.buildApi||((path,options)=>cloudflareApiRequest(env,path,options)))(path,options);}
+    catch{throw Error('Workers Builds '+stage+' failed or is uncertain; outcome cannot be verified, read back configuration before retrying');}
+  };
+  const root='/accounts/'+env.CLOUDFLARE_ACCOUNT_ID;
+  const scripts=await api(root+'/workers/scripts');
+  const tag=Array.isArray(scripts)&&scripts.find(worker=>worker.id==='relay')?.tag;
+  if(typeof tag!=='string'||!/^[a-f0-9]{32}$/.test(tag))throw Error('Canonical Worker tag is missing');
+  const buildOptions={token:env.CLOUDFLARE_BUILDS_API_TOKEN};
+  if(!buildOptions.token)throw Error('Existing Workers Builds authority is required');
+  const readTrigger=async()=>{
+    const list=await api(root+'/builds/workers/'+tag+'/triggers',buildOptions);
+    if(!Array.isArray(list)||list.length!==1)throw Error('Build guard requires exactly one canonical production trigger');
+    const trigger=list[0],repo=trigger?.repo_connection;
+    if(trigger.trigger_uuid!==RELAY_BUILD_TRIGGER||trigger.external_script_id!==tag||trigger.deleted_on||repo?.deleted_on||repo?.provider_type!=='github'||repo.provider_account_name!=='lrnolivia'||repo.repo_name!=='relay'||trigger.root_directory!=='/'||JSON.stringify(trigger.branch_includes)!=='["main"]'||trigger.branch_excludes?.length!==0||trigger.build_command!=='npm run build'||!['npx wrangler deploy',RELAY_GUARDED_DEPLOY_COMMAND].includes(trigger.deploy_command))throw Error('Workers Builds trigger identity or commands changed; reconcile before setup');
+    return trigger;
+  };
+  const trigger=await readTrigger();
+  const variablesPath=root+'/builds/triggers/'+RELAY_BUILD_TRIGGER+'/environment_variables';
+  const readVariables=()=>api(variablesPath,buildOptions);
+  const variables=await readVariables();
+  if(!variables||typeof variables!=='object'||Array.isArray(variables))throw Error('Build variable readback is incomplete');
+  const present=BUILD_IDENTITY_KEYS.filter(key=>Object.hasOwn(variables,key));
+  if(present.length){
+    // A lost response is reconciled from masked metadata. Never overwrite an
+    // existing secret, and never treat the presence of a key as value proof.
+    const at=Date.parse(reserved.operations.find(op=>op.id===hold.operation_id).at);
+    if(present.length!==2||BUILD_IDENTITY_KEYS.some(key=>variables[key]?.is_secret!==true||variables[key].value!==null||!Number.isFinite(Date.parse(variables[key].created_on))||Date.parse(variables[key].created_on)<at))throw Error('Existing build identity is unaccounted for; setup remains held without overwriting it');
+  }else{
+    if(completed)throw Error('Configured build identity is missing; reconciliation is required');
+    await assertReservation();
+    await api(variablesPath,{...buildOptions,method:'PATCH',body:Object.fromEntries(BUILD_IDENTITY_KEYS.map(key=>[key,{is_secret:true,value:deps.buildIdentity[key]}]))},'secret write');
+  }
+  const saved=await readVariables();
+  if(BUILD_IDENTITY_KEYS.some(key=>saved?.[key]?.is_secret!==true||saved[key].value!==null))throw Error('Secret build identity readback failed; setup remains held');
+  if(trigger.deploy_command!==RELAY_GUARDED_DEPLOY_COMMAND){
+    if(completed)throw Error('Configured build command changed; reconciliation is required');
+    await assertReservation();
+    await readTrigger();
+    await api(root+'/builds/triggers/'+RELAY_BUILD_TRIGGER,{...buildOptions,method:'PATCH',body:{deploy_command:RELAY_GUARDED_DEPLOY_COMMAND}},'command write');
+  }
+  if((await readTrigger()).deploy_command!==RELAY_GUARDED_DEPLOY_COMMAND)throw Error('Guarded build command readback failed; setup remains held');
+  if(!completed)await assertReservation();
+  const result=await autonomyRequest(env,resume);
+  return {...result,build_guard:{trigger_id:RELAY_BUILD_TRIGGER,deploy_command:RELAY_GUARDED_DEPLOY_COMMAND,secret_variables:BUILD_IDENTITY_KEYS,configuration_readback_verified:true,build_execution_verified:false}};
+}
+
 export async function callAutonomyControl(env,input,deps={}){
+  if(input?.action==='configure_build_guard'){
+    validateAutonomyInput({...input,action:'resume'});
+    return configureRelayBuildGuard(env,input,deps);
+  }
   const rollback=input?.action==='rollback';
   const prepared=rollback?{...input,action:'prepare_rollback'}:input;
   validateAutonomyInput(prepared);

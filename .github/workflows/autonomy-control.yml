@@ -42,7 +42,7 @@ jobs:
           assert.ok(raw && Buffer.byteLength(raw) <= 16384, 'Safety requests must fit 16 KiB');
           const requests = JSON.parse(raw);
           assert.ok(Array.isArray(requests) && requests.length >= 1 && requests.length <= 2, 'One or two exact requests are required');
-          const actions = new Set(['status', 'hold', 'resume', 'healthy', 'approve', 'rollback']);
+          const actions = new Set(['status', 'hold', 'resume', 'healthy', 'approve', 'rollback', 'configure_build_guard']);
           for (const input of requests) {
             assert.ok(input && actions.has(input.action) && /^(global|[a-z0-9-]{1,80})$/.test(input.scope), 'Unsupported safety action or scope');
             if (input.action !== 'status') {
@@ -94,7 +94,7 @@ jobs:
               assert.equal(readback.state.last_user_approved?.approval?.text, input.approval.text);
               assert.equal(readback.state.last_user_approved?.approval?.source, input.approval.source);
             }
-            console.log('SAFETY_RECEIPT=' + JSON.stringify({action: input.action, operation_id: input.operation_id, state: readback.state, duplicate: receipt.duplicate, verified_release: receipt.verified_release}));
+            console.log('SAFETY_RECEIPT=' + JSON.stringify({action: input.action, operation_id: input.operation_id, state: readback.state, duplicate: receipt.duplicate, verified_release: receipt.verified_release, build_guard: receipt.build_guard}));
           }
           NODE
       - name: Verify authenticated CLI publication gate
