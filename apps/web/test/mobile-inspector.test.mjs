@@ -2,7 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {mkdir} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
 import {webAssets,mcpHtml} from '../generated.js';
+
+const captureDirectory=fileURLToPath(new URL('../../../qa-evidence/retirement/',import.meta.url));
 
 test('mobile compatibility handoffs are inert, readable and keyboard accessible', {timeout:45000},async()=>{
  const browser=await chromium.launch({headless:true});
@@ -14,7 +17,7 @@ test('mobile compatibility handoffs are inert, readable and keyboard accessible'
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
    const link=page.getByRole('link',{name:'Open CTRL',exact:true});assert.equal(new URL(await link.getAttribute('href')).origin,'https://ctrl.loew.fi');
    await page.keyboard.press('Tab');assert.equal(await link.evaluate(node=>node===document.activeElement),true);assert.deepEqual(requests,[]);
-   await mkdir('qa-evidence/retirement',{recursive:true});await page.screenshot({path:'qa-evidence/retirement/'+name+'-'+width+'.png',fullPage:true});await page.close();
+   await mkdir(captureDirectory,{recursive:true});await page.screenshot({path:captureDirectory+name+'-'+width+'.png',fullPage:true});await page.close();
   }
  }finally{await browser.close();}
 });

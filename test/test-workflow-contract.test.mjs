@@ -188,7 +188,7 @@ test('root command and CI retain the real gate and always upload suite accountin
   assert.match(workflow,/qa-evidence\/test-workflow\//);assert.match(workflow,/if-no-files-found: error/);
   assert.equal((workflow.match(/'test\/\*\*'/g)||[]).length,2);
   assert.match(workflow,/Account for suites blocked by setup/);assert.match(workflow,/ci-test-orchestrator.mjs --blocked/);
-  assert.match(workflow,/timeout-minutes: 95/);
+  assert.match(workflow,/timeout-minutes: 125/);
   assert.doesNotMatch(workflow,/continue-on-error:/);
 });
 
