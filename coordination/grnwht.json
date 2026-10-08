@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T21:29:23.569Z",
+  "updated_at": "2026-10-08T21:37:47.424Z",
   "legacy_branches": [
     "main"
   ],
@@ -1263,14 +1263,23 @@
         "tests/push-enrollment-model.test.mjs",
         "tests/push-enrollment-browser.mjs",
         "docs/launch-checklist-20261008.md",
-        "docs/multi-household-migration.md"
+        "docs/multi-household-migration.md",
+        "src/directory-person-row.jsx",
+        "src/directory-person-row.css",
+        "src/family-calendar.jsx",
+        "src/family-calendar-model.js",
+        "src/family-calendar.css",
+        "tests/family-calendar-model.test.mjs",
+        "tests/family-calendar-browser.mjs",
+        "backend/src/calendar.mjs",
+        "backend/tests/calendar.test.mjs"
       ],
       "resources": [
         "grnwht-device-push-release"
       ],
       "goal": "Deliver one consolidated GW launch candidate covering all Lauren-approved current functional and UI work, with parent hotfix reconciliation and living multi-household support",
       "acceptance": "Latest Lauren21:15 explicit single consolidated nextrelease supersedes release-first staging. Include all parenthotfixes; devicepush regression/errorprivacy; eightpreset email source/defaultoffconsent; editorcontrolpolish; device-local returningname/avatar/provider noauthcredential; confirmedselective GWreset withserver signout/nofamilydeletion; compactAbout+linkedofficialcredit; You/Family invitationcards; authorizedcontactglyphbadges; sharedmini-profile identities/privacy/focus/fullphotoactions+selectedfonts; coherenthouseholdhero; verified216compactv3guidePNGs preservingnativeinstallbehaviors; livingmulti-household withperhouseholdroles/recipientconsent/duplicates/pending/primary/remove/privatechildren, migrationbackuprehearsalrollback. Retain explicitpanel/formparity/fade checklist. Meaningful failed-case/targeted/fullheadCI/sourceartifact/runtime/liveproof, no partialall-doneclaim/no newworkers/no invalidation of activefamilyonboarding. Freshauthschema andnecessaryD1migration accessmustbesupported; no cancelled/deniedactionreplay/newcredentials/purchases, actualpushdeliveryonlybyreceipt.",
-      "next_action": "Latestparent2ee5ef62/builda48256d contentfix reconcileactualPeopleHouseholdProfile topermissioncheckedmanager plushouseholdsummaryViewbutton. ConsolidateMemorialellipsisEditfullform/title/yearunknown,Childrenrecords card,ancestorresponsivewidth. Implementnotificationactiontoasts independently and signup/return pushpromptframework flaggedOFF untilverifieddelivery, no spontaneouspermission/send. Multi0023 migration+API11targetedPASS; devicehint/resetmodels5PASS; v3assets20PASS; sourceworkcontinues, no duplicatefullCIyet.",
+      "next_action": "Complete consolidated batch including Family full Calendar header action, retained three tabs and Reunion Schedule separation with privacy/recurrence/year/create/edit proof; retain D1 denial gate and backup rehearsal, disabled push popup ships without delivery activation.",
       "primary_team": "release",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1305,8 +1314,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T21:29:23.569Z",
-      "lease_until": "2026-10-09T09:29:23.569Z",
+      "updated_at": "2026-10-08T21:37:47.424Z",
+      "lease_until": "2026-10-09T09:37:47.424Z",
       "amendment_count": 2,
       "amendments": [
         {
