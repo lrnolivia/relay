@@ -149,8 +149,10 @@ const BUILD_IDENTITY_KEYS=['CF_ACCESS_CLIENT_ID','CF_ACCESS_CLIENT_SECRET'];
 // Called only after MCP authentication. Credentials come from private request
 // headers, never tool arguments or durable operation intent. Revalidate that
 // pair at the fixed Access-protected origin before giving it to Workers Builds.
-async function verifyBuildIdentity(identity,request){
+async function verifyBuildIdentity(identity,request,verifiedJwt){
   if(BUILD_IDENTITY_KEYS.some(key=>typeof identity?.[key]!=='string'||!identity[key]||identity[key].length>5000||/[\r\n]/.test(identity[key])))throw Error('Existing authenticated CI service identity is required');
+  let claims;try{claims=JSON.parse(Buffer.from(verifiedJwt.split('.')[1],'base64url').toString('utf8'));}catch{}
+  if(claims?.common_name!==identity.CF_ACCESS_CLIENT_ID)throw Error('CI identity must match the authenticated service token');
   for(const scope of ['global','relay']){
     let response;
     try{response=await request('https://relay.loew.fi/autonomy-status?scope='+scope,{headers:{'CF-Access-Client-Id':identity.CF_ACCESS_CLIENT_ID,'CF-Access-Client-Secret':identity.CF_ACCESS_CLIENT_SECRET},redirect:'manual',cache:'no-store',signal:AbortSignal.timeout(5000)});}
@@ -173,7 +175,7 @@ export async function configureRelayBuildGuard(env,input,deps={}){
   if(input.operation_id.length>100)throw Error('Build guard operation identity exceeds 100 characters');
   const status=await projectCloudStatus(env,'relay',deps.github);
   if(!status.writable||status.repository!=='lrnolivia/relay'||status.worker!=='relay'||status.transport!=='workers-builds'||status.production_branch!=='main'||status.build_command!=='npm run build'||!['npx wrangler deploy',RELAY_GUARDED_DEPLOY_COMMAND].includes(status.deploy_command))throw Error('Canonical Relay Workers Builds registration is required');
-  await verifyBuildIdentity(deps.buildIdentity,deps.identityFetch||fetch);
+  await verifyBuildIdentity(deps.buildIdentity,deps.identityFetch||fetch,deps.accessJwt);
   const hold={action:'hold',scope:'relay',expected_revision:input.expected_revision,operation_id:input.operation_id+'-hold',reason:input.reason};
   const resume={action:'resume',scope:'relay',expected_revision:input.expected_revision+1,operation_id:input.operation_id+'-resume',reason:input.reason,authorization:input.authorization};
   const before=(await autonomyRequest(env,{action:'status',scope:'relay'})).state;

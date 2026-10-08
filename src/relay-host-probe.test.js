@@ -15,7 +15,7 @@ test("authenticated endpoint preserves original tools and controls alongside the
   const kid = "host-proof-regression";
   const encode = value => Buffer.from(JSON.stringify(value)).toString("base64url");
   const payload = encode({ alg: "RS256", kid }) + "." + encode({ iss: "https://loewfi.cloudflareaccess.com",
-    aud: ["7d90e5b24c6c74b4bd0fb36699e0a65a3aa25057763986ca1b8ce1a52d528819"], exp: Math.floor(Date.now() / 1000) + 600 });
+    aud: ["7d90e5b24c6c74b4bd0fb36699e0a65a3aa25057763986ca1b8ce1a52d528819"], common_name:'synthetic-client', exp: Math.floor(Date.now() / 1000) + 600 });
   const token = payload + "." + sign("RSA-SHA256", Buffer.from(payload), privateKey).toString("base64url");
   t.mock.method(globalThis, "fetch", async url => {
     assert.equal(String(url), "https://loewfi.cloudflareaccess.com/cdn-cgi/access/certs");
@@ -41,6 +41,34 @@ test("authenticated endpoint preserves original tools and controls alongside the
   assert.equal(autonomy.inputSchema.properties.buildIdentity,undefined);
   const setupDenied=await worker.fetch(new Request('https://relay.loew.fi/mcp',{method:'POST',headers:{'content-type':'application/json','CF-Access-Client-Id':'synthetic-client','CF-Access-Client-Secret':'synthetic-secret'},body:JSON.stringify({jsonrpc:'2.0',id:2,method:'tools/call',params:{name:'relay_autonomy',arguments:{action:'configure_build_guard',scope:'relay',expected_revision:0,operation_id:'unauthenticated-setup',reason:'Synthetic denial test',authorization:'Synthetic'}}})}),{});
   assert.equal(setupDenied.status,401);
+  await t.test('private setup headers survive removal of primary service headers and bind to the verified JWT',async()=>{
+    const {readFile}=await import('node:fs/promises');
+    const {autonomyState}=await import('./autonomy-control.js');
+    const registration=JSON.parse(await readFile(new URL('../projects/relay.json',import.meta.url)));
+    const priorFetch=globalThis.fetch;let probes=0,providerCalls=0;
+    t.mock.method(globalThis,'fetch',async(url,options)=>{
+      const path=String(url);
+      if(path.startsWith('https://api.github.com/')){
+        const value=path.includes('/contents/projects/relay.json')?registration:{project:'relay',claims:[],queue:[],legacy_branches:[]};
+        return Response.json({type:'file',sha:'d'.repeat(40),encoding:'base64',content:Buffer.from(JSON.stringify(value)).toString('base64')});
+      }
+      if(path.startsWith('https://relay.loew.fi/autonomy-status?')){
+        probes++;assert.equal(options.headers['CF-Access-Client-Id'],'synthetic-client');assert.equal(options.headers['CF-Access-Client-Secret'],'synthetic-secret');assert.equal(options.headers['X-Relay-Build-Client-Secret'],undefined);
+        return Response.json({schema:1,scope:new URL(url).searchParams.get('scope'),revision:0,held:false,enforced:true});
+      }
+      if(path.startsWith('https://api.cloudflare.com/'))providerCalls++;
+      return priorFetch(url,options);
+    });
+    const env={RELAY_GITHUB_TOKEN:'private-header-fixture',RELAY_AUTONOMY_GUARD:'enforced',RELAY_EVENTS:{idFromName:name=>name,get:name=>({fetch:async(_url,options)=>{
+      const input=JSON.parse(options.body);assert.equal(input.action,'status');
+      return Response.json({ok:true,state:{...autonomyState(input.scope),held:name.endsWith(':global'),reason:'Synthetic stop'}});
+    }})}};
+    const call=async client=>worker.fetch(new Request('https://relay.loew.fi/mcp',{method:'POST',headers:{'content-type':'application/json','cf-access-jwt-assertion':token,'X-Relay-Build-Client-Id':client,'X-Relay-Build-Client-Secret':'synthetic-secret'},body:JSON.stringify({jsonrpc:'2.0',id:3,method:'tools/call',params:{name:'relay_autonomy',arguments:{action:'configure_build_guard',scope:'relay',expected_revision:0,operation_id:'private-header-regression',reason:'Synthetic setup',authorization:'Synthetic resume'}}})}),env);
+    try{
+      const result=await (await call('synthetic-client')).json();assert.equal(result.result.isError,true);assert.match(JSON.stringify(result),/held for global/);assert.equal(probes,2);assert.equal(providerCalls,0);assert.doesNotMatch(JSON.stringify(result),/synthetic-client|synthetic-secret|private-header-fixture/);
+      const mismatch=await (await call('different-client')).json();assert.match(JSON.stringify(mismatch),/must match the authenticated service token/);assert.equal(probes,2);assert.equal(providerCalls,0);
+    }finally{t.mock.method(globalThis,'fetch',priorFetch);}
+  });
   assert.deepEqual(tools.find(tool => tool.name === "relay_ui_request")._meta.ui.visibility, ["app"]);
   const manifestTool=tools.find(tool=>tool.name==='relay_source_tree');
   assert.equal(manifestTool.annotations.readOnlyHint,true);assert.equal(manifestTool.annotations.destructiveHint,false);

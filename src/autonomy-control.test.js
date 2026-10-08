@@ -105,7 +105,7 @@ function buildGuardFixture(){
  const trigger={trigger_uuid:'364453c2-c933-447a-9b19-451dff930e90',external_script_id:tag,root_directory:'/',branch_includes:['main'],branch_excludes:[],build_command:'npm run build',deploy_command:'npx wrangler deploy',repo_connection:{provider_type:'github',provider_account_name:'lrnolivia',repo_name:'relay'}};
  const variables={UNRELATED:{value:'keep',is_secret:false,created_on:'2020-01-01T00:00:00Z'}},calls=[];
  Object.assign(f.deps,{
-  accessJwt:'verified-private-context',buildIdentity:{CF_ACCESS_CLIENT_ID:'fixture-client',CF_ACCESS_CLIENT_SECRET:'fixture-secret'},
+  accessJwt:'verified.'+Buffer.from(JSON.stringify({common_name:'fixture-client'})).toString('base64url')+'.signature',buildIdentity:{CF_ACCESS_CLIENT_ID:'fixture-client',CF_ACCESS_CLIENT_SECRET:'fixture-secret'},
   identityFetch:async(url,options)=>{assert.match(url,/^https:\/\/relay\.loew\.fi\/autonomy-status\?scope=(global|relay)$/);assert.equal(options.redirect,'manual');assert.deepEqual(options.headers,{'CF-Access-Client-Id':'fixture-client','CF-Access-Client-Secret':'fixture-secret'});return Response.json({schema:1,scope:new URL(url).searchParams.get('scope'),revision:0,held:false,enforced:true});},
   buildApi:async(path,options={})=>{
    calls.push({path,method:options.method||'GET'});
@@ -139,6 +139,7 @@ test('build setup rejects missing or invalid private identity and unregistered s
  for(const change of [
   f=>{delete f.deps.accessJwt;},f=>{delete f.deps.buildIdentity;},f=>{f.deps.buildIdentity.CF_ACCESS_CLIENT_SECRET='';},
   f=>{f.deps.buildIdentity.CF_ACCESS_CLIENT_SECRET='secret\n';},f=>{f.args.scope='field';},f=>{f.env.RELAY_AUTONOMY_GUARD='disabled';},
+  f=>{f.deps.accessJwt='verified.'+Buffer.from(JSON.stringify({common_name:'different-client'})).toString('base64url')+'.signature';},
   f=>{f.deps.identityFetch=async()=>{throw Error('secret-containing remote diagnostic');};},
   f=>{f.deps.identityFetch=async()=>new Response(null,{status:302,headers:{Location:'https://login.example/'}});},
   f=>{f.deps.identityFetch=async()=>Response.json({schema:1,scope:'wrong',revision:0,held:false,enforced:true});},

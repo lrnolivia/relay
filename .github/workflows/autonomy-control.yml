@@ -57,6 +57,12 @@ jobs:
             'CF-Access-Client-Id': id, 'CF-Access-Client-Secret': secret,
             'Content-Type': 'application/json', Accept: 'application/json, text/event-stream'
           };
+          // Access authenticates the primary headers. Its service JWT binds
+          // this private setup-only copy to the same existing CI identity.
+          if (requests.some(input => input.action === 'configure_build_guard')) {
+            headers['X-Relay-Build-Client-Id'] = id;
+            headers['X-Relay-Build-Client-Secret'] = secret;
+          }
           const diagnostic = value => String(value || 'No diagnostic returned').replaceAll(id, '[redacted]').replaceAll(secret, '[redacted]').slice(0, 1500);
           let sequence = 0;
           async function rpc(method, params) {
