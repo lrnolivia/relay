@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-08T01:45:37.331Z",
+  "updated_at": "2026-10-08T01:45:43.203Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -258,6 +258,52 @@
       "lease_until": "2026-10-04T14:29:36.854Z"
     },
     {
+      "id": "rtxforge-ci-efficiency-20261008",
+      "owner": "01a118b2-63d5-7a63-8d3a-55bf649b1f89",
+      "branch": "rtxforge/ci-efficiency-20261008",
+      "paths": [
+        ".github/workflows/",
+        "tests/ui_couch_review.py"
+      ],
+      "resources": [
+        "rtxforge-ci-efficiency"
+      ],
+      "goal": "Streamline CI under Lauren's explicit ALL-project request and CI-only takeover authorization.",
+      "acceptance": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
+      "next_action": "Repair actual PR16 native CI failure with bounded GTK frame-readiness handling, retaining every screenshot and behavior assertion. Preserve product implementation. Verify readiness/timeout plus actual native CI and merge only when all checks pass.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "3a3f7e49c877bdb66fdc5ddac254acd97f62f1e7",
+      "state": "completed",
+      "created_at": "2026-10-08T01:09:12.483Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Streamline CI under Lauren's explicit ALL-project request and CI-only takeover authorization.",
+          "acceptance": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
+          "at": "2026-10-08T01:09:12.483Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-ci-efficiency-20261008:acceptance:0",
+            "text": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
+            "at": "2026-10-08T01:09:12.483Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T01:45:37.331Z",
+      "lease_until": "2026-10-08T13:45:37.331Z",
+      "pr": 16,
+      "merged_head_sha": "3576dc91213ee64c09f4fe58735d905bfd80be68",
+      "merge_commit_sha": "0778d5e577e95a6d65bdd68ffcf860ea90cff635",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/16 merge 0778d5e577e95a6d65bdd68ffcf860ea90cff635; exact reviewed head 3576dc91213ee64c09f4fe58735d905bfd80be68 passed native, KDE, Wayland and admission. Three files read back and restored with Git blob + SHA256 integrity checks. Every native image/assertion retained; frame readiness bounded at 5s. CI workflow scope is released; original product branch preserved.",
+      "work_accounted": true,
+      "completed_at": "2026-10-08T01:45:37.331Z"
+    },
+    {
       "id": "rtxforge-shared-package-ui-20261002",
       "owner": "01a10034-0e3d-7162-886f-0038c226a8c9",
       "branch": "rtxforge/shared-package-ui-20261002",
@@ -270,47 +316,7 @@
         "packaging/",
         "README.md",
         "VERSION",
-        "tests/test_adoption_lifecycle.py",
-        "tests/test_app_completion.py",
-        "tests/test_app_update.py",
-        "tests/test_artwork_overrides.py",
-        "tests/test_batches.py",
-        "tests/test_cleanup.py",
-        "tests/test_conflict_scope.py",
-        "tests/test_controller_native.py",
-        "tests/test_desktop_service.py",
-        "tests/test_frontend_session.py",
-        "tests/test_game_launch.py",
-        "tests/test_legacy_repair.py",
-        "tests/test_nr_composition.py",
-        "tests/test_operation_finalization.py",
-        "tests/test_package_cache.py",
-        "tests/test_package_catalog.py",
-        "tests/test_package_download.py",
-        "tests/test_per_game_presets.py",
-        "tests/test_release_backup.py",
-        "tests/test_route_policy.py",
-        "tests/test_runtime_updates.py",
-        "tests/test_setup.py",
-        "tests/test_steam_artwork.py",
-        "tests/test_steam_artwork_bundle.py",
-        "tests/test_steam_self_install.py",
-        "tests/test_steamgrid_credentials.py",
-        "tests/test_ui_colors.py",
-        "tests/test_ui_scaling.py",
-        "tests/test_user_messages.py",
-        "tests/ui_actions_accents.py",
-        "tests/ui_app_completion.py",
-        "tests/ui_couch_workspace.py",
-        "tests/ui_install_flow.py",
-        "tests/ui_joined_reviews.py",
-        "tests/ui_layout_scaling.py",
-        "tests/ui_library_resume.py",
-        "tests/ui_package_review.py",
-        "tests/ui_settings_refinements.py",
-        "tests/ui_steam_self_review.py",
-        "tests/ui_steamgrid_review.py",
-        "tests/ui_support_checks.py"
+        "tests/"
       ],
       "resources": [
         "rtxforge-shared-package-engine",
@@ -318,7 +324,7 @@
       ],
       "goal": "User Codex handoff: finish rtxForge Classic, package/runtime correctness, native themes and remaining portability/QA goals. Julian implementation stopped.",
       "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserve all original requirements, shared safe package engine and runtime MFG evidence. Verify per-game presets and NR failure; native Dark/Light stock greys, custom Night. Native KDE/Hyprland/controller/Gamescope/metadata/extras/beta portal and consent-aware QA retained. Approved final Papirus launcher and unplated in-app SVGs are in handoff recovery/, not installed. PR6 draftabd243e7 remains held/unmerged; published preview695d292e. Separate paused Figma fidelity task not resumed. User-started receiver identity not yet known; no invented owner or automatic launch.\n2026-10-03 current user scope: finish all GTK app work and perform NR diagnosis. Defer Qt/Kirigami and SteamOS/CachyOS-specific work; table the beta website. Continue desktop/Game Mode/controller support, metadata/tools, safe package handling, Classic visual polish and app-side support as applicable. Installed game access remains read-only unless a scoped test write is explicitly authorized. Preserve known-good MFG. No new production merge/release approval is inferred.\nExplicit user authorization supersedes read-only test restriction: controlled reversible tests on any game with NR installed, plus Cyberpunk, Avowed, Forza, Witcher 3 and Avatar. Preserve backups and known-good MFG.\nUser refined controller UX: a game-like tool menu with large directional choices; traditional Classic controls only during keyboard/mouse use. Dedicated couch surface shares the safe engine. User reports F10 may not have worked in controlled Avatar run; investigate exact installed hotkey handler.\n2026-10-03 16:42 UTC resume batch: PR6 is now merged as 96c18d34b46c48a7f1d8c2f34e5238dfb6a3a7df and the continuous Linux preview is published; older held/unmerged wording above is historical. Lauren authorizes one Sol 6.1 medium local Linux Codex worker, preferably resuming her previous session. Implement Settings UI scaling (proposed 150% default at 4K, adjustable, avoid double OS scaling); game-mode dashboard poster/wide artwork, left/right library shelf and visible row count; persistent top/bottom navigation across all game-mode screens; compact integrated auto-hiding controller hints with bottom navigation, optional auto-hide in normal layout while keeping current always-visible default. Preserve approved current dashboard and shared safe engine. Verify native fullscreen, scaling, focus/navigation and 4K screenshots without claiming physical controller input unless actually tested. Julian retains icon/artwork and ctrl/Relay. Do not start Windows port or Steam Store publication. Optional installer Add to Steam artwork integration may follow when Julian supplies approved assets. Root makes no simultaneous RTX source edits; actual receiving session ID must be verified before ownership handoff. Existing wider acceptance remains accounted, not declared complete.\n2026-10-04 16:28–16:31 UTC: completed verified portions may ship incrementally for Lauren's review. Shipping tested implemented scope does not claim final 1.0 RC, live API credentials, physical SteamOS/GPU or hardware acceptance. Preserve remaining full scope.",
-      "next_action": "Preserve product assignment and branch. Lauren authorized CI-only takeover and permanent CI repairs: tests/ui_couch_review.py is isolated for frame-readiness handling; exact blob ccc2aee84ee3a2b99aaec60e4fd3b07a29d5c73f matches main and product branch. All other existing test paths and product resources remain reserved. Future owner refreshes scope before adding files; no source bytes changed.",
+      "next_action": "Original product test scope restored after CI-only fixture repair merged in PR16 at 0778d5e577e95a6d65bdd68ffcf860ea90cff635. Preserve this product branch and all unfinished objective. Future owner integrates current main deliberately; tests/ui_couch_review.py now waits for GTK frame readiness without weakening assertions. CI workflow files remain available for future claim.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -353,8 +359,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T01:31:56.817Z",
-      "lease_until": "2026-10-08T13:31:56.817Z",
+      "updated_at": "2026-10-08T01:45:43.203Z",
+      "lease_until": "2026-10-08T13:45:43.203Z",
       "amendment_count": 28,
       "amendments": [
         {
@@ -803,52 +809,6 @@
           "next_action": "Explicit current user authorizes this Linux session LOCAL resume in /home/loew/Repos/rtxForge-codex on codex/resume-main-20261007 at GitHub main56a31705e1a0038fd3f58fd992356411797362a5, overriding older stopped-session/branch destination for local-only development. Preserve historical task branch and all original acceptance. No push, merge, deploy, drivers/system settings or credential changes without approval. Preserve dirty checkout/backups. Reproduce Library-first/count/branding/shared operation flow/independent Restore Update/launch logging defects; inspect own Steam roles and existing customizations read-only. Focused native fixture checks and recoverable local checkpoints; no user Steam artwork writes."
         }
       ]
-    },
-    {
-      "id": "rtxforge-ci-efficiency-20261008",
-      "owner": "01a118b2-63d5-7a63-8d3a-55bf649b1f89",
-      "branch": "rtxforge/ci-efficiency-20261008",
-      "paths": [
-        ".github/workflows/",
-        "tests/ui_couch_review.py"
-      ],
-      "resources": [
-        "rtxforge-ci-efficiency"
-      ],
-      "goal": "Streamline CI under Lauren's explicit ALL-project request and CI-only takeover authorization.",
-      "acceptance": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
-      "next_action": "Repair actual PR16 native CI failure with bounded GTK frame-readiness handling, retaining every screenshot and behavior assertion. Preserve product implementation. Verify readiness/timeout plus actual native CI and merge only when all checks pass.",
-      "category": "maintenance",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "adrian",
-      "supporting_staff": [],
-      "base_sha": "3a3f7e49c877bdb66fdc5ddac254acd97f62f1e7",
-      "state": "completed",
-      "created_at": "2026-10-08T01:09:12.483Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Streamline CI under Lauren's explicit ALL-project request and CI-only takeover authorization.",
-          "acceptance": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
-          "at": "2026-10-08T01:09:12.483Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-ci-efficiency-20261008:acceptance:0",
-            "text": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
-            "at": "2026-10-08T01:09:12.483Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-08T01:45:37.331Z",
-      "lease_until": "2026-10-08T13:45:37.331Z",
-      "pr": 16,
-      "merged_head_sha": "3576dc91213ee64c09f4fe58735d905bfd80be68",
-      "merge_commit_sha": "0778d5e577e95a6d65bdd68ffcf860ea90cff635",
-      "evidence": "https://github.com/lrnolivia/rtxForge/pull/16 merge 0778d5e577e95a6d65bdd68ffcf860ea90cff635; exact reviewed head 3576dc91213ee64c09f4fe58735d905bfd80be68 passed native, KDE, Wayland and admission. Three files read back and restored with Git blob + SHA256 integrity checks. Every native image/assertion retained; frame readiness bounded at 5s. CI workflow scope is released; original product branch preserved.",
-      "work_accounted": true,
-      "completed_at": "2026-10-08T01:45:37.331Z"
     }
   ]
 }
