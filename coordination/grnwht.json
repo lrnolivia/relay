@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T19:19:34.675Z",
+  "updated_at": "2026-10-08T19:21:47.808Z",
   "legacy_branches": [
     "main"
   ],
@@ -189,10 +189,10 @@
     },
     {
       "id": "grnwht-email-visual-templates-20261008",
-      "owner": "01a11b04-95a2-7212-aa48-1e23e956d00a",
+      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
       "goal": "Renderable branded notification/announcement email templates and chosen-theme previews only; preserve existing auth/invitation mails and live release; no delivery/recipient/consent changes",
       "acceptance": "Safe HTML/text renderers; actual GW palette/wordmark/Momo default with selected font/accent input and email-safe fallback; isolated fictional light/dark preview fixtures; meaningful escaping/URL/theme tests and build/test; no send path or production deploy",
-      "next_action": "Claim exact bounded visual-template scope then inspect existing design and implement offline previews",
+      "next_action": "Keep PR19held/draft for Lauren/Julian visualreview; all3CI37794605842PASS and Libraryv15/recovery/nativeimageIDs retained. No merge/send/dispatch. Prior writer resumes separately authorizedpushcorrection; no emailwriter running.",
       "paths": [
         "backend/src/family-update-email.mjs",
         "backend/src/family-email-theme.mjs",
@@ -225,7 +225,16 @@
             "at": "2026-10-08T14:15:16.007Z"
           }
         ]
-      }
+      },
+      "handoffs": [
+        {
+          "at": "2026-10-08T19:21:47.808Z",
+          "from": "01a11b04-95a2-7212-aa48-1e23e956d00a",
+          "to": "01a1146d-0267-735e-8332-fa38cf7fb007",
+          "next_action": "Keep PR19held/draft for Lauren/Julian visualreview; all3CI37794605842PASS and Libraryv15/recovery/nativeimageIDs retained. No merge/send/dispatch. Prior writer resumes separately authorizedpushcorrection; no emailwriter running."
+        }
+      ],
+      "updated_at": "2026-10-08T19:21:47.808Z"
     },
     {
       "id": "grnwht-device-push-correction-20261008",
@@ -905,7 +914,7 @@
     },
     {
       "id": "grnwht-email-visual-templates-20261008",
-      "owner": "01a11b04-95a2-7212-aa48-1e23e956d00a",
+      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
       "branch": "grnwht/email-visual-templates-20261008",
       "paths": [
         "backend/src/family-update-email.mjs",
@@ -922,7 +931,7 @@
       ],
       "goal": "Renderable branded notification/announcement templates and explicit chosen-theme inputs, offline preview only",
       "acceptance": "Actual current GW flat palette/wordmark/Momo default and selectedfont/accent where supplied; safe fallback/escaping/plaintext; light/dark fictional previews+tests/build; no auth/invitation modification, dispatch/sends/consent/credentials/deploy",
-      "next_action": "Polished tested visual preview ready in draftPR19 exactb2ae5ba; sharedCIgreen/browserCIpending. Parent requested stop at preview; source/evidence Library+R2 recoverable. Await review and separately authorized delivery decisions; no source writer, deployment, email or background monitor running.",
+      "next_action": "Keep PR19held/draft for Lauren/Julian visualreview; all3CI37794605842PASS and Libraryv15/recovery/nativeimageIDs retained. No merge/send/dispatch. Prior writer resumes separately authorizedpushcorrection; no emailwriter running.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -945,8 +954,16 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T14:47:15.200Z",
-      "lease_until": "2026-10-09T02:47:15.200Z"
+      "updated_at": "2026-10-08T19:21:47.808Z",
+      "lease_until": "2026-10-09T07:21:47.808Z",
+      "handoffs": [
+        {
+          "at": "2026-10-08T19:21:47.808Z",
+          "from": "01a11b04-95a2-7212-aa48-1e23e956d00a",
+          "to": "01a1146d-0267-735e-8332-fa38cf7fb007",
+          "next_action": "Keep PR19held/draft for Lauren/Julian visualreview; all3CI37794605842PASS and Libraryv15/recovery/nativeimageIDs retained. No merge/send/dispatch. Prior writer resumes separately authorizedpushcorrection; no emailwriter running."
+        }
+      ]
     }
   ]
 }
