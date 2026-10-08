@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "gamebridge",
-  "updated_at": "2026-10-06T02:43:22.792Z",
+  "updated_at": "2026-10-08T01:35:24.457Z",
   "legacy_branches": [
     "main",
     "runner/universal-authority"
@@ -103,11 +103,9 @@
         "lite/",
         "tests/",
         "AGENTS.md",
-        ".github/workflows/core-safety.yml",
         "src/gamebridge/__init__.py",
         "src/gamebridge/sync.py",
-        "tests/test_sync_planner.py",
-        ".github/workflows/runner-coordination.yml"
+        "tests/test_sync_planner.py"
       ],
       "resources": [
         "gamebridge-shared-core",
@@ -115,7 +113,7 @@
       ],
       "goal": "Implement the full researched GameBridge ambition: finish compact Lite, build Main, share one safe interoperability engine, deliver native Windows/GNOME/KDE and independent packages, then complete documented post-core expansions. Full source-linked mandate: https://github.com/lrnolivia/relay/issues/150 . This is an umbrella Codex implementation assignment, not research-only work. Follow M0–M7 and the complete provider inventory; do not stop at UI/stubs/one vertical slice/two example games. Lite remains same-game/same-distribution cross-OS; validated cross-store conversion belongs in Main. Preserve newer local/remote work and approved UI; inspected remote baseline 3606f651319891a094a1e80625ac36591be79f4c does not prove local work is absent. Current user request authorizes this assignment while data safety and release gates remain mandatory.",
       "acceptance": "Full criteria: https://github.com/lrnolivia/relay/issues/150 . (1) Reconcile live local/remote/claims, recover available later append-only research, preserve newer approved UI and maintain a requirement/code/test/evidence matrix. (2) Harden identity engine: persistent settings, exact safe fields, format-aware escaping/encoding, protected IDs/custom data, fresh preimages, unique checksummed backups, atomic/journaled apply and verified restore; unknown is not compatible. (3) Shared testable provider/path/game adapters, explicit game/distribution/runtime/account identities, scoped Windows Known Folders/Proton/Wine/XDG/Flatpak discovery, pinned offline catalog, fail-closed unsupported semantics. (4) Lite Review/Go use immutable plans; local/shared .gamebridge generations/endpoint baselines, content-based three-way sync, PLAN_STALE, preserved conflicts, locks/quiescence, verified backup/publication/recovery. Missing/inaccessible/uninitialized is not empty; no timestamp-only winners/deletion propagation. (5) Main Library/Profiles/Migration/Backups covers Steam, Xbox/Game Pass/MS Store, Epic/EOS, GOG, Ubisoft, EA, Rockstar, Battle.net, Amazon, itch, PlayStation PC, Heroic, Lutris, Bottles, Proton/Wine, native/Flatpak/manual/shared installs. Real discovery and capability fixtures; unknown games visible, no provider-label stubs. (6) Validated direct-copy/container/game-adapter migration: WGS extraction != conversion != installation != game-load verification. Main cross-store edges individually proven; no account/DRM/auth bypass or generic binary rewrites. Source/destination backups, restore and cloud conflict evidence. (7) Main native GTK4/libadwaita, Qt6/Kirigami, WinUI3; compact Lite Windows/Linux; approved family design without graphics scope. Safe legacy-ID migration to separate fi.loew.GameBridgeLite/fi.loew.GameBridge; independent Flatpak/AppImage/Windows packages, package-manager-safe updates, GPL-3.0-or-later/notices, CI and verified remote artifacts. (8) After core safety: community registry, metadata previews, duplicate detection, cross-device sync, opt-in scheduled backups/history, supported config migration, cloud comparison, bundles/recipes/new-PC restore. Track actual prerequisites; no silently dropped ambitions. (9) Exact-artifact tests: safe names/settings, provider identity, bidirectional sync/conflicts/stale/first-run/missing endpoints, link/case/Unicode/filesystem boundaries, concurrent writers, interruption/recovery/corruption/full disk, native UI and package upgrades. PASS/FAIL/BLOCKED/NOT RUN distinct; no fabricated runtime/save-load evidence. (10) All M0–M7 requirements accounted before umbrella closure; incomplete/protected capabilities explicit. Actual implementation uses bounded milestone claims and draft PRs under current coordination/QA rules, no force-push or bypassed checks.",
-      "next_action": "Review and publish exact tested PR3 planner foundation and stale-workflow correction; preserve explicit no-save-copy boundaries and all incomplete M0-M7 scope.",
+      "next_action": "Lauren explicitly authorizes this chat01a118b2 to take over CI-only and release it after completion. Only GW is active per her direct instruction. Workflow blobs on retained branch equal current main; no unpublished workflow bytes are discarded. Preserve original product branch/objectives/reservations and original owner. Resume product work only after fresh admission; CI scope moves to separate bounded assignment.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -138,8 +136,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-06T02:43:22.792Z",
-      "lease_until": "2026-10-06T14:43:22.792Z",
+      "updated_at": "2026-10-08T01:09:16.087Z",
+      "lease_until": "2026-10-08T13:09:16.087Z",
       "handoffs": [
         {
           "at": "2026-10-04T08:44:26.327Z",
@@ -154,6 +152,51 @@
           "next_action": "Lauren explicitly says merge and deploy safe tested work. Previous owner latest turn verified interrupted. Root reviews existing PR3 verified planner foundation and canonical coordination repair, preserves all incomplete M0-M7 scope, no workers and no user save mutations."
         }
       ]
+    },
+    {
+      "id": "gamebridge-ci-efficiency-20261008",
+      "owner": "01a118b2-63d5-7a63-8d3a-55bf649b1f89",
+      "branch": "gamebridge/ci-efficiency-20261008",
+      "paths": [
+        ".github/workflows/"
+      ],
+      "resources": [
+        "gamebridge-ci-efficiency"
+      ],
+      "goal": "Streamline CI under Lauren's explicit ALL-project request and CI-only takeover authorization.",
+      "acceptance": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
+      "next_action": "Refresh workflow bytes and candidate identity; apply bounded reductions, run canonical gates and complete CI ownership.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "44c0d2a6b3368eddc754d6ee8251c38975c439de",
+      "state": "completed",
+      "created_at": "2026-10-08T01:09:20.454Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Streamline CI under Lauren's explicit ALL-project request and CI-only takeover authorization.",
+          "acceptance": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
+          "at": "2026-10-08T01:09:20.454Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "gamebridge-ci-efficiency-20261008:acceptance:0",
+            "text": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
+            "at": "2026-10-08T01:09:20.454Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T01:35:24.457Z",
+      "lease_until": "2026-10-08T13:35:24.457Z",
+      "pr": 4,
+      "merged_head_sha": "72e0d7c20e9df80dfb08f24dbed8f136fdaf4d00",
+      "merge_commit_sha": "5c7b3a68cf8fe94e1036c67e1c5f10266e4069a0",
+      "evidence": "https://github.com/lrnolivia/GameBridge/pull/4; all exact-head required checks passed. Merge 5c7b3a68cf8fe94e1036c67e1c5f10266e4069a0 changed workflows read back byte-for-byte, Git blob hashes checked after isolated restoration. Daily hygiene and obsolete-PR cancellation preserve all commands/permissions/platforms/assertions. CI slice completed and released; product branches retained.",
+      "work_accounted": true,
+      "completed_at": "2026-10-08T01:35:24.457Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "ctrl",
-  "updated_at": "2026-10-08T01:02:57.979Z",
+  "updated_at": "2026-10-08T01:27:25.419Z",
   "legacy_branches": [
     "main"
   ],
@@ -724,7 +724,7 @@
       "primary_staff": "adrian",
       "supporting_staff": [],
       "base_sha": "81648924c9949f76745dc103a49f1c027f7484ac",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-08T00:51:30.709Z",
       "objective_history": {
         "baseline": {
@@ -741,8 +741,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T01:02:57.979Z",
-      "lease_until": "2026-10-08T13:02:57.979Z"
+      "updated_at": "2026-10-08T01:27:25.419Z",
+      "lease_until": "2026-10-08T13:27:25.419Z",
+      "pr": 31,
+      "merged_head_sha": "351517027898dc34f1bfa324eb9103bc78318759",
+      "merge_commit_sha": "0dfe6c3926b4ae02068bdcc9b339aa625ddbd062",
+      "evidence": "https://github.com/lrnolivia/ctrl/pull/31; required exact-head admission and existing quality/build checks passed. Current main workflow readback equals reviewed candidate byte-for-byte (blob a02d69c1eaa467a8129511ad94105323528ae4d4). Changed workflow bytes restored and hash-verified in isolated recovery directory. Daily hygiene, immediate admission and required assertions preserved. CI-only slice complete; other product work preserved.",
+      "work_accounted": true,
+      "completed_at": "2026-10-08T01:27:25.419Z"
     }
   ]
 }
