@@ -1,6 +1,7 @@
 import { githubApiRequest } from "./source.js";
 import { cloudWriteScripts, deployCloudVersion, cloudWorkerSummary, recoverCloudVersion, activeCloudVersion, retainedCloudVersion, cloudBuilds, cloudflareApiRequest } from "./cloud.js";
 import { guardAutonomy, autonomyRequest, validateAutonomyInput } from './autonomy-control.js';
+import { verifyRetainedReleaseArchive } from './release-recovery.js';
 
 const PROJECT = /^[a-z0-9-]{1,80}$/;
 const decode = content => Buffer.from(String(content || "").replace(/\s/g, ""), "base64").toString("utf8");
@@ -255,6 +256,10 @@ export async function callAutonomyControl(env,input,deps={}){
   }
   const profile=rollbackProfile(status);
   if(!rollback){
+    if(input.target.recovery){
+      if(input.action==='healthy')await guardAutonomy(env,[input.scope]);
+      await verifyRetainedReleaseArchive(env,input.target);
+    }
     const proof=await (input.action==='approve'?verifyApprovedTarget:verifyReleaseTarget)(env,status,input.target,deps);
     const result=await autonomyRequest(env,input);
     return {...result,verified_release:proof};

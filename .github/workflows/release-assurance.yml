@@ -1,0 +1,36 @@
+name: Relay release assurance
+
+on:
+  workflow_run:
+    workflows: ['Relay workspace checks']
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: relay-release-assurance
+  cancel-in-progress: false
+
+jobs:
+  retain:
+    if: github.repository == 'lrnolivia/relay' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      # Run only the protected default-branch controller. Archived code is
+      # restored and hashed as data; it is never executed with CI credentials.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+      - name: Retain, read back and restore the exact completed release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CF_ACCESS_CLIENT_ID: ${{ vars.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF }}
+        run: node scripts/release-assurance.mjs

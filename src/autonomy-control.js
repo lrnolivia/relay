@@ -27,7 +27,8 @@ export function validateAutonomyInput(input){
  if(input.action==='resume'&&!text(input.authorization))fail('Resume requires explicit user authorization evidence',400);
  if(['healthy','approve'].includes(input.action)){
   const t=input.target;
-  if(input.scope==='global'||!t||Object.keys(t).some(k=>!['worker','version_id','source_sha','compatibility_id','evidence'].includes(k))||!/^[a-zA-Z0-9_-]{1,128}$/.test(t.worker||'')||!VERSION.test(t.version_id||'')||!SHA.test(t.source_sha||'')||!text(t.compatibility_id,200)||!text(t.evidence))fail('Release target requires exact worker/version/source, compatibility and evidence',400);
+  if(input.scope==='global'||!t||Object.keys(t).some(k=>!['worker','version_id','source_sha','compatibility_id','evidence','recovery'].includes(k))||!/^[a-zA-Z0-9_-]{1,128}$/.test(t.worker||'')||!VERSION.test(t.version_id||'')||!SHA.test(t.source_sha||'')||!text(t.compatibility_id,200)||!text(t.evidence))fail('Release target requires exact worker/version/source, compatibility and evidence',400);
+  if('recovery' in t){const r=t.recovery;if(!r||typeof r!=='object'||Array.isArray(r)||Object.keys(r).length!==5||Object.keys(r).some(k=>!['archive_sha256','manifest_sha256','restore_sha256','artifact_id','ci_run'].includes(k))||!['archive_sha256','manifest_sha256','restore_sha256'].every(k=>/^[a-f0-9]{64}$/.test(r[k]||''))||!['artifact_id','ci_run'].every(k=>Number.isSafeInteger(r[k])&&r[k]>0))fail('Recovery pointer requires exact archive/manifest/restore digests and CI/artifact identities',400);}
   if(input.action==='approve'&&(!input.approval||Object.keys(input.approval).some(k=>!['text','source'].includes(k))||!text(input.approval.text)||!text(input.approval.source)))fail('User approval requires its explicit text and source',400);
  }
  if(input.action==='prepare_rollback'&&(input.scope==='global'||!['healthy','user-approved'].includes(input.kind)||!VERSION.test(input.expected_current_version||'')))fail('Rollback requires project, target kind and current version',400);
@@ -92,7 +93,7 @@ export const autonomyTool={
   action:{type:'string',enum:['status','hold','resume','healthy','approve','rollback','configure_build_guard']},scope:{type:'string',pattern:'^(global|[a-z0-9-]{1,80})$'},
   expected_revision:{type:'integer',minimum:0},operation_id:{type:'string',pattern:'^[-\\w]{8,110}$'},
   reason:{type:'string',minLength:1,maxLength:1000},authorization:{type:'string',minLength:1,maxLength:1000},
-  target:{type:'object',additionalProperties:false,properties:{worker:{type:'string'},version_id:{type:'string'},source_sha:{type:'string'},compatibility_id:{type:'string'},evidence:{type:'string',maxLength:1000}},required:['worker','version_id','source_sha','compatibility_id','evidence']},
+  target:{type:'object',additionalProperties:false,properties:{worker:{type:'string'},version_id:{type:'string'},source_sha:{type:'string'},compatibility_id:{type:'string'},evidence:{type:'string',maxLength:1000},recovery:{type:'object',additionalProperties:false,properties:{archive_sha256:{type:'string',pattern:'^[a-f0-9]{64}$'},manifest_sha256:{type:'string',pattern:'^[a-f0-9]{64}$'},restore_sha256:{type:'string',pattern:'^[a-f0-9]{64}$'},artifact_id:{type:'integer',minimum:1},ci_run:{type:'integer',minimum:1}},required:['archive_sha256','manifest_sha256','restore_sha256','artifact_id','ci_run']}},required:['worker','version_id','source_sha','compatibility_id','evidence']},
   approval:{type:'object',additionalProperties:false,properties:{text:{type:'string',maxLength:1000},source:{type:'string',maxLength:1000}},required:['text','source']},
   kind:{type:'string',enum:['healthy','user-approved']},expected_current_version:{type:'string'}
  },required:['action','scope']},

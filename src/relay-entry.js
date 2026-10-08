@@ -20,7 +20,9 @@ import { isContextualRelayTool, contextualizeRelayTool, contextualPresentation }
 import { RELAY_V2_PROBE_URI, relayV2ProbeDescriptor, relayV2ProbeResource } from "./relay-v2-probe.js";
 import { presentationOperation, withHumanPresentation } from './communication-presentation.js';
 import { publicAutonomyStatus, autonomyTool } from './autonomy-control.js';
-import { callAutonomyControl } from './project-cloud.js';
+import { callAutonomyControl, projectCloudStatus, verifyReleaseTarget } from './project-cloud.js';
+import { activeCloudVersion } from './cloud.js';
+import { releaseRecoveryResponse, ReleaseRecoveryError } from './release-recovery.js';
 
 export const RELAY_EXTENSION_VERSION = "1.10.0";
 
@@ -205,6 +207,7 @@ function isExtensionTool(name) {
 async function authProbe(request, message, env) {
   const headers = new Headers(request.headers);
   headers.delete("content-length");
+  headers.set('Content-Type','application/json');
   const probe = {
     jsonrpc: "2.0",
     id: message.id ?? null,
@@ -306,6 +309,18 @@ function toolError(id, error, toolName = "", args = {}, mode) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if(url.pathname==='/api/release-recovery'){
+      const probe=new Request(new URL('/mcp',request.url),{headers:request.headers});
+      const auth=await authProbe(probe,{id:null},env);
+      if(auth.status!==200)return auth;
+      try{return await releaseRecoveryResponse(request,env,{resolveTarget:async source=>{
+        const status=await projectCloudStatus(env,'relay');
+        const active=await activeCloudVersion(env,status.worker);
+        const target={worker:status.worker,version_id:active.version_id,source_sha:source,compatibility_id:status.rollback?.compatibility_id,evidence:'Completed main CI recovery archive; isolated host restoration must precede healthy registration.'};
+        await verifyReleaseTarget(env,status,target,{accessJwt:request.headers.get('Cf-Access-Jwt-Assertion')});
+        return target;
+      }});}catch(error){return Response.json({ok:false,error:error instanceof ReleaseRecoveryError?{code:error.code,message:error.message}:{code:'verification_unavailable',message:'Release archive verification failed; reconcile source, provider and storage before retrying'}},{status:error instanceof ReleaseRecoveryError?error.status:503,headers:{'Cache-Control':'no-store'}});}
+    }
     if (url.pathname === '/autonomy-status' && request.method === 'GET') {
       try {
         if ([...url.searchParams.keys()].some(key=>key!=='scope')) throw Object.assign(Error('Unsupported safety query'),{status:400});
