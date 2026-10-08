@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T13:00:36.601Z",
+  "updated_at": "2026-10-08T13:29:17.692Z",
   "legacy_branches": [
     "main"
   ],
@@ -127,7 +127,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-08T12:02:24.746Z",
       "objective_history": {
         "baseline": {
@@ -143,7 +143,9 @@
             "at": "2026-10-08T12:02:24.746Z"
           }
         ]
-      }
+      },
+      "completed_at": "2026-10-08T13:29:17.692Z",
+      "updated_at": "2026-10-08T13:29:17.692Z"
     }
   ],
   "claims": [
@@ -701,7 +703,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "f48a647f582d2a9b2e42f0b21a77227a8cb43cbb",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-08T12:02:45.559Z",
       "objective_history": {
         "baseline": {
@@ -718,8 +720,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T13:00:36.601Z",
-      "lease_until": "2026-10-09T01:00:36.601Z"
+      "updated_at": "2026-10-08T13:29:17.692Z",
+      "lease_until": "2026-10-09T01:29:17.692Z",
+      "pr": 17,
+      "merged_head_sha": "d0e026a9d08140e8167145fac49a3a1e7a4ee2da",
+      "merge_commit_sha": "8412c7585c9e64a014226f37c4df13a4edc9216f",
+      "evidence": "PR17 merged exact tested d0e026a to tree-identical8412c758. All3CI37781108099 PASS;1056frontend/361backend; both8guide+21CMS zeroerrors. Productiond92fe063100% deployment6e9933d1/build7b10eb, live sealedmoduleSHA d60519839820e451f226f60e380943880e1fb5838add228c0a9f74220fca9271;309assets101060300bytes all hashmatch;health/config/build200/pauseabsent. Fresh69table/fourmedia backup/source856/build316 and24fileevidence remote readback+restoreverified; no migrations/data writes;22bindings/runtime/native/yearsafe unchanged/existing6secrets inherited. Safe evidence R2 releases/d0e026a9d08140e8167145fac49a3a1e7a4ee2da/release-evidence.zip SHA f8c97434da71fbae901e6c9961e66380bc4313ac6e7051fc874dd284d7e8caa6. Maclocked newnativeSafari refreshpending; prior PR15 proof accurately retained, no physicalinstall/delivery assertion. All source work published; no background monitor/writer/deploy in flight; Relay product remains paused.",
+      "work_accounted": true,
+      "completed_at": "2026-10-08T13:29:17.692Z"
     }
   ]
 }
