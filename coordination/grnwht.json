@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T10:50:06.708Z",
+  "updated_at": "2026-10-08T10:50:31.764Z",
   "legacy_branches": [
     "main"
   ],
@@ -78,7 +78,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-08T10:50:06.708Z",
       "objective_history": {
         "baseline": {
@@ -565,6 +565,48 @@
       "evidence": "Exact8705884 source all accounted/published in PR15 guardedmerge efc15a6f39c93713318cca78d4018c9fecf816ba, maintree exactsame. FullCI37760510060 all3PASS; artifact11541429816 ZIP9e26ad4b28a44e5d9adaad0f35c862b69a1171bb2688f7e015dd38f20548baff all75hashesverified. Live100% d07b631e-6989-4b17-85fd-74f258022d7f deploymentfb534060-eab3-41c5-a662-2d5aa53ee6a7 build52aca92d51031e2de27a, live module/all68assetsbyte-match. FreshclosedwriteD1/fourmedia private backup remote-readback/restore verified;0013+0021only appliedonce preservedall65oldtables/columns/rows/layouts/FK0/integrityOK. Year-aware readonly1c9891a4 retained. NativeSafari fiveviews initial/repeat/polls PASS248APIreads allGET200/0exceptions/diagnostics; captureSTOPPED10:40:09. Safari buildconfirmed/pushreadytrue/devices0, controlON existingkeys/nobulknotifications. Physicaldevice enrollment/deliveryreceipt unverified and requires usermediation; not claimed. Librarylibfile_4012c8b03edc8191930b61f2fa515328 v2 plus safePOSTFLIGHT.md retained. No unpublishedsource or backlog/design started; Relayprojectpaused.",
       "work_accounted": true,
       "completed_at": "2026-10-08T10:43:09.768Z"
+    },
+    {
+      "id": "grnwht-android-tablet-fab-20261008",
+      "owner": "01a11b04-95a2-7212-aa48-1e23e956d00a",
+      "branch": "grnwht/android-tablet-fab-20261008",
+      "paths": [
+        "src/navigation-insets.css",
+        "src/navigation-insets.js",
+        "tests/navigation-insets.test.mjs",
+        "tests/navigation-insets-browser.mjs"
+      ],
+      "resources": [
+        "grnwht-family-app"
+      ],
+      "goal": "Finish Lauren's deferred Android tablet Post FAB bottom-right placement after verified PR15 release.",
+      "acceptance": "Android tablet Flat Post FAB bottom-right with safe-area clearance; preserve phone, Glass, desktop and keyboard geometry and actual Post action. Required build/tests and targeted hosted Chromium/WebKit geometry; no physical-device claim. Preserve live PR15 rollback until exact-head release.",
+      "next_action": "Implement bounded tablet bottom-right Post geometry with unchanged desktop placement; required build/test and existing hosted browser gates.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "efc15a6f39c93713318cca78d4018c9fecf816ba",
+      "state": "active",
+      "created_at": "2026-10-08T10:50:31.764Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Finish Lauren's deferred Android tablet Post FAB bottom-right placement after verified PR15 release.",
+          "acceptance": "Android tablet Flat Post FAB bottom-right with safe-area clearance; preserve phone, Glass, desktop and keyboard geometry and actual Post action. Required build/tests and targeted hosted Chromium/WebKit geometry; no physical-device claim. Preserve live PR15 rollback until exact-head release.",
+          "at": "2026-10-08T10:50:06.708Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-android-tablet-fab-20261008:acceptance:0",
+            "text": "Android tablet Flat Post FAB bottom-right with safe-area clearance; preserve phone, Glass, desktop and keyboard geometry and actual Post action. Required build/tests and targeted hosted Chromium/WebKit geometry; no physical-device claim. Preserve live PR15 rollback until exact-head release.",
+            "at": "2026-10-08T10:50:06.708Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T10:50:31.764Z",
+      "lease_until": "2026-10-08T22:50:31.764Z"
     }
   ]
 }
