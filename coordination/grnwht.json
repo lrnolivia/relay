@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T19:42:35.275Z",
+  "updated_at": "2026-10-08T19:44:03.486Z",
   "legacy_branches": [
     "main"
   ],
@@ -1007,14 +1007,40 @@
         "tests/push-browser.test.mjs",
         "tests/notifications-browser.mjs",
         "tests/push-settings-browser.mjs",
-        ".github/workflows/gw-quality.yml"
+        ".github/workflows/gw-quality.yml",
+        "backend/src/family-update-email.mjs",
+        "backend/src/family-email-theme.mjs",
+        "backend/tests/family-update-email.test.mjs",
+        "scripts/preview-family-emails.mjs",
+        "tests/family-email-theme-parity.test.mjs",
+        "docs/family-email-preview/",
+        "docs/family-email-templates.md",
+        "tests/email-preview-browser.mjs",
+        "src/theme-presets.js",
+        "src/profiles.jsx",
+        "src/email-notifications.jsx",
+        "src/email-notification-model.js",
+        "backend/src/email-notifications.mjs",
+        "backend/src/email-delivery-policy.mjs",
+        "backend/src/routes.mjs",
+        "backend/src/worker.mjs",
+        "backend/migrations/0022_email_notifications.sql",
+        "backend/tests/email-notifications.test.mjs",
+        "tests/email-notification-model.test.mjs",
+        "src/page-panels.jsx",
+        "src/page-panels.css",
+        "src/card-content-layout.jsx",
+        "src/card-content-layout.css",
+        "tests/editor-geometry-browser.mjs",
+        "tests/shared-panels.test.mjs"
       ],
       "resources": [
-        "grnwht-device-push-release"
+        "grnwht-device-push-release",
+        "grnwht-family-app"
       ],
       "goal": "Move device push near top/disclose explanation accessibly and repair actual test-send cause",
       "acceptance": "Actualfailedcase regression, auth/endpoint/privacy boundaries, meaningfulUI/fulltests/exactartifactrollbackdeployment/liveproof; no othermemberpush/noLaurenpush before proposed-testreport, preservePR19held and Relaypaused",
-      "next_action": "Read-onlyaggregate status and safe tail/native sender reproduction; screenshot Mactransfer403 explicit",
+      "next_action": "Integrate preserved PR19 source after supersession; exactly8 current presets, safe reversible default-off email channel/authorized settings and delivery tests; Notifications/editor corrections and actual push diagnosis; reserve onboarding, no deploy until parent receipt/source reconciliation, no real sends/denial bypass.",
       "primary_team": "release",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1037,8 +1063,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T19:22:45.896Z",
-      "lease_until": "2026-10-09T07:22:45.896Z"
+      "updated_at": "2026-10-08T19:44:03.486Z",
+      "lease_until": "2026-10-09T07:44:03.486Z"
     }
   ]
 }
