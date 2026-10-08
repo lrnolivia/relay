@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T11:56:55.436Z",
+  "updated_at": "2026-10-08T12:02:24.746Z",
   "legacy_branches": [
     "main"
   ],
@@ -97,6 +97,53 @@
       },
       "completed_at": "2026-10-08T11:56:55.436Z",
       "updated_at": "2026-10-08T11:56:55.436Z"
+    },
+    {
+      "id": "grnwht-approved-install-guide-20261008",
+      "owner": "01a11b04-95a2-7212-aa48-1e23e956d00a",
+      "goal": "Integrate Lauren's approved preview Home v2 installation artwork without design changes.",
+      "acceptance": "Use exact verified fdf81fd archive,216 PNG/25 inline SVG controls/provenance. Select four devices, default plus eight designated colors, light/dark using actual resolver and react to changes. Hide guide/menu on desktop; preserve iPad desktop-like detection and accessible three-step instructions. Isolated preview with meaningful hosted Chromium/WebKit checks, required build/tests, exact-head gated release/recovery. No physical-device/delivery claim or Relay product work.",
+      "next_action": "Claim and preflight; verify249file payload; replace existing guide asset routing and written inline controls only.",
+      "paths": [
+        "src/install.jsx",
+        "src/install-guide-visuals.jsx",
+        "src/install-guide-visuals.css",
+        "src/install-inline-controls.jsx",
+        "src/install-capabilities.js",
+        "src/react-app.jsx",
+        "src/install-guide-selection.js",
+        "dist/install-guide",
+        "docs/install-guide",
+        "tests/install-guide-visuals.test.mjs",
+        "tests/install-tutorial-browser.mjs",
+        "tests/install-tutorial-fixture.test.mjs",
+        "tests/install-guide-selection.test.mjs"
+      ],
+      "resources": [
+        "grnwht-family-app"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-08T12:02:24.746Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Integrate Lauren's approved preview Home v2 installation artwork without design changes.",
+          "acceptance": "Use exact verified fdf81fd archive,216 PNG/25 inline SVG controls/provenance. Select four devices, default plus eight designated colors, light/dark using actual resolver and react to changes. Hide guide/menu on desktop; preserve iPad desktop-like detection and accessible three-step instructions. Isolated preview with meaningful hosted Chromium/WebKit checks, required build/tests, exact-head gated release/recovery. No physical-device/delivery claim or Relay product work.",
+          "at": "2026-10-08T12:02:24.746Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-approved-install-guide-20261008:acceptance:0",
+            "text": "Use exact verified fdf81fd archive,216 PNG/25 inline SVG controls/provenance. Select four devices, default plus eight designated colors, light/dark using actual resolver and react to changes. Hide guide/menu on desktop; preserve iPad desktop-like detection and accessible three-step instructions. Isolated preview with meaningful hosted Chromium/WebKit checks, required build/tests, exact-head gated release/recovery. No physical-device/delivery claim or Relay product work.",
+            "at": "2026-10-08T12:02:24.746Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
