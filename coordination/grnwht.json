@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T13:37:56.551Z",
+  "updated_at": "2026-10-08T13:41:12.877Z",
   "legacy_branches": [
     "main"
   ],
@@ -775,14 +775,15 @@
         "src/page-panels.jsx",
         "tests/editor-geometry-browser.mjs",
         "tests/shared-panels.test.mjs",
-        ".github/workflows/gw-quality.yml"
+        ".github/workflows/gw-quality.yml",
+        "tests/panel-order-controls.test.mjs"
       ],
       "resources": [
         "grnwht-family-app"
       ],
       "goal": "Finish arrow-only order controls in the selected-panel inspector, exactly matching Lauren's preserved request.",
       "acceptance": "Remove visible Earlier/Later only from selected-panel inspector, add explicit panel/direction accessible names and tooltips; preserve ordering, locks, Phone/Wide independence, existing colors/surfaces and 44px targets. Targeted actual regression then full exact-head build/tests/hosted gates, recoverable deployment/live verification; no production test writes or email sends.",
-      "next_action": "Implement admitted bounded arrow-only parity fix and accurate source-mapped email/device backlog.",
+      "next_action": "Add actual rendered inspector-markup regression, reproduce on live source baseline, then fix labels and verify hosted geometry/focus both engines.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -806,8 +807,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T13:37:56.551Z",
-      "lease_until": "2026-10-09T01:37:56.551Z"
+      "updated_at": "2026-10-08T13:41:12.877Z",
+      "lease_until": "2026-10-09T01:41:12.877Z"
     }
   ]
 }
