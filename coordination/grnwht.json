@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T10:43:09.768Z",
+  "updated_at": "2026-10-08T10:44:50.323Z",
   "legacy_branches": [
     "main"
   ],
@@ -26,7 +26,7 @@
       "supporting_teams": [],
       "primary_staff": "roman",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "cancelled",
       "created_at": "2026-10-08T07:36:42.475Z",
       "objective_history": {
         "baseline": {
@@ -42,6 +42,20 @@
             "at": "2026-10-08T07:36:42.475Z"
           }
         ]
+      },
+      "updated_at": "2026-10-08T10:44:50.323Z",
+      "retirement": {
+        "at": "2026-10-08T10:44:50.323Z",
+        "intent": {
+          "operation_id": "gw-retire-standalone-diagnostic-after-pr15-20261008",
+          "owner": "01a11a66-e465-7352-b120-b472c71827f6",
+          "disposition": "cancelled",
+          "reason": "Release remaining standalone diagnostic branch reservation after all source and requested live postflight were delivered through completed PR15 release assignment. No separate diagnostic-branch merge remains planned. Existing release successor is already completed, so supported nonterminal supersession cannot apply. Delivered source, native cause proof and live acceptance are explicitly retained/accounted in evidence.",
+          "evidence": "Diagnostic source78ca108 integrated into PR15source8705884/main efc15a6. Original auth/browser AsyncLocalStorage failure reproduced exact old artifact9/12 failures; fixed native12/12twoaccounts+30reads+401/403/faultPASS. Current auth/build/manifest/lock blobs unchanged. PR15all3checksPASS, CLOUDd07b631e100%/build52aca92d verified. Native Safari5views initial/repeat/ordinarypollsPASS248GET200/0exceptions/0diagnostics; captureSTOPPED10:40:09exit0. Pushreadytrue/devices0; physicalenrollment/deliveryunverified. Safe9fileR2packet gwfamily-recovery/diagnostics/20261008/live-d07b631e-6989-4b17-85fd-74f258022d7f/postflight.zip SHA2561ac26124935a95fe9106fa89535970d686a45b15daa48ee858c160225253815a, remote-readback/restoreverified9files. Relaycontext169 ctx_de0e5e6c7544627364553ebbecc18b0d1455e61b19796904790f342cf1f6af34 exactlimits retained. GW releaseclaimcompletedPR15 and finalLibrarylibfile_4012c8b03edc8191930b61f2fa515328v3 includespostflight. No unpublished diagnostic source, no runningcapture, no further source/deploy work.",
+          "superseded_by": null,
+          "branch": "grnwht/shared-auth-diagnostic-20261008",
+          "head_sha": "78ca108fa5ff9b2a75a1b7e92565f19e5b0761b5"
+        }
       }
     }
   ],
@@ -65,7 +79,7 @@
       "primary_staff": "roman",
       "supporting_staff": [],
       "base_sha": "bc6a11fab0021ee45548fc07200682d7e6109fa2",
-      "state": "active",
+      "state": "cancelled",
       "created_at": "2026-10-08T07:39:51.586Z",
       "objective_history": {
         "baseline": {
@@ -82,8 +96,21 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T10:31:46.273Z",
-      "lease_until": "2026-10-08T22:31:46.273Z"
+      "updated_at": "2026-10-08T10:44:50.323Z",
+      "lease_until": "2026-10-08T22:31:46.273Z",
+      "retirement": {
+        "at": "2026-10-08T10:44:50.323Z",
+        "intent": {
+          "operation_id": "gw-retire-standalone-diagnostic-after-pr15-20261008",
+          "owner": "01a11a66-e465-7352-b120-b472c71827f6",
+          "disposition": "cancelled",
+          "reason": "Release remaining standalone diagnostic branch reservation after all source and requested live postflight were delivered through completed PR15 release assignment. No separate diagnostic-branch merge remains planned. Existing release successor is already completed, so supported nonterminal supersession cannot apply. Delivered source, native cause proof and live acceptance are explicitly retained/accounted in evidence.",
+          "evidence": "Diagnostic source78ca108 integrated into PR15source8705884/main efc15a6. Original auth/browser AsyncLocalStorage failure reproduced exact old artifact9/12 failures; fixed native12/12twoaccounts+30reads+401/403/faultPASS. Current auth/build/manifest/lock blobs unchanged. PR15all3checksPASS, CLOUDd07b631e100%/build52aca92d verified. Native Safari5views initial/repeat/ordinarypollsPASS248GET200/0exceptions/0diagnostics; captureSTOPPED10:40:09exit0. Pushreadytrue/devices0; physicalenrollment/deliveryunverified. Safe9fileR2packet gwfamily-recovery/diagnostics/20261008/live-d07b631e-6989-4b17-85fd-74f258022d7f/postflight.zip SHA2561ac26124935a95fe9106fa89535970d686a45b15daa48ee858c160225253815a, remote-readback/restoreverified9files. Relaycontext169 ctx_de0e5e6c7544627364553ebbecc18b0d1455e61b19796904790f342cf1f6af34 exactlimits retained. GW releaseclaimcompletedPR15 and finalLibrarylibfile_4012c8b03edc8191930b61f2fa515328v3 includespostflight. No unpublished diagnostic source, no runningcapture, no further source/deploy work.",
+          "superseded_by": null,
+          "branch": "grnwht/shared-auth-diagnostic-20261008",
+          "head_sha": "78ca108fa5ff9b2a75a1b7e92565f19e5b0761b5"
+        }
+      }
     },
     {
       "id": "grnwht-family-app-20261004",
