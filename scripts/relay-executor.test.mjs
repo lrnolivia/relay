@@ -17,6 +17,19 @@ test('executor fails honestly without connection identity and never sends it to 
   const rpc=createMcpClient({token:'fixture',fetchImpl:async(_url,options)=>Response.json({jsonrpc:'2.0',id:JSON.parse(options.body).id,result:{structuredContent:{ok:true,job:{state:'queued'}}}})});
   assert.equal((await rpc('relay_execution',{})).job.state,'queued');
 });
+test('large repeated resume histories preserve the current mission, original acceptance and canonical version references',()=>{
+  const baseline={goal:'Original rebuild',acceptance:'Original acceptance remains binding'},versions=[{id:'acceptance:0',text:'Original acceptance remains binding'},{id:'acceptance:1',text:'Current additive acceptance',reason:'Explicit user addition'}];
+  const assignment={id:'same-assignment',goal:'Current full rebuild',acceptance:'Current additive acceptance',paths:['src/'],resources:['executor'],objective_history:{baseline,acceptance_versions:versions,scope_amendments:Array(30).fill({before:{acceptance:'repeated '.repeat(2000)}})}};
+  const latest={project:'relay',assignment,canonical_record_sha:'a'.repeat(40),checkpoint_id:'same-checkpoint',source:{head_sha:'b'.repeat(40)},resume:{instruction:'Continue the original task'}};
+  const resume={ok:true,project:'relay',latest,checkpoints:[latest,latest]},context={resume,project_context:{revision:12,entries:[{content:'A pending user instruction'}]}};
+  assert.ok(Buffer.byteLength(JSON.stringify(context))>128000);
+  const prompt=executionPrompt({assignment:assignment.id,objective:{goal:assignment.goal,acceptance:assignment.acceptance},request:'Bounded existing work'},context,[], '/private/inbox.json');
+  assert.ok(Buffer.byteLength(prompt)<128000);const data=JSON.parse(prompt.split('\n\n')[1]);
+  assert.equal(data.context.resume.latest.assignment.goal,assignment.goal);assert.equal(data.context.resume.latest.assignment.acceptance,assignment.acceptance);assert.deepEqual(data.context.resume.latest.assignment.objective_history.baseline,baseline);
+  assert.deepEqual(data.context.resume.latest.assignment.objective_history.acceptance_versions.map(x=>x.id),versions.map(x=>x.id));assert.deepEqual(data.context.resume.latest.assignment.paths,assignment.paths);assert.deepEqual(data.context.resume.latest.source,latest.source);
+  assert.equal(data.context.resume.history_reference.record_sha,latest.canonical_record_sha);assert.equal(data.context.resume.history_reference.checkpoint_id,latest.checkpoint_id);assert.deepEqual(data.context.project_context,context.project_context);assert.equal(data.context.inbox.path,'/private/inbox.json');
+  assert.equal(context.resume,resume);assert.equal(resume.latest.assignment,assignment);assert.equal(resume.checkpoints.length,2);
+});
 
 const responseFor=(options,result)=>({jsonrpc:'2.0',id:JSON.parse(options.body).id,...result});
 test('executor transport retains observed HTTP classes and rate windows without identity fallback or replay',async()=>{
@@ -97,6 +110,20 @@ test('failed executor lease preserves the exact pending operation and classified
     const text=await fs.readFile(path.join(stateDir,'receipt.json'),'utf8'),journal=JSON.parse(text);
     assert.deepEqual(journal.pending,attempts[1]);assert.equal(journal.last_transport_failure.category,'permission');assert.equal(journal.last_transport_failure.side_effects,'unknown');assert.equal(journal.last_transport_failure.http_status,403);assert.ok(journal.last_transport_failure.observed_at);assert.doesNotMatch(text,/do-not-log|password/);
     assert.equal((await fs.stat(path.join(stateDir,'receipt.json'))).mode&0o777,0o600);await assert.rejects(fs.stat(path.join(stateDir,'executor.lock')),error=>error.code==='ENOENT');
+  }finally{await fs.rm(root,{recursive:true,force:true});}
+});
+test('an oversized actual mission is rejected before spawning or recording a running process',async()=>{
+  const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-executor-context-')),workspace=path.join(root,'checkout'),stateDir=path.join(root,'receipts');await fs.mkdir(workspace);
+  const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim();let spawned=false;const actions=[];
+  try{
+    git(['init','-b','relay/fixture']);git(['config','user.name','Fixture']);git(['config','user.email','fixture@example.invalid']);git(['remote','add','origin','https://github.com/lrnolivia/fixture.git']);await fs.writeFile(path.join(workspace,'README.md'),'Bounded context fixture\n');git(['add','README.md']);git(['commit','-m','fixture']);
+    let job={id:'fixture',state:'queued',owner:'fixture',branch:'relay/fixture',repository:'lrnolivia/fixture',initial_head_sha:git(['rev-parse','HEAD']),revision:1,objective:{goal:'Preserve this actual mission',acceptance:'x'.repeat(140000),paths:['README.md']}};
+    const rpc=async(name,args)=>{
+      if(name==='relay_runner_resume')return {ok:true};if(name==='relay_context')return {ok:true,entries:[],revision:0};if(name==='relay_runner_feedback_peek')return {ok:true,feedback:{available:true,events:[],conflicts:[],truncated:false}};
+      assert.equal(name,'relay_execution');actions.push(args.action);if(args.action==='lease'){job={...job,state:'leased',revision:2,attempt:1};return {job,lease_token:'synthetic-lease'};}assert.equal(args.action,'status');return {job};
+    };
+    await assert.rejects(runExecution({config:{project:'fixture',assignment:'fixture',owner:'fixture',branch:'relay/fixture',executor_id:'fixture',skill_tags:['no-matching-skill']},workspace,stateDir,rpc,getVersion:()=> 'synthetic',spawnProcess:()=>{spawned=true;throw Error('must not spawn');}}),/exceeds 128 KiB before process start/);
+    assert.equal(spawned,false);assert.ok(!actions.includes('start'));const journal=JSON.parse(await fs.readFile(path.join(stateDir,'receipt.json'),'utf8'));assert.equal(journal.job.state,'leased');assert.equal(journal.pid,undefined);await assert.rejects(fs.stat(path.join(stateDir,'events-1.jsonl')),error=>error.code==='ENOENT');
   }finally{await fs.rm(root,{recursive:true,force:true});}
 });
 for(const platform of ['darwin','win32']) test('executor rejects source protection on '+platform+' before lease or process start',async()=>{
