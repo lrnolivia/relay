@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-08T23:27:36.227Z",
+  "updated_at": "2026-10-08T23:28:53.449Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -15000,6 +15000,49 @@
           }
         }
       ]
+    },
+    {
+      "id": "relay-ci-parallelism-20261008",
+      "owner": "root.hotfix_relay_ci_parallelism",
+      "branch": "relay/ci-parallelism-20261008",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "test/test-workflow-contract.test.mjs",
+        "test/ci-stage-contract.test.mjs",
+        "scripts/ci-parallel-suites.mjs",
+        "test/ci-parallel-suites.test.mjs",
+        "docs/relay/CI_PARALLEL_DANCE_20261008.md"
+      ],
+      "resources": [
+        "relay-ci-parallelism"
+      ],
+      "goal": "Hotfix Relay CI with one shared install/build and two balanced isolated suite groups against the same sealed artifact on a standard GitHub runner.",
+      "acceptance": "Preserve every required inspector, runner, layout, contracts and web suite; isolate fixture state/ports and workspaces; keep exact-head fail-closed quality aggregate and all auth/permissions/data/recovery gates and artifacts. Record the measured two-group CI dance for Relay-managed projects. Do not resume or merge held PR204, rewrite Relay, change runtime behavior, or deploy unrelated application code.",
+      "next_action": "Create exact-base isolated branch and checkout, implement/test CI-only parallel driver and gate wiring, open draft PR and validate exact-head checks; record dependency in held rebuild context. Owner maps to internal native task /root/hotfix_relay_ci_parallelism.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "994a4e59d20c475897592efb766ae71aa5e50792",
+      "state": "active",
+      "created_at": "2026-10-08T23:28:53.449Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Hotfix Relay CI with one shared install/build and two balanced isolated suite groups against the same sealed artifact on a standard GitHub runner.",
+          "acceptance": "Preserve every required inspector, runner, layout, contracts and web suite; isolate fixture state/ports and workspaces; keep exact-head fail-closed quality aggregate and all auth/permissions/data/recovery gates and artifacts. Record the measured two-group CI dance for Relay-managed projects. Do not resume or merge held PR204, rewrite Relay, change runtime behavior, or deploy unrelated application code.",
+          "at": "2026-10-08T23:28:53.449Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-ci-parallelism-20261008:acceptance:0",
+            "text": "Preserve every required inspector, runner, layout, contracts and web suite; isolate fixture state/ports and workspaces; keep exact-head fail-closed quality aggregate and all auth/permissions/data/recovery gates and artifacts. Record the measured two-group CI dance for Relay-managed projects. Do not resume or merge held PR204, rewrite Relay, change runtime behavior, or deploy unrelated application code.",
+            "at": "2026-10-08T23:28:53.449Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T23:28:53.449Z",
+      "lease_until": "2026-10-09T11:28:53.449Z"
     }
   ],
   "migrated_from": "loew-inspector"
