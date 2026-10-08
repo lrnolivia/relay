@@ -39,7 +39,7 @@ test('middle failure survives truncation and later passing test titles containin
   const log=await readFile(join(dir,r.log.path),'utf8');assert.equal(r.log.truncated,true);assert.doesNotMatch(log,/middle-cause/);assert.match(r.failure_excerpt,/middle-cause/);assert.doesNotMatch(r.failure_excerpt,/SYNTHETIC_MIDDLE|passing fixture/);assert.ok(r.failure_excerpt.length<8192);assert.equal(r.exit_code,9);
 });
 test('canonical identity failure executes no command and saves nonpassing evidence',async t=>{
-  const dir=await root(t),r=await runStage({...command("throw Error('MUST_NOT_RUN')"),root:dir,env:{...process.env,GITHUB_ACTIONS:'true',RELAY_SOURCE_SHA:'a'.repeat(40)}});assert.equal(r.state,'evidence_failed');assert.equal(r.error.code,'source_identity_missing');assert.equal(r.exit_code,1);assert.doesNotMatch(r.error.message,/MUST_NOT_RUN/);
+  const dir=await root(t),r=await runStage({...command("throw Error('MUST_NOT_RUN')"),root:dir,env:{...process.env,GITHUB_ACTIONS:'true',RELAY_SOURCE_SHA:'a'.repeat(40)}});assert.equal(r.state,'evidence_failed');assert.equal(r.error.code,'source_identity_missing');assert.equal(r.exit_code,1);assert.doesNotMatch(r.error.message,/MUST_NOT_RUN/);assert.match(r.identity.source_error.message,/not a git repository/);
 });
 test('successful command cannot retain stale lock identity after changing its bytes',async t=>{
   const dir=await root(t);await writeFile(join(dir,'package-lock.json'),'before');const r=await runStage({...command("require('node:fs').writeFileSync('package-lock.json','after')"),root:dir});assert.equal(r.state,'identity_changed');assert.equal(r.exit_code,1);assert.equal(r.result.exit_code,0);assert.equal(r.classification.category,'source-identity-change');
@@ -110,6 +110,12 @@ test('hosted finalization requires the original exact-source plan including ever
     const changed=structuredClone(plan);mutate(changed);await writeFile(join(directory,'quality-plan.json'),JSON.stringify(changed));const blocked=await finalizeStages({job:'quality',root:dir,env});assert.equal(blocked.exit_code,1);assert.equal(blocked.error.code,'invalid_stage_plan');assert.equal(blocked.classification.category,'applicability-evidence-failure');
   }
 });
+test('a failed Git lookup retains its original cause before any hosted gate can run',async t=>{
+  const dir=await root(t),env={GITHUB_ACTIONS:'true',RELAY_SOURCE_SHA:'a'.repeat(40),RELAY_CI_PRODUCTION_REQUIRED:'false',RELAY_CI_PREVIEW_REQUIRED:'true',RELAY_CI_CARD_REQUIRED:'false'};
+  await assert.rejects(writeQualityPlan({root:dir,env}),cause=>cause.code==='source_identity_missing'&&/not a git repository/.test(cause.message));
+  const blocked=JSON.parse(await readFile(join(dir,'qa-evidence/ci-stages/quality-plan.json')));assert.equal(blocked.state,'blocked');assert.equal(blocked.exit_code,1);assert.match(blocked.identity.source_error.message,/not a git repository/);
+  const summary=await finalizeStages({job:'quality',root:dir,env});assert.equal(summary.exit_code,1);assert.match(summary.error.message,/not a git repository/);
+});
 test('one canonical runner reuses its exact build and retains every applicable gate',async()=>{
   const workflow=await readFile(new URL('../.github/workflows/ci.yml',import.meta.url),'utf8');
   assert.deepEqual([...workflow.matchAll(/^  ([a-z][\w-]+):$/mg)].map(match=>match[1]).filter(name=>!['workflow_dispatch','pull_request','push'].includes(name)),['quality']);
@@ -121,6 +127,7 @@ test('one canonical runner reuses its exact build and retains every applicable g
   for(const [id,command] of [['production','node apps/web/verify-production.mjs'],['retained','node scripts/retain-web-preview.mjs'],['visual-review','node scripts/retain-web-preview.mjs']])assert.ok(workflow.includes('ci-stage.mjs '+id+' -- '+command));
   assert.match(workflow,/let required=process.env.EVENT_NAME==='workflow_dispatch'/);assert.match(workflow,/required=needsProductionVerification/);
   assert.match(workflow,/RELAY_CI_PREVIEW_REQUIRED:.*github.event.pull_request.draft == true/);assert.match(workflow,/RELAY_CI_CARD_REQUIRED:/);assert.match(workflow,/await writeQualityPlan/);
+  assert.ok(workflow.indexOf('id: checkout-identity')<workflow.indexOf('id: production-scope'));assert.match(workflow,/git config --global --add safe.directory "\$GITHUB_WORKSPACE"/);assert.doesNotMatch(workflow,/safe.directory ['"]\*/);assert.match(workflow,/test "\$source_head" = "\$RELAY_SOURCE_SHA"/);
   assert.doesNotMatch(workflow,/playwright install/);assert.match(workflow,/const browser=await chromium.launch\(\)/);
   assert.match(workflow,/run: npm test/);assert.doesNotMatch(workflow,/ci-stage.mjs suites/);assert.doesNotMatch(workflow,/continue-on-error:/);assert.equal(STAGE_JOBS.quality.find(stage=>stage.id==='suites').timeout_ms,0,'five-suite orchestration retains independent 15-minute bounds');
 });

@@ -71,6 +71,20 @@ jobs:
             package-lock.json
             package.json
             .node-version
+      - name: Verify the exact container checkout and Git ownership registration
+        id: checkout-identity
+        run: |
+          probe_error=$(mktemp)
+          if ! source_head=$(git rev-parse HEAD 2>"$probe_error"); then
+            cat "$probe_error" >&2
+            if ! grep -q 'detected dubious ownership' "$probe_error"; then exit 1; fi
+            test "$(git -c safe.directory="$GITHUB_WORKSPACE" rev-parse --show-toplevel)" = "$GITHUB_WORKSPACE"
+            git config --global --add safe.directory "$GITHUB_WORKSPACE"
+            source_head=$(git rev-parse HEAD)
+          fi
+          test "$source_head" = "$RELAY_SOURCE_SHA"
+          test "$(git rev-parse --show-toplevel)" = "$GITHUB_WORKSPACE"
+          rm "$probe_error"
       - name: Resolve deploying source scope and required downstream gates
         id: production-scope
         env:
@@ -239,7 +253,7 @@ jobs:
         env:
           RELAY_REQUIRED_STAGES: ${{ steps.production-scope.outputs.required_stages }}
           RELAY_STAGE_OUTCOMES: >-
-            {"toolchain":"${{ steps.setup-toolchain.outcome }}","install":"${{ steps.setup-install.outcome }}","build":"${{ steps.setup-build.outcome }}","browser":"${{ steps.setup-browser.outcome }}","source-checkout":"${{ steps.source-checkout.outcome }}","node-setup":"${{ steps.node-setup.outcome }}","focused":"${{ steps.setup-focused.outcome }}","contracts":"${{ steps.setup-contracts.outcome }}","runtime":"${{ steps.setup-runtime.outcome }}","typecheck":"${{ steps.setup-typecheck.outcome }}","suites":"${{ steps.verify-suites.outcome }}","context-card":"${{ steps.verify-context-card.outcome }}","production-scope":"${{ steps.production-scope.outcome }}","reuse":"${{ steps.verify-reuse.outcome }}","production":"${{ steps.verify-production.outcome }}","retained":"${{ steps.verify-retained.outcome }}","visual-review":"${{ steps.verify-visual-review.outcome }}"}
+            {"toolchain":"${{ steps.setup-toolchain.outcome }}","install":"${{ steps.setup-install.outcome }}","build":"${{ steps.setup-build.outcome }}","browser":"${{ steps.setup-browser.outcome }}","source-checkout":"${{ steps.source-checkout.outcome }}","checkout-identity":"${{ steps.checkout-identity.outcome }}","node-setup":"${{ steps.node-setup.outcome }}","focused":"${{ steps.setup-focused.outcome }}","contracts":"${{ steps.setup-contracts.outcome }}","runtime":"${{ steps.setup-runtime.outcome }}","typecheck":"${{ steps.setup-typecheck.outcome }}","suites":"${{ steps.verify-suites.outcome }}","context-card":"${{ steps.verify-context-card.outcome }}","production-scope":"${{ steps.production-scope.outcome }}","reuse":"${{ steps.verify-reuse.outcome }}","production":"${{ steps.verify-production.outcome }}","retained":"${{ steps.verify-retained.outcome }}","visual-review":"${{ steps.verify-visual-review.outcome }}"}
         run: node scripts/ci-stage.mjs --summary quality
       - name: Preserve redacted CI stage evidence
         if: always()

@@ -30,8 +30,12 @@ function requiredStagesFor(job,requiredStages){
 export async function writeQualityPlan({root=process.cwd(),env=process.env}){
   const boolean=key=>{if(!['true','false'].includes(env[key]))throw error('invalid_stage_plan','Missing explicit '+key);return env[key]==='true';};
   const plan={schema:1,kind:'ci-stage-plan',job:'quality',...qualityPlan({production:boolean('RELAY_CI_PRODUCTION_REQUIRED'),preview:boolean('RELAY_CI_PREVIEW_REQUIRED'),contextCard:boolean('RELAY_CI_CARD_REQUIRED')}),identity:await identity(root,env),state:'planned',exit_code:0};
-  if(env.GITHUB_ACTIONS==='true'&&!plan.identity.source_matches)throw error('source_identity_missing','Stage plan requires the exact checked-out source');
-  const directory=resolve(root,'qa-evidence/ci-stages');await mkdir(directory,{recursive:true});await save(join(directory,'quality-plan.json'),plan);
+  const directory=resolve(root,'qa-evidence/ci-stages');await mkdir(directory,{recursive:true});
+  if(env.GITHUB_ACTIONS==='true'&&!plan.identity.source_matches){
+    plan.state='blocked';plan.exit_code=1;plan.error={code:'source_identity_missing',message:'Stage plan requires the exact checked-out source'+(plan.identity.source_error?'\n'+plan.identity.source_error.message:'')};
+    await save(join(directory,'quality-plan.json'),plan);throw error(plan.error.code,plan.error.message);
+  }
+  await save(join(directory,'quality-plan.json'),plan);
   if(env.GITHUB_OUTPUT)await appendFile(env.GITHUB_OUTPUT,['production_required='+plan.production_required,'preview_required='+plan.preview_required,'context_card_required='+plan.context_card_required,'required_stages='+JSON.stringify(plan.required_stages)].join('\n')+'\n');
   return plan;
 }
@@ -39,9 +43,9 @@ function rule(job,id){const value=STAGE_JOBS[job]?.find(stage=>stage.id===id);if
 async function save(path,data){await writeFile(path+'.tmp',JSON.stringify(data,null,2)+'\n');await rename(path+'.tmp',path);}
 async function identity(root,env){
   const hash=async path=>{try{return digest(await readFile(join(root,path)));}catch{return null;}};
-  let head=null;try{head=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8',timeout:10000,stdio:['ignore','pipe','pipe']}).trim();}catch{}
+  let head=null,sourceError=null;try{head=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8',timeout:10000,stdio:['ignore','pipe','pipe']}).trim();}catch(cause){sourceError={code:cause.code||cause.status||'git_probe_failed',message:redact(String(cause.stderr||cause.message)).slice(0,2000)};}
   const expected=env.RELAY_SOURCE_SHA||env.GITHUB_SHA||null;
-  return {source_sha:head,expected_source_sha:expected,source_matches:Boolean(/^[a-f0-9]{40}$/.test(head||'')&&head===expected),node:process.version,platform:process.platform,arch:process.arch,lock_sha256:await hash('package-lock.json'),run_id:env.GITHUB_RUN_ID||null,run_attempt:env.GITHUB_RUN_ATTEMPT||null,job:env.RELAY_CI_JOB||null};
+  return {source_sha:head,expected_source_sha:expected,source_matches:Boolean(/^[a-f0-9]{40}$/.test(head||'')&&head===expected),source_error:sourceError,node:process.version,platform:process.platform,arch:process.arch,lock_sha256:await hash('package-lock.json'),run_id:env.GITHUB_RUN_ID||null,run_attempt:env.GITHUB_RUN_ATTEMPT||null,job:env.RELAY_CI_JOB||null};
 }
 export function classifyStage(result){
   const categories={passed:'passed',start_failed:'process-start-failure',timed_out:'timeout',cancelled:'cancellation-observed',signalled:'signal-exit',failed:'command-exit-failure',not_run:'not-run',blocked:'prerequisite-blocked'};
@@ -127,6 +131,7 @@ export async function finalizeStages({job,root=process.cwd(),env=process.env}){
     if(requiredStages)requiredStagesFor(job,requiredStages);
     if(job==='quality'&&env.GITHUB_ACTIONS==='true'){
       const plan=JSON.parse(await readFile(join(directory,'quality-plan.json')));
+      if(plan.state==='blocked')throw error('invalid_stage_plan',plan.error?.message||'Source applicability planning failed');
       if(!observed.source_matches||!observed.lock_sha256||!requiredStages||plan.schema!==1||plan.state!=='planned'||plan.job!==job||plan.identity?.source_sha!==observed.source_sha||plan.identity?.lock_sha256!==observed.lock_sha256||plan.identity?.run_id!==observed.run_id||plan.identity?.run_attempt!==observed.run_attempt||JSON.stringify(plan.required_stages)!==JSON.stringify(requiredStages))throw error('invalid_stage_plan','Missing, stale or changed applicability plan cannot close hosted quality');
       const expected=qualityPlan({production:plan.production_required,preview:plan.preview_required,contextCard:plan.context_card_required});
       if(JSON.stringify(expected.required_stages)!==JSON.stringify(requiredStages))throw error('invalid_stage_plan','Applicability plan does not match its required gates');
