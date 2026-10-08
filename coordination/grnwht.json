@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T10:50:31.764Z",
+  "updated_at": "2026-10-08T11:05:44.768Z",
   "legacy_branches": [
     "main"
   ],
@@ -574,14 +574,15 @@
         "src/navigation-insets.css",
         "src/navigation-insets.js",
         "tests/navigation-insets.test.mjs",
-        "tests/navigation-insets-browser.mjs"
+        "tests/navigation-insets-browser.mjs",
+        ".github/workflows/gw-quality.yml"
       ],
       "resources": [
         "grnwht-family-app"
       ],
       "goal": "Finish Lauren's deferred Android tablet Post FAB bottom-right placement after verified PR15 release.",
       "acceptance": "Android tablet Flat Post FAB bottom-right with safe-area clearance; preserve phone, Glass, desktop and keyboard geometry and actual Post action. Required build/tests and targeted hosted Chromium/WebKit geometry; no physical-device claim. Preserve live PR15 rollback until exact-head release.",
-      "next_action": "Implement bounded tablet bottom-right Post geometry with unchanged desktop placement; required build/test and existing hosted browser gates.",
+      "next_action": "Repair confirmed isolated tall-tablet scroll fixture without weakening compact-header assertions. Run full navigation matrix first in existing hosted jobs before broad browser suites; all success coverage retained. Exact fresh gates before deploy.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -605,8 +606,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T10:50:31.764Z",
-      "lease_until": "2026-10-08T22:50:31.764Z"
+      "updated_at": "2026-10-08T11:05:44.768Z",
+      "lease_until": "2026-10-08T23:05:44.768Z"
     }
   ]
 }
