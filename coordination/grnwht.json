@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T21:08:42.578Z",
+  "updated_at": "2026-10-08T21:14:07.908Z",
   "legacy_branches": [
     "main"
   ],
@@ -360,6 +360,53 @@
             "id": "grnwht-install-guide-compact-v3-20261008:acceptance:0",
             "text": "Verify authoritative local archive SHA cebd1d8a6581892cedb380d9a53eab6c442f7be95690422d9a7069296129ffc8, all249 payload entries; replace216 PNGs/provenance/dimensions preserving25 inlineSVGs, intrinsic ratio100%width/autoheight, true bakedalpha no extra mask/blur/crop/stretch or oldfullheight wrapper; preserve3steps/detectedOSformfactor/desktophidden/current8+Default palette lightdark reacting selection; meaningful representative mobile/tablet geometry andalpha/selection proof, no actualphysicaldeviceinstallation claim.",
             "at": "2026-10-08T21:08:42.578Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "grnwht-profile-contact-parity-20261008",
+      "owner": "01a11b04-95a2-7212-aa48-1e23e956d00a",
+      "goal": "Apply Lauren's shared mini-profile interaction/font parity, compact private contact actions and coherent household detail hero after current push release",
+      "acceptance": "Home avatar+author names, comment/reaction identities, sharedcontact/household/member lists reuse sharedmini-profile; unavailable/removed/viewerprivacy guards, keyboarddismiss/focusreturn, selection controls stayseparate. Preserve fullphoto/comments/reactions/save reachable frommini-profile. Names/headings selectedMomo/DMSerif acrossportal/GlassFlat/lightdark/preferencechanges. Sharedwithyou onlyauthorizedDTOfields compactclickableglyphbadges withmail/tel/address/site/socialcorrespondingactions/accessibility/themecontrols; nohiddencontactexposure. Parentinspected screenshots: householdhero photo/label/Back/name/count/Manage currentlydisjoint; groupthem inlaterpass, doNOTtouchparentMembers+multi-select/emailcheckboxhotfix. Regressionproof meaningful. No newlayoutbeforeactivepushbatchlive.",
+      "next_action": "Queued only. Sourceaudit confirms PostIdentity avatar directphoto and passive PersonIdentity; useexisting MemberLink/MemberMiniCard sharedpattern, verify correct fonttoken/specificity and allmajorrenderers after currentrelease. Reconcileparenthouseholdhotfix first, refresh boundedadmission beforeedits. Parent screenshotinterpretation provided afteroriginalreference403stopped; nopersonalvalues copied.",
+      "paths": [
+        "src/conversation.jsx",
+        "src/person-identity.jsx",
+        "src/person-identity.css",
+        "src/contact-directory.jsx",
+        "src/profile-contact-actions.jsx",
+        "src/profile-contact-actions.css",
+        "src/profiles.jsx",
+        "src/households.jsx",
+        "src/ui-core.jsx",
+        "src/visual-system.css",
+        "tests/communications-browser.mjs",
+        "tests/households-browser.mjs",
+        "tests/profile-contact-actions.test.mjs"
+      ],
+      "resources": [
+        "grnwht-profile-contact-parity"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-08T21:14:07.908Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Apply Lauren's shared mini-profile interaction/font parity, compact private contact actions and coherent household detail hero after current push release",
+          "acceptance": "Home avatar+author names, comment/reaction identities, sharedcontact/household/member lists reuse sharedmini-profile; unavailable/removed/viewerprivacy guards, keyboarddismiss/focusreturn, selection controls stayseparate. Preserve fullphoto/comments/reactions/save reachable frommini-profile. Names/headings selectedMomo/DMSerif acrossportal/GlassFlat/lightdark/preferencechanges. Sharedwithyou onlyauthorizedDTOfields compactclickableglyphbadges withmail/tel/address/site/socialcorrespondingactions/accessibility/themecontrols; nohiddencontactexposure. Parentinspected screenshots: householdhero photo/label/Back/name/count/Manage currentlydisjoint; groupthem inlaterpass, doNOTtouchparentMembers+multi-select/emailcheckboxhotfix. Regressionproof meaningful. No newlayoutbeforeactivepushbatchlive.",
+          "at": "2026-10-08T21:14:07.908Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-profile-contact-parity-20261008:acceptance:0",
+            "text": "Home avatar+author names, comment/reaction identities, sharedcontact/household/member lists reuse sharedmini-profile; unavailable/removed/viewerprivacy guards, keyboarddismiss/focusreturn, selection controls stayseparate. Preserve fullphoto/comments/reactions/save reachable frommini-profile. Names/headings selectedMomo/DMSerif acrossportal/GlassFlat/lightdark/preferencechanges. Sharedwithyou onlyauthorizedDTOfields compactclickableglyphbadges withmail/tel/address/site/socialcorrespondingactions/accessibility/themecontrols; nohiddencontactexposure. Parentinspected screenshots: householdhero photo/label/Back/name/count/Manage currentlydisjoint; groupthem inlaterpass, doNOTtouchparentMembers+multi-select/emailcheckboxhotfix. Regressionproof meaningful. No newlayoutbeforeactivepushbatchlive.",
+            "at": "2026-10-08T21:14:07.908Z"
           }
         ]
       }
