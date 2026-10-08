@@ -9,6 +9,7 @@ test('executor uses supported sandboxed CLI and exact-session recovery, with bou
   assert.throws(()=>assertScope(['secrets/file'],['src/']),/outside/);assert.doesNotThrow(()=>assertScope(['src/file.js'],['src/']));
   const prompt=executionPrompt({assignment:'one',objective:{goal:'unchanged',acceptance:['A']},request:'bounded work'},{});
   assert.match(prompt,/unchanged/);assert.match(prompt,/Do not create other agents/);
+  assert.match(prompt,/Never read private adapter receipts, RPC bridge files, executor locks or credential files/);
 });
 test('executor fails honestly without connection identity and never sends it to another endpoint',async()=>{
   assert.throws(()=>createMcpClient({}),/existing authorized/);
@@ -153,7 +154,7 @@ for (const source_checkpoints of [false,true]) test((source_checkpoints?'source-
     let reads=0;
     const rpc=async(name,args)=>name==='relay_context'?{ok:true,entries:[{content:++reads>2?'new in-run context':'startup context'}],revision:reads}:name==='relay_runner_feedback_peek'?{ok:true,feedback:{available:true,events:[],conflicts:[],truncated:false}}:name==='relay_runner_resume'?{ok:true,synthetic:true}:operateJob(bucket,args,target);
     const result=await runExecution({workspace,stateDir,config:{project:'fixture',assignment:'fixture',owner:'fixture',branch:'relay/fixture',executor_id:'fixture',source_checkpoints},rpc,pollMs:20,getVersion:()=> 'synthetic adapter test',
-      spawnProcess:(_cmd,_args,options)=>spawn(process.execPath,['-e',`let prompt='';process.stdin.on('data',chunk=>prompt+=chunk);process.stdin.on('end',()=>{const data=JSON.parse(prompt.split('\\n\\n')[1]);console.log(JSON.stringify({type:'thread.started',thread_id:'synthetic-session'}));setTimeout(()=>{const inbox=JSON.parse(require('fs').readFileSync(data.context.inbox.path,'utf8'));console.log(JSON.stringify({type:'synthetic.inbox-read',content:inbox.context.entries[0].content}));console.log(JSON.stringify({type:'turn.completed'}));},100);});`],options)});
+      spawnProcess:(_cmd,_args,options)=>spawn(process.execPath,['-e',`let prompt='';process.stdin.on('data',chunk=>prompt+=chunk);process.stdin.on('end',()=>{const data=JSON.parse(prompt.split('\\n\\n')[1]);console.log(JSON.stringify({type:'thread.started',thread_id:'synthetic-session'}));setTimeout(()=>{const inbox=JSON.parse(require('fs').readFileSync(data.context.inbox.path,'utf8'));console.log(JSON.stringify({type:'synthetic.inbox-read',content:inbox.context.entries[0].content,skillDirectory:data.context.installed_skills?.directory}));console.log(JSON.stringify({type:'turn.completed'}));},100);});`],options)});
     assert.equal(result.state,'succeeded');assert.equal(result.objective_completed,false);
     const journal=JSON.parse(await fs.readFile(result.receipt,'utf8'));
     assert.equal(journal.pid,null);assert.equal(journal.session_id,'synthetic-session');assert.equal(journal.job.result.exit_code,0);assert.ok(journal.job.events.some(event=>event.action==='start'));
@@ -161,5 +162,8 @@ for (const source_checkpoints of [false,true]) test((source_checkpoints?'source-
     assert.equal((await fs.stat(result.receipt)).mode&0o777,0o600);
     assert.match(await fs.readFile(path.join(stateDir,'events-1.jsonl'),'utf8'),/new in-run context/);
     assert.equal(journal.inbox.consumption_verified,false);
+    assert.equal(journal.skills.installed,true);assert.ok(journal.skills.directory.startsWith(await fs.realpath(stateDir)+path.sep));
+    const events=(await fs.readFile(path.join(stateDir,'events-1.jsonl'),'utf8')).trim().split('\n').map(line=>JSON.parse(line));
+    assert.equal(events.find(event=>event.type==='synthetic.inbox-read').skillDirectory,journal.skills.directory);
   } finally {await fs.rm(root,{recursive:true,force:true});}
 });
