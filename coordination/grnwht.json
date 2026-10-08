@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T14:15:38.587Z",
+  "updated_at": "2026-10-08T14:16:45.894Z",
   "legacy_branches": [
     "main"
   ],
@@ -869,14 +869,15 @@
         "scripts/preview-family-emails.mjs",
         "tests/family-email-theme-parity.test.mjs",
         "docs/family-email-preview/",
-        "docs/family-email-templates.md"
+        "docs/family-email-templates.md",
+        "tests/email-preview-browser.mjs"
       ],
       "resources": [
         "grnwht-family-app"
       ],
       "goal": "Renderable branded notification/announcement templates and explicit chosen-theme inputs, offline preview only",
       "acceptance": "Actual current GW flat palette/wordmark/Momo default and selectedfont/accent where supplied; safe fallback/escaping/plaintext; light/dark fictional previews+tests/build; no auth/invitation modification, dispatch/sends/consent/credentials/deploy",
-      "next_action": "Implement email renderers and reusable theme mapping with isolated fixtures",
+      "next_action": "Add source-only renderers, theme parity and offline headless preview geometry/fallback checks",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -899,8 +900,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T14:15:38.587Z",
-      "lease_until": "2026-10-09T02:15:38.587Z"
+      "updated_at": "2026-10-08T14:16:45.894Z",
+      "lease_until": "2026-10-09T02:16:45.894Z"
     }
   ]
 }
