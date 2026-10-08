@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "loewtorials",
-  "updated_at": "2026-10-06T03:09:28.447Z",
+  "updated_at": "2026-10-08T01:02:54.475Z",
   "legacy_branches": [
     "codex/llm-help-integration",
     "docs/move-to-runner",
@@ -117,6 +117,45 @@
       "evidence": "https://github.com/lrnolivia/loewtorials/pull/4",
       "work_accounted": true,
       "completed_at": "2026-10-06T03:09:28.447Z"
+    },
+    {
+      "id": "loewtorials-ci-efficiency-20261008",
+      "owner": "01a118b2-63d5-7a63-8d3a-55bf649b1f89",
+      "branch": "loewtorials/ci-efficiency-20261008",
+      "paths": [
+        ".github/workflows/runner-coordination.yml"
+      ],
+      "resources": [
+        "loewtorials-ci-efficiency"
+      ],
+      "goal": "Reduce unnecessary GitHub Actions usage as part of Lauren's ALL-projects CI streamlining request.",
+      "acceptance": "Preserve immediate exact-head PR admission and every required quality/runtime/release check. Replace twice-hourly completed-branch cleanup with a daily safety sweep and retain manual recovery. Cancel superseded PR-only checks safely. Validate workflow structure and the exact published candidate; record measured or explicitly estimated savings in Relay.",
+      "next_action": "User explicitly resumed with keep going. Continue ALL-project CI and autonomous release safety plan from docs/relay/ALL_PROJECT_CI_20261008.md. Preserve last healthy and separately user-approved rollback targets; no repeated routine approvals. Verify staged candidates, finish source batches and implement enforced safety controls.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "99d73eac097ddb46fa5aa29b43f751965b8e9cb2",
+      "state": "active",
+      "created_at": "2026-10-08T00:51:26.217Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Reduce unnecessary GitHub Actions usage as part of Lauren's ALL-projects CI streamlining request.",
+          "acceptance": "Preserve immediate exact-head PR admission and every required quality/runtime/release check. Replace twice-hourly completed-branch cleanup with a daily safety sweep and retain manual recovery. Cancel superseded PR-only checks safely. Validate workflow structure and the exact published candidate; record measured or explicitly estimated savings in Relay.",
+          "at": "2026-10-08T00:51:26.217Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "loewtorials-ci-efficiency-20261008:acceptance:0",
+            "text": "Preserve immediate exact-head PR admission and every required quality/runtime/release check. Replace twice-hourly completed-branch cleanup with a daily safety sweep and retain manual recovery. Cancel superseded PR-only checks safely. Validate workflow structure and the exact published candidate; record measured or explicitly estimated savings in Relay.",
+            "at": "2026-10-08T00:51:26.217Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T01:02:54.475Z",
+      "lease_until": "2026-10-08T13:02:54.475Z"
     }
   ]
 }
