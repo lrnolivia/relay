@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T21:44:51.279Z",
+  "updated_at": "2026-10-08T21:55:08.023Z",
   "legacy_branches": [
     "main"
   ],
@@ -1295,14 +1295,34 @@
         "src/about-notices.json",
         "scripts/version-assets.mjs",
         "scripts/build-about-notices.mjs",
-        "tests/release-version.test.mjs"
+        "tests/release-version.test.mjs",
+        "src/member-view-model.js",
+        "src/member-view.jsx",
+        "src/member-view.css",
+        "backend/src/member-view.mjs",
+        "backend/tests/member-view.test.mjs",
+        "tests/member-view-model.test.mjs",
+        "tests/member-view-browser.mjs",
+        "src/leader-access.js",
+        "src/content-actions-model.js",
+        "src/calendar-model.js",
+        "src/page-content.jsx",
+        "src/manage-family.jsx",
+        "src/reunion-years.jsx",
+        "src/memories.jsx",
+        "src/planner.jsx",
+        "src/payment-methods-manager.jsx",
+        "tests/leader-access.test.mjs",
+        "tests/content-actions-model.test.mjs",
+        "tests/data-adapter.test.mjs",
+        "tests/reunion-model.test.mjs"
       ],
       "resources": [
         "grnwht-device-push-release"
       ],
       "goal": "Deliver one consolidated GW launch candidate covering all Lauren-approved current functional and UI work, with parent hotfix reconciliation and living multi-household support",
       "acceptance": "Latest Lauren21:15 explicit single consolidated nextrelease supersedes release-first staging. Include all parenthotfixes; devicepush regression/errorprivacy; eightpreset email source/defaultoffconsent; editorcontrolpolish; device-local returningname/avatar/provider noauthcredential; confirmedselective GWreset withserver signout/nofamilydeletion; compactAbout+linkedofficialcredit; You/Family invitationcards; authorizedcontactglyphbadges; sharedmini-profile identities/privacy/focus/fullphotoactions+selectedfonts; coherenthouseholdhero; verified216compactv3guidePNGs preservingnativeinstallbehaviors; livingmulti-household withperhouseholdroles/recipientconsent/duplicates/pending/primary/remove/privatechildren, migrationbackuprehearsalrollback. Retain explicitpanel/formparity/fade checklist. Meaningful failed-case/targeted/fullheadCI/sourceartifact/runtime/liveproof, no partialall-doneclaim/no newworkers/no invalidation of activefamilyonboarding. Freshauthschema andnecessaryD1migration accessmustbesupported; no cancelled/deniedactionreplay/newcredentials/purchases, actualpushdeliveryonlybyreceipt.",
-      "next_action": "Parentpresentationhotfixfinished exact f4e6747c/bd6182e0 reconcilelabels/People/headerpreservingkeys. ExistinghumanAppversion0.1.0; next0.2.0consistentpackage/About/buildmetadata, cachehashseparate; allcurrentfamilyCalendar/eventmoderation/push/identitybatch.",
+      "next_action": "Preserve tested local calendar/identity/ancestor/fade, implement defaultMemberPreview/labeledMemberLeader switch acrossdirectpreviewgates/reducer; liveactualLeader eye reduces serverread capabilities and closeseditors/deniesprivmutations/no role mutation. ParentavatarbroadWorkerrejected, no alternatepatchdeployment; retain0.2.0source.",
       "primary_team": "release",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1337,8 +1357,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T21:44:51.279Z",
-      "lease_until": "2026-10-09T09:44:51.279Z",
+      "updated_at": "2026-10-08T21:55:08.023Z",
+      "lease_until": "2026-10-09T09:55:08.023Z",
       "amendment_count": 2,
       "amendments": [
         {
