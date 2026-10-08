@@ -167,13 +167,6 @@ jobs:
           RELAY_SETUP_RUNTIME: ${{ steps.setup-runtime.outcome }}
           RELAY_SETUP_TYPECHECK: ${{ steps.setup-typecheck.outcome }}
         run: node scripts/ci-test-orchestrator.mjs --blocked
-      - name: Preserve exact toolchain and build identities
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: relay-toolchain-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
-          path: qa-evidence/toolchain/
-          if-no-files-found: error
       - name: Preserve source and named-test contract mapping
         if: always()
         uses: actions/upload-artifact@v4
@@ -255,6 +248,13 @@ jobs:
           RELAY_STAGE_OUTCOMES: >-
             {"toolchain":"${{ steps.setup-toolchain.outcome }}","install":"${{ steps.setup-install.outcome }}","build":"${{ steps.setup-build.outcome }}","browser":"${{ steps.setup-browser.outcome }}","source-checkout":"${{ steps.source-checkout.outcome }}","checkout-identity":"${{ steps.checkout-identity.outcome }}","node-setup":"${{ steps.node-setup.outcome }}","focused":"${{ steps.setup-focused.outcome }}","contracts":"${{ steps.setup-contracts.outcome }}","runtime":"${{ steps.setup-runtime.outcome }}","typecheck":"${{ steps.setup-typecheck.outcome }}","suites":"${{ steps.verify-suites.outcome }}","context-card":"${{ steps.verify-context-card.outcome }}","production-scope":"${{ steps.production-scope.outcome }}","reuse":"${{ steps.verify-reuse.outcome }}","production":"${{ steps.verify-production.outcome }}","retained":"${{ steps.verify-retained.outcome }}","visual-review":"${{ steps.verify-visual-review.outcome }}"}
         run: node scripts/ci-stage.mjs --summary quality
+      - name: Preserve exact toolchain and build identities
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-toolchain-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qa-evidence/toolchain/
+          if-no-files-found: error
       - name: Preserve redacted CI stage evidence
         if: always()
         uses: actions/upload-artifact@v4

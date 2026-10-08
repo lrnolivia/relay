@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import http from 'node:http';
 import fs from 'node:fs/promises';
 import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
 import {chromium} from 'playwright';
 import {webAssets} from '../generated.js';
 import {browserFileResponse} from '../../../src/file-transfer.js';
@@ -37,7 +38,7 @@ test('shared file manager uploads, resumes, downloads, closes and stays inside m
   const asset=webAssets[path]||webAssets['/'];if(!asset){res.writeHead(404);res.end();return}res.writeHead(200,{'Content-Type':asset.type});res.end(asset.text);
  }catch(e){res.writeHead(500);res.end(String(e))}});
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const browser=await chromium.launch({headless:true});
- const output=process.env.RELAY_QA_OUTPUT||'qa-evidence/file-manager';await fs.mkdir(output,{recursive:true});
+ const output=process.env.RELAY_QA_OUTPUT||fileURLToPath(new URL('../../../qa-evidence/file-manager/',import.meta.url));await fs.mkdir(output,{recursive:true});
  try{
   const page=await browser.newPage({viewport:{width:1440,height:900}});await page.goto('http://127.0.0.1:'+server.address().port+'/');
   await page.getByRole('button',{name:'Open files',exact:true}).click();const modal=page.getByRole('dialog');await modal.waitFor();
