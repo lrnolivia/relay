@@ -22,9 +22,9 @@ export default {
     }
     if(url.pathname==='/relay-app.js'&&['GET','HEAD'].includes(request.method))return new Response(request.method==='HEAD'?null:'This legacy Relay interface is retired. Open https://ctrl.loew.fi/',{status:410,headers:{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
     if (url.pathname.startsWith("/api/")) {
-      // File transport validates the same JWT in the gateway, without copying a
+      // Binary transports validate the same JWT in the gateway, without copying a
       // multi-megabyte Content-Length onto the small JSON authentication probe.
-      if(url.pathname.startsWith('/api/files'))return gateway.fetch(request,env);
+      if(url.pathname.startsWith('/api/files')||url.pathname==='/api/release-recovery')return gateway.fetch(request,env);
       // Verify the same identity as native MCP before exposing operator API routes.
       const auth = await gateway.fetch(new Request(url.origin + "/mcp", {
         method: "POST", headers: new Headers({ ...Object.fromEntries(request.headers), "Content-Type": "application/json" }),
