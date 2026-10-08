@@ -79,7 +79,7 @@
     "transport": "workers-builds",
     "production_branch": "main",
     "build_command": "npm run build",
-    "deploy_command": "npx wrangler deploy",
+    "deploy_command": "node scripts/autonomy-gate.mjs relay && npx wrangler deploy",
     "manual_upload": "disabled",
     "rollback": {
       "identity_url": "https://relay.loew.fi/",

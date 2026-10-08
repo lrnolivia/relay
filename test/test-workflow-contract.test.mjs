@@ -5,6 +5,18 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {spawnSync,spawn} from 'node:child_process';
 import {REQUIRED_SUITES,redact,runSuites} from '../scripts/ci-test-orchestrator.mjs';
+import {RELAY_GUARDED_DEPLOY_COMMAND} from '../src/project-cloud.js';
+
+test('registered publication command uses the stop gate and deploying profiles enter PR and main CI',async()=>{
+  const registration=JSON.parse(await readFile(new URL('../projects/relay.json',import.meta.url)));
+  assert.equal(registration.cloud.deploy_command,RELAY_GUARDED_DEPLOY_COMMAND);
+  const workflow=await readFile(new URL('../.github/workflows/ci.yml',import.meta.url),'utf8');
+  for(const trigger of ['pull_request','push']){
+    const block=new RegExp('^  '+trigger+':\\n([\\s\\S]*?)(?=^  [a-z_]+:|^permissions:)','m').exec(workflow)?.[1];
+    assert.ok(block,'Required CI trigger '+trigger+' is missing');
+    assert.match(block,/^      - 'projects\/\*\*'$/m,'Deploying project profiles must receive the same required quality gates');
+  }
+});
 
 const suite=(id,code,dependsOn=[])=>({id,command:process.execPath,args:['-e',code],required:true,dependsOn});
 
