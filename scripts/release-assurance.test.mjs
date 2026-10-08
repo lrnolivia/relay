@@ -101,9 +101,10 @@ function failedFixture(){
  }})}};
  const snapshot=async()=>({ok:true,script:'relay',deployments:{deployments:[{id:'synthetic-deployment',versions:[{version_id:active.version_id,percentage:100}]}]},versions:{items:[{id:version},{id:active.version_id}]},domains:[{service:'relay',hostname:'relay.loew.fi',enabled:true}]});
  const profile={identity_url:'https://relay.loew.fi/',health_url:'https://relay.loew.fi/health',source_header:'X-Relay-Source-Sha',compatibility_header:'X-Relay-Release-Compatibility',compatibility_id:healthy.compatibility_id};
- const f={run,jobs,production,calls,logs,env,event:{repository:{full_name:'lrnolivia/relay'},workflow_run:run},get state(){return state;},get active(){return active;},globalHold:false,raceHold:false,loseResponse:false,writes:0};
+ const f={run,jobs,production,calls,logs,env,event:{repository:{full_name:'lrnolivia/relay'},workflow_run:run},get state(){return state;},get active(){return active;},globalHold:false,raceHold:false,loseResponse:false,loseBeforeCommit:false,identityLag:0,waits:[],writes:0};
  f.github=async path=>path.endsWith('/runs/9')?run:jobs;
- const deps={github:async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,rollback:profile}})).toString('base64')}),snapshot,active:async()=>({version_id:active.version_id,deployment_id:'synthetic-deployment'}),fetch:async url=>url.endsWith('/health')?Response.json({ok:true,service:'relay'}):new Response('fixture',{headers:{'X-Relay-Source-Sha':active.source_sha,'X-Relay-Release-Compatibility':active.compatibility_id}}),recover:async()=>{
+ const deps={github:async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,rollback:profile}})).toString('base64')}),snapshot,active:async()=>({version_id:active.version_id,deployment_id:'synthetic-deployment'}),fetch:async url=>{if(url.endsWith('/health'))return Response.json({ok:true,service:'relay'});const source=active.version_id===healthy.version_id&&f.identityLag-->0?failed:active.source_sha;return new Response('fixture',{headers:{'X-Relay-Source-Sha':source,'X-Relay-Release-Compatibility':active.compatibility_id}});},recover:async()=>{
+  if(f.loseBeforeCommit)throw Error('Synthetic unconfirmed provider write');
   if(active.version_id!==healthy.version_id){assert.equal(active.version_id,failedVersion);f.writes++;active={...healthy};if(f.loseResponse){f.loseResponse=false;throw Error('Synthetic provider response lost');}}return {ok:true};
  }};
  f.request=async(url,options)=>{
@@ -116,8 +117,8 @@ function failedFixture(){
    return Response.json({jsonrpc:'2.0',id:message.id,result:{structuredContent:result}});
   }catch{return Response.json({jsonrpc:'2.0',id:message.id,result:{isError:true}});}
  };
- f.execute=()=>runFailedReleaseRecovery({...f,log:value=>logs.push(value)});
- f.changeSource=sha=>{active.source_sha=sha;};f.keepHealthyLive=()=>{active={...healthy};};f.removeHealthy=()=>{state.last_healthy=null;};return f;
+ f.execute=()=>runFailedReleaseRecovery({...f,log:value=>logs.push(value),wait:async ms=>{f.waits.push(ms);await f.onWait?.();}});
+ f.stopDuringWait=()=>{state=transitionAutonomy(state,{action:'hold',scope:'relay',expected_revision:state.revision,operation_id:'synthetic-wait-stop',reason:'Concurrent user stop'}).state;};f.changeSource=sha=>{active.source_sha=sha;};f.keepHealthyLive=()=>{active={...healthy};};f.removeHealthy=()=>{state.last_healthy=null;};return f;
 }
 
 test('failed production restores the durable healthy target once and preserves the user approval and hold',async()=>{
@@ -137,7 +138,19 @@ test('global/project stops and concurrent CAS loss prevent new recovery; missing
  const missing=failedFixture();missing.removeHealthy();await assert.rejects(missing.execute(),/distinct compatible/);assert.equal(missing.state.held,true);assert.equal(missing.writes,0);
  assert.equal((await missing.execute()).held,true);
 });
-test('uncertain recovery stays pending and a rerun reconciles its original operation without replay',async()=>{
- const f=failedFixture();f.loseResponse=true;await assert.rejects(f.execute(),/reconcile before retrying/);assert.equal(f.state.held,true);assert.equal(f.state.rollback.state,'pending');assert.equal(f.writes,1);
- assert.equal((await f.execute()).recovered,true);assert.equal(f.state.rollback.state,'verified');assert.equal(f.writes,1);
+test('uncertain provider response reconciles automatically with one provider write and no resume',async()=>{
+ const f=failedFixture();f.loseResponse=true;assert.equal((await f.execute()).recovered,true);assert.equal(f.state.held,true);assert.equal(f.state.rollback.state,'verified');assert.equal(f.writes,1);assert.deepEqual(f.waits,[2000]);assert.equal(f.calls.filter(x=>x.action==='rollback').length,2);assert.equal(f.calls.filter(x=>x.action==='resume').length,0);
+});
+test('post-deployment identity lag reconciles through a fresh invocation; persistent mismatch stays held after one retry',async()=>{
+ const f=failedFixture();f.identityLag=1;assert.equal((await f.execute()).recovered,true);assert.equal(f.writes,1);assert.deepEqual(f.waits,[2000]);assert.equal(f.state.rollback.state,'verified');
+ const stuck=failedFixture();stuck.identityLag=10;await assert.rejects(stuck.execute(),/reconcile before retrying/);assert.equal(stuck.state.held,true);assert.equal(stuck.state.rollback.state,'pending');assert.equal(stuck.writes,1);assert.deepEqual(stuck.waits,[2000]);assert.equal(stuck.calls.filter(x=>x.action==='rollback').length,2);
+});
+test('a concurrent project or global stop during reconciliation prevents another invocation',async()=>{
+ for(const scope of ['global','relay']){
+  const f=failedFixture();f.identityLag=1;f.onWait=()=>{if(scope==='global')f.globalHold=true;else f.stopDuringWait();};
+  await assert.rejects(f.execute());assert.equal(f.calls.filter(x=>x.action==='rollback').length,1);assert.equal(f.state.held,true);assert.equal(f.writes,1);
+ }
+});
+test('an uncertain write without the exact target active is never replayed automatically',async()=>{
+ const f=failedFixture();f.loseBeforeCommit=true;await assert.rejects(f.execute());assert.equal(f.state.held,true);assert.equal(f.state.rollback.state,'pending');assert.equal(f.writes,0);assert.equal(f.calls.filter(x=>x.action==='rollback').length,1);assert.deepEqual(f.waits,[]);
 });

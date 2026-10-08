@@ -88,7 +88,7 @@ export async function runReleaseAssurance({event,env=process.env,request=fetch,g
 }
 // Failure recovery uses the already verified durable target and existing
 // rollback operation. It never executes archived code or resumes a hold.
-export async function runFailedReleaseRecovery({event,env=process.env,request=fetch,github=gh,log=console.log}={}){
+export async function runFailedReleaseRecovery({event,env=process.env,request=fetch,github=gh,log=console.log,wait=ms=>new Promise(resolve=>setTimeout(resolve,ms))}={}){
  const identity=releaseEvent(event,'failure'),transport=safetyTransport(env,request);
  await verifiedRun(github,identity,'failure');
  const jobs=await github('repos/lrnolivia/relay/actions/runs/'+identity.run_id+'/jobs?filter=latest&per_page=100');
@@ -133,7 +133,33 @@ export async function runFailedReleaseRecovery({event,env=process.env,request=fe
   }
  }
  const approval=current.state.last_user_approved,healthy=current.state.last_healthy;
- const result=await transport.call({action:'rollback',scope:'relay',kind:'healthy',expected_revision:revision,expected_current_version:expectedVersion,operation_id:operation,reason});
+ const input={action:'rollback',scope:'relay',kind:'healthy',expected_revision:revision,expected_current_version:expectedVersion,operation_id:operation,reason};
+ let result;
+ try{result=await transport.call(input);}
+ catch(error){
+  // A deployment can finish before all locations observe its new identity.
+  // Start a fresh authenticated invocation only after exact durable evidence
+  // proves this operation owns the pending/finished recovery. Never mint a
+  // replacement operation or clear a hold to work around an uncertain reply.
+  const reconcile=async()=>{
+   const global=await transport.call({action:'status',scope:'global'}),latest=await transport.call({action:'status',scope:'relay'}),state=latest.state;
+   if(global.state.held||!state.held||state.rollback?.operation_id!==operation||state.rollback.kind!=='healthy'||!['pending','verified'].includes(state.rollback.state)||state.revision!==revision+(state.rollback.state==='pending'?2:3))throw error;
+   assert.deepEqual(state.rollback.target,healthy,'Recovery target changed; no reconciliation');
+   assert.deepEqual(state.last_healthy,healthy);assert.deepEqual(state.last_user_approved,approval);
+   assert.equal(state.rollback.expected_current_version,expectedVersion);
+   const snapshot=await transport.tool('relay_cloud_worker',{script:'relay'}),deployments=Array.isArray(snapshot.deployments)?snapshot.deployments:snapshot.deployments?.deployments;
+   const active=deployments?.[0];
+   // Reconciliation must be verification-only: do not retry an uncertain
+   // provider write unless the exact target is independently active already.
+   if(active?.versions?.length!==1||active.versions[0].percentage!==100||active.versions[0].version_id!==healthy.version_id)throw error;
+   return {state,global:global.state,deployment_id:active.id};
+  };
+  const before=await reconcile();await wait(2000);const after=await reconcile();
+  assert.deepEqual(after,before,'Safety changed during recovery wait; no reconciliation');
+  log(JSON.stringify({ok:true,ci_run:identity.run_id,reconciling:true,operation_id:operation,reason:'Exact durable recovery retained after an uncertain verification response'}));
+  result=await transport.call(input);
+ }
+
  const readback=await transport.call({action:'status',scope:'relay'});
  assert.deepEqual(result.state,readback.state,'Recovery state changed before readback; reconcile');
  assert.ok(readback.state.held&&readback.state.rollback?.state==='verified'&&readback.state.rollback.operation_id===operation,'Verified held recovery receipt is required');
