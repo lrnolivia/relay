@@ -34,6 +34,12 @@ function safetyTransport(env,request){
  const id=env.CF_ACCESS_CLIENT_ID,secret=env.CF_ACCESS_CLIENT_SECRET;
  assert.ok(id&&secret,'Existing authenticated CI identity is required');
  const headers={Authorization:JSON.stringify({'cf-access-client-id':id,'cf-access-client-secret':secret}),'CF-Access-Client-Id':id,'CF-Access-Client-Secret':secret};
+ const external=env.RELAY_RECOVERY_CONTROL_URL;
+ assert.ok(!external||external===ORIGIN+'/recovery-control','Recovery controller must use the fixed existing Access origin');
+ async function controller(input){
+  const response=await request(external,{method:'POST',redirect:'manual',signal:AbortSignal.timeout(30000),headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(input)});
+  assert.ok(response.ok,'Independent safety request failed; reconcile before retrying');const result=JSON.parse((await bounded(response,1048576)).toString());assert.equal(result.ok,true,'Complete independent safety receipt required');return result;
+ }
  let sequence=0;
  async function rpc(method,params){
   const rpcId=++sequence,response=await request(ORIGIN+'/mcp',{method:'POST',redirect:'manual',signal:AbortSignal.timeout(20000),headers:{...headers,'Content-Type':'application/json',Accept:'application/json, text/event-stream'},body:JSON.stringify({jsonrpc:'2.0',id:rpcId,method,params})});
@@ -41,8 +47,11 @@ function safetyTransport(env,request){
   const messages=response.headers.get('content-type')?.includes('text/event-stream')?text.split(/\r?\n\r?\n/).map(block=>block.split(/\r?\n/).filter(line=>line.startsWith('data:')).map(line=>line.slice(5).trim()).join('\n')).filter(Boolean).map(line=>JSON.parse(line)):[JSON.parse(text)];
   const message=messages.find(item=>item.id===rpcId);assert.ok(message&&!message.error&&message.result&&!message.result.isError,'Safety request failed; reconcile before retrying');return message.result;
  }
- const tool=async(name,input)=>{const result=await rpc('tools/call',{name,arguments:input});assert.ok(result.structuredContent?.ok===true,'Complete authenticated control receipt is required');return result.structuredContent;};
- return {headers,rpc,tool,call:input=>tool('relay_autonomy',input)};
+ const tool=async(name,input)=>{
+  if(external&&name==='relay_cloud_worker'){assert.deepEqual(input,{script:'relay'});return controller({action:'cloud_status',scope:'relay'});}
+  const result=await rpc('tools/call',{name,arguments:input});assert.ok(result.structuredContent?.ok===true,'Complete authenticated control receipt is required');return result.structuredContent;
+ };
+ return {headers,rpc,tool,external:Boolean(external),call:input=>external&&['status','hold','resume','rollback'].includes(input.action)?controller(input):tool('relay_autonomy',input),inspect:input=>controller({action:'inspect_release',scope:'relay',...input})};
 }
 export async function runReleaseAssurance({event,env=process.env,request=fetch,github=gh,restore,log=console.log}={}){
  const identity=releaseEvent(event),transport=safetyTransport(env,request);
@@ -121,18 +130,23 @@ export async function runFailedReleaseRecovery({event,env=process.env,request=fe
   const deployments=Array.isArray(snapshot.deployments)?snapshot.deployments:snapshot.deployments?.deployments;
   const active=deployments?.[0];assert.ok(active?.versions?.length===1&&active.versions[0].percentage===100,'Exact active deployment is required');expectedVersion=active.versions[0].version_id;
   assert.match(expectedVersion,/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/);
-  const page=await request(ORIGIN+'/',{method:'GET',redirect:'manual',headers:transport.headers,signal:AbortSignal.timeout(10000)});
-  const source=page.headers.get('X-Relay-Source-Sha'),compatibility=page.headers.get('X-Relay-Release-Compatibility');await page.body?.cancel();
+  let page;
+  try{page=await request(ORIGIN+'/',{method:'GET',redirect:'manual',headers:transport.headers,signal:AbortSignal.timeout(10000)});}catch(error){if(!transport.external)throw error;}
+  let source=page?.headers.get('X-Relay-Source-Sha'),compatibility=page?.headers.get('X-Relay-Release-Compatibility');await page?.body?.cancel();
   if(source&&source!==identity.source_sha){
    // If the old healthy build is still live, stop the failed candidate from
    // publishing late. A different newer source is left untouched.
-   if(page.ok&&source===current.state.last_healthy?.source_sha&&expectedVersion===current.state.last_healthy.version_id){
+   if(page?.ok&&source===current.state.last_healthy?.source_sha&&expectedVersion===current.state.last_healthy.version_id){
     await transport.call({action:'hold',scope:'relay',expected_revision:revision,operation_id:operation+'-pending',reason});
     log(JSON.stringify({ok:true,source_sha:identity.source_sha,recovered:false,held:true,reason:'Failed candidate has not replaced healthy production; late publication stopped'}));return {held:true,pendingPublication:true};
    }
    log(JSON.stringify({ok:true,source_sha:identity.source_sha,recovered:false,reason:'Production source changed; superseded CI event ignored'}));return {superseded:true};
   }
-  assert.ok(page.ok&&!page.redirected&&source===identity.source_sha&&compatibility==='relay-autonomy-v1','Production identity is ambiguous; no automatic provider write');
+  if(!(page?.ok&&!page.redirected&&source===identity.source_sha&&compatibility==='relay-autonomy-v1')){
+   assert.ok(transport.external&&(!page||page.status>=500||page.status===404||(page.ok&&!page.redirected&&!source)),'Production identity is ambiguous; no automatic provider write');
+   const proof=await transport.inspect({source_sha:identity.source_sha,version_id:expectedVersion});assert.equal(proof.source_sha,identity.source_sha);assert.equal(proof.version_id,expectedVersion);assert.equal(proof.verification,'canonical-provider-build+active-deployment');
+   source=identity.source_sha;compatibility='relay-autonomy-v1';
+  }
   const target=current.state.last_healthy;
   if(!target||target.compatibility_id!==compatibility||target.source_sha===source||target.version_id===expectedVersion){
    await transport.call({action:'hold',scope:'relay',expected_revision:revision,operation_id:operation+'-unavailable',reason});

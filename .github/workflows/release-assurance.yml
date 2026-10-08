@@ -33,4 +33,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           CF_ACCESS_CLIENT_ID: ${{ vars.CF_ACCESS_CLIENT_ID }}
           CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF }}
+          RELAY_RECOVERY_CONTROL_URL: ${{ vars.RELAY_RECOVERY_CONTROL_URL }}
         run: node scripts/release-assurance.mjs

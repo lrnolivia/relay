@@ -26,6 +26,9 @@ function fixture(){
  f.restore=async(_bytes,sha,digest)=>({schema:1,source_sha:sha,archive_sha256:digest,file_count:5,host_restore_verified:true,compiled_ci_runtime_evidence_verified:true,runtime_reexecuted:false,production_rollback_performed:false,files:['bundle/README.md','bundle/index.js','bundle/index.js.map','probe.json','result.json'].map(path=>({path,bytes:2,sha256:'c'.repeat(64)}))});
  f.request=async(url,options)=>{
   assert.ok(url.startsWith('https://relay.loew.fi/'));assert.equal(options.redirect,'manual');assert.equal(options.headers['CF-Access-Client-Secret'],env.CF_ACCESS_CLIENT_SECRET);
+  if(url==='https://relay.loew.fi/recovery-control'){
+   const input=JSON.parse(options.body);calls.push(input);assert.equal(input.action,'status','Independent controller must not promote healthy or record approval');return Response.json({ok:true,state:input.scope==='global'?{...autonomyState('global'),held:f.hold}:state});
+  }
   if(url.includes('/mcp')){
    const message=JSON.parse(options.body);let result;
    if(message.method==='tools/list')result={tools:[{name:'relay_autonomy',inputSchema:{properties:{target:{properties:{recovery:{}}}}}}]};
@@ -102,7 +105,7 @@ function failedFixture(){
  }})}};
  const snapshot=async()=>({ok:true,script:'relay',deployments:{deployments:[{id:'synthetic-deployment',versions:[{version_id:active.version_id,percentage:100}]}]},versions:{items:[{id:version},{id:active.version_id}]},domains:[{service:'relay',hostname:'relay.loew.fi',enabled:true}]});
  const profile={identity_url:'https://relay.loew.fi/',health_url:'https://relay.loew.fi/health',source_header:'X-Relay-Source-Sha',compatibility_header:'X-Relay-Release-Compatibility',compatibility_id:healthy.compatibility_id};
- const f={run,jobs,production,calls,logs,env,event:{repository:{full_name:'lrnolivia/relay'},workflow_run:run},get state(){return state;},get active(){return active;},globalHold:false,raceHold:false,loseResponse:false,loseBeforeCommit:false,compiled:false,identityLag:0,waits:[],writes:0};
+ const f={run,jobs,production,calls,logs,env,event:{repository:{full_name:'lrnolivia/relay'},workflow_run:run},get state(){return state;},get active(){return active;},globalHold:false,raceHold:false,loseResponse:false,loseBeforeCommit:false,compiled:false,productOutage:0,providerProofUnavailable:false,identityLag:0,waits:[],writes:0};
  f.github=async path=>path.endsWith('/runs/9')?run:jobs;
  const deps={github:async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,rollback:profile}})).toString('base64')}),snapshot,active:async()=>({version_id:active.version_id,deployment_id:'synthetic-deployment'}),fetch:async url=>{if(url.endsWith('/health'))return Response.json({ok:true,service:'relay'});const source=active.source_sha===healthy.source_sha&&f.identityLag-->0?failed:active.source_sha;return new Response('fixture',{headers:{'X-Relay-Source-Sha':source,'X-Relay-Release-Compatibility':active.compatibility_id}});},recover:async()=>{
   if(f.loseBeforeCommit)throw Error('Synthetic unconfirmed provider write');
@@ -118,14 +121,22 @@ function failedFixture(){
   if(active.version_id!==healthy.version_id){assert.equal(active.version_id,failedVersion);f.writes++;active={...healthy};if(f.loseResponse){f.loseResponse=false;throw Error('Synthetic provider response lost');}}return {ok:true};
  }};
  f.request=async(url,options)=>{
-  if(url==='https://relay.loew.fi/')return deps.fetch(url);
-  const message=JSON.parse(options.body),args=message.params.arguments;calls.push({name:message.params.name,...args});
+  if(url==='https://relay.loew.fi/'){
+   if(active.source_sha===failed&&f.productOutage){if(f.productOutage==='network')throw Error('Synthetic product HTTP failure');return new Response('Synthetic unavailable product',{status:f.productOutage});}
+   return deps.fetch(url);
+  }
+  const external=url==='https://relay.loew.fi/recovery-control';
+  const message=external?{params:{name:'controller',arguments:JSON.parse(options.body)}}:JSON.parse(options.body),args=message.params.arguments;calls.push({name:message.params.name,...args});
   let result;
   try{
-   if(message.params.name==='relay_cloud_worker')result=await snapshot();
+   if(message.params.name==='relay_cloud_worker'||(external&&args.action==='cloud_status'))result=await snapshot();
+   else if(external&&args.action==='inspect_release'){
+    if(f.providerProofUnavailable||args.source_sha!==failed||args.version_id!==active.version_id)throw Error('Synthetic provider source mismatch');
+    result={ok:true,source_sha:failed,version_id:active.version_id,verification:'canonical-provider-build+active-deployment'};
+   }
    else{if(args.action==='rollback'&&f.raceHold)state=transitionAutonomy(state,{action:'hold',scope:'relay',expected_revision:state.revision,operation_id:'synthetic-concurrent-hold',reason:'Concurrent user stop'}).state;result=await callAutonomyControl(env,args,deps);}
-   return Response.json({jsonrpc:'2.0',id:message.id,result:{structuredContent:result}});
-  }catch{return Response.json({jsonrpc:'2.0',id:message.id,result:{isError:true}});}
+   return external?Response.json(result):Response.json({jsonrpc:'2.0',id:message.id,result:{structuredContent:result}});
+  }catch{return external?Response.json({ok:false},{status:503}):Response.json({jsonrpc:'2.0',id:message.id,result:{isError:true}});}
  };
  f.execute=()=>runFailedReleaseRecovery({...f,log:value=>logs.push(value),wait:async ms=>{f.waits.push(ms);await f.onWait?.();}});
  f.stopDuringWait=()=>{state=transitionAutonomy(state,{action:'hold',scope:'relay',expected_revision:state.revision,operation_id:'synthetic-wait-stop',reason:'Concurrent user stop'}).state;};f.changeSource=sha=>{active.source_sha=sha;};f.keepHealthyLive=()=>{active={...healthy};};f.removeHealthy=()=>{state.last_healthy=null;};return f;
@@ -171,4 +182,20 @@ test('compiled fallback verifies the new provider UUID while preserving original
   assert.equal((await f.execute()).recovered,true);assert.equal(f.writes,1);assert.equal(f.state.rollback.state,'verified');assert.equal(f.state.revision,5);assert.equal(f.state.held,true);assert.notEqual(f.active.version_id,healthy.version_id);assert.deepEqual(f.state.rollback.original_target,healthy);assert.deepEqual(f.state.last_healthy,healthy);assert.deepEqual(f.state.last_user_approved,approval);
   await f.execute();assert.equal(f.writes,1);
  }
+});
+
+test('enabled independent controller recovers a failed product HTTP handler only with exact active provider source proof',async()=>{
+ for(const outage of [500,404,'network']){
+  const f=failedFixture();f.env.RELAY_RECOVERY_CONTROL_URL='https://relay.loew.fi/recovery-control';f.productOutage=outage;
+  assert.equal((await f.execute()).recovered,true);assert.equal(f.writes,1);assert.equal(f.state.held,true);assert.equal(f.state.rollback.state,'verified');assert.equal(f.calls.filter(x=>x.action==='inspect_release').length,1);assert.ok(f.calls.every(x=>x.name==='controller'),'Recovery must not depend on the product MCP handler');
+ }
+ const unavailable=failedFixture();unavailable.env.RELAY_RECOVERY_CONTROL_URL='https://relay.loew.fi/recovery-control';unavailable.productOutage=500;unavailable.providerProofUnavailable=true;await assert.rejects(unavailable.execute());assert.equal(unavailable.writes,0);
+ for(const status of [302,401,403,429]){
+  const denied=failedFixture();denied.env.RELAY_RECOVERY_CONTROL_URL='https://relay.loew.fi/recovery-control';denied.productOutage=status;await assert.rejects(denied.execute());assert.equal(denied.writes,0);assert.equal(denied.calls.filter(x=>x.action==='inspect_release').length,0,'An access/transport denial is not a product failure');
+ }
+ const wrong=failedFixture();wrong.env.RELAY_RECOVERY_CONTROL_URL='https://untrusted.example/recovery-control';await assert.rejects(wrong.execute());assert.equal(wrong.calls.length,0);
+});
+
+test('enabled controller still sends healthy promotion through the verified product path',async()=>{
+ const f=fixture();f.env.RELAY_RECOVERY_CONTROL_URL='https://relay.loew.fi/recovery-control';assert.equal((await f.execute()).state.last_healthy.source_sha,source);assert.equal(f.calls.filter(x=>x.action==='healthy').length,1);
 });
