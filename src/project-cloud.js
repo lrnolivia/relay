@@ -111,8 +111,25 @@ export async function verifyApprovedTarget(env,status,target,deps={}){
   if(file?.type!=='file'||file.encoding!=='base64'||file.truncated)throw Error('Historical source profile is incomplete');
   const registration=JSON.parse(decode(file.content)),historic=validateRegistration(registration,status.project);
   if(registration.repository!==status.repository||historic?.worker!==status.worker||historic.write!==true||historic.transport!=='workers-builds'||historic.rollback?.compatibility_id!==profile.compatibility_id||!historic.production_branch||!historic.deploy_command)throw Error('Historical source recovery compatibility is not established');
-  const history=await (deps.builds||((worker)=>cloudBuilds(env,worker)))(status.worker);
-  const builds=(Array.isArray(history)?history:history?.builds||[]).filter(b=>b.build_outcome==='success'&&b.build_trigger_metadata?.commit_hash===target.source_sha&&b.build_trigger_metadata.branch===historic.production_branch&&b.build_trigger_metadata.deploy_command===historic.deploy_command);
+  const buildId=await verifyProviderBuildVersion(env,target,{branch:historic.production_branch,deploy_command:historic.deploy_command},deps);
+  const checks=await (deps.checks||(()=>api(root+'/commits/'+target.source_sha+'/check-runs?per_page=100')))();
+  if(checks.total_count>checks.check_runs?.length)throw Error('Historical production checks are incomplete');
+  const quality=checks.check_runs?.filter(c=>c.name==='quality'&&c.app?.slug==='github-actions').sort((a,b)=>b.id-a.id)[0];
+  if(quality?.head_sha!==target.source_sha||quality.status!=='completed'||quality.conclusion!=='success')throw Error('Exact historical production quality did not pass');
+  const prefix='https://github.com/'+status.repository+'/actions/runs/';
+  const jobId=quality.html_url?.startsWith(prefix)&&/^\d+\/job\/([0-9]+)$/.exec(quality.html_url.slice(prefix.length))?.[1];
+  if(!jobId)throw Error('Historical production job identity is missing');
+  const job=await (deps.job||((id)=>api(root+'/actions/jobs/'+id)))(jobId);
+  if(job.head_sha!==target.source_sha||job.conclusion!=='success'||!['Verify exact live source and capture actual website pages','Retain and verify exact interactive sample build'].every(name=>job.steps?.some(s=>s.name===name&&s.conclusion==='success')))throw Error('Historical production and retained-build verification did not pass');
+  return {version_id:target.version_id,source_sha:target.source_sha,build_id:buildId,production_job_id:jobId,currently_active:false,verification:'retained-provider-deployment+exact-source-production-ci'};
+}
+
+// Bind an exact source to its deployed provider UUID without asking the
+// product's HTTP handler to identify itself. Used by independent recovery.
+export async function verifyProviderBuildVersion(env,target,profile,deps={}){
+ if(!/^[a-f0-9]{40}$/.test(target.source_sha||'')||!/^[a-f0-9-]{36}$/.test(target.version_id||'')||typeof profile.branch!=='string'||typeof profile.deploy_command!=='string')throw Error('Exact provider source/version/profile required');
+  const history=await (deps.builds||((worker)=>cloudBuilds(env,worker)))(target.worker);
+  const builds=(Array.isArray(history)?history:history?.builds||[]).filter(b=>b.build_outcome==='success'&&b.build_trigger_metadata?.commit_hash===target.source_sha&&b.build_trigger_metadata.branch===profile.branch&&b.build_trigger_metadata.deploy_command===profile.deploy_command);
   if(builds.length!==1)throw Error('Historical approval requires one exact successful canonical provider build');
   const build=builds[0];
   if(!/^[a-f0-9-]{36}$/.test(build.build_uuid||''))throw Error('Invalid provider build identity');
@@ -131,16 +148,7 @@ export async function verifyApprovedTarget(env,status,target,deps={}){
     if(typeof cursor!=='string'||cursor.length>4096||cursors.has(cursor))throw Error('Invalid provider deployment evidence cursor');cursors.add(cursor);
   }
   if(!complete||ids.size!==1||!ids.has(target.version_id))throw Error('Provider build does not prove this exact retained version');
-  const checks=await (deps.checks||(()=>api(root+'/commits/'+target.source_sha+'/check-runs?per_page=100')))();
-  if(checks.total_count>checks.check_runs?.length)throw Error('Historical production checks are incomplete');
-  const quality=checks.check_runs?.filter(c=>c.name==='quality'&&c.app?.slug==='github-actions').sort((a,b)=>b.id-a.id)[0];
-  if(quality?.head_sha!==target.source_sha||quality.status!=='completed'||quality.conclusion!=='success')throw Error('Exact historical production quality did not pass');
-  const prefix='https://github.com/'+status.repository+'/actions/runs/';
-  const jobId=quality.html_url?.startsWith(prefix)&&/^\d+\/job\/([0-9]+)$/.exec(quality.html_url.slice(prefix.length))?.[1];
-  if(!jobId)throw Error('Historical production job identity is missing');
-  const job=await (deps.job||((id)=>api(root+'/actions/jobs/'+id)))(jobId);
-  if(job.head_sha!==target.source_sha||job.conclusion!=='success'||!['Verify exact live source and capture actual website pages','Retain and verify exact interactive sample build'].every(name=>job.steps?.some(s=>s.name===name&&s.conclusion==='success')))throw Error('Historical production and retained-build verification did not pass');
-  return {version_id:target.version_id,source_sha:target.source_sha,build_id:build.build_uuid,production_job_id:jobId,currently_active:false,verification:'retained-provider-deployment+exact-source-production-ci'};
+  return build.build_uuid;
 }
 
 export const RELAY_GUARDED_DEPLOY_COMMAND='node scripts/autonomy-gate.mjs relay && npx wrangler deploy';

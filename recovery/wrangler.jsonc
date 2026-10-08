@@ -1,0 +1,21 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "relay-recovery",
+  "main": "../src/recovery-controller.js",
+  "compatibility_date": "2026-09-29",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [],
+  "vars": {
+    "CLOUDFLARE_ACCOUNT_ID": "8df30cd302a4d4a4c01db9863c712166",
+    "RELAY_AUTONOMY_GUARD": "enforced",
+    "RELAY_CLOUDFLARE_WRITE_SCRIPTS": "relay",
+    "RELAY_RUNNER_CONTROL_REPOSITORY": "lrnolivia/relay",
+    "RELAY_CANONICAL_REPOSITORY": "lrnolivia/relay"
+  },
+  "durable_objects": {
+    "bindings": [{"name": "RELAY_EVENTS", "class_name": "RelayEvents", "script_name": "relay"}]
+  },
+  "r2_buckets": [{"binding": "EVIDENCE", "bucket_name": "loew-inspector-evidence"}]
+}

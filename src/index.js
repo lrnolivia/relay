@@ -1,3 +1,4 @@
+import {verifyAccessJwt} from './access-verification.js';
 import {transferTools,transferRead,transferWrite,browserFileResponse} from './file-transfer.js';
 import { readMcpBody, mcpBodyErrorResponse } from "./mcp-request-body.js";
 import { handleApi as runnerApi } from "../packages/runner/src/cloudflare-worker.mjs";
@@ -38,8 +39,6 @@ const EVIDENCE_CONTEXT_SCHEMA = {
   },
   additionalProperties: false
 };
-const ACCESS_ISSUER = "https://loewfi.cloudflareaccess.com";
-const RELAY_ACCESS_AUD = "7d90e5b24c6c74b4bd0fb36699e0a65a3aa25057763986ca1b8ce1a52d528819";
 const MAX_BODY_BYTES = 262144;
 const MAX_REDIRECTS = 5;
 const TARGET_TIMEOUT_MS = 10000;
@@ -162,7 +161,6 @@ function relayResult(id, result) {
 }
 
 
-let jwksCache = { expires: 0, keys: [] };
 
 function json(value, status = 200, headers = {}) {
   return new Response(JSON.stringify(value), {
@@ -192,65 +190,6 @@ function validateTarget(input) {
   return url;
 }
 
-function decodeBase64Url(value) {
-  const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
-  const padded = normalized + "=".repeat((4 - normalized.length % 4) % 4);
-  return Uint8Array.from(atob(padded), c => c.charCodeAt(0));
-}
-
-async function getAccessKeys() {
-  const now = Date.now();
-  if (jwksCache.expires > now && jwksCache.keys.length) return jwksCache.keys;
-  const response = await fetch(ACCESS_ISSUER + "/cdn-cgi/access/certs", {
-    signal: AbortSignal.timeout(5000)
-  });
-  if (!response.ok) throw new Error("Unable to load Access signing keys");
-  const data = await response.json();
-  const keys = Array.isArray(data.keys) ? data.keys : [];
-  jwksCache = { expires: now + 300000, keys };
-  return keys;
-}
-
-async function verifyAccessJwt(request) {
-  const token = request.headers.get("cf-access-jwt-assertion");
-  if (!token || token.length > 8192) return null;
-  const parts = token.split(".");
-  if (parts.length !== 3) return null;
-  try {
-    const header = JSON.parse(new TextDecoder().decode(decodeBase64Url(parts[0])));
-    const claims = JSON.parse(new TextDecoder().decode(decodeBase64Url(parts[1])));
-    const aud = Array.isArray(claims.aud) ? claims.aud : [claims.aud];
-    const now = Date.now() / 1000;
-    if (
-      header.alg !== "RS256" ||
-      typeof header.kid !== "string" ||
-      claims.iss !== ACCESS_ISSUER ||
-      !aud.includes(RELAY_ACCESS_AUD) ||
-      typeof claims.exp !== "number" || claims.exp <= now ||
-      (typeof claims.nbf === "number" && claims.nbf > now)
-    ) return null;
-
-    const keys = await getAccessKeys();
-    const jwk = keys.find(k => k.kid === header.kid && k.kty === "RSA");
-    if (!jwk) return null;
-    const key = await crypto.subtle.importKey(
-      "jwk",
-      jwk,
-      { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
-      false,
-      ["verify"]
-    );
-    const ok = await crypto.subtle.verify(
-      "RSASSA-PKCS1-v1_5",
-      key,
-      decodeBase64Url(parts[2]),
-      new TextEncoder().encode(parts[0] + "." + parts[1])
-    );
-    return ok ? { token, claims } : null;
-  } catch {
-    return null;
-  }
-}
 
 async function boundedText(response) {
   if (!response.body) return { body: "", truncated: false };
