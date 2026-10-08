@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { autonomyState, transitionAutonomy, durableAutonomy, guardAutonomy, guardRepository, publicAutonomyStatus } from './autonomy-control.js';
 import { githubApiRequest, githubGraphqlRequest } from './source.js';
 import { deployCloudVersion, recoverCloudVersion } from './cloud.js';
-import { deployProjectCloudVersion, callAutonomyControl, verifyReleaseTarget } from './project-cloud.js';
+import { deployProjectCloudVersion, callAutonomyControl, verifyReleaseTarget, RELAY_GUARDED_DEPLOY_COMMAND } from './project-cloud.js';
 import { handleApi } from '../packages/runner/src/cloudflare-worker.mjs';
 import { callUiApi } from '../apps/web/api.js';
 
@@ -99,10 +99,94 @@ test('missing or malformed safety state fails closed; public status reveals no a
 });
 
 const profile={identity_url:'https://relay.loew.fi/',health_url:'https://relay.loew.fi/health',source_header:'X-Relay-Source-Sha',compatibility_header:'X-Relay-Release-Compatibility',compatibility_id:'relay-v1'};
+function buildGuardFixture(){
+ const state=binding(),f=releaseFixture(state.env),tag='a'.repeat(32);
+ Object.assign(state.env,{CLOUDFLARE_ACCOUNT_ID:'fixture-account',CLOUDFLARE_API_TOKEN:'primary',CLOUDFLARE_BUILDS_API_TOKEN:'builds',RELAY_CLOUDFLARE_WRITE_SCRIPTS:'relay'});
+ const trigger={trigger_uuid:'364453c2-c933-447a-9b19-451dff930e90',external_script_id:tag,root_directory:'/',branch_includes:['main'],branch_excludes:[],build_command:'npm run build',deploy_command:'npx wrangler deploy',repo_connection:{provider_type:'github',provider_account_name:'lrnolivia',repo_name:'relay'}};
+ const variables={UNRELATED:{value:'keep',is_secret:false,created_on:'2020-01-01T00:00:00Z'}},calls=[];
+ Object.assign(f.deps,{
+  accessJwt:'verified-private-context',buildIdentity:{CF_ACCESS_CLIENT_ID:'fixture-client',CF_ACCESS_CLIENT_SECRET:'fixture-secret'},
+  identityFetch:async(url,options)=>{assert.match(url,/^https:\/\/relay\.loew\.fi\/autonomy-status\?scope=(global|relay)$/);assert.equal(options.redirect,'manual');assert.deepEqual(options.headers,{'CF-Access-Client-Id':'fixture-client','CF-Access-Client-Secret':'fixture-secret'});return Response.json({schema:1,scope:new URL(url).searchParams.get('scope'),revision:0,held:false,enforced:true});},
+  buildApi:async(path,options={})=>{
+   calls.push({path,method:options.method||'GET'});
+   if(path.endsWith('/workers/scripts')){assert.equal(options.token,undefined);return [{id:'relay',tag}];}
+   assert.equal(options.token,'builds');
+   if(path.endsWith('/triggers'))return [structuredClone(trigger)];
+   if(path.endsWith('/environment_variables')){
+    if(options.method==='PATCH'){
+     assert.deepEqual(Object.keys(options.body),['CF_ACCESS_CLIENT_ID','CF_ACCESS_CLIENT_SECRET']);
+     for(const [key,value] of Object.entries(options.body)){assert.equal(value.is_secret,true);assert.equal(value.value,f.deps.buildIdentity[key]);variables[key]={is_secret:true,value:null,created_on:new Date().toISOString()};}
+    }
+    return structuredClone(variables);
+   }
+   assert.equal(path,'/accounts/fixture-account/builds/triggers/'+trigger.trigger_uuid);assert.equal(options.method,'PATCH');assert.deepEqual(options.body,{deploy_command:RELAY_GUARDED_DEPLOY_COMMAND});trigger.deploy_command=options.body.deploy_command;return structuredClone(trigger);
+  }
+ });
+ return {...state,...f,trigger,variables,calls,args:input('configure_build_guard',0,{authorization:'Lauren: keep going with autonomous deployment and safety switch'})};
+}
+
+test('canonical build guard setup holds publication, writes only secret CI identity, verifies and resumes once',async()=>{
+ const f=buildGuardFixture();let writes=0;const api=f.deps.buildApi;
+ f.deps.buildApi=async(path,options)=>{if(options?.method==='PATCH'){writes++;assert.equal(f.values.get('autonomy:relay').held,true);}return api(path,options);};
+ const receipt=await callAutonomyControl(f.env,f.args,f.deps);
+ assert.equal(receipt.state.revision,2);assert.equal(receipt.state.held,false);assert.equal(receipt.build_guard.configuration_readback_verified,true);assert.equal(receipt.build_guard.build_execution_verified,false);assert.equal(f.trigger.deploy_command,RELAY_GUARDED_DEPLOY_COMMAND);assert.equal(writes,2);assert.equal(f.variables.UNRELATED.value,'keep');
+ assert.doesNotMatch(JSON.stringify(receipt)+JSON.stringify([...f.values]),/fixture-client|fixture-secret|verified-private-context/);
+ assert.equal((await callAutonomyControl(f.env,f.args,f.deps)).duplicate,true);assert.equal(writes,2);
+ await assert.rejects(callAutonomyControl(f.env,{...f.args,authorization:'different authorization'},f.deps),/different intent/);
+});
+
+test('build setup rejects missing or invalid private identity and unregistered scope before holding or writing',async()=>{
+ for(const change of [
+  f=>{delete f.deps.accessJwt;},f=>{delete f.deps.buildIdentity;},f=>{f.deps.buildIdentity.CF_ACCESS_CLIENT_SECRET='';},
+  f=>{f.deps.buildIdentity.CF_ACCESS_CLIENT_SECRET='secret\n';},f=>{f.args.scope='field';},f=>{f.env.RELAY_AUTONOMY_GUARD='disabled';},
+  f=>{f.deps.identityFetch=async()=>{throw Error('secret-containing remote diagnostic');};},
+  f=>{f.deps.identityFetch=async()=>new Response(null,{status:302,headers:{Location:'https://login.example/'}});},
+  f=>{f.deps.identityFetch=async()=>Response.json({schema:1,scope:'wrong',revision:0,held:false,enforced:true});},
+  f=>{f.deps.identityFetch=async()=>Response.json({schema:1,scope:'relay',revision:0,held:false,enforced:false});},
+  f=>{f.deps.identityFetch=async()=>new Response('x'.repeat(16385),{headers:{'Content-Type':'application/json'}});},
+  f=>{f.args.buildIdentity={CF_ACCESS_CLIENT_SECRET:'tool-secret'};}
+ ]){const f=buildGuardFixture();change(f);await assert.rejects(callAutonomyControl(f.env,f.args,f.deps),error=>!error.message.includes('secret-containing'));assert.equal(f.values.has('autonomy:relay'),false);assert.equal(f.calls.length,0);}
+});
+
+test('build setup preserves unknown existing secrets and changed trigger ownership',async()=>{
+ for(const change of [
+  f=>{f.trigger.repo_connection.repo_name='another';},f=>{f.trigger.branch_includes=['main','*'];},f=>{f.trigger.external_script_id='b'.repeat(32);},
+  f=>{f.trigger.trigger_uuid='another';},f=>{f.trigger.root_directory='/subproject';},f=>{f.trigger.deploy_command='unreviewed command';},
+  f=>{f.variables.CF_ACCESS_CLIENT_SECRET={value:null,is_secret:true,created_on:'2020-01-01T00:00:00Z'};},
+  f=>{for(const key of ['CF_ACCESS_CLIENT_ID','CF_ACCESS_CLIENT_SECRET'])f.variables[key]={value:null,is_secret:true,created_on:'2020-01-01T00:00:00Z'};}
+ ]){const f=buildGuardFixture();change(f);await assert.rejects(callAutonomyControl(f.env,f.args,f.deps));assert.equal(f.values.get('autonomy:relay').held,true);assert.equal(f.calls.filter(c=>c.method==='PATCH').length,0);}
+});
+
+test('uncertain build writes remain held and are reconciled without replaying successful writes',async()=>{
+ for(const suffix of ['/environment_variables','/364453c2-c933-447a-9b19-451dff930e90']){
+  const f=buildGuardFixture(),api=f.deps.buildApi;let once=true;
+  f.deps.buildApi=async(path,options)=>{const result=await api(path,options);if(once&&options?.method==='PATCH'&&path.endsWith(suffix)){once=false;throw Error('Provider accidentally echoed fixture-secret');}return result;};
+  await assert.rejects(callAutonomyControl(f.env,f.args,f.deps),error=>/uncertain/.test(error.message)&&!error.message.includes('fixture-secret'));
+  assert.equal(f.values.get('autonomy:relay').held,true);
+  const result=await callAutonomyControl(f.env,f.args,f.deps);assert.equal(result.state.held,false);
+  assert.equal(f.calls.filter(c=>c.method==='PATCH'&&c.path.endsWith('/environment_variables')).length,1);
+  assert.equal(f.calls.filter(c=>c.method==='PATCH'&&!c.path.endsWith('/environment_variables')).length,1);
+ }
+});
+
+test('a concurrent stop wins over setup and global holds prevent provider configuration',async()=>{
+ for(const global of [false,true]){
+  const f=buildGuardFixture(),api=f.deps.buildApi;
+  f.deps.buildApi=async(path,options)=>{const result=await api(path,options);if(options?.method==='PATCH'&&path.endsWith('/environment_variables')){
+    const scope=global?'global':'relay',revision=global?0:1;
+    await durableAutonomy({transaction:fn=>fn({get:async()=>f.values.get('autonomy:'+scope),put:async(_key,value)=>f.values.set('autonomy:'+scope,value)})},{action:'hold',scope,expected_revision:revision,operation_id:'concurrent-human-stop',reason:'Stop now'});
+   }return result;};
+  await assert.rejects(callAutonomyControl(f.env,f.args,f.deps),global?/held for global/:/revision changed/);
+  assert.equal(f.values.get('autonomy:'+(global?'global':'relay')).held,true);assert.equal(f.trigger.deploy_command,'npx wrangler deploy');
+ }
+ const f=buildGuardFixture();f.values.set('autonomy:global',{...autonomyState('global'),held:true,reason:'Stop now'});
+ await assert.rejects(callAutonomyControl(f.env,f.args,f.deps),/held for global/);assert.equal(f.calls.length,0);
+});
+
 function releaseFixture(env){
  let current=target;
  const deps={
-  github:async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,transport:'workers-builds',production_branch:'main',deploy_command:'npx wrangler deploy',rollback:profile}})).toString('base64')}),
+  github:async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,transport:'workers-builds',production_branch:'main',build_command:'npm run build',deploy_command:'npx wrangler deploy',rollback:profile}})).toString('base64')}),
   snapshot:async()=>({deployments:{deployments:[{id:'deployment',versions:[{version_id:current.version_id,percentage:100}]}]},versions:{items:[target,current].map(value=>({id:value.version_id}))},domains:[{service:'relay',hostname:'relay.loew.fi',enabled:true}]}),
   active:async()=>({version_id:current.version_id,deployment_id:'deployment'}),
   fetch:async (url,options)=>{assert.equal(options.redirect,'manual');return url.endsWith('/health')?Response.json({ok:true,service:'relay'}):new Response('website',{headers:{'X-Relay-Source-Sha':current.source_sha,'X-Relay-Release-Compatibility':current.compatibility_id}});}
@@ -168,6 +252,9 @@ test('historical approval binds retained version to exact provider deployment an
  const args=input('approve',0,{target,approval:{text:'Approve the older exact release',source:'human message'}});
  const good=fixture();const result=await callAutonomyControl(good.env,args,good.deps);assert.equal(result.state.last_user_approved.version_id,version);assert.equal(result.state.last_healthy,null);assert.equal(result.verified_release.currently_active,false);assert.equal(result.verified_release.production_job_id,'34');
  const eof=fixture();eof.deps.buildLogs=async(_id,cursor)=>cursor?{lines:[],cursor}:{lines:[[0,'Current Version ID: '+version]],cursor:'terminal'};assert.equal((await callAutonomyControl(eof.env,args,eof.deps)).state.last_user_approved.version_id,version);
+ const changed=fixture(),oldProfile=changed.deps.github;
+ changed.deps.github=async()=>{const file=await oldProfile(),value=JSON.parse(Buffer.from(file.content,'base64'));value.cloud.deploy_command=RELAY_GUARDED_DEPLOY_COMMAND;value.cloud.production_branch='new-production';return {...file,content:Buffer.from(JSON.stringify(value)).toString('base64')};};
+ assert.equal((await callAutonomyControl(changed.env,args,changed.deps)).state.last_user_approved.version_id,version);
  for(const change of [
   f=>{f.deps.retained=async()=>({id:'wrong'});},
   f=>{f.deps.builds=async()=>[];},
@@ -178,6 +265,9 @@ test('historical approval binds retained version to exact provider deployment an
   f=>{f.deps.checks=async()=>({check_runs:[]});},
   f=>{f.deps.job=async()=>({head_sha:target.source_sha,conclusion:'success',steps:[]});},
   f=>{f.deps.sourceProfile=async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,cloud:{provider:'cloudflare',worker:'relay',write:true,rollback:{compatibility_id:'incompatible'}}})).toString('base64')});}
+  ,f=>{const source=f.deps.sourceProfile;f.deps.sourceProfile=async()=>{const file=await source(),value=JSON.parse(Buffer.from(file.content,'base64'));value.cloud.deploy_command='unproven command';return {...file,content:Buffer.from(JSON.stringify(value)).toString('base64')};};}
+  ,f=>{const source=f.deps.sourceProfile;f.deps.sourceProfile=async()=>{const file=await source(),value=JSON.parse(Buffer.from(file.content,'base64'));delete value.cloud.production_branch;return {...file,content:Buffer.from(JSON.stringify(value)).toString('base64')};};}
+  ,f=>{const source=f.deps.sourceProfile;f.deps.sourceProfile=async()=>{const file=await source(),value=JSON.parse(Buffer.from(file.content,'base64'));value.repository='lrnolivia/another';return {...file,content:Buffer.from(JSON.stringify(value)).toString('base64')};};}
  ]){const f=fixture();change(f);await assert.rejects(callAutonomyControl(f.env,args,f.deps));assert.equal(f.values.has('autonomy:relay'),false);}
 });
 

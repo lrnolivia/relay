@@ -71,6 +71,7 @@ export async function cloudflareApiRequest(env, path, options = {}) {
   if (options.body !== undefined) headers["Content-Type"] = "application/json";
   const response = await fetch(CLOUDFLARE_API + path, {
     method: options.method || "GET",
+    redirect: 'manual',
     headers,
     body: options.body === undefined ? undefined : JSON.stringify(options.body),
     signal: AbortSignal.timeout(10000)

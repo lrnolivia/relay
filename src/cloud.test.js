@@ -27,6 +27,7 @@ test("relay.CLOUD uses the dedicated user token only for Workers Builds", async 
   const originalFetch = globalThis.fetch;
   const authorizations = [];
   globalThis.fetch = async (url, options = {}) => {
+    assert.equal(options.redirect,'manual');
     authorizations.push({ url: String(url), authorization: options.headers.Authorization });
     if (String(url).endsWith("/workers/scripts")) {
       return new Response(JSON.stringify({
