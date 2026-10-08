@@ -1,5 +1,6 @@
 import { githubApiRequest } from "./source.js";
 import { cloudflareApiRequest, cloudWriteScripts } from "./cloud.js";
+import { guardRepository } from './autonomy-control.js';
 
 const SHA = /^[a-f0-9]{40}$/;
 const REPO = /^[A-Za-z0-9_.-]+$/;
@@ -224,6 +225,7 @@ export function validateCloudUploadArguments(args) {
 
 export async function uploadCloudSourceVersion(args, env, deps = {}) {
   validateCloudUploadArguments(args);
+  await guardRepository(env,args.repo);
   if (!cloudWriteScripts(env).includes(args.script)) throw new Error("relay.CLOUD writes are not allowed for " + args.script);
   if (args.script === "relay" && args.repo === "relay") {
     throw new Error("Canonical Relay source upload is disabled; use Cloudflare Workers Builds for publication or deploy a known-good Worker version for rollback");

@@ -12,6 +12,7 @@ import { getQaReview, saveQaReview, qaQuestionsForEvidence, inspectLivePreview }
 import { reviewBatch } from "./work-review.mjs";
 import { workerSource } from "../../shared-ui/work-view-model.js";
 import { recordQaFeedback } from "./qa-feedback.mjs";
+import { callAutonomyControl } from '../../../src/project-cloud.js';
 const OWNER = "lrnolivia";
 const REPOSITORY = "relay";
 const BRANCH = "main";
@@ -41,6 +42,16 @@ function humanQaGuard(request, authenticatedMcp = false) {
   if (authenticatedMcp) return null;
   if (request.headers.get("Cf-Access-Jwt-Assertion")) return null;
   return json({ error: "Human QA is available only through the Access-protected Runner." }, 403);
+}
+
+async function safetyBody(request){
+  if(!request.headers.get('Content-Type')?.startsWith('application/json'))throw Object.assign(Error('JSON is required'),{status:415});
+  const reader=request.body?.getReader(),chunks=[];let size=0;
+  if(reader)while(true){const part=await reader.read();if(part.done)break;size+=part.value.byteLength;
+    if(size>16384){await reader.cancel();throw Object.assign(Error('Safety request exceeds limit'),{status:413});}chunks.push(part.value);}
+  const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}
+  try{return JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));}
+  catch{throw Object.assign(Error('Invalid safety JSON'),{status:400});}
 }
 
 function tokenGuard(env) {
@@ -236,6 +247,20 @@ export async function handleApi(request, env, { authenticatedMcp = false } = {})
   if (request.method === "POST" && !authenticatedMcp) {
     const origin = request.headers.get("Origin");
     if (origin && origin !== url.origin) return json({ error: "Cross-origin control writes are blocked." }, 403);
+  }
+  if (url.pathname === '/api/autonomy' && ['GET','POST'].includes(request.method)) {
+    const guard=humanQaGuard(request,authenticatedMcp);if(guard)return guard;
+    try {
+      if ([...url.searchParams.keys()].some(key=>key!=='scope')) return json({error:'Unsupported safety query'},400);
+      const input=request.method==='GET'?{action:'status',scope:url.searchParams.get('scope')||'global'}:await safetyBody(request);
+      if (JSON.stringify(input).length>16384) return json({error:'Safety request exceeds limit'},413);
+      if(input.scope!=='global'){
+        if(!/^[a-z0-9-]{1,80}$/.test(input.scope||''))return json({error:'Invalid safety scope'},400);
+        const registration=await readJsonFile(env,'projects/'+input.scope+'.json');
+        if(registration.value.alias_of||registration.value.id!==input.scope)return json({error:'Use a registered canonical project'},400);
+      }
+      return json(await callAutonomyControl(env,input));
+    } catch(error) {return json({error:error.message},error.status||503);}
   }
   if (request.method === "POST" && url.pathname === "/api/work-review") {
     const guard=humanQaGuard(request,authenticatedMcp);

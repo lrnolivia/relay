@@ -6,6 +6,10 @@ Authority: Bible section 20. All managed clients, including relay, use the same 
 
 Chats and owners persist. Each coherent implementation task has one stable assignment, one isolated checkout, one temporary branch and one PR. A successor continues that same task and branch. Read-only research, reviews and queued tasks need no implementation branch. Finish and integrate useful batches before starting more; the backlog lives in Runner's queue.
 
+Autonomous completion and unattended release follow Bible sections 6.1–6.3. Preserve explicit user authorization across routine steps and handoffs; do not add a fresh approval gate for every claim, repair, PR or release already within that authorization. A user's explicit bounded takeover can authorize the supported CAS handoff/rescope without another approval from the prior owner. Verify quiescence and preserve unpublished work first; transfer only the authorized slice, leaving unrelated objectives and reservations intact. When that slice is merged and verified, complete its assignment and account for any remaining product work rather than retaining ownership indefinitely.
+
+A safety hold is persistent and is not completion. Record its scope, cause, candidate and recovery target; stop new publication and request cancellation through the relevant execution/provider controls. Confirm actual process/deployment state separately. Resume only on explicit user instruction after fresh admission. Neither a held assignment nor a cancellation request alone proves that a native chat, CI job or deployment stopped.
+
 Field permits **four active implementation branches total**, including imported active Mobile work. Each owner may hold one. Held and expired claims count against the limit and retain their paths/resources. Legacy recovery branches are frozen provenance outside this new-task budget; they cannot be reused to evade admission. Historical cleanup is governed by the existing consolidation ledger and is not automated by this feature.
 
 Before edits or branch/worktree creation:

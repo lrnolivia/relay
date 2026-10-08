@@ -1,3 +1,4 @@
+import { guardRepository, autonomyRequest } from './autonomy-control.js';
 const CLOUDFLARE_API = "https://api.cloudflare.com/client/v4";
 const DEFAULT_WRITE_SCRIPTS = ["relay"];
 
@@ -134,6 +135,7 @@ export async function deployCloudVersion(env, scriptName, versionId, message) {
   const script = validateScriptName(scriptName);
   const version = validateVersionId(versionId);
   assertWritable(env, script);
+  await guardRepository(env, script);
   const id = String(env.CLOUDFLARE_ACCOUNT_ID);
   const body = {
     strategy: "percentage",
@@ -148,4 +150,40 @@ export async function deployCloudVersion(env, scriptName, versionId, message) {
     { method: "POST", body }
   );
   return { ok: true, script, version_id: version, deployment };
+}
+
+export async function activeCloudVersion(env, scriptName) {
+  const script=validateScriptName(scriptName);
+  const result=await cloudflareApiRequest(env,'/accounts/'+env.CLOUDFLARE_ACCOUNT_ID+'/workers/scripts/'+encodeURIComponent(script)+'/deployments');
+  const deployment=(Array.isArray(result)?result:result?.deployments)?.[0];
+  if(deployment?.versions?.length!==1||deployment.versions[0].percentage!==100)throw Error('Recovery requires one exact active Worker version at 100%');
+  return {version_id:validateVersionId(deployment.versions[0].version_id),deployment_id:deployment.id};
+}
+
+export async function retainedCloudVersion(env,scriptName,versionId){
+  const script=validateScriptName(scriptName),version=validateVersionId(versionId);
+  return cloudflareApiRequest(env,'/accounts/'+env.CLOUDFLARE_ACCOUNT_ID+'/workers/scripts/'+encodeURIComponent(script)+'/versions/'+version);
+}
+
+// This narrow recovery path has no caller-selected artifact or guard bypass flag.
+// Its target comes only from the pending, durable, exact rollback operation.
+export async function recoverCloudVersion(env,scope,operationId) {
+  const read=async()=>{
+    const {state}=await autonomyRequest(env,{action:'status',scope});
+    if(!state.held||state.rollback?.state!=='pending'||state.rollback.operation_id!==operationId)throw Error('Exact held rollback operation is required');
+    return state.rollback;
+  };
+  const pending=await read(),script=validateScriptName(pending.target.worker),version=validateVersionId(pending.target.version_id);
+  assertWritable(env,script);
+  const retained=await retainedCloudVersion(env,script,version);
+  if(retained?.id!==version)throw Error('Retained rollback artifact identity changed');
+  const active=await activeCloudVersion(env,script);
+  if(active.version_id===version)return {ok:true,script,version_id:version,reconciled:true,deployment_id:active.deployment_id};
+  if(active.version_id!==pending.expected_current_version)throw Error('Deployment changed; recovery must be reconciled before another write');
+  const current=await read();
+  if(JSON.stringify(current)!==JSON.stringify(pending))throw Error('Rollback intent changed before provider write');
+  const deployment=await cloudflareApiRequest(env,'/accounts/'+env.CLOUDFLARE_ACCOUNT_ID+'/workers/scripts/'+encodeURIComponent(script)+'/deployments',{
+    method:'POST',body:{strategy:'percentage',versions:[{version_id:version,percentage:100}],annotations:{'workers/message':'Relay bounded recovery '+operationId}}
+  });
+  return {ok:true,script,version_id:version,deployment};
 }

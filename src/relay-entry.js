@@ -19,8 +19,10 @@ import { EXECUTIVE_COMMUNICATION_SKILL_URI, executiveCommunicationSkillCatalogEn
 import { isContextualRelayTool, contextualizeRelayTool, contextualPresentation } from "./relay-chat-ui.js";
 import { RELAY_V2_PROBE_URI, relayV2ProbeDescriptor, relayV2ProbeResource } from "./relay-v2-probe.js";
 import { presentationOperation, withHumanPresentation } from './communication-presentation.js';
+import { publicAutonomyStatus, autonomyTool } from './autonomy-control.js';
+import { callAutonomyControl } from './project-cloud.js';
 
-export const RELAY_EXTENSION_VERSION = "1.9.9";
+export const RELAY_EXTENSION_VERSION = "1.10.0";
 
 const createBranch = {
   name: "relay_source_create_branch",
@@ -87,7 +89,7 @@ export function augmentToolList(tools) {
     securitySchemes: schemes,
     _meta: { ...(old?._meta || {}), securitySchemes: schemes }
   };
-  const extensionTools = [contextTool, jobsTool, nightShiftTool, skillsTool, ...lifecycle, ...sourceTextMutationTools, staffDirectoryTool, runnerCleanupTool, cloudUploadTool, uiApiTool];
+  const extensionTools = [contextTool, jobsTool, nightShiftTool, skillsTool, ...lifecycle, ...sourceTextMutationTools, staffDirectoryTool, runnerCleanupTool, cloudUploadTool, autonomyTool, uiApiTool];
   const names = new Set(extensionTools.map(tool => tool.name));
   const sourceDescriptions = {
     relay_source_file: "QUERY — read one UTF-8 repository file through relay.SOURCE. Safe to retry. Use its blob SHA as the expected identity before exact text mutation when applicable.",
@@ -198,7 +200,7 @@ function patchVersion(payload) {
 }
 
 function isExtensionTool(name) {
-  return name === contextTool.name || name === jobsTool.name || name === nightShiftTool.name || name === skillsTool.name || name === uiApiTool.name || name === createBranch.name || lifecycle.some(tool => tool.name === name) || isSourceTextMutationTool(name) || name === staffDirectoryTool.name || name === runnerCleanupTool.name || name === cloudUploadTool.name;
+  return name === autonomyTool.name || name === contextTool.name || name === jobsTool.name || name === nightShiftTool.name || name === skillsTool.name || name === uiApiTool.name || name === createBranch.name || lifecycle.some(tool => tool.name === name) || isSourceTextMutationTool(name) || name === staffDirectoryTool.name || name === runnerCleanupTool.name || name === cloudUploadTool.name;
 }
 async function authProbe(request, message, env) {
   const headers = new Headers(request.headers);
@@ -304,6 +306,12 @@ function toolError(id, error, toolName = "", args = {}, mode) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.pathname === '/autonomy-status' && request.method === 'GET') {
+      try {
+        if ([...url.searchParams.keys()].some(key=>key!=='scope')) throw Object.assign(Error('Unsupported safety query'),{status:400});
+        return Response.json(await publicAutonomyStatus(env,url.searchParams.get('scope')||'global'),{headers:{'Cache-Control':'no-store'}});
+      } catch(error) { return Response.json({error:error.message},{status:error.status||503,headers:{'Cache-Control':'no-store'}}); }
+    }
     let message;
     try { message = await readMcp(request); }
     catch (error) { return mcpBodyErrorResponse(error); }
@@ -314,7 +322,11 @@ export default {
       try {
         const name = message.params.name;
         let result;
-        if (name === uiApiTool.name) {
+        if (name === autonomyTool.name) {
+          const args=message.params?.arguments||{};
+          if (args.scope!=='global') await callRunnerControlCore('relay_runner_project',{project:args.scope},env);
+          result=await callAutonomyControl(env,args);
+        } else if (name === uiApiTool.name) {
           result = await callUiApi(message.params?.arguments || {}, env, { rpc: async method => {
             if(!['initialize','ping','tools/list'].includes(method))throw Error('Unsupported panel discovery method');
             const response=await legacy.fetch(new Request(request.url,{method:'POST',headers:request.headers,body:JSON.stringify({jsonrpc:'2.0',id:0,method})}),env);
