@@ -59,6 +59,9 @@ async function jsonFile(api, control, path, ref) {
   return { ...file, value: JSON.parse(file.content) };
 }
 
+// CLI observers use the same bounded, blob-verified Contents fallback as MCP.
+export { jsonFile as readRunnerJsonFile };
+
 async function pages(api, path) {
   const items = [];
   for (let page = 1; page <= 100; page += 1) {

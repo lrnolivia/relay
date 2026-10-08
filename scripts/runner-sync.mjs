@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
+import { readRunnerJsonFile, runnerControlBase } from '../src/runner-control-core.js';
 
 const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const terminal = new Set(['completed','cancelled','superseded']);
@@ -16,10 +17,20 @@ export async function synchronizeProject(project, registration, record, api) {
       try {
         const pulls=claim.pr ? [await api(`/repos/${repository}/pulls/${claim.pr}`)] : await api(`/repos/${repository}/pulls?state=all&head=${encodeURIComponent(repository.split('/')[0]+':'+claim.branch)}&per_page=10`);
         if(!Array.isArray(pulls))throw Error('Invalid PR response');
-        const pr=pulls.find(pr=>pr.head?.ref===claim.branch && pr.head?.repo?.full_name===repository && pr.base?.ref===registration.default_branch && pr.base?.repo?.full_name===repository);
+        const matches=pr=>pr.head?.ref===claim.branch && pr.head?.repo?.full_name===repository && pr.base?.ref===registration.default_branch && pr.base?.repo?.full_name===repository;
+        let pr=pulls.find(matches);
         if(!pr){result.source='no_matching_pr';return result;}
+        // List responses omit `merged`; a closed PR or preview merge SHA is
+        // not merge proof. Resolve only the selected PR, checking for a race.
+        if(typeof pr.merged!=='boolean' && !claim.pr){
+          if(!Number.isSafeInteger(pr.number)||pr.number<1)throw Error('Invalid listed PR identity');
+          const detail=await api(`/repos/${repository}/pulls/${pr.number}`);
+          if(!detail || !matches(detail) || detail.number!==pr.number || detail.head.sha!==pr.head.sha)throw Error('PR changed while resolving merge evidence');
+          pr=detail;
+        }
+        if(typeof pr.merged!=='boolean' || !/^[a-f0-9]{40}$/.test(pr.head.sha||'') || (pr.merged&&!/^[a-f0-9]{40}$/.test(pr.merge_commit_sha||'')))throw Error('PR verification identity is incomplete');
         result.pr=pr.number;result.head_sha=pr.head.sha;result.pr_state=pr.merged?'merged':pr.state;
-        result.merge_sha=pr.merge_commit_sha || null;
+        result.merge_sha=pr.merged?pr.merge_commit_sha:null;
         const [checks,deployments]=await Promise.all([
           api(`/repos/${repository}/commits/${pr.head.sha}/check-runs?per_page=100`),
           api(`/repos/${repository}/deployments?sha=${pr.merged?pr.merge_commit_sha:pr.head.sha}&per_page=10`)
@@ -48,22 +59,30 @@ export async function synchronizeProject(project, registration, record, api) {
   return {project,repository,observations,recommendations,truncated:candidates.length>100,model_calls:0,coordination_writes:0,worker_execution:false};
 }
 
-async function main() {
-  const args=process.argv.slice(2);if(args.length && (args.length!==2||args[0]!=='--out'))throw Error('Usage: node scripts/runner-sync.mjs [--out path]');
-  const api=async path=>JSON.parse(execFileSync('gh',['api',path],{encoding:'utf8',maxBuffer:8*1024*1024,stdio:['pipe','pipe','pipe']}));
-  const read=async path=>{const file=await api(`/repos/lrnolivia/relay/contents/${path}?ref=main`);return {sha:file.sha,value:JSON.parse(Buffer.from(file.content,'base64').toString('utf8'))};};
-  const files=await api('/repos/lrnolivia/relay/contents/projects?ref=main');
+export async function synchronizeRegistry(api) {
+  const control=runnerControlBase();
+  const read=path=>readRunnerJsonFile(api,control,path,'main');
+  const files=await api(control+'/contents/projects?ref=main');
+  if(!Array.isArray(files)||files.length>=1000)throw Error('Project inventory is incomplete');
   const projects=[];
   for(const file of files.filter(x=>x.type==='file'&&/^[a-z0-9-]+\.json$/.test(x.name))) {
     const project=file.name.slice(0,-5);
     try {
       const registration=(await read('projects/'+file.name)).value;
-      if(!registration.managed || registration.coordination?.status!=='enabled')continue;
+      if(registration.alias_of || !registration.managed || registration.coordination?.status!=='enabled')continue;
+      if(registration.id!==project || registration.coordination.record!==`coordination/${project}.json`)throw Error('Project registration identity mismatch');
       const record=await read(registration.coordination.record);
+      if(record.value.project!==project || !Array.isArray(record.value.claims) || !Array.isArray(record.value.queue))throw Error('Coordination record is incomplete');
       projects.push({record_sha:record.sha,...await synchronizeProject(project,registration,record.value,api)});
     } catch { projects.push({project,source:'unavailable',recommendations:[],coordination_writes:0}); }
   }
-  const report={schema:1,checked_at:new Date().toISOString(),kind:'model-free-provider-sync',model_calls:0,projects};
+  return {schema:1,checked_at:new Date().toISOString(),kind:'model-free-provider-sync',model_calls:0,projects};
+}
+
+async function main() {
+  const args=process.argv.slice(2);if(args.length && (args.length!==2||args[0]!=='--out'))throw Error('Usage: node scripts/runner-sync.mjs [--out path]');
+  const api=async path=>JSON.parse(execFileSync('gh',['api',path],{encoding:'utf8',maxBuffer:8*1024*1024,stdio:['pipe','pipe','pipe']}));
+  const report=await synchronizeRegistry(api);
   const text=JSON.stringify(report,null,2)+'\n';
   if(args[0])await writeFile(args[1],text);else process.stdout.write(text);
 }

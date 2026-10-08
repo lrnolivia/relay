@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version-file: .node-version
 
       - name: Synchronize source and deployment evidence without a model
         env:
