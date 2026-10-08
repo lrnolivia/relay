@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T22:15:33.439Z",
+  "updated_at": "2026-10-08T22:22:30.410Z",
   "legacy_branches": [
     "main"
   ],
@@ -1242,17 +1242,10 @@
         "tests/form-layout.test.mjs",
         "tests/shared-scroll-edge.test.mjs",
         "src/features.jsx",
-        "src/memorials.jsx",
-        "src/memorials.css",
-        "backend/src/memorials.mjs",
         "src/use-notifications.js",
         "src/notification-model.js",
-        "src/notification-toasts.js",
         "src/push-enrollment-prompt.jsx",
         "src/push-enrollment-model.js",
-        "src/toast.jsx",
-        "src/toast-model.js",
-        "tests/notification-toasts.test.mjs",
         "tests/push-enrollment-model.test.mjs",
         "docs/launch-checklist-20261008.md",
         "src/directory-person-row.jsx",
@@ -1263,7 +1256,6 @@
         "tests/family-calendar-model.test.mjs",
         "backend/src/calendar.mjs",
         "backend/tests/calendar.test.mjs",
-        "src/toast.css",
         "src/navigation.js",
         "src/calendar-events.jsx",
         "src/calendar-events.css",
@@ -1273,8 +1265,6 @@
         "backend/tests/family-calendar.test.mjs",
         "backend/src/notification-policy.mjs",
         "backend/src/notification-service.mjs",
-        "tests/toast-component.test.mjs",
-        "tests/toast-model.test.mjs",
         "tests/navigation.test.mjs",
         "src/page-navigation.jsx",
         "src/page-navigation.css",
@@ -1321,29 +1311,15 @@
         "src/install-capabilities.js",
         "tests/install-capabilities.test.mjs",
         "src/install-guide-flow.json",
-        "backend/src/photo-discussions.mjs",
-        "backend/tests/photo-discussions.test.mjs",
-        "backend/tests/memorial-tributes.test.mjs",
         "src/member-tags.jsx",
-        "src/family.jsx",
-        "src/memorial-model.js",
-        "tests/memorial-model.test.mjs",
-        "tests/memorial-browser.mjs",
-        "dist/memorial-clouds.png",
-        "src/build-update-model.js",
-        "src/build-update-notice.jsx",
-        "src/build-update-notice.css",
-        "tests/build-update-model.test.mjs",
-        "tests/build-update-browser.mjs",
-        "PRODUCT.md",
-        "src/photo-viewer.jsx"
+        "src/family.jsx"
       ],
       "resources": [
         "grnwht-device-push-release"
       ],
       "goal": "Deliver one consolidated GW launch candidate covering all Lauren-approved current functional and UI work, with parent hotfix reconciliation and living multi-household support",
       "acceptance": "Latest Lauren21:15 explicit single consolidated nextrelease supersedes release-first staging. Include all parenthotfixes; devicepush regression/errorprivacy; eightpreset email source/defaultoffconsent; editorcontrolpolish; device-local returningname/avatar/provider noauthcredential; confirmedselective GWreset withserver signout/nofamilydeletion; compactAbout+linkedofficialcredit; You/Family invitationcards; authorizedcontactglyphbadges; sharedmini-profile identities/privacy/focus/fullphotoactions+selectedfonts; coherenthouseholdhero; verified216compactv3guidePNGs preservingnativeinstallbehaviors; livingmulti-household withperhouseholdroles/recipientconsent/duplicates/pending/primary/remove/privatechildren, migrationbackuprehearsalrollback. Retain explicitpanel/formparity/fade checklist. Meaningful failed-case/targeted/fullheadCI/sourceartifact/runtime/liveproof, no partialall-doneclaim/no newworkers/no invalidation of activefamilyonboarding. Freshauthschema andnecessaryD1migration accessmustbesupported; no cancelled/deniedactionreplay/newcredentials/purchases, actualpushdeliveryonlybyreceipt.",
-      "next_action": "Memorial target runtime extension and complete fullpage/Tributes/quote/edit/sourcehotfix; preserve source/recovery and parentpatches. Audit exactpaths including sharedPhotoViewer discussion-only reuse; safe update bottomtoast and top overlay. D1 mandatory access gate unchanged no replay.",
+      "next_action": "Lauren ownership correction: parent 01a1146d owns full memorial and both update/reload and notification toast layering. Root stops and relinquishes their exclusive paths; all dirty ancestor and action infrastructure remains intact for reconciliation. Shared react-app/conversation/ui-core toast contracts frozen. Root continues approved v4 install, avatar alignment and remaining consolidated release tests. No rejected upload or D1 replay; no deletion or deployment.",
       "primary_team": "release",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1378,8 +1354,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T22:15:33.439Z",
-      "lease_until": "2026-10-09T10:15:33.439Z",
+      "updated_at": "2026-10-08T22:22:30.410Z",
+      "lease_until": "2026-10-09T10:22:30.410Z",
       "amendment_count": 2,
       "amendments": [
         {
