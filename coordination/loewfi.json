@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "loewfi",
-  "updated_at": "2026-10-08T01:02:50.708Z",
+  "updated_at": "2026-10-08T01:27:11.362Z",
   "legacy_branches": [
     "main",
     "runner/universal-authority"
@@ -97,7 +97,7 @@
       "primary_staff": "adrian",
       "supporting_staff": [],
       "base_sha": "e979ef49860895f541670f699d174d1497f3c30e",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-08T00:51:19.410Z",
       "objective_history": {
         "baseline": {
@@ -114,8 +114,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T01:02:50.708Z",
-      "lease_until": "2026-10-08T13:02:50.708Z"
+      "updated_at": "2026-10-08T01:27:11.362Z",
+      "lease_until": "2026-10-08T13:27:11.362Z",
+      "pr": 5,
+      "merged_head_sha": "f6bb457bc5dd5a87a2ff75acff11ac18a43f0605",
+      "merge_commit_sha": "b08c58f28f5f13ef0c1b5816d8992dc8a9de7e04",
+      "evidence": "https://github.com/lrnolivia/loewfi/pull/5; required exact-head admission and existing quality/build checks passed. Current main workflow readback equals reviewed candidate byte-for-byte (blob 0836c4ddf00e9f9662c1b456bbacacc6e2125e5a). Changed workflow bytes restored and hash-verified in isolated recovery directory. Daily hygiene, immediate admission and required assertions preserved. CI-only slice complete; other product work preserved.",
+      "work_accounted": true,
+      "completed_at": "2026-10-08T01:27:11.362Z"
     }
   ]
 }
