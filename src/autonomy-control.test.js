@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import { autonomyState, transitionAutonomy, durableAutonomy, guardAutonomy, guardRepository, publicAutonomyStatus } from './autonomy-control.js';
 import { githubApiRequest, githubGraphqlRequest } from './source.js';
 import { deployCloudVersion, recoverCloudVersion } from './cloud.js';
-import { deployProjectCloudVersion, callAutonomyControl } from './project-cloud.js';
+import { deployProjectCloudVersion, callAutonomyControl, verifyReleaseTarget } from './project-cloud.js';
+import { handleApi } from '../packages/runner/src/cloudflare-worker.mjs';
+import { callUiApi } from '../apps/web/api.js';
 
 const version='11111111-2222-3333-4444-555555555555';
 const target={worker:'relay',version_id:version,source_sha:'a'.repeat(40),compatibility_id:'relay-v1',evidence:'Exact candidate and production receipt'};
@@ -156,6 +158,41 @@ test('identity and health redirects never save healthy or user-approved recovery
   await assert.rejects(callAutonomyControl(env,input(action,0,{target,...(action==='approve'?{approval:{text:'Approve',source:'message'}}:{})}),f.deps),path==='identity'?/identity does not match/:/health endpoint failed/);
   assert.equal(calls,path==='identity'?1:2);assert.equal(values.has('autonomy:relay'),false);
  }
+});
+
+test('release probes carry only the trusted existing Access identity to the bound hostname',async()=>{
+ const {env}=binding(),f=releaseFixture(env);env.RELAY_CLOUDFLARE_WRITE_SCRIPTS='relay';
+ const request=f.deps.fetch;let calls=0;
+ f.deps.accessJwt='synthetic-verified-identity';
+ f.deps.fetch=async(url,options)=>{calls++;assert.equal(new URL(url).hostname,'relay.loew.fi');assert.deepEqual(options.headers,{'Cf-Access-Token':'synthetic-verified-identity'});return request(url,options);};
+ await callAutonomyControl(env,input('healthy',0,{target}),f.deps);assert.equal(calls,2);
+ const status={worker:'relay',writable:true,rollback:profile};
+ await assert.rejects(verifyReleaseTarget(env,{...status,rollback:{...profile,health_url:'https://other.loew.fi/health'}},target,f.deps),/same bound Worker hostname/);assert.equal(calls,2);
+ await assert.rejects(verifyReleaseTarget(env,status,target,{snapshot:f.deps.snapshot,active:f.deps.active}),/Authenticated release verification identity/);
+});
+
+test('browser and authenticated app safety routes preserve private Access context through production verification',async t=>{
+ let expectedIdentity,probes=0;
+ const registration={id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,rollback:profile}};
+ t.mock.method(globalThis,'fetch',async(url,options)=>{
+  const address=String(url);
+  if(address.startsWith('https://api.github.com/'))return Response.json({type:'file',sha:'a'.repeat(40),encoding:'base64',content:Buffer.from(JSON.stringify(registration)).toString('base64')});
+  if(address.startsWith('https://api.cloudflare.com/')){
+   const result=address.endsWith('/deployments')?{deployments:[{id:'fixture-deployment',versions:[{version_id:version,percentage:100}]}]}:address.endsWith('/versions')?{items:[{id:version}]}:address.endsWith('/domains')?[{service:'relay',hostname:'relay.loew.fi'}]:address.endsWith('/scripts')?[{id:'relay',tag:'fixture-tag'}]:{};
+   return Response.json({success:true,result});
+  }
+  assert.ok(address==='https://relay.loew.fi/'||address==='https://relay.loew.fi/health');
+  assert.deepEqual(options.headers,{'Cf-Access-Token':expectedIdentity});assert.equal(options.redirect,'manual');probes++;
+  return address.endsWith('/health')?Response.json({ok:true,service:'relay'}):new Response('fixture',{headers:{'X-Relay-Source-Sha':target.source_sha,'X-Relay-Release-Compatibility':target.compatibility_id}});
+ });
+ const environment=()=>{const state=binding();Object.assign(state.env,{RUNNER_GITHUB_TOKEN:'synthetic',RELAY_GITHUB_TOKEN:'synthetic',CLOUDFLARE_ACCOUNT_ID:'synthetic',CLOUDFLARE_API_TOKEN:'synthetic',RELAY_CLOUDFLARE_WRITE_SCRIPTS:'relay'});return state;};
+ const args=input('healthy',0,{target});
+ let state=environment();expectedIdentity='synthetic-browser-identity';
+ const response=await handleApi(new Request('https://relay.loew.fi/api/autonomy',{method:'POST',headers:{'Content-Type':'application/json','Cf-Access-Jwt-Assertion':expectedIdentity},body:JSON.stringify(args)}),state.env);
+ assert.equal(response.status,200,JSON.stringify(await response.json()));assert.equal(state.values.get('autonomy:relay').last_healthy.version_id,version);
+ state=environment();expectedIdentity='synthetic-mcp-identity';
+ const app=await callUiApi({path:'/api/autonomy',method:'POST',body:args},state.env,{accessJwt:expectedIdentity});assert.equal(app.status,200);assert.equal(state.values.get('autonomy:relay').last_healthy.version_id,version);assert.equal(probes,4);
+ state=environment();const missing=await callUiApi({path:'/api/autonomy',method:'POST',body:args},state.env);assert.equal(missing.status,503);assert.match(missing.body.error,/Authenticated release verification identity/);assert.equal(state.values.has('autonomy:relay'),false);assert.equal(probes,4);
 });
 
 test('actual recovery transport never replays a successful but uncertain provider deployment',async()=>{

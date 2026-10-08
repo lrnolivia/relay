@@ -325,9 +325,9 @@ export default {
         if (name === autonomyTool.name) {
           const args=message.params?.arguments||{};
           if (args.scope!=='global') await callRunnerControlCore('relay_runner_project',{project:args.scope},env);
-          result=await callAutonomyControl(env,args);
+          result=await callAutonomyControl(env,args,{accessJwt:request.headers.get('Cf-Access-Jwt-Assertion')});
         } else if (name === uiApiTool.name) {
-          result = await callUiApi(message.params?.arguments || {}, env, { rpc: async method => {
+          result = await callUiApi(message.params?.arguments || {}, env, { accessJwt:request.headers.get('Cf-Access-Jwt-Assertion'), rpc: async method => {
             if(!['initialize','ping','tools/list'].includes(method))throw Error('Unsupported panel discovery method');
             const response=await legacy.fetch(new Request(request.url,{method:'POST',headers:request.headers,body:JSON.stringify({jsonrpc:'2.0',id:0,method})}),env);
             if(response.status!==200)throw Error('MCP handshake unavailable');

@@ -56,6 +56,7 @@ function rollbackProfile(status){
     const url=new URL(profile[key]);
     if(url.protocol!=='https:'||!url.hostname.endsWith('.loew.fi')||url.username||url.password||url.port)throw Error('Invalid registered recovery endpoint');
   }
+  if(new URL(profile.health_url).hostname!==new URL(profile.identity_url).hostname)throw Error('Recovery health must use the same bound Worker hostname');
   return profile;
 }
 
@@ -73,9 +74,10 @@ export async function verifyReleaseTarget(env,status,target,deps={}){
   const host=new URL(profile.identity_url).hostname;
   if(!snapshot.domains?.some(d=>d.service===status.worker&&d.hostname===host&&d.enabled!==false))throw Error('Recovery endpoint is not bound to this Worker');
   const request=deps.fetch||fetch;
+  if(!deps.fetch&&!deps.accessJwt)throw Error('Authenticated release verification identity is required');
   // Workers supports manual/follow, not the Node/browser redirect:error mode.
   // Manual preserves the exact endpoint; all redirects fail the checks below.
-  const options={redirect:'manual',cache:'no-store',signal:AbortSignal.timeout(10000)};
+  const options={redirect:'manual',cache:'no-store',signal:AbortSignal.timeout(10000),...(deps.accessJwt?{headers:{'Cf-Access-Token':deps.accessJwt}}:{})};
   const identity=await request(profile.identity_url,options);
   if(!identity.ok||identity.redirected||identity.headers.get(profile.source_header)!==target.source_sha||identity.headers.get(profile.compatibility_header)!==profile.compatibility_id)throw Error('Production source or recovery compatibility identity does not match');
   await identity.body?.cancel();

@@ -61,9 +61,10 @@ test('release verification request options work in the actual pinned edge runtim
       const target={worker:'relay',version_id:'11111111-2222-3333-4444-555555555555',source_sha:'a'.repeat(40),compatibility_id:'relay-v1'};
       const status={worker:'relay',writable:true,rollback:{identity_url:'https://relay.loew.fi/',health_url:'https://relay.loew.fi/health',source_header:'X-Relay-Source-Sha',compatibility_header:'X-Relay-Release-Compatibility',compatibility_id:'relay-v1'}};
       const proof=await verifyReleaseTarget({},status,target,{
+        accessJwt:'synthetic-verified-identity',
         snapshot:async()=>({deployments:[{versions:[{version_id:target.version_id,percentage:100}]}],versions:[{id:target.version_id}],domains:[{service:'relay',hostname:'relay.loew.fi'}]}),
         active:async()=>({version_id:target.version_id,deployment_id:'fixture'}),
-        fetch:async(url,options)=>{const request=new Request(url,options);if(request.redirect!=='manual')throw Error('Redirect policy changed');return url.endsWith('/health')?Response.json({ok:true,service:'relay'}):new Response('fixture',{headers:{'X-Relay-Source-Sha':target.source_sha,'X-Relay-Release-Compatibility':target.compatibility_id}});}
+        fetch:async(url,options)=>{const request=new Request(url,options);if(request.redirect!=='manual'||request.headers.get('Cf-Access-Token')!=='synthetic-verified-identity')throw Error('Authenticated redirect policy changed');return url.endsWith('/health')?Response.json({ok:true,service:'relay'}):new Response('fixture',{headers:{'X-Relay-Source-Sha':target.source_sha,'X-Relay-Release-Compatibility':target.compatibility_id}});}
       });return Response.json({ok:true,proof});
     }catch(error){return Response.json({error:error.message},{status:500});}}};`);
   const harness=createTestHarness({root:directory,workers:[{config:{name:'relay-release-runtime',main,compatibility_date:config.compatibility_date,compatibility_flags:config.compatibility_flags}}]});
