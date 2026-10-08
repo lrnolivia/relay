@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T11:05:44.768Z",
+  "updated_at": "2026-10-08T11:56:55.436Z",
   "legacy_branches": [
     "main"
   ],
@@ -78,7 +78,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-08T10:50:06.708Z",
       "objective_history": {
         "baseline": {
@@ -94,7 +94,9 @@
             "at": "2026-10-08T10:50:06.708Z"
           }
         ]
-      }
+      },
+      "completed_at": "2026-10-08T11:56:55.436Z",
+      "updated_at": "2026-10-08T11:56:55.436Z"
     }
   ],
   "claims": [
@@ -589,7 +591,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "efc15a6f39c93713318cca78d4018c9fecf816ba",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-08T10:50:31.764Z",
       "objective_history": {
         "baseline": {
@@ -606,8 +608,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T11:05:44.768Z",
-      "lease_until": "2026-10-08T23:05:44.768Z"
+      "updated_at": "2026-10-08T11:56:55.436Z",
+      "lease_until": "2026-10-08T23:56:55.436Z",
+      "pr": 16,
+      "merged_head_sha": "11bcad16215922cd3faaf9a434e3a1aee4a6dd2d",
+      "merge_commit_sha": "f48a647f582d2a9b2e42f0b21a77227a8cb43cbb",
+      "evidence": "PR16 merged f48a647f582d2a9b2e42f0b21a77227a8cb43cbb exact tested11bcad16215922cd3faaf9a434e3a1aee4a6dd2d. Native Android Flat tablet FAB bottom-right/safe-area; phone/Glass/desktop/keyboard coverage preserved. HostedCI37768539556 all3PASS,72navigationcases eachengine and broad suites;1051frontend/361backendPASS. Exact artifact11547146670 all75files verified. Version84438cbd-830e-4e18-81dd-3693e76e8b7e100% build942570de2e895bdb3ccd, Cloudreadback/module/all68publicasset hashes PASS; health/config/build PASS.69tableD1+4media3799254bytes closed-write backup remote/readback/restorePASS integrityOK/FK0; no migrations. Native backend/recovery identicalPR15;22bindings/runtime identical; existingsecrets/PushON preserved;d07normal and1creadonly rollbackretained. Latest Safari refresh pending manualunlock(Maclocked); priorPR15fiveviews248GET200/zeroerrors retained, not claimedforPR16. No physicalAndroid/deviceenrollment/delivery/notifications asserted. Source/backup/evidence retained; finaldurableLibrarycheckpoint follows.",
+      "work_accounted": true,
+      "completed_at": "2026-10-08T11:56:55.436Z"
     }
   ]
 }
