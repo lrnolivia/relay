@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import { autonomyState, transitionAutonomy, durableAutonomy, guardAutonomy, guardRepository, publicAutonomyStatus } from './autonomy-control.js';
 import { githubApiRequest, githubGraphqlRequest } from './source.js';
 import { deployCloudVersion, recoverCloudVersion } from './cloud.js';
-import { deployProjectCloudVersion, callAutonomyControl } from './project-cloud.js';
+import { deployProjectCloudVersion, callAutonomyControl, verifyReleaseTarget } from './project-cloud.js';
+import { handleApi } from '../packages/runner/src/cloudflare-worker.mjs';
+import { callUiApi } from '../apps/web/api.js';
 
 const version='11111111-2222-3333-4444-555555555555';
 const target={worker:'relay',version_id:version,source_sha:'a'.repeat(40),compatibility_id:'relay-v1',evidence:'Exact candidate and production receipt'};
@@ -100,7 +102,7 @@ const profile={identity_url:'https://relay.loew.fi/',health_url:'https://relay.l
 function releaseFixture(env){
  let current=target;
  const deps={
-  github:async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,rollback:profile}})).toString('base64')}),
+  github:async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,transport:'workers-builds',production_branch:'main',deploy_command:'npx wrangler deploy',rollback:profile}})).toString('base64')}),
   snapshot:async()=>({deployments:{deployments:[{id:'deployment',versions:[{version_id:current.version_id,percentage:100}]}]},versions:{items:[target,current].map(value=>({id:value.version_id}))},domains:[{service:'relay',hostname:'relay.loew.fi',enabled:true}]}),
   active:async()=>({version_id:current.version_id,deployment_id:'deployment'}),
   fetch:async (url,options)=>{assert.equal(options.redirect,'manual');return url.endsWith('/health')?Response.json({ok:true,service:'relay'}):new Response('website',{headers:{'X-Relay-Source-Sha':current.source_sha,'X-Relay-Release-Compatibility':current.compatibility_id}});}
@@ -144,8 +146,39 @@ test('wrong deployed source, missing retained version and incompatible configura
  await assert.rejects(callAutonomyControl(env,args,f.deps),/identity does not match/);
  assert.equal(values.has('autonomy:relay'),false);
  f.setCurrent(target);f.deps.snapshot=async()=>({versions:{items:[]},deployments:{deployments:[]}});
- await assert.rejects(callAutonomyControl(env,args,f.deps),/retained exact active/);
+ f.deps.retained=async()=>null;
+ await assert.rejects(callAutonomyControl(env,args,f.deps),/not retained/);
  await assert.rejects(callAutonomyControl(env,{...args,target:{...target,compatibility_id:'changed-schema'}},f.deps),/compatibility/);
+});
+
+test('historical approval binds retained version to exact provider deployment and actual production gates',async()=>{
+ function fixture(){
+  const state=binding(),f=releaseFixture(state.env);state.env.RELAY_CLOUDFLARE_WRITE_SCRIPTS='relay';
+  const newer={...target,version_id:'66666666-7777-8888-9999-aaaaaaaaaaaa',source_sha:'b'.repeat(40)};f.setCurrent(newer);
+  Object.assign(f.deps,{
+   retained:async()=>({id:version}),
+   builds:async()=>[{build_uuid:'bbbbbbbb-2222-3333-4444-555555555555',build_outcome:'success',build_trigger_metadata:{commit_hash:target.source_sha,branch:'main',deploy_command:'npx wrangler deploy'}}],
+   buildLogs:async(_id,cursor)=>cursor?{lines:[[1,'Current Version ID: '+version]]}:{lines:[[0,'Uploading exact build']],cursor:'page2'},
+   sourceProfile:f.deps.github,
+   checks:async()=>({total_count:1,check_runs:[{id:1,name:'quality',app:{slug:'github-actions'},head_sha:target.source_sha,status:'completed',conclusion:'success',html_url:'https://github.com/lrnolivia/relay/actions/runs/12/job/34'}]}),
+   job:async()=>({head_sha:target.source_sha,conclusion:'success',steps:[{name:'Verify exact live source and capture actual website pages',conclusion:'success'},{name:'Retain and verify exact interactive sample build',conclusion:'success'}]}),
+   fetch:async()=>{throw Error('Historical approval must not claim the newer endpoint is the older version');}
+  });return {...state,...f};
+ }
+ const args=input('approve',0,{target,approval:{text:'Approve the older exact release',source:'human message'}});
+ const good=fixture();const result=await callAutonomyControl(good.env,args,good.deps);assert.equal(result.state.last_user_approved.version_id,version);assert.equal(result.state.last_healthy,null);assert.equal(result.verified_release.currently_active,false);assert.equal(result.verified_release.production_job_id,'34');
+ const eof=fixture();eof.deps.buildLogs=async(_id,cursor)=>cursor?{lines:[],cursor}:{lines:[[0,'Current Version ID: '+version]],cursor:'terminal'};assert.equal((await callAutonomyControl(eof.env,args,eof.deps)).state.last_user_approved.version_id,version);
+ for(const change of [
+  f=>{f.deps.retained=async()=>({id:'wrong'});},
+  f=>{f.deps.builds=async()=>[];},
+  f=>{const original=f.deps.builds;f.deps.builds=async()=>[...(await original()),...(await original())];},
+  f=>{f.deps.buildLogs=async()=>({lines:[[0,'Current Version ID: 66666666-7777-8888-9999-aaaaaaaaaaaa']]});},
+  f=>{f.deps.buildLogs=async()=>({lines:[],truncated:true});},
+  f=>{f.deps.buildLogs=async()=>({lines:[],cursor:'repeated'});},
+  f=>{f.deps.checks=async()=>({check_runs:[]});},
+  f=>{f.deps.job=async()=>({head_sha:target.source_sha,conclusion:'success',steps:[]});},
+  f=>{f.deps.sourceProfile=async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,cloud:{provider:'cloudflare',worker:'relay',write:true,rollback:{compatibility_id:'incompatible'}}})).toString('base64')});}
+ ]){const f=fixture();change(f);await assert.rejects(callAutonomyControl(f.env,args,f.deps));assert.equal(f.values.has('autonomy:relay'),false);}
 });
 
 test('identity and health redirects never save healthy or user-approved recovery targets',async()=>{
@@ -156,6 +189,41 @@ test('identity and health redirects never save healthy or user-approved recovery
   await assert.rejects(callAutonomyControl(env,input(action,0,{target,...(action==='approve'?{approval:{text:'Approve',source:'message'}}:{})}),f.deps),path==='identity'?/identity does not match/:/health endpoint failed/);
   assert.equal(calls,path==='identity'?1:2);assert.equal(values.has('autonomy:relay'),false);
  }
+});
+
+test('release probes carry only the trusted existing Access identity to the bound hostname',async()=>{
+ const {env}=binding(),f=releaseFixture(env);env.RELAY_CLOUDFLARE_WRITE_SCRIPTS='relay';
+ const request=f.deps.fetch;let calls=0;
+ f.deps.accessJwt='synthetic-verified-identity';
+ f.deps.fetch=async(url,options)=>{calls++;assert.equal(new URL(url).hostname,'relay.loew.fi');assert.deepEqual(options.headers,{'Cf-Access-Token':'synthetic-verified-identity'});return request(url,options);};
+ await callAutonomyControl(env,input('healthy',0,{target}),f.deps);assert.equal(calls,2);
+ const status={worker:'relay',writable:true,rollback:profile};
+ await assert.rejects(verifyReleaseTarget(env,{...status,rollback:{...profile,health_url:'https://other.loew.fi/health'}},target,f.deps),/same bound Worker hostname/);assert.equal(calls,2);
+ await assert.rejects(verifyReleaseTarget(env,status,target,{snapshot:f.deps.snapshot,active:f.deps.active}),/Authenticated release verification identity/);
+});
+
+test('browser and authenticated app safety routes preserve private Access context through production verification',async t=>{
+ let expectedIdentity,probes=0;
+ const registration={id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,rollback:profile}};
+ t.mock.method(globalThis,'fetch',async(url,options)=>{
+  const address=String(url);
+  if(address.startsWith('https://api.github.com/'))return Response.json({type:'file',sha:'a'.repeat(40),encoding:'base64',content:Buffer.from(JSON.stringify(registration)).toString('base64')});
+  if(address.startsWith('https://api.cloudflare.com/')){
+   const result=address.endsWith('/deployments')?{deployments:[{id:'fixture-deployment',versions:[{version_id:version,percentage:100}]}]}:address.endsWith('/versions')?{items:[{id:version}]}:address.endsWith('/domains')?[{service:'relay',hostname:'relay.loew.fi'}]:address.endsWith('/scripts')?[{id:'relay',tag:'fixture-tag'}]:{};
+   return Response.json({success:true,result});
+  }
+  assert.ok(address==='https://relay.loew.fi/'||address==='https://relay.loew.fi/health');
+  assert.deepEqual(options.headers,{'Cf-Access-Token':expectedIdentity});assert.equal(options.redirect,'manual');probes++;
+  return address.endsWith('/health')?Response.json({ok:true,service:'relay'}):new Response('fixture',{headers:{'X-Relay-Source-Sha':target.source_sha,'X-Relay-Release-Compatibility':target.compatibility_id}});
+ });
+ const environment=()=>{const state=binding();Object.assign(state.env,{RUNNER_GITHUB_TOKEN:'synthetic',RELAY_GITHUB_TOKEN:'synthetic',CLOUDFLARE_ACCOUNT_ID:'synthetic',CLOUDFLARE_API_TOKEN:'synthetic',RELAY_CLOUDFLARE_WRITE_SCRIPTS:'relay'});return state;};
+ const args=input('healthy',0,{target});
+ let state=environment();expectedIdentity='synthetic-browser-identity';
+ const response=await handleApi(new Request('https://relay.loew.fi/api/autonomy',{method:'POST',headers:{'Content-Type':'application/json','Cf-Access-Jwt-Assertion':expectedIdentity},body:JSON.stringify(args)}),state.env);
+ assert.equal(response.status,200,JSON.stringify(await response.json()));assert.equal(state.values.get('autonomy:relay').last_healthy.version_id,version);
+ state=environment();expectedIdentity='synthetic-mcp-identity';
+ const app=await callUiApi({path:'/api/autonomy',method:'POST',body:args},state.env,{accessJwt:expectedIdentity});assert.equal(app.status,200);assert.equal(state.values.get('autonomy:relay').last_healthy.version_id,version);assert.equal(probes,4);
+ state=environment();const missing=await callUiApi({path:'/api/autonomy',method:'POST',body:args},state.env);assert.equal(missing.status,503);assert.match(missing.body.error,/Authenticated release verification identity/);assert.equal(state.values.has('autonomy:relay'),false);assert.equal(probes,4);
 });
 
 test('actual recovery transport never replays a successful but uncertain provider deployment',async()=>{

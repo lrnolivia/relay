@@ -218,7 +218,7 @@ async function dispatchWorkflow(env, workflow, inputs = {}) {
   return { ok: true, workflow };
 }
 
-export async function handleApi(request, env, { authenticatedMcp = false } = {}) {
+export async function handleApi(request, env, { authenticatedMcp = false, accessJwt } = {}) {
   const url = new URL(request.url);
 
   if (request.method === "GET" && url.pathname === "/api/health") {
@@ -259,7 +259,7 @@ export async function handleApi(request, env, { authenticatedMcp = false } = {})
         const registration=await readJsonFile(env,'projects/'+input.scope+'.json');
         if(registration.value.alias_of||registration.value.id!==input.scope)return json({error:'Use a registered canonical project'},400);
       }
-      return json(await callAutonomyControl(env,input));
+      return json(await callAutonomyControl(env,input,{accessJwt:authenticatedMcp?accessJwt:request.headers.get('Cf-Access-Jwt-Assertion')}));
     } catch(error) {return json({error:error.message},error.status||503);}
   }
   if (request.method === "POST" && url.pathname === "/api/work-review") {

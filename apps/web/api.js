@@ -36,14 +36,14 @@ export function validateUiRequest(args) {
 
 // Called only after the MCP gateway has verified its OAuth/Access identity.
 // Trust is passed in process, never obtained from a caller-supplied header or argument.
-export async function callUiApi(input, env, { rpc } = {}) {
+export async function callUiApi(input, env, { rpc, accessJwt } = {}) {
   const args = validateUiRequest(input);
   const request = new Request("https://relay.loew.fi" + args.path, {
     method: args.method,
     headers: { "Content-Type": "application/json", Origin: "https://relay.loew.fi" },
     body: args.body === undefined ? undefined : JSON.stringify(args.body)
   });
-  const response = await relayPanelResponse(request,{rpc}) || await handleApi(request, env, { authenticatedMcp: true });
+  const response = await relayPanelResponse(request,{rpc}) || await handleApi(request, env, { authenticatedMcp: true, accessJwt });
   const content_type = response.headers.get("content-type") || "application/json";
   if (content_type.startsWith("image/")) {
     const bytes = new Uint8Array(await response.arrayBuffer());
