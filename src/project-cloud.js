@@ -94,6 +94,19 @@ export async function verifyReleaseTarget(env,status,target,deps={}){
 // A human may approve a retained release after a newer deployment. Bind that
 // approval to provider deployment output and its actual production CI gates.
 // Fresh live verification still governs healthy promotion and every rollback.
+export async function resolveRecoveryTarget(env,status,source,deps={}){
+  const state=(await (deps.safety||autonomyRequest)(env,{action:'status',scope:status.project})).state;
+  const approved=state.last_user_approved;
+  if(approved?.source_sha===source){
+    const target=Object.fromEntries(['worker','version_id','source_sha','compatibility_id','evidence'].map(key=>[key,approved[key]]));
+    await verifyApprovedTarget(env,status,target,deps);
+    return target;
+  }
+  const active=await (deps.active||((worker)=>activeCloudVersion(env,worker)))(status.worker);
+  const target={worker:status.worker,version_id:active.version_id,source_sha:source,compatibility_id:status.rollback?.compatibility_id,evidence:'Completed main CI recovery archive; isolated host restoration must precede healthy registration.'};
+  await verifyReleaseTarget(env,status,target,deps);
+  return target;
+}
 export async function verifyApprovedTarget(env,status,target,deps={}){
   const profile=rollbackProfile(status);
   if(target.worker!==status.worker||target.compatibility_id!==profile.compatibility_id)throw Error('Release target does not match registered Worker compatibility');

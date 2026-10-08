@@ -53,7 +53,17 @@ function safetyTransport(env,request){
  };
  return {headers,rpc,tool,external:Boolean(external),call:input=>external&&['status','hold','resume','rollback'].includes(input.action)?controller(input):tool('relay_autonomy',input),inspect:input=>controller({action:'inspect_release',scope:'relay',...input})};
 }
-export async function runReleaseAssurance({event,env=process.env,request=fetch,github=gh,restore,log=console.log}={}){
+export async function runApprovedReleaseRetention(options={}){
+ const {event,env=process.env,request=fetch,github=gh}=options;
+ assert.equal(event?.repository?.full_name,'lrnolivia/relay');assert.equal(env.GITHUB_EVENT_NAME,'workflow_dispatch');assert.equal(env.GITHUB_REF,'refs/heads/main');assert.equal(env.GITHUB_ACTOR,'lrnolivia');
+ assert.match(event?.inputs?.approved_ci_run||'',/^[1-9]\d{0,15}$/);
+ const approved=(await safetyTransport(env,request).call({action:'status',scope:'relay'})).state.last_user_approved;
+ assert.ok(approved?.approval?.text&&approved.approval.source&&approved.approval.recorded_at,'An existing exact user approval is required');
+ const run=await github('repos/lrnolivia/relay/actions/runs/'+event.inputs.approved_ci_run);
+ assert.equal(String(run.id),event.inputs.approved_ci_run);assert.equal(run.head_sha,approved.source_sha,'Historical CI must match the existing approval');
+ return runReleaseAssurance({...options,event:{repository:event.repository,workflow_run:run},approvedTarget:approved});
+}
+export async function runReleaseAssurance({event,env=process.env,request=fetch,github=gh,restore,log=console.log,approvedTarget}={}){
  const identity=releaseEvent(event),transport=safetyTransport(env,request);
  const inventory=await transport.rpc('tools/list',{});
  assert.ok(inventory.tools?.find(x=>x.name==='relay_autonomy')?.inputSchema?.properties?.target?.properties?.recovery,'Deployed archive-aware safety contract is required');
@@ -85,6 +95,15 @@ export async function runReleaseAssurance({event,env=process.env,request=fetch,g
  assert.match(retained.target.recovery.restore_sha256,/^[a-f0-9]{64}$/);receipt.target=retained.target;
  const global=await transport.call({action:'status',scope:'global'}),current=await transport.call({action:'status',scope:'relay'});
  if(global.state.held||current.state.held){log(JSON.stringify({ok:true,source_sha:identity.source_sha,archive_retained:true,host_restore_verified:true,healthy_advanced:false,reason:'Autonomous work is held'}));return {held:true,receipt,restored};}
+ if(approvedTarget){
+  assert.deepEqual(current.state.last_user_approved,approvedTarget,'User approval changed during retention; reconcile');
+  for(const key of ['worker','version_id','source_sha','compatibility_id'])assert.equal(receipt.target[key],approvedTarget[key],'Retention cannot replace the approved release');
+  if(approvedTarget.recovery){assert.deepEqual(approvedTarget.recovery,receipt.target.recovery,'Existing approved recovery evidence is immutable');log(JSON.stringify({ok:true,approved_recovery_retained:true,duplicate:true,healthy_advanced:false}));return {duplicate:true,receipt,restored};}
+  const target=Object.fromEntries(['worker','version_id','source_sha','compatibility_id','evidence'].map(key=>[key,approvedTarget[key]]));target.recovery=receipt.target.recovery;
+  const result=await transport.call({action:'approve',scope:'relay',expected_revision:current.state.revision,operation_id:'relay-approved-retention-'+identity.run_id+'-'+identity.attempt,reason:'Attach restore-verified archive to the existing exact user-approved release; preserve original approval',target,approval:{text:approvedTarget.approval.text,source:approvedTarget.approval.source}});
+  const readback=await transport.call({action:'status',scope:'relay'});assert.deepEqual(result.state,readback.state,'Safety changed before readback; reconcile');assert.deepEqual(readback.state.last_healthy,current.state.last_healthy,'Historical retention cannot advance healthy');assert.deepEqual(readback.state.last_user_approved,{...approvedTarget,recovery:target.recovery},'Original approval must remain unchanged');
+  log(JSON.stringify({ok:true,source_sha:identity.source_sha,ci_run:identity.run_id,artifact_id:artifact.id,...target.recovery,host_restore_verified:true,approved_recovery_retained:true,healthy_advanced:false,safety_revision:readback.state.revision}));return {receipt,restored,state:readback.state};
+ }
  const operation='relay-release-healthy-'+identity.run_id+'-'+identity.attempt;
  const target={...receipt.target,evidence:'Completed canonical main CI '+identity.run_id+'; exact GitHub runtime archive '+artifact.id+' digest '+artifact.digest+' retained/readback/isolated5-file restoration verified; CI compiled artifact hashes and local-workerd evidence preserved. Manifest '+receipt.target.recovery.manifest_sha256+'. No user approval or production rollback inferred.'};
  const previous=current.state.operations?.find(x=>x.id===operation);
@@ -194,7 +213,7 @@ async function main(){
  const event=JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH,'utf8'));
  if(event.workflow_run?.conclusion==='failure'){await runFailedReleaseRecovery({event});return;}
  const directory=await mkdtemp(join(tmpdir(),'relay-release-restore-'));
- try{await runReleaseAssurance({event,restore:async(bytes,source,digest)=>{
+ try{await (process.env.GITHUB_EVENT_NAME==='workflow_dispatch'?runApprovedReleaseRetention:runReleaseAssurance)({event,restore:async(bytes,source,digest)=>{
   const archive=join(directory,'archive.zip');await writeFile(archive,bytes,{mode:0o600});
   let result;try{result=execFileSync('python3',[resolve('scripts/restore-release-archive.py'),archive,join(directory,'restored'),source,digest],{stdio:['ignore','pipe','pipe'],timeout:20000,maxBuffer:65536});}catch{throw Error('Isolated release restoration failed; healthy target was not advanced');}
   const receipt=JSON.parse(result.toString());await writeFile(join(directory,'restore-receipt.json'),JSON.stringify(receipt)+'\n',{mode:0o600});return receipt;

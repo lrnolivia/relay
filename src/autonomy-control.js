@@ -51,7 +51,12 @@ export function transitionAutonomy(stored,input,now=new Date().toISOString()){
  if(input.action==='hold'){state.held=true;state.reason=input.reason;}
  if(input.action==='resume'){if(state.rollback?.state==='pending')fail('An uncertain rollback must be reconciled before resuming');state.held=false;state.reason=null;}
  if(input.action==='healthy')state.last_healthy={...input.target,recorded_at:now};
- if(input.action==='approve')state.last_user_approved={...input.target,approval:{...input.approval,recorded_at:now,provenance:'attributed-explicit-user-instruction'}};
+ if(input.action==='approve'){
+  const previous=state.last_user_approved,same=previous&&['worker','version_id','source_sha','compatibility_id'].every(key=>previous[key]===input.target[key]);
+  if(same&&previous.recovery&&JSON.stringify(canonical(previous.recovery))!==JSON.stringify(canonical(input.target.recovery)))fail('Recorded approved recovery evidence is immutable');
+  const approval=same&&previous.approval?.text===input.approval.text&&previous.approval?.source===input.approval.source?previous.approval:{...input.approval,recorded_at:now,provenance:'attributed-explicit-user-instruction'};
+  state.last_user_approved={...input.target,approval};
+ }
  if(input.action==='prepare_rollback'){
   const target=input.kind==='healthy'?state.last_healthy:state.last_user_approved;
   if(!target)fail('The requested rollback target is not recorded; no substitute is allowed');
