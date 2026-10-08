@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-08T01:32:04.113Z",
+  "updated_at": "2026-10-08T01:45:37.331Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -824,7 +824,7 @@
       "primary_staff": "adrian",
       "supporting_staff": [],
       "base_sha": "3a3f7e49c877bdb66fdc5ddac254acd97f62f1e7",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-08T01:09:12.483Z",
       "objective_history": {
         "baseline": {
@@ -841,8 +841,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T01:32:04.113Z",
-      "lease_until": "2026-10-08T13:32:04.113Z"
+      "updated_at": "2026-10-08T01:45:37.331Z",
+      "lease_until": "2026-10-08T13:45:37.331Z",
+      "pr": 16,
+      "merged_head_sha": "3576dc91213ee64c09f4fe58735d905bfd80be68",
+      "merge_commit_sha": "0778d5e577e95a6d65bdd68ffcf860ea90cff635",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/16 merge 0778d5e577e95a6d65bdd68ffcf860ea90cff635; exact reviewed head 3576dc91213ee64c09f4fe58735d905bfd80be68 passed native, KDE, Wayland and admission. Three files read back and restored with Git blob + SHA256 integrity checks. Every native image/assertion retained; frame readiness bounded at 5s. CI workflow scope is released; original product branch preserved.",
+      "work_accounted": true,
+      "completed_at": "2026-10-08T01:45:37.331Z"
     }
   ]
 }
