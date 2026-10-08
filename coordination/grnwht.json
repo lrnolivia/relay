@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T12:02:24.746Z",
+  "updated_at": "2026-10-08T12:02:45.559Z",
   "legacy_branches": [
     "main"
   ],
@@ -127,7 +127,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-08T12:02:24.746Z",
       "objective_history": {
         "baseline": {
@@ -663,6 +663,57 @@
       "evidence": "PR16 merged f48a647f582d2a9b2e42f0b21a77227a8cb43cbb exact tested11bcad16215922cd3faaf9a434e3a1aee4a6dd2d. Native Android Flat tablet FAB bottom-right/safe-area; phone/Glass/desktop/keyboard coverage preserved. HostedCI37768539556 all3PASS,72navigationcases eachengine and broad suites;1051frontend/361backendPASS. Exact artifact11547146670 all75files verified. Version84438cbd-830e-4e18-81dd-3693e76e8b7e100% build942570de2e895bdb3ccd, Cloudreadback/module/all68publicasset hashes PASS; health/config/build PASS.69tableD1+4media3799254bytes closed-write backup remote/readback/restorePASS integrityOK/FK0; no migrations. Native backend/recovery identicalPR15;22bindings/runtime identical; existingsecrets/PushON preserved;d07normal and1creadonly rollbackretained. Latest Safari refresh pending manualunlock(Maclocked); priorPR15fiveviews248GET200/zeroerrors retained, not claimedforPR16. No physicalAndroid/deviceenrollment/delivery/notifications asserted. Source/backup/evidence retained; finaldurableLibrarycheckpoint follows.",
       "work_accounted": true,
       "completed_at": "2026-10-08T11:56:55.436Z"
+    },
+    {
+      "id": "grnwht-approved-install-guide-20261008",
+      "owner": "01a11b04-95a2-7212-aa48-1e23e956d00a",
+      "branch": "grnwht/approved-install-guide-20261008",
+      "paths": [
+        "src/install.jsx",
+        "src/install-guide-visuals.jsx",
+        "src/install-guide-visuals.css",
+        "src/install-inline-controls.jsx",
+        "src/install-capabilities.js",
+        "src/react-app.jsx",
+        "src/install-guide-selection.js",
+        "dist/install-guide",
+        "docs/install-guide",
+        "tests/install-guide-visuals.test.mjs",
+        "tests/install-tutorial-browser.mjs",
+        "tests/install-tutorial-fixture.test.mjs",
+        "tests/install-guide-selection.test.mjs"
+      ],
+      "resources": [
+        "grnwht-family-app"
+      ],
+      "goal": "Integrate Lauren's approved preview Home v2 installation artwork without design changes.",
+      "acceptance": "Use exact verified fdf81fd archive,216 PNG/25 inline SVG controls/provenance. Select four devices, default plus eight designated colors, light/dark using actual resolver and react to changes. Hide guide/menu on desktop; preserve iPad desktop-like detection and accessible three-step instructions. Isolated preview with meaningful hosted Chromium/WebKit checks, required build/tests, exact-head gated release/recovery. No physical-device/delivery claim or Relay product work.",
+      "next_action": "Verify249file payload and integrate existing approved screens/control variants with actual appearance resolver and mobile/tablet detection.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "f48a647f582d2a9b2e42f0b21a77227a8cb43cbb",
+      "state": "active",
+      "created_at": "2026-10-08T12:02:45.559Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Integrate Lauren's approved preview Home v2 installation artwork without design changes.",
+          "acceptance": "Use exact verified fdf81fd archive,216 PNG/25 inline SVG controls/provenance. Select four devices, default plus eight designated colors, light/dark using actual resolver and react to changes. Hide guide/menu on desktop; preserve iPad desktop-like detection and accessible three-step instructions. Isolated preview with meaningful hosted Chromium/WebKit checks, required build/tests, exact-head gated release/recovery. No physical-device/delivery claim or Relay product work.",
+          "at": "2026-10-08T12:02:24.746Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-approved-install-guide-20261008:acceptance:0",
+            "text": "Use exact verified fdf81fd archive,216 PNG/25 inline SVG controls/provenance. Select four devices, default plus eight designated colors, light/dark using actual resolver and react to changes. Hide guide/menu on desktop; preserve iPad desktop-like detection and accessible three-step instructions. Isolated preview with meaningful hosted Chromium/WebKit checks, required build/tests, exact-head gated release/recovery. No physical-device/delivery claim or Relay product work.",
+            "at": "2026-10-08T12:02:24.746Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T12:02:45.559Z",
+      "lease_until": "2026-10-09T00:02:45.559Z"
     }
   ]
 }
