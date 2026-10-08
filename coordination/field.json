@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-10-08T01:03:01.642Z",
+  "updated_at": "2026-10-08T01:27:32.483Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1752,7 +1752,7 @@
       "primary_staff": "adrian",
       "supporting_staff": [],
       "base_sha": "4b67650e1eee8f6053f8545da9410e443bd5f906",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-08T00:52:29.020Z",
       "objective_history": {
         "baseline": {
@@ -1769,8 +1769,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T01:03:01.642Z",
-      "lease_until": "2026-10-08T13:03:01.642Z"
+      "updated_at": "2026-10-08T01:27:32.483Z",
+      "lease_until": "2026-10-08T13:27:32.483Z",
+      "pr": 148,
+      "merged_head_sha": "2750c363c4ab09d361449e82c921b195e6aba05b",
+      "merge_commit_sha": "4f2d5a091fc0b4a2cd19a1f71907015590c88450",
+      "evidence": "https://github.com/lrnolivia/field/pull/148; required exact-head admission and existing quality/build checks passed. Current main workflow readback equals reviewed candidate byte-for-byte (blob 8a451327c748b80c1b42a30421986f53096887c4). Changed workflow bytes restored and hash-verified in isolated recovery directory. Daily hygiene, immediate admission and required assertions preserved. CI-only slice complete; other product work preserved.",
+      "work_accounted": true,
+      "completed_at": "2026-10-08T01:27:32.483Z"
     }
   ]
 }
