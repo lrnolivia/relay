@@ -277,10 +277,11 @@ export async function callAutonomyControl(env,input,deps={}){
   const recover=deps.recover||((scope,operation)=>recoverCloudVersion(env,scope,operation));
   const receipt=await recover(input.scope,input.operation_id);
   // An uncertain provider response deliberately leaves the pending operation held.
-  const proof=await verifyReleaseTarget(env,status,target,deps);
+  const effectiveTarget=receipt.effective_target||target;
+  const proof=await verifyReleaseTarget(env,status,effectiveTarget,deps);
   const latest=(await autonomyRequest(env,{action:'status',scope:input.scope})).state;
   const result=await autonomyRequest(env,{action:'finish_rollback',scope:input.scope,expected_revision:latest.revision,
-    operation_id:input.operation_id+'-finish',reason:input.reason,result:{state:'verified',version_id:target.version_id,evidence:JSON.stringify(proof)}});
+    operation_id:input.operation_id+'-finish',reason:input.reason,result:{state:'verified',version_id:effectiveTarget.version_id,evidence:JSON.stringify(proof)}});
   return {...result,recovery:receipt,verified_release:proof};
 }
 

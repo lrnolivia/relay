@@ -1,5 +1,6 @@
 import {createHash} from 'node:crypto';
 import {githubApiRequest} from './source.js';
+import {providerRecoveryConfiguration,recoveryConfigurationDigest,readCompiledRecoveryArchive} from './compiled-recovery.js';
 
 export const RELEASE_ARCHIVE_LIMIT=8*1024*1024;
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
@@ -70,17 +71,29 @@ export async function verifyRetainedReleaseArchive(env,target){
  requireValue(manifest?.schema===1&&manifest.kind==='relay-release-recovery-archive'&&manifest.repository==='lrnolivia/relay'&&manifest.source_sha===target.source_sha&&manifest.worker===target.worker&&manifest.retained_provider_version===target.version_id&&manifest.compatibility_id===target.compatibility_id&&manifest.zip_sha256===pointer.archive_sha256&&manifest.artifact_id===pointer.artifact_id&&manifest.ci_run===pointer.ci_run&&manifest.archive_key===root+pointer.archive_sha256+'.zip'&&manifest.required_release_gates_verified===true,'invalid_manifest','Recovery manifest does not bind this exact release');
  const archive=await objectBytes(env.EVIDENCE,manifest.archive_key,RELEASE_ARCHIVE_LIMIT);
  requireValue(archive.length===manifest.zip_bytes&&hash(archive)===pointer.archive_sha256,'archive_readback','Recovery archive digest does not match');
+ if(manifest.provider_configuration){
+  const saved=manifest.provider_configuration;
+  const normalized=providerRecoveryConfiguration({id:saved.version_id,resources:{script_runtime:saved,bindings:saved.bindings,script:{named_handlers:saved.named_handlers}}});
+  requireValue(saved.version_id===target.version_id&&recoveryConfigurationDigest(saved)===recoveryConfigurationDigest(normalized),'invalid_configuration','Retained provider configuration is not canonical');
+ }
+ let hostRestore;
  if(pointer.restore_sha256){
   const bytes=await objectBytes(env.EVIDENCE,root+'host-restore-'+pointer.restore_sha256+'.json',65536);
   requireValue(hash(bytes)===pointer.restore_sha256,'archive_readback','Host restoration receipt digest does not match');
   let restored;try{restored=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));}catch{throw new ReleaseRecoveryError('invalid_restore','Host restoration receipt is invalid');}
   requireValue(restored?.schema===1&&restored.kind==='relay-release-host-restore'&&restored.evidence_source==='authenticated-ci-restoration-receipt'&&restored.manifest_sha256===pointer.manifest_sha256&&restored.version_id===target.version_id&&restored.ci_run===pointer.ci_run&&restored.artifact_id===pointer.artifact_id&&validRestore(restored.receipt,target.source_sha,pointer.archive_sha256),'invalid_restore','Host restoration receipt does not bind this exact release');
+  hostRestore=restored;
  }
- return {manifest,archive};
+ return {manifest,archive,hostRestore};
+}
+export async function retainedCompiledRecovery(env,target){
+ const retained=await verifyRetainedReleaseArchive(env,target);
+ requireValue(retained.manifest.provider_configuration&&retained.hostRestore,'invalid_configuration','Compiled recovery requires retained provider configuration and restoration proof');
+ return {...retained,...readCompiledRecoveryArchive(retained.archive,target.source_sha,retained.hostRestore.receipt)};
 }
 // Authentication is enforced by the entrypoint before this handler. The only
 // storage namespace is the existing Relay recovery prefix; no caller URL/key.
-export async function releaseRecoveryResponse(request,env,{api,resolveTarget}={}){
+export async function releaseRecoveryResponse(request,env,{api,resolveTarget,resolveConfiguration}={}){
  requireValue(['GET','POST'].includes(request.method),'invalid_method','Use GET or POST',405);
  const identity=releaseArchiveQuery(new URL(request.url));
  const {artifact,run}=await verifiedReleaseArtifact(env,identity,api);
@@ -110,6 +123,9 @@ export async function releaseRecoveryResponse(request,env,{api,resolveTarget}={}
  requireValue(resolveTarget,'archive_unavailable','Release verification is unavailable',503);
  const target=await resolveTarget(identity.source_sha);
  requireValue(target.worker==='relay'&&target.source_sha===identity.source_sha&&target.compatibility_id==='relay-autonomy-v1','invalid_target','Only the exact compatible Relay release can be retained');
+ requireValue(resolveConfiguration,'archive_unavailable','Exact provider configuration capture is required',503);
+ const providerConfiguration=providerRecoveryConfiguration(await resolveConfiguration(target));
+ requireValue(providerConfiguration.version_id===target.version_id,'invalid_configuration','Provider configuration does not match the verified version');
  const sourceApi=api||((path,options)=>githubApiRequest(env,path,options));
  const configs={};
  for(const path of ['projects/relay.json','wrangler.jsonc']){
@@ -117,7 +133,7 @@ export async function releaseRecoveryResponse(request,env,{api,resolveTarget}={}
   requireValue(file?.type==='file'&&file.encoding==='base64'&&!file.truncated&&file.size>0&&file.size<=32768&&typeof file.content==='string'&&file.content.length<=48000,'invalid_configuration','Exact source recovery configuration is incomplete');
   const encoded=file.content.replace(/\s/g,''),raw=Buffer.from(encoded,'base64');requireValue(raw.length===file.size&&raw.toString('base64')===encoded,'invalid_configuration','Source configuration size or encoding mismatch');configs[path]={text:new TextDecoder('utf-8',{fatal:true}).decode(raw),sha256:hash(raw)};
  }
- const manifest={schema:1,kind:'relay-release-recovery-archive',repository:'lrnolivia/relay',source_sha:identity.source_sha,worker:target.worker,retained_provider_version:target.version_id,compatibility_id:target.compatibility_id,zip_sha256:artifact.digest.slice(7),zip_bytes:bytes.length,archive_key:archiveKey,artifact_id:artifact.id,ci_run:run.id,ci_attempt:run.run_attempt,required_release_gates_verified:true,source_configuration:configs,limitations:['Secrets and mutable production data are excluded.','Host restoration is separately reported by the CI follow-up; no production rollback or provider-expiry fallback is implied.']};
+ const manifest={schema:1,kind:'relay-release-recovery-archive',repository:'lrnolivia/relay',source_sha:identity.source_sha,worker:target.worker,retained_provider_version:target.version_id,compatibility_id:target.compatibility_id,zip_sha256:artifact.digest.slice(7),zip_bytes:bytes.length,archive_key:archiveKey,artifact_id:artifact.id,ci_run:run.id,ci_attempt:run.run_attempt,required_release_gates_verified:true,source_configuration:configs,provider_configuration:providerConfiguration,limitations:['Secret values and mutable production data are excluded; secret binding names are retained.','Host restoration is separately reported by the CI follow-up; this receipt alone does not prove a production rollback or provider-expiry fallback.']};
  const manifestBytes=Buffer.from(JSON.stringify(manifest)+'\n'),manifestHash=hash(manifestBytes);
  requireValue(manifestBytes.length<=65536,'archive_limit','Recovery configuration manifest exceeds 64 KiB',413);
  await immutableObject(env.EVIDENCE,archiveKey,bytes);

@@ -336,3 +336,32 @@ test('actual recovery transport never replays a successful but uncertain provide
   assert.equal(writes,1);
  }finally{globalThis.fetch=original;}
 });
+
+test('authorization/provider failures cannot trigger compiled fallback and a new stop blocks pending recovery writes',async()=>{
+ const pending=transitionAutonomy(transitionAutonomy(null,input('healthy',0,{target})).state,input('prepare_rollback',1,{kind:'healthy',expected_current_version:'66666666-7777-8888-9999-aaaaaaaaaaaa'})).state;
+ const {env,values}=binding({'autonomy:relay':pending});Object.assign(env,{CLOUDFLARE_ACCOUNT_ID:'test',CLOUDFLARE_API_TOKEN:'test'});
+ const original=globalThis.fetch;let calls=0;
+ try{
+  for(const status of [403,429,503]){
+   calls=0;globalThis.fetch=async()=>{calls++;return Response.json({success:false,errors:[{message:'Synthetic provider rejection'}]},{status});};
+   await assert.rejects(recoverCloudVersion(env,'relay',pending.rollback.operation_id),error=>error.status===status);assert.equal(calls,1);
+  }
+  values.set('autonomy:relay',transitionAutonomy(pending,input('hold',2,{operation_id:'later-human-stop-fixture'})).state);
+  calls=0;await assert.rejects(recoverCloudVersion(env,'relay',pending.rollback.operation_id),/Safety changed after rollback reservation/);assert.equal(calls,0);
+ }finally{globalThis.fetch=original;}
+});
+
+
+test('compiled restoration transitions bind one upload intent and reject mismatched hashes or unsafe UUID substitution',()=>{
+ const retained={...target,recovery:{archive_sha256:'a'.repeat(64),manifest_sha256:'b'.repeat(64),restore_sha256:'c'.repeat(64),artifact_id:1,ci_run:2}};
+ const operation='compiled-durable-fixture',from='66666666-7777-8888-9999-aaaaaaaaaaaa',restored='bbbbbbbb-cccc-dddd-eeee-ffffffffffff',hashes={module_sha256:'d'.repeat(64),configuration_sha256:'e'.repeat(64)};
+ let state=transitionAutonomy({...autonomyState('relay'),last_healthy:retained,last_user_approved:retained},input('prepare_rollback',0,{operation_id:operation,kind:'healthy',expected_current_version:from})).state;
+ const prepare=input('prepare_restore_upload',1,{operation_id:operation+'-upload',result:hashes});
+ assert.throws(()=>transitionAutonomy(state,{...prepare,operation_id:'another-upload-operation'}),/exact pending/);
+ state=transitionAutonomy(state,prepare).state;assert.equal(transitionAutonomy(state,prepare).duplicate,true);
+ const record=input('finish_restore_upload',2,{operation_id:operation+'-record',result:{...hashes,version_id:restored}});
+ for(const version_id of [version,from])assert.throws(()=>transitionAutonomy(state,{...record,result:{...record.result,version_id}}),/pending intent/);
+ assert.throws(()=>transitionAutonomy(state,{...record,result:{...record.result,module_sha256:'f'.repeat(64)}}),/pending intent/);
+ state=transitionAutonomy(state,record).state;assert.equal(state.rollback.target.version_id,restored);assert.equal(state.rollback.original_target.version_id,version);assert.equal(state.last_user_approved.version_id,version);assert.equal(state.last_healthy.version_id,version);
+ assert.throws(()=>transitionAutonomy(state,input('finish_rollback',3,{result:{state:'verified',version_id:version,evidence:'Wrong original provider UUID'}})),/pending exact target/);
+});

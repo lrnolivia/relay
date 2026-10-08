@@ -1,4 +1,5 @@
 import { guardRepository, autonomyRequest } from './autonomy-control.js';
+import {restoreExpiredCloudVersion} from './recovery-upload.js';
 const CLOUDFLARE_API = "https://api.cloudflare.com/client/v4";
 const DEFAULT_WRITE_SCRIPTS = ["relay"];
 
@@ -170,21 +171,39 @@ export async function retainedCloudVersion(env,scriptName,versionId){
 // Its target comes only from the pending, durable, exact rollback operation.
 export async function recoverCloudVersion(env,scope,operationId) {
   const read=async()=>{
-    const {state}=await autonomyRequest(env,{action:'status',scope});
+    const [{state},{state:global}]=await Promise.all([autonomyRequest(env,{action:'status',scope}),autonomyRequest(env,{action:'status',scope:'global'})]);
     if(!state.held||state.rollback?.state!=='pending'||state.rollback.operation_id!==operationId)throw Error('Exact held rollback operation is required');
-    return state.rollback;
+    if(global.held)throw Error('Recovery is held for global');
+    const prepared=state.operations.find(item=>item.id===operationId),restoration=state.rollback.restoration;
+    const ownedRevision=prepared?.revision+(restoration?.state==='uploaded'?2:restoration?.state==='upload_pending'?1:0);
+    if(state.revision!==ownedRevision)throw Error('Safety changed after rollback reservation; reconcile the new stop before provider writes');
+    return {state,global};
   };
-  const pending=await read(),script=validateScriptName(pending.target.worker),version=validateVersionId(pending.target.version_id);
+  let snapshot=await read(),pending=snapshot.state.rollback;
+  const script=validateScriptName(pending.target.worker);
   assertWritable(env,script);
-  const retained=await retainedCloudVersion(env,script,version);
+  const root='/accounts/'+env.CLOUDFLARE_ACCOUNT_ID+'/workers/scripts/'+encodeURIComponent(script);
+  const api=suffix=>cloudflareApiRequest(env,root+suffix);
+  let version=validateVersionId(pending.target.version_id),retained;
+  try{retained=await retainedCloudVersion(env,script,version);}
+  catch(error){
+    if(error.status!==404||pending.restoration?.state==='uploaded')throw error;
+    await restoreExpiredCloudVersion(env,scope,operationId,{api,read,active:()=>activeCloudVersion(env,script),upload:async(metadata,module)=>{
+      const form=new FormData();form.set('metadata',new Blob([JSON.stringify(metadata)],{type:'application/json'}),'metadata.json');form.set('index.js',new Blob([module],{type:'application/javascript+module'}),'index.js');
+      const response=await fetch(CLOUDFLARE_API+root+'/versions?bindings_inherit=strict',{method:'POST',redirect:'manual',headers:{Authorization:'Bearer '+env.CLOUDFLARE_API_TOKEN,Accept:'application/json'},body:form,signal:AbortSignal.timeout(20000)});
+      const body=await response.json();if(!response.ok||body?.success!==true)throw Error('Compiled recovery upload failed');return body.result;
+    }});
+    snapshot=await read();pending=snapshot.state.rollback;version=validateVersionId(pending.target.version_id);
+    retained=await retainedCloudVersion(env,script,version);
+  }
   if(retained?.id!==version)throw Error('Retained rollback artifact identity changed');
   const active=await activeCloudVersion(env,script);
-  if(active.version_id===version)return {ok:true,script,version_id:version,reconciled:true,deployment_id:active.deployment_id};
+  if(active.version_id===version)return {ok:true,script,version_id:version,effective_target:pending.target,reconciled:true,deployment_id:active.deployment_id};
   if(active.version_id!==pending.expected_current_version)throw Error('Deployment changed; recovery must be reconciled before another write');
   const current=await read();
-  if(JSON.stringify(current)!==JSON.stringify(pending))throw Error('Rollback intent changed before provider write');
+  if(JSON.stringify(current)!==JSON.stringify(snapshot))throw Error('Rollback intent changed before provider write');
   const deployment=await cloudflareApiRequest(env,'/accounts/'+env.CLOUDFLARE_ACCOUNT_ID+'/workers/scripts/'+encodeURIComponent(script)+'/deployments',{
     method:'POST',body:{strategy:'percentage',versions:[{version_id:version,percentage:100}],annotations:{'workers/message':'Relay bounded recovery '+operationId}}
   });
-  return {ok:true,script,version_id:version,deployment};
+  return {ok:true,script,version_id:version,effective_target:pending.target,deployment};
 }
