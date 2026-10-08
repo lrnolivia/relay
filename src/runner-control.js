@@ -84,8 +84,8 @@ const DEFINITIONS = [
   },
   {
     name: 'relay_runner_project',
-    description: 'QUERY — resolve one registered project with current policy, ownership, queue and record revision. Safe to retry. Read this before a managed-project mutation when policy/record revision is not already current.',
-    inputSchema: schema({ project: projectSchema }, ['project'])
+    description: 'QUERY — resolve one registered project with current policy, ownership, queue, record revision and universal CI routing policy. Optional ci returns an advisory exact-source route plan: auto may select hosted when PC is unavailable; explicit pc waits without silent fallback. Holds and unresolved dispatches block fallback. This query never reserves a runner, registers credentials or dispatches CI; the admitted dispatch/start path must recheck current evidence.',
+    inputSchema: schema({ project: projectSchema, ci: schema({mode:{type:'string',enum:['auto','pc','hosted']},source_sha:shaSchema,source_ref:text(240)}, ['mode','source_sha','source_ref']) }, ['project'])
   },
   {
     name: 'relay_runner_assignments',
