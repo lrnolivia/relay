@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { autonomyState, transitionAutonomy, durableAutonomy, guardAutonomy, guardRepository, publicAutonomyStatus } from './autonomy-control.js';
 import { githubApiRequest, githubGraphqlRequest } from './source.js';
 import { deployCloudVersion, recoverCloudVersion } from './cloud.js';
-import { deployProjectCloudVersion, callAutonomyControl, verifyReleaseTarget, RELAY_GUARDED_DEPLOY_COMMAND } from './project-cloud.js';
+import { deployProjectCloudVersion, callAutonomyControl, verifyReleaseTarget, resolveRecoveryTarget, RELAY_GUARDED_DEPLOY_COMMAND } from './project-cloud.js';
 import { handleApi } from '../packages/runner/src/cloudflare-worker.mjs';
 import { callUiApi } from '../apps/web/api.js';
 
@@ -38,6 +38,14 @@ test('stop is durable, revision checked and a retry cannot overwrite a resume',a
  await assert.rejects(durableAutonomy(storage,{...input('hold'),reason:'Different intent'}),/different intent/);
 });
 
+test('same approved release retains its original approval and immutable recovery pointer',()=>{
+ const approval={text:'Approve exact version',source:'Human reply'};
+ const original=transitionAutonomy(null,input('approve',0,{target,approval}),'2026-01-01T00:00:00.000Z').state;
+ const recovery={archive_sha256:'a'.repeat(64),manifest_sha256:'b'.repeat(64),restore_sha256:'c'.repeat(64),artifact_id:1,ci_run:2};
+ const enriched=transitionAutonomy(original,input('approve',1,{target:{...target,recovery},approval}),'2026-02-01T00:00:00.000Z').state;
+ assert.deepEqual(enriched.last_user_approved.approval,original.last_user_approved.approval);assert.equal(enriched.last_healthy,null);
+ for(const next of [target,{...target,recovery:{...recovery,ci_run:3}}])assert.throws(()=>transitionAutonomy(enriched,input('approve',2,{target:next,approval})),/immutable/);
+});
 test('concurrent writers cannot both win the same revision',async()=>{
  const {storage}=binding();
  const results=await Promise.allSettled([durableAutonomy(storage,input('hold')),durableAutonomy(storage,input('resume',0,{authorization:'Resume'}))]);
@@ -252,6 +260,9 @@ test('historical approval binds retained version to exact provider deployment an
  }
  const args=input('approve',0,{target,approval:{text:'Approve the older exact release',source:'human message'}});
  const good=fixture();const result=await callAutonomyControl(good.env,args,good.deps);assert.equal(result.state.last_user_approved.version_id,version);assert.equal(result.state.last_healthy,null);assert.equal(result.verified_release.currently_active,false);assert.equal(result.verified_release.production_job_id,'34');
+ const status={project:'relay',worker:'relay',repository:'lrnolivia/relay',writable:true,rollback:profile};
+ assert.deepEqual(await resolveRecoveryTarget(good.env,status,target.source_sha,good.deps),target,'Recovery capture must resolve the recorded older approval, not the current deployment');
+ await assert.rejects(resolveRecoveryTarget(good.env,status,'c'.repeat(40),good.deps),/Historical approval must not claim/);
  const eof=fixture();eof.deps.buildLogs=async(_id,cursor)=>cursor?{lines:[],cursor}:{lines:[[0,'Current Version ID: '+version]],cursor:'terminal'};assert.equal((await callAutonomyControl(eof.env,args,eof.deps)).state.last_user_approved.version_id,version);
  const changed=fixture(),oldProfile=changed.deps.github;
  changed.deps.github=async()=>{const file=await oldProfile(),value=JSON.parse(Buffer.from(file.content,'base64'));value.cloud.deploy_command=RELAY_GUARDED_DEPLOY_COMMAND;value.cloud.production_branch='new-production';return {...file,content:Buffer.from(JSON.stringify(value)).toString('base64')};};

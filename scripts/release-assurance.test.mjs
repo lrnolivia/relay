@@ -5,7 +5,7 @@ import {mkdtemp,writeFile,readFile,rm,access} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {execFileSync} from 'node:child_process';
-import {releaseEvent,runReleaseAssurance,runFailedReleaseRecovery} from './release-assurance.mjs';
+import {releaseEvent,runReleaseAssurance,runFailedReleaseRecovery,runApprovedReleaseRetention} from './release-assurance.mjs';
 import {callAutonomyControl} from '../src/project-cloud.js';
 import {releaseRecoveryResponse} from '../src/release-recovery.js';
 import {autonomyState,transitionAutonomy,autonomyRequest} from '../src/autonomy-control.js';
@@ -21,7 +21,7 @@ function fixture(){
  const bucket={async get(key){if(!objects.has(key))return null;const bytes=objects.get(key);return {size:bytes.length,arrayBuffer:async()=>bytes};},async put(key,bytes){objects.set(key,Buffer.from(bytes));}};
  const api=async path=>path.endsWith('/runs/7')?run:path.endsWith('/artifacts/8')?artifact:path.includes('/jobs?')?{total_count:1,jobs:[{name:'quality',status:'completed',conclusion:'success',steps:['Run workspace, contract, API, browser and React tests','Verify bundled Worker in local workerd','Verify exact live source and capture actual website pages','Retain and verify exact interactive sample build'].map(name=>({name,status:'completed',conclusion:'success'}))}]}:{type:'file',encoding:'base64',size:2,content:'e30='};
  const env={CF_ACCESS_CLIENT_ID:'synthetic-service-id',CF_ACCESS_CLIENT_SECRET:'synthetic-service-secret'};
- const f={bytes,objects,logs,calls,run,artifact,event,env,get state(){return state;},hold:false,raceHold:false,corruptReadback:false};
+ const f={bytes,objects,logs,calls,run,artifact,event,env,get state(){return state;},setApproval(value){state.last_user_approved=value;},hold:false,raceHold:false,corruptReadback:false};
  f.github=async(path,binary)=>binary?bytes:path.includes('/artifacts?')?{total_count:1,artifacts:[artifact]}:run;
  f.restore=async(_bytes,sha,digest)=>({schema:1,source_sha:sha,archive_sha256:digest,file_count:5,host_restore_verified:true,compiled_ci_runtime_evidence_verified:true,runtime_reexecuted:false,production_rollback_performed:false,files:['bundle/README.md','bundle/index.js','bundle/index.js.map','probe.json','result.json'].map(path=>({path,bytes:2,sha256:'c'.repeat(64)}))});
  f.request=async(url,options)=>{
@@ -52,6 +52,24 @@ test('completed release uses the same artifact through retained restoration and 
  assert.equal(f.objects.size,3);assert.ok(result.state.last_healthy.recovery.restore_sha256);assert.equal(f.calls.filter(c=>c.action==='healthy').length,1);
  await f.execute();assert.equal(f.calls.filter(c=>c.action==='healthy').length,1,'Successful healthy operation must not replay');assert.equal(f.state.revision,1);
  assert.doesNotMatch(f.logs.join('\n'),/synthetic-service-id|synthetic-service-secret/);
+});
+function approvedFixture(){
+ const f=fixture();f.setApproval({worker:'relay',version_id:version,source_sha:source,compatibility_id:'relay-autonomy-v1',evidence:'Original exact release evidence',approval:{text:'Approve this exact release',source:'Original human message',recorded_at:'2026-01-01T00:00:00.000Z',provenance:'attributed-explicit-user-instruction'}});
+ f.env={...f.env,GITHUB_EVENT_NAME:'workflow_dispatch',GITHUB_REF:'refs/heads/main',GITHUB_ACTOR:'lrnolivia'};
+ f.event={repository:{full_name:'lrnolivia/relay'},inputs:{approved_ci_run:'7'}};
+ f.execute=()=>runApprovedReleaseRetention({...f,log:value=>f.logs.push(value)});return f;
+}
+test('manual historical retention enriches only the existing approval and preserves its provenance and healthy target',async()=>{
+ const f=approvedFixture(),approved=structuredClone(f.state.last_user_approved),result=await f.execute();
+ assert.deepEqual(result.state.last_user_approved,{...approved,recovery:result.receipt.target.recovery});assert.equal(result.state.last_healthy,null);assert.equal(result.state.held,false);assert.equal(f.calls.filter(x=>x.action==='approve').length,1);assert.equal(f.calls.filter(x=>x.action==='healthy').length,0);assert.equal(f.objects.size,3);
+ await f.execute();assert.equal(f.calls.filter(x=>x.action==='approve').length,1);assert.equal(f.state.revision,1);
+});
+test('historical retention refuses wrong source, dispatcher or changed approval and honors concurrent holds',async()=>{
+ const wrong=approvedFixture();wrong.run.head_sha='b'.repeat(40);await assert.rejects(wrong.execute(),/existing approval/);assert.equal(wrong.objects.size,0);
+ const actor=approvedFixture();actor.env.GITHUB_ACTOR='other';await assert.rejects(actor.execute());assert.equal(actor.calls.length,0);
+ const held=approvedFixture();held.hold=true;assert.equal((await held.execute()).held,true);assert.equal(held.state.last_user_approved.recovery,undefined);
+ const race=approvedFixture(),original=structuredClone(race.state.last_user_approved);race.raceHold=true;await assert.rejects(race.execute(),/reconcile before retrying/);assert.deepEqual(race.state.last_user_approved,original);assert.equal(race.state.held,true);
+ const changed=approvedFixture(),request=changed.request;let reads=0;changed.request=async(url,options)=>{const args=url.endsWith('/mcp')?JSON.parse(options.body).params?.arguments:null;if(args?.action==='status'&&args.scope==='relay'&&++reads===2)changed.setApproval({...changed.state.last_user_approved,source_sha:'c'.repeat(40)});return request(url,options);};await assert.rejects(changed.execute(),/approval changed/);assert.equal(changed.calls.filter(x=>x.action==='approve').length,0);
 });
 test('global stop preserves archives without promotion; a concurrent project stop wins CAS',async()=>{
  const held=fixture();held.hold=true;const result=await held.execute();assert.equal(result.held,true);assert.equal(held.objects.size,3);assert.equal(held.calls.filter(c=>c.action==='healthy').length,0);

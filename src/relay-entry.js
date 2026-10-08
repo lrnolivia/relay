@@ -20,8 +20,8 @@ import { isContextualRelayTool, contextualizeRelayTool, contextualPresentation }
 import { RELAY_V2_PROBE_URI, relayV2ProbeDescriptor, relayV2ProbeResource } from "./relay-v2-probe.js";
 import { presentationOperation, withHumanPresentation } from './communication-presentation.js';
 import { publicAutonomyStatus, autonomyTool } from './autonomy-control.js';
-import { callAutonomyControl, projectCloudStatus, verifyReleaseTarget } from './project-cloud.js';
-import { activeCloudVersion,retainedCloudVersion } from './cloud.js';
+import { callAutonomyControl, projectCloudStatus, resolveRecoveryTarget } from './project-cloud.js';
+import { retainedCloudVersion } from './cloud.js';
 import { releaseRecoveryResponse, ReleaseRecoveryError } from './release-recovery.js';
 
 export const RELAY_EXTENSION_VERSION = "1.10.0";
@@ -315,10 +315,7 @@ export default {
       if(auth.status!==200)return auth;
       try{return await releaseRecoveryResponse(request,env,{resolveTarget:async source=>{
         const status=await projectCloudStatus(env,'relay');
-        const active=await activeCloudVersion(env,status.worker);
-        const target={worker:status.worker,version_id:active.version_id,source_sha:source,compatibility_id:status.rollback?.compatibility_id,evidence:'Completed main CI recovery archive; isolated host restoration must precede healthy registration.'};
-        await verifyReleaseTarget(env,status,target,{accessJwt:request.headers.get('Cf-Access-Jwt-Assertion')});
-        return target;
+        return resolveRecoveryTarget(env,status,source,{accessJwt:request.headers.get('Cf-Access-Jwt-Assertion')});
       },resolveConfiguration:target=>retainedCloudVersion(env,target.worker,target.version_id)});}catch(error){return Response.json({ok:false,error:error instanceof ReleaseRecoveryError?{code:error.code,message:error.message}:{code:'verification_unavailable',message:'Release archive verification failed; reconcile source, provider and storage before retrying'}},{status:error instanceof ReleaseRecoveryError?error.status:503,headers:{'Cache-Control':'no-store'}});}
     }
     if (url.pathname === '/autonomy-status' && request.method === 'GET') {
