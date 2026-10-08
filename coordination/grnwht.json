@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T21:59:25.873Z",
+  "updated_at": "2026-10-08T22:04:00.602Z",
   "legacy_branches": [
     "main"
   ],
@@ -1251,7 +1251,6 @@
         "src/memorials.jsx",
         "src/memorials.css",
         "backend/src/memorials.mjs",
-        "backend/tests/memorials.test.mjs",
         "src/use-notifications.js",
         "src/notification-model.js",
         "src/notification-toasts.js",
@@ -1278,7 +1277,6 @@
         "src/calendar-events.jsx",
         "src/calendar-events.css",
         "src/leader-tools.jsx",
-        "src/family-calendar-api.js",
         "backend/src/family-calendar.mjs",
         "backend/migrations/0024_family_calendar.sql",
         "backend/tests/family-calendar.test.mjs",
@@ -1294,7 +1292,6 @@
         "package-lock.json",
         "src/about-notices.json",
         "scripts/version-assets.mjs",
-        "scripts/build-about-notices.mjs",
         "tests/release-version.test.mjs",
         "src/member-view-model.js",
         "src/member-view.jsx",
@@ -1320,23 +1317,30 @@
         "src/profile-options-tip.js",
         "tests/profile-options-tip.test.mjs",
         "tests/calendar-model.test.mjs",
-        "tests/card-content-semantics.test.mjs",
-        "tests/first-load-policy.test.mjs",
-        "tests/household-management-source.test.mjs",
         "tests/household-heritage.test.mjs",
         "tests/membership-model.test.mjs",
         "tests/membership-removal.test.mjs",
         "tests/profile-contact-actions.test.mjs",
         "tests/planning-model.test.mjs",
-        "tests/reunion-source.test.mjs",
-        "src/payment-methods.jsx"
+        "src/payment-methods.jsx",
+        "src/personal-colors-preference.js",
+        "tests/personal-colors-preference.test.mjs",
+        "src/profile-options-trigger.css",
+        "tests/member-directory.test.mjs",
+        "tests/card-content-layout.test.mjs",
+        "tests/first-load-boundary.test.mjs",
+        "tests/form-consumers-reconstruction.test.mjs",
+        "tests/notification-hook.test.mjs",
+        "tests/page-navigation-model.test.mjs",
+        "tests/reunion-years.test.mjs",
+        "tests/shared-page-integration.test.mjs"
       ],
       "resources": [
         "grnwht-device-push-release"
       ],
       "goal": "Deliver one consolidated GW launch candidate covering all Lauren-approved current functional and UI work, with parent hotfix reconciliation and living multi-household support",
       "acceptance": "Latest Lauren21:15 explicit single consolidated nextrelease supersedes release-first staging. Include all parenthotfixes; devicepush regression/errorprivacy; eightpreset email source/defaultoffconsent; editorcontrolpolish; device-local returningname/avatar/provider noauthcredential; confirmedselective GWreset withserver signout/nofamilydeletion; compactAbout+linkedofficialcredit; You/Family invitationcards; authorizedcontactglyphbadges; sharedmini-profile identities/privacy/focus/fullphotoactions+selectedfonts; coherenthouseholdhero; verified216compactv3guidePNGs preservingnativeinstallbehaviors; livingmulti-household withperhouseholdroles/recipientconsent/duplicates/pending/primary/remove/privatechildren, migrationbackuprehearsalrollback. Retain explicitpanel/formparity/fade checklist. Meaningful failed-case/targeted/fullheadCI/sourceartifact/runtime/liveproof, no partialall-doneclaim/no newworkers/no invalidation of activefamilyonboarding. Freshauthschema andnecessaryD1migration accessmustbesupported; no cancelled/deniedactionreplay/newcredentials/purchases, actualpushdeliveryonlybyreceipt.",
-      "next_action": "Reconcile actual approvedparentavatarhotfix live0002b725/ce77209f sourceandtests:Settingsrouteyou, redcountpulse+reducedmotion, onceaccountentrytip. Fixactual20localunitfailures withoutassertionweakening, preserve114? source allWIP. Live/previewroleview source and4targetedPASS; continueallcurrentbatch.",
+      "next_action": "Finish one consolidated source: personal-colors-on once/account with later opt-out preserved; parent avatar deltas; Member-default preview/MemoryViewer owner and moderator proof; repair actual no-op household regression and exact failing tests. Parent memorial layout hotfix retained pending source handoff. D1 denied access/export/migration gates remain; no partial deployment.",
       "primary_team": "release",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1371,8 +1375,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T21:59:25.873Z",
-      "lease_until": "2026-10-09T09:59:25.873Z",
+      "updated_at": "2026-10-08T22:04:00.602Z",
+      "lease_until": "2026-10-09T10:04:00.602Z",
       "amendment_count": 2,
       "amendments": [
         {
