@@ -1,4 +1,6 @@
-// Invalidation transport only. Runner, evidence and Git remain canonical state.
+import {durableAutonomy} from './autonomy-control.js';
+// Invalidation and safety use separate object identities and storage keys.
+// Runner, evidence and Git remain canonical for existing product state.
 const WINDOW=250,TTL=24*60*60*1000;
 const mutations=new Set(['relay_execution','relay_context','relay_runner_coordinate','relay_runner_action','relay_runner_feedback_submit','relay_runner_feedback_ack','relay_source_create_branch','relay_source_commit_files','relay_source_update_file','relay_source_edit_text','relay_source_append_text','relay_source_open_pull_request','relay_source_pull_request_action','relay_verify_browser_capture','relay_verify_browser_recipe','relay_cloud_upload_version','relay_cloud_deploy_version','relay_cloud_deploy_project_version']);
 export function mutationTopics(name,args={}){
@@ -53,6 +55,11 @@ export async function publishInvalidation(env,topics,operationId=crypto.randomUU
 export class RelayEvents {
  constructor(ctx){this.ctx=ctx;ctx.setWebSocketAutoResponse(new WebSocketRequestResponsePair('ping','pong'));}
  async fetch(request){const url=new URL(request.url);
+  if(url.pathname==='/autonomy'&&request.method==='POST'){
+   const text=await request.text();if(text.length>8192)return new Response('Too large',{status:413});
+   try{return Response.json(await durableAutonomy(this.ctx.storage,JSON.parse(text)));}
+   catch(error){return Response.json({ok:false,error:error.message},{status:error.status||400});}
+  }
   if(url.pathname==='/publish'&&request.method==='POST'){
    const text=await request.text();if(text.length>2048)return new Response('Too large',{status:413});let input;try{input=JSON.parse(text);}catch{return new Response('Invalid JSON',{status:400});}
    let result;try{result=await this.ctx.storage.transaction(async tx=>{const next=appendEvent(await tx.get('ledger'),input);if(!next.duplicate)await tx.put('ledger',next.state);return next;});}catch{return new Response('Event rejected',{status:400});}

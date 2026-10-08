@@ -1,5 +1,6 @@
 import { createSign, createHash } from "node:crypto";
 import { createGitHubReadCache } from './github-read-cache.js';
+import { guardRepository } from './autonomy-control.js';
 
 const GITHUB_API = "https://api.github.com";
 const GITHUB_API_VERSION = "2022-11-28";
@@ -153,6 +154,13 @@ export async function githubApiRequest(env, path, options = {}) {
   const write = !["GET", "HEAD"].includes(method);
   const repo = repositoryFromPath(path);
 
+  // Coordination receipts and cancellation remain usable during a stop.
+  // Every repository publication checks fresh durable state before transport.
+  const control=String(env.RELAY_RUNNER_CONTROL_REPOSITORY||'lrnolivia/relay');
+  const journal=repo&&repo.owner+'/'+repo.repo===control&&/^\/repos\/[^/]+\/[^/]+\/contents\/coordination\/[a-z0-9-]+\.json(?:\?|$)/.test(path);
+  const recovery = journal || /\/actions\/runs\/\d+\/cancel$/.test(path);
+  if (write && repo && !recovery) await guardRepository(env, repo.owner + '/' + repo.repo);
+
   if (appConfigured(env) && repo) {
     let token;
     try {
@@ -176,6 +184,7 @@ export async function githubApiRequest(env, path, options = {}) {
 }
 
 export async function githubGraphqlRequest(env, owner, repo, query, variables = {}) {
+  if (/\bmutation\b/.test(query)) await guardRepository(env, owner + '/' + repo);
   let token = null,context={};
   if (appConfigured(env)) {
     const installation=await installationToken(env, owner, repo);token=installation.token;context={auth_mode:'github_app_installation',scope:installation.scope,budget:installation.budget,installation_id:installation.installation_id};

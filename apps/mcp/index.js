@@ -45,7 +45,7 @@ export default {
     }
     const asset = webAssets[url.pathname];
     if (asset && ["GET", "HEAD"].includes(request.method)) return new Response(request.method === "HEAD" ? null : asset.text, {
-      headers: { "Content-Type": asset.type, "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "X-Relay-Web-Build": webBuildId, ...(webSourceSha ? { "X-Relay-Source-Sha": webSourceSha } : {}) }
+      headers: { "Content-Type": asset.type, "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "X-Relay-Web-Build": webBuildId, "X-Relay-Release-Compatibility":"relay-autonomy-v1", ...(webSourceSha ? { "X-Relay-Source-Sha": webSourceSha } : {}) }
     });
     const identityRequest = url.pathname === "/mcp" && request.method === "POST" ? request.clone() : null;
     let eventTopics=null;

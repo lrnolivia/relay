@@ -1,8 +1,17 @@
 import { createHash } from "node:crypto";
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildProjectAuthority, readJsonFile } from "../src/cloudflare-worker.mjs";
+import { buildProjectAuthority, readJsonFile, handleApi } from "../src/cloudflare-worker.mjs";
 import worker from '../src/cloudflare-worker.mjs';
+
+test('safety controls require authenticated operator identity, same origin and bounded JSON',async()=>{
+ const request=(body,headers={})=>new Request('https://relay.loew.fi/api/autonomy',{method:'POST',headers:{'Content-Type':'application/json',...headers},body});
+ assert.equal((await handleApi(request('{}'),{})).status,403);
+ assert.equal((await handleApi(request('{}',{'Cf-Access-Jwt-Assertion':'authenticated',Origin:'https://other.invalid'}),{})).status,403);
+ assert.equal((await handleApi(request('x'.repeat(17000)),{},{authenticatedMcp:true})).status,413);
+ assert.equal((await handleApi(request('{'),{},{authenticatedMcp:true})).status,400);
+ assert.equal((await handleApi(request(JSON.stringify({action:'hold',scope:'global',expected_revision:0,operation_id:'hold-test',reason:'stop'})),{},{authenticatedMcp:true})).status,503);
+});
 
 test("managed project authority is distinct from the read-only automation target", () => {
   const config = {

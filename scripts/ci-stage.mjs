@@ -8,7 +8,7 @@ import {runSuites,redact,REQUIRED_SUITES} from './ci-test-orchestrator.mjs';
 
 const stage=(id,minutes,optional=false)=>({id,timeout_ms:minutes*60000,optional});
 export const STAGE_JOBS=Object.freeze({
-  quality:[stage('toolchain',2),stage('focused',5),stage('install',15),stage('contracts',10),stage('build',10),stage('runtime',3),stage('browser',2),stage('typecheck',10),stage('suites',0),stage('context-card',10,true),stage('reuse',2,true),stage('production',8,true),stage('retained',8,true),stage('visual-review',8,true)],
+  quality:[stage('toolchain',2),stage('focused',5),stage('install',15),stage('contracts',10),stage('build',10),stage('tool-surface',2),stage('runtime',3),stage('browser',2),stage('typecheck',10),stage('suites',0),stage('context-card',10,true),stage('reuse',2,true),stage('production',8,true),stage('retained',8,true),stage('visual-review',8,true)],
   'website-production':[stage('toolchain',2),stage('install',8),stage('build',8),stage('browser',8),stage('production',8),stage('retained',8)],
   'visual-review-preview':[stage('toolchain',2),stage('install',8),stage('checkout',2),stage('build',8),stage('browser',8),stage('visual-review',8)]
 });

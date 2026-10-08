@@ -4,7 +4,8 @@
   "main": "apps/mcp/index.js",
   "compatibility_date": "2026-09-29",
   "compatibility_flags": [
-    "nodejs_compat"
+    "nodejs_compat",
+    "global_fetch_strictly_public"
   ],
   "workers_dev": false,
   "routes": [
@@ -14,6 +15,7 @@
     }
   ],
   "vars": {
+    "RELAY_AUTONOMY_GUARD": "enforced",
     "CLOUDFLARE_ACCOUNT_ID": "8df30cd302a4d4a4c01db9863c712166",
     "RELAY_CLOUDFLARE_WRITE_SCRIPTS": "relay,field,loewfi,loewtorials,thetake,ctrl,gwfamily",
     "RELAY_RUNNER_CONTROL_REPOSITORY": "lrnolivia/relay",

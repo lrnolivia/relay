@@ -80,6 +80,13 @@
     "production_branch": "main",
     "build_command": "npm run build",
     "deploy_command": "npx wrangler deploy",
-    "manual_upload": "disabled"
+    "manual_upload": "disabled",
+    "rollback": {
+      "identity_url": "https://relay.loew.fi/",
+      "health_url": "https://relay.loew.fi/health",
+      "source_header": "X-Relay-Source-Sha",
+      "compatibility_header": "X-Relay-Release-Compatibility",
+      "compatibility_id": "relay-autonomy-v1"
+    }
   }
 }

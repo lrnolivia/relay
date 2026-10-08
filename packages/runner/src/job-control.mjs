@@ -2,6 +2,7 @@ import { callRunnerControlCore } from '../../../src/runner-control-core.js';
 import { validateControlArguments } from '../../../src/runner-control.js';
 import { githubApiRequest } from '../../../src/source.js';
 import { operateJob } from './jobs.mjs';
+import { guardAutonomy } from '../../../src/autonomy-control.js';
 const string=(maxLength,pattern)=>({type:'string',minLength:1,maxLength,...(pattern?{pattern}:{})});
 const id=string(100,'^[a-zA-Z0-9][a-zA-Z0-9_.:-]*$'),sha=string(40,'^[a-f0-9]{40}$');
 const object=(properties,required=[])=>({type:'object',additionalProperties:false,properties,required});
@@ -23,6 +24,7 @@ export const jobsTool={name:'relay_execution',title:'Manage durable coding execu
   },['action','project','assignment']),annotations:{readOnlyHint:false,destructiveHint:false,idempotentHint:true,openWorldHint:false}};
 export async function callJobs(args,env,apiOverride){
   validateControlArguments(args,jobsTool.inputSchema);
+  if(['submit','lease','start','recover'].includes(args.action)) await guardAutonomy(env,[args.project]);
   if(args.action==='submit'&&!args.prompt)throw Error('Execution request requires prompt');
   if(args.origin){
     if(args.action!=='submit')throw Error('Execution origin is immutable submit context');
@@ -38,7 +40,17 @@ export async function callJobs(args,env,apiOverride){
   let head=null;
   if(!['status','cancel'].includes(args.action))head=(await api(`/repos/${project.registration.repository}/git/ref/heads/${encodeURIComponent(claim.branch)}`))?.object?.sha;
   const target={...claim,repository:project.registration.repository,head_sha:head};
-  const result=await operateJob(env.EVIDENCE,args,target);
+  let result=await operateJob(env.EVIDENCE,args,target);
+  if(args.action==='checkpoint'&&result.job?.state==='running'){
+    try {await guardAutonomy(env,[args.project]);}
+    catch(error){
+      if(error.code!=='safety_control')throw error;
+      result=await operateJob(env.EVIDENCE,{action:'cancel',project:args.project,assignment:args.assignment,job_id:args.job_id,
+        expected_revision:result.job.revision,expected_owner:claim.owner,expected_branch:claim.branch,
+        operation_id:String(args.operation_id).slice(0,80)+':safety-stop'},target);
+      result={...result,safety_stop:{requested:true,reason:error.message,process_exit_verified:false}};
+    }
+  }
   if(!['status','cancel'].includes(args.action)){
     const current=await callRunnerControlCore('relay_runner_project',{project:args.project},env,api);
     const actual=current.coordination.claims.find(c=>c.id===args.assignment);

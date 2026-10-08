@@ -127,6 +127,9 @@ jobs:
       - name: Build exact web and MCP payloads
         id: setup-build
         run: WORKERS_CI_COMMIT_SHA=${{ github.event.pull_request.head.sha || github.sha }} node scripts/ci-stage.mjs build -- npm run build
+      - name: Verify built tool version, inventory and authentication contracts
+        id: setup-tool-surface
+        run: node scripts/ci-stage.mjs tool-surface -- npm run test:tool-surface
       - name: Verify bundled Worker in local workerd
         id: setup-runtime
         env:
@@ -155,12 +158,13 @@ jobs:
           RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: npm test
       - name: Account for suites blocked by setup
-        if: always() && (steps.setup-toolchain.outcome != 'success' || steps.setup-focused.outcome != 'success' || steps.setup-install.outcome != 'success' || steps.setup-contracts.outcome != 'success' || steps.setup-browser.outcome != 'success' || steps.setup-build.outcome != 'success' || steps.setup-typecheck.outcome != 'success' || steps.setup-runtime.outcome != 'success')
+        if: always() && (steps.setup-toolchain.outcome != 'success' || steps.setup-focused.outcome != 'success' || steps.setup-install.outcome != 'success' || steps.setup-contracts.outcome != 'success' || steps.setup-tool-surface.outcome != 'success' || steps.setup-browser.outcome != 'success' || steps.setup-build.outcome != 'success' || steps.setup-typecheck.outcome != 'success' || steps.setup-runtime.outcome != 'success')
         env:
           RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           RELAY_SETUP_TOOLCHAIN: ${{ steps.setup-toolchain.outcome }}
           RELAY_SETUP_FOCUSED: ${{ steps.setup-focused.outcome }}
           RELAY_SETUP_INSTALL: ${{ steps.setup-install.outcome }}
+          RELAY_SETUP_TOOL_SURFACE: ${{ steps.setup-tool-surface.outcome }}
           RELAY_SETUP_CONTRACTS: ${{ steps.setup-contracts.outcome }}
           RELAY_SETUP_BROWSER: ${{ steps.setup-browser.outcome }}
           RELAY_SETUP_BUILD: ${{ steps.setup-build.outcome }}
@@ -246,7 +250,7 @@ jobs:
         env:
           RELAY_REQUIRED_STAGES: ${{ steps.production-scope.outputs.required_stages }}
           RELAY_STAGE_OUTCOMES: >-
-            {"toolchain":"${{ steps.setup-toolchain.outcome }}","install":"${{ steps.setup-install.outcome }}","build":"${{ steps.setup-build.outcome }}","browser":"${{ steps.setup-browser.outcome }}","source-checkout":"${{ steps.source-checkout.outcome }}","checkout-identity":"${{ steps.checkout-identity.outcome }}","node-setup":"${{ steps.node-setup.outcome }}","focused":"${{ steps.setup-focused.outcome }}","contracts":"${{ steps.setup-contracts.outcome }}","runtime":"${{ steps.setup-runtime.outcome }}","typecheck":"${{ steps.setup-typecheck.outcome }}","suites":"${{ steps.verify-suites.outcome }}","context-card":"${{ steps.verify-context-card.outcome }}","production-scope":"${{ steps.production-scope.outcome }}","reuse":"${{ steps.verify-reuse.outcome }}","production":"${{ steps.verify-production.outcome }}","retained":"${{ steps.verify-retained.outcome }}","visual-review":"${{ steps.verify-visual-review.outcome }}"}
+            {"toolchain":"${{ steps.setup-toolchain.outcome }}","install":"${{ steps.setup-install.outcome }}","build":"${{ steps.setup-build.outcome }}","browser":"${{ steps.setup-browser.outcome }}","source-checkout":"${{ steps.source-checkout.outcome }}","checkout-identity":"${{ steps.checkout-identity.outcome }}","node-setup":"${{ steps.node-setup.outcome }}","focused":"${{ steps.setup-focused.outcome }}","contracts":"${{ steps.setup-contracts.outcome }}","tool-surface":"${{ steps.setup-tool-surface.outcome }}","runtime":"${{ steps.setup-runtime.outcome }}","typecheck":"${{ steps.setup-typecheck.outcome }}","suites":"${{ steps.verify-suites.outcome }}","context-card":"${{ steps.verify-context-card.outcome }}","production-scope":"${{ steps.production-scope.outcome }}","reuse":"${{ steps.verify-reuse.outcome }}","production":"${{ steps.verify-production.outcome }}","retained":"${{ steps.verify-retained.outcome }}","visual-review":"${{ steps.verify-visual-review.outcome }}"}
         run: node scripts/ci-stage.mjs --summary quality
       - name: Preserve exact toolchain and build identities
         if: always()

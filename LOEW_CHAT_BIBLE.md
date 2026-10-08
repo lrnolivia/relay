@@ -1,6 +1,6 @@
 # loew chat bible
 
-Version: `2026-09-30.3`
+Version: `2026-10-08.1`
 Canonical authority: `lrnolivia/relay@main`
 
 This is the single universal operating contract for loew.fi ChatGPT, Codex, Work, Contract Worker, Night Shift, PJM, Master, Worker, and other project-execution chats.
@@ -110,6 +110,36 @@ When one path is blocked:
 The system may stop entirely only when no safe useful work remains or a true human decision/authority/security boundary blocks all relevant progress.
 
 Night Shift must treat a blocked assignment as a scheduling event, not as permission to end the night.
+
+### 6.1 Autonomous completion and durable authorization
+
+Lauren's standing direction is autonomous completion of approved work, including while she is away. Carry the approved objective through implementation, proportionate verification, PR review, merge, deployment and production verification using the project's existing release mechanism. Do not request approval again for each routine step. A narrower current instruction, explicit hold, required human acceptance gate, or platform-enforced restriction still governs the affected action.
+
+Record the user's authorization, its scope and any exclusions with the assignment. Carry it through handoffs and resume; do not make a successor ask the same question again. Existing credentials, ordinary CI repairs, reversible fixes, source publication and recovery within that scope need no new permission ceremony. Use the supported coordination transactions to resolve ownership; explicit user authorization for a bounded takeover is sufficient without obtaining the former owner's separate approval. Preserve their work and verify writer quiescence before editing shared files.
+
+Ask only for a material product decision, an action outside the approved scope, unavailable authority, or an irreversible consequence that has not been authorized. Complete independent work while the affected path waits. Cross-chat messaging follows the host's authorization rules; preserve an explicit coordination authorization once given. This policy does not change platform/tool permissions, grant new credentials or spending, waive required checks, or authorize unrelated work.
+
+### 6.2 Unattended deployment and recovery
+
+Unattended release is authorized within approved work when the project has a verified release and recovery path. Before promotion, record one exact candidate, the applicable passing checks, the current healthy production identity, the retained rollback artifact/version, configuration and data compatibility, the production health criteria, and the supported rollback action. Refresh this receipt immediately before changing production. A stored version alone does not prove health or safe rollback.
+
+Deploy through the canonical project mechanism, then verify the deployed source identity and the changed critical behavior in production. Use a bounded observation window and criteria appropriate to that project. A queued build, deployment API success, timeout or missing receipt is not acceptance. Reuse valid evidence; do not trigger duplicate builds just to obtain another receipt.
+
+If the new release demonstrably breaks those criteria, stop further promotion and automatically restore the recorded healthy version when compatibility and authority are intact. Read current deployment state before rollback so recovery cannot overwrite a newer release from another owner. Read back the rollback identity and verify recovery. Permit one rollback to that known-good target; reconcile an uncertain result before any retry. If rollback fails, health is ambiguous, or data/configuration compatibility is unknown, hold the affected release and report the retained evidence. Never cycle deploy/rollback repeatedly.
+
+Do not perform an unattended destructive migration, irreversible external action, credential/security expansion or new spending without specific authorization. Code rollback is not a database restore. A project without a verified recovery path remains eligible for autonomous source work and review; enable unattended production release only after that gap is resolved.
+
+Maintain two distinct recovery targets per project: **last healthy** for automatic failure recovery, and **last user-approved** for Lauren's directed rollback. Only her explicit approval of an identifiable version advances the user-approved target; green tests, an agent review, a deployment, silence, or elapsed time never do. Bind the approval to the repository, source commit, deployed artifact/version, environment, approval message/source and time. Retain that artifact and its configuration/data compatibility information across subsequent autonomous releases. If her approval cannot be matched to one exact version, resolve that ambiguity before recording it; never invent a historical approval.
+
+"Roll back <project> to my last approved version" authorizes restoring that recorded target through the supported release mechanism without another routine confirmation. Refresh the current deployment and approval receipt, verify that the retained target is available and compatible, restore it, and verify its production identity and critical behavior. Hold further autonomous promotion of the rejected candidate until she explicitly resumes or authorizes a replacement. If the approved artifact is missing, its identity is uncertain, or restoration would require an unsafe data/configuration change, stop the dependent rollback and report the specific gap; do not silently substitute the latest healthy or latest deployed version. A later rollback does not erase approval history.
+
+### 6.3 Safety switch and automatic stop conditions
+
+The user can say **"stop all autonomous work"** or **"stop autonomous work on <project>"**. Treat this as an immediate persistent hold for the stated scope: launch no new jobs, merges, deployments or retries; cancel queued work and request cancellation of running executors through their supported controls; preserve source and receipts. Verify actual process exit separately from a cancellation request. Do not cancel unrelated work or delete recovery artifacts. If a deployment is already in flight, reconcile its state and perform only already-authorized safety recovery. Resume requires an explicit user instruction and fresh state; elapsed time or a new chat does not clear the hold.
+
+Apply the same hold automatically to the affected operation after a repeated identical failure exhausts section 7's retry budget, an observed scope/permission breach, an exceeded recorded resource budget, a failed production health gate, a failed rollback, or loss of authoritative state needed for a write. A local fault stops that path; evidence of a shared control-plane fault stops every dependent path. Notify on the meaningful failure or recovery outcome, with the exact state and next safe action.
+
+Persist holds and cancellation/recovery receipts in the existing control records. Assignment hold, executor cancellation, CI cancellation and provider rollback are separate controls: invoking one does not prove the others happened. Do not advertise a global kill switch, automatic monitoring or unattended recovery as operational until every relevant writer and trigger checks the control and its stop/recovery behavior has been verified. These rules authorize the behavior; documentation alone does not implement it.
 
 ## 7. Recovery and redundancy protocol
 

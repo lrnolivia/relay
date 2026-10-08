@@ -26,8 +26,8 @@ export function validateWorkerd(installed,locked,compatibilityDate){
   return installed;
 }
 
-// Deliberate local projection: production vars, secrets, routes and remote browser
-// binding are not part of this startup smoke. R2 and DO are local simulations.
+// Deliberate local projection: production secrets, routes and remote browser
+// binding are omitted. Only the non-secret safety guard is enabled locally.
 export function localRuntimeConfig(config,bundle){
   const supported=new Set(['$schema','name','main','compatibility_date','compatibility_flags','workers_dev','routes','vars','browser','r2_buckets','preview_urls','triggers','durable_objects','migrations']);
   if(Object.keys(config).some(key=>!supported.has(key)))fail('unsupported_runtime_config','Review new Worker configuration before extending the local runtime gate');
@@ -35,7 +35,7 @@ export function localRuntimeConfig(config,bundle){
   if(config.durable_objects?.bindings?.some(b=>b.script_name||b.environment))fail('remote_durable_object','External Durable Objects cannot be simulated by this gate');
   return {name:'relay-runtime-smoke',main:bundle,no_bundle:true,compatibility_date:config.compatibility_date,compatibility_flags:config.compatibility_flags,
     r2_buckets:(config.r2_buckets||[]).map(b=>({binding:b.binding,bucket_name:'local-'+b.binding.toLowerCase(),remote:false})),
-    durable_objects:config.durable_objects,migrations:config.migrations};
+    durable_objects:config.durable_objects,migrations:config.migrations,vars:{RELAY_AUTONOMY_GUARD:'enforced'}};
 }
 
 export async function probeResponses(fetcher,source){
@@ -54,6 +54,13 @@ export async function probeResponses(fetcher,source){
     assert.match(response.headers.get('www-authenticate')||'',/Bearer /);
     assert.equal((await response.json()).error,'invalid_token');
     checks.push({criterion:'unauthenticated-rejection',path,status:response.status});
+  }
+  for(const scope of ['global','relay']){
+    const response=await fetcher('/autonomy-status?scope='+scope);
+    assert.equal(response.status,200,'Durable safety state must be readable');
+    const state=await response.json();
+    assert.deepEqual(state,{schema:1,scope,revision:0,held:false,enforced:true},'Fresh local durable safety state');
+    checks.push({criterion:'durable-safety-status',scope,revision:state.revision,held:state.held});
   }
   return checks;
 }
@@ -121,7 +128,7 @@ export async function verifyWorkerRuntime({root=process.cwd(),env=process.env,si
     receipt.stage='startup';await save();
     await run('startup',[fileURLToPath(import.meta.url),'--probe']);
     receipt.checks=(await readJson(join(directory,'probe.json'))).checks;
-    assert.equal(receipt.checks.length,4,'Every runtime criterion must have evidence');
+    assert.equal(receipt.checks.length,6,'Every runtime criterion must have evidence');
     assert.deepEqual(await bundleRecords(join(directory,'bundle')),receipt.artifacts,'Bundle changed during startup verification');
     await verifyBuild(await readJson(resolve(root,'qa-evidence/toolchain/build.json')),{root,env});
     receipt.state='passed';receipt.stage='complete';receipt.runtime='local-workerd';

@@ -26,11 +26,11 @@ export function validateUiRequest(args) {
   const url = new URL(path, "https://relay.loew.fi");
   const reads = /^\/api\/(?:execution\/jobs|night-shift\/items|feedback\/(?:status|binding)|health|progress\/[a-zA-Z0-9._-]+|projects(?:\/[a-zA-Z0-9._-]+(?:\/icon)?)?|workers|visual(?:\/runs(?:\/run_[a-zA-Z0-9._-]{8,128}\/review)?|\/compare|\/vis_[a-zA-Z0-9-]{8,128}(?:\/(?:image|qa|live))?)?)$/;
   const writes = /^\/api\/(?:execution\/request|night-shift\/request|relay\/(?:check|refresh)|feedback\/submit|workers\/[a-zA-Z0-9._-]+\/(?:toggle|settings|run|doctor|repair)|visual\/vis_[a-zA-Z0-9-]{8,128}\/qa)$/;
-  if (method === "GET" ? !reads.test(url.pathname) : method !== "POST" || !writes.test(url.pathname)) throw new Error("UI route or method is not allowed");
+  if (url.pathname === '/api/autonomy' ? !['GET','POST'].includes(method) : method === "GET" ? !reads.test(url.pathname) : method !== "POST" || !writes.test(url.pathname)) throw new Error("UI route or method is not allowed");
   if (method === "GET" && args.body !== undefined) throw new Error("GET cannot contain a body");
   if (args.body !== undefined && (!args.body || typeof args.body !== "object" || Array.isArray(args.body))) throw new Error("Invalid UI body");
   if (JSON.stringify(args.body || {}).length > 16384) throw new Error("UI body exceeds limit");
-  for (const key of url.searchParams.keys()) if (!["project", "environment", "pr", "run", "base", "current", "assignment", "report_id", "review_mode", "cursor", "source_cursor", "limit", "head_sha"].includes(key)) throw new Error("Unsupported UI filter");
+  for (const key of url.searchParams.keys()) if (!(url.pathname==='/api/autonomy'?['scope']:["project", "environment", "pr", "run", "base", "current", "assignment", "report_id", "review_mode", "cursor", "source_cursor", "limit", "head_sha"]).includes(key)) throw new Error("Unsupported UI filter");
   return { path, method, body: args.body };
 }
 
