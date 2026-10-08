@@ -1,6 +1,8 @@
 import { githubApiRequest } from './source.js';
 import { createHash } from 'node:crypto';
 import { transition, evaluate, occupying, normalizeScope } from './coordination-engine.js';
+import { projectCiPolicy, projectCiRoute } from './ci-routing.js';
+import { guardAutonomy } from './autonomy-control.js';
 
 export const RUNNER_ENGINE_SHA = '591d0155555a74db4769fda289e5212b07609e65';
 export const DEFAULT_RUNNER_CONTROL_REPOSITORY = 'lrnolivia/relay';
@@ -356,6 +358,7 @@ export async function callRunnerControlCore(name, args, env = {}, apiOverride) {
         repository: project.value.repository,
         managed: project.value.managed,
         coordination: project.value.coordination?.status || 'unavailable',
+        ci: projectCiPolicy(project.value),
         policy_sha: project.sha
       });
     }
@@ -364,7 +367,13 @@ export async function callRunnerControlCore(name, args, env = {}, apiOverride) {
 
   const context = await registration(api, control, args.project);
   if (name === 'relay_runner_project') {
-    return result(context, { registration: context.registration, coordination: context.record.value });
+    let blocked = null;
+    if (args.ci) {
+      try { await guardAutonomy(env, [args.project]); }
+      catch (error) { if (error.code !== 'safety_control') throw error; blocked = error.message; }
+    }
+    const ci = await projectCiRoute(context.registration, args.ci, env, api, { blocked });
+    return result(context, { registration: context.registration, coordination: context.record.value, ci });
   }
   if (name === 'relay_runner_assignments') {
     const claims = context.record.value.claims

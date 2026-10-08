@@ -251,12 +251,33 @@ test('Runner control authority is configurable for Relay migration and validates
   const env = { RELAY_RUNNER_CONTROL_REPOSITORY: 'lrnolivia/relay' };
   const result = await callRunnerControl('relay_runner_project', { project: 'relay' }, env, f.api);
   assert.equal(result.ok, true);
+  assert.equal(result.ci.available, true);
+  assert.equal(result.ci.default_mode, 'auto');
+  assert.equal(result.ci.pc_configured, false);
   assert.ok(f.calls.some(path => path.startsWith('/repos/lrnolivia/relay/contents/projects/relay.json')));
   assert.equal(runnerControlRepository(env), 'lrnolivia/relay');
   assert.throws(
     () => runnerControlRepository({ RELAY_RUNNER_CONTROL_REPOSITORY: 'other/relay' }),
     /Invalid Runner control repository binding/
   );
+});
+
+test('exact-source CI discovery preserves explicit PC intent and honors durable safety holds', async () => {
+  const f=fixture();
+  const ci={mode:'pc',source_sha:sha,source_ref:'main'};
+  const result=await callRunnerControl('relay_runner_project',{project:'relay',ci},{},f.api);
+  assert.equal(result.ci.plan.route,'waiting');
+  assert.equal(result.ci.plan.dispatched,false);
+  assert.equal(f.writes.length,0);
+  let privateReads=0;
+  const env={RELAY_AUTONOMY_GUARD:'enforced',EVIDENCE:{get:async()=>{privateReads++;throw Error('No reads while held');}},RELAY_EVENTS:{
+    idFromName:name=>name,get:scope=>({fetch:async()=>Response.json({ok:true,state:{schema:1,scope:scope.replace('autonomy:',''),revision:3,held:true,reason:'User stop',operations:[]}})})
+  }};
+  const held=await callRunnerControl('relay_runner_project',{project:'relay',ci:{...ci,mode:'auto'}},env,f.api);
+  assert.equal(held.ci.plan.route,'blocked');
+  assert.match(held.ci.plan.reason,/held/);
+  assert.equal(privateReads,0);
+  await assert.rejects(callRunnerControl('relay_runner_project',{project:'relay',ci:{...ci,mode:'silent-fallback'}},{},f.api),/unsupported/);
 });
 
 
