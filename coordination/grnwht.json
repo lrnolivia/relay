@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T22:38:29.374Z",
+  "updated_at": "2026-10-08T22:46:04.310Z",
   "legacy_branches": [
     "main"
   ],
@@ -1292,16 +1292,13 @@
         "tests/profile-options-tip.test.mjs",
         "tests/calendar-model.test.mjs",
         "tests/membership-removal.test.mjs",
-        "tests/planning-model.test.mjs",
         "src/payment-methods.jsx",
         "src/personal-colors-preference.js",
         "tests/personal-colors-preference.test.mjs",
         "src/profile-options-trigger.css",
-        "tests/member-directory.test.mjs",
         "tests/card-content-layout.test.mjs",
         "tests/first-load-boundary.test.mjs",
         "tests/form-consumers-reconstruction.test.mjs",
-        "tests/notification-hook.test.mjs",
         "tests/page-navigation-model.test.mjs",
         "tests/reunion-years.test.mjs",
         "tests/shared-page-integration.test.mjs",
@@ -1338,14 +1335,17 @@
         "tests/memorial-backend.test.mjs",
         "backend/src/memorials.mjs",
         "backend/src/photo-discussions.mjs",
-        "src/photo-viewer.jsx"
+        "src/photo-viewer.jsx",
+        "tests/messaging-model.test.mjs",
+        "tests/update-notice-layout.test.mjs",
+        "tests/memorial-update-browser.mjs"
       ],
       "resources": [
         "grnwht-device-push-release"
       ],
       "goal": "Deliver one consolidated GW launch candidate covering all Lauren-approved current functional and UI work, with parent hotfix reconciliation and living multi-household support",
       "acceptance": "Latest Lauren21:15 explicit single consolidated nextrelease supersedes release-first staging. Include all parenthotfixes; devicepush regression/errorprivacy; eightpreset email source/defaultoffconsent; editorcontrolpolish; device-local returningname/avatar/provider noauthcredential; confirmedselective GWreset withserver signout/nofamilydeletion; compactAbout+linkedofficialcredit; You/Family invitationcards; authorizedcontactglyphbadges; sharedmini-profile identities/privacy/focus/fullphotoactions+selectedfonts; coherenthouseholdhero; verified216compactv3guidePNGs preservingnativeinstallbehaviors; livingmulti-household withperhouseholdroles/recipientconsent/duplicates/pending/primary/remove/privatechildren, migrationbackuprehearsalrollback. Retain explicitpanel/formparity/fade checklist. Meaningful failed-case/targeted/fullheadCI/sourceartifact/runtime/liveproof, no partialall-doneclaim/no newworkers/no invalidation of activefamilyonboarding. Freshauthschema andnecessaryD1migration accessmustbesupported; no cancelled/deniedactionreplay/newcredentials/purchases, actualpushdeliveryonlybyreceipt.",
-      "next_action": "Combinedreleaseonly/noexpansion. Parentv1verified; integrateauthoredMemorialPage/EditForm/update/ToastLayer and narrowbackenddelta preserving extensions/action/householdtitle/MemberView. Sourcecheckpoint+quickbuild/focusedchecks. D1schema/export/migration7403unchangedno replay.",
+      "next_action": "Finish combined release integration. Repair moved update-notice assertions to approved bottom safe-idle behavior; focused real built memorial/update/toast browser smoke, preview permission failed-case, full source tests/build and one hosted CI. No further feature expansion. Fresh D1/schema/closed-write backup/migrations remain gated on verified legitimate service repair; no alternate credentials or blind replay.",
       "primary_team": "release",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1380,8 +1380,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T22:38:29.374Z",
-      "lease_until": "2026-10-09T10:38:29.374Z",
+      "updated_at": "2026-10-08T22:46:04.310Z",
+      "lease_until": "2026-10-09T10:46:04.310Z",
       "amendment_count": 2,
       "amendments": [
         {
