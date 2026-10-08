@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T14:12:21.982Z",
+  "updated_at": "2026-10-08T14:15:16.007Z",
   "legacy_branches": [
     "main"
   ],
@@ -186,6 +186,46 @@
       },
       "completed_at": "2026-10-08T14:12:21.982Z",
       "updated_at": "2026-10-08T14:12:21.982Z"
+    },
+    {
+      "id": "grnwht-email-visual-templates-20261008",
+      "owner": "01a11b04-95a2-7212-aa48-1e23e956d00a",
+      "goal": "Renderable branded notification/announcement email templates and chosen-theme previews only; preserve existing auth/invitation mails and live release; no delivery/recipient/consent changes",
+      "acceptance": "Safe HTML/text renderers; actual GW palette/wordmark/Momo default with selected font/accent input and email-safe fallback; isolated fictional light/dark preview fixtures; meaningful escaping/URL/theme tests and build/test; no send path or production deploy",
+      "next_action": "Claim exact bounded visual-template scope then inspect existing design and implement offline previews",
+      "paths": [
+        "backend/src/family-update-email.mjs",
+        "backend/src/family-email-theme.mjs",
+        "backend/tests/family-update-email.test.mjs",
+        "scripts/preview-family-emails.mjs",
+        "tests/family-email-theme-parity.test.mjs",
+        "docs/family-email-preview/",
+        "docs/family-email-templates.md"
+      ],
+      "resources": [
+        "grnwht-family-app"
+      ],
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-08T14:15:16.007Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Renderable branded notification/announcement email templates and chosen-theme previews only; preserve existing auth/invitation mails and live release; no delivery/recipient/consent changes",
+          "acceptance": "Safe HTML/text renderers; actual GW palette/wordmark/Momo default with selected font/accent input and email-safe fallback; isolated fictional light/dark preview fixtures; meaningful escaping/URL/theme tests and build/test; no send path or production deploy",
+          "at": "2026-10-08T14:15:16.007Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-email-visual-templates-20261008:acceptance:0",
+            "text": "Safe HTML/text renderers; actual GW palette/wordmark/Momo default with selected font/accent input and email-safe fallback; isolated fictional light/dark preview fixtures; meaningful escaping/URL/theme tests and build/test; no send path or production deploy",
+            "at": "2026-10-08T14:15:16.007Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
