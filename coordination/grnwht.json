@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T22:51:20.314Z",
+  "updated_at": "2026-10-08T22:57:25.349Z",
   "legacy_branches": [
     "main"
   ],
@@ -1187,12 +1187,9 @@
         "src/onboarding-more.jsx",
         "src/official-sign-in-button-view.mjs",
         "backend/src/family-invitations.mjs",
-        "backend/tests/family-invitations.test.mjs",
-        "tests/official-sign-in-buttons.test.mjs",
         "src/ui-core.jsx",
         "src/install.jsx",
         "tests/install-tutorial-browser.mjs",
-        "tests/install-tutorial-fixture.test.mjs",
         "tests/install-guide-visuals.test.mjs",
         "tests/family-invitations-browser.mjs",
         "tests/page-content-browser.mjs",
@@ -1230,7 +1227,6 @@
         "backend/src/household-invites.mjs",
         "backend/src/family-service.mjs",
         "backend/migrations/0023_multi_household_membership.sql",
-        "backend/tests/households.test.mjs",
         "backend/tests/multi-household.test.mjs",
         "tests/household-model.test.mjs",
         "tests/profile-interactions-browser.mjs",
@@ -1252,7 +1248,6 @@
         "src/family-calendar-model.js",
         "src/family-calendar.css",
         "tests/family-calendar-model.test.mjs",
-        "backend/tests/calendar.test.mjs",
         "src/navigation.js",
         "src/calendar-events.jsx",
         "src/calendar-events.css",
@@ -1338,14 +1333,19 @@
         "tests/update-notice-layout.test.mjs",
         "tests/memorial-update-browser.mjs",
         "dist/index.html",
-        "dist/build.json"
+        "dist/build.json",
+        "AGENTS.md",
+        "tests/test-environment-guard.mjs",
+        "tests/test-environment-guard.test.mjs",
+        "backend/package.json",
+        "scripts/ci-test-summary.mjs"
       ],
       "resources": [
         "grnwht-device-push-release"
       ],
       "goal": "Deliver one consolidated GW launch candidate covering all Lauren-approved current functional and UI work, with parent hotfix reconciliation and living multi-household support",
       "acceptance": "Latest Lauren21:15 explicit single consolidated nextrelease supersedes release-first staging. Include all parenthotfixes; devicepush regression/errorprivacy; eightpreset email source/defaultoffconsent; editorcontrolpolish; device-local returningname/avatar/provider noauthcredential; confirmedselective GWreset withserver signout/nofamilydeletion; compactAbout+linkedofficialcredit; You/Family invitationcards; authorizedcontactglyphbadges; sharedmini-profile identities/privacy/focus/fullphotoactions+selectedfonts; coherenthouseholdhero; verified216compactv3guidePNGs preservingnativeinstallbehaviors; livingmulti-household withperhouseholdroles/recipientconsent/duplicates/pending/primary/remove/privatechildren, migrationbackuprehearsalrollback. Retain explicitpanel/formparity/fade checklist. Meaningful failed-case/targeted/fullheadCI/sourceartifact/runtime/liveproof, no partialall-doneclaim/no newworkers/no invalidation of activefamilyonboarding. Freshauthschema andnecessaryD1migration accessmustbesupported; no cancelled/deniedactionreplay/newcredentials/purchases, actualpushdeliveryonlybyreceipt.",
-      "next_action": "Both-engine built memorial/update smoke PASS; frontend1105/backend392/builds/authfixturePASS. Freeze combined source, publish PR20 exactcandidate for one hostedfullCI and seal artifacts. Single explicitlyauthorized exactD1 retry succeeded zero writes; freshnormal authschema/closedwrite D1+4media restore/migration rehearsal required before promotion. No feature expansion.",
+      "next_action": "Latest Lauren explicitly requires hard-coded content/test separation: durable AGENTS and test preflight production-mutation rejection, deterministic isolated fixture storage, no content-based build identity or data-destroying rollback; narrow guard regression only. Repair actual hosted editor failed case, preserve useful WebKit currentrun. Parentv1backend integrated, sourcee15f910. RestoredD1/authschema and new7media backup required beforecombinedrelease; no feature expansion.",
       "primary_team": "release",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1380,8 +1380,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T22:51:20.314Z",
-      "lease_until": "2026-10-09T10:51:20.314Z",
+      "updated_at": "2026-10-08T22:57:25.349Z",
+      "lease_until": "2026-10-09T10:57:25.349Z",
       "amendment_count": 2,
       "amendments": [
         {
