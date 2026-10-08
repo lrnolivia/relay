@@ -129,7 +129,7 @@ test('one canonical runner reuses its exact build and retains every applicable g
   assert.match(workflow,/RELAY_CI_PREVIEW_REQUIRED:.*github.event.pull_request.draft == true/);assert.match(workflow,/RELAY_CI_CARD_REQUIRED:/);assert.match(workflow,/await writeQualityPlan/);
   assert.ok(workflow.indexOf('id: checkout-identity')<workflow.indexOf('id: production-scope'));assert.match(workflow,/git config --global --add safe.directory "\$GITHUB_WORKSPACE"/);assert.doesNotMatch(workflow,/safe.directory ['"]\*/);assert.match(workflow,/test "\$source_head" = "\$RELAY_SOURCE_SHA"/);
   assert.doesNotMatch(workflow,/playwright install/);assert.match(workflow,/const browser=await chromium.launch\(\)/);
-  assert.match(workflow,/run: npm test/);assert.doesNotMatch(workflow,/ci-stage.mjs suites/);assert.doesNotMatch(workflow,/continue-on-error:/);assert.equal(STAGE_JOBS.quality.find(stage=>stage.id==='suites').timeout_ms,0,'five-suite orchestration retains independent 15-minute bounds');
+  assert.match(workflow,/run: node scripts\/ci-parallel-suites.mjs/);assert.doesNotMatch(workflow,/ci-stage.mjs suites/);assert.doesNotMatch(workflow,/continue-on-error:/);assert.equal(STAGE_JOBS.quality.find(stage=>stage.id==='suites').timeout_ms,0,'five-suite orchestration retains independent 15-minute bounds');
 });
 
 // These contracts import generated payloads but do not launch a browser.
