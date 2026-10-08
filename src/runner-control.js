@@ -263,6 +263,7 @@ export async function callRunnerControl(name, args, env, apiOverride) {
 }
 
 export function runnerControlError(error) {
+  const admission = error instanceof ControlError && error.code === 'conflict' && error.reason === 'coordination_admission';
   const status = error?.status;
   const code =
     error?.code ||
@@ -275,15 +276,19 @@ export function runnerControlError(error) {
   return {
     ok: false,
     namespace: 'relay.RUNNER',
+    ...(admission ? { mutation: 'not_attempted' } : {}),
     error: {
       class: code,
+      ...(admission ? { reason: 'coordination_admission', ...safeAdmissionFindings(error.findings) } : {}),
       message: error instanceof ControlError ? error.message : 'Runner provider request failed',
       ...(safeGithubFailure(error?.github) ? { upstream: safeGithubFailure(error.github) } : {}),
       ...(error?.record_sha ? { record_sha: error.record_sha } : {}),
       retryable: code === 'capacity',
       requires_auth: code === 'auth',
       requires_user: false,
-      recovery: code === 'uncertain_write'
+      recovery: admission
+        ? 'Review the blocking findings and reconcile the current assignment before trying again; do not reclaim or overwrite another owner.'
+        : code === 'uncertain_write'
         ? 'Inspect the current record and claim; never replay blindly.'
         : code === 'rate_limit'
           ? 'Respect this connection\'s recorded GitHub rate-limit window. On an authorized Codex machine, existing local Git/gh or another already-authorized transport may refresh canonical policy, ownership and admission and update the same Relay record through its supported CAS operation. Reconcile uncertain writes first; do not bypass authentication, permission or approval denials, create credentials, use unauthorized identities or evade an account-wide quota.'
@@ -297,6 +302,31 @@ export function runnerControlError(error) {
     },
     checked_at: new Date().toISOString()
   };
+}
+
+// Only canonical admission failures may expose these bounded coordination facts.
+function safeAdmissionFindings(value) {
+  const rows = Array.isArray(value) ? value : [];
+  const safeText = (text, pattern) => typeof text === 'string' && pattern.test(text) ? text : null;
+  const id = text => safeText(text, /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,99}$/);
+  const branch = text => safeText(text, /^[A-Za-z0-9_.\/-]{1,200}$/);
+  const path = text => safeText(text, /^[A-Za-z0-9_. \/-]{1,200}$/);
+  const findings = [];
+  for (const row of rows.slice(0,8)) {
+    if (!row || !['budget','expired','missing_branch','overlap','scope_drift'].includes(row.type)) continue;
+    const clean = {type: row.type};
+    if (id(row.assignment)) clean.assignment = row.assignment;
+    if (branch(row.branch)) clean.branch = row.branch;
+    for (const key of ['count','pr']) if (Number.isSafeInteger(row[key]) && row[key] >= 0) clean[key] = row[key];
+    if (Array.isArray(row.assignments)) clean.assignments = row.assignments.slice(0,8).filter(id);
+    if (Array.isArray(row.paths)) {
+      clean.paths = row.paths.slice(0,8).filter(path);
+      if (clean.paths.length !== row.paths.length) clean.paths_truncated = true;
+    }
+    findings.push(clean);
+    if (findings.length === 8) break;
+  }
+  return {findings, findings_count: rows.length, findings_truncated: findings.length !== rows.length};
 }
 
 function safeGithubFailure(value) {

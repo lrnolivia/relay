@@ -187,3 +187,11 @@ test('source tree reads keep query error semantics and explicit partial manifest
  assert.equal(failed.mutation,'not_applicable');assert.equal(formatRelay(failed).message_id,'error.timeout_read');
  assert.equal(present({ok:true,truncated:true,manifest_complete:false},operation).message_id,'data.partial');
 });
+
+
+test('admission presentation preserves bounded findings and its catalog schema without exposing arbitrary data',async()=>{
+ const data={ok:false,mutation:'not_attempted',error:{class:'conflict',reason:'coordination_admission',findings:[{type:'missing_branch',assignment:'task',branch:'relay/task',token:'forbidden-secret',message:'Bearer forbidden-secret'}]}};
+ const out=present(data,{kind:'query',name:'relay_runner_preflight'});assert.equal(out.message_id,'error.admission');assert.match(JSON.stringify(out.details),/missing_branch|relay\/task/);assert.doesNotMatch(JSON.stringify(out),/forbidden-secret|Bearer/);
+ const schema=JSON.parse(await readFile(new URL('../contracts/presentation/human-v1.schema.json',import.meta.url),'utf8'));for(const enumValues of [schema.properties.message_id.enum,schema.$defs.input.properties.message_id.enum])assert.deepEqual(new Set(enumValues),new Set(Object.keys(HUMAN_CATALOG)));
+ assert.equal(present({ok:false,error:{class:'conflict',reason:'unrecognized',findings:data.error.findings}}).message_id,'error.conflict');
+});

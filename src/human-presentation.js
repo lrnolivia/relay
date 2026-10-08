@@ -33,6 +33,7 @@ export const HUMAN_CATALOG = Object.freeze({
   'error.auth': ['Connection unverified', "Relay couldn't verify this connection.", 'error'],
   'error.permission': ['Permission needed', "Relay doesn't have permission to do that.", 'error'],
   'error.not_found': ['Item unavailable', "Relay couldn't find this item with this connection.", 'warning'],
+  'error.admission': ['Work admission blocked', 'Relay found a coordination issue that must be resolved before this work can proceed.', 'warning'],
   'error.conflict': ['Changed during the request', 'The item changed before this request finished.', 'warning'],
   'error.capacity': ['Service busy', "The service can't handle this request right now.", 'warning'],
   'error.rate_limit': ['Requests paused', 'The service is limiting requests on this connection. This step is paused.', 'warning'],
@@ -108,6 +109,20 @@ function technicalDetails(data, error, operation) {
   for(const key of ['head_sha','pr_head_sha','merge_commit_sha'])if(/^[a-f0-9]{40}$/.test(identities[key]||''))out[key]=identities[key];
   for(const key of ['request_id','operation_id','record_sha','version_id'])if(codeText(data[key]))out[key]=data[key];
   if(['github','cloudflare'].includes(error.upstream?.provider))out.service=error.upstream.provider;
+  if(error.reason==='coordination_admission') {
+    out.reason='coordination_admission';
+    if(Array.isArray(error.findings)) {
+      const rows=error.findings.slice(0,8).filter(row=>plainObject(row)&&['budget','expired','missing_branch','overlap','scope_drift'].includes(row.type));
+      const facts=rows.map(row=>{
+        const parts=[row.type];
+        for(const key of ['assignment','branch'])if(codeText(row[key]))parts.push(row[key]);
+        for(const key of ['count','pr'])if(Number.isSafeInteger(row[key])&&row[key]>=0)parts.push(key+'='+row[key]);
+        for(const key of ['assignments','paths'])if(Array.isArray(row[key]))parts.push(...row[key].slice(0,8).map(codeText).filter(Boolean));
+        return parts.join(': ');
+      });
+      out.admission_findings=safePresentationText(facts.join('; '));
+    }else if(typeof error.admission_findings==='string')out.admission_findings=safePresentationText(error.admission_findings);
+  }
   return Object.fromEntries(Object.entries(out).filter(([,value])=>value!==null));
 }
 
@@ -151,9 +166,10 @@ export function normalizeCommunicationResult(data = {}, {operation, now = null} 
   if(failure){
     const classes={validation:'error.validation',auth:'error.auth',permission:'error.permission',not_found:'error.not_found',conflict:'error.conflict',capacity:'error.capacity',rate_limit:'error.rate_limit',uncertain_write:'error.uncertain_write'};
     id=(Object.hasOwn(classes,error.class||error.code)?classes[error.class||error.code]:null)||((error.class==='timeout'||error.code==='timeout')?(readOnly?'error.timeout_read':'error.uncertain_write'):(error.class==='provider'?(readOnly?'error.provider_read':'error.unknown_write'):(readOnly?'error.unknown_read':'error.unknown_write')));
+    if(id==='error.conflict'&&error.reason==='coordination_admission')id='error.admission';
     outcome='failed';
     if(['error.uncertain_write','error.unknown_write'].includes(id))outcome='unknown';
-    if(['error.conflict','error.uncertain_write','error.unknown_write'].includes(id)){
+    if(['error.admission','error.conflict','error.uncertain_write','error.unknown_write'].includes(id)){
       retry.policy='read_first';next={code:'check_status',actor:'relay',availability:'unavailable'};
     }else if(readOnly&&['error.timeout_read','error.provider_read','error.unknown_read'].includes(id))retry.policy='bounded_read';
     if(id==='error.rate_limit'){
@@ -208,7 +224,8 @@ export function formatRelay(input, {locale='en', timeZone='UTC'} = {}) {
       summary+=' '+(service||'The service')+' says requests can resume after '+date+'.';
     }else summary+=' '+(service||'The service')+" hasn't provided a current retry time.";
   }
-  if(['error.uncertain_write','error.unknown_write','error.conflict'].includes(normalized.message_id))nextStep='Check the latest status before trying again.';
+  if(normalized.message_id==='error.admission')nextStep='Review the blocking findings and reconcile the current assignment before trying again.';
+  else if(['error.uncertain_write','error.unknown_write','error.conflict'].includes(normalized.message_id))nextStep='Check the latest status before trying again.';
   else if(normalized.next_action?.code==='verify_release')nextStep='Deployment and live checks are still pending.';
   else if(normalized.next_action?.code==='check_status')nextStep='Check the latest status.';
   else if(normalized.next_action?.code==='review_details')nextStep='Review the task details.';

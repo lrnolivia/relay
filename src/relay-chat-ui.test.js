@@ -601,6 +601,7 @@ test('human_v1 generated current and legacy bridge resources share exact server 
     {ok:true,state:'unknown-provider-state',presentation_operation:{kind:'unknown',name:'new_tool'}},
     {ok:false,error:{class:'rate_limit',retry_at:'2026-10-07T11:00:00Z'},checked_at:'2026-10-07T10:00:00Z'},
     {ok:false,presentation_operation:{kind:'command',name:'relay_execution'},error:{class:'uncertain_write'}},
+    {ok:false,mutation:'not_attempted',error:{class:'conflict',reason:'coordination_admission',findings:[{type:'missing_branch',assignment:'task',branch:'relay/task'}]}},
     {partial:true,claim:{state:'working',goal:'Keep the last update'}},
     {pull_request:{merged:true,number:9},next_action:{code:'verify_release',actor:'relay',availability:'unavailable'}},
     {check_runs:[{name:'test',status:'completed',conclusion:'cancelled'}]},
@@ -627,17 +628,23 @@ test('human_v1 removal of duplicate error text does not turn legacy health healt
 test('human_v1 mobile shows the complete warning and next step without duplicate error text',async()=>{
  const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
  try{
-  for(const error of [{class:'uncertain_write'},{class:'rate_limit',retry_at:'2026-10-07T11:00:00Z',upstream:{provider:'github'}}]){
+  for(const error of [{class:'conflict',reason:'coordination_admission',findings:[{type:'missing_branch',assignment:'task',branch:'relay/task'}]},{class:'uncertain_write'},{class:'rate_limit',retry_at:'2026-10-07T11:00:00Z',upstream:{provider:'github'}}]){
    const page=await browser.newPage({viewport:{width:320,height:900}});
    await page.addInitScript(({error})=>{window.openai={toolInput:{project:'relay'},toolOutput:{project:'relay',ok:false,checked_at:'2026-10-07T10:00:00Z',error}};},{error});
    await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
-   await page.locator('#summary').filter({hasText:error.class==='uncertain_write'?'whether or not':'GitHub says requests can resume'}).waitFor();
+   await page.locator('#summary').filter({hasText:error.reason==='coordination_admission'?'coordination issue':error.class==='uncertain_write'?'whether or not':'GitHub says requests can resume'}).waitFor();
    assert.equal(await page.locator('#blocker').isVisible(),false);
    assert.equal(await page.locator('.telemetry-stat').isVisible(),false);
    assert.ok(await page.locator('#summary').evaluate(node=>node.scrollHeight<=node.clientHeight+1),'material explanation is not clamped');
    if(error.class==='uncertain_write'){
     assert.equal(await page.locator('#next').isVisible(),true);
     assert.match(await page.locator('#next').textContent(),/Check the latest status before trying again/);
+   }
+   if(error.reason==='coordination_admission'){
+    assert.equal(await page.locator('#next').isVisible(),true);
+    assert.match(await page.locator('#next').textContent(),/blocking findings/);
+    await page.locator('#details summary').click();
+    assert.match(await page.locator('#details').textContent(),/missing_branch|relay\/task/);
    }
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
    await page.close();

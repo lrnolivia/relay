@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { callRunnerControl, runnerControlTools, runnerControlError, RUNNER_ENGINE_SHA, runnerControlRepository } from './runner-control.js';
+import {ControlError} from './runner-control-core.js';
+import {withHumanPresentation} from './human-presentation.js';
 const sha = 'a'.repeat(40);
 const newSha = 'b'.repeat(40);
 const defaultRequest = { id: 'task', owner: 'worker', branch: 'relay/task', paths: ['src/'], resources: ['relay-control'], goal: 'Native tools', acceptance: 'Policy enforced', next_action: 'Implement' };
@@ -449,4 +451,29 @@ test('large coordination reads resolve an immutable verified blob without changi
     const broken=async(path,options)=>path.endsWith('/git/blobs/'+digest)?bad:api(path,options);
     await assert.rejects(callRunnerControl('relay_runner_assignments',{project:'relay'}, {},broken),/blob/);
   }
+});
+
+
+test('missing admitted branch retains its blocking finding without unrelated inventory noise or writes',async()=>{
+ const old=new Date(Date.now()-2*3600000).toISOString();
+ const f=fixture({claims:[claim({created_at:old}),claim({id:'other',owner:'other-worker',branch:'relay/other',paths:['other/'],resources:[],created_at:old})],branches:[]});
+ let failure;try{await callRunnerControl('relay_runner_preflight',{project:'relay',id:'task',owner:'worker',paths:['src/index.js']},{},f.api);}catch(error){failure=error;}
+ assert.ok(failure instanceof ControlError);assert.equal(failure.reason,'coordination_admission');assert.deepEqual(failure.findings,[{type:'missing_branch',assignment:'task',branch:'relay/task'}]);assert.equal(f.writes.length,0);
+ const result=runnerControlError(failure);assert.equal(result.error.class,'conflict');assert.equal(result.error.reason,'coordination_admission');assert.deepEqual(result.error.findings,failure.findings);assert.equal(result.mutation,'not_attempted');assert.equal(result.error.retryable,false);
+ const shown=withHumanPresentation(result,{operation:{kind:'query',name:'relay_runner_preflight'}}).human_v1;assert.equal(shown.message_id,'error.admission');assert.doesNotMatch(shown.summary,/changed before/);assert.match(shown.next_step,/blocking findings/);assert.match(JSON.stringify(shown.details),/missing_branch|relay\/task/);
+});
+
+test('branch budget admission stays blocked and is distinct from a stale CAS revision',async()=>{
+ const claims=Array.from({length:5},(_,i)=>claim({id:i?'task'+i:'task',branch:i?'relay/task'+i:'relay/task',paths:i?['area'+i+'/']:['src/'],resources:[]}));
+ const f=fixture({claims,branches:claims.map(c=>({name:c.branch}))});let failure;
+ try{await callRunnerControl('relay_runner_preflight',{project:'relay',id:'task',owner:'worker',paths:['src/index.js']},{},f.api);}catch(error){failure=error;}
+ assert.deepEqual(runnerControlError(failure).error.findings,[{type:'budget',count:5}]);assert.equal(f.writes.length,0);
+ const stale=fixture({claims:[claim()]});let race;try{await coordinate(stale,'heartbeat',{id:'task',owner:'worker',next_action:'Continue'},newSha);}catch(error){race=error;}
+ assert.equal(race.code,'conflict');const out=runnerControlError(race);assert.equal(out.error.reason,undefined);assert.equal(out.error.findings,undefined);assert.equal(withHumanPresentation(out,{operation:{kind:'command',name:'relay_runner_coordinate'}}).human_v1.message_id,'error.conflict');assert.equal(stale.writes.length,0);
+});
+
+test('admission diagnostics are bounded and omit arbitrary provider payloads',()=>{
+ const findings=Array.from({length:30},()=>({type:'scope_drift',assignment:'task',branch:'relay/task',pr:9,paths:Array.from({length:20},(_,i)=>'src/file'+i+'.js'),token:'forbidden-secret',action:'Bearer forbidden-secret'}));findings.push({type:'provider',message:'forbidden-secret'});
+ const out=runnerControlError(new ControlError('conflict','Coordination preflight failed',{reason:'coordination_admission',findings}));assert.equal(out.error.findings.length,8);assert.equal(out.error.findings_count,31);assert.equal(out.error.findings_truncated,true);assert.equal(out.error.findings[0].paths.length,8);assert.doesNotMatch(JSON.stringify(out),/forbidden-secret|Bearer/);
+ const forged=runnerControlError(Object.assign(new Error('hidden'),{code:'conflict',reason:'coordination_admission',findings}));assert.equal(forged.error.reason,undefined);assert.equal(forged.error.findings,undefined);
 });

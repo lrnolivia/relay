@@ -144,8 +144,9 @@ function preflight(context, request, data) {
   if (request.paths.some(path => !claim.paths.some(scope => path === scope || (scope.endsWith('/') && path.startsWith(scope))))) {
     throw new ControlError('scope', 'Changed paths exceed the claim');
   }
-  if (data.findings.some(finding => finding.type === 'budget' || finding.assignment === claim.id || finding.assignments?.includes(claim.id))) {
-    throw new ControlError('conflict', 'Coordination preflight failed', { findings: data.findings });
+  const blockingFindings = data.findings.filter(finding => finding.type === 'budget' || finding.assignment === claim.id || finding.assignments?.includes(claim.id));
+  if (blockingFindings.length) {
+    throw new ControlError('conflict', 'Coordination preflight failed', { reason: 'coordination_admission', findings: blockingFindings });
   }
   return claim;
 }
