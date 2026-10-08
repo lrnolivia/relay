@@ -73,13 +73,16 @@ export async function verifyReleaseTarget(env,status,target,deps={}){
   const host=new URL(profile.identity_url).hostname;
   if(!snapshot.domains?.some(d=>d.service===status.worker&&d.hostname===host&&d.enabled!==false))throw Error('Recovery endpoint is not bound to this Worker');
   const request=deps.fetch||fetch;
-  const options={redirect:'error',cache:'no-store',signal:AbortSignal.timeout(10000)};
+  // Workers supports manual/follow, not the Node/browser redirect:error mode.
+  // Manual preserves the exact endpoint; all redirects fail the checks below.
+  const options={redirect:'manual',cache:'no-store',signal:AbortSignal.timeout(10000)};
   const identity=await request(profile.identity_url,options);
-  if(!identity.ok||identity.headers.get(profile.source_header)!==target.source_sha||identity.headers.get(profile.compatibility_header)!==profile.compatibility_id)throw Error('Production source or recovery compatibility identity does not match');
+  if(!identity.ok||identity.redirected||identity.headers.get(profile.source_header)!==target.source_sha||identity.headers.get(profile.compatibility_header)!==profile.compatibility_id)throw Error('Production source or recovery compatibility identity does not match');
   await identity.body?.cancel();
   const health=await request(profile.health_url,{...options,signal:AbortSignal.timeout(10000)});
+  if(!health.ok||health.redirected)throw Error('Production critical health endpoint failed');
   const body=await health.json();
-  if(!health.ok||body.ok!==true||body.service!==status.worker)throw Error('Production critical health endpoint failed');
+  if(body.ok!==true||body.service!==status.worker)throw Error('Production critical health endpoint failed');
   const after=await (deps.active||((worker)=>activeCloudVersion(env,worker)))(status.worker);
   if(after.version_id!==target.version_id)throw Error('Deployment changed during production verification');
   return {version_id:target.version_id,source_sha:target.source_sha,deployment_id:after.deployment_id,health_url:profile.health_url};

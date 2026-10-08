@@ -103,7 +103,7 @@ function releaseFixture(env){
   github:async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,rollback:profile}})).toString('base64')}),
   snapshot:async()=>({deployments:{deployments:[{id:'deployment',versions:[{version_id:current.version_id,percentage:100}]}]},versions:{items:[target,current].map(value=>({id:value.version_id}))},domains:[{service:'relay',hostname:'relay.loew.fi',enabled:true}]}),
   active:async()=>({version_id:current.version_id,deployment_id:'deployment'}),
-  fetch:async url=>url.endsWith('/health')?Response.json({ok:true,service:'relay'}):new Response('website',{headers:{'X-Relay-Source-Sha':current.source_sha,'X-Relay-Release-Compatibility':current.compatibility_id}})
+  fetch:async (url,options)=>{assert.equal(options.redirect,'manual');return url.endsWith('/health')?Response.json({ok:true,service:'relay'}):new Response('website',{headers:{'X-Relay-Source-Sha':current.source_sha,'X-Relay-Release-Compatibility':current.compatibility_id}});}
  };
  return {deps,setCurrent:value=>{current=value;},getCurrent:()=>current};
 }
@@ -146,6 +146,16 @@ test('wrong deployed source, missing retained version and incompatible configura
  f.setCurrent(target);f.deps.snapshot=async()=>({versions:{items:[]},deployments:{deployments:[]}});
  await assert.rejects(callAutonomyControl(env,args,f.deps),/retained exact active/);
  await assert.rejects(callAutonomyControl(env,{...args,target:{...target,compatibility_id:'changed-schema'}},f.deps),/compatibility/);
+});
+
+test('identity and health redirects never save healthy or user-approved recovery targets',async()=>{
+ for(const action of ['healthy','approve'])for(const path of ['identity','health'])for(const status of [301,302,303,307,308]){
+  const {env,values}=binding(),f=releaseFixture(env);env.RELAY_CLOUDFLARE_WRITE_SCRIPTS='relay';
+  const request=f.deps.fetch;let calls=0;
+  f.deps.fetch=async(url,options)=>{calls++;assert.equal(options.redirect,'manual');return (url.endsWith('/health')?path==='health':path==='identity')?new Response(null,{status,headers:{Location:'https://elsewhere.loew.fi/'}}):request(url,options);};
+  await assert.rejects(callAutonomyControl(env,input(action,0,{target,...(action==='approve'?{approval:{text:'Approve',source:'message'}}:{})}),f.deps),path==='identity'?/identity does not match/:/health endpoint failed/);
+  assert.equal(calls,path==='identity'?1:2);assert.equal(values.has('autonomy:relay'),false);
+ }
 });
 
 test('actual recovery transport never replays a successful but uncertain provider deployment',async()=>{
