@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "loew-shell",
-  "updated_at": "2026-10-06T02:12:53.378Z",
+  "updated_at": "2026-10-08T01:09:33.538Z",
   "legacy_branches": [
     "docs/move-to-runner",
     "main",
@@ -36,7 +36,7 @@
     },
     {
       "id": "loew-shell-canonical-workflow-20261006",
-      "owner": "01a10d01-eb49-71e1-9403-3a14f65bf0e1",
+      "owner": "01a118b2-63d5-7a63-8d3a-55bf649b1f89",
       "branch": "loew-shell/canonical-workflow-20261006",
       "paths": [
         ".github/workflows/runner-coordination.yml"
@@ -46,7 +46,7 @@
       ],
       "goal": "Repair stale workflow checkout to canonical Relay without changing permissions or admission and cleanup safeguards.",
       "acceptance": "Exact workflow diff changes retired loew-runner repository to relay; existing actions and permissions preserved; exact-head coordination check passes; publish only under authorized guarded merge with rollback.",
-      "next_action": "Create exact-base branch, change two checkout references, open draft PR and verify.",
+      "next_action": "Lauren directly authorizes takeover for CI-only then release after verification. Existing assignment is only runner-coordination.yml. Existing remote workflow equals main; preserve exact original branch and objective. Refresh ancestry, streamline daily cleanup/PR cancellation, verify and complete.",
       "category": "maintenance",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -70,8 +70,16 @@
           }
         ]
       },
-      "updated_at": "2026-10-06T02:12:53.378Z",
-      "lease_until": "2026-10-06T14:12:53.378Z"
+      "updated_at": "2026-10-08T01:09:33.538Z",
+      "lease_until": "2026-10-08T13:09:33.538Z",
+      "handoffs": [
+        {
+          "at": "2026-10-08T01:09:33.538Z",
+          "from": "01a10d01-eb49-71e1-9403-3a14f65bf0e1",
+          "to": "01a118b2-63d5-7a63-8d3a-55bf649b1f89",
+          "next_action": "Lauren directly authorizes takeover for CI-only then release after verification. Existing assignment is only runner-coordination.yml. Existing remote workflow equals main; preserve exact original branch and objective. Refresh ancestry, streamline daily cleanup/PR cancellation, verify and complete."
+        }
+      ]
     }
   ]
 }
