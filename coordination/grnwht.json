@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T07:38:38.968Z",
+  "updated_at": "2026-10-08T07:39:51.586Z",
   "legacy_branches": [
     "main"
   ],
@@ -26,7 +26,7 @@
       "supporting_teams": [],
       "primary_staff": "roman",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-08T07:36:42.475Z",
       "objective_history": {
         "baseline": {
@@ -267,6 +267,48 @@
           "next_action": "Lauren directly selected Resume implementation after checking ownership, clarified investigation handled elsewhere and this chat must finish all implementation, authorized ordering and keeping live isolated preview updated with links. Resume exact PR12 58bbade and separate editor draft through existing assignment. First fix remaining panel/photo framing and card network failures without weakening gates; integrate worker-owned editor three-way; complete evergreen own-profile invitations/You, memorial household/head/ancestor work, branded email and notifications, push preparation and PWA guide/acceptance. No new workers. Preserve original full acceptance, production PR11 rollback, separate read-only investigation, no repeated0015-19/memorial restoration, no push activation/sample payments/credentials. Exact checks/rendered acceptance before release; supported source and coordination paths only."
         }
       ]
+    },
+    {
+      "id": "grnwht-shared-auth-diagnostic-20261008",
+      "owner": "01a11a66-e465-7352-b120-b472c71827f6",
+      "branch": "grnwht/shared-auth-diagnostic-20261008",
+      "paths": [
+        "backend/src/auth.mjs",
+        "backend/src/error-diagnostics.mjs",
+        "backend/src/auth-d1-diagnostics.mjs",
+        "backend/tests/auth-d1-diagnostics.test.mjs"
+      ],
+      "resources": [
+        "grnwht-auth-d1-diagnostic"
+      ],
+      "goal": "Diagnose the recurring signed-in shared-auth 500s by exposing the original D1 operation failure before Better Auth wrapping, using only finite safe fields and same-request correlation.",
+      "acceptance": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
+      "next_action": "Accepted direct diagnostic ownership; original GW owner released exact auth/error paths at record d94e8a7 and confirmed writer quiescence/no PR14 changes. Create isolated managed checkout from current main, add failure-only D1 boundary records and known error fingerprints, preserve auth behavior, run focused and required checks plus actual local workerd/D1 representative checks, publish exact source for deliberate integration. No independent production deployment.",
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "base_sha": "bc6a11fab0021ee45548fc07200682d7e6109fa2",
+      "state": "active",
+      "created_at": "2026-10-08T07:39:51.586Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Diagnose the recurring signed-in shared-auth 500s by exposing the original D1 operation failure before Better Auth wrapping, using only finite safe fields and same-request correlation.",
+          "acceptance": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
+          "at": "2026-10-08T07:36:42.475Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-shared-auth-diagnostic-20261008:acceptance:0",
+            "text": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
+            "at": "2026-10-08T07:36:42.475Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T07:39:51.586Z",
+      "lease_until": "2026-10-08T19:39:51.586Z"
     }
   ]
 }
