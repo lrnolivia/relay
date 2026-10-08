@@ -1,11 +1,50 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T01:16:05.355Z",
+  "updated_at": "2026-10-08T07:36:42.475Z",
   "legacy_branches": [
     "main"
   ],
-  "queue": [],
+  "queue": [
+    {
+      "id": "grnwht-shared-auth-diagnostic-20261008",
+      "owner": "01a11a66-e465-7352-b120-b472c71827f6",
+      "goal": "Diagnose the recurring signed-in shared-auth 500s by exposing the original D1 operation failure before Better Auth wrapping, using only finite safe fields and same-request correlation.",
+      "acceptance": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
+      "next_action": "Lauren assigned diagnostics here in GW chat01a118bb turn01a119cd ('no make them do the diagnosticw'), verified2026-10-08 07:34UTC/context140. Await non-overlapping auth/error file carve-out; claim/admission, isolated worktree, narrow failure-boundary implementation. PR14 b532 and CI37742998507 remain unchanged. Coordinate deployment with UI owner.",
+      "paths": [
+        "backend/src/auth.mjs",
+        "backend/src/error-diagnostics.mjs",
+        "backend/src/auth-d1-diagnostics.mjs",
+        "backend/tests/auth-d1-diagnostics.test.mjs"
+      ],
+      "resources": [
+        "grnwht-auth-d1-diagnostic"
+      ],
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-08T07:36:42.475Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Diagnose the recurring signed-in shared-auth 500s by exposing the original D1 operation failure before Better Auth wrapping, using only finite safe fields and same-request correlation.",
+          "acceptance": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
+          "at": "2026-10-08T07:36:42.475Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-shared-auth-diagnostic-20261008:acceptance:0",
+            "text": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
+            "at": "2026-10-08T07:36:42.475Z"
+          }
+        ]
+      }
+    }
+  ],
   "claims": [
     {
       "id": "grnwht-family-app-20261004",
