@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T14:15:16.007Z",
+  "updated_at": "2026-10-08T14:15:38.587Z",
   "legacy_branches": [
     "main"
   ],
@@ -209,7 +209,7 @@
       "supporting_teams": [],
       "primary_staff": "julian",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-08T14:15:16.007Z",
       "objective_history": {
         "baseline": {
@@ -857,6 +857,50 @@
       "evidence": "PR18 merged2026ea6986a7673f4c4664c61e654ce1ff271313->14ff8790108bd10129f6bf9e7ac7a553d0c165cc tree identical; all3CI37786974880PASS; live d88be9ee-d58f-4815-ad58-58ca475a6277@100% build114c09ead7d0c9cc886a exactmodule/all309assets verified. Source/build and fresh69table/fourmedia closedbackup remote readback+restore verified/no migrations.47file evidence R2 releases/2026ea6986a7673f4c4664c61e654ce1ff271313/release-evidence.zip SHAd5c5c46cb1d7553a53f2013413deee1fe5920b302e21406a26dd4709ab514005. Prior source, native proof, recovery and layout preserved. All scoped work accounted; no unpublished product patch. Notification/announcement emails unfinished outside this bounded controls slice; Maclocked/native/device/mailbox acceptance pending; no wake or sends.",
       "work_accounted": true,
       "completed_at": "2026-10-08T14:12:21.982Z"
+    },
+    {
+      "id": "grnwht-email-visual-templates-20261008",
+      "owner": "01a11b04-95a2-7212-aa48-1e23e956d00a",
+      "branch": "grnwht/email-visual-templates-20261008",
+      "paths": [
+        "backend/src/family-update-email.mjs",
+        "backend/src/family-email-theme.mjs",
+        "backend/tests/family-update-email.test.mjs",
+        "scripts/preview-family-emails.mjs",
+        "tests/family-email-theme-parity.test.mjs",
+        "docs/family-email-preview/",
+        "docs/family-email-templates.md"
+      ],
+      "resources": [
+        "grnwht-family-app"
+      ],
+      "goal": "Renderable branded notification/announcement templates and explicit chosen-theme inputs, offline preview only",
+      "acceptance": "Actual current GW flat palette/wordmark/Momo default and selectedfont/accent where supplied; safe fallback/escaping/plaintext; light/dark fictional previews+tests/build; no auth/invitation modification, dispatch/sends/consent/credentials/deploy",
+      "next_action": "Implement email renderers and reusable theme mapping with isolated fixtures",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "14ff8790108bd10129f6bf9e7ac7a553d0c165cc",
+      "state": "active",
+      "created_at": "2026-10-08T14:15:38.587Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Renderable branded notification/announcement email templates and chosen-theme previews only; preserve existing auth/invitation mails and live release; no delivery/recipient/consent changes",
+          "acceptance": "Safe HTML/text renderers; actual GW palette/wordmark/Momo default with selected font/accent input and email-safe fallback; isolated fictional light/dark preview fixtures; meaningful escaping/URL/theme tests and build/test; no send path or production deploy",
+          "at": "2026-10-08T14:15:16.007Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-email-visual-templates-20261008:acceptance:0",
+            "text": "Safe HTML/text renderers; actual GW palette/wordmark/Momo default with selected font/accent input and email-safe fallback; isolated fictional light/dark preview fixtures; meaningful escaping/URL/theme tests and build/test; no send path or production deploy",
+            "at": "2026-10-08T14:15:16.007Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T14:15:38.587Z",
+      "lease_until": "2026-10-09T02:15:38.587Z"
     }
   ]
 }
