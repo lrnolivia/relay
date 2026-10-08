@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T22:58:24.024Z",
+  "updated_at": "2026-10-08T23:02:06.132Z",
   "legacy_branches": [
     "main"
   ],
@@ -1281,14 +1281,16 @@
         "backend/package.json",
         "scripts/ci-test-summary.mjs",
         "tests/",
-        "backend/tests/"
+        "backend/tests/",
+        "src/membership-posting-default.mjs",
+        "src/membership-review-polish.css"
       ],
       "resources": [
         "grnwht-device-push-release"
       ],
       "goal": "Deliver one consolidated GW launch candidate covering all Lauren-approved current functional and UI work, with parent hotfix reconciliation and living multi-household support",
       "acceptance": "Latest Lauren21:15 explicit single consolidated nextrelease supersedes release-first staging. Include all parenthotfixes; devicepush regression/errorprivacy; eightpreset email source/defaultoffconsent; editorcontrolpolish; device-local returningname/avatar/provider noauthcredential; confirmedselective GWreset withserver signout/nofamilydeletion; compactAbout+linkedofficialcredit; You/Family invitationcards; authorizedcontactglyphbadges; sharedmini-profile identities/privacy/focus/fullphotoactions+selectedfonts; coherenthouseholdhero; verified216compactv3guidePNGs preservingnativeinstallbehaviors; livingmulti-household withperhouseholdroles/recipientconsent/duplicates/pending/primary/remove/privatechildren, migrationbackuprehearsalrollback. Retain explicitpanel/formparity/fade checklist. Meaningful failed-case/targeted/fullheadCI/sourceartifact/runtime/liveproof, no partialall-doneclaim/no newworkers/no invalidation of activefamilyonboarding. Freshauthschema andnecessaryD1migration accessmustbesupported; no cancelled/deniedactionreplay/newcredentials/purchases, actualpushdeliveryonlybyreceipt.",
-      "next_action": "Latest Lauren explicitly requires hard-coded content/test separation: durable AGENTS and test preflight production-mutation rejection, deterministic isolated fixture storage, no content-based build identity or data-destroying rollback; narrow guard regression only. Repair actual hosted editor failed case, preserve useful WebKit currentrun. Parentv1backend integrated, sourcee15f910. RestoredD1/authschema and new7media backup required beforecombinedrelease; no feature expansion.",
+      "next_action": "Integrate parent-authored pending-membership approval ordinary-posting default/compact admin UI package exacte15f910 base, no existingaccount batchchanges/organizerrole expansion. Targeted helper and phone proof; test production guard and failed editor field correction before nextfullCI. Preserve combinedscope/recovery; no featureexpansion.",
       "primary_team": "release",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1323,8 +1325,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T22:58:24.024Z",
-      "lease_until": "2026-10-09T10:58:24.024Z",
+      "updated_at": "2026-10-08T23:02:06.132Z",
+      "lease_until": "2026-10-09T11:02:06.132Z",
       "amendment_count": 2,
       "amendments": [
         {
