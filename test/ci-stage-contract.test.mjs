@@ -1,11 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp,readFile,rm,readdir,writeFile} from 'node:fs/promises';
+import {mkdtemp,readFile,rm,readdir,writeFile,mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import {tmpdir} from 'node:os';
-import {spawnSync} from 'node:child_process';
+import {spawnSync,execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
-import {STAGE_JOBS,runStage,classifyStage,originalStageExit,summarizeStages,finalizeStages} from '../scripts/ci-stage.mjs';
+import {STAGE_JOBS,runStage,classifyStage,originalStageExit,summarizeStages,finalizeStages,qualityPlan,writeQualityPlan} from '../scripts/ci-stage.mjs';
 import {REQUIRED_SUITES} from '../scripts/ci-test-orchestrator.mjs';
 
 async function root(t){const dir=await mkdtemp(join(tmpdir(),'relay-ci-stage-'));t.after(()=>rm(dir,{recursive:true,force:true}));return dir;}
@@ -73,8 +73,54 @@ test('unsupported job, stage, timeout and workflow outcome reject the operation'
   const dir=await root(t);await assert.rejects(runStage({...command(''),root:dir,id:'unknown'}),{code:'invalid_stage'});await assert.rejects(runStage({...command(''),root:dir,timeoutMs:16*60000}),{code:'invalid_timeout'});
   const value=passing();value.outcomes.install='invented';assert.throws(()=>summarizeStages(value),{code:'invalid_stage_summary'});
 });
-test('all three canonical jobs wrap setup commands and always retain stage evidence',async()=>{
+test('applicable downstream gates cannot be skipped or satisfied by missing evidence',()=>{
+  for(const flags of [{production:true,preview:false,contextCard:false},{production:false,preview:true,contextCard:true},{production:false,preview:false,contextCard:false}]){
+    const plan=qualityPlan(flags),good=passing();good.requiredStages=plan.required_stages;
+    for(const stage of STAGE_JOBS.quality.filter(stage=>stage.optional&&!plan.required_stages.includes(stage.id)))good.outcomes[stage.id]='skipped';
+    assert.equal(summarizeStages(good).exit_code,0);
+    for(const id of plan.required_stages){
+      const skipped=structuredClone(good);skipped.outcomes[id]='skipped';assert.equal(summarizeStages(skipped).exit_code,1,id);
+      const missing=structuredClone(good);delete missing.receipts[id];if(id==='suites')missing.suites=null;assert.equal(summarizeStages(missing).exit_code,1,id);
+    }
+  }
+  assert.throws(()=>qualityPlan({production:true,preview:true,contextCard:false}),{code:'invalid_stage_plan'});
+  assert.throws(()=>qualityPlan({production:'false',preview:false,contextCard:false}),{code:'invalid_stage_plan'});
+  for(const requiredStages of [[],['unknown'],[...qualityPlan({production:false,preview:false,contextCard:false}).required_stages,'build']])assert.throws(()=>summarizeStages({...passing(),requiredStages}),{code:'invalid_stage_plan'});
+});
+test('applicability is saved before execution and rejects implicit or stale hosted decisions',async t=>{
+  const dir=await root(t),env={RELAY_CI_PRODUCTION_REQUIRED:'true',RELAY_CI_PREVIEW_REQUIRED:'false',RELAY_CI_CARD_REQUIRED:'false',GITHUB_OUTPUT:join(dir,'outputs')};
+  const plan=await writeQualityPlan({root:dir,env});assert.ok(plan.required_stages.includes('production'));assert.ok(plan.required_stages.includes('retained'));assert.ok(plan.required_stages.includes('reuse'));assert.ok(!plan.required_stages.includes('visual-review'));
+  assert.deepEqual(JSON.parse(await readFile(join(dir,'qa-evidence/ci-stages/quality-plan.json'))),plan);assert.match(await readFile(env.GITHUB_OUTPUT,'utf8'),/production_required=true\n/);
+  await assert.rejects(writeQualityPlan({root:dir,env:{...env,RELAY_CI_PREVIEW_REQUIRED:undefined}}),{code:'invalid_stage_plan'});
+  for(const hosted of [{GITHUB_ACTIONS:'true'},{GITHUB_ACTIONS:'true',GITHUB_RUN_ID:'new-run',RELAY_REQUIRED_STAGES:JSON.stringify(plan.required_stages)}]){
+    const blocked=await finalizeStages({job:'quality',root:dir,env:hosted});assert.equal(blocked.exit_code,1);assert.equal(blocked.error.code,'invalid_stage_plan');assert.equal(JSON.parse(await readFile(join(dir,'qa-evidence/ci-stages/quality-summary.json'))).state,'nonpassing');
+  }
+});
+test('hosted finalization requires the original exact-source plan including every release gate',async t=>{
+  const dir=await root(t);await writeFile(join(dir,'package-lock.json'),'{}');
+  const git=args=>execFileSync('git',args,{cwd:dir,encoding:'utf8',stdio:['ignore','pipe','pipe']}).trim();
+  git(['init']);git(['add','.']);git(['-c','user.name=Relay fixture','-c','user.email=fixture@example.invalid','commit','-m','Synthetic applicability fixture']);
+  const env={GITHUB_ACTIONS:'true',RELAY_SOURCE_SHA:git(['rev-parse','HEAD']),GITHUB_RUN_ID:'123',GITHUB_RUN_ATTEMPT:'1',RELAY_CI_PRODUCTION_REQUIRED:'true',RELAY_CI_PREVIEW_REQUIRED:'false',RELAY_CI_CARD_REQUIRED:'true'};
+  const plan=await writeQualityPlan({root:dir,env}),value=passing(),directory=join(dir,'qa-evidence/ci-stages');
+  for(const stage of STAGE_JOBS.quality){if(!plan.required_stages.includes(stage.id))value.outcomes[stage.id]='skipped';if(value.receipts[stage.id]){value.receipts[stage.id].identity=plan.identity;await writeFile(join(directory,'quality-'+stage.id+'.json'),JSON.stringify(value.receipts[stage.id]));}}
+  value.suites.identity=plan.identity;await mkdir(join(dir,'qa-evidence/test-workflow'),{recursive:true});await writeFile(join(dir,'qa-evidence/test-workflow/result.json'),JSON.stringify(value.suites));
+  env.RELAY_REQUIRED_STAGES=JSON.stringify(plan.required_stages);env.RELAY_STAGE_OUTCOMES=JSON.stringify(value.outcomes);assert.equal((await finalizeStages({job:'quality',root:dir,env})).exit_code,0);
+  value.outcomes.retained='skipped';assert.equal((await finalizeStages({job:'quality',root:dir,env:{...env,RELAY_STAGE_OUTCOMES:JSON.stringify(value.outcomes)}})).exit_code,1);
+  for(const mutate of [p=>p.identity.run_id='old',p=>p.identity.source_sha='b'.repeat(40),p=>p.identity.lock_sha256='changed',p=>p.production_required=false,p=>p.required_stages=p.required_stages.filter(id=>id!=='retained')]){
+    const changed=structuredClone(plan);mutate(changed);await writeFile(join(directory,'quality-plan.json'),JSON.stringify(changed));const blocked=await finalizeStages({job:'quality',root:dir,env});assert.equal(blocked.exit_code,1);assert.equal(blocked.error.code,'invalid_stage_plan');assert.equal(blocked.classification.category,'applicability-evidence-failure');
+  }
+});
+test('one canonical runner reuses its exact build and retains every applicable gate',async()=>{
   const workflow=await readFile(new URL('../.github/workflows/ci.yml',import.meta.url),'utf8');
-  for(const job of Object.keys(STAGE_JOBS)){const body=workflow.split('  '+job+':')[1].split(/^  [a-z][\w-]+:/m)[0];assert.match(body,/Summarize observed CI stage outcomes\n\s+if: always\(\)/);assert.match(body,/Preserve redacted CI stage evidence\n\s+if: always\(\)/);assert.match(body,/node scripts\/ci-stage.mjs toolchain -- npm run check:toolchain/);assert.match(body,/node scripts\/ci-stage.mjs install -- npm ci/);assert.match(body,/node scripts\/ci-stage.mjs build -- npm run build/);assert.match(body,/node scripts\/ci-stage.mjs browser -- npx playwright install --with-deps chromium/);}
+  assert.deepEqual([...workflow.matchAll(/^  ([a-z][\w-]+):$/mg)].map(match=>match[1]).filter(name=>!['workflow_dispatch','pull_request','push'].includes(name)),['quality']);
+  assert.match(workflow,/Summarize observed CI stage outcomes\n\s+if: always\(\)/);assert.match(workflow,/Preserve redacted CI stage evidence\n\s+if: always\(\)/);
+  for(const text of ['node scripts/ci-stage.mjs toolchain -- npm run check:toolchain','node scripts/ci-stage.mjs install -- npm ci','node scripts/ci-stage.mjs build -- npm run build'])assert.equal(workflow.split(text).length-1,1);
+  assert.match(workflow,/node scripts\/ci-stage.mjs reuse -- node scripts\/release-toolchain.mjs verify-build/);
+  assert.ok(workflow.indexOf('id: verify-reuse')<workflow.indexOf('id: verify-production'));assert.ok(workflow.indexOf('id: verify-reuse')<workflow.indexOf('id: verify-visual-review'));
+  assert.match(workflow,/RELAY_REQUIRED_STAGES: \$\{\{ steps.production-scope.outputs.required_stages \}\}/);
+  for(const [id,command] of [['production','node apps/web/verify-production.mjs'],['retained','node scripts/retain-web-preview.mjs'],['visual-review','node scripts/retain-web-preview.mjs']])assert.ok(workflow.includes('ci-stage.mjs '+id+' -- '+command));
+  assert.match(workflow,/let required=process.env.EVENT_NAME==='workflow_dispatch'/);assert.match(workflow,/required=needsProductionVerification/);
+  assert.match(workflow,/RELAY_CI_PREVIEW_REQUIRED:.*github.event.pull_request.draft == true/);assert.match(workflow,/RELAY_CI_CARD_REQUIRED:/);assert.match(workflow,/await writeQualityPlan/);
+  assert.doesNotMatch(workflow,/playwright install/);assert.match(workflow,/const browser=await chromium.launch\(\)/);
   assert.match(workflow,/run: npm test/);assert.doesNotMatch(workflow,/ci-stage.mjs suites/);assert.doesNotMatch(workflow,/continue-on-error:/);assert.equal(STAGE_JOBS.quality.find(stage=>stage.id==='suites').timeout_ms,0,'five-suite orchestration retains independent 15-minute bounds');
 });

@@ -1,14 +1,14 @@
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {constants} from 'node:os';
-import {mkdir,readFile,writeFile,rename} from 'node:fs/promises';
+import {mkdir,readFile,writeFile,rename,appendFile} from 'node:fs/promises';
 import {resolve,join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {runSuites,redact,REQUIRED_SUITES} from './ci-test-orchestrator.mjs';
 
 const stage=(id,minutes,optional=false)=>({id,timeout_ms:minutes*60000,optional});
 export const STAGE_JOBS=Object.freeze({
-  quality:[stage('toolchain',2),stage('focused',5),stage('install',15),stage('contracts',10),stage('build',10),stage('runtime',3),stage('browser',15),stage('typecheck',10),stage('suites',0),stage('context-card',10,true)],
+  quality:[stage('toolchain',2),stage('focused',5),stage('install',15),stage('contracts',10),stage('build',10),stage('runtime',3),stage('browser',2),stage('typecheck',10),stage('suites',0),stage('context-card',10,true),stage('reuse',2,true),stage('production',8,true),stage('retained',8,true),stage('visual-review',8,true)],
   'website-production':[stage('toolchain',2),stage('install',8),stage('build',8),stage('browser',8),stage('production',8),stage('retained',8)],
   'visual-review-preview':[stage('toolchain',2),stage('install',8),stage('checkout',2),stage('build',8),stage('browser',8),stage('visual-review',8)]
 });
@@ -17,6 +17,24 @@ const escaped=value=>String(value).replaceAll('%','%25').replaceAll('\r','%0D').
 const error=(code,message)=>Object.assign(Error(message),{code});
 const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
 const hostedLog=env=>/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(env.GITHUB_REPOSITORY||'')&&/^\d+$/.test(env.GITHUB_RUN_ID||'')?'https://github.com/'+env.GITHUB_REPOSITORY+'/actions/runs/'+env.GITHUB_RUN_ID:null;
+export function qualityPlan({production,preview,contextCard}){
+  if([production,preview,contextCard].some(value=>typeof value!=='boolean')||production&&preview)throw error('invalid_stage_plan','Explicit nonoverlapping production, preview and card decisions required');
+  const selected=new Set([...STAGE_JOBS.quality.filter(stage=>!stage.optional).map(stage=>stage.id),...(contextCard?['context-card']:[]),...(production||preview?['reuse']:[]),...(production?['production','retained']:[]),...(preview?['visual-review']:[])]);
+  return {production_required:production,preview_required:preview,context_card_required:contextCard,required_stages:STAGE_JOBS.quality.filter(stage=>selected.has(stage.id)).map(stage=>stage.id)};
+}
+function requiredStagesFor(job,requiredStages){
+  const stages=STAGE_JOBS[job];
+  if(!stages||!Array.isArray(requiredStages)||new Set(requiredStages).size!==requiredStages.length||requiredStages.some(id=>!stages.some(stage=>stage.id===id))||stages.some(stage=>!stage.optional&&!requiredStages.includes(stage.id)))throw error('invalid_stage_plan','Required stages must include every core gate and only known unique stages');
+  return requiredStages;
+}
+export async function writeQualityPlan({root=process.cwd(),env=process.env}){
+  const boolean=key=>{if(!['true','false'].includes(env[key]))throw error('invalid_stage_plan','Missing explicit '+key);return env[key]==='true';};
+  const plan={schema:1,kind:'ci-stage-plan',job:'quality',...qualityPlan({production:boolean('RELAY_CI_PRODUCTION_REQUIRED'),preview:boolean('RELAY_CI_PREVIEW_REQUIRED'),contextCard:boolean('RELAY_CI_CARD_REQUIRED')}),identity:await identity(root,env),state:'planned',exit_code:0};
+  if(env.GITHUB_ACTIONS==='true'&&!plan.identity.source_matches)throw error('source_identity_missing','Stage plan requires the exact checked-out source');
+  const directory=resolve(root,'qa-evidence/ci-stages');await mkdir(directory,{recursive:true});await save(join(directory,'quality-plan.json'),plan);
+  if(env.GITHUB_OUTPUT)await appendFile(env.GITHUB_OUTPUT,['production_required='+plan.production_required,'preview_required='+plan.preview_required,'context_card_required='+plan.context_card_required,'required_stages='+JSON.stringify(plan.required_stages)].join('\n')+'\n');
+  return plan;
+}
 function rule(job,id){const value=STAGE_JOBS[job]?.find(stage=>stage.id===id);if(!value||id==='suites')throw error('invalid_stage','Unknown command stage; the five-suite orchestrator retains its own time bounds');return value;}
 async function save(path,data){await writeFile(path+'.tmp',JSON.stringify(data,null,2)+'\n');await rename(path+'.tmp',path);}
 async function identity(root,env){
@@ -78,8 +96,9 @@ export async function runStage({job,id,command,args=[],root=process.cwd(),env=pr
   return receipt;
 }
 
-export function summarizeStages({job,outcomes,receipts,suites,identity}){
+export function summarizeStages({job,outcomes,receipts,suites,identity,requiredStages=STAGE_JOBS[job]?.filter(stage=>!stage.optional).map(stage=>stage.id)}){
   if(!STAGE_JOBS[job]||!outcomes||typeof outcomes!=='object'||Array.isArray(outcomes))throw error('invalid_stage_summary','Job and explicit stage outcomes required');
+  requiredStagesFor(job,requiredStages);
   const valid=new Set(['success','failure','cancelled','skipped','']);
   if(Object.values(outcomes).some(value=>!valid.has(value)))throw error('invalid_stage_summary','Unsupported workflow stage outcome');
   const results=STAGE_JOBS[job].map(definition=>{
@@ -89,19 +108,32 @@ export function summarizeStages({job,outcomes,receipts,suites,identity}){
       const complete=suites?.identity?.source_sha===identity.source_sha&&suites.identity.run_id===identity.run_id&&suites.identity.run_attempt===identity.run_attempt&&JSON.stringify(suites.required_suites)===JSON.stringify(required)&&suites.results?.length===required.length&&suites.results.every((r,i)=>r.id===required[i]&&r.required===true&&r.status==='passed'&&r.exit_code===0)&&suites.exit_code===0;
       return {id,outcome,status:outcome==='success'&&complete?'passed':outcome==='skipped'?'blocked':outcome==='cancelled'?'cancelled':outcome==='failure'?'failed':'evidence_missing',receipt:'qa-evidence/test-workflow/result.json'};
     }
-    if(outcome==='skipped')return {id,outcome,status:definition.optional?'skipped':'blocked',optional:definition.optional};
+    if(outcome==='skipped'){const optional=definition.optional&&!requiredStages.includes(id);return {id,outcome,status:optional?'skipped':'blocked',optional};}
     if(!receipt||receipt.job!==job||receipt.stage!==id||receipt.identity?.source_sha!==identity.source_sha||receipt.identity?.run_id!==identity.run_id||receipt.identity?.run_attempt!==identity.run_attempt)return {id,outcome,status:outcome==='cancelled'?'cancelled':'evidence_missing'};
     return {id,outcome,status:outcome==='success'&&receipt.state==='passed'&&receipt.exit_code===0&&receipt.result?.status==='passed'&&receipt.result?.exit_code===0?'passed':receipt.state==='passed'?'outcome_mismatch':receipt.state,original_exit_code:receipt.result?.exit_code??null,signal:receipt.result?.signal??null,classification:receipt.classification,diagnostic:receipt.failure_excerpt||receipt.result?.diagnostic||receipt.error?.message||'See retained stage receipt'};
   });
   const external=Object.entries(outcomes).filter(([id])=>!STAGE_JOBS[job].some(stage=>stage.id===id)).map(([id,outcome])=>({id,outcome,status:outcome==='success'?'passed':outcome==='skipped'?'skipped':outcome==='cancelled'?'cancelled':'failed',evidence:'workflow-outcome',cause:'undetermined',cancellation_actor:'unknown'}));
   const complete=results.every(result=>result.status==='passed'||result.optional&&result.status==='skipped')&&external.every(result=>result.status==='passed'||result.status==='skipped');
-  return {schema:1,kind:'ci-stage-summary',job,identity,results,external_steps:external,state:complete?'passed':'nonpassing',exit_code:complete?0:1,limits:['Classification describes observed process/workflow state; it does not identify the responsible actor or root cause','Bootstrap, upload and hard job cancellation failures may prevent local receipts; consult the hosted job log and check conclusion']};
+  return {schema:1,kind:'ci-stage-summary',job,identity,required_stages:requiredStages,results,external_steps:external,state:complete?'passed':'nonpassing',exit_code:complete?0:1,limits:['Classification describes observed process/workflow state; it does not identify the responsible actor or root cause','Bootstrap, upload and hard job cancellation failures may prevent local receipts; consult the hosted job log and check conclusion']};
 }
 export async function finalizeStages({job,root=process.cwd(),env=process.env}){
   const directory=resolve(root,'qa-evidence/ci-stages');await mkdir(directory,{recursive:true});
   const receipts={};for(const stage of STAGE_JOBS[job]||[]){try{receipts[stage.id]=JSON.parse(await readFile(join(directory,job+'-'+stage.id+'.json')));}catch{}}
   let suites;try{suites=JSON.parse(await readFile(resolve(root,'qa-evidence/test-workflow/result.json')));}catch{}
-  const summary=summarizeStages({job,outcomes:JSON.parse(env.RELAY_STAGE_OUTCOMES||'{}'),receipts,suites,identity:await identity(root,env)});
+  const observed=await identity(root,env);
+  let requiredStages,planError;
+  try{
+    requiredStages=env.RELAY_REQUIRED_STAGES?JSON.parse(env.RELAY_REQUIRED_STAGES):undefined;
+    if(requiredStages)requiredStagesFor(job,requiredStages);
+    if(job==='quality'&&env.GITHUB_ACTIONS==='true'){
+      const plan=JSON.parse(await readFile(join(directory,'quality-plan.json')));
+      if(!observed.source_matches||!observed.lock_sha256||!requiredStages||plan.schema!==1||plan.state!=='planned'||plan.job!==job||plan.identity?.source_sha!==observed.source_sha||plan.identity?.lock_sha256!==observed.lock_sha256||plan.identity?.run_id!==observed.run_id||plan.identity?.run_attempt!==observed.run_attempt||JSON.stringify(plan.required_stages)!==JSON.stringify(requiredStages))throw error('invalid_stage_plan','Missing, stale or changed applicability plan cannot close hosted quality');
+      const expected=qualityPlan({production:plan.production_required,preview:plan.preview_required,contextCard:plan.context_card_required});
+      if(JSON.stringify(expected.required_stages)!==JSON.stringify(requiredStages))throw error('invalid_stage_plan','Applicability plan does not match its required gates');
+    }
+  }catch(cause){requiredStages=undefined;planError={code:cause.code||'invalid_stage_plan',message:redact(cause.message).slice(0,2000)};}
+  const summary=summarizeStages({job,outcomes:JSON.parse(env.RELAY_STAGE_OUTCOMES||'{}'),receipts,suites,identity:observed,requiredStages});
+  if(planError){summary.state='nonpassing';summary.exit_code=1;summary.error=planError;summary.classification={category:'applicability-evidence-failure',evidence:'stage-plan-validation'};}
   summary.hosted_log_url=hostedLog(env);
   await save(join(directory,job+'-summary.json'),summary);return summary;
 }
@@ -109,9 +141,10 @@ async function main(){
   const controller=new AbortController(),stop=()=>controller.abort();process.once('SIGINT',stop);process.once('SIGTERM',stop);
   try{
     let receipt;
-    if(process.argv[2]==='--summary'&&process.argv.length===4)receipt=await finalizeStages({job:process.argv[3]});
+    if(process.argv[2]==='--plan'&&process.argv[3]==='quality'&&process.argv.length===4)receipt=await writeQualityPlan({});
+    else if(process.argv[2]==='--summary'&&process.argv.length===4)receipt=await finalizeStages({job:process.argv[3]});
     else if(process.argv[3]==='--'&&process.argv.length>=5)receipt=await runStage({job:process.env.RELAY_CI_JOB,id:process.argv[2],command:process.argv[4],args:process.argv.slice(5),signal:controller.signal,onOutput:text=>process.stdout.write(text)});
-    else throw error('invalid_cli','Use ci-stage.mjs <stage> -- <command> [arguments], or --summary <job>');
+    else throw error('invalid_cli','Use ci-stage.mjs <stage> -- <command> [arguments], --plan quality, or --summary <job>');
     if(receipt.exit_code!==0)process.stderr.write('::error title=CI stage '+escaped(receipt.stage||receipt.job)+' '+escaped(receipt.state)+'::'+escaped((receipt.failure_excerpt||receipt.result?.diagnostic||receipt.error?.message||'Stage evidence is incomplete; see retained summary and hosted job log')+(receipt.hosted_log_url?'\nRetained run log: '+receipt.hosted_log_url:''))+'\n');
     process.exitCode=receipt.exit_code;
   }finally{process.removeListener('SIGINT',stop);process.removeListener('SIGTERM',stop);}
