@@ -1,7 +1,7 @@
 // Safety atoms share the existing durable binding, separate from event replay.
 const SCOPE=/^(?:global|[a-z0-9-]{1,80})$/,SHA=/^[a-f0-9]{40}$/;
 const VERSION=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
-const actions=new Set(['status','hold','resume','healthy','approve','prepare_rollback','finish_rollback']);
+const actions=new Set(['status','hold','resume','healthy','approve','prepare_rollback','finish_rollback','prepare_restore_upload','finish_restore_upload']);
 const fail=(message,status=409)=>{throw Object.assign(Error(message),{status,code:'safety_control'});};
 const text=(v,max=1000)=>typeof v==='string'&&v.trim()&&v.length<=max;
 const canonical=value=>Array.isArray(value)?value.map(canonical):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])):value;
@@ -22,7 +22,7 @@ export function validateAutonomyInput(input){
  }
  if(!Number.isSafeInteger(input.expected_revision)||input.expected_revision<0||!/^[-\w]{8,120}$/.test(input.operation_id||''))fail('Safety mutation requires revision and operation identity',400);
  if(!text(input.reason))fail('Safety mutation requires a bounded reason',400);
- const fields={hold:[],resume:['authorization'],healthy:['target'],approve:['target','approval'],prepare_rollback:['kind','expected_current_version'],finish_rollback:['result']}[input.action];
+ const fields={hold:[],resume:['authorization'],healthy:['target'],approve:['target','approval'],prepare_rollback:['kind','expected_current_version'],finish_rollback:['result'],prepare_restore_upload:['result'],finish_restore_upload:['result']}[input.action];
  if(Object.keys(input).some(k=>!['action','scope','expected_revision','operation_id','reason',...fields].includes(k)))fail('Unexpected fields for safety action',400);
  if(input.action==='resume'&&!text(input.authorization))fail('Resume requires explicit user authorization evidence',400);
  if(['healthy','approve'].includes(input.action)){
@@ -33,6 +33,10 @@ export function validateAutonomyInput(input){
  }
  if(input.action==='prepare_rollback'&&(input.scope==='global'||!['healthy','user-approved'].includes(input.kind)||!VERSION.test(input.expected_current_version||'')))fail('Rollback requires project, target kind and current version',400);
  if(input.action==='finish_rollback'&&(!input.result||Object.keys(input.result).some(k=>!['state','version_id','evidence'].includes(k))||!['verified','failed'].includes(input.result.state)||!VERSION.test(input.result.version_id||'')||!text(input.result.evidence)))fail('Rollback completion requires a verified or failed receipt',400);
+ if(['prepare_restore_upload','finish_restore_upload'].includes(input.action)){
+  const r=input.result,keys=input.action==='prepare_restore_upload'?['module_sha256','configuration_sha256']:['module_sha256','configuration_sha256','version_id'];
+  if(input.scope!=='relay'||!r||Object.keys(r).length!==keys.length||Object.keys(r).some(k=>!keys.includes(k))||!['module_sha256','configuration_sha256'].every(k=>/^[a-f0-9]{64}$/.test(r[k]||''))||(input.action==='finish_restore_upload'&&!VERSION.test(r.version_id||'')))fail('Compiled restoration requires exact hashes and version identity',400);
+ }
  return input;
 }
 export function transitionAutonomy(stored,input,now=new Date().toISOString()){
@@ -58,6 +62,17 @@ export function transitionAutonomy(stored,input,now=new Date().toISOString()){
  if(input.action==='finish_rollback'){
   if(state.rollback?.state!=='pending'||input.result.version_id!==state.rollback.target.version_id)fail('Rollback receipt does not match the pending exact target');
   state.rollback={...state.rollback,...input.result,completed_at:now};
+ }
+ if(input.action==='prepare_restore_upload'){
+  if(!state.held||state.rollback?.state!=='pending'||state.rollback.restoration||!state.rollback.target.recovery?.restore_sha256||input.operation_id!==state.rollback.operation_id+'-upload')fail('Compiled restoration requires one exact pending rollback');
+  state.rollback.restoration={state:'upload_pending',...input.result,created_at:now};
+ }
+ if(input.action==='finish_restore_upload'){
+  const pending=state.rollback,r=pending?.restoration;
+  if(!state.held||pending?.state!=='pending'||r?.state!=='upload_pending'||input.operation_id!==pending.operation_id+'-record'||r.module_sha256!==input.result.module_sha256||r.configuration_sha256!==input.result.configuration_sha256||[pending.target.version_id,pending.expected_current_version].includes(input.result.version_id))fail('Compiled upload receipt does not match its pending intent');
+  pending.original_target=structuredClone(pending.target);
+  pending.target={...pending.target,version_id:input.result.version_id};
+  pending.restoration={...r,...input.result,state:'uploaded',recorded_at:now};
  }
  state.revision++;state.operations.push({id:input.operation_id,intent,at:now,revision:state.revision});return {state,changed:true};
 }

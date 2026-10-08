@@ -21,7 +21,7 @@ import { RELAY_V2_PROBE_URI, relayV2ProbeDescriptor, relayV2ProbeResource } from
 import { presentationOperation, withHumanPresentation } from './communication-presentation.js';
 import { publicAutonomyStatus, autonomyTool } from './autonomy-control.js';
 import { callAutonomyControl, projectCloudStatus, verifyReleaseTarget } from './project-cloud.js';
-import { activeCloudVersion } from './cloud.js';
+import { activeCloudVersion,retainedCloudVersion } from './cloud.js';
 import { releaseRecoveryResponse, ReleaseRecoveryError } from './release-recovery.js';
 
 export const RELAY_EXTENSION_VERSION = "1.10.0";
@@ -319,7 +319,7 @@ export default {
         const target={worker:status.worker,version_id:active.version_id,source_sha:source,compatibility_id:status.rollback?.compatibility_id,evidence:'Completed main CI recovery archive; isolated host restoration must precede healthy registration.'};
         await verifyReleaseTarget(env,status,target,{accessJwt:request.headers.get('Cf-Access-Jwt-Assertion')});
         return target;
-      }});}catch(error){return Response.json({ok:false,error:error instanceof ReleaseRecoveryError?{code:error.code,message:error.message}:{code:'verification_unavailable',message:'Release archive verification failed; reconcile source, provider and storage before retrying'}},{status:error instanceof ReleaseRecoveryError?error.status:503,headers:{'Cache-Control':'no-store'}});}
+      },resolveConfiguration:target=>retainedCloudVersion(env,target.worker,target.version_id)});}catch(error){return Response.json({ok:false,error:error instanceof ReleaseRecoveryError?{code:error.code,message:error.message}:{code:'verification_unavailable',message:'Release archive verification failed; reconcile source, provider and storage before retrying'}},{status:error instanceof ReleaseRecoveryError?error.status:503,headers:{'Cache-Control':'no-store'}});}
     }
     if (url.pathname === '/autonomy-status' && request.method === 'GET') {
       try {

@@ -6,6 +6,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {releaseRecoveryResponse,verifyRetainedReleaseArchive,verifiedReleaseArtifact,releaseArchiveQuery} from './release-recovery.js';
 import {validateAutonomyInput} from './autonomy-control.js';
+import {recoveryVersionFixture} from '../test/fixtures/recovery-archive.mjs';
 
 const hash=x=>createHash('sha256').update(x).digest('hex');
 const source='a'.repeat(40),version='11111111-2222-3333-4444-555555555555';
@@ -19,7 +20,7 @@ function fixture(){
  const bucket={async get(key){if(!objects.has(key))return null;const bytes=Buffer.from(objects.get(key));return {size:bytes.length,arrayBuffer:async()=>bytes};},async put(key,bytes,options){assert.equal(options.onlyIf.etagDoesNotMatch,'*');puts.push(key);if(!objects.has(key))objects.set(key,Buffer.from(bytes));if(bucket.loseOnce){bucket.loseOnce=false;throw Error('Synthetic lost provider response');}return {};}};
  const target={worker:'relay',version_id:version,source_sha:source,compatibility_id:'relay-autonomy-v1',evidence:'Synthetic release'};
  const url='https://relay.loew.fi/api/release-recovery?source_sha='+source+'&run_id=7&artifact_id=8';
- const send=(body=bytes,type='application/zip')=>releaseRecoveryResponse(new Request(url,{method:'POST',headers:{'Content-Type':type},body}),{EVIDENCE:bucket},{api,resolveTarget:async sha=>{assert.equal(sha,source);return target;}});
+ const send=(body=bytes,type='application/zip')=>releaseRecoveryResponse(new Request(url,{method:'POST',headers:{'Content-Type':type},body}),{EVIDENCE:bucket},{api,resolveTarget:async sha=>{assert.equal(sha,source);return target;},resolveConfiguration:async()=>recoveryVersionFixture(version)});
  return {bytes,objects,puts,run,artifact,jobs,api,bucket,target,url,send};
 }
 function restoreReceipt(digest){return {schema:1,source_sha:source,archive_sha256:digest,file_count:5,host_restore_verified:true,compiled_ci_runtime_evidence_verified:true,runtime_reexecuted:false,production_rollback_performed:false,files:['bundle/README.md','bundle/index.js','bundle/index.js.map','probe.json','result.json'].map(path=>({path,bytes:2,sha256:'b'.repeat(64)}))};}
@@ -64,7 +65,7 @@ test('archive retention and recovery readback run against actual pinned workerd 
  const artifact={id:8,name:'relay-worker-runtime-'+source+'-7-1',expired:false,workflow_run:{id:7,head_sha:source,head_branch:'main',repository_id:99,head_repository_id:99},size_in_bytes:bytes.length,digest:'sha256:'+digest};
  const api=async path=>path.endsWith('/runs/7')?run:path.endsWith('/artifacts/8')?artifact:path.includes('/jobs?')?{total_count:1,jobs:[{name:'quality',status:'completed',conclusion:'success',steps:${JSON.stringify(gates)}.map(name=>({name,status:'completed',conclusion:'success'}))}]}:{type:'file',encoding:'base64',size:2,content:'e30='};
  const url='https://relay.loew.fi/api/release-recovery?source_sha='+source+'&run_id=7&artifact_id=8';
- const deps={api,resolveTarget:async()=>({worker:'relay',version_id:'${version}',source_sha:source,compatibility_id:'relay-autonomy-v1',evidence:'Synthetic runtime'})};
+ const deps={api,resolveTarget:async()=>({worker:'relay',version_id:'${version}',source_sha:source,compatibility_id:'relay-autonomy-v1',evidence:'Synthetic runtime'}),resolveConfiguration:async()=>(${JSON.stringify(recoveryVersionFixture(version))})};
  const posted=await releaseRecoveryResponse(new Request(url,{method:'POST',headers:{'Content-Type':'application/zip'},body:bytes}),env,deps),receipt=await posted.json();
  const read=await releaseRecoveryResponse(new Request(url),env,deps);return Response.json({receipt,bytes:Array.from(new Uint8Array(await read.arrayBuffer()))});
  }catch(error){return Response.json({error:error.message},{status:500});}}};`);

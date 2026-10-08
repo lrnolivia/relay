@@ -8,7 +8,8 @@ import {execFileSync} from 'node:child_process';
 import {releaseEvent,runReleaseAssurance,runFailedReleaseRecovery} from './release-assurance.mjs';
 import {callAutonomyControl} from '../src/project-cloud.js';
 import {releaseRecoveryResponse} from '../src/release-recovery.js';
-import {autonomyState,transitionAutonomy} from '../src/autonomy-control.js';
+import {autonomyState,transitionAutonomy,autonomyRequest} from '../src/autonomy-control.js';
+import {recoveryVersionFixture} from '../test/fixtures/recovery-archive.mjs';
 
 const source='a'.repeat(40),version='11111111-2222-3333-4444-555555555555',hash=x=>createHash('sha256').update(x).digest('hex');
 function fixture(){
@@ -37,7 +38,7 @@ function fixture(){
    return Response.json({jsonrpc:'2.0',id:message.id,result});
   }
   if(f.corruptReadback&&options.method==='GET')return new Response('changed',{headers:{'Content-Type':'application/zip'}});
-  return releaseRecoveryResponse(new Request(url,options),{EVIDENCE:bucket},{api,resolveTarget:async()=>({worker:'relay',version_id:version,source_sha:source,compatibility_id:'relay-autonomy-v1',evidence:'Synthetic fixture'})});
+  return releaseRecoveryResponse(new Request(url,options),{EVIDENCE:bucket},{api,resolveTarget:async()=>({worker:'relay',version_id:version,source_sha:source,compatibility_id:'relay-autonomy-v1',evidence:'Synthetic fixture'}),resolveConfiguration:async()=>recoveryVersionFixture(version)});
  };
  f.execute=()=>runReleaseAssurance({...f,log:value=>logs.push(value)});return f;
 }
@@ -89,7 +90,7 @@ test('follow-up has read-only permissions, protected main code, event guards and
 // orchestration. Provider responses are synthetic; no production is changed.
 function failedFixture(){
  const failed='d'.repeat(40),failedVersion='66666666-7777-8888-9999-aaaaaaaaaaaa';
- const healthy={worker:'relay',version_id:version,source_sha:source,compatibility_id:'relay-autonomy-v1',evidence:'Synthetic prior verified release'};
+ const healthy={worker:'relay',version_id:version,source_sha:source,compatibility_id:'relay-autonomy-v1',evidence:'Synthetic prior verified release',recovery:{archive_sha256:'a'.repeat(64),manifest_sha256:'b'.repeat(64),restore_sha256:'c'.repeat(64),artifact_id:1,ci_run:2}};
  const approval={...healthy,source_sha:'b'.repeat(40),approval:{text:'Synthetic explicit approval',source:'Synthetic user message'}};
  let state={...autonomyState('relay'),last_healthy:healthy,last_user_approved:approval},active={source_sha:failed,version_id:failedVersion,compatibility_id:healthy.compatibility_id};
  const run={id:9,head_sha:failed,run_attempt:1,path:'.github/workflows/ci.yml',event:'push',head_branch:'main',head_repository:{full_name:'lrnolivia/relay'},repository:{full_name:'lrnolivia/relay'},status:'completed',conclusion:'failure'};
@@ -101,10 +102,19 @@ function failedFixture(){
  }})}};
  const snapshot=async()=>({ok:true,script:'relay',deployments:{deployments:[{id:'synthetic-deployment',versions:[{version_id:active.version_id,percentage:100}]}]},versions:{items:[{id:version},{id:active.version_id}]},domains:[{service:'relay',hostname:'relay.loew.fi',enabled:true}]});
  const profile={identity_url:'https://relay.loew.fi/',health_url:'https://relay.loew.fi/health',source_header:'X-Relay-Source-Sha',compatibility_header:'X-Relay-Release-Compatibility',compatibility_id:healthy.compatibility_id};
- const f={run,jobs,production,calls,logs,env,event:{repository:{full_name:'lrnolivia/relay'},workflow_run:run},get state(){return state;},get active(){return active;},globalHold:false,raceHold:false,loseResponse:false,loseBeforeCommit:false,identityLag:0,waits:[],writes:0};
+ const f={run,jobs,production,calls,logs,env,event:{repository:{full_name:'lrnolivia/relay'},workflow_run:run},get state(){return state;},get active(){return active;},globalHold:false,raceHold:false,loseResponse:false,loseBeforeCommit:false,compiled:false,identityLag:0,waits:[],writes:0};
  f.github=async path=>path.endsWith('/runs/9')?run:jobs;
- const deps={github:async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,rollback:profile}})).toString('base64')}),snapshot,active:async()=>({version_id:active.version_id,deployment_id:'synthetic-deployment'}),fetch:async url=>{if(url.endsWith('/health'))return Response.json({ok:true,service:'relay'});const source=active.version_id===healthy.version_id&&f.identityLag-->0?failed:active.source_sha;return new Response('fixture',{headers:{'X-Relay-Source-Sha':source,'X-Relay-Release-Compatibility':active.compatibility_id}});},recover:async()=>{
+ const deps={github:async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,rollback:profile}})).toString('base64')}),snapshot,active:async()=>({version_id:active.version_id,deployment_id:'synthetic-deployment'}),fetch:async url=>{if(url.endsWith('/health'))return Response.json({ok:true,service:'relay'});const source=active.source_sha===healthy.source_sha&&f.identityLag-->0?failed:active.source_sha;return new Response('fixture',{headers:{'X-Relay-Source-Sha':source,'X-Relay-Release-Compatibility':active.compatibility_id}});},recover:async()=>{
   if(f.loseBeforeCommit)throw Error('Synthetic unconfirmed provider write');
+  if(f.compiled){
+   if(!state.rollback.restoration){
+    const hashes={module_sha256:'e'.repeat(64),configuration_sha256:'f'.repeat(64)};
+    await autonomyRequest(env,{action:'prepare_restore_upload',scope:'relay',expected_revision:state.revision,operation_id:state.rollback.operation_id+'-upload',reason:state.reason,result:hashes});
+    await autonomyRequest(env,{action:'finish_restore_upload',scope:'relay',expected_revision:state.revision,operation_id:state.rollback.operation_id+'-record',reason:state.reason,result:{...hashes,version_id:'bbbbbbbb-cccc-dddd-eeee-ffffffffffff'}});
+   }
+   if(active.version_id!==state.rollback.target.version_id){f.writes++;active={...state.rollback.target};if(f.loseResponse){f.loseResponse=false;throw Error('Synthetic provider response lost');}}
+   return {ok:true,effective_target:state.rollback.target};
+  }
   if(active.version_id!==healthy.version_id){assert.equal(active.version_id,failedVersion);f.writes++;active={...healthy};if(f.loseResponse){f.loseResponse=false;throw Error('Synthetic provider response lost');}}return {ok:true};
  }};
  f.request=async(url,options)=>{
@@ -153,4 +163,12 @@ test('a concurrent project or global stop during reconciliation prevents another
 });
 test('an uncertain write without the exact target active is never replayed automatically',async()=>{
  const f=failedFixture();f.loseBeforeCommit=true;await assert.rejects(f.execute());assert.equal(f.state.held,true);assert.equal(f.state.rollback.state,'pending');assert.equal(f.writes,0);assert.equal(f.calls.filter(x=>x.action==='rollback').length,1);assert.deepEqual(f.waits,[]);
+});
+
+test('compiled fallback verifies the new provider UUID while preserving original release/approval across uncertain reconciliation',async()=>{
+ for(const lost of [false,true]){
+  const f=failedFixture();f.compiled=true;f.loseResponse=lost;const healthy=structuredClone(f.state.last_healthy),approval=structuredClone(f.state.last_user_approved);
+  assert.equal((await f.execute()).recovered,true);assert.equal(f.writes,1);assert.equal(f.state.rollback.state,'verified');assert.equal(f.state.revision,5);assert.equal(f.state.held,true);assert.notEqual(f.active.version_id,healthy.version_id);assert.deepEqual(f.state.rollback.original_target,healthy);assert.deepEqual(f.state.last_healthy,healthy);assert.deepEqual(f.state.last_user_approved,approval);
+  await f.execute();assert.equal(f.writes,1);
+ }
 });
