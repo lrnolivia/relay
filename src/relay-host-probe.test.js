@@ -41,6 +41,10 @@ test("authenticated endpoint preserves original tools and controls alongside the
   assert.equal(autonomy.inputSchema.properties.buildIdentity,undefined);
   const setupDenied=await worker.fetch(new Request('https://relay.loew.fi/mcp',{method:'POST',headers:{'content-type':'application/json','CF-Access-Client-Id':'synthetic-client','CF-Access-Client-Secret':'synthetic-secret'},body:JSON.stringify({jsonrpc:'2.0',id:2,method:'tools/call',params:{name:'relay_autonomy',arguments:{action:'configure_build_guard',scope:'relay',expected_revision:0,operation_id:'unauthenticated-setup',reason:'Synthetic denial test',authorization:'Synthetic'}}})}),{});
   assert.equal(setupDenied.status,401);
+  const archiveDenied=await worker.fetch(new Request('https://relay.loew.fi/api/release-recovery?source_sha='+('a'.repeat(40))+'&run_id=7&artifact_id=8',{method:'POST',headers:{'content-type':'application/zip'},body:'synthetic archive'}),{});
+  assert.equal(archiveDenied.status,401,'Archive persistence requires the same cryptographic ingress authentication');
+  const archiveInvalid=await worker.fetch(new Request('https://relay.loew.fi/api/release-recovery?source_sha=invalid',{headers:{'cf-access-jwt-assertion':token}}),{});
+  assert.equal(archiveInvalid.status,400,'Verified JWT reaches archive validation through the canonical auth probe');
   await t.test('private setup headers survive removal of primary service headers and bind to the verified JWT',async()=>{
     const {readFile}=await import('node:fs/promises');
     const {autonomyState}=await import('./autonomy-control.js');
