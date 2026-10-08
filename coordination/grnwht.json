@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T21:06:44.238Z",
+  "updated_at": "2026-10-08T21:08:42.578Z",
   "legacy_branches": [
     "main"
   ],
@@ -323,6 +323,46 @@
           }
         }
       ]
+    },
+    {
+      "id": "grnwht-install-guide-compact-v3-20261008",
+      "owner": "01a11b04-95a2-7212-aa48-1e23e956d00a",
+      "goal": "Integrate Lauren-approved uniform no-blur compact v3 install artwork after current push batch live",
+      "acceptance": "Verify authoritative local archive SHA cebd1d8a6581892cedb380d9a53eab6c442f7be95690422d9a7069296129ffc8, all249 payload entries; replace216 PNGs/provenance/dimensions preserving25 inlineSVGs, intrinsic ratio100%width/autoheight, true bakedalpha no extra mask/blur/crop/stretch or oldfullheight wrapper; preserve3steps/detectedOSformfactor/desktophidden/current8+Default palette lightdark reacting selection; meaningful representative mobile/tablet geometry andalpha/selection proof, no actualphysicaldeviceinstallation claim.",
+      "next_action": "Verified local archive +249 hashes independently at21:07UTC; retainedroot restoration-check. Queue only until active push release completes; refresh exactcorrectpaths/admission beforesourcewrites. No generatedreplacementorchange to activeCI producthead.",
+      "paths": [
+        "dist/install-guide/",
+        "docs/install-guide/",
+        "src/install.jsx",
+        "src/install-guide.css",
+        "tests/install-guide-visuals.test.mjs",
+        "tests/install-tutorial-browser.mjs"
+      ],
+      "resources": [
+        "grnwht-install-guide-compact-v3"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-08T21:08:42.578Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Integrate Lauren-approved uniform no-blur compact v3 install artwork after current push batch live",
+          "acceptance": "Verify authoritative local archive SHA cebd1d8a6581892cedb380d9a53eab6c442f7be95690422d9a7069296129ffc8, all249 payload entries; replace216 PNGs/provenance/dimensions preserving25 inlineSVGs, intrinsic ratio100%width/autoheight, true bakedalpha no extra mask/blur/crop/stretch or oldfullheight wrapper; preserve3steps/detectedOSformfactor/desktophidden/current8+Default palette lightdark reacting selection; meaningful representative mobile/tablet geometry andalpha/selection proof, no actualphysicaldeviceinstallation claim.",
+          "at": "2026-10-08T21:08:42.578Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-install-guide-compact-v3-20261008:acceptance:0",
+            "text": "Verify authoritative local archive SHA cebd1d8a6581892cedb380d9a53eab6c442f7be95690422d9a7069296129ffc8, all249 payload entries; replace216 PNGs/provenance/dimensions preserving25 inlineSVGs, intrinsic ratio100%width/autoheight, true bakedalpha no extra mask/blur/crop/stretch or oldfullheight wrapper; preserve3steps/detectedOSformfactor/desktophidden/current8+Default palette lightdark reacting selection; meaningful representative mobile/tablet geometry andalpha/selection proof, no actualphysicaldeviceinstallation claim.",
+            "at": "2026-10-08T21:08:42.578Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
