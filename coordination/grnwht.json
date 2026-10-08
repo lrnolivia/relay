@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T07:52:26.174Z",
+  "updated_at": "2026-10-08T07:52:37.950Z",
   "legacy_branches": [
     "main"
   ],
@@ -46,6 +46,45 @@
     }
   ],
   "claims": [
+    {
+      "id": "grnwht-shared-auth-diagnostic-20261008",
+      "owner": "01a11a66-e465-7352-b120-b472c71827f6",
+      "branch": "grnwht/shared-auth-diagnostic-20261008",
+      "paths": [
+        "backend/tests/auth-d1-diagnostics-runtime.test.mjs"
+      ],
+      "resources": [
+        "grnwht-auth-d1-diagnostic"
+      ],
+      "goal": "Diagnose the recurring signed-in shared-auth 500s by exposing the original D1 operation failure before Better Auth wrapping, using only finite safe fields and same-request correlation.",
+      "acceptance": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
+      "next_action": "Source frozen at78ca108fa5ff9b2a75a1b7e92565f19e5b0761b5, four remote files restore-verified, focused18/18PASS. Release original4paths for GW combined integration/CI. Retain only potential isolated native-runtime test path (no file exists or planned source edit) because rescope requires nonempty paths, plus diagnostic resource. This chat owns cause/evidence follow-through. No production source writes; remaining local runtime verification and required checks. No independent deploy/fullhostedCI; live500 not resolved.",
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "base_sha": "bc6a11fab0021ee45548fc07200682d7e6109fa2",
+      "state": "active",
+      "created_at": "2026-10-08T07:39:51.586Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Diagnose the recurring signed-in shared-auth 500s by exposing the original D1 operation failure before Better Auth wrapping, using only finite safe fields and same-request correlation.",
+          "acceptance": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
+          "at": "2026-10-08T07:36:42.475Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-shared-auth-diagnostic-20261008:acceptance:0",
+            "text": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
+            "at": "2026-10-08T07:36:42.475Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T07:52:26.174Z",
+      "lease_until": "2026-10-08T19:52:26.174Z"
+    },
     {
       "id": "grnwht-family-app-20261004",
       "owner": "01a118bb-6944-7fc1-aeb8-c886955c79d6",
@@ -165,14 +204,18 @@
         "backend/tests/year-safe-rollback.test.mjs",
         "backend/wrangler.jsonc",
         "backend/migrations/",
-        "backend/scripts/"
+        "backend/scripts/",
+        "backend/src/auth.mjs",
+        "backend/src/error-diagnostics.mjs",
+        "backend/src/auth-d1-diagnostics.mjs",
+        "backend/tests/auth-d1-diagnostics.test.mjs"
       ],
       "resources": [
         "grnwht-family-app"
       ],
       "goal": "Build Lauren's Green & White family reunion PWA, preserving all approved panels and features with simple older-user-friendly flows.",
       "acceptance": "Phone/tablet native-feeling responsive PWA; tablet doubles as desktop. Terra Prime/ctrl/Relay design, deep forest dark and pale sage light, brighter green actions, rounded buttons, tree logo, small consistent primary-action glyphs, labeled bottom nav. Photo-first Instagram/simple Facebook familiarity. Feed, polls, admin/mod media first, microprofiles, confirmed family connections and ancestors, RSVP, household bulk-shirt selection, reusable reunion years, planner/admin/treasurer permissions, sign-in for private data and writes. External verified PayPal.Me and Cash App contribution links; app does not hold funds. Self-reports pending until treasurer verifies receipt. Preserve every feature and panel; simplify flows and progressive attention with reduced-motion behavior, not feature removal. Isolated resettable test mode with sample content and no real side effects. No credentials, bank account opening or transfers authorized. Prototype is not proof of production auth, persistence, payments or native installability.",
-      "next_action": "Preserve original acceptance and UI/features PR14 release ownership. Lauren directly requires push activation in this combined release, superseding earlier OFF direction; implement readiness, staged keys/config, consent/device registration and verified test delivery without bulk family notifications. Existing coordination chat 01a11a66-e465-7352-b120-b472c71827f6 owns the bounded original D1/auth diagnostic: release reservations for backend/src/auth.mjs, backend/src/error-diagnostics.mjs and their new diagnostic module/test. Those files are unchanged by PR14 b532. Coordinate exact integration/runtime releases; retain privacy, per-request auth, saved layouts, exact-head gates and rollback. No new workers.",
+      "next_action": "Preserve original acceptance and UI/features PR14 release ownership. Lauren directly requires push activation in this combined release, superseding earlier OFF direction; implement readiness, staged keys/config, consent/device registration and verified test delivery without bulk family notifications. Existing coordination chat 01a11a66-e465-7352-b120-b472c71827f6 owns the bounded original D1/auth diagnostic: release reservations for backend/src/auth.mjs, backend/src/error-diagnostics.mjs and their new diagnostic module/test. Those files are unchanged by PR14 b532. Coordinate exact integration/runtime releases; retain privacy, per-request auth, saved layouts, exact-head gates and rollback. No new workers. Integrate frozen, remote/hash-restore verified diagnostic78ca108 with four source paths explicitly released by its owner; one combined PR14 exact-head pipeline. Diagnostic chat retains cause/evidence follow-through, no runtime race.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -196,8 +239,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T07:38:38.968Z",
-      "lease_until": "2026-10-08T19:38:38.968Z",
+      "updated_at": "2026-10-08T07:52:37.950Z",
+      "lease_until": "2026-10-08T19:52:37.950Z",
       "amendment_count": 2,
       "amendments": [
         {
@@ -267,45 +310,6 @@
           "next_action": "Lauren directly selected Resume implementation after checking ownership, clarified investigation handled elsewhere and this chat must finish all implementation, authorized ordering and keeping live isolated preview updated with links. Resume exact PR12 58bbade and separate editor draft through existing assignment. First fix remaining panel/photo framing and card network failures without weakening gates; integrate worker-owned editor three-way; complete evergreen own-profile invitations/You, memorial household/head/ancestor work, branded email and notifications, push preparation and PWA guide/acceptance. No new workers. Preserve original full acceptance, production PR11 rollback, separate read-only investigation, no repeated0015-19/memorial restoration, no push activation/sample payments/credentials. Exact checks/rendered acceptance before release; supported source and coordination paths only."
         }
       ]
-    },
-    {
-      "id": "grnwht-shared-auth-diagnostic-20261008",
-      "owner": "01a11a66-e465-7352-b120-b472c71827f6",
-      "branch": "grnwht/shared-auth-diagnostic-20261008",
-      "paths": [
-        "backend/tests/auth-d1-diagnostics-runtime.test.mjs"
-      ],
-      "resources": [
-        "grnwht-auth-d1-diagnostic"
-      ],
-      "goal": "Diagnose the recurring signed-in shared-auth 500s by exposing the original D1 operation failure before Better Auth wrapping, using only finite safe fields and same-request correlation.",
-      "acceptance": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
-      "next_action": "Source frozen at78ca108fa5ff9b2a75a1b7e92565f19e5b0761b5, four remote files restore-verified, focused18/18PASS. Release original4paths for GW combined integration/CI. Retain only potential isolated native-runtime test path (no file exists or planned source edit) because rescope requires nonempty paths, plus diagnostic resource. This chat owns cause/evidence follow-through. No production source writes; remaining local runtime verification and required checks. No independent deploy/fullhostedCI; live500 not resolved.",
-      "category": "qa-verification",
-      "primary_team": "inspector",
-      "supporting_teams": [],
-      "primary_staff": "roman",
-      "supporting_staff": [],
-      "base_sha": "bc6a11fab0021ee45548fc07200682d7e6109fa2",
-      "state": "active",
-      "created_at": "2026-10-08T07:39:51.586Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Diagnose the recurring signed-in shared-auth 500s by exposing the original D1 operation failure before Better Auth wrapping, using only finite safe fields and same-request correlation.",
-          "acceptance": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
-          "at": "2026-10-08T07:36:42.475Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "grnwht-shared-auth-diagnostic-20261008:acceptance:0",
-            "text": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
-            "at": "2026-10-08T07:36:42.475Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-08T07:52:26.174Z",
-      "lease_until": "2026-10-08T19:52:26.174Z"
     }
   ]
 }
