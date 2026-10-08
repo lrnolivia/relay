@@ -131,3 +131,27 @@ test('one canonical runner reuses its exact build and retains every applicable g
   assert.doesNotMatch(workflow,/playwright install/);assert.match(workflow,/const browser=await chromium.launch\(\)/);
   assert.match(workflow,/run: npm test/);assert.doesNotMatch(workflow,/ci-stage.mjs suites/);assert.doesNotMatch(workflow,/continue-on-error:/);assert.equal(STAGE_JOBS.quality.find(stage=>stage.id==='suites').timeout_ms,0,'five-suite orchestration retains independent 15-minute bounds');
 });
+
+// These contracts import generated payloads but do not launch a browser.
+// They must run after the canonical build and block every expensive caller.
+test('built tool contracts fail before runtime and browser setup with complete stage accounting',async()=>{
+  const workflow=await readFile(new URL('../.github/workflows/ci.yml',import.meta.url),'utf8');
+  const manifest=JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
+  assert.ok(workflow.indexOf('id: setup-tool-surface')>workflow.indexOf('id: setup-build'));
+  assert.ok(workflow.indexOf('id: setup-tool-surface')<workflow.indexOf('id: setup-runtime'));
+  assert.ok(workflow.indexOf('id: setup-tool-surface')<workflow.indexOf('id: setup-browser'));
+  assert.equal(workflow.split('node scripts/ci-stage.mjs tool-surface -- npm run test:tool-surface').length-1,1);
+  assert.match(manifest.scripts['test:tool-surface'],/^node --test test\/tool-contract\.test\.mjs && node --test --test-name-pattern=/);
+  assert.ok(manifest.scripts['test:tool-surface'].includes('^authenticated endpoint preserves original tools and controls alongside the admitted diagnostics$'));
+  assert.ok(manifest.scripts['test:tool-surface'].endsWith(' src/relay-host-probe.test.js'));
+  const host=await readFile(new URL('../src/relay-host-probe.test.js',import.meta.url),'utf8');
+  assert.equal(host.split('test(\"authenticated endpoint preserves original tools and controls alongside the admitted diagnostics\",').length-1,1,'named gate must select exactly one existing endpoint contract');
+  assert.match(workflow,/steps\.setup-tool-surface\.outcome != 'success'/);
+  assert.match(workflow,/RELAY_SETUP_TOOL_SURFACE: \$\{\{ steps.setup-tool-surface.outcome \}\}/);
+  assert.ok(workflow.includes('"tool-surface":"${{ steps.setup-tool-surface.outcome }}"'));
+  const plan=qualityPlan({production:false,preview:false,contextCard:false});
+  assert.ok(plan.required_stages.includes('tool-surface'));
+  for(const change of [x=>delete x.receipts['tool-surface'],x=>x.outcomes['tool-surface']='skipped',x=>{x.receipts['tool-surface'].state='failed';x.receipts['tool-surface'].exit_code=7;}]){
+    const value=passing();change(value);assert.equal(summarizeStages(value).exit_code,1);
+  }
+});

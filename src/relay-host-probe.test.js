@@ -29,8 +29,15 @@ test("authenticated endpoint preserves original tools and controls alongside the
     return response.json();
   };
   const { result: { tools } } = await rpc("tools/list");
-  // Discovery exposes 51 model tools plus the existing app-only bridge.
-  assert.deepEqual(tools.filter(tool => tool.name !== HOST_PROBE_TOOL).map(tool => tool.name).sort(), [...originalTools, "relay_context", "relay_execution", "relay_night_shift", "relay_skills", "relay_ui_request", "relay_test_card_action", "relay_card_action_sample", "relay_runner_feedback_submit", "relay_runner_feedback_peek", "relay_runner_feedback_status", "relay_runner_feedback_ack", "relay_test_card_static_standard", "relay_test_card_static_compat", "relay_test_card_lifecycle_standard"].sort());
+  // The exact inventory preserves every existing tool and the admitted additions.
+  assert.deepEqual(tools.filter(tool => tool.name !== HOST_PROBE_TOOL).map(tool => tool.name).sort(), [...originalTools, "relay_autonomy", "relay_context", "relay_execution", "relay_night_shift", "relay_skills", "relay_ui_request", "relay_test_card_action", "relay_card_action_sample", "relay_runner_feedback_submit", "relay_runner_feedback_peek", "relay_runner_feedback_status", "relay_runner_feedback_ack", "relay_test_card_static_standard", "relay_test_card_static_compat", "relay_test_card_lifecycle_standard"].sort());
+  const autonomy = tools.find(tool => tool.name === "relay_autonomy");
+  assert.deepEqual(autonomy.securitySchemes, [{ type: "oauth2", scopes: [] }]);
+  assert.deepEqual(autonomy.inputSchema.properties.action.enum, ["status", "hold", "resume", "healthy", "approve", "rollback"]);
+  assert.deepEqual(autonomy.inputSchema.required, ["action", "scope"]);
+  assert.equal(autonomy.inputSchema.additionalProperties, false);
+  const unauthenticated = await worker.fetch(new Request("https://relay.loew.fi/mcp", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({jsonrpc:"2.0",id:1,method:"tools/call",params:{name:"relay_autonomy",arguments:{action:"hold",scope:"global"}}})}), {});
+  assert.equal(unauthenticated.status,401);
   assert.deepEqual(tools.find(tool => tool.name === "relay_ui_request")._meta.ui.visibility, ["app"]);
   const manifestTool=tools.find(tool=>tool.name==='relay_source_tree');
   assert.equal(manifestTool.annotations.readOnlyHint,true);assert.equal(manifestTool.annotations.destructiveHint,false);

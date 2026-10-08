@@ -140,10 +140,11 @@ test('incomplete accounting is persisted before execution and after every result
 
 test('blocked CLI writes all required outcomes without launching any suite',async()=>{
   const dir=await mkdtemp(join(tmpdir(),'relay-blocked-fixture-'));try{
-    const result=spawnSync(process.execPath,[new URL('../scripts/ci-test-orchestrator.mjs',import.meta.url).pathname,'--blocked'],{cwd:dir,env:{...process.env,RELAY_SOURCE_SHA:'a'.repeat(40),RELAY_SETUP_INSTALL:'failure',RELAY_SETUP_BROWSER:'skipped',RELAY_SETUP_BUILD:'skipped',RELAY_SETUP_TYPECHECK:'skipped'},encoding:'utf8'});
+    const result=spawnSync(process.execPath,[new URL('../scripts/ci-test-orchestrator.mjs',import.meta.url).pathname,'--blocked'],{cwd:dir,env:{...process.env,RELAY_SOURCE_SHA:'a'.repeat(40),RELAY_SETUP_INSTALL:'failure',RELAY_SETUP_TOOL_SURFACE:'failure',RELAY_SETUP_BROWSER:'skipped',RELAY_SETUP_BUILD:'skipped',RELAY_SETUP_TYPECHECK:'skipped'},encoding:'utf8'});
     assert.equal(result.status,1);const report=JSON.parse(await readFile(join(dir,'qa-evidence/test-workflow/result.json'),'utf8'));
     assert.equal(report.results.length,5);assert.ok(report.results.every(r=>r.status==='blocked'&&r.exit_code===null));
     assert.equal(report.identity.complete,false);assert.equal(report.exit_code,1);
+    assert.equal(report.prerequisites['tool-surface'],'failure');assert.ok(report.results.every(r=>r.blocked_by.includes('tool-surface')));
   }finally{await rm(dir,{recursive:true,force:true});}
 });
 

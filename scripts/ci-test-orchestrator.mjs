@@ -108,7 +108,7 @@ async function main(){
     const output=resolve('qa-evidence/test-workflow/result.json');await mkdir(dirname(output),{recursive:true});
     const save=async report=>{await writeFile(output+'.tmp',JSON.stringify(report,null,2)+'\n');await rename(output+'.tmp',output);};
     if(blocked){
-      const prerequisites=Object.fromEntries(['toolchain','focused','install','contracts','browser','build','typecheck','runtime'].map(id=>[id,process.env['RELAY_SETUP_'+id.toUpperCase()]||'unknown']));
+      const prerequisites=Object.fromEntries(['toolchain','focused','install','contracts','tool-surface','browser','build','typecheck','runtime'].map(id=>[id,process.env['RELAY_SETUP_'+id.toUpperCase().replaceAll('-','_')]||'unknown']));
       const blockedBy=Object.keys(prerequisites).filter(id=>prerequisites[id]!=='success');
       const report={schema:1,identity,required_suites:REQUIRED_SUITES.map(s=>s.id),prerequisites,results:REQUIRED_SUITES.map(s=>({id:s.id,required:true,status:'blocked',exit_code:null,blocked_by:blockedBy,diagnostic:'Shared CI prerequisite did not pass; no suite was launched'})),passed:0,nonpassing:REQUIRED_SUITES.length,exit_code:1};
       await save(report);process.stdout.write('::error::Required suites blocked by shared setup: '+blockedBy.join(', ')+'\n');process.exitCode=1;return;
