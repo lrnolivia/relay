@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T07:39:51.586Z",
+  "updated_at": "2026-10-08T07:52:26.174Z",
   "legacy_branches": [
     "main"
   ],
@@ -273,17 +273,14 @@
       "owner": "01a11a66-e465-7352-b120-b472c71827f6",
       "branch": "grnwht/shared-auth-diagnostic-20261008",
       "paths": [
-        "backend/src/auth.mjs",
-        "backend/src/error-diagnostics.mjs",
-        "backend/src/auth-d1-diagnostics.mjs",
-        "backend/tests/auth-d1-diagnostics.test.mjs"
+        "backend/tests/auth-d1-diagnostics-runtime.test.mjs"
       ],
       "resources": [
         "grnwht-auth-d1-diagnostic"
       ],
       "goal": "Diagnose the recurring signed-in shared-auth 500s by exposing the original D1 operation failure before Better Auth wrapping, using only finite safe fields and same-request correlation.",
       "acceptance": "Capture original operation/category/class/code with matching HTTP/server request ID in actual supported runtime; retain all safe records per invocation; preserve exact auth settings, revocation/membership and second messaging checks, rethrow original failures, no cache/retry/reset/Push changes. Return exact files, commit, focused/required tests and safe runtime evidence to the GW integration owner. Keep incident open until affected signed-in initial loads and repeated polls pass.",
-      "next_action": "Accepted direct diagnostic ownership; original GW owner released exact auth/error paths at record d94e8a7 and confirmed writer quiescence/no PR14 changes. Create isolated managed checkout from current main, add failure-only D1 boundary records and known error fingerprints, preserve auth behavior, run focused and required checks plus actual local workerd/D1 representative checks, publish exact source for deliberate integration. No independent production deployment.",
+      "next_action": "Source frozen at78ca108fa5ff9b2a75a1b7e92565f19e5b0761b5, four remote files restore-verified, focused18/18PASS. Release original4paths for GW combined integration/CI. Retain only potential isolated native-runtime test path (no file exists or planned source edit) because rescope requires nonempty paths, plus diagnostic resource. This chat owns cause/evidence follow-through. No production source writes; remaining local runtime verification and required checks. No independent deploy/fullhostedCI; live500 not resolved.",
       "category": "qa-verification",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -307,8 +304,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T07:39:51.586Z",
-      "lease_until": "2026-10-08T19:39:51.586Z"
+      "updated_at": "2026-10-08T07:52:26.174Z",
+      "lease_until": "2026-10-08T19:52:26.174Z"
     }
   ]
 }
