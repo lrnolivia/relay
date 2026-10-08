@@ -1,11 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdir} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
 import {chromium} from 'playwright';
 import {webAssets,mcpHtml} from '../generated.js';
 import {reactJs} from '../generated-react.js';
 import {legacyScript} from '../generated-inspector.js';
 import {contextFixture} from './project-context-fixture.mjs';
+const captureDirectory=fileURLToPath(new URL('../../../qa-evidence/retirement/',import.meta.url));
 
 test('production bundles contain the Relay landing and inert CTRL handoffs, without legacy application programs',()=>{
  assert.equal(legacyScript,'');assert.equal(webAssets['/relay-app.js'],undefined);
@@ -30,7 +32,7 @@ test('the actual generated landing stays intact and retired hash routes cannot r
    await page.locator('.live-telemetry[data-loading=false]').waitFor();
    assert.equal(await page.getByRole('button',{name:'Open files',exact:true}).isEnabled(),true);
    assert.equal(await page.locator('.operator-nav,.work-viewer,#review-list').count(),0);
-   await mkdir('qa-evidence/retirement',{recursive:true});await page.screenshot({path:'qa-evidence/retirement/relay-landing-'+width+'.png',fullPage:true});
+   await mkdir(captureDirectory,{recursive:true});await page.screenshot({path:captureDirectory+'relay-landing-'+width+'.png',fullPage:true});
    for(const path of ['/','/index.html','/preview/fixture'])for(const route of ['today','runner','night-shift','inspector']){
     await page.goto(fixture.origin+path+'#/'+route+'?project=relay');
     await page.getByRole('heading',{name:'Your work is in CTRL',exact:true}).waitFor();
@@ -39,7 +41,7 @@ test('the actual generated landing stays intact and retired hash routes cannot r
     assert.equal(await page.locator('.operator-nav,.work-viewer,#review-list').count(),0);
    }
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
-   await page.screenshot({path:'qa-evidence/retirement/ctrl-handoff-'+width+'.png',fullPage:true});
+   await page.screenshot({path:captureDirectory+'ctrl-handoff-'+width+'.png',fullPage:true});
    await page.getByRole('link',{name:'Back to Relay connections and files'}).click();
    await page.getByRole('heading',{name:'relay',exact:true,level:1}).waitFor();await page.close();
   }

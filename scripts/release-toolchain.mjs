@@ -9,7 +9,7 @@ export const BUILD_INPUTS=Object.freeze(['package.json','package-lock.json','.no
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const stable=value=>Array.isArray(value)?value.map(stable):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,stable(value[key])])):value;
 const digest=value=>hash(JSON.stringify(stable(value)));
-const fail=(code,message)=>{const error=Error(message);error.code=code;throw error;};
+const fail=(code,message,details={})=>{const error=Error(message);Object.assign(error,{code},details);throw error;};
 const json=(bytes,name)=>{try{return JSON.parse(bytes);}catch{fail('invalid_input',name+' must be valid JSON');}};
 export function validateToolchain({manifest,lock,nodePin,nodeVersion,npmVersion}){
   const node=String(nodePin).trim();
@@ -55,7 +55,11 @@ async function readCheckout(root){
 }
 export function validateCheckout(checkout,source){
   if(!checkout||checkout.head_sha!==source||! /^[a-f0-9]{40}$/.test(checkout.tree_sha||''))fail('checkout_mismatch','Actual Git checkout does not match the exact source identity');
-  if(!Array.isArray(checkout.dirty_paths)||checkout.dirty_paths.length)fail('checkout_dirty','Tracked changes or untracked source would invalidate exact commit provenance; preserve and commit them first');
+  if(!Array.isArray(checkout.dirty_paths))fail('checkout_dirty','Checkout dirty-path evidence is missing');
+  if(checkout.dirty_paths.length){
+    const paths=checkout.dirty_paths.slice(0,32).map(path=>String(path).replace(/[\x00-\x1f\x7f]/g,' ').slice(0,240));
+    fail('checkout_dirty','Tracked changes or untracked source would invalidate exact commit provenance; preserve and commit them first. Dirty paths: '+paths.join(', '),{dirty_paths:paths,dirty_path_count:checkout.dirty_paths.length,paths_truncated:checkout.dirty_paths.length>paths.length});
+  }
   return {head_sha:checkout.head_sha,tree_sha:checkout.tree_sha,state:'clean-tracked-and-untracked-source'};
 }
 export async function inspectToolchain({root=process.cwd(),nodeVersion=process.version,npmVersion,env=process.env,checkout}={}){
@@ -92,7 +96,7 @@ async function main(){
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))main().catch(async error=>{
   const code=/^[a-z_]+$/.test(error.code||'')?error.code:'unavailable';
   const message=code==='unavailable'?'Unable to read required release inputs':error.message;
-  await save(process.cwd(),'qa-evidence/toolchain/failure.json',{schema:1,stage:'release-toolchain',state:'blocked',class:'setup_or_artifact',code,message,runtime_verified:false}).catch(()=>{});
+  await save(process.cwd(),'qa-evidence/toolchain/failure.json',{schema:1,stage:'release-toolchain',state:'blocked',class:'setup_or_artifact',code,message,...(error.dirty_paths?{dirty_paths:error.dirty_paths,dirty_path_count:error.dirty_path_count,paths_truncated:error.paths_truncated}:{}),runtime_verified:false}).catch(()=>{});
   const escape=value=>String(value).replaceAll('%','%25').replaceAll('\r','%0D').replaceAll('\n','%0A');
   process.stderr.write('::error title=Release toolchain '+escape(code)+'::'+escape(message)+'\n');process.exitCode=1;
 });

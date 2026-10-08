@@ -37,14 +37,20 @@ test('actual checkout head and clean source are mandatory',()=>{assert.throws(()
 
 async function gitFixture(t){
   const root=await fixture(t);
-  await put(root,'.gitignore','qa-evidence/\nnode_modules/\napps/web/generated.js\napps/web/generated-react.js\napps/web/generated-inspector.js\n');
+  await put(root,'.gitignore','/qa-evidence/\nnode_modules/\napps/web/generated.js\napps/web/generated-react.js\napps/web/generated-inspector.js\n');
   const git=args=>execFileSync('git',args,{cwd:root,encoding:'utf8',stdio:['ignore','pipe','pipe']}).trim();
   git(['init']);git(['add','.']);git(['-c','user.name=Relay contract fixture','-c','user.email=fixture@example.invalid','commit','-m','Synthetic source provenance fixture']);
   const source=git(['rev-parse','HEAD']);
   const opts={root,nodeVersion:'v22.23.3',npmVersion:'10.9.9',env:{RELAY_SOURCE_SHA:source}};
   return {root,git,source,opts};
 }
-test('actual Git root and tracked input identities pass',async t=>{const {root,source,opts}=await gitFixture(t);const receipt=await inspectToolchain(opts);assert.equal(receipt.source_checkout.head_sha,source);assert.match(receipt.source_checkout.tree_sha,/^[a-f0-9]{40}$/);await put(root,'package.json',JSON.stringify(manifest)+'\n');await assert.rejects(inspectToolchain(opts),{code:'checkout_dirty'});});
+test('actual Git root and tracked input identities pass, while failures name the dirty path',async t=>{const {root,source,opts}=await gitFixture(t);const receipt=await inspectToolchain(opts);assert.equal(receipt.source_checkout.head_sha,source);assert.match(receipt.source_checkout.tree_sha,/^[a-f0-9]{40}$/);await put(root,'package.json',JSON.stringify(manifest)+'\n');await assert.rejects(inspectToolchain(opts),cause=>cause.code==='checkout_dirty'&&cause.dirty_paths.includes('package.json')&&/Dirty paths: package.json/.test(cause.message));});
+test('root QA captures preserve build reuse while misplaced app captures remain nonpassing',async t=>{
+  const {root,opts}=await gitFixture(t);await put(root,'apps/web/generated.js','export const webSourceSha='+JSON.stringify(opts.env.RELAY_SOURCE_SHA)+';\n');const receipt=await recordBuild(opts);
+  await put(root,'qa-evidence/retirement/fixture.png','synthetic screenshot');assert.deepEqual(await verifyBuild(receipt,opts),receipt);
+  await put(root,'apps/web/qa-evidence/retirement/fixture.png','misplaced screenshot');await assert.rejects(verifyBuild(receipt,opts),cause=>cause.code==='checkout_dirty'&&cause.dirty_paths.includes('apps/web/qa-evidence/retirement/fixture.png'));
+  const workflow=await readFile(new URL('../.github/workflows/ci.yml',import.meta.url),'utf8'),react=await readFile(new URL('../apps/web/test/react.test.mjs',import.meta.url),'utf8');assert.match(workflow,/path: qa-evidence\/retirement\//);assert.match(react,/new URL\('\.\.\/\.\.\/\.\.\/qa-evidence\/retirement\/',import.meta.url\)/);
+});
 test('snapshot nested under unrelated clean repository cannot borrow ancestor HEAD',async t=>{const {root,git,source}=await gitFixture(t);await put(root,'.gitignore','snapshot/\nqa-evidence/\napps/web/generated.js\napps/web/generated-react.js\napps/web/generated-inspector.js\n');git(['add','.gitignore']);git(['-c','user.name=Relay contract fixture','-c','user.email=fixture@example.invalid','commit','-m','Ignore synthetic snapshot']);for(const file of BUILD_INPUTS)await put(root,'snapshot/'+file,await readFile(join(root,file)));await assert.rejects(inspectToolchain({root:join(root,'snapshot'),nodeVersion:'v22.23.3',npmVersion:'10.9.9',env:{RELAY_SOURCE_SHA:git(['rev-parse','HEAD'])}}),{code:'checkout_root_mismatch'});});
 test('ignored build input cannot be attributed to HEAD',async t=>{const {root,git,opts}=await gitFixture(t);git(['rm','--cached','wrangler.jsonc']);await put(root,'.gitignore','wrangler.jsonc\nqa-evidence/\napps/web/generated.js\napps/web/generated-react.js\napps/web/generated-inspector.js\n');git(['add','.gitignore']);git(['-c','user.name=Relay contract fixture','-c','user.email=fixture@example.invalid','commit','-m','Ignore synthetic config']);await assert.rejects(inspectToolchain({...opts,env:{RELAY_SOURCE_SHA:git(['rev-parse','HEAD'])}}),{code:'checkout_input_untracked'});});
 test('one exact build precedes browser readiness and the official image matches the lock',async()=>{

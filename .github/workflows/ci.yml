@@ -274,7 +274,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: relay-retirement-${{ github.event.pull_request.head.sha || github.sha }}
-          path: apps/web/qa-evidence/retirement/
+          path: qa-evidence/retirement/
           if-no-files-found: error
       - name: Preserve actual website route screenshots
         if: always() && (startsWith(github.head_ref, 'relay/retained-interactive-previews-') || startsWith(github.head_ref, 'relay/website-work-queue-views-') || startsWith(github.head_ref, 'relay/website-post-release-polish-') || startsWith(github.head_ref, 'relay/website-2.0-repair-') || startsWith(github.head_ref, 'relay/website-project-context-polish-') || startsWith(github.head_ref, 'relay/website-notifications-review-'))
