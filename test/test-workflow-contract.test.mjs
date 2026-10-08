@@ -9,12 +9,13 @@ import {REQUIRED_SUITES,redact,runSuites} from '../scripts/ci-test-orchestrator.
 const suite=(id,code,dependsOn=[])=>({id,command:process.execPath,args:['-e',code],required:true,dependsOn});
 
 // SIGKILL delivery is asynchronous. Observe this exact fixture PID for a bounded
-// interval; only absence or zombie state proves it no longer executes.
+// interval; only absence or zombie state proves it no longer executes. Linux
+// proc_single_show returns ESRCH if the task disappears after the file opens.
 async function waitForStopped(pid,{read=readFile,now=()=>performance.now(),sleep=ms=>new Promise(done=>setTimeout(done,ms)),timeoutMs=500}={}){
   const deadline=now()+timeoutMs;
   for(;;){
     try{const stat=await read('/proc/'+pid+'/stat','utf8');if(/\) Z /.test(stat))return true;}
-    catch(error){if(error.code==='ENOENT')return true;throw error;}
+    catch(error){if(error.code==='ENOENT'||error.code==='ESRCH')return true;throw error;}
     const remaining=deadline-now();if(remaining<=0)return false;
     await sleep(Math.min(10,remaining));
   }
@@ -29,8 +30,8 @@ test('a genuinely surviving descendant fails the bounded termination observation
   assert.equal(stopped,false);assert.equal(time,500);assert.equal(reads,51);
 });
 test('termination observation accepts only disappearance and propagates unreadable state',async()=>{
-  assert.equal(await waitForStopped(123,{read:async()=>{throw Object.assign(Error('gone'),{code:'ENOENT'});}}),true);
-  await assert.rejects(waitForStopped(123,{read:async()=>{throw Object.assign(Error('denied'),{code:'EACCES'});}}),{code:'EACCES'});
+  for(const code of ['ENOENT','ESRCH'])assert.equal(await waitForStopped(123,{read:async()=>{throw Object.assign(Error('gone'),{code});}}),true);
+  for(const code of ['EACCES','EPERM','EIO'])await assert.rejects(waitForStopped(123,{read:async()=>{throw Object.assign(Error('unreadable'),{code});}}),{code});
 });
 
 
