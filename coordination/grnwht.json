@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T02:24:37.032Z",
+  "updated_at": "2026-10-09T02:52:28.151Z",
   "legacy_branches": [
     "main"
   ],
@@ -588,7 +588,7 @@
       "supporting_teams": [],
       "primary_staff": null,
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-09T01:40:28.530Z",
       "objective_history": {
         "baseline": {
@@ -613,7 +613,8 @@
           "next_action": "Lauren explicitly requested Julian take over until 1 AM America/New_York on October 9 (05:00 UTC), supplied GW_PR21_HANDOFF.md. Claude held this assignment for handoff; parent now coordinates sole writer and checkpoints. Current PR21 head 8c3afddea13f90b68c7e42ec035833a73ef10313, run 37872382155 in progress; shared/API/surfaces passed, Chromium shared-page editor has failed and needs exact diagnosis. Do not treat earlier-head fixes as current success. Mac task 01a11e67-53ca-7220-9f56-32655aa7202c is admitted read-only pending usage availability and ownership confirmation. Finish PR21 exact-head checks, merge commit, sealed archive hash/binding verification, deploy and anonymous postflight; no schema changes. Then notification-channels branch WIP5afa065 UI/tests and 0025 migration rehearsal with app_migrations tracking, never wrangler migrations apply; then queued next batch if time. Stop by05:00 UTC with committed recoverable checkpoint and no lingering jobs. Preserve family data and rollback aa0b8044-f344-4e4c-bb5a-54ba7dc36a43. No real test push until Lauren's explicit test action."
         }
       ],
-      "updated_at": "2026-10-09T02:04:49.494Z"
+      "updated_at": "2026-10-09T02:52:28.151Z",
+      "completed_at": "2026-10-09T02:52:28.151Z"
     },
     {
       "id": "grnwht-notification-channel-controls-20261009",
@@ -1706,7 +1707,7 @@
       "primary_staff": null,
       "supporting_staff": [],
       "base_sha": "c75d7b4c30a23a822eda4064fcf867911a356e0a",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-09T01:40:51.342Z",
       "objective_history": {
         "baseline": {
@@ -1723,8 +1724,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-09T02:20:29.323Z",
-      "lease_until": "2026-10-09T14:20:29.323Z",
+      "updated_at": "2026-10-09T02:52:28.151Z",
+      "lease_until": "2026-10-09T14:52:28.151Z",
       "handoffs": [
         {
           "at": "2026-10-09T02:04:49.494Z",
@@ -1732,7 +1733,13 @@
           "to": "01a1146d-0267-735e-8332-fa38cf7fb007",
           "next_action": "Lauren explicitly requested Julian take over until 1 AM America/New_York on October 9 (05:00 UTC), supplied GW_PR21_HANDOFF.md. Claude held this assignment for handoff; parent now coordinates sole writer and checkpoints. Current PR21 head 8c3afddea13f90b68c7e42ec035833a73ef10313, run 37872382155 in progress; shared/API/surfaces passed, Chromium shared-page editor has failed and needs exact diagnosis. Do not treat earlier-head fixes as current success. Mac task 01a11e67-53ca-7220-9f56-32655aa7202c is admitted read-only pending usage availability and ownership confirmation. Finish PR21 exact-head checks, merge commit, sealed archive hash/binding verification, deploy and anonymous postflight; no schema changes. Then notification-channels branch WIP5afa065 UI/tests and 0025 migration rehearsal with app_migrations tracking, never wrangler migrations apply; then queued next batch if time. Stop by05:00 UTC with committed recoverable checkpoint and no lingering jobs. Preserve family data and rollback aa0b8044-f344-4e4c-bb5a-54ba7dc36a43. No real test push until Lauren's explicit test action."
         }
-      ]
+      ],
+      "pr": 21,
+      "merged_head_sha": "4387b837c907ec72f4a64239bec1ad3084cf7f05",
+      "merge_commit_sha": "e91b68d0fbff03c01468e68648b06d241eab9b68",
+      "evidence": "PR21 merged e91b68d0fbff03c01468e68648b06d241eab9b68 from4387b837c907ec72f4a64239bec1ad3084cf7f05. Run37874374267 all9PASS,1120frontend394backend. Sealed shared artifact11591288379 ZIP8e893679246a7942ef7a4b3bdda4bab9f00b0a283256c5434c075d891b563d22 and modulebfd6130feed92513b6f976904d3794fc6fa25c663e8a1671b8def15d3a223592 verified. Worker a3d2eed6-68cf-4c29-8d02-d4610c834423 at100%, deploymentc7164783-d6fd-4086-9130-d531c9350df9 02:49:08UTC.22bindings/runtime/header rules preserved,325noncoreassets identical. Two identical reserved header representations allowed only by exacttype/length/hash with uniqueJS. Both greenwhitefamily.com and gwf.loew.fi health200,build8a3c1bfaf3f7cb52b532 and index/JS/CSS hashes matchCI; anonymousapi/state401. No schema changes. Oldaa0b rollback only BEFORE new invitation-layout writes; thereafter forwardfix withoutdatarestore. Humanversionstill0.2.0; nextchannelsrelease bumps0.3.0. Lauren asked to retry physicaliPhone test; actualdelivery/signedinhardware acceptance not claimed. No leftoverlocaljobs/sourcewrites. Frozen notificationchannels patch is separatequeuedassignment, not partofthiscompletion.",
+      "work_accounted": true,
+      "completed_at": "2026-10-09T02:52:28.151Z"
     }
   ]
 }
