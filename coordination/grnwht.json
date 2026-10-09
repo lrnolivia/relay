@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T05:38:49.349Z",
+  "updated_at": "2026-10-09T05:45:00.881Z",
   "legacy_branches": [
     "main"
   ],
@@ -2488,14 +2488,14 @@
       ],
       "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
       "acceptance": "Start from released main after PR23; preserve shipped functionality. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname suggestions require explicit confirmation; no automatic joins, kinship inference, access or head assignment. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
-      "next_action": "Claimed by Claude; branch grnwht/family-setup-onboarding-20261009 from main 03e5cb7 (local worktree /Users/lrnolivia/Repos/gwfamily-next, nothing pushed yet). Survey: households + multi-membership/roles/primary exist (0023); family_groups (0002) are private close-family post groups, NOT branches; no Branch concept exists. SLICE 1 DESIGN: migration 0027 additive: branches(id TEXT PK, name TEXT NOT NULL, name_key TEXT NOT NULL UNIQUE lowercased surname, created_by TEXT REFERENCES members, created_at) and branch_households(branch_id, household_id, added_by, added_at, PK(branch_id,household_id)); households may belong to several branches. Authority: any active member may create a branch only when no name_key match exists (explicit, disclosed); household heads attach/detach their own household; leaders/admins manage any; no universal admin review. Surname suggestions: client/server suggest branches+households by member surname, always require explicit confirm, never auto-join, never grant access or heads. Setup UI: search/suggest branches and households, join (existing household request/approval flow), create household (founding head disclosed), attach to branch. Then slices 2 badges (one primary household badge +N, quieter branch, pending excluded, initials collision fallback), 3 onboarding solid card over blurred authorized Home + accent tutorial, 4 existing-member one-time refinement (account/version scoped, Not now stops), 5 multi-memory upload wizard (partial success/retry idempotent), 6 parity pass incl. Family Calendar event-type selector. Apply sheet standard (X left/check right, platter rows, sticky footer, scroll->sheet). Recommendation to Lauren: continue in a fresh Claude session reading this record to save usage.",
+      "next_action": "RELEASED by the original Claude chat (context exhausted) for a fresh Claude worker, per Lauren. Nothing coded; local worktree /Users/lrnolivia/Repos/gwfamily-next on branch grnwht/family-setup-onboarding-20261009 from main 03e5cb7 (unpushed, clean). New worker: resume with owner id claude-code-pr20 (or hand off), then follow the slice plan: 1 Branches (migration 0027 branches + branch_households, setup/suggestions with explicit confirmation, authority: create only when no name match, heads attach own household, leaders manage), 2 compact badges, 3 onboarding solid card over blurred authorized Home + accent tutorial, 4 existing-member one-time refinement, 5 multi-memory upload wizard, 6 parity pass incl. Calendar event-type selector. Apply sheet standard (X left / check right, platter rows, sticky footer incl. destructive, scroll->sheet). Lean testing; full CI on PR. No production writes without Lauren; 0027 via rehearsal + d1 execute --file + app_migrations row, never wrangler migrations apply.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "03e5cb7848f269195b4b1761cc8ee0dd8cfd55ec",
-      "state": "active",
+      "state": "held",
       "created_at": "2026-10-09T05:38:21.407Z",
       "objective_history": {
         "baseline": {
@@ -2552,8 +2552,8 @@
         }
       ],
       "amendment_count": 2,
-      "updated_at": "2026-10-09T05:38:49.349Z",
-      "lease_until": "2026-10-09T17:38:49.349Z"
+      "updated_at": "2026-10-09T05:45:00.881Z",
+      "lease_until": "2026-10-09T17:45:00.881Z"
     }
   ]
 }
