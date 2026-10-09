@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T05:45:18.202Z",
+  "updated_at": "2026-10-09T05:54:01.042Z",
   "legacy_branches": [
     "main"
   ],
@@ -2488,7 +2488,7 @@
       ],
       "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
       "acceptance": "Start from released main after PR23; preserve shipped functionality. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname suggestions require explicit confirmation; no automatic joins, kinship inference, access or head assignment. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
-      "next_action": "RESUMED by fresh Claude side session (owner claude-code-pr20) in /Users/lrnolivia/Repos/gwfamily-next on grnwht/family-setup-onboarding-20261009 from 03e5cb7. Starting slice 1 Branches (migration 0027 branches + branch_households, API, setup/management UI). Slices 2-6 follow per prior plan. No production/D1 writes.",
+      "next_action": "Slice 1 Branches pushed b44787a on grnwht/family-setup-onboarding-20261009: migration 0027_family_branches (branches unique name_key + branch_households), Worker authority (create only when no name match; heads own household; leaders any; rename/remove-empty leaders), CREATE_HOUSEHOLD optional branchId, You > Branches & households UI with confirmed suggestions. Backend+unit+webkit family-setup-browser pass. Next: slice 2 compact badges. Note: CI step for tests/family-setup-browser.mjs needs .github path (rescope at PR time). No production/D1 writes.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2552,8 +2552,8 @@
         }
       ],
       "amendment_count": 2,
-      "updated_at": "2026-10-09T05:45:18.202Z",
-      "lease_until": "2026-10-09T17:45:18.202Z"
+      "updated_at": "2026-10-09T05:54:01.042Z",
+      "lease_until": "2026-10-09T17:54:01.042Z"
     }
   ]
 }
