@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T01:58:56.944Z",
+  "updated_at": "2026-10-09T02:00:07.943Z",
   "legacy_branches": [
     "main"
   ],
@@ -1623,7 +1623,7 @@
       ],
       "goal": "Hotfix Lauren's 2026-10-09 live review: real page structure/headers/glyphs and the production push send failure, before the next combined batch.",
       "acceptance": "Invitations card is an editable/movable native panel on Family and You (no rogue chevron); undefined glyph names (link/more/play) drawn and guarded by test; memorial pages use a real header row instead of a back button on the hero plate; memorial menu shows dots; tributes without duplicate copy; Your Reunion Plan sheet has one title and no nested card; memorial rows show photo or angel plate; row glyphs align to bold title line app-wide; push transport uses Workers-valid redirect:'manual' (root cause of 500 on test send) with regression test; push panel shows only state-appropriate actions; member email styling pickers removed (email follows app theme). Unit, backend and Chromium/WebKit browser suites, exact-head CI, deploy with rollback, live push test by Lauren.",
-      "next_action": "Adding Lauren's sheet standard (X left / check right, platter rows, sticky footer actions incl. destructive, phone bottom sheets, element-only vs panel-only removal), Family desktop squeeze fix, mini-profile single centered action, profile-menu eye on name row. Push onto PR21 branch, one CI, then deploy.",
+      "next_action": "CHECKPOINT (Claude usage nearly exhausted). PR21 branch grnwht/ui-structure-fixes-20261009 head 8c3afddea13f90b68c7e42ec035833a73ef10313: push fix (redirect:'manual' - root cause of 500 on test send), page structure fixes, sheet standard (X left/check right, platter rows, sticky footer incl. destructive, phone bottom sheets, element-only vs panel-only removal), Family desktop squeeze fix, mini-profile single centered action, profile-menu eye on name row. Local: unit 1115/1117 (2 Node26-only), backend 393/393, affected Chromium suites pass. NEXT: wait for PR21 exact-head CI on 8c3afdd (auto-fix on), fix any failures, mark ready, merge, deploy sealed CI archive exactly like PR20 (no schema change; rollback aa0b8044-f344-4e4c-bb5a-54ba7dc36a43), then Lauren retries Send test notification from Home Screen app. FOLLOW-UP branch grnwht/notification-channels-20261009 (5afa065, WIP, untested): migration 0025 channels_json + server read/write + push/email filters; still needs UI (In app/Email/Push per category on Notifications), tests, rehearsal on prod schema copy, app_migrations record. Then claim grnwht-next-family-setup-onboarding-20261009. UI standard saved in Claude memory gw-ui-sheet-standard.",
       "category": "implementation",
       "primary_team": "release",
       "supporting_teams": [],
@@ -1647,8 +1647,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-09T01:58:56.944Z",
-      "lease_until": "2026-10-09T13:58:56.944Z"
+      "updated_at": "2026-10-09T02:00:07.943Z",
+      "lease_until": "2026-10-09T14:00:07.943Z"
     }
   ]
 }
