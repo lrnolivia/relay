@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T03:47:26.081Z",
+  "updated_at": "2026-10-09T04:24:14.921Z",
   "legacy_branches": [
     "main"
   ],
@@ -646,7 +646,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-09T02:17:30.614Z",
       "objective_history": {
         "baseline": {
@@ -662,7 +662,9 @@
             "at": "2026-10-09T02:17:30.614Z"
           }
         ]
-      }
+      },
+      "completed_at": "2026-10-09T04:24:14.921Z",
+      "updated_at": "2026-10-09T04:24:14.921Z"
     },
     {
       "id": "grnwht-calendar-push-polish-20261009",
@@ -1862,7 +1864,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "e91b68d0fbff03c01468e68648b06d241eab9b68",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-09T02:53:13.605Z",
       "objective_history": {
         "baseline": {
@@ -1879,8 +1881,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-09T03:47:00.365Z",
-      "lease_until": "2026-10-09T15:47:00.365Z"
+      "updated_at": "2026-10-09T04:24:14.921Z",
+      "lease_until": "2026-10-09T16:24:14.921Z",
+      "pr": 22,
+      "merged_head_sha": "d1320a82ab433e134f5801ac0c4461718ff99912",
+      "merge_commit_sha": "e42d342758c0a65788f2481d20eb799d80806c15",
+      "evidence": "PR22 merged as e42d342758c0a65788f2481d20eb799d80806c15. Exact tested head d1320a82, CI37879209209: all9 jobs,1137 frontend and409 backend tests,8 browser groups passed. Live0.3.0 build be3f4c9569fbad92e6df, Worker82331bd3-85d2-4f2b-944c-466ce5ba2a29 at100%, deployment77d09acb-7586-4095-a274-07f1bb241bdc. Both domains' HTML/JS/CSS/build hashes match CI; health200 and anonymous state401. Migration0025 applied atomically with fresh D1 bookmark; all165 expected schema objects match, ledger present, attempt marker0, quick_check ok and no foreign-key violations. User subsequently authorized email and push-prompt activation: both public flags true, member opt-outs preserved, no mass enrollment/preferences changed. User confirmed seeing returning-member prompt on Mac. Missing accepted minute delivery schedule added while retaining hourly. Ordinary scheduled provider delivery is NOT claimed verified: separate read-only follow-through remains open, one pending row had zero attempts at04:06:42. All source/checkpoints preserved; stable rollback is PR21 a3d2eed6 with additive schema and current family data retained, never the transient migration wrapper. Deployment receipt saved; source writer stopped.",
+      "work_accounted": true,
+      "completed_at": "2026-10-09T04:24:14.921Z"
     }
   ]
 }
