@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T16:42:41.524Z",
+  "updated_at": "2026-10-09T17:19:48.993Z",
   "legacy_branches": [
     "main"
   ],
@@ -2489,7 +2489,7 @@
       ],
       "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
       "acceptance": "Start from released main after PR23; preserve shipped functionality. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname suggestions require explicit confirmation; no automatic joins, kinship inference, access or head assignment. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
-      "next_action": "Context handover. Live = PR #24 (Worker 62761a2d, rollback 30ef7035). Follow-up draft PR lrnolivia/gwfamily#25 head f2d20a3 (branch grnwht/parity-pass-20261009, worktree /Users/lrnolivia/Repos/gwfamily-next): badges full names up to 2 then +N, circle chip only on profile/mini card, profile-menu avatar fix, danger surface now wins over primary (fixes live Leave/Remove showing primary), sticky sheet saves, shirt/branch parity. Tools scripts/parity-audit.mjs + scripts/contrast-audit.mjs. Next owner: finish android/dark audit review, CI green on #25, screenshots to Lauren, release only with her go. Full notes: side-session-notes family-setup-onboarding-handover.md (HANDOVER section).",
+      "next_action": "RELEASING PR #25 with Lauren's go ('ship it', 2026-10-09 ~17:15Z) from session local_4823ff74. Head b5df45e (adds dark danger-tint contrast fix + per-view audit reload). Frontend only: no migrations/backend/wrangler changes. Steps: all 9 CI green on exact head -> mark ready + merge via Relay -> sealed CI artifact -> wrangler versions upload --no-bundle -> verify 24 bindings vs live 62761a2d -> relay_cloud_deploy_project_version -> smoke. Rollback 62761a2d-6230-4fe3-9345-652055a9beb4. Next after release: multi-step simplification of the household/Refine popup + branch question on household creation (Lauren).",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2519,8 +2519,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-09T16:42:41.524Z",
-      "lease_until": "2026-10-10T04:42:41.524Z",
+      "updated_at": "2026-10-09T17:19:48.993Z",
+      "lease_until": "2026-10-10T05:19:48.993Z",
       "amendments": [
         {
           "at": "2026-10-09T02:24:37.032Z",
