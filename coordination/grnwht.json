@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T01:40:51.342Z",
+  "updated_at": "2026-10-09T01:58:56.944Z",
   "legacy_branches": [
     "main"
   ],
@@ -1603,9 +1603,17 @@
         "src/family.jsx",
         "src/memorials.css",
         "src/page-panels.jsx",
+        "src/page-panels.css",
         "src/visual-system.css",
         "src/push-device.jsx",
         "src/email-notifications.jsx",
+        "src/sheet-standard.css",
+        "src/ui-core.jsx",
+        "src/page-object-tools.jsx",
+        "src/card-content-layout.jsx",
+        "src/photo-framing.jsx",
+        "src/page-elements.jsx",
+        "src/person-identity.jsx",
         "backend/src/push-runtime.mjs",
         "backend/tests/push-routes.test.mjs",
         "tests/"
@@ -1615,7 +1623,7 @@
       ],
       "goal": "Hotfix Lauren's 2026-10-09 live review: real page structure/headers/glyphs and the production push send failure, before the next combined batch.",
       "acceptance": "Invitations card is an editable/movable native panel on Family and You (no rogue chevron); undefined glyph names (link/more/play) drawn and guarded by test; memorial pages use a real header row instead of a back button on the hero plate; memorial menu shows dots; tributes without duplicate copy; Your Reunion Plan sheet has one title and no nested card; memorial rows show photo or angel plate; row glyphs align to bold title line app-wide; push transport uses Workers-valid redirect:'manual' (root cause of 500 on test send) with regression test; push panel shows only state-appropriate actions; member email styling pickers removed (email follows app theme). Unit, backend and Chromium/WebKit browser suites, exact-head CI, deploy with rollback, live push test by Lauren.",
-      "next_action": "Claimed by Claude. Local fixes complete; browser matrix running; then Relay commits, draft PR, exact-head CI, deploy and Lauren live push test.",
+      "next_action": "Adding Lauren's sheet standard (X left / check right, platter rows, sticky footer actions incl. destructive, phone bottom sheets, element-only vs panel-only removal), Family desktop squeeze fix, mini-profile single centered action, profile-menu eye on name row. Push onto PR21 branch, one CI, then deploy.",
       "category": "implementation",
       "primary_team": "release",
       "supporting_teams": [],
@@ -1639,8 +1647,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-09T01:40:51.342Z",
-      "lease_until": "2026-10-09T13:40:51.342Z"
+      "updated_at": "2026-10-09T01:58:56.944Z",
+      "lease_until": "2026-10-09T13:58:56.944Z"
     }
   ]
 }
