@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T01:40:28.530Z",
+  "updated_at": "2026-10-09T01:40:51.342Z",
   "legacy_branches": [
     "main"
   ],
@@ -570,7 +570,7 @@
       "supporting_teams": [],
       "primary_staff": null,
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-09T01:40:28.530Z",
       "objective_history": {
         "baseline": {
@@ -1583,6 +1583,64 @@
       "evidence": "PR20 merged 2026-10-09T01:13:44Z as c75d7b4c30a23a822eda4064fcf867911a356e0a (merge commit; main tree identical to head 4f16b50d2bb5b53cb066c57ab29eff14dbb61908) on Lauren's explicit instruction. Exact-head CI run 37866845748: all 9 checks success. Production: gwfamily Worker version aa0b8044-f344-4e4c-bb5a-54ba7dc36a43 (deployment c57672a8) built from that run's sealed archive sha256 400867011c018d593a6c90394f232b81caba4c5d0187622ae6822de130bf0f48 (335-file manifest verified), all 22 bindings/secrets unchanged. D1: time-travel bookmark 000000e2-00000000-000050ff-da086e3e840106a8af21b73b296a40b7 and local export (sha256 8cf43fbe...) taken before change; 0022/0023/0024 rehearsed on prod schema and real-data copy, applied and recorded in app_migrations 01:06Z, memberships/triggers verified. Live postflight on greenwhitefamily.com and gwf.loew.fi: build 85de3183e602586923bc, health 200, assets match sealed build, anonymous private APIs 401, sign-in renders without console errors. Email notification delivery and push prompt remain off. Rollback: deploy 0002b725-05a5-4381-9513-525c02affee8 (schema-compatible); no DB restore after multi-household writes. Untracked Mac files (src/memorial-model.js unused helper, generated dist/QA) preserved untouched. Remaining non-blocking: Lauren signed-in owner smoke test.",
       "work_accounted": true,
       "completed_at": "2026-10-09T01:14:09.214Z"
+    },
+    {
+      "id": "grnwht-ui-structure-push-hotfix-20261009",
+      "owner": "claude-code-pr20",
+      "branch": "grnwht/ui-structure-fixes-20261009",
+      "paths": [
+        "src/glyph-paths.js",
+        "src/shared-content-schema.js",
+        "src/shared-panels.js",
+        "src/family-invitations.jsx",
+        "src/family-invitations.css",
+        "src/react-app.jsx",
+        "src/page-navigation.jsx",
+        "src/memorial-page.jsx",
+        "src/planning-checklist.jsx",
+        "src/planning-checklist.css",
+        "src/reunion-plans.jsx",
+        "src/family.jsx",
+        "src/memorials.css",
+        "src/page-panels.jsx",
+        "src/visual-system.css",
+        "src/push-device.jsx",
+        "src/email-notifications.jsx",
+        "backend/src/push-runtime.mjs",
+        "backend/tests/push-routes.test.mjs",
+        "tests/"
+      ],
+      "resources": [
+        "grnwht-device-push-release"
+      ],
+      "goal": "Hotfix Lauren's 2026-10-09 live review: real page structure/headers/glyphs and the production push send failure, before the next combined batch.",
+      "acceptance": "Invitations card is an editable/movable native panel on Family and You (no rogue chevron); undefined glyph names (link/more/play) drawn and guarded by test; memorial pages use a real header row instead of a back button on the hero plate; memorial menu shows dots; tributes without duplicate copy; Your Reunion Plan sheet has one title and no nested card; memorial rows show photo or angel plate; row glyphs align to bold title line app-wide; push transport uses Workers-valid redirect:'manual' (root cause of 500 on test send) with regression test; push panel shows only state-appropriate actions; member email styling pickers removed (email follows app theme). Unit, backend and Chromium/WebKit browser suites, exact-head CI, deploy with rollback, live push test by Lauren.",
+      "next_action": "Claimed by Claude. Local fixes complete; browser matrix running; then Relay commits, draft PR, exact-head CI, deploy and Lauren live push test.",
+      "category": "implementation",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "base_sha": "c75d7b4c30a23a822eda4064fcf867911a356e0a",
+      "state": "active",
+      "created_at": "2026-10-09T01:40:51.342Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Hotfix Lauren's 2026-10-09 live review: real page structure/headers/glyphs and the production push send failure, before the next combined batch.",
+          "acceptance": "Invitations card is an editable/movable native panel on Family and You (no rogue chevron); undefined glyph names (link/more/play) drawn and guarded by test; memorial pages use a real header row instead of a back button on the hero plate; memorial menu shows dots; tributes without duplicate copy; Your Reunion Plan sheet has one title and no nested card; memorial rows show photo or angel plate; row glyphs align to bold title line app-wide; push transport uses Workers-valid redirect:'manual' (root cause of 500 on test send) with regression test; push panel shows only state-appropriate actions; member email styling pickers removed (email follows app theme). Unit, backend and Chromium/WebKit browser suites, exact-head CI, deploy with rollback, live push test by Lauren.",
+          "at": "2026-10-09T01:40:28.530Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-ui-structure-push-hotfix-20261009:acceptance:0",
+            "text": "Invitations card is an editable/movable native panel on Family and You (no rogue chevron); undefined glyph names (link/more/play) drawn and guarded by test; memorial pages use a real header row instead of a back button on the hero plate; memorial menu shows dots; tributes without duplicate copy; Your Reunion Plan sheet has one title and no nested card; memorial rows show photo or angel plate; row glyphs align to bold title line app-wide; push transport uses Workers-valid redirect:'manual' (root cause of 500 on test send) with regression test; push panel shows only state-appropriate actions; member email styling pickers removed (email follows app theme). Unit, backend and Chromium/WebKit browser suites, exact-head CI, deploy with rollback, live push test by Lauren.",
+            "at": "2026-10-09T01:40:28.530Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-09T01:40:51.342Z",
+      "lease_until": "2026-10-09T13:40:51.342Z"
     }
   ]
 }
