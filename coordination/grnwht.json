@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T03:47:00.365Z",
+  "updated_at": "2026-10-09T03:47:26.081Z",
   "legacy_branches": [
     "main"
   ],
@@ -669,7 +669,7 @@
       "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
       "goal": "Deliver approved Family Calendar controls and first-line menu glyph alignment together with explicit per-device message preview consent and clearer push copy in GW0.3.1.",
       "acceptance": "Preserve PR22 independent channels, keyboard focus, permissions, calendar date/recurrence/moderation behavior and saved family content. Existing devices remain generic until explicit preview consent. Preserve old/new service-worker deep-link compatibility; Reply in GW uses authorized existing composer, no unverified native inline replies. Apply reviewed additive0026 only after guarded rehearsal and checkpoint, never old migration replay. Exact combined source CI and artifact verification before deployment; verify embedded sw.js Worker-first routing and live bytes. Report visual/device limits honestly.",
-      "next_action": "Local combined candidate sealed from immutable d1320a82 plus independently reviewed rich-push patch and six-file Calendar/menu patch. Wait until PR22 deployed and active reservation completed, then claim a fresh branch from current main and run one combined CI release. Final synthetic Calendar rendering awaits explicit user approval; do not retry denied render. Work until05:00UTC, checkpoint by04:50; preserve remaining work for handoff.",
+      "next_action": "Claim freshbranchfromcurrentmain e42d3427 andpublishsealedlocal0.3.1source inonePR; verifyapplyhashesagainstmergedPR22 andrunoneexactcombinedCI. Parent keepsPR22production-release resource; nextcandidate must notmigrate/deployuntilpriorreleaseverifiedandproductionownershiptransferred. Final syntheticCalendar renderingpermissionstillpending; do notretrydeniedrender. Checkpointby04:50UTC, stop05:00UTC.",
       "paths": [
         "backend/migrations/0026_push_message_previews.sql",
         "backend/scripts/build-site-worker.mjs",
@@ -716,7 +716,7 @@
         "src/about.jsx"
       ],
       "resources": [
-        "grnwht-production-release"
+        "grnwht-next-source-031"
       ],
       "category": "implementation",
       "primary_team": "release",
@@ -739,7 +739,32 @@
             "at": "2026-10-09T03:40:24.072Z"
           }
         ]
-      }
+      },
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-09T03:47:26.081Z",
+          "by": "01a1146d-0267-735e-8332-fa38cf7fb007",
+          "reason": "PR22 is merged and source writers have finished; its activeclaim now exclusively retainsproductionrelease only. Allow isolated nextsourceCI inparallelwithout overlappingfiles/runtimeownership.",
+          "fields": [
+            "next_action",
+            "resources"
+          ],
+          "before": {
+            "next_action": "Local combined candidate sealed from immutable d1320a82 plus independently reviewed rich-push patch and six-file Calendar/menu patch. Wait until PR22 deployed and active reservation completed, then claim a fresh branch from current main and run one combined CI release. Final synthetic Calendar rendering awaits explicit user approval; do not retry denied render. Work until05:00UTC, checkpoint by04:50; preserve remaining work for handoff.",
+            "resources": [
+              "grnwht-production-release"
+            ]
+          },
+          "after": {
+            "next_action": "Claim freshbranchfromcurrentmain e42d3427 andpublishsealedlocal0.3.1source inonePR; verifyapplyhashesagainstmergedPR22 andrunoneexactcombinedCI. Parent keepsPR22production-release resource; nextcandidate must notmigrate/deployuntilpriorreleaseverifiedandproductionownershiptransferred. Final syntheticCalendar renderingpermissionstillpending; do notretrydeniedrender. Checkpointby04:50UTC, stop05:00UTC.",
+            "resources": [
+              "grnwht-next-source-031"
+            ]
+          }
+        }
+      ],
+      "updated_at": "2026-10-09T03:47:26.081Z"
     }
   ],
   "claims": [
