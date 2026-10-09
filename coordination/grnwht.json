@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T06:06:54.429Z",
+  "updated_at": "2026-10-09T06:13:26.620Z",
   "legacy_branches": [
     "main"
   ],
@@ -2481,14 +2481,15 @@
         "backend/src/",
         "backend/tests/",
         "backend/migrations/",
-        "docs/"
+        "docs/",
+        ".github/workflows/"
       ],
       "resources": [
         "grnwht-next-family-setup-onboarding"
       ],
       "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
       "acceptance": "Start from released main after PR23; preserve shipped functionality. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname suggestions require explicit confirmation; no automatic joins, kinship inference, access or head assignment. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
-      "next_action": "Slices 1-5 pushed (b44787a, d7468aa, da4b4dc, 07b8960, dd349ab multi-memory upload: per-file status rows, honest partial summary, retry repeats only the failed step without re-upload/duplicate, per-item details wizard on existing editor). Next: slice 6 parity pass incl. Family Calendar event-type selector, then draft PR via Relay + CI. No production/D1 writes.",
+      "next_action": "Slices 1-6 pushed (b44787a, d7468aa, da4b4dc, 07b8960, dd349ab, 695076d parity + sticky footer gap fix verified Chromium/WebKit, 42843de). Rescoped to .github/workflows/ only to add CI steps for new browser suites (family-setup, welcome, memory-batch). Next: CI wiring, draft PR via Relay, CI green on exact head. No production/D1 writes.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2518,6 +2519,8 @@
           }
         ]
       },
+      "updated_at": "2026-10-09T06:13:26.620Z",
+      "lease_until": "2026-10-09T18:13:26.620Z",
       "amendments": [
         {
           "at": "2026-10-09T02:24:37.032Z",
@@ -2551,9 +2554,7 @@
           }
         }
       ],
-      "amendment_count": 2,
-      "updated_at": "2026-10-09T06:06:54.429Z",
-      "lease_until": "2026-10-09T18:06:54.429Z"
+      "amendment_count": 2
     }
   ]
 }
