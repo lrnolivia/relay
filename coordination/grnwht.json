@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T01:14:09.214Z",
+  "updated_at": "2026-10-09T01:40:28.530Z",
   "legacy_branches": [
     "main"
   ],
@@ -530,6 +530,60 @@
             "id": "grnwht-next-family-setup-onboarding-20261009:acceptance:0",
             "text": "Keep separate from current PR20 deployment; use its verified released baseline. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname matching may suggest provisional placement only, never grant access, infer kinship or assign heads. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
             "at": "2026-10-09T01:02:17.682Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "grnwht-ui-structure-push-hotfix-20261009",
+      "owner": "claude-code-pr20",
+      "goal": "Hotfix Lauren's 2026-10-09 live review: real page structure/headers/glyphs and the production push send failure, before the next combined batch.",
+      "acceptance": "Invitations card is an editable/movable native panel on Family and You (no rogue chevron); undefined glyph names (link/more/play) drawn and guarded by test; memorial pages use a real header row instead of a back button on the hero plate; memorial menu shows dots; tributes without duplicate copy; Your Reunion Plan sheet has one title and no nested card; memorial rows show photo or angel plate; row glyphs align to bold title line app-wide; push transport uses Workers-valid redirect:'manual' (root cause of 500 on test send) with regression test; push panel shows only state-appropriate actions; member email styling pickers removed (email follows app theme). Unit, backend and Chromium/WebKit browser suites, exact-head CI, deploy with rollback, live push test by Lauren.",
+      "next_action": "Branch grnwht/ui-structure-fixes-20261009 from main c75d7b4. Code complete locally; running browser matrix, then commit via Relay, draft PR, exact-head CI, deploy (no schema change), Lauren live push test. Then claim grnwht-next-family-setup-onboarding-20261009 on fresh baseline.",
+      "paths": [
+        "src/glyph-paths.js",
+        "src/shared-content-schema.js",
+        "src/shared-panels.js",
+        "src/family-invitations.jsx",
+        "src/family-invitations.css",
+        "src/react-app.jsx",
+        "src/page-navigation.jsx",
+        "src/memorial-page.jsx",
+        "src/planning-checklist.jsx",
+        "src/planning-checklist.css",
+        "src/reunion-plans.jsx",
+        "src/family.jsx",
+        "src/memorials.css",
+        "src/page-panels.jsx",
+        "src/visual-system.css",
+        "src/push-device.jsx",
+        "src/email-notifications.jsx",
+        "backend/src/push-runtime.mjs",
+        "backend/tests/push-routes.test.mjs",
+        "tests/"
+      ],
+      "resources": [
+        "grnwht-device-push-release"
+      ],
+      "category": "implementation",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-09T01:40:28.530Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Hotfix Lauren's 2026-10-09 live review: real page structure/headers/glyphs and the production push send failure, before the next combined batch.",
+          "acceptance": "Invitations card is an editable/movable native panel on Family and You (no rogue chevron); undefined glyph names (link/more/play) drawn and guarded by test; memorial pages use a real header row instead of a back button on the hero plate; memorial menu shows dots; tributes without duplicate copy; Your Reunion Plan sheet has one title and no nested card; memorial rows show photo or angel plate; row glyphs align to bold title line app-wide; push transport uses Workers-valid redirect:'manual' (root cause of 500 on test send) with regression test; push panel shows only state-appropriate actions; member email styling pickers removed (email follows app theme). Unit, backend and Chromium/WebKit browser suites, exact-head CI, deploy with rollback, live push test by Lauren.",
+          "at": "2026-10-09T01:40:28.530Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-ui-structure-push-hotfix-20261009:acceptance:0",
+            "text": "Invitations card is an editable/movable native panel on Family and You (no rogue chevron); undefined glyph names (link/more/play) drawn and guarded by test; memorial pages use a real header row instead of a back button on the hero plate; memorial menu shows dots; tributes without duplicate copy; Your Reunion Plan sheet has one title and no nested card; memorial rows show photo or angel plate; row glyphs align to bold title line app-wide; push transport uses Workers-valid redirect:'manual' (root cause of 500 on test send) with regression test; push panel shows only state-appropriate actions; member email styling pickers removed (email follows app theme). Unit, backend and Chromium/WebKit browser suites, exact-head CI, deploy with rollback, live push test by Lauren.",
+            "at": "2026-10-09T01:40:28.530Z"
           }
         ]
       }
