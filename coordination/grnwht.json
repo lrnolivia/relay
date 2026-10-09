@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T02:53:13.605Z",
+  "updated_at": "2026-10-09T03:40:24.072Z",
   "legacy_branches": [
     "main"
   ],
@@ -660,6 +660,83 @@
             "id": "grnwht-notification-channel-controls-20261009:acceptance:0",
             "text": "Three compact accessible controls per category with independent persistence and truthful readiness. Preserve existing category opt-outs across all delivery channels, global email opt-in, push registration/permission/runtime flags, global-off semantics, conversation mutes, account/revision conflicts and resource authorization. No implicit browser permission, device enrollment or real sends. Email follows app theme. Correct fanout/list/count/open semantics for hidden delivery records; keep legacy category-only client intent without silently enabling channels. Normalize channels in live and preview models. Rehearse reviewed migration0025, backup and forward apply with app_migrations tracking; NEVER wrangler d1 migrations apply. Isolated fictional unit/backend/browser tests for all combinations, exact pinned CI/build and live release proof. No production preference changes or bulk notifications. Preserve production email and automatic push-enrollment flags. Stop by05:00UTC Oct9 with recoverable checkpoint.",
             "at": "2026-10-09T02:17:30.614Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "grnwht-calendar-push-polish-20261009",
+      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
+      "goal": "Deliver approved Family Calendar controls and first-line menu glyph alignment together with explicit per-device message preview consent and clearer push copy in GW0.3.1.",
+      "acceptance": "Preserve PR22 independent channels, keyboard focus, permissions, calendar date/recurrence/moderation behavior and saved family content. Existing devices remain generic until explicit preview consent. Preserve old/new service-worker deep-link compatibility; Reply in GW uses authorized existing composer, no unverified native inline replies. Apply reviewed additive0026 only after guarded rehearsal and checkpoint, never old migration replay. Exact combined source CI and artifact verification before deployment; verify embedded sw.js Worker-first routing and live bytes. Report visual/device limits honestly.",
+      "next_action": "Local combined candidate sealed from immutable d1320a82 plus independently reviewed rich-push patch and six-file Calendar/menu patch. Wait until PR22 deployed and active reservation completed, then claim a fresh branch from current main and run one combined CI release. Final synthetic Calendar rendering awaits explicit user approval; do not retry denied render. Work until05:00UTC, checkpoint by04:50; preserve remaining work for handoff.",
+      "paths": [
+        "backend/migrations/0026_push_message_previews.sql",
+        "backend/scripts/build-site-worker.mjs",
+        "backend/scripts/check-site-worker.mjs",
+        "backend/src/core-assets.mjs",
+        "backend/src/push-policy.mjs",
+        "backend/src/push-routes.mjs",
+        "backend/src/push-runtime.mjs",
+        "backend/src/push-store.mjs",
+        "backend/tests/core-assets.test.mjs",
+        "backend/tests/notification-channels.test.mjs",
+        "backend/tests/push-preview.test.mjs",
+        "backend/tests/push-routes.test.mjs",
+        "backend/tests/push.test.mjs",
+        "backend/wrangler.jsonc",
+        "dist/build.json",
+        "dist/index.html",
+        "dist/react-app.css",
+        "dist/react-app.js",
+        "dist/sw.js",
+        "package-lock.json",
+        "package.json",
+        "src/family-calendar.css",
+        "src/family-calendar.jsx",
+        "src/messaging.jsx",
+        "src/notifications.css",
+        "src/push-device.jsx",
+        "src/push-enrollment-prompt.jsx",
+        "src/push-open.js",
+        "src/push-presentation.js",
+        "src/service-worker.js",
+        "src/visual-system.css",
+        "tests/family-calendar-controls.test.mjs",
+        "tests/fixtures/push-sw-8bddc0a.js",
+        "tests/menu-row-alignment.test.mjs",
+        "tests/notification-model.test.mjs",
+        "tests/notifications-browser.mjs",
+        "tests/profile-interactions-browser.mjs",
+        "tests/push-browser.test.mjs",
+        "tests/push-device-settings.test.mjs",
+        "tests/push-presentation.test.mjs",
+        "tests/release-version.test.mjs",
+        "tests/update-check.test.mjs",
+        "src/about.jsx"
+      ],
+      "resources": [
+        "grnwht-production-release"
+      ],
+      "category": "implementation",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-09T03:40:24.072Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Deliver approved Family Calendar controls and first-line menu glyph alignment together with explicit per-device message preview consent and clearer push copy in GW0.3.1.",
+          "acceptance": "Preserve PR22 independent channels, keyboard focus, permissions, calendar date/recurrence/moderation behavior and saved family content. Existing devices remain generic until explicit preview consent. Preserve old/new service-worker deep-link compatibility; Reply in GW uses authorized existing composer, no unverified native inline replies. Apply reviewed additive0026 only after guarded rehearsal and checkpoint, never old migration replay. Exact combined source CI and artifact verification before deployment; verify embedded sw.js Worker-first routing and live bytes. Report visual/device limits honestly.",
+          "at": "2026-10-09T03:40:24.072Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-calendar-push-polish-20261009:acceptance:0",
+            "text": "Preserve PR22 independent channels, keyboard focus, permissions, calendar date/recurrence/moderation behavior and saved family content. Existing devices remain generic until explicit preview consent. Preserve old/new service-worker deep-link compatibility; Reply in GW uses authorized existing composer, no unverified native inline replies. Apply reviewed additive0026 only after guarded rehearsal and checkpoint, never old migration replay. Exact combined source CI and artifact verification before deployment; verify embedded sw.js Worker-first routing and live bytes. Report visual/device limits honestly.",
+            "at": "2026-10-09T03:40:24.072Z"
           }
         ]
       }
