@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T01:02:17.682Z",
+  "updated_at": "2026-10-09T01:08:17.324Z",
   "legacy_branches": [
     "main"
   ],
@@ -1386,7 +1386,7 @@
       ],
       "goal": "Deliver one consolidated GW launch candidate covering all Lauren-approved current functional and UI work, with parent hotfix reconciliation and living multi-household support",
       "acceptance": "Latest Lauren21:15 explicit single consolidated nextrelease supersedes release-first staging. Include all parenthotfixes; devicepush regression/errorprivacy; eightpreset email source/defaultoffconsent; editorcontrolpolish; device-local returningname/avatar/provider noauthcredential; confirmedselective GWreset withserver signout/nofamilydeletion; compactAbout+linkedofficialcredit; You/Family invitationcards; authorizedcontactglyphbadges; sharedmini-profile identities/privacy/focus/fullphotoactions+selectedfonts; coherenthouseholdhero; verified216compactv3guidePNGs preservingnativeinstallbehaviors; livingmulti-household withperhouseholdroles/recipientconsent/duplicates/pending/primary/remove/privatechildren, migrationbackuprehearsalrollback. Retain explicitpanel/formparity/fade checklist. Meaningful failed-case/targeted/fullheadCI/sourceartifact/runtime/liveproof, no partialall-doneclaim/no newworkers/no invalidation of activefamilyonboarding. Freshauthschema andnecessaryD1migration accessmustbesupported; no cancelled/deniedactionreplay/newcredentials/purchases, actualpushdeliveryonlybyreceipt.",
-      "next_action": "Claude (owner, Lauren-authorized) pushed 10 Relay-verified commits bfbeb44..4f16b50d2bb5b53cb066c57ab29eff14dbb61908 on grnwht/device-push-correction-20261008: update toast clears composer/FAB; acknowledged live commands stay confirmed (no permission change, new unit test); nested layouts stack via container query (nested-only); 44px notification info control; scoped Leader/Member fixtures, preset color assertion, nearest-owner hero selector, install decode readiness, Reunion render gate, Settings/About approved entries. Local on exact tree: Chromium 25/25 browser suites pass; WebKit all pass except macOS-only keyboard-focus artifacts (install-tutorial, hotfix:80, editor-geometry:44) and page-content cancelled read that also fails on pristine bfbeb44 locally; unit 1113/1115 (2 Node26-only, fail on pristine too). Next: await exact-head CI for 4f16b50, fix any newly revealed failures, then release gates (backup/migration rehearsal/exact build/live proof). No deployment.",
+      "next_action": "DEPLOYED 2026-10-09 ~01:07Z by Claude with Lauren's explicit chat authorization. Worker gwfamily version aa0b8044-f344-4e4c-bb5a-54ba7dc36a43 (deployment c57672a8) = sealed CI archive 400867011c01 from run 37866845748 (all 9 checks green) at exact head 4f16b50d2bb5b53cb066c57ab29eff14dbb61908; all 22 bindings/secrets unchanged. Backup: D1 time-travel bookmark 000000e2-00000000-000050ff-da086e3e840106a8af21b73b296a40b7 (01:05Z) + local export ~/gw-backups/gwfamily-db-pre-0022-20261009T0105Z.sql sha256 8cf43fbe. Migrations 0022/0023/0024 rehearsed on prod schema and real-data copy (memberships/counts/triggers preserved), applied via d1 execute and recorded in app_migrations 01:06Z. Postflight: both domains build 85de3183e602586923bc, health 200, JS/CSS/HTML match sealed build (loew.fi adds CF bot script), private APIs 401 anonymous, live sign-in renders with no console errors. Email notifications remain off (no EMAIL_SCHEMA_VERSION), push prompt disabled. Rollback: deploy 0002b725-05a5-4381-9513-525c02affee8 (schema-compatible); do not restore DB after multi-household writes. Remaining: merge PR20 to main (Lauren decision), signed-in owner smoke test by Lauren.",
       "primary_team": "release",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1421,8 +1421,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-09T00:51:12.895Z",
-      "lease_until": "2026-10-09T12:51:12.895Z",
+      "updated_at": "2026-10-09T01:08:17.324Z",
+      "lease_until": "2026-10-09T13:08:17.324Z",
       "amendment_count": 5,
       "amendments": [
         {
