@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T04:58:50.132Z",
+  "updated_at": "2026-10-09T05:01:37.812Z",
   "legacy_branches": [
     "main"
   ],
@@ -2206,14 +2206,15 @@
         "tests/family-invitations-browser.mjs",
         "tests/hotfix-browser.mjs",
         "tests/onboarding-browser.mjs",
-        "tests/push-settings-browser.mjs"
+        "tests/push-settings-browser.mjs",
+        "tests/page-content.test.mjs"
       ],
       "resources": [
         "grnwht-production-release"
       ],
       "goal": "Deliver GW0.3.1 with Calendar/menu polish, opt-in message previews, responsive Home/People panels, household/profile refinements, image/header fixes, and the approved Leader Tools membership queue.",
       "acceptance": "Preserve existing data, removed layouts, fonts/colors, roles, consent and all PR22 channel/focus behavior. Existing devices remain generic until explicit per-device preview opt-in. Compatible old/new SW deep links and exact /sw.js delivery. Normal People-only invitation panel, mobile-only reunion sheet, desktop/tablet checklist, clean Address Book/household profile and preserved private-record/request navigation. Active-member main view, separate sortable approval queue with individually authorized captured-state bulk actions; tests never approve real users. Optional dispatch resilience only if fully reviewed before freeze, with no GET side effects or weakened delivery gates. Reviewed additive0026 with exact preflight/ledger/backup and no replay. Full exact-head CI before deployment; preserve additive layout compatibility on rollback and never restore older family data. Report browser/device limits and leave recoverable handoff by05:00UTC.",
-      "next_action": "Claude supervising (usage-limited). Test fixes for PR23 CI pushed: onboarding (People-only invitation: side on wide, present in People stack on phones; You stays last), push-settings (new preview-consent disclosure text), family-invitations and hotfix (invites/filters now via Family > All family full directory), home-reunion (select Page area via visible chip label). REMAINING REAL BUG for a coder: changing Page area (Main/Side/Full width) in 'Panel · Bring your people.' closes the panel editor because the moved panel re-mounts and src/page-content.jsx MutationObserver (activeSurface disconnected -> activateSurface(null)) clears the active editor. home-reunion-browser.mjs now asserts tools stay open. Fix: on disconnect, re-find the same panel (data-panel-id on same data-panel-page, excluding clones inside dialog / page-element-preview) and keep activeEditor; activeSurface was set from openPanel's options button closest('dialog,.card,section') which may be the inner card, so store panel id/page at activation. A first attempt still closed; verify with a diagnostic stack before shipping. Then full exact-head CI, apply 0026 per runbook (fresh bookmark, preflight, wrangler d1 execute --file 0026-with-ledger.sql, verify), deploy sealed CI artifact with /sw.js in run_worker_first, postflight.",
+      "next_action": "Claude finishing PR23 (Lauren asked). Pushed test alignments (eacf998) and editor fix e339c84 (panel editor stays open when a panel changes page area; one-frame deferred relocation). Updating tests/page-content.test.mjs source pattern, then full exact-head CI, 0026 per runbook, deploy sealed CI artifact with /sw.js worker-first, postflight.",
       "category": "implementation",
       "primary_team": "release",
       "supporting_teams": [],
@@ -2243,8 +2244,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-09T04:58:50.132Z",
-      "lease_until": "2026-10-09T16:58:50.132Z",
+      "updated_at": "2026-10-09T05:01:37.812Z",
+      "lease_until": "2026-10-09T17:01:37.812Z",
       "amendments": [
         {
           "at": "2026-10-09T03:47:26.081Z",
