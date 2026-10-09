@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T02:52:28.151Z",
+  "updated_at": "2026-10-09T02:53:13.605Z",
   "legacy_branches": [
     "main"
   ],
@@ -646,7 +646,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-09T02:17:30.614Z",
       "objective_history": {
         "baseline": {
@@ -1740,6 +1740,62 @@
       "evidence": "PR21 merged e91b68d0fbff03c01468e68648b06d241eab9b68 from4387b837c907ec72f4a64239bec1ad3084cf7f05. Run37874374267 all9PASS,1120frontend394backend. Sealed shared artifact11591288379 ZIP8e893679246a7942ef7a4b3bdda4bab9f00b0a283256c5434c075d891b563d22 and modulebfd6130feed92513b6f976904d3794fc6fa25c663e8a1671b8def15d3a223592 verified. Worker a3d2eed6-68cf-4c29-8d02-d4610c834423 at100%, deploymentc7164783-d6fd-4086-9130-d531c9350df9 02:49:08UTC.22bindings/runtime/header rules preserved,325noncoreassets identical. Two identical reserved header representations allowed only by exacttype/length/hash with uniqueJS. Both greenwhitefamily.com and gwf.loew.fi health200,build8a3c1bfaf3f7cb52b532 and index/JS/CSS hashes matchCI; anonymousapi/state401. No schema changes. Oldaa0b rollback only BEFORE new invitation-layout writes; thereafter forwardfix withoutdatarestore. Humanversionstill0.2.0; nextchannelsrelease bumps0.3.0. Lauren asked to retry physicaliPhone test; actualdelivery/signedinhardware acceptance not claimed. No leftoverlocaljobs/sourcewrites. Frozen notificationchannels patch is separatequeuedassignment, not partofthiscompletion.",
       "work_accounted": true,
       "completed_at": "2026-10-09T02:52:28.151Z"
+    },
+    {
+      "id": "grnwht-notification-channel-controls-20261009",
+      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
+      "branch": "grnwht/notification-channel-controls-20261009",
+      "paths": [
+        "backend/migrations/0025_notification_channels.sql",
+        "backend/src/email-notifications.mjs",
+        "backend/src/notification-service.mjs",
+        "backend/src/push-store.mjs",
+        "backend/src/family-calendar.mjs",
+        "backend/tests/",
+        "package.json",
+        "package-lock.json",
+        "src/about-notices.json",
+        "src/about.jsx",
+        "src/data-adapter.js",
+        "src/email-notifications.jsx",
+        "src/notification-model.js",
+        "src/notifications.css",
+        "src/notifications.jsx",
+        "src/push-device.jsx",
+        "src/use-notifications.js",
+        "tests/"
+      ],
+      "resources": [
+        "grnwht-notification-channel-controls"
+      ],
+      "goal": "Complete per-category In app, Email and Push controls from Claude's preserved WIP after PR21 release.",
+      "acceptance": "Three compact accessible controls per category with independent persistence and truthful readiness. Preserve existing category opt-outs across all delivery channels, global email opt-in, push registration/permission/runtime flags, global-off semantics, conversation mutes, account/revision conflicts and resource authorization. No implicit browser permission, device enrollment or real sends. Email follows app theme. Correct fanout/list/count/open semantics for hidden delivery records; keep legacy category-only client intent without silently enabling channels. Normalize channels in live and preview models. Rehearse reviewed migration0025, backup and forward apply with app_migrations tracking; NEVER wrangler d1 migrations apply. Isolated fictional unit/backend/browser tests for all combinations, exact pinned CI/build and live release proof. No production preference changes or bulk notifications. Preserve production email and automatic push-enrollment flags. Stop by05:00UTC Oct9 with recoverable checkpoint.",
+      "next_action": "PR21 is merged and deployed, baseline e91b68d0fbff03c01468e68648b06d241eab9b68. Integrate isolated channel patch only after fixing and independently rechecking four identified settings/readback edges. Preserve original WIP branch. Publish to this fresh branch in bounded commits, draft PR, pinned full CI and migration rehearsal. No production migration before verified patch and backup. Stop by05:00UTC with checkpoint.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "e91b68d0fbff03c01468e68648b06d241eab9b68",
+      "state": "active",
+      "created_at": "2026-10-09T02:53:13.605Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Complete per-category In app, Email and Push controls from Claude's preserved WIP after PR21 release.",
+          "acceptance": "Three compact accessible controls per category with independent persistence and truthful readiness. Preserve existing category opt-outs across all delivery channels, global email opt-in, push registration/permission/runtime flags, global-off semantics, conversation mutes, account/revision conflicts and resource authorization. No implicit browser permission, device enrollment or real sends. Email follows app theme. Correct fanout/list/count/open semantics for hidden delivery records; keep legacy category-only client intent without silently enabling channels. Normalize channels in live and preview models. Rehearse reviewed migration0025, backup and forward apply with app_migrations tracking; NEVER wrangler d1 migrations apply. Isolated fictional unit/backend/browser tests for all combinations, exact pinned CI/build and live release proof. No production preference changes or bulk notifications. Preserve production email and automatic push-enrollment flags. Stop by05:00UTC Oct9 with recoverable checkpoint.",
+          "at": "2026-10-09T02:17:30.614Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-notification-channel-controls-20261009:acceptance:0",
+            "text": "Three compact accessible controls per category with independent persistence and truthful readiness. Preserve existing category opt-outs across all delivery channels, global email opt-in, push registration/permission/runtime flags, global-off semantics, conversation mutes, account/revision conflicts and resource authorization. No implicit browser permission, device enrollment or real sends. Email follows app theme. Correct fanout/list/count/open semantics for hidden delivery records; keep legacy category-only client intent without silently enabling channels. Normalize channels in live and preview models. Rehearse reviewed migration0025, backup and forward apply with app_migrations tracking; NEVER wrangler d1 migrations apply. Isolated fictional unit/backend/browser tests for all combinations, exact pinned CI/build and live release proof. No production preference changes or bulk notifications. Preserve production email and automatic push-enrollment flags. Stop by05:00UTC Oct9 with recoverable checkpoint.",
+            "at": "2026-10-09T02:17:30.614Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-09T02:53:13.605Z",
+      "lease_until": "2026-10-09T14:53:13.605Z"
     }
   ]
 }
