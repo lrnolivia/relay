@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T06:16:46.649Z",
+  "updated_at": "2026-10-09T09:56:45.914Z",
   "legacy_branches": [
     "main"
   ],
@@ -2489,7 +2489,7 @@
       ],
       "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
       "acceptance": "Start from released main after PR23; preserve shipped functionality. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname suggestions require explicit confirmation; no automatic joins, kinship inference, access or head assignment. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
-      "next_action": "Draft PR lrnolivia/gwfamily#24 open via Relay, head 1287338 (all 6 slices + CI wiring a4bec93). Sticky-footer gap (Lauren device report) fixed with surface box-shadow cover; verified on real panel tools sheet in Chromium and WebKit with 34px inset (before/after). Local: npm test + backend test pass (2 pre-existing Node26-only notification assertion diffs), webkit family-setup/welcome/memory-batch/onboarding browser pass. Waiting on PR CI (app auto-fix monitor on). Then: independent parity review, 0027 rehearsal (fresh bookmark, preflight, d1 execute --file + app_migrations row, never migrations apply), Lauren approval before production. No production/D1 writes done.",
+      "next_action": "PR lrnolivia/gwfamily#24 head 9cfc0de. Fixed CI: Add a memory label restored (9268b59); single-upload thumbnail removed so bounded private-media retry runs (2666d65, webkit memory-reload + diagnostics pass locally). Lauren requests: editor tools header glass blur/fade + flat padding (dc5be37); default notification channels for everyone (9cfc0de + migration 0028_notification_channel_defaults recreating 7 0025 triggers: email off following/mentions/replies/messages, push off following/mentions; stored choices win). Root/backend suites pass. Waiting on CI. Lauren authorized deploy of the most recent safe build at 05:55 EDT (alarm set): merge, apply 0027 then 0028 via bookmark+preflight+rehearsal+d1 execute --file+app_migrations rows, deploy sealed artifact, smoke, rollback 30ef7035 on regression.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2519,8 +2519,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-09T06:16:46.649Z",
-      "lease_until": "2026-10-09T18:16:46.649Z",
+      "updated_at": "2026-10-09T09:56:45.914Z",
+      "lease_until": "2026-10-09T21:56:45.914Z",
       "amendments": [
         {
           "at": "2026-10-09T02:24:37.032Z",
