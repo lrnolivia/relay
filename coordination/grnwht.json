@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T00:51:12.895Z",
+  "updated_at": "2026-10-09T01:02:17.682Z",
   "legacy_branches": [
     "main"
   ],
@@ -489,6 +489,46 @@
             "id": "grnwht-profile-contact-parity-20261008:acceptance:0",
             "text": "Home avatar+author names, comment/reaction identities, sharedcontact/household/member lists reuse sharedmini-profile; unavailable/removed/viewerprivacy guards, keyboarddismiss/focusreturn, selection controls stayseparate. Preserve fullphoto/comments/reactions/save reachable frommini-profile. Names/headings selectedMomo/DMSerif acrossportal/GlassFlat/lightdark/preferencechanges. Sharedwithyou onlyauthorizedDTOfields compactclickableglyphbadges withmail/tel/address/site/socialcorrespondingactions/accessibility/themecontrols; nohiddencontactexposure. Parentinspected screenshots: householdhero photo/label/Back/name/count/Manage currentlydisjoint; groupthem inlaterpass, doNOTtouchparentMembers+multi-select/emailcheckboxhotfix. Regressionproof meaningful. No newlayoutbeforeactivepushbatchlive.",
             "at": "2026-10-08T21:14:07.908Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "grnwht-next-family-setup-onboarding-20261009",
+      "owner": "claude-code-pr20",
+      "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
+      "acceptance": "Keep separate from current PR20 deployment; use its verified released baseline. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname matching may suggest provisional placement only, never grant access, infer kinship or assign heads. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
+      "next_action": "QUEUED FOR CLAUDE by Lauren01:00UTC; plan only, uncoded, not a request to interrupt PR20. Finish current release first, then claim this next batch on a fresh baseline/branch. Full approved plan: GW_NEXT_BATCH_ONBOARDING_AND_FAMILY_SETUP_PLAN.md, Library libfile_511d4f474e5081919edce82c6cdf3be7 v0. Organize coding in small slices with one build/integration owner, then independent internal parity/test review, return precise fixes to coder, repeat, then CI/deployment owner. Ship one combined next release, not a deployment per coding slice. Preserve supported current auth/provisional policy, not a new approval gate. Default-head creation is intentional/disclosed, not inferred from surnames. Determine new Branch creation authority consistently without inventing universal admin review. Existing-member prompt account/version-scoped, Not now stops automatic repetition, manual access remains. UI overlays solid; blur belongs only behind them. Use Impeccable design guidance. Reconcile old queued guide/profile-contact rows against PR20 before duplicating delivered work. Apple sign-in remains deferred; hardware delivery testing is not presumed done. Parent has not started a competing implementation.",
+      "paths": [
+        "src/",
+        "tests/",
+        "backend/src/",
+        "backend/tests/",
+        "backend/migrations/",
+        "docs/"
+      ],
+      "resources": [
+        "grnwht-next-family-setup-onboarding"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-09T01:02:17.682Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
+          "acceptance": "Keep separate from current PR20 deployment; use its verified released baseline. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname matching may suggest provisional placement only, never grant access, infer kinship or assign heads. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
+          "at": "2026-10-09T01:02:17.682Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-next-family-setup-onboarding-20261009:acceptance:0",
+            "text": "Keep separate from current PR20 deployment; use its verified released baseline. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname matching may suggest provisional placement only, never grant access, infer kinship or assign heads. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
+            "at": "2026-10-09T01:02:17.682Z"
           }
         ]
       }
