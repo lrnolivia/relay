@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T00:43:08.502Z",
+  "updated_at": "2026-10-09T00:51:12.895Z",
   "legacy_branches": [
     "main"
   ],
@@ -1346,7 +1346,7 @@
       ],
       "goal": "Deliver one consolidated GW launch candidate covering all Lauren-approved current functional and UI work, with parent hotfix reconciliation and living multi-household support",
       "acceptance": "Latest Lauren21:15 explicit single consolidated nextrelease supersedes release-first staging. Include all parenthotfixes; devicepush regression/errorprivacy; eightpreset email source/defaultoffconsent; editorcontrolpolish; device-local returningname/avatar/provider noauthcredential; confirmedselective GWreset withserver signout/nofamilydeletion; compactAbout+linkedofficialcredit; You/Family invitationcards; authorizedcontactglyphbadges; sharedmini-profile identities/privacy/focus/fullphotoactions+selectedfonts; coherenthouseholdhero; verified216compactv3guidePNGs preservingnativeinstallbehaviors; livingmulti-household withperhouseholdroles/recipientconsent/duplicates/pending/primary/remove/privatechildren, migrationbackuprehearsalrollback. Retain explicitpanel/formparity/fade checklist. Meaningful failed-case/targeted/fullheadCI/sourceartifact/runtime/liveproof, no partialall-doneclaim/no newworkers/no invalidation of activefamilyonboarding. Freshauthschema andnecessaryD1migration accessmustbesupported; no cancelled/deniedactionreplay/newcredentials/purchases, actualpushdeliveryonlybyreceipt.",
-      "next_action": "Lauren explicitly authorized Claude (claude-code-pr20) to take over in chat 2026-10-09 ~00:43 UTC. Claude is CI/deploy owner; Julian fallback; parent stops writes. Branch grnwht/device-push-correction-20261008 head bfbeb4416f14de66b72c1c8ff40e4d38336e5001. Claude commits locally verified fixes via Relay against that exact head: update toast clears chat composer/FAB; post-ack live cleanup no longer reports confirmed writes as unsent (no permission change); nested page layouts stack via container query; 44px notification info control; scoped Leader/Member fixtures, preset color assertion, nearest-owner hero selector, install decode readiness, Reunion render gate, Settings/About approved entries. Local: Chromium all 25 browser suites pass; WebKit partial (macOS focus artifacts); 1113/1115 unit (2 Node26-only). Next: commit, exact-head CI, then release gates. No deployment yet.",
+      "next_action": "Claude (owner, Lauren-authorized) pushed 10 Relay-verified commits bfbeb44..4f16b50d2bb5b53cb066c57ab29eff14dbb61908 on grnwht/device-push-correction-20261008: update toast clears composer/FAB; acknowledged live commands stay confirmed (no permission change, new unit test); nested layouts stack via container query (nested-only); 44px notification info control; scoped Leader/Member fixtures, preset color assertion, nearest-owner hero selector, install decode readiness, Reunion render gate, Settings/About approved entries. Local on exact tree: Chromium 25/25 browser suites pass; WebKit all pass except macOS-only keyboard-focus artifacts (install-tutorial, hotfix:80, editor-geometry:44) and page-content cancelled read that also fails on pristine bfbeb44 locally; unit 1113/1115 (2 Node26-only, fail on pristine too). Next: await exact-head CI for 4f16b50, fix any newly revealed failures, then release gates (backup/migration rehearsal/exact build/live proof). No deployment.",
       "primary_team": "release",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1381,8 +1381,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-09T00:43:08.502Z",
-      "lease_until": "2026-10-09T12:43:08.502Z",
+      "updated_at": "2026-10-09T00:51:12.895Z",
+      "lease_until": "2026-10-09T12:51:12.895Z",
       "amendment_count": 5,
       "amendments": [
         {
