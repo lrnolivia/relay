@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T02:20:29.323Z",
+  "updated_at": "2026-10-09T02:24:37.032Z",
   "legacy_branches": [
     "main"
   ],
@@ -499,7 +499,7 @@
       "owner": "claude-code-pr20",
       "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
       "acceptance": "Keep separate from current PR20 deployment; use its verified released baseline. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname matching may suggest provisional placement only, never grant access, infer kinship or assign heads. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
-      "next_action": "QUEUED FOR CLAUDE by Lauren01:00UTC; plan only, uncoded, not a request to interrupt PR20. Finish current release first, then claim this next batch on a fresh baseline/branch. Full approved plan: GW_NEXT_BATCH_ONBOARDING_AND_FAMILY_SETUP_PLAN.md, Library libfile_511d4f474e5081919edce82c6cdf3be7 v0. Organize coding in small slices with one build/integration owner, then independent internal parity/test review, return precise fixes to coder, repeat, then CI/deployment owner. Ship one combined next release, not a deployment per coding slice. Preserve supported current auth/provisional policy, not a new approval gate. Default-head creation is intentional/disclosed, not inferred from surnames. Determine new Branch creation authority consistently without inventing universal admin review. Existing-member prompt account/version-scoped, Not now stops automatic repetition, manual access remains. UI overlays solid; blur belongs only behind them. Use Impeccable design guidance. Reconcile old queued guide/profile-contact rows against PR20 before duplicating delivered work. Apple sign-in remains deferred; hardware delivery testing is not presumed done. Parent has not started a competing implementation.",
+      "next_action": "PR20 is released. Julian has bounded takeover until05:00UTC to finish PR21, notification channels, then this batch if time remains. Lauren adds Impeccable refinement of Family Calendar, especially the Event type selector/menu: inspect rendered UI and improve event switching, hierarchy, readability and consistent controls within GW design. Preserve event creation, moderation, notices, filters and date behavior. Include in panel/form parity after urgent fixes. Full approved onboarding/household plan: GW_NEXT_BATCH_ONBOARDING_AND_FAMILY_SETUP_PLAN.md, Librarylibfile_511d4f474e5081919edce82c6cdf3be7v0. One build/integration owner codes small slices, independent parity/test review sends precise fixes back, then CI/deployment owner. Ship combined next release, not per coding slice. Solid overlays; dramatic blur only behind. Preserve existing auth/provisional policy and disclosed own-household founding-head behavior; surname suggestions never grant roles. Branch creation authority needs explicit coherent implementation, not invented universal admin review. Existing-member prompt account/version-scoped, Not now stops nagging, manual entry stays. Reconcile old queued guide/profile-contact work against released PR20 to avoid duplicate work. Apple sign-in deferred, hardware delivery not presumed tested. No concurrent implementation against current release.",
       "paths": [
         "src/",
         "tests/",
@@ -532,7 +532,25 @@
             "at": "2026-10-09T01:02:17.682Z"
           }
         ]
-      }
+      },
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-09T02:24:37.032Z",
+          "by": "claude-code-pr20",
+          "reason": "Lauren requested an Impeccable Family Calendar pass and explicitly approved retrying this cancelled assignment update.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "QUEUED FOR CLAUDE by Lauren01:00UTC; plan only, uncoded, not a request to interrupt PR20. Finish current release first, then claim this next batch on a fresh baseline/branch. Full approved plan: GW_NEXT_BATCH_ONBOARDING_AND_FAMILY_SETUP_PLAN.md, Library libfile_511d4f474e5081919edce82c6cdf3be7 v0. Organize coding in small slices with one build/integration owner, then independent internal parity/test review, return precise fixes to coder, repeat, then CI/deployment owner. Ship one combined next release, not a deployment per coding slice. Preserve supported current auth/provisional policy, not a new approval gate. Default-head creation is intentional/disclosed, not inferred from surnames. Determine new Branch creation authority consistently without inventing universal admin review. Existing-member prompt account/version-scoped, Not now stops automatic repetition, manual access remains. UI overlays solid; blur belongs only behind them. Use Impeccable design guidance. Reconcile old queued guide/profile-contact rows against PR20 before duplicating delivered work. Apple sign-in remains deferred; hardware delivery testing is not presumed done. Parent has not started a competing implementation."
+          },
+          "after": {
+            "next_action": "PR20 is released. Julian has bounded takeover until05:00UTC to finish PR21, notification channels, then this batch if time remains. Lauren adds Impeccable refinement of Family Calendar, especially the Event type selector/menu: inspect rendered UI and improve event switching, hierarchy, readability and consistent controls within GW design. Preserve event creation, moderation, notices, filters and date behavior. Include in panel/form parity after urgent fixes. Full approved onboarding/household plan: GW_NEXT_BATCH_ONBOARDING_AND_FAMILY_SETUP_PLAN.md, Librarylibfile_511d4f474e5081919edce82c6cdf3be7v0. One build/integration owner codes small slices, independent parity/test review sends precise fixes back, then CI/deployment owner. Ship combined next release, not per coding slice. Solid overlays; dramatic blur only behind. Preserve existing auth/provisional policy and disclosed own-household founding-head behavior; surname suggestions never grant roles. Branch creation authority needs explicit coherent implementation, not invented universal admin review. Existing-member prompt account/version-scoped, Not now stops nagging, manual entry stays. Reconcile old queued guide/profile-contact work against released PR20 to avoid duplicate work. Apple sign-in deferred, hardware delivery not presumed tested. No concurrent implementation against current release."
+          }
+        }
+      ],
+      "updated_at": "2026-10-09T02:24:37.032Z"
     },
     {
       "id": "grnwht-ui-structure-push-hotfix-20261009",
