@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T02:02:15.712Z",
+  "updated_at": "2026-10-09T02:04:49.494Z",
   "legacy_branches": [
     "main"
   ],
@@ -536,10 +536,10 @@
     },
     {
       "id": "grnwht-ui-structure-push-hotfix-20261009",
-      "owner": "claude-code-pr20",
+      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
       "goal": "Hotfix Lauren's 2026-10-09 live review: real page structure/headers/glyphs and the production push send failure, before the next combined batch.",
       "acceptance": "Invitations card is an editable/movable native panel on Family and You (no rogue chevron); undefined glyph names (link/more/play) drawn and guarded by test; memorial pages use a real header row instead of a back button on the hero plate; memorial menu shows dots; tributes without duplicate copy; Your Reunion Plan sheet has one title and no nested card; memorial rows show photo or angel plate; row glyphs align to bold title line app-wide; push transport uses Workers-valid redirect:'manual' (root cause of 500 on test send) with regression test; push panel shows only state-appropriate actions; member email styling pickers removed (email follows app theme). Unit, backend and Chromium/WebKit browser suites, exact-head CI, deploy with rollback, live push test by Lauren.",
-      "next_action": "Branch grnwht/ui-structure-fixes-20261009 from main c75d7b4. Code complete locally; running browser matrix, then commit via Relay, draft PR, exact-head CI, deploy (no schema change), Lauren live push test. Then claim grnwht-next-family-setup-onboarding-20261009 on fresh baseline.",
+      "next_action": "Lauren explicitly requested Julian take over until 1 AM America/New_York on October 9 (05:00 UTC), supplied GW_PR21_HANDOFF.md. Claude held this assignment for handoff; parent now coordinates sole writer and checkpoints. Current PR21 head 8c3afddea13f90b68c7e42ec035833a73ef10313, run 37872382155 in progress; shared/API/surfaces passed, Chromium shared-page editor has failed and needs exact diagnosis. Do not treat earlier-head fixes as current success. Mac task 01a11e67-53ca-7220-9f56-32655aa7202c is admitted read-only pending usage availability and ownership confirmation. Finish PR21 exact-head checks, merge commit, sealed archive hash/binding verification, deploy and anonymous postflight; no schema changes. Then notification-channels branch WIP5afa065 UI/tests and 0025 migration rehearsal with app_migrations tracking, never wrangler migrations apply; then queued next batch if time. Stop by05:00 UTC with committed recoverable checkpoint and no lingering jobs. Preserve family data and rollback aa0b8044-f344-4e4c-bb5a-54ba7dc36a43. No real test push until Lauren's explicit test action.",
       "paths": [
         "src/glyph-paths.js",
         "src/shared-content-schema.js",
@@ -586,7 +586,16 @@
             "at": "2026-10-09T01:40:28.530Z"
           }
         ]
-      }
+      },
+      "handoffs": [
+        {
+          "at": "2026-10-09T02:04:49.494Z",
+          "from": "claude-code-pr20",
+          "to": "01a1146d-0267-735e-8332-fa38cf7fb007",
+          "next_action": "Lauren explicitly requested Julian take over until 1 AM America/New_York on October 9 (05:00 UTC), supplied GW_PR21_HANDOFF.md. Claude held this assignment for handoff; parent now coordinates sole writer and checkpoints. Current PR21 head 8c3afddea13f90b68c7e42ec035833a73ef10313, run 37872382155 in progress; shared/API/surfaces passed, Chromium shared-page editor has failed and needs exact diagnosis. Do not treat earlier-head fixes as current success. Mac task 01a11e67-53ca-7220-9f56-32655aa7202c is admitted read-only pending usage availability and ownership confirmation. Finish PR21 exact-head checks, merge commit, sealed archive hash/binding verification, deploy and anonymous postflight; no schema changes. Then notification-channels branch WIP5afa065 UI/tests and 0025 migration rehearsal with app_migrations tracking, never wrangler migrations apply; then queued next batch if time. Stop by05:00 UTC with committed recoverable checkpoint and no lingering jobs. Preserve family data and rollback aa0b8044-f344-4e4c-bb5a-54ba7dc36a43. No real test push until Lauren's explicit test action."
+        }
+      ],
+      "updated_at": "2026-10-09T02:04:49.494Z"
     }
   ],
   "claims": [
@@ -1586,7 +1595,7 @@
     },
     {
       "id": "grnwht-ui-structure-push-hotfix-20261009",
-      "owner": "claude-code-pr20",
+      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
       "branch": "grnwht/ui-structure-fixes-20261009",
       "paths": [
         "src/glyph-paths.js",
@@ -1623,7 +1632,7 @@
       ],
       "goal": "Hotfix Lauren's 2026-10-09 live review: real page structure/headers/glyphs and the production push send failure, before the next combined batch.",
       "acceptance": "Invitations card is an editable/movable native panel on Family and You (no rogue chevron); undefined glyph names (link/more/play) drawn and guarded by test; memorial pages use a real header row instead of a back button on the hero plate; memorial menu shows dots; tributes without duplicate copy; Your Reunion Plan sheet has one title and no nested card; memorial rows show photo or angel plate; row glyphs align to bold title line app-wide; push transport uses Workers-valid redirect:'manual' (root cause of 500 on test send) with regression test; push panel shows only state-appropriate actions; member email styling pickers removed (email follows app theme). Unit, backend and Chromium/WebKit browser suites, exact-head CI, deploy with rollback, live push test by Lauren.",
-      "next_action": "HELD by Claude for handoff (2026-10-09 ~02:10Z). Lauren approved Codex or Julian taking this over for the next few hours; take ownership via Relay handoff/claim from claude-code-pr20. Full plan in GW_PR21_HANDOFF.md (Lauren's Downloads) and previous next_action: PR21 head 8c3afdd CI in progress (earlier editors failures were from fca6b2c, already fixed); merge, deploy sealed CI archive (no schema change, rollback aa0b8044-f344-4e4c-bb5a-54ba7dc36a43), Lauren push test; then finish branch grnwht/notification-channels-20261009 (5afa065 WIP: migration 0025 + server; needs UI/tests/rehearsal; apply via d1 execute + app_migrations row, never wrangler migrations apply); then grnwht-next-family-setup-onboarding-20261009.",
+      "next_action": "Lauren explicitly requested Julian take over until 1 AM America/New_York on October 9 (05:00 UTC), supplied GW_PR21_HANDOFF.md. Claude held this assignment for handoff; parent now coordinates sole writer and checkpoints. Current PR21 head 8c3afddea13f90b68c7e42ec035833a73ef10313, run 37872382155 in progress; shared/API/surfaces passed, Chromium shared-page editor has failed and needs exact diagnosis. Do not treat earlier-head fixes as current success. Mac task 01a11e67-53ca-7220-9f56-32655aa7202c is admitted read-only pending usage availability and ownership confirmation. Finish PR21 exact-head checks, merge commit, sealed archive hash/binding verification, deploy and anonymous postflight; no schema changes. Then notification-channels branch WIP5afa065 UI/tests and 0025 migration rehearsal with app_migrations tracking, never wrangler migrations apply; then queued next batch if time. Stop by05:00 UTC with committed recoverable checkpoint and no lingering jobs. Preserve family data and rollback aa0b8044-f344-4e4c-bb5a-54ba7dc36a43. No real test push until Lauren's explicit test action.",
       "category": "implementation",
       "primary_team": "release",
       "supporting_teams": [],
@@ -1647,8 +1656,16 @@
           }
         ]
       },
-      "updated_at": "2026-10-09T02:02:15.712Z",
-      "lease_until": "2026-10-09T14:02:15.712Z"
+      "updated_at": "2026-10-09T02:04:49.494Z",
+      "lease_until": "2026-10-09T14:04:49.494Z",
+      "handoffs": [
+        {
+          "at": "2026-10-09T02:04:49.494Z",
+          "from": "claude-code-pr20",
+          "to": "01a1146d-0267-735e-8332-fa38cf7fb007",
+          "next_action": "Lauren explicitly requested Julian take over until 1 AM America/New_York on October 9 (05:00 UTC), supplied GW_PR21_HANDOFF.md. Claude held this assignment for handoff; parent now coordinates sole writer and checkpoints. Current PR21 head 8c3afddea13f90b68c7e42ec035833a73ef10313, run 37872382155 in progress; shared/API/surfaces passed, Chromium shared-page editor has failed and needs exact diagnosis. Do not treat earlier-head fixes as current success. Mac task 01a11e67-53ca-7220-9f56-32655aa7202c is admitted read-only pending usage availability and ownership confirmation. Finish PR21 exact-head checks, merge commit, sealed archive hash/binding verification, deploy and anonymous postflight; no schema changes. Then notification-channels branch WIP5afa065 UI/tests and 0025 migration rehearsal with app_migrations tracking, never wrangler migrations apply; then queued next batch if time. Stop by05:00 UTC with committed recoverable checkpoint and no lingering jobs. Preserve family data and rollback aa0b8044-f344-4e4c-bb5a-54ba7dc36a43. No real test push until Lauren's explicit test action."
+        }
+      ]
     }
   ]
 }
