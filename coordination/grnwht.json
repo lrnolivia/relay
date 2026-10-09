@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T03:40:24.072Z",
+  "updated_at": "2026-10-09T03:47:00.365Z",
   "legacy_branches": [
     "main"
   ],
@@ -1823,31 +1823,14 @@
       "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
       "branch": "grnwht/notification-channel-controls-20261009",
       "paths": [
-        "backend/migrations/0025_notification_channels.sql",
-        "backend/src/email-notifications.mjs",
-        "backend/src/notification-service.mjs",
-        "backend/src/push-store.mjs",
-        "backend/src/family-calendar.mjs",
-        "backend/tests/",
-        "package.json",
-        "package-lock.json",
-        "src/about-notices.json",
-        "src/about.jsx",
-        "src/data-adapter.js",
-        "src/email-notifications.jsx",
-        "src/notification-model.js",
-        "src/notifications.css",
-        "src/notifications.jsx",
-        "src/push-device.jsx",
-        "src/use-notifications.js",
-        "tests/"
+        "docs/releases/gw-0.3.0-deployment.md"
       ],
       "resources": [
-        "grnwht-notification-channel-controls"
+        "grnwht-production-release"
       ],
       "goal": "Complete per-category In app, Email and Push controls from Claude's preserved WIP after PR21 release.",
       "acceptance": "Three compact accessible controls per category with independent persistence and truthful readiness. Preserve existing category opt-outs across all delivery channels, global email opt-in, push registration/permission/runtime flags, global-off semantics, conversation mutes, account/revision conflicts and resource authorization. No implicit browser permission, device enrollment or real sends. Email follows app theme. Correct fanout/list/count/open semantics for hidden delivery records; keep legacy category-only client intent without silently enabling channels. Normalize channels in live and preview models. Rehearse reviewed migration0025, backup and forward apply with app_migrations tracking; NEVER wrangler d1 migrations apply. Isolated fictional unit/backend/browser tests for all combinations, exact pinned CI/build and live release proof. No production preference changes or bulk notifications. Preserve production email and automatic push-enrollment flags. Stop by05:00UTC Oct9 with recoverable checkpoint.",
-      "next_action": "PR21 is merged and deployed, baseline e91b68d0fbff03c01468e68648b06d241eab9b68. Integrate isolated channel patch only after fixing and independently rechecking four identified settings/readback edges. Preserve original WIP branch. Publish to this fresh branch in bounded commits, draft PR, pinned full CI and migration rehearsal. No production migration before verified patch and backup. Stop by05:00UTC with checkpoint.",
+      "next_action": "PR22merged e42d342758c0a65788f2481d20eb799d80806c15; exactd132 CI37879209209 all9green. Sourceworkerfinished, allsourcepatches/accounted; release source reservations for next independently integrated0.3.1candidate. Parent retains exclusiveproduction-release resource through0025migration verification and final0.3.0deployment. Temporarywrappere827437f deployed03:43; freshbookmarkrecorded;missingacceptedminutecronadded03:45:59 toenableordinaryqueueandatomicmigration. No furtherPR22sourcechanges planned.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1871,8 +1854,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-09T02:53:13.605Z",
-      "lease_until": "2026-10-09T14:53:13.605Z"
+      "updated_at": "2026-10-09T03:47:00.365Z",
+      "lease_until": "2026-10-09T15:47:00.365Z"
     }
   ]
 }
