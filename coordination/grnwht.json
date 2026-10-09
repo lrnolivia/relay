@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-08T23:55:22.706Z",
+  "updated_at": "2026-10-09T00:43:08.502Z",
   "legacy_branches": [
     "main"
   ],
@@ -251,10 +251,10 @@
     },
     {
       "id": "grnwht-device-push-correction-20261008",
-      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
+      "owner": "claude-code-pr20",
       "goal": "Deliver one consolidated GW launch candidate covering all Lauren-approved current functional and UI work, with parent hotfix reconciliation and living multi-household support",
       "acceptance": "Latest Lauren21:15 explicit single consolidated nextrelease supersedes release-first staging. Include all parenthotfixes; devicepush regression/errorprivacy; eightpreset email source/defaultoffconsent; editorcontrolpolish; device-local returningname/avatar/provider noauthcredential; confirmedselective GWreset withserver signout/nofamilydeletion; compactAbout+linkedofficialcredit; You/Family invitationcards; authorizedcontactglyphbadges; sharedmini-profile identities/privacy/focus/fullphotoactions+selectedfonts; coherenthouseholdhero; verified216compactv3guidePNGs preservingnativeinstallbehaviors; livingmulti-household withperhouseholdroles/recipientconsent/duplicates/pending/primary/remove/privatechildren, migrationbackuprehearsalrollback. Retain explicitpanel/formparity/fade checklist. Meaningful failed-case/targeted/fullheadCI/sourceartifact/runtime/liveproof, no partialall-doneclaim/no newworkers/no invalidation of activefamilyonboarding. Freshauthschema andnecessaryD1migration accessmustbesupported; no cancelled/deniedactionreplay/newcredentials/purchases, actualpushdeliveryonlybyreceipt.",
-      "next_action": "Lauren confirms Claude Opus working on GW deployment23:54. Parent makes NO code/deploy writes; coordination held here pending Claude claim identity, parent fallback only if needed. PR20head bfbeb4416f14de66b72c1c8ff40e4d38336e5001, branch grnwht/device-push-correction-20261008. Updated handoff Librarylibfile_82e3680288f881919fbbac03cd2ea714 GW_PR20_CI_HANDOFF.md v1 (30940bytes) includes exact code suggestions/source evidence, NOT applied patches or whole source. Run37860811566 terminal: sharedbuild/bothsurfacesPASS;6groupsFAIL. New findings: update toast intercepts Send message; memorial acknowledged command may fail post-ack preview reducer permission, verify response/readback; recovery expects old interface color; People nestedfilter grid~60px at768Flat; install remount image decode/editor hash-route races need confirmation. Nestedhero selector and44pxGlassinfo fixes still needed; negativeMember fixture remains Leader. Preserve exact coverage/draftguard/serverauth and distinguish candidate causes. Five prior Mac testedits pushed by user; remaining untracked generatedfiles/recoveryQA/node_modules and memorial-model.js preserved locally; helper appearsduplicate, actual memorial-page-model.mjs tracked. No completed Mac handoff dueusagecap. Production lastverified0002b725-05a5-4381-9513-525c02affee8/buildce77209fa48146dca210. D1samecontext/bothschemaPASS22:49. Complete currentcombinedscope with backup/migration/exactbuild/liveproof, no nextbatchfeatures. Parent will relay useful findings without competing edits.",
+      "next_action": "Lauren explicitly authorized Claude (claude-code-pr20) to take over in chat 2026-10-09 ~00:43 UTC. Claude is CI/deploy owner; Julian fallback; parent stops writes. Branch grnwht/device-push-correction-20261008 head bfbeb4416f14de66b72c1c8ff40e4d38336e5001. Claude commits locally verified fixes via Relay against that exact head: update toast clears chat composer/FAB; post-ack live cleanup no longer reports confirmed writes as unsent (no permission change); nested page layouts stack via container query; 44px notification info control; scoped Leader/Member fixtures, preset color assertion, nearest-owner hero selector, install decode readiness, Reunion render gate, Settings/About approved entries. Local: Chromium all 25 browser suites pass; WebKit partial (macOS focus artifacts); 1113/1115 unit (2 Node26-only). Next: commit, exact-head CI, then release gates. No deployment yet.",
       "paths": [
         "src/push-device.jsx",
         "src/push-client.js",
@@ -305,7 +305,7 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T23:55:22.706Z",
+      "updated_at": "2026-10-09T00:43:08.502Z",
       "amendment_count": 5,
       "amendments": [
         {
@@ -397,6 +397,12 @@
           "from": "01a11b04-95a2-7212-aa48-1e23e956d00a",
           "to": "01a1146d-0267-735e-8332-fa38cf7fb007",
           "next_action": "Lauren requested Claude try CI and deployment on the new shared build; Julian is fallback if Claude cannot proceed. Mac writer 01a11b04-95a2-7212-aa48-1e23e956d00a terminal FAILED at 23:36 UTC: usage limit, no further turn admitted. Parent holds coordination pending Claude's explicit claim; do not run overlapping writers. PR20 branch grnwht/device-push-correction-20261008 head0680794c09a45cfe1b8e27a9f5f0e2e9503a0910, run37859551443, sealed shared artifact11585134404 gw-built-source-0680794c09a45cfe1b8e27a9f5f0e2e9503a0910-1 SHA2567078a661eec90c62e15b2edaa4f44422d333768ce81299509b02938a2b6619cc. Shared build and both surfaces PASS; communications/invitations, recovery/hotfix and page-editor failures need exact fixes, remaining groups still running. Initial diagnosis: old leader fixtures now default Member; memorial labels changed; nested panel options locator ambiguous; reload test waits for domcontentloaded. Preserve full coverage and product behavior. D1 same-context read and both schema configs passed22:49; not blocked. Current production remains0002b725-05a5-4381-9513-525c02affee8/buildce77209fa48146dca210. Combine all current scope, recovery checkpoint and rollout safety; no next-batch features. Last verified1101-file remote source checkpoint restored; don't assume unpublished Mac edits absent. Existing acceptance and scope retained. Prior next action: Integrate parent-authored pending-membership approval ordinary-posting default/compact admin UI package exacte15f910 base, no existingaccount batchchanges/organizerrole expansion. Targeted helper and phone proof; test production guard and failed editor field correction before nextfullCI. Preserve combinedscope/recovery; no featureexpansion."
+        },
+        {
+          "at": "2026-10-09T00:43:08.502Z",
+          "from": "01a1146d-0267-735e-8332-fa38cf7fb007",
+          "to": "claude-code-pr20",
+          "next_action": "Lauren explicitly authorized Claude (claude-code-pr20) to take over in chat 2026-10-09 ~00:43 UTC. Claude is CI/deploy owner; Julian fallback; parent stops writes. Branch grnwht/device-push-correction-20261008 head bfbeb4416f14de66b72c1c8ff40e4d38336e5001. Claude commits locally verified fixes via Relay against that exact head: update toast clears chat composer/FAB; post-ack live cleanup no longer reports confirmed writes as unsent (no permission change); nested page layouts stack via container query; 44px notification info control; scoped Leader/Member fixtures, preset color assertion, nearest-owner hero selector, install decode readiness, Reunion render gate, Settings/About approved entries. Local: Chromium all 25 browser suites pass; WebKit partial (macOS focus artifacts); 1113/1115 unit (2 Node26-only). Next: commit, exact-head CI, then release gates. No deployment yet."
         }
       ]
     },
@@ -1186,7 +1192,7 @@
     },
     {
       "id": "grnwht-device-push-correction-20261008",
-      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
+      "owner": "claude-code-pr20",
       "branch": "grnwht/device-push-correction-20261008",
       "paths": [
         "src/push-device.jsx",
@@ -1340,7 +1346,7 @@
       ],
       "goal": "Deliver one consolidated GW launch candidate covering all Lauren-approved current functional and UI work, with parent hotfix reconciliation and living multi-household support",
       "acceptance": "Latest Lauren21:15 explicit single consolidated nextrelease supersedes release-first staging. Include all parenthotfixes; devicepush regression/errorprivacy; eightpreset email source/defaultoffconsent; editorcontrolpolish; device-local returningname/avatar/provider noauthcredential; confirmedselective GWreset withserver signout/nofamilydeletion; compactAbout+linkedofficialcredit; You/Family invitationcards; authorizedcontactglyphbadges; sharedmini-profile identities/privacy/focus/fullphotoactions+selectedfonts; coherenthouseholdhero; verified216compactv3guidePNGs preservingnativeinstallbehaviors; livingmulti-household withperhouseholdroles/recipientconsent/duplicates/pending/primary/remove/privatechildren, migrationbackuprehearsalrollback. Retain explicitpanel/formparity/fade checklist. Meaningful failed-case/targeted/fullheadCI/sourceartifact/runtime/liveproof, no partialall-doneclaim/no newworkers/no invalidation of activefamilyonboarding. Freshauthschema andnecessaryD1migration accessmustbesupported; no cancelled/deniedactionreplay/newcredentials/purchases, actualpushdeliveryonlybyreceipt.",
-      "next_action": "Lauren confirms Claude Opus working on GW deployment23:54. Parent makes NO code/deploy writes; coordination held here pending Claude claim identity, parent fallback only if needed. PR20head bfbeb4416f14de66b72c1c8ff40e4d38336e5001, branch grnwht/device-push-correction-20261008. Updated handoff Librarylibfile_82e3680288f881919fbbac03cd2ea714 GW_PR20_CI_HANDOFF.md v1 (30940bytes) includes exact code suggestions/source evidence, NOT applied patches or whole source. Run37860811566 terminal: sharedbuild/bothsurfacesPASS;6groupsFAIL. New findings: update toast intercepts Send message; memorial acknowledged command may fail post-ack preview reducer permission, verify response/readback; recovery expects old interface color; People nestedfilter grid~60px at768Flat; install remount image decode/editor hash-route races need confirmation. Nestedhero selector and44pxGlassinfo fixes still needed; negativeMember fixture remains Leader. Preserve exact coverage/draftguard/serverauth and distinguish candidate causes. Five prior Mac testedits pushed by user; remaining untracked generatedfiles/recoveryQA/node_modules and memorial-model.js preserved locally; helper appearsduplicate, actual memorial-page-model.mjs tracked. No completed Mac handoff dueusagecap. Production lastverified0002b725-05a5-4381-9513-525c02affee8/buildce77209fa48146dca210. D1samecontext/bothschemaPASS22:49. Complete currentcombinedscope with backup/migration/exactbuild/liveproof, no nextbatchfeatures. Parent will relay useful findings without competing edits.",
+      "next_action": "Lauren explicitly authorized Claude (claude-code-pr20) to take over in chat 2026-10-09 ~00:43 UTC. Claude is CI/deploy owner; Julian fallback; parent stops writes. Branch grnwht/device-push-correction-20261008 head bfbeb4416f14de66b72c1c8ff40e4d38336e5001. Claude commits locally verified fixes via Relay against that exact head: update toast clears chat composer/FAB; post-ack live cleanup no longer reports confirmed writes as unsent (no permission change); nested page layouts stack via container query; 44px notification info control; scoped Leader/Member fixtures, preset color assertion, nearest-owner hero selector, install decode readiness, Reunion render gate, Settings/About approved entries. Local: Chromium all 25 browser suites pass; WebKit partial (macOS focus artifacts); 1113/1115 unit (2 Node26-only). Next: commit, exact-head CI, then release gates. No deployment yet.",
       "primary_team": "release",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1375,8 +1381,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-08T23:55:22.706Z",
-      "lease_until": "2026-10-09T11:55:22.706Z",
+      "updated_at": "2026-10-09T00:43:08.502Z",
+      "lease_until": "2026-10-09T12:43:08.502Z",
       "amendment_count": 5,
       "amendments": [
         {
@@ -1468,6 +1474,12 @@
           "from": "01a11b04-95a2-7212-aa48-1e23e956d00a",
           "to": "01a1146d-0267-735e-8332-fa38cf7fb007",
           "next_action": "Lauren requested Claude try CI and deployment on the new shared build; Julian is fallback if Claude cannot proceed. Mac writer 01a11b04-95a2-7212-aa48-1e23e956d00a terminal FAILED at 23:36 UTC: usage limit, no further turn admitted. Parent holds coordination pending Claude's explicit claim; do not run overlapping writers. PR20 branch grnwht/device-push-correction-20261008 head0680794c09a45cfe1b8e27a9f5f0e2e9503a0910, run37859551443, sealed shared artifact11585134404 gw-built-source-0680794c09a45cfe1b8e27a9f5f0e2e9503a0910-1 SHA2567078a661eec90c62e15b2edaa4f44422d333768ce81299509b02938a2b6619cc. Shared build and both surfaces PASS; communications/invitations, recovery/hotfix and page-editor failures need exact fixes, remaining groups still running. Initial diagnosis: old leader fixtures now default Member; memorial labels changed; nested panel options locator ambiguous; reload test waits for domcontentloaded. Preserve full coverage and product behavior. D1 same-context read and both schema configs passed22:49; not blocked. Current production remains0002b725-05a5-4381-9513-525c02affee8/buildce77209fa48146dca210. Combine all current scope, recovery checkpoint and rollout safety; no next-batch features. Last verified1101-file remote source checkpoint restored; don't assume unpublished Mac edits absent. Existing acceptance and scope retained. Prior next action: Integrate parent-authored pending-membership approval ordinary-posting default/compact admin UI package exacte15f910 base, no existingaccount batchchanges/organizerrole expansion. Targeted helper and phone proof; test production guard and failed editor field correction before nextfullCI. Preserve combinedscope/recovery; no featureexpansion."
+        },
+        {
+          "at": "2026-10-09T00:43:08.502Z",
+          "from": "01a1146d-0267-735e-8332-fa38cf7fb007",
+          "to": "claude-code-pr20",
+          "next_action": "Lauren explicitly authorized Claude (claude-code-pr20) to take over in chat 2026-10-09 ~00:43 UTC. Claude is CI/deploy owner; Julian fallback; parent stops writes. Branch grnwht/device-push-correction-20261008 head bfbeb4416f14de66b72c1c8ff40e4d38336e5001. Claude commits locally verified fixes via Relay against that exact head: update toast clears chat composer/FAB; post-ack live cleanup no longer reports confirmed writes as unsent (no permission change); nested page layouts stack via container query; 44px notification info control; scoped Leader/Member fixtures, preset color assertion, nearest-owner hero selector, install decode readiness, Reunion render gate, Settings/About approved entries. Local: Chromium all 25 browser suites pass; WebKit partial (macOS focus artifacts); 1113/1115 unit (2 Node26-only). Next: commit, exact-head CI, then release gates. No deployment yet."
         }
       ]
     }
