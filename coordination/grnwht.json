@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T04:43:48.436Z",
+  "updated_at": "2026-10-09T04:58:50.132Z",
   "legacy_branches": [
     "main"
   ],
@@ -2160,6 +2160,7 @@
         "src/notifications.css",
         "src/page-navigation.css",
         "src/page-panels.jsx",
+        "src/page-content.jsx",
         "src/push-device.jsx",
         "src/push-enrollment-prompt.jsx",
         "src/push-open.js",
@@ -2201,14 +2202,18 @@
         "tests/release-version.test.mjs",
         "tests/shared-page-integration.test.mjs",
         "tests/tree-heritage-layout.test.mjs",
-        "tests/update-check.test.mjs"
+        "tests/update-check.test.mjs",
+        "tests/family-invitations-browser.mjs",
+        "tests/hotfix-browser.mjs",
+        "tests/onboarding-browser.mjs",
+        "tests/push-settings-browser.mjs"
       ],
       "resources": [
         "grnwht-production-release"
       ],
       "goal": "Deliver GW0.3.1 with Calendar/menu polish, opt-in message previews, responsive Home/People panels, household/profile refinements, image/header fixes, and the approved Leader Tools membership queue.",
       "acceptance": "Preserve existing data, removed layouts, fonts/colors, roles, consent and all PR22 channel/focus behavior. Existing devices remain generic until explicit per-device preview opt-in. Compatible old/new SW deep links and exact /sw.js delivery. Normal People-only invitation panel, mobile-only reunion sheet, desktop/tablet checklist, clean Address Book/household profile and preserved private-record/request navigation. Active-member main view, separate sortable approval queue with individually authorized captured-state bulk actions; tests never approve real users. Optional dispatch resilience only if fully reviewed before freeze, with no GET side effects or weakened delivery gates. Reviewed additive0026 with exact preflight/ledger/backup and no replay. Full exact-head CI before deployment; preserve additive layout compatibility on rollback and never restore older family data. Report browser/device limits and leave recoverable handoff by05:00UTC.",
-      "next_action": "Lauren explicitly returns this assignment to the same Claude chat. All Julian source writers are stopped. Complete source is published in draft PR23 https://github.com/lrnolivia/gwfamily/pull/23, branch grnwht/calendar-push-polish-20261009, exact head02d629c97d03d054730fd5ef6f3f675dae311b0c, basee42d342758c0a65788f2481d20eb799d80806c15. Pinned CI37885063520 is running; inspect exact results, fix only evidenced failures, retain full coverage. Source includes all approved0.3.1 UI/membership fixes, opt-in message previews and bounded dispatch supplement. Current production remains VERIFIED0.3.0: Worker82331bd3-85d2-4f2b-944c-466ce5ba2a29, deployment77d09acb-7586-4095-a274-07f1bb241bdc, buildbe3f4c9569fbad92e6df,24bindings, emailNotifications and pushEnrollmentPrompt true. Migration0025 is applied and verified;0026 is NOT applied. Never run wrangler d1 migrations apply. Before0026, verify ledger/schema/predecessor marker, take fresh bookmark, apply only reviewed0026 plus explicit app_migrations row through atomic import or reviewed temporary bootstrap, then verify. Use exact green CI artifact, not local build;0.3.1 deliberately adds /sw.js to Worker-first routing and embeds SW. Preserve all other bindings/assets and family data. Minute cron is configured but remains unproven: analytics only show hourly04:00; ordinary provider delivery is not established. Post-commit max1 hints plus hourly fallback improve resilience, not full immediate fanout proof. No real test notifications or approvals were sent by workers. After new People panel layouts are saved, rollback must preserve additive panel schema compatibility. Broad Branch/household onboarding, multi-memory wizard and native inline replies remain outside PR23. Julian is finishing private handoff artifacts only, no further source or production writes.",
+      "next_action": "Claude supervising (usage-limited). Test fixes for PR23 CI pushed: onboarding (People-only invitation: side on wide, present in People stack on phones; You stays last), push-settings (new preview-consent disclosure text), family-invitations and hotfix (invites/filters now via Family > All family full directory), home-reunion (select Page area via visible chip label). REMAINING REAL BUG for a coder: changing Page area (Main/Side/Full width) in 'Panel · Bring your people.' closes the panel editor because the moved panel re-mounts and src/page-content.jsx MutationObserver (activeSurface disconnected -> activateSurface(null)) clears the active editor. home-reunion-browser.mjs now asserts tools stay open. Fix: on disconnect, re-find the same panel (data-panel-id on same data-panel-page, excluding clones inside dialog / page-element-preview) and keep activeEditor; activeSurface was set from openPanel's options button closest('dialog,.card,section') which may be the inner card, so store panel id/page at activation. A first attempt still closed; verify with a diagnostic stack before shipping. Then full exact-head CI, apply 0026 per runbook (fresh bookmark, preflight, wrangler d1 execute --file 0026-with-ledger.sql, verify), deploy sealed CI artifact with /sw.js in run_worker_first, postflight.",
       "category": "implementation",
       "primary_team": "release",
       "supporting_teams": [],
@@ -2238,6 +2243,8 @@
           }
         ]
       },
+      "updated_at": "2026-10-09T04:58:50.132Z",
+      "lease_until": "2026-10-09T16:58:50.132Z",
       "amendments": [
         {
           "at": "2026-10-09T03:47:26.081Z",
@@ -2424,8 +2431,6 @@
         }
       ],
       "amendment_count": 2,
-      "updated_at": "2026-10-09T04:43:48.436Z",
-      "lease_until": "2026-10-09T16:43:48.436Z",
       "handoffs": [
         {
           "at": "2026-10-09T04:43:48.436Z",
