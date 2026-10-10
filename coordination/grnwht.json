@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-10T23:12:21.323Z",
+  "updated_at": "2026-10-10T23:12:39.800Z",
   "legacy_branches": [
     "main"
   ],
@@ -1095,7 +1095,7 @@
       "supporting_teams": [],
       "primary_staff": null,
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-10T23:09:06.195Z",
       "objective_history": {
         "baseline": {
@@ -2704,6 +2704,68 @@
       "evidence": "Claim branch grnwht/family-setup-onboarding-20261009 merged as PR #24 (2026-10-09T10:43Z). Follow-up releases under this claim all merged and deployed: #25 parity pass, #26 household steps, #27 branch question, #28 sienna footer, #29 page stage, #30 stage repair, #31 stage align, #32 stage cover, #33 no top stroke (merge e2748ed, CI 38074453913 all 9 green, worker bcca157b, rollback 621c7913). No unpublished work remains. Device/email/push acceptance was specified as reported separately and is tracked outside this claim. Completed to reconcile ownership before grnwht-feature-audit-email-remediation-20261010 per its next_action, on Lauren's 'start the whole thing'.",
       "work_accounted": true,
       "completed_at": "2026-10-10T23:12:21.323Z"
+    },
+    {
+      "id": "grnwht-feature-audit-email-remediation-20261010",
+      "owner": "claude-code-pr20",
+      "branch": "grnwht/feature-audit-email-20261010",
+      "paths": [
+        "src/",
+        "tests/",
+        "backend/src/",
+        "backend/tests/",
+        "backend/migrations/",
+        "scripts/preview-family-emails.mjs",
+        ".github/workflows/gw-quality.yml"
+      ],
+      "resources": [
+        "grnwht-feature-audit-remediation",
+        "grnwht-transactional-email-templates"
+      ],
+      "goal": "Close GW everyday-feature audit gaps and integrate approved transactional email templates in bounded, tested batches.",
+      "acceptance": "Queue only for existing Claude owner. Audit baseline e2748eddfcced7ca8837f4849a53885b587e163a (main verified 2026-10-10); source/test inspection only, no runtime tests. Reproduce each finding on current source before fixing. Full audit: Library libfile_a10f3efe16b48191866e194e9ef1317b. All 12 findings follow.\n\nBounded batches, P1 first:\n1. Memory deletion, paging and reports (P1 findings 1-3): confirmed owner/moderator recoverable soft-delete of memory, linked post, discussion visibility, saved/featured references and media access. Deleting only its feed post is insufficient. Stable keyset paging for posts/memories and per-post comments; history-aware server search. Test above 100 posts, 200 memories, 1,000 global comments and 30/200 secondary caps without starvation/duplicates. Reachable capability-gated report queue, safe content context/link and confirmed resolution through ordinary navigation.\n2. Roles and succession (P1 4-5): document/test intended bounded role matrix before changes. Planner/Treasurer reach only authorized tools under You, without widening shared-page editing. Resolve is_leader grant/revoke/remove/restore semantics; retain last-admin protection. Explicit household founder transfer and scoped admin recovery, consent, last-active-head invariant and audit history.\n3. Chat safety (P1 6): participant block preventing repeat invitations, plus intentional reports disclosing only chosen reported material. Preserve accepted-adult-participant-only reads; no routine admin/moderator access to private chats.\n4. Saved and content editing (P2 7-8): private, access-rechecked Saved destination; history search. Attachment/tag correction, announcement pin/unpin, owner authorization and stale-edit conflict checks. Define poll-edit policy after votes; preserve vote history.\n5. Message actions (P2 9): expose existing per-chat mute and serialize state; safe recoverable delete/unsend policy, edit and quoted replies. Preserve message/read cursors, idempotency and attachment/original/quote access after deletion.\n6. Invitations and transactional email (P2 10 plus latest request): sent/pending lists, revoke/cancel/expiry/safe resend, household request/invitation withdrawal; recipient binding, consent and duplicate-send protection. Integrate approved stock-green Momo light/dark sign-in code/link, family-invite and household-invite templates currently using legacy email-template.mjs. Preserve one-use/expiry/security, escaping/URL safety, plaintext, accessibility and email-client/font-off fallbacks. Reuse existing family-update-email.mjs/family-email-theme.mjs primitives; notification/announcement recipient-themed renderer already exists, do not rebuild it. PR19 is design provenance only: https://github.com/lrnolivia/gwfamily/pull/19 .\n7. Cleanup/account lifecycle (P2 11): owner-private child removal with recovery; safe memorial/household archive. Account deletion is intentionally disabled. Define retention, ownership handover, shared-content, export/request and recovery flows before lifecycle changes; do not blindly enable erasure or equate membership removal with deletion.\n8. Uploads (P2 12): align picker/preview/live formats including DOC/DOCX, AVIF and QuickTime mismatches; preserve partial successes, per-file retry/remove and drafts without duplicates. Persist/rehydrate music-link metadata.\n\nPer batch: fictional isolated loopback fixtures/test D1/R2 only; preserve environment guard, backend roles/privacy and rollback. Actual UI navigation across relevant roles, denied cross-owner/group access, interrupted saves/retries, repeated actions/account switches; focused regressions and integrated exact-head full CI including applicable Chromium/WebKit. Never rely on live family counts/order/assets. Visual parity and phone acceptance are COMPLETE; preserve, do not reopen. No real family changes, permission expansion, irreversible deletion, migration execution, email/notification sends, merge or deployment authorized by this queue.",
+      "next_action": "CLAIMED 2026-10-10 ~23:15Z on Lauren's 'start the whole thing'. Working in Claude Code session (no workers). Fresh worktree from origin/main e2748ed. Order: reproduce findings on source, then batches 1-8 P1 first, focused tests per batch, draft PR, full exact-head CI. No merge/deploy/migration execution/sends.",
+      "category": "implementation",
+      "labels": [
+        {
+          "key": "execution",
+          "value": "queued-only"
+        },
+        {
+          "key": "audit-baseline",
+          "value": "e2748eddfcced7ca8837f4849a53885b587e163a"
+        }
+      ],
+      "tags": [
+        "feature-audit",
+        "p1-first",
+        "transactional-email",
+        "fictional-fixtures"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "base_sha": "e2748eddfcced7ca8837f4849a53885b587e163a",
+      "state": "active",
+      "created_at": "2026-10-10T23:12:39.800Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Close GW everyday-feature audit gaps and integrate approved transactional email templates in bounded, tested batches.",
+          "acceptance": "Queue only for existing Claude owner. Audit baseline e2748eddfcced7ca8837f4849a53885b587e163a (main verified 2026-10-10); source/test inspection only, no runtime tests. Reproduce each finding on current source before fixing. Full audit: Library libfile_a10f3efe16b48191866e194e9ef1317b. All 12 findings follow.\n\nBounded batches, P1 first:\n1. Memory deletion, paging and reports (P1 findings 1-3): confirmed owner/moderator recoverable soft-delete of memory, linked post, discussion visibility, saved/featured references and media access. Deleting only its feed post is insufficient. Stable keyset paging for posts/memories and per-post comments; history-aware server search. Test above 100 posts, 200 memories, 1,000 global comments and 30/200 secondary caps without starvation/duplicates. Reachable capability-gated report queue, safe content context/link and confirmed resolution through ordinary navigation.\n2. Roles and succession (P1 4-5): document/test intended bounded role matrix before changes. Planner/Treasurer reach only authorized tools under You, without widening shared-page editing. Resolve is_leader grant/revoke/remove/restore semantics; retain last-admin protection. Explicit household founder transfer and scoped admin recovery, consent, last-active-head invariant and audit history.\n3. Chat safety (P1 6): participant block preventing repeat invitations, plus intentional reports disclosing only chosen reported material. Preserve accepted-adult-participant-only reads; no routine admin/moderator access to private chats.\n4. Saved and content editing (P2 7-8): private, access-rechecked Saved destination; history search. Attachment/tag correction, announcement pin/unpin, owner authorization and stale-edit conflict checks. Define poll-edit policy after votes; preserve vote history.\n5. Message actions (P2 9): expose existing per-chat mute and serialize state; safe recoverable delete/unsend policy, edit and quoted replies. Preserve message/read cursors, idempotency and attachment/original/quote access after deletion.\n6. Invitations and transactional email (P2 10 plus latest request): sent/pending lists, revoke/cancel/expiry/safe resend, household request/invitation withdrawal; recipient binding, consent and duplicate-send protection. Integrate approved stock-green Momo light/dark sign-in code/link, family-invite and household-invite templates currently using legacy email-template.mjs. Preserve one-use/expiry/security, escaping/URL safety, plaintext, accessibility and email-client/font-off fallbacks. Reuse existing family-update-email.mjs/family-email-theme.mjs primitives; notification/announcement recipient-themed renderer already exists, do not rebuild it. PR19 is design provenance only: https://github.com/lrnolivia/gwfamily/pull/19 .\n7. Cleanup/account lifecycle (P2 11): owner-private child removal with recovery; safe memorial/household archive. Account deletion is intentionally disabled. Define retention, ownership handover, shared-content, export/request and recovery flows before lifecycle changes; do not blindly enable erasure or equate membership removal with deletion.\n8. Uploads (P2 12): align picker/preview/live formats including DOC/DOCX, AVIF and QuickTime mismatches; preserve partial successes, per-file retry/remove and drafts without duplicates. Persist/rehydrate music-link metadata.\n\nPer batch: fictional isolated loopback fixtures/test D1/R2 only; preserve environment guard, backend roles/privacy and rollback. Actual UI navigation across relevant roles, denied cross-owner/group access, interrupted saves/retries, repeated actions/account switches; focused regressions and integrated exact-head full CI including applicable Chromium/WebKit. Never rely on live family counts/order/assets. Visual parity and phone acceptance are COMPLETE; preserve, do not reopen. No real family changes, permission expansion, irreversible deletion, migration execution, email/notification sends, merge or deployment authorized by this queue.",
+          "at": "2026-10-10T23:09:06.195Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-feature-audit-email-remediation-20261010:acceptance:0",
+            "text": "Queue only for existing Claude owner. Audit baseline e2748eddfcced7ca8837f4849a53885b587e163a (main verified 2026-10-10); source/test inspection only, no runtime tests. Reproduce each finding on current source before fixing. Full audit: Library libfile_a10f3efe16b48191866e194e9ef1317b. All 12 findings follow.\n\nBounded batches, P1 first:\n1. Memory deletion, paging and reports (P1 findings 1-3): confirmed owner/moderator recoverable soft-delete of memory, linked post, discussion visibility, saved/featured references and media access. Deleting only its feed post is insufficient. Stable keyset paging for posts/memories and per-post comments; history-aware server search. Test above 100 posts, 200 memories, 1,000 global comments and 30/200 secondary caps without starvation/duplicates. Reachable capability-gated report queue, safe content context/link and confirmed resolution through ordinary navigation.\n2. Roles and succession (P1 4-5): document/test intended bounded role matrix before changes. Planner/Treasurer reach only authorized tools under You, without widening shared-page editing. Resolve is_leader grant/revoke/remove/restore semantics; retain last-admin protection. Explicit household founder transfer and scoped admin recovery, consent, last-active-head invariant and audit history.\n3. Chat safety (P1 6): participant block preventing repeat invitations, plus intentional reports disclosing only chosen reported material. Preserve accepted-adult-participant-only reads; no routine admin/moderator access to private chats.\n4. Saved and content editing (P2 7-8): private, access-rechecked Saved destination; history search. Attachment/tag correction, announcement pin/unpin, owner authorization and stale-edit conflict checks. Define poll-edit policy after votes; preserve vote history.\n5. Message actions (P2 9): expose existing per-chat mute and serialize state; safe recoverable delete/unsend policy, edit and quoted replies. Preserve message/read cursors, idempotency and attachment/original/quote access after deletion.\n6. Invitations and transactional email (P2 10 plus latest request): sent/pending lists, revoke/cancel/expiry/safe resend, household request/invitation withdrawal; recipient binding, consent and duplicate-send protection. Integrate approved stock-green Momo light/dark sign-in code/link, family-invite and household-invite templates currently using legacy email-template.mjs. Preserve one-use/expiry/security, escaping/URL safety, plaintext, accessibility and email-client/font-off fallbacks. Reuse existing family-update-email.mjs/family-email-theme.mjs primitives; notification/announcement recipient-themed renderer already exists, do not rebuild it. PR19 is design provenance only: https://github.com/lrnolivia/gwfamily/pull/19 .\n7. Cleanup/account lifecycle (P2 11): owner-private child removal with recovery; safe memorial/household archive. Account deletion is intentionally disabled. Define retention, ownership handover, shared-content, export/request and recovery flows before lifecycle changes; do not blindly enable erasure or equate membership removal with deletion.\n8. Uploads (P2 12): align picker/preview/live formats including DOC/DOCX, AVIF and QuickTime mismatches; preserve partial successes, per-file retry/remove and drafts without duplicates. Persist/rehydrate music-link metadata.\n\nPer batch: fictional isolated loopback fixtures/test D1/R2 only; preserve environment guard, backend roles/privacy and rollback. Actual UI navigation across relevant roles, denied cross-owner/group access, interrupted saves/retries, repeated actions/account switches; focused regressions and integrated exact-head full CI including applicable Chromium/WebKit. Never rely on live family counts/order/assets. Visual parity and phone acceptance are COMPLETE; preserve, do not reopen. No real family changes, permission expansion, irreversible deletion, migration execution, email/notification sends, merge or deployment authorized by this queue.",
+            "at": "2026-10-10T23:09:06.195Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-10T23:12:39.800Z",
+      "lease_until": "2026-10-11T11:12:39.800Z"
     }
   ]
 }
