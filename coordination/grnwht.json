@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-10T06:06:18.471Z",
+  "updated_at": "2026-10-10T06:58:53.844Z",
   "legacy_branches": [
     "main"
   ],
@@ -2531,7 +2531,7 @@
       ],
       "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
       "acceptance": "Start from released main after PR23; preserve shipped functionality. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname suggestions require explicit confirmation; no automatic joins, kinship inference, access or head assignment. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
-      "next_action": "Lauren authorized (chat 2026-10-10: 'finish those tweaks and deploy once you make them'); autonomy hold resumed (op gw-resume-stage-repair-20261010). Draft PR lrnolivia/gwfamily#30 (branch grnwht/stage-repair-20261010, head 56865e9, base main 7f987c2) fixes the five recorded points: You heading/no empty hero; no preview photos in live (photos/ samples preview-only, live card default = family oak); no stage carousel controls (gallery/video stay in card); consistent hero height from Home's ratio + crossfade/side-slide transition (reduced motion off); photo-derived 3-color wordmark at 6:1, no-hero pages unchanged. Next: exact-head CI green -> merge via Relay -> sealed artifact -> upload -> deploy with rollback 682d9373 -> smoke. Production currently PR27 Worker 682d9373.",
+      "next_action": "RELEASED PR #30 stage repair 2026-10-10 ~07:00Z with Lauren's go ('finish those tweaks and deploy once you make them'): merged e72ceb3 (tree identical to tested head 56865e9; CI run 38029766794 attempt 3 all 9 green; attempts 1-2 hit unrelated flakes that passed locally). Sealed archive sha256 36cd6451657eb9fd14fca254b0f8b1516537663afb594ca3c588e01e68c16565. Worker a1ec8c24-05a2-47e6-979c-cd67d19418cd (tag gw-pr30-56865e901702), deployment c5ba8c60-825b-47b4-a549-7ce48e7b8a0c. ROLLBACK: 682d9373-4a53-4e86-9921-887757000cb1. No D1 changes; 24 bindings identical. Verified: build e0e51537 x5, /health 200, sw 200, signed-out API 401, new stage in bundle with no carousel, welcome renders with no console errors and no sample photos. NEXT: Lauren's phone check with real photos (You heading position, live heroes show only real photos, matching hero heights + crossfade, photo-derived wordmark legibility).",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2561,8 +2561,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-10T06:06:18.471Z",
-      "lease_until": "2026-10-10T18:06:18.471Z",
+      "updated_at": "2026-10-10T06:58:53.844Z",
+      "lease_until": "2026-10-10T18:58:53.844Z",
       "amendments": [
         {
           "at": "2026-10-09T02:24:37.032Z",
