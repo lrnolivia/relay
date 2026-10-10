@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-10T04:01:39.068Z",
+  "updated_at": "2026-10-10T04:03:38.839Z",
   "legacy_branches": [
     "main"
   ],
@@ -499,7 +499,7 @@
       "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
       "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
       "acceptance": "Start from released main after PR23; preserve shipped functionality. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname suggestions require explicit confirmation; no automatic joins, kinship inference, access or head assignment. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
-      "next_action": "ROLLED BACK on Lauren's explicit request at 04:00:11 UTC. Current production is prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1 at 100%, deployment 14a6272c-c305-4c95-827b-5352232d3487, build c6db0573dad9f8c5314f. Both production domains return this exact prior build and healthy 200. PR28+29 remain merged on main 7f987c253f4c17cf7adb58578b6d4391c4e5d28f, but their Worker e3f3f68e and build e7bb8e1585a7a2a398a0 are NOT an accepted stable release. Keep release held pending user issue details and new release authorization. Do not redeploy from main, revert source, change database, or implement speculative fixes. All 24 bindings and current family D1/R2 data are preserved. Earlier release receipt is superseded by this rollback. Preserve original broader acceptance without declaring it complete.",
+      "next_action": "ROLLED BACK and HELD. Production is prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1 at 100%, deployment 14a6272c-c305-4c95-827b-5352232d3487, build c6db0573dad9f8c5314f; both domains' build and health verified. Main 7f987c2/Worker e3f3f68e are rejected for production, despite green CI. Lauren's exact feedback (Sentinel_f2560e6ac5fc8191be501683c41d1aee): 'this header is way too far down on You, but the main show stopper was the preview images the fake family made it to the carousel on the front. also i don’t want carousel controls there.' Screenshot libfile_cc6a9acd0cb08191bbc4ca3e9002c343. Read-only diagnosis identifies unconditional photos/garden.jpg in Home and Reunion stage fallbacks (src/react-app.jsx), unvalidated fallback passthrough and visible controls in src/page-stage.jsx, and tall bottom-aligned non-framed stage in src/page-stage.css. Do not deploy, revert source/database, or implement fixes until next instructions. Retain current family data, all 24 bindings and both schedules. Project autonomy hold is verified. This supersedes the successful release receipt; broader acceptance remains uncompleted.",
       "paths": [
         "src/",
         "tests/",
@@ -539,7 +539,7 @@
           }
         ]
       },
-      "amendment_count": 3,
+      "amendment_count": 4,
       "amendments": [
         {
           "at": "2026-10-09T02:24:37.032Z",
@@ -585,9 +585,23 @@
           "after": {
             "next_action": "ROLLED BACK on Lauren's explicit request at 04:00:11 UTC. Current production is prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1 at 100%, deployment 14a6272c-c305-4c95-827b-5352232d3487, build c6db0573dad9f8c5314f. Both production domains return this exact prior build and healthy 200. PR28+29 remain merged on main 7f987c253f4c17cf7adb58578b6d4391c4e5d28f, but their Worker e3f3f68e and build e7bb8e1585a7a2a398a0 are NOT an accepted stable release. Keep release held pending user issue details and new release authorization. Do not redeploy from main, revert source, change database, or implement speculative fixes. All 24 bindings and current family D1/R2 data are preserved. Earlier release receipt is superseded by this rollback. Preserve original broader acceptance without declaring it complete."
           }
+        },
+        {
+          "at": "2026-10-10T04:03:38.839Z",
+          "by": "01a1146d-0267-735e-8332-fa38cf7fb007",
+          "reason": "Record Lauren's exact release-rejection feedback and verified rollback while preserving the held state. Read-only diagnosis only; no code changes.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "ROLLED BACK on Lauren's explicit request at 04:00:11 UTC. Current production is prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1 at 100%, deployment 14a6272c-c305-4c95-827b-5352232d3487, build c6db0573dad9f8c5314f. Both production domains return this exact prior build and healthy 200. PR28+29 remain merged on main 7f987c253f4c17cf7adb58578b6d4391c4e5d28f, but their Worker e3f3f68e and build e7bb8e1585a7a2a398a0 are NOT an accepted stable release. Keep release held pending user issue details and new release authorization. Do not redeploy from main, revert source, change database, or implement speculative fixes. All 24 bindings and current family D1/R2 data are preserved. Earlier release receipt is superseded by this rollback. Preserve original broader acceptance without declaring it complete."
+          },
+          "after": {
+            "next_action": "ROLLED BACK and HELD. Production is prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1 at 100%, deployment 14a6272c-c305-4c95-827b-5352232d3487, build c6db0573dad9f8c5314f; both domains' build and health verified. Main 7f987c2/Worker e3f3f68e are rejected for production, despite green CI. Lauren's exact feedback (Sentinel_f2560e6ac5fc8191be501683c41d1aee): 'this header is way too far down on You, but the main show stopper was the preview images the fake family made it to the carousel on the front. also i don’t want carousel controls there.' Screenshot libfile_cc6a9acd0cb08191bbc4ca3e9002c343. Read-only diagnosis identifies unconditional photos/garden.jpg in Home and Reunion stage fallbacks (src/react-app.jsx), unvalidated fallback passthrough and visible controls in src/page-stage.jsx, and tall bottom-aligned non-framed stage in src/page-stage.css. Do not deploy, revert source/database, or implement fixes until next instructions. Retain current family data, all 24 bindings and both schedules. Project autonomy hold is verified. This supersedes the successful release receipt; broader acceptance remains uncompleted."
+          }
         }
       ],
-      "updated_at": "2026-10-10T04:01:39.068Z",
+      "updated_at": "2026-10-10T04:03:38.839Z",
       "handoffs": [
         {
           "at": "2026-10-10T03:50:12.760Z",
@@ -2511,7 +2525,7 @@
       ],
       "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
       "acceptance": "Start from released main after PR23; preserve shipped functionality. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname suggestions require explicit confirmation; no automatic joins, kinship inference, access or head assignment. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
-      "next_action": "ROLLED BACK on Lauren's explicit request at 04:00:11 UTC. Current production is prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1 at 100%, deployment 14a6272c-c305-4c95-827b-5352232d3487, build c6db0573dad9f8c5314f. Both production domains return this exact prior build and healthy 200. PR28+29 remain merged on main 7f987c253f4c17cf7adb58578b6d4391c4e5d28f, but their Worker e3f3f68e and build e7bb8e1585a7a2a398a0 are NOT an accepted stable release. Keep release held pending user issue details and new release authorization. Do not redeploy from main, revert source, change database, or implement speculative fixes. All 24 bindings and current family D1/R2 data are preserved. Earlier release receipt is superseded by this rollback. Preserve original broader acceptance without declaring it complete.",
+      "next_action": "ROLLED BACK and HELD. Production is prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1 at 100%, deployment 14a6272c-c305-4c95-827b-5352232d3487, build c6db0573dad9f8c5314f; both domains' build and health verified. Main 7f987c2/Worker e3f3f68e are rejected for production, despite green CI. Lauren's exact feedback (Sentinel_f2560e6ac5fc8191be501683c41d1aee): 'this header is way too far down on You, but the main show stopper was the preview images the fake family made it to the carousel on the front. also i don’t want carousel controls there.' Screenshot libfile_cc6a9acd0cb08191bbc4ca3e9002c343. Read-only diagnosis identifies unconditional photos/garden.jpg in Home and Reunion stage fallbacks (src/react-app.jsx), unvalidated fallback passthrough and visible controls in src/page-stage.jsx, and tall bottom-aligned non-framed stage in src/page-stage.css. Do not deploy, revert source/database, or implement fixes until next instructions. Retain current family data, all 24 bindings and both schedules. Project autonomy hold is verified. This supersedes the successful release receipt; broader acceptance remains uncompleted.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2541,8 +2555,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-10T04:01:39.068Z",
-      "lease_until": "2026-10-10T16:01:39.068Z",
+      "updated_at": "2026-10-10T04:03:38.839Z",
+      "lease_until": "2026-10-10T16:03:38.839Z",
       "amendments": [
         {
           "at": "2026-10-09T02:24:37.032Z",
@@ -2588,9 +2602,23 @@
           "after": {
             "next_action": "ROLLED BACK on Lauren's explicit request at 04:00:11 UTC. Current production is prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1 at 100%, deployment 14a6272c-c305-4c95-827b-5352232d3487, build c6db0573dad9f8c5314f. Both production domains return this exact prior build and healthy 200. PR28+29 remain merged on main 7f987c253f4c17cf7adb58578b6d4391c4e5d28f, but their Worker e3f3f68e and build e7bb8e1585a7a2a398a0 are NOT an accepted stable release. Keep release held pending user issue details and new release authorization. Do not redeploy from main, revert source, change database, or implement speculative fixes. All 24 bindings and current family D1/R2 data are preserved. Earlier release receipt is superseded by this rollback. Preserve original broader acceptance without declaring it complete."
           }
+        },
+        {
+          "at": "2026-10-10T04:03:38.839Z",
+          "by": "01a1146d-0267-735e-8332-fa38cf7fb007",
+          "reason": "Record Lauren's exact release-rejection feedback and verified rollback while preserving the held state. Read-only diagnosis only; no code changes.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "ROLLED BACK on Lauren's explicit request at 04:00:11 UTC. Current production is prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1 at 100%, deployment 14a6272c-c305-4c95-827b-5352232d3487, build c6db0573dad9f8c5314f. Both production domains return this exact prior build and healthy 200. PR28+29 remain merged on main 7f987c253f4c17cf7adb58578b6d4391c4e5d28f, but their Worker e3f3f68e and build e7bb8e1585a7a2a398a0 are NOT an accepted stable release. Keep release held pending user issue details and new release authorization. Do not redeploy from main, revert source, change database, or implement speculative fixes. All 24 bindings and current family D1/R2 data are preserved. Earlier release receipt is superseded by this rollback. Preserve original broader acceptance without declaring it complete."
+          },
+          "after": {
+            "next_action": "ROLLED BACK and HELD. Production is prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1 at 100%, deployment 14a6272c-c305-4c95-827b-5352232d3487, build c6db0573dad9f8c5314f; both domains' build and health verified. Main 7f987c2/Worker e3f3f68e are rejected for production, despite green CI. Lauren's exact feedback (Sentinel_f2560e6ac5fc8191be501683c41d1aee): 'this header is way too far down on You, but the main show stopper was the preview images the fake family made it to the carousel on the front. also i don’t want carousel controls there.' Screenshot libfile_cc6a9acd0cb08191bbc4ca3e9002c343. Read-only diagnosis identifies unconditional photos/garden.jpg in Home and Reunion stage fallbacks (src/react-app.jsx), unvalidated fallback passthrough and visible controls in src/page-stage.jsx, and tall bottom-aligned non-framed stage in src/page-stage.css. Do not deploy, revert source/database, or implement fixes until next instructions. Retain current family data, all 24 bindings and both schedules. Project autonomy hold is verified. This supersedes the successful release receipt; broader acceptance remains uncompleted."
+          }
         }
       ],
-      "amendment_count": 3,
+      "amendment_count": 4,
       "handoffs": [
         {
           "at": "2026-10-10T03:50:12.760Z",
