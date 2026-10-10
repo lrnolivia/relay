@@ -8,7 +8,7 @@ import { pathToFileURL } from 'node:url';
 import { createInterface } from 'node:readline';
 import { callSkills } from '../src/skills-service.js';
 import { createExecutionInbox } from './relay-executor-inbox.mjs';
-import { captureSourceBundle, verifyRemoteSourceCheckpoint, recoverSourceCheckpoint } from './relay-source-checkpoint.mjs';
+import { captureSourceBundle, verifyRemoteSourceCheckpoint, recoverSourceCheckpoint, assertSourceCheckpointRuntime } from './relay-source-checkpoint.mjs';
 
 export function codexArguments({workspace,session_id}) {
   if(!path.isAbsolute(workspace))throw Error('Executor workspace must be absolute');
@@ -86,11 +86,10 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     if(job.owner!==config.owner||job.branch!==config.branch)throw Error('Execution does not match the configured owner and branch');
     const protectionEnabled=config.source_checkpoints===true;
     const platform=getPlatform();
-    // The capture/restore helper uses Linux descriptor identity checks. Reject
-    // unsupported protection before advertising it or taking a remote lease.
+    // Verify native descriptor primitives before advertising protection or leasing.
     if(protectionEnabled){
-      if(platform!=='linux')throw Error('Source checkpoints require Linux descriptor identity verification in this version');
-      await fs.access('/proc/self/fd');
+      journal.source_checkpoint_runtime=await assertSourceCheckpointRuntime(platform);
+      await save();
     }
     const protectSource=async(session,summary)=>{
       const previous=journal.source_checkpoint?.state==='restore_verified'?journal.source_checkpoint:journal.source_checkpoint?.last_verified_source||null;
