@@ -3,10 +3,36 @@ import {constants} from 'node:fs';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {createHash,randomUUID} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
 import {validateSourceBundle,sourceBundleDigest,serializeSourceBundle,validateSourcePath} from '../packages/runner/src/source-checkpoints.mjs';
 
 const sha256=bytes=>createHash('sha256').update(bytes).digest('hex');
 const inside=(file,scope)=>scope.some(p=>file===p||(p.endsWith('/')&&file.startsWith(p)));
+const macHelper=fileURLToPath(new URL('./relay-source-checkpoint-macos.py',import.meta.url));
+let macRuntime;
+let macProgram;
+const macArguments=operation=>['-I','-S','-B','-c',macProgram,operation];
+export async function assertSourceCheckpointRuntime(platform=process.platform){
+  if(platform==='linux'){await fs.access('/proc/self/fd');return {platform,descriptor_identity:'proc-fd'};}
+  if(platform!=='darwin'||process.platform!=='darwin')throw Error('Source checkpoints require supported Linux or macOS descriptor identity verification');
+  if(!macRuntime){
+    try{
+      // Freeze trusted helper bytes before a coding process can edit its checkout.
+      // Isolated Python excludes workspace/PYTHONPATH and site customization imports.
+      macProgram=await fs.readFile(macHelper,'utf8');
+      const runtime=JSON.parse(execFileSync('python3',macArguments('probe'),{encoding:'utf8',maxBuffer:4096,timeout:5000,stdio:['ignore','pipe','pipe']}));
+      if(runtime.platform!=='darwin'||runtime.descriptor_identity!=='F_GETPATH'||runtime.anchored_creation!==true||!path.isAbsolute(runtime.executable)||!/^3\.[0-9]+\.[0-9]+$/.test(runtime.python))throw Error('Invalid runtime');
+      macRuntime={...runtime,helper_sha256:sha256(Buffer.from(macProgram))};
+    }catch{throw Error('Source checkpoints require installed Python3.9+ with native macOS descriptor primitives');}
+  }
+  return {...macRuntime};
+}
+async function descriptorPath(handle){
+  if(process.platform==='linux')return fs.realpath('/proc/self/fd/'+handle.fd);
+  const runtime=await assertSourceCheckpointRuntime();
+  try{return JSON.parse(execFileSync(runtime.executable,macArguments('descriptor'),{encoding:'utf8',maxBuffer:4096,timeout:5000,stdio:['ignore','pipe','pipe',handle.fd]})).path;}
+  catch{throw Error('Source descriptor identity verification failed');}
+}
 
 async function checkedPath(root,relative,{missing=false}={}){
   validateSourcePath(relative);
@@ -23,7 +49,6 @@ async function checkedPath(root,relative,{missing=false}={}){
 }
 
 async function fileEntry(root,relative){
-  if(process.platform!=='linux')throw Error('Race-safe source capture requires Linux descriptor identity verification in this version');
   const filename=await checkedPath(root,relative,{missing:true});
   if(!filename)return {path:relative,kind:'deleted'};
   const handle=await fs.open(filename,constants.O_RDONLY|(constants.O_NOFOLLOW||0));
@@ -31,19 +56,18 @@ async function fileEntry(root,relative){
     const before=await handle.stat();if(!before.isFile()||before.nlink!==1)throw Error('Only regular non-hardlinked source files can be checkpointed');
     // Validate the opened descriptor, not merely the path checked before open.
     // A parent swap cannot cause outside bytes to be read through this handle.
-    const opened=await fs.realpath('/proc/self/fd/'+handle.fd);
+    const opened=await descriptorPath(handle);
     if(opened!==path.join(root,relative))throw Error('Source path changed before descriptor validation');
     if(before.size>128*1024)throw Error('Source checkpoint file exceeds bounded capture size');
     const bytes=await handle.readFile(),after=await handle.stat();
-    if(await fs.realpath('/proc/self/fd/'+handle.fd)!==opened)throw Error('Source path changed during capture');
+    if(await descriptorPath(handle)!==opened)throw Error('Source path changed during capture');
     if(before.ino!==after.ino||before.size!==after.size||before.mtimeMs!==after.mtimeMs||bytes.length!==after.size)throw Error('Source changed during checkpoint capture');
     return {path:relative,kind:'file',mode:before.mode&0o111?493:420,size:bytes.length,sha256:sha256(bytes),data:bytes.toString('base64')};
   }finally{await handle.close();}
 }
 
 export async function captureSourceBundle({workspace,repository,branch,head_sha,scope}){
-  if(process.platform!=='linux')throw Error('Race-safe source capture requires Linux descriptor identity verification in this version');
-  await fs.access('/proc/self/fd');
+  await assertSourceCheckpointRuntime();
   const root=await fs.realpath(workspace);
   if(!Array.isArray(scope)||!scope.length)throw Error('Source checkpoint needs the complete admitted scope');
   for(const entry of scope)validateSourcePath(entry,{prefix:entry.endsWith('/')});
@@ -69,12 +93,16 @@ export async function captureSourceBundle({workspace,repository,branch,head_sha,
 export async function restoreSourceBundle(bundle,{directory,identity}={}){
   const metadata=validateSourceBundle(bundle,identity);
   if(!path.isAbsolute(directory||''))throw Error('Restore directory must be absolute');
-  if(process.platform!=='linux')throw Error('Race-safe restoration requires Linux descriptor identity verification in this version');
-  await fs.access('/proc/self/fd');
+  const runtime=await assertSourceCheckpointRuntime();
   // Create-only, one fresh root. Never overlay an existing working tree.
   await fs.mkdir(directory,{mode:0o700});
   const root=await fs.realpath(directory);
-  for(const entry of bundle.files){
+  if(process.platform==='darwin'){
+    try{
+      const result=JSON.parse(execFileSync(runtime.executable,macArguments('restore'),{input:JSON.stringify({root,files:bundle.files}),encoding:'utf8',maxBuffer:4096,timeout:10000,stdio:['pipe','pipe','pipe']}));
+      if(result.restored!==true)throw Error('Invalid restore result');
+    }catch{throw Error('Restore parent or file descriptor verification failed; source restoration is incomplete');}
+  }else for(const entry of bundle.files){
     if(entry.kind==='deleted')continue;
     const parents=[],parts=entry.path.split('/');
     try {
