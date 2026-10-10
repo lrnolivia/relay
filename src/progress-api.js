@@ -4,6 +4,15 @@ import { cloudWorkerSummary } from "./cloud.js";
 import { deriveObservedProgress } from "./progress-observation.js";
 
 export const PROGRESS_CONTRACT_VERSION = "1.7.5";
+export const PROGRESS_READ_CONCURRENCY = 8;
+
+async function mapBounded(items, limit, run) {
+  const out = new Array(items.length);
+  let next = 0;
+  const worker = async () => { while (next < items.length) { const index = next++; out[index] = await run(items[index]); } };
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return out;
+}
 
 async function jsonFile(api, base, path) {
   const file = await readRunnerFile(api, base, path);
@@ -73,28 +82,21 @@ export async function callProgress(args, env = {}, apiOverride, cloudOverride) {
     }
   }
   const claims = record.claims.filter(item => !args.assignment || item.id === args.assignment);
-  const progress = [];
-  for (const claim of claims) {
+  const findings = branches
+    .filter(item => !record.claims.some(c => c.branch === item.name) && !record.legacy_branches.includes(item.name))
+    .map(item => ({ type: "unregistered_branch", branch: item.name }));
+  // Per-claim commit and check reads are independent; bounded fan-out keeps claim order and output identical.
+  const progress = await mapBounded(claims, PROGRESS_READ_CONCURRENCY, async claim => {
     const branch = branches.find(item => item.name === claim.branch) || null;
     const headSha = branch?.commit?.sha || claim.merged_head_sha || null;
-    let commit = null;
-    if (headSha) { try { commit = await api(`${repoBase}/commits/${headSha}`); } catch {} }
     const pr = prs.filter(item => item?.head?.ref === claim.branch)
       .sort((a,b) => Date.parse(b.updated_at || b.created_at || 0) - Date.parse(a.updated_at || a.created_at || 0))[0] || null;
-    let checks = [];
-    if (headSha) {
-      try {
-        const got = await api(`${repoBase}/commits/${headSha}/check-runs?per_page=100`);
-        checks = Array.isArray(got?.check_runs) ? got.check_runs : [];
-      } catch {}
-    }
-    progress.push(deriveObservedProgress({
-      project: args.project, claim, branch, commit, pullRequest: pr, checks, cloud,
-      findings: branches
-        .filter(item => !record.claims.some(c => c.branch === item.name) && !record.legacy_branches.includes(item.name))
-        .map(item => ({ type: "unregistered_branch", branch: item.name }))
-    }));
-  }
+    const [commit, checks] = headSha ? await Promise.all([
+      api(`${repoBase}/commits/${headSha}`).catch(() => null),
+      api(`${repoBase}/commits/${headSha}/check-runs?per_page=100`).then(got => Array.isArray(got?.check_runs) ? got.check_runs : [], () => [])
+    ]) : [null, []];
+    return deriveObservedProgress({ project: args.project, claim, branch, commit, pullRequest: pr, checks, cloud, findings });
+  });
   const queue = record.queue
     .filter(item => item.state === "queued" && (!args.assignment || item.id === args.assignment))
     .map(queuedProgress);
