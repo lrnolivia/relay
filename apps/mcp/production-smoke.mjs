@@ -151,7 +151,7 @@ try {
         form.set("metadata", JSON.stringify({
           request_id: "relay-brand-" + expected.slice(0, 12) + "-" + capture.id,
           target_url: origin + "/", kind: "qa_capture", engine: "github-chromium",
-          context: { project: "relay", environment: "production", surface: "relay-home", route_kind: "home", commit_sha: expected },
+          context: { project: "relay", environment: "production", surface: "relay-home", route_kind: "other", commit_sha: expected },
           viewport: { width: capture.width, height: capture.height, deviceScaleFactor: 1 },
           step_id: capture.id, step_label: "Relay home · " + capture.id,
           assertions: [{ id: "responsive-layout", status: "pass", detail: "No horizontal overflow; live telemetry rendered; exact source and web build identity verified." }]
