@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-10T21:16:03.744Z",
+  "updated_at": "2026-10-10T22:51:49.393Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -5578,8 +5578,10 @@
       "supporting_staff": [
         "nico"
       ],
-      "state": "claimed",
-      "created_at": "2026-10-01T06:19:35.602Z"
+      "state": "completed",
+      "created_at": "2026-10-01T06:19:35.602Z",
+      "completed_at": "2026-10-10T22:51:49.393Z",
+      "updated_at": "2026-10-10T22:51:49.393Z"
     },
     {
       "id": "relay-chatgpt-card-host-mount-followup-20261001",
@@ -11521,10 +11523,16 @@
         "nico"
       ],
       "base_sha": "15ccf60f235974eac58c03be9af10a479cfc7e68",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-01T06:20:20.044Z",
-      "updated_at": "2026-10-01T06:20:20.044Z",
-      "lease_until": "2026-10-01T18:20:20.044Z"
+      "updated_at": "2026-10-10T22:51:49.393Z",
+      "lease_until": "2026-10-11T10:51:49.393Z",
+      "pr": 83,
+      "merged_head_sha": "72a29a6566782b98d284c256e6be9c3c54bcb50e",
+      "merge_commit_sha": "72e3e3cb551f712e46eb668657d852ac59498f4c",
+      "evidence": "Bounded takeover explicitly authorized by Lauren on 2026-10-10 in Claude Code session_01BgnNKqhF4NC2kToiBQozfR ('do both' in reply to closing this stale claim), executed by claude-ai-chat-20261007. The claim's own branch relay/1.9.9.1-production-smoke-sync-20261001 delivered PR82 (merged c91105b7bc55ea752b077c2ccf63515e605fb76d, 2026-10-01T06:23Z) and PR83 'Finish Relay 1.9.9 production smoke sync' (merged 2026-10-01T06:26:44Z). The relay-production-smoke workflow then succeeded at 2026-10-01T06:28Z on 85171e0. The branch was deleted after merge, and the lease expired 2026-10-01T18:20Z with no live writer. Later drift (a 2026-10-04 smoke failure on the v6 card URI against d8fee49) is new work and will be fixed under relay-mcp-rebuild-continuation-20261003, not by reopening this claim.",
+      "work_accounted": true,
+      "completed_at": "2026-10-10T22:51:49.393Z"
     },
     {
       "id": "relay-2.0-live-react-dashboard-20261001",
