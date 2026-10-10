@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-09T20:33:43.179Z",
+  "updated_at": "2026-10-10T00:52:05.008Z",
   "legacy_branches": [
     "main"
   ],
@@ -2489,7 +2489,7 @@
       ],
       "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
       "acceptance": "Start from released main after PR23; preserve shipped functionality. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname suggestions require explicit confirmation; no automatic joins, kinship inference, access or head assignment. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
-      "next_action": "Live = PR #25 (Worker 9a569d5b, rollback 62761a2d). Draft PR lrnolivia/gwfamily#26 (branch grnwht/household-steps-20261009, head 975416b, worktree /Users/lrnolivia/Repos/gwfamily-next): guided household setup in welcome/Refine card, one question per screen (households -> branch per headed unplaced household, surname branch pre-selected, skippable -> main household if 2+ -> review; Done saves together, Not now saves nothing). Lauren approved mockup https://claude.ai/artifact/H42Ufw1iUiW9zYb6jd95kF and asked for glyphs (added search glyph). Frontend only. Local: build, welcome + family-setup browser suites (WebKit) pass. Next: CI green, Lauren reviews screenshots, release only with her go (same procedure as #25).",
+      "next_action": "RELEASED PR #26 2026-10-10 00:53Z with Lauren's go ('ship it and keep going'): merged 3e66778 (live code = head 975416b, CI run 37987793449 all 9 green, sealed archive sha256 9482808b94bbce988033e101ea5658d85b90b6b87dcbac398333e3e5d5da0a74). Worker 03aab6b1-4be1-44d6-bbb3-59df39c69c1a (tag gw-pr26-975416b1d0be), deployment a5ceba07-155f-4bae-a77e-052b0ee1ab48, 100%. Rollback: 9a569d5b-d81f-4fbf-a833-c85736f66f6d. No D1 changes; 24 bindings identical. Verified: build ada4def1 x5, health 200, sw 200, signed-out API 401, new steps in live bundle, sign-in no console errors. NOT verified: signed-in prod UI, iPhone. NEXT: optional branch question when starting a household from You -> Branches & households (surname branch pre-selected, Not sure yet), per Lauren's agreed design.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2519,8 +2519,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-09T20:33:43.179Z",
-      "lease_until": "2026-10-10T08:33:43.179Z",
+      "updated_at": "2026-10-10T00:52:05.008Z",
+      "lease_until": "2026-10-10T12:52:05.008Z",
       "amendments": [
         {
           "at": "2026-10-09T02:24:37.032Z",
