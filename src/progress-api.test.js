@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { queuedProgress, progressResponse, PROGRESS_CONTRACT_VERSION } from "./progress-api.js";
+import { queuedProgress, progressResponse, PROGRESS_CONTRACT_VERSION, PROGRESS_READ_CONCURRENCY } from "./progress-api.js";
 
 test("1.8 consumer contract keeps queued intent separate from observed progress", () => {
   const q = queuedProgress({id:"q",next_action:"later"});
@@ -72,4 +72,29 @@ test('current progress paths reduce twenty concurrent display reads from140 reso
   assert.equal(results.reduce((sum,r)=>sum+r.github_reads.network_requests,0),45);assert.equal(results.reduce((sum,r)=>sum+r.github_reads.logical_requests,0),140);
   await Promise.all(claims.map(c=>callProgress({project:'relay',assignment:c.id,display_cache:true},env)));assert.equal(network,45);
   const fresh=await callProgress({project:'relay',assignment:claims[0].id},env);assert.equal(network,52);assert.equal(fresh.github_reads.mode,'upstream-revalidated');
+});
+
+test('per-claim evidence reads fan out within the bound and keep claim order',async()=>{
+  const count=30,claims=Array.from({length:count},(_,i)=>({id:'assignment-'+i,branch:'branch-'+i,owner:'fixture',state:'active',goal:'Synthetic scope',next_action:'later'}));
+  const record=Buffer.from(JSON.stringify({claims,queue:[],legacy_branches:[]}));
+  const sha=createHash('sha1').update(`blob ${record.length}\0`).update(record).digest('hex');
+  const reg=Buffer.from(JSON.stringify({repository:'lrnolivia/fanout-fixture',coordination:{record:'coordination/relay.json'}}));
+  let inFlight=0,peak=0;
+  const api=async path=>{
+    if(path.includes('/contents/projects/'))return {type:'file',encoding:'base64',sha:'b'.repeat(40),content:reg.toString('base64')};
+    if(path.includes('/contents/coordination/'))return {type:'file',encoding:'base64',sha,content:record.toString('base64')};
+    if(path.includes('/branches?'))return claims.map((c,i)=>({name:c.branch,commit:{sha:i.toString(16).padStart(40,'0')}}));
+    if(path.includes('/pulls?'))return [];
+    inFlight++;peak=Math.max(peak,inFlight);
+    await new Promise(resolve=>setTimeout(resolve,(count-Number.parseInt(path.split('/commits/')[1],16))%7));
+    inFlight--;
+    if(path.includes('/check-runs?'))return {check_runs:[]};
+    if(path.includes('/commits/'))return {sha:path.split('/commits/')[1],commit:{committer:{date:'2026-10-07T00:00:00Z'}}};
+    throw Error('Unexpected fixture route '+path);
+  };
+  const result=await callProgress({project:'relay'},{},api);
+  assert.deepEqual(result.progress.map(item=>item.assignment),claims.map(c=>c.id));
+  assert.ok(peak>2,'claim evidence reads must overlap');
+  assert.ok(peak<=PROGRESS_READ_CONCURRENCY*2,'commit and check reads stay within the claim bound');
+  assert.equal(result.github_reads.logical_requests,4+count*2);
 });
