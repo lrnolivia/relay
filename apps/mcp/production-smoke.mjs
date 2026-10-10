@@ -117,10 +117,13 @@ try {
   const build = builds[0], deployed = Date.parse(deployment.created_on);
   if (build?.build_trigger_metadata?.commit_hash !== expected) throw new Error("Newest successful production build is not the expected SHA");
   if (!(deployed >= Date.parse(build.running_on) && deployed <= Date.parse(build.stopped_on))) throw new Error("Active deployment was not created by the expected source build");
+  // Each built web path must behave exactly as the exact-source deployed entry does, including intentional ctrl redirects.
+  const { default: deployedEntry } = await import("./index.js");
   for (const path of Object.keys(webAssets)) {
+    const want = await deployedEntry.fetch(new Request(origin + path), {}, { waitUntil() {} });
     const response = await fetch(origin + path, { headers, redirect: "manual", signal: AbortSignal.timeout(45000) });
-    if (response.status !== 200) throw new Error("Web route failed " + path + " HTTP " + response.status);
-    if (response.headers.get("X-Relay-Source-Sha") !== expected || response.headers.get("X-Relay-Web-Build") !== webBuildId) throw new Error("Web asset identity differs from exact source " + path);
+    if (response.status !== want.status || response.headers.get("Location") !== want.headers.get("Location")) throw new Error("Web route differs from exact source " + path + " HTTP " + response.status + " expected " + want.status);
+    if (want.status === 200 && (response.headers.get("X-Relay-Source-Sha") !== expected || response.headers.get("X-Relay-Web-Build") !== webBuildId)) throw new Error("Web asset identity differs from exact source " + path);
     results.push({ web_path: path, status: response.status });
   }
   for (const path of ["/api/projects", "/api/progress/relay", "/api/projects/relay/icon", "/api/workers", "/api/visual"]) {
