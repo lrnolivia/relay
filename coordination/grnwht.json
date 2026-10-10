@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-10T17:00:16.886Z",
+  "updated_at": "2026-10-10T18:20:12.687Z",
   "legacy_branches": [
     "main"
   ],
@@ -2531,7 +2531,7 @@
       ],
       "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
       "acceptance": "Start from released main after PR23; preserve shipped functionality. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname suggestions require explicit confirmation; no automatic joins, kinship inference, access or head assignment. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
-      "next_action": "RELEASED PR #32 2026-10-10 ~17:05Z with Lauren's go ('yeah deploy it'): non-Home stage photos wider than Home's shape fill the hero (object-fit cover, centered); Home always contain. Merged c9a4e81 (tree = tested head b91a779; CI run 38068890921 all 9 green). Archive sha256 297ddf4aa63e87a6f9c3d3d38c52a0a76f498c789efca537ba010e4cb5f70d57. Worker 621c7913-eddc-44d7-a6f1-1d3a1542285b (tag gw-pr32-b91a77924cf2), deployment 6a79c628-d10d-4e3e-9ab9-49e241bf6fb1. ROLLBACK: 619cf2b8-6403-4cd9-ac20-e1d1980ecd33 (PR31). No D1; 24 bindings identical. Verified: build 47f88725 x6, /health 200, sw 200, signed-out API 401, cover rule in live CSS, no console errors. Lauren confirmed Reunion's hero is her Detroit skyline (page hero photo). NEXT: Lauren phone check of Reunion skyline filling the hero.",
+      "next_action": "RELEASED PR #33 2026-10-10 ~18:25Z with Lauren's go ('ship it'): removed the unapproved top stroke (welcome-card::before gradient bar; tour-card inset accent stroke). Merged e2748ed (tree = tested head f4b58a1; CI run 38074453913 all 9 green). Archive sha256 aa8cc5a0ef965de3a75c480b7cd86dbf1337590f1833a4556a687049537cd87e. Worker bcca157b-312a-4579-803f-1707d098365f (tag gw-pr33-f4b58a1a5f3c), deployment eb2928a3-0fcd-493a-b63b-3657ae7eaf69. ROLLBACK: 621c7913-eddc-44d7-a6f1-1d3a1542285b (PR32). No D1; 24 bindings identical. Verified: build f92406d9 x6, /health 200, sw 200, signed-out API 401, neither stroke rule in live CSS, no console errors. Standing rule: no decorative top strokes/accent strips on cards.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2561,8 +2561,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-10T17:00:16.886Z",
-      "lease_until": "2026-10-11T05:00:16.886Z",
+      "updated_at": "2026-10-10T18:20:12.687Z",
+      "lease_until": "2026-10-11T06:20:12.687Z",
       "amendments": [
         {
           "at": "2026-10-09T02:24:37.032Z",
