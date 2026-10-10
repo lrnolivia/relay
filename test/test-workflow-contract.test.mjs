@@ -203,6 +203,8 @@ test('root command and CI retain the real gate and always upload suite accountin
   assert.equal((workflow.match(/'test\/\*\*'/g)||[]).length,2);
   assert.match(workflow,/Account for suites blocked by setup/);assert.match(workflow,/ci-test-orchestrator.mjs --blocked/);
   assert.match(workflow,/timeout-minutes: 125/);
+  assert.match(workflow,/run: node scripts\/ci-parallel-suites.mjs/);
+  assert.match(workflow,/qa-evidence\/parallel-suites\//);
   assert.doesNotMatch(workflow,/continue-on-error:/);
 });
 

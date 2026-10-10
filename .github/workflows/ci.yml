@@ -50,7 +50,7 @@ jobs:
   quality:
     name: quality
     runs-on: ubuntu-latest
-    # One runner/build for five bounded suites and applicable release/preview gates.
+    # One standard runner/build; two balanced isolated groups retain all five suites.
     timeout-minutes: 125
     container:
       image: mcr.microsoft.com/playwright:v1.60.0-noble@sha256:9bd26ad900bb5e0f4dee75839e957a89ae89c2b7ab1e76050e559790e946b948
@@ -160,7 +160,7 @@ jobs:
         env:
           RELAY_QA_OUTPUT: ${{ github.workspace }}/qa-evidence/relay-motion
           RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: npm test
+        run: node scripts/ci-parallel-suites.mjs
       - name: Account for suites blocked by setup
         if: always() && (steps.setup-toolchain.outcome != 'success' || steps.setup-focused.outcome != 'success' || steps.setup-install.outcome != 'success' || steps.setup-contracts.outcome != 'success' || steps.setup-tool-surface.outcome != 'success' || steps.setup-browser.outcome != 'success' || steps.setup-build.outcome != 'success' || steps.setup-typecheck.outcome != 'success' || steps.setup-runtime.outcome != 'success')
         env:
@@ -194,7 +194,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: relay-required-suites-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
-          path: qa-evidence/test-workflow/
+          path: |
+            qa-evidence/test-workflow/
+            qa-evidence/parallel-suites/
           if-no-files-found: error
       - name: Preserve Relay motion and layout evidence
         if: always() && github.head_ref == 'relay/mcp-rebuild-20261003'
