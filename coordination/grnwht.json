@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-10T23:11:35.486Z",
+  "updated_at": "2026-10-10T23:12:21.323Z",
   "legacy_branches": [
     "main"
   ],
@@ -516,7 +516,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-09T01:02:17.682Z",
       "objective_history": {
         "baseline": {
@@ -601,7 +601,7 @@
           }
         }
       ],
-      "updated_at": "2026-10-10T04:06:38.952Z",
+      "updated_at": "2026-10-10T23:12:21.323Z",
       "handoffs": [
         {
           "at": "2026-10-10T03:50:12.760Z",
@@ -615,7 +615,8 @@
           "to": "claude-code-pr20",
           "next_action": "HELD for Claude to fix later. No implementation or release now. Production stays at prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1, build c6db0573dad9f8c5314f. PR28+29 remain merged; their rejected Worker e3f3f68e and current main must not be redeployed without new release authorization. Preserve current family data, bindings, schedules and original broader acceptance.\n\nFuture repair scope:\n1. Raise the You heading and remove its oversized empty hero space.\n2. Keep fake-family/preview images out of live heroes. Remove or preview-gate the unconditional photos/garden.jpg fallbacks in src/react-app.jsx and validate fallback images in src/page-stage.jsx. Empty live media needs a non-photographic fallback.\n3. Remove visible page-stage carousel controls, preserving unrelated editor/gallery controls.\n4. Use consistent hero-image heights. Lauren says the main featured-photo height/framing was perfect and showed the whole family. Preserve that full-family framing and prevent the awkward vertical jump. Preferred transition: crossfade the next page hero while page content slides horizontally from the sides. Only if variable height is unavoidable, consider her alternative coordinated gradient-up/content-up animation. Respect reduced motion and interrupted navigation.\n5. On pages with a hero image, derive the wordmark's three colors from that image, preserving contrast/readability and synchronizing color changes with the hero transition. On pages with NO hero image, preserve exactly the existing wordmark behavior/colors.\n\nScreenshots: libfile_cc6a9acd0cb08191bbc4ca3e9002c343, libfile_d85205db63bc81918f780003f6fc1824, libfile_b782e0b770548191a11f22b2d2998a03. Before a future authorized release, cover live/preview media isolation, absent controls, stable hero geometry/framing, page transitions, adaptive wordmark and no-hero preservation in phone/tablet/desktop Chromium/WebKit and reduced-motion checks; run full exact-head CI and verify the sealed artifact."
         }
-      ]
+      ],
+      "completed_at": "2026-10-10T23:12:21.323Z"
     },
     {
       "id": "grnwht-ui-structure-push-hotfix-20261009",
@@ -2596,7 +2597,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "03e5cb7848f269195b4b1761cc8ee0dd8cfd55ec",
-      "state": "held",
+      "state": "completed",
       "created_at": "2026-10-09T05:38:21.407Z",
       "objective_history": {
         "baseline": {
@@ -2619,8 +2620,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-10T23:11:35.486Z",
-      "lease_until": "2026-10-11T11:11:35.486Z",
+      "updated_at": "2026-10-10T23:12:21.323Z",
+      "lease_until": "2026-10-11T11:12:21.323Z",
       "amendments": [
         {
           "at": "2026-10-09T02:24:37.032Z",
@@ -2696,7 +2697,13 @@
           "to": "claude-code-pr20",
           "next_action": "HELD for Claude to fix later. No implementation or release now. Production stays at prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1, build c6db0573dad9f8c5314f. PR28+29 remain merged; their rejected Worker e3f3f68e and current main must not be redeployed without new release authorization. Preserve current family data, bindings, schedules and original broader acceptance.\n\nFuture repair scope:\n1. Raise the You heading and remove its oversized empty hero space.\n2. Keep fake-family/preview images out of live heroes. Remove or preview-gate the unconditional photos/garden.jpg fallbacks in src/react-app.jsx and validate fallback images in src/page-stage.jsx. Empty live media needs a non-photographic fallback.\n3. Remove visible page-stage carousel controls, preserving unrelated editor/gallery controls.\n4. Use consistent hero-image heights. Lauren says the main featured-photo height/framing was perfect and showed the whole family. Preserve that full-family framing and prevent the awkward vertical jump. Preferred transition: crossfade the next page hero while page content slides horizontally from the sides. Only if variable height is unavoidable, consider her alternative coordinated gradient-up/content-up animation. Respect reduced motion and interrupted navigation.\n5. On pages with a hero image, derive the wordmark's three colors from that image, preserving contrast/readability and synchronizing color changes with the hero transition. On pages with NO hero image, preserve exactly the existing wordmark behavior/colors.\n\nScreenshots: libfile_cc6a9acd0cb08191bbc4ca3e9002c343, libfile_d85205db63bc81918f780003f6fc1824, libfile_b782e0b770548191a11f22b2d2998a03. Before a future authorized release, cover live/preview media isolation, absent controls, stable hero geometry/framing, page transitions, adaptive wordmark and no-hero preservation in phone/tablet/desktop Chromium/WebKit and reduced-motion checks; run full exact-head CI and verify the sealed artifact."
         }
-      ]
+      ],
+      "pr": 24,
+      "merged_head_sha": "508ebdea9768aa721dfaf015ce7ae0c545a63351",
+      "merge_commit_sha": "25310cb07f1727b6d6a3244771323f31216d1cab",
+      "evidence": "Claim branch grnwht/family-setup-onboarding-20261009 merged as PR #24 (2026-10-09T10:43Z). Follow-up releases under this claim all merged and deployed: #25 parity pass, #26 household steps, #27 branch question, #28 sienna footer, #29 page stage, #30 stage repair, #31 stage align, #32 stage cover, #33 no top stroke (merge e2748ed, CI 38074453913 all 9 green, worker bcca157b, rollback 621c7913). No unpublished work remains. Device/email/push acceptance was specified as reported separately and is tracked outside this claim. Completed to reconcile ownership before grnwht-feature-audit-email-remediation-20261010 per its next_action, on Lauren's 'start the whole thing'.",
+      "work_accounted": true,
+      "completed_at": "2026-10-10T23:12:21.323Z"
     }
   ]
 }
