@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-10T04:06:38.952Z",
+  "updated_at": "2026-10-10T06:06:18.471Z",
   "legacy_branches": [
     "main"
   ],
@@ -2531,14 +2531,14 @@
       ],
       "goal": "Deliver Lauren's next combined GW release: welcoming onboarding/tutorial, Branch and Household setup, compact badges, multi-memory upload wizard, then full panel/form parity.",
       "acceptance": "Start from released main after PR23; preserve shipped functionality. Solid opaque onboarding card over a dramatic translucent blurred Home backdrop; private content must never mount before existing authorization. Smooth interrupted-safe reveal into a friendly tutorial; accent spotlight, accessible focus, reduced motion, skippable/replayable flow, drafts and history preserved. Reuse setup UI for existing-member one-time optional family refinement. Branch means broad surname family group; Household smaller unit. Suggest/search eligible branches and households, allow multiple memberships and explicit creation when missing, preserve all existing memberships/roles/privacy/primary household. Surname suggestions require explicit confirmation; no automatic joins, kinship inference, access or head assignment. Explicit own-household creator retains disclosed founding-head behavior; additional heads use existing approval. Lomack Branch can contain Willie & Ruthie, Corey, Scottie and Nicholas households; use full names in picker, initials only compact with collision fallback. One primary household badge plus +N, quieter Branch details; pending requests not counted as memberships. Add Memory supports multiple uploads and per-item details wizard based on current flow, truthful partial-success/retry without duplicate uploads. Finish complete panel/form/control behavior parity after integration, including surface-colored scroll fades, typography, sizing, alignment, popovers and modal accessibility. Global app stays eight presets; profiles may have custom colors. Use isolated fictional test data, preserve real family content, checkpoint ready-to-test slices and fixes. Test final combined exact build in Chromium/WebKit, retain coverage, migration/recovery and live verification; report actual device/email/push acceptance separately.",
-      "next_action": "HELD for Claude to fix later. No implementation or release now. Production stays at prior PR27 Worker 682d9373-4a53-4e86-9921-887757000cb1, build c6db0573dad9f8c5314f. PR28+29 remain merged; their rejected Worker e3f3f68e and current main must not be redeployed without new release authorization. Preserve current family data, bindings, schedules and original broader acceptance.\n\nFuture repair scope:\n1. Raise the You heading and remove its oversized empty hero space.\n2. Keep fake-family/preview images out of live heroes. Remove or preview-gate the unconditional photos/garden.jpg fallbacks in src/react-app.jsx and validate fallback images in src/page-stage.jsx. Empty live media needs a non-photographic fallback.\n3. Remove visible page-stage carousel controls, preserving unrelated editor/gallery controls.\n4. Use consistent hero-image heights. Lauren says the main featured-photo height/framing was perfect and showed the whole family. Preserve that full-family framing and prevent the awkward vertical jump. Preferred transition: crossfade the next page hero while page content slides horizontally from the sides. Only if variable height is unavoidable, consider her alternative coordinated gradient-up/content-up animation. Respect reduced motion and interrupted navigation.\n5. On pages with a hero image, derive the wordmark's three colors from that image, preserving contrast/readability and synchronizing color changes with the hero transition. On pages with NO hero image, preserve exactly the existing wordmark behavior/colors.\n\nScreenshots: libfile_cc6a9acd0cb08191bbc4ca3e9002c343, libfile_d85205db63bc81918f780003f6fc1824, libfile_b782e0b770548191a11f22b2d2998a03. Before a future authorized release, cover live/preview media isolation, absent controls, stable hero geometry/framing, page transitions, adaptive wordmark and no-hero preservation in phone/tablet/desktop Chromium/WebKit and reduced-motion checks; run full exact-head CI and verify the sealed artifact.",
+      "next_action": "Lauren authorized (chat 2026-10-10: 'finish those tweaks and deploy once you make them'); autonomy hold resumed (op gw-resume-stage-repair-20261010). Draft PR lrnolivia/gwfamily#30 (branch grnwht/stage-repair-20261010, head 56865e9, base main 7f987c2) fixes the five recorded points: You heading/no empty hero; no preview photos in live (photos/ samples preview-only, live card default = family oak); no stage carousel controls (gallery/video stay in card); consistent hero height from Home's ratio + crossfade/side-slide transition (reduced motion off); photo-derived 3-color wordmark at 6:1, no-hero pages unchanged. Next: exact-head CI green -> merge via Relay -> sealed artifact -> upload -> deploy with rollback 682d9373 -> smoke. Production currently PR27 Worker 682d9373.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "03e5cb7848f269195b4b1761cc8ee0dd8cfd55ec",
-      "state": "held",
+      "state": "active",
       "created_at": "2026-10-09T05:38:21.407Z",
       "objective_history": {
         "baseline": {
@@ -2561,8 +2561,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-10T04:06:38.952Z",
-      "lease_until": "2026-10-10T16:06:38.952Z",
+      "updated_at": "2026-10-10T06:06:18.471Z",
+      "lease_until": "2026-10-10T18:06:18.471Z",
       "amendments": [
         {
           "at": "2026-10-09T02:24:37.032Z",
