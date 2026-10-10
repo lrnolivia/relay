@@ -108,9 +108,15 @@ try {
     }
   }
   const worker = await call("relay_cloud_worker", { script: "relay" });
-  const active = worker.deployments.deployments[0].versions[0].version_id;
-  const version = worker.versions.items.find(version => version.id === active);
-  if (version?.annotations?.["workers/commit_sha"] !== expected) throw new Error("Deployed source does not match expected SHA");
+  const deployment = worker.deployments.deployments[0];
+  const active = deployment.versions[0].version_id;
+  // Guarded `wrangler deploy` versions carry no commit annotation; bind the active deployment to the newest successful canonical main build instead.
+  const builds = (await call("relay_cloud_builds", { script: "relay" })).builds
+    .filter(build => build.build_outcome === "success" && build.build_trigger_metadata?.branch === "main")
+    .sort((a, b) => Date.parse(b.created_on) - Date.parse(a.created_on));
+  const build = builds[0], deployed = Date.parse(deployment.created_on);
+  if (build?.build_trigger_metadata?.commit_hash !== expected) throw new Error("Newest successful production build is not the expected SHA");
+  if (!(deployed >= Date.parse(build.running_on) && deployed <= Date.parse(build.stopped_on))) throw new Error("Active deployment was not created by the expected source build");
   for (const path of Object.keys(webAssets)) {
     const response = await fetch(origin + path, { headers, redirect: "manual", signal: AbortSignal.timeout(45000) });
     if (response.status !== 200) throw new Error("Web route failed " + path + " HTTP " + response.status);
