@@ -37,7 +37,8 @@ function safetyTransport(env,request){
  const external=env.RELAY_RECOVERY_CONTROL_URL;
  assert.ok(!external||external===ORIGIN+'/recovery-control','Recovery controller must use the fixed existing Access origin');
  async function controller(input){
-  const response=await request(external,{method:'POST',redirect:'manual',signal:AbortSignal.timeout(30000),headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(input)});
+  const registrationHeaders=['rollback','inspect_release'].includes(input.action)&&env.GH_TOKEN?{'X-Relay-Registration-Token':env.GH_TOKEN}:{};
+  const response=await request(external,{method:'POST',redirect:'manual',signal:AbortSignal.timeout(30000),headers:{...headers,...registrationHeaders,'Content-Type':'application/json'},body:JSON.stringify(input)});
   assert.ok(response.ok,'Independent safety request failed; reconcile before retrying');const result=JSON.parse((await bounded(response,1048576)).toString());assert.equal(result.ok,true,'Complete independent safety receipt required');return result;
  }
  let sequence=0;

@@ -14,21 +14,24 @@ import {recoveryVersionFixture} from '../test/fixtures/recovery-archive.mjs';
 test('manual safety workflow survives product outage and fails closed on independent denial',async()=>{
  const yaml=await readFile(new URL('../.github/workflows/autonomy-control.yml',import.meta.url),'utf8');
  const code=yaml.split("node --input-type=module <<'NODE'\n")[1].split('\n          NODE')[0].split('\n').map(line=>line.slice(10)).join('\n');
- for(const mode of ['success','denied','changed','wrong-origin']){
+ for(const mode of ['success','rollback','denied','changed','wrong-origin']){
   const prelude=`
    const mode=${JSON.stringify(mode)};let calls=0;
-   process.env.SAFETY_REQUESTS=JSON.stringify([{action:'hold',scope:'relay',expected_revision:0,operation_id:'independent-test'}]);
+   process.env.SAFETY_REQUESTS=JSON.stringify([{action:mode==='rollback'?'rollback':'hold',scope:'relay',expected_revision:0,operation_id:'independent-test'}]);
+   process.env.GH_TOKEN='synthetic_registration_read_token';
    process.env.CF_ACCESS_CLIENT_ID='fixture-id';process.env.CF_ACCESS_CLIENT_SECRET='fixture-secret';
    process.env.RELAY_RECOVERY_CONTROL_URL=mode==='wrong-origin'?'https://example.invalid/recovery-control':'https://relay.loew.fi/recovery-control';
    globalThis.fetch=async(url,options)=>{
     if(url!=='https://relay.loew.fi/recovery-control')throw Error('Product endpoint must not be called');
     calls++;if(options.redirect!=='error')throw Error('Redirects forbidden');
     if(options.headers['CF-Access-Client-Secret']!=='fixture-secret')throw Error('Missing Access identity');
+    const action=JSON.parse(options.body).action;
+    if(options.headers['X-Relay-Registration-Token']!==(action==='rollback'?process.env.GH_TOKEN:undefined))throw Error('Unexpected registration credential destination');
     if(mode==='denied')return new Response('denied',{status:403});
     return Response.json({ok:true,state:{scope:'relay',held:true,revision:mode==='changed'?calls:1}});
    };
-   try{await import('data:text/javascript;base64,'+${JSON.stringify(Buffer.from(code).toString('base64'))});if(mode!=='success')process.exit(2);}
-   catch(error){if(mode==='success')throw error;}
+   try{await import('data:text/javascript;base64,'+${JSON.stringify(Buffer.from(code).toString('base64'))});if(!['success','rollback'].includes(mode))process.exit(2);}
+   catch(error){if(['success','rollback'].includes(mode))throw error;}
    if(calls!==(mode==='wrong-origin'?0:mode==='denied'?1:2))throw Error('Unexpected retry or fallback');
   `;
   execFileSync(process.execPath,['--input-type=module','--eval',prelude],{stdio:['ignore','pipe','pipe'],timeout:5000});
@@ -240,4 +243,17 @@ test('enabled independent controller recovers a failed product HTTP handler only
 
 test('enabled controller still sends healthy promotion through the verified product path',async()=>{
  const f=fixture();f.env.RELAY_RECOVERY_CONTROL_URL='https://relay.loew.fi/recovery-control';assert.equal((await f.execute()).state.last_healthy.source_sha,source);assert.equal(f.calls.filter(x=>x.action==='healthy').length,1);
+});
+
+test('ephemeral repository read token travels only to exact independent registration-reading actions',async()=>{
+ const f=failedFixture();f.env.RELAY_RECOVERY_CONTROL_URL='https://relay.loew.fi/recovery-control';f.env.GH_TOKEN='synthetic_registration_read_token';f.productOutage=503;
+ const request=f.request,seen=[];
+ f.request=async(url,options)=>{
+  const action=url===f.env.RELAY_RECOVERY_CONTROL_URL?JSON.parse(options.body).action:null;
+  const token=options.headers?.['X-Relay-Registration-Token'];
+  assert.equal(token,['rollback','inspect_release'].includes(action)?f.env.GH_TOKEN:undefined);
+  if(token)seen.push(action);
+  return request(url,options);
+ };
+ assert.equal((await f.execute()).recovered,true);assert.deepEqual(seen,['inspect_release','rollback']);assert.doesNotMatch(f.logs.join('\n'),/synthetic_registration_read_token/);
 });
