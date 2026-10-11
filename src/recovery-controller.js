@@ -62,6 +62,16 @@ export async function recoveryControllerResponse(request,env,{verify=verifyAcces
   }
   return json(await control(env,input,{accessJwt:access.token,snapshot:worker=>snapshot(env,worker)}));
  }
- catch(error){return json({ok:false,error:'Safety operation did not complete; refresh the exact durable operation before retrying',code:error.code==='safety_control'?'safety_control':'recovery_unavailable'},Number.isInteger(error.status)&&error.status>=400&&error.status<500?error.status:503);}
+ catch(error){
+  const known={
+   'Production source or recovery compatibility identity does not match':'source_identity',
+   'Production critical health endpoint failed':'health',
+   'Deployment changed during production verification':'deployment_changed',
+   'Recovery domain binding changed':'domain_binding'
+  };
+  const stage=error.github?.provider==='github'?'github_registration':error.code==='safety_control'?'durable_safety':known[error.message]||'provider_or_verification';
+  const diagnostic={stage,...(error.code==='rate_limit'?{rate_limited:true}:{}),...(Number.isSafeInteger(error.github?.rate_limit_reset)?{retry_at:error.github.rate_limit_reset}:{})};
+  return json({ok:false,error:'Safety operation did not complete; refresh the exact durable operation before retrying',code:error.code==='safety_control'?'safety_control':'recovery_unavailable',diagnostic},Number.isInteger(error.status)&&error.status>=400&&error.status<500?error.status:503);
+ }
 }
 export default {fetch:recoveryControllerResponse};
