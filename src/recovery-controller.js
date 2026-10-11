@@ -1,6 +1,26 @@
 import {verifyAccessJwt} from './access-verification.js';
 import {callAutonomyControl,projectCloudStatus,verifyProviderBuildVersion,RELAY_GUARDED_DEPLOY_COMMAND} from './project-cloud.js';
-import {cloudWorkerSummary,activeCloudVersion} from './cloud.js';
+import {cloudflareApiRequest,activeCloudVersion} from './cloud.js';
+
+// Public provider identities verified against Relay's existing resources. A
+// replaced resource requires a reviewed source update, never broad discovery.
+export const RECOVERY_RESOURCES=Object.freeze({account:'8df30cd302a4d4a4c01db9863c712166',worker:'relay',tag:'734382bfc38a43cfb8cf9115116ed688',domain:'f82a59da7dfd0f31c3ba79c03bf815a3f2a090b1',zone:'2aebf5319f0b0095b28b5ca53f0fa972',hostname:'relay.loew.fi'});
+function recoveryRoot(env,worker){
+ if(env.CLOUDFLARE_ACCOUNT_ID!==RECOVERY_RESOURCES.account||worker!==RECOVERY_RESOURCES.worker)throw Error('Recovery resource identity changed');
+ return '/accounts/'+RECOVERY_RESOURCES.account;
+}
+export async function recoveryCloudSnapshot(env,worker,api=cloudflareApiRequest){
+ const root=recoveryRoot(env,worker),script=root+'/workers/scripts/relay';
+ const [deployments,versions,domain]=await Promise.all([api(env,script+'/deployments'),api(env,script+'/versions'),api(env,root+'/workers/domains/'+RECOVERY_RESOURCES.domain)]);
+ if(domain?.id!==RECOVERY_RESOURCES.domain||domain.zone_id!==RECOVERY_RESOURCES.zone||domain.service!==worker||domain.hostname!==RECOVERY_RESOURCES.hostname||domain.environment!=='production'||domain.enabled!==true)throw Error('Recovery domain binding changed');
+ return {ok:true,script:worker,deployments,versions,domains:[domain]};
+}
+export async function recoveryBuildHistory(env,worker,api=cloudflareApiRequest){
+ const root=recoveryRoot(env,worker);
+ if(!env.CLOUDFLARE_BUILDS_API_TOKEN)throw Error('Recovery build identity unavailable');
+ return api(env,root+'/builds/workers/'+RECOVERY_RESOURCES.tag+'/builds',{token:env.CLOUDFLARE_BUILDS_API_TOKEN});
+}
+const recoveryProviderSource=(env,target,profile)=>verifyProviderBuildVersion(env,target,profile,{builds:worker=>recoveryBuildHistory(env,worker)});
 
 export const RECOVERY_CONTROLLER_BUILD='20261008.1';
 const headers={'Cache-Control':'no-store','Content-Type':'application/json; charset=utf-8','X-Content-Type-Options':'nosniff','X-Relay-Recovery-Build':RECOVERY_CONTROLLER_BUILD};
@@ -16,7 +36,7 @@ async function boundedInput(request){
 // This entrypoint is deployed and versioned separately from Relay. It has no
 // source publication, arbitrary provider API, healthy promotion or approval
 // operations. Existing safety atoms are reached directly through their binding.
-export async function recoveryControllerResponse(request,env,{verify=verifyAccessJwt,control=callAutonomyControl,snapshot=cloudWorkerSummary,active=activeCloudVersion,registration=projectCloudStatus,providerSource=verifyProviderBuildVersion}={}){
+export async function recoveryControllerResponse(request,env,{verify=verifyAccessJwt,control=callAutonomyControl,snapshot=recoveryCloudSnapshot,active=activeCloudVersion,registration=projectCloudStatus,providerSource=recoveryProviderSource}={}){
  if(new URL(request.url).pathname!=='/recovery-control')return json({ok:false,error:'Not found'},404);
  if(request.method!=='POST'||!request.headers.get('content-type')?.startsWith('application/json'))return json({ok:false,error:'Use an authenticated JSON POST'},405);
  const access=await verify(request);if(!access)return json({ok:false,error:'Verified Relay Access identity required'},401);
@@ -40,7 +60,7 @@ export async function recoveryControllerResponse(request,env,{verify=verifyAcces
    const after=await active(env,'relay');if(JSON.stringify(after)!==JSON.stringify(before))throw Error('Active candidate changed during provider proof');
    return json({ok:true,source_sha:input.source_sha,version_id:input.version_id,deployment_id:after.deployment_id,build_id:build,verification:'canonical-provider-build+active-deployment'});
   }
-  return json(await control(env,input,{accessJwt:access.token}));
+  return json(await control(env,input,{accessJwt:access.token,snapshot:worker=>snapshot(env,worker)}));
  }
  catch(error){return json({ok:false,error:'Safety operation did not complete; refresh the exact durable operation before retrying',code:error.code==='safety_control'?'safety_control':'recovery_unavailable'},Number.isInteger(error.status)&&error.status>=400&&error.status<500?error.status:503);}
 }
