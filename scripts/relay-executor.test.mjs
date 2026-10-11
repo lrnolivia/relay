@@ -132,6 +132,26 @@ test('oversized protected source is rejected before leasing or starting the codi
     await assert.rejects(fs.stat(path.join(stateDir,'executor.lock')),error=>error.code==='ENOENT');
   }finally{await fs.rm(root,{recursive:true,force:true});}
 });
+test('one protected source file larger than 128 KiB is rejected before lease, CLI version read or process start',async()=>{
+  const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-executor-file-limit-')),workspace=path.join(root,'checkout'),stateDir=path.join(root,'receipts');
+  await fs.mkdir(workspace);const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim();
+  const actions=[];let versionRead=false,spawned=false;
+  try{
+    git(['init','-b','relay/fixture']);git(['config','user.name','Fixture']);git(['config','user.email','fixture@example.invalid']);git(['remote','add','origin','https://github.com/lrnolivia/fixture.git']);
+    const paths=['source.txt'],source=Buffer.alloc(128*1024+1,0x61);
+    await fs.writeFile(path.join(workspace,paths[0]),source);
+    git(['add','.']);git(['commit','-m','fixture']);
+    const job={id:'fixture',state:'queued',owner:'fixture',branch:'relay/fixture',repository:'lrnolivia/fixture',initial_head_sha:git(['rev-parse','HEAD']),revision:1,objective:{paths}};
+    const rpc=async(name,args)=>{assert.equal(name,'relay_execution');actions.push(args.action);assert.equal(args.action,'status','source admission must precede lease');return {job};};
+    await assert.rejects(runExecution({workspace,stateDir,rpc,config:{project:'fixture',assignment:'fixture',owner:'fixture',branch:'relay/fixture',executor_id:'fixture',source_checkpoints:true},getVersion:()=>{versionRead=true;return 'synthetic';},spawnProcess:()=>{spawned=true;throw Error('must not spawn');}}),/Source checkpoint file exceeds bounded capture size/);
+    assert.deepEqual(actions,['status']);assert.equal(versionRead,false);assert.equal(spawned,false);
+    assert.deepEqual(await fs.readFile(path.join(workspace,paths[0])),source);
+    assert.equal(git(['status','--porcelain']),'');assert.equal(git(['rev-parse','HEAD']),job.initial_head_sha);
+    const receipt=JSON.parse(await fs.readFile(path.join(stateDir,'receipt.json'),'utf8'));
+    assert.equal(receipt.pending,undefined);assert.equal(receipt.lease_token,undefined);
+    await assert.rejects(fs.stat(path.join(stateDir,'executor.lock')),error=>error.code==='ENOENT');
+  }finally{await fs.rm(root,{recursive:true,force:true});}
+});
 test('an oversized actual mission is rejected before spawning or recording a running process',async()=>{
   const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-executor-context-')),workspace=path.join(root,'checkout'),stateDir=path.join(root,'receipts');await fs.mkdir(workspace);
   const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim();let spawned=false;const actions=[];
