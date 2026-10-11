@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-11T16:30:38.513Z",
+  "updated_at": "2026-10-11T21:09:14.627Z",
   "legacy_branches": [
     "main"
   ],
@@ -2877,14 +2877,16 @@
         "tests/first-load-splash-browser.mjs",
         "tests/recovery-browser.mjs",
         "dist/build.json",
-        "dist/index.html"
+        "dist/index.html",
+        ".github/workflows/gw-quality.yml",
+        "tests/ci-artifact-retry.test.mjs"
       ],
       "resources": [
         "grnwht-splash-center-hotfix"
       ],
       "goal": "Hotfix true viewport-centered loading splash without footer or Fresh Start.",
       "acceptance": "Lauren requested immediate hotfix at 2026-10-11 16:10Z: actual viewport centering, no footer, no Fresh Start on splash. Preserve error recovery and approved tree/leaf design; isolate no database or family content changes. Verify build, focused/full tests and mobile/desktop geometry before deploy; retain PR34 rollback and data.",
-      "next_action": "PR35 head 18db23d7612fca8db4243177c6256e86649397a7 is published. Splash browser geometry/cleanup passed in Chromium and WebKit. Shared CI passed; WebKit editors failed in content-history via browser-read-readiness.mjs:20 request.response after browser closure. GitHub job rerun denied 403 integration access; owner asked to rerun job 114516118448 in run 38154946045. Staged Cloudflare version 0fba08e3-d502-49f2-a301-659979367f55, frontend 60d90a7e3a3b288d8dd9, module SHA256 59171bede5e97f0467afcd3dffe37df2026a32eb193d0917023b3d0850c45561. Settings and bindings verified identical to current PR34 version aaf67aa0-5d49-4d8e-9f36-9c424f3ab8d5; no traffic deployed. After all required checks pass, merge PR35 and deploy exact staged version, verify live build and health, retain PR34 rollback. No D1/R2 changes.",
+      "next_action": "Fix confirmed single-job retry artifact mismatch: publish the producer artifact name as a shared-job output, consume that exact identity in browser jobs, preserve SHA verification and all tests. Add a regression contract test; no browser gate weakening. User authorized handling remaining blockers at 21:01 UTC. Then rerun exact-head CI and deploy splash only after checks pass.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2908,8 +2910,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-11T16:30:38.513Z",
-      "lease_until": "2026-10-12T04:30:38.513Z",
+      "updated_at": "2026-10-11T21:09:14.627Z",
+      "lease_until": "2026-10-12T09:09:14.627Z",
       "amendment_count": 1,
       "amendments": [
         {
