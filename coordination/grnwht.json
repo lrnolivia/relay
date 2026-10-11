@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-11T00:19:46.261Z",
+  "updated_at": "2026-10-11T16:30:38.513Z",
   "legacy_branches": [
     "main"
   ],
@@ -1095,7 +1095,7 @@
       "supporting_teams": [],
       "primary_staff": null,
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-10T23:09:06.195Z",
       "objective_history": {
         "baseline": {
@@ -1112,7 +1112,7 @@
           }
         ]
       },
-      "updated_at": "2026-10-11T00:19:46.261Z",
+      "updated_at": "2026-10-11T03:04:24.426Z",
       "amendment_count": 3,
       "amendments": [
         {
@@ -1157,7 +1157,8 @@
             "next_action": "Batch 1 (P1 1-3) committed a895bc6 on grnwht/feature-audit-email-20261010; draft PR #34 open, CI running; migration 0029 written, not applied. Now batch 2 (roles/succession), then 3-8.\n\nSPLASH V3 (00:19Z Oct11) supersedes both prior splash archives. Lauren requested dynamic leaves, trails that follow them, pointed leaf silhouettes and faint branched veins. Parent implemented shared SVG paths/timing for each leaf/trail; build and 1219 tests pass. Integrated browser testing pending. Updated private preview https://gw-tree-splash-preview.lrnolivia.chatgpt.site .\nREADY inbox transfer to claude-code-pr20: tr_a75a3eb698c2c12ff78e24005c24de9e, filename gw-tree-splash-v3-source.tar.gz, 6982 bytes, one chunk index0. SHA256 1a2e9b1f2b37f1ce9e859cf71b175699da5c0f5c218526829bd98ef9004746b5. Use relay_transfer_read action chunk, decode, verify checksum, then ack. It is an inbox transfer, not file-manager files. Archive contains full five-file patch against e2748ed and deltas from v1 or v2; apply exactly one appropriate patch. Rebuild integrated source; run splash/recovery Chromium and WebKit checks. Preserve Reduce Motion/hidden-tab pause and immediate hydration exit. Supersedes tr_4c693e33b812670fe155a83ea8f1cb3b and tr_a860214177668b7bf8c0c7bbeaed0d7c. Expires72h. No merge/deploy."
           }
         }
-      ]
+      ],
+      "completed_at": "2026-10-11T03:04:24.426Z"
     }
   ],
   "claims": [
@@ -2770,7 +2771,7 @@
       ],
       "goal": "Close GW everyday-feature audit gaps and integrate approved transactional email templates in bounded, tested batches.",
       "acceptance": "Queue only for existing Claude owner. Audit baseline e2748eddfcced7ca8837f4849a53885b587e163a (main verified 2026-10-10); source/test inspection only, no runtime tests. Reproduce each finding on current source before fixing. Full audit: Library libfile_a10f3efe16b48191866e194e9ef1317b. All 12 findings follow.\n\nBounded batches, P1 first:\n1. Memory deletion, paging and reports (P1 findings 1-3): confirmed owner/moderator recoverable soft-delete of memory, linked post, discussion visibility, saved/featured references and media access. Deleting only its feed post is insufficient. Stable keyset paging for posts/memories and per-post comments; history-aware server search. Test above 100 posts, 200 memories, 1,000 global comments and 30/200 secondary caps without starvation/duplicates. Reachable capability-gated report queue, safe content context/link and confirmed resolution through ordinary navigation.\n2. Roles and succession (P1 4-5): document/test intended bounded role matrix before changes. Planner/Treasurer reach only authorized tools under You, without widening shared-page editing. Resolve is_leader grant/revoke/remove/restore semantics; retain last-admin protection. Explicit household founder transfer and scoped admin recovery, consent, last-active-head invariant and audit history.\n3. Chat safety (P1 6): participant block preventing repeat invitations, plus intentional reports disclosing only chosen reported material. Preserve accepted-adult-participant-only reads; no routine admin/moderator access to private chats.\n4. Saved and content editing (P2 7-8): private, access-rechecked Saved destination; history search. Attachment/tag correction, announcement pin/unpin, owner authorization and stale-edit conflict checks. Define poll-edit policy after votes; preserve vote history.\n5. Message actions (P2 9): expose existing per-chat mute and serialize state; safe recoverable delete/unsend policy, edit and quoted replies. Preserve message/read cursors, idempotency and attachment/original/quote access after deletion.\n6. Invitations and transactional email (P2 10 plus latest request): sent/pending lists, revoke/cancel/expiry/safe resend, household request/invitation withdrawal; recipient binding, consent and duplicate-send protection. Integrate approved stock-green Momo light/dark sign-in code/link, family-invite and household-invite templates currently using legacy email-template.mjs. Preserve one-use/expiry/security, escaping/URL safety, plaintext, accessibility and email-client/font-off fallbacks. Reuse existing family-update-email.mjs/family-email-theme.mjs primitives; notification/announcement recipient-themed renderer already exists, do not rebuild it. PR19 is design provenance only: https://github.com/lrnolivia/gwfamily/pull/19 .\n7. Cleanup/account lifecycle (P2 11): owner-private child removal with recovery; safe memorial/household archive. Account deletion is intentionally disabled. Define retention, ownership handover, shared-content, export/request and recovery flows before lifecycle changes; do not blindly enable erasure or equate membership removal with deletion.\n8. Uploads (P2 12): align picker/preview/live formats including DOC/DOCX, AVIF and QuickTime mismatches; preserve partial successes, per-file retry/remove and drafts without duplicates. Persist/rehydrate music-link metadata.\n\nPer batch: fictional isolated loopback fixtures/test D1/R2 only; preserve environment guard, backend roles/privacy and rollback. Actual UI navigation across relevant roles, denied cross-owner/group access, interrupted saves/retries, repeated actions/account switches; focused regressions and integrated exact-head full CI including applicable Chromium/WebKit. Never rely on live family counts/order/assets. Visual parity and phone acceptance are COMPLETE; preserve, do not reopen. No real family changes, permission expansion, irreversible deletion, migration execution, email/notification sends, merge or deployment authorized by this queue.",
-      "next_action": "Batch 1 (P1 1-3) committed a895bc6 on grnwht/feature-audit-email-20261010; draft PR #34 open, CI running; migration 0029 written, not applied. Now batch 2 (roles/succession), then 3-8.\n\nSPLASH V3 (00:19Z Oct11) supersedes both prior splash archives. Lauren requested dynamic leaves, trails that follow them, pointed leaf silhouettes and faint branched veins. Parent implemented shared SVG paths/timing for each leaf/trail; build and 1219 tests pass. Integrated browser testing pending. Updated private preview https://gw-tree-splash-preview.lrnolivia.chatgpt.site .\nREADY inbox transfer to claude-code-pr20: tr_a75a3eb698c2c12ff78e24005c24de9e, filename gw-tree-splash-v3-source.tar.gz, 6982 bytes, one chunk index0. SHA256 1a2e9b1f2b37f1ce9e859cf71b175699da5c0f5c218526829bd98ef9004746b5. Use relay_transfer_read action chunk, decode, verify checksum, then ack. It is an inbox transfer, not file-manager files. Archive contains full five-file patch against e2748ed and deltas from v1 or v2; apply exactly one appropriate patch. Rebuild integrated source; run splash/recovery Chromium and WebKit checks. Preserve Reduce Motion/hidden-tab pause and immediate hydration exit. Supersedes tr_4c693e33b812670fe155a83ea8f1cb3b and tr_a860214177668b7bf8c0c7bbeaed0d7c. Expires72h. No merge/deploy.",
+      "next_action": "DEPLOY AUTHORIZED by Lauren in chat 2026-10-11 ~02:00Z ('yes and deploy'); Auto-fix enabled on PR #34. Head 2784ca5 (all 8 batches + splash v3). Production before: worker bcca157b (PR33, e2748ed), ledger through 0028 = our base. Backup taken 02:01Z: D1 time-travel bookmark 0000012a-00000000-00005101-e4d5f540c285aec59441b524b8c98b80 + local export ~/gw-backups/gwfamily-db-pre-0029-20261011T0201Z.sql sha256 ea038566...6707d (662 inserts). Rehearsal on real-data copy: 0029-0034 apply cleanly, only app_migrations rows added, integrity ok, 0 FK violations, new code loads state/feed/saved/removed/sent/report queue for all 6 active members; copy deleted. WAITING: exact-head CI run 38103527604 (5/9 green, rest running). Then: download sealed archive, apply 0029-0034 via d1 execute + app_migrations, versions upload sealed build (bindings unchanged), deploy, postflight. Rollback: worker bcca157b is schema-compatible with additive 0029-0034 (or 621c7913). Merge to main is a separate Lauren decision.",
       "category": "implementation",
       "labels": [
         {
@@ -2793,7 +2794,7 @@
       "primary_staff": null,
       "supporting_staff": [],
       "base_sha": "e2748eddfcced7ca8837f4849a53885b587e163a",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-10T23:12:39.800Z",
       "objective_history": {
         "baseline": {
@@ -2810,8 +2811,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-11T00:19:46.261Z",
-      "lease_until": "2026-10-11T12:19:46.261Z",
+      "updated_at": "2026-10-11T03:04:24.426Z",
+      "lease_until": "2026-10-11T15:04:24.426Z",
       "amendment_count": 3,
       "amendments": [
         {
@@ -2854,6 +2855,75 @@
           },
           "after": {
             "next_action": "Batch 1 (P1 1-3) committed a895bc6 on grnwht/feature-audit-email-20261010; draft PR #34 open, CI running; migration 0029 written, not applied. Now batch 2 (roles/succession), then 3-8.\n\nSPLASH V3 (00:19Z Oct11) supersedes both prior splash archives. Lauren requested dynamic leaves, trails that follow them, pointed leaf silhouettes and faint branched veins. Parent implemented shared SVG paths/timing for each leaf/trail; build and 1219 tests pass. Integrated browser testing pending. Updated private preview https://gw-tree-splash-preview.lrnolivia.chatgpt.site .\nREADY inbox transfer to claude-code-pr20: tr_a75a3eb698c2c12ff78e24005c24de9e, filename gw-tree-splash-v3-source.tar.gz, 6982 bytes, one chunk index0. SHA256 1a2e9b1f2b37f1ce9e859cf71b175699da5c0f5c218526829bd98ef9004746b5. Use relay_transfer_read action chunk, decode, verify checksum, then ack. It is an inbox transfer, not file-manager files. Archive contains full five-file patch against e2748ed and deltas from v1 or v2; apply exactly one appropriate patch. Rebuild integrated source; run splash/recovery Chromium and WebKit checks. Preserve Reduce Motion/hidden-tab pause and immediate hydration exit. Supersedes tr_4c693e33b812670fe155a83ea8f1cb3b and tr_a860214177668b7bf8c0c7bbeaed0d7c. Expires72h. No merge/deploy."
+          }
+        }
+      ],
+      "pr": 34,
+      "merged_head_sha": "2784ca537d2c301e14f6ec205029831dc4e9873d",
+      "merge_commit_sha": "cb5b8e3da66460ca3b507aabfc04e47c953d7640",
+      "evidence": "DEPLOYED + MERGED 2026-10-11 with Lauren's explicit chat authorization ('yes and deploy', then 'yes' to merging). Exact head 2784ca5: CI run 38103527604 all 9 green; sealed archive sha256 ec587ea3c2dd989b533a435f2122b1e76e5038382dc78cbe17fa4b0248d94280 matches CI log, internal manifest all OK, gw-source-sha = head. Backup 02:01Z: D1 time-travel bookmark 0000012a-00000000-00005101-e4d5f540c285aec59441b524b8c98b80 + ~/gw-backups/gwfamily-db-pre-0029-20261011T0201Z.sql (sha256 ea038566...6707d). Rehearsed 0029-0034 on real-data copy (only ledger rows added, integrity ok, 0 FK violations, new code loads all 6 active members). Applied 0029-0034 to prod via d1 execute + app_migrations; quick_check ok, 7 new tables present. Worker version aaf67aa0-5d49-4d8e-9f36-9c424f3ab8d5 (tag gw-pr34-2784ca5) deployed 100% at 03:03Z; 24 bindings/secrets identical to previous. Postflight greenwhitefamily.com and gwf.loew.fi: build 75732f7dcbe1cc94075d, /health 200, sw.js 200, react-app.js/css match sealed build, private APIs 401 signed-out, live sign-in renders with no console errors. Merged as cb5b8e3; main tree == deployed head. ROLLBACK: deploy bcca157b-312a-4579-803f-1707d098365f (schema-compatible with additive 0029-0034); do not restore DB after new writes. Splash v3 integrated from tr_a75a3eb6 (acked). Remaining: signed-in owner smoke test, real mailbox/device checks.",
+      "work_accounted": true,
+      "completed_at": "2026-10-11T03:04:24.426Z"
+    },
+    {
+      "id": "grnwht-splash-center-hotfix-20261011",
+      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
+      "branch": "grnwht/splash-center-hotfix-20261011",
+      "paths": [
+        "src/first-load.jsx",
+        "src/first-load.css",
+        "src/react-app.jsx",
+        "tests/first-load-splash.test.mjs",
+        "tests/first-load-splash-browser.mjs",
+        "tests/recovery-browser.mjs",
+        "dist/build.json",
+        "dist/index.html"
+      ],
+      "resources": [
+        "grnwht-splash-center-hotfix"
+      ],
+      "goal": "Hotfix true viewport-centered loading splash without footer or Fresh Start.",
+      "acceptance": "Lauren requested immediate hotfix at 2026-10-11 16:10Z: actual viewport centering, no footer, no Fresh Start on splash. Preserve error recovery and approved tree/leaf design; isolate no database or family content changes. Verify build, focused/full tests and mobile/desktop geometry before deploy; retain PR34 rollback and data.",
+      "next_action": "PR35 head 18db23d7612fca8db4243177c6256e86649397a7 is published. Splash browser geometry/cleanup passed in Chromium and WebKit. Shared CI passed; WebKit editors failed in content-history via browser-read-readiness.mjs:20 request.response after browser closure. GitHub job rerun denied 403 integration access; owner asked to rerun job 114516118448 in run 38154946045. Staged Cloudflare version 0fba08e3-d502-49f2-a301-659979367f55, frontend 60d90a7e3a3b288d8dd9, module SHA256 59171bede5e97f0467afcd3dffe37df2026a32eb193d0917023b3d0850c45561. Settings and bindings verified identical to current PR34 version aaf67aa0-5d49-4d8e-9f36-9c424f3ab8d5; no traffic deployed. After all required checks pass, merge PR35 and deploy exact staged version, verify live build and health, retain PR34 rollback. No D1/R2 changes.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "cb5b8e3da66460ca3b507aabfc04e47c953d7640",
+      "state": "active",
+      "created_at": "2026-10-11T16:11:35.416Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Hotfix true viewport-centered loading splash without footer or Fresh Start.",
+          "acceptance": "Lauren requested immediate hotfix at 2026-10-11 16:10Z: actual viewport centering, no footer, no Fresh Start on splash. Preserve error recovery and approved tree/leaf design; isolate no database or family content changes. Verify build, focused/full tests and mobile/desktop geometry before deploy; retain PR34 rollback and data.",
+          "at": "2026-10-11T16:11:35.416Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-splash-center-hotfix-20261011:acceptance:0",
+            "text": "Lauren requested immediate hotfix at 2026-10-11 16:10Z: actual viewport centering, no footer, no Fresh Start on splash. Preserve error recovery and approved tree/leaf design; isolate no database or family content changes. Verify build, focused/full tests and mobile/desktop geometry before deploy; retain PR34 rollback and data.",
+            "at": "2026-10-11T16:11:35.416Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-11T16:30:38.513Z",
+      "lease_until": "2026-10-12T04:30:38.513Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-11T16:30:38.513Z",
+          "by": "01a1146d-0267-735e-8332-fa38cf7fb007",
+          "reason": "Checkpoint source, staged runtime, passed focused browser checks and exact remaining CI blocker.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Parent personally implements narrow visual hotfix from main cb5b8e3, exact source checks and deploy. User explicitly requested hotfix. No other features or migrations."
+          },
+          "after": {
+            "next_action": "PR35 head 18db23d7612fca8db4243177c6256e86649397a7 is published. Splash browser geometry/cleanup passed in Chromium and WebKit. Shared CI passed; WebKit editors failed in content-history via browser-read-readiness.mjs:20 request.response after browser closure. GitHub job rerun denied 403 integration access; owner asked to rerun job 114516118448 in run 38154946045. Staged Cloudflare version 0fba08e3-d502-49f2-a301-659979367f55, frontend 60d90a7e3a3b288d8dd9, module SHA256 59171bede5e97f0467afcd3dffe37df2026a32eb193d0917023b3d0850c45561. Settings and bindings verified identical to current PR34 version aaf67aa0-5d49-4d8e-9f36-9c424f3ab8d5; no traffic deployed. After all required checks pass, merge PR35 and deploy exact staged version, verify live build and health, retain PR34 rollback. No D1/R2 changes."
           }
         }
       ]
