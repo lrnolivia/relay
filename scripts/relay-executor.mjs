@@ -113,6 +113,10 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     assertScope(changedPaths(workspace),job.objective.paths);
     const capabilities=['codex-cli',platform==='darwin'?'macos':platform==='win32'?'windows':'linux',...(protectionEnabled?['source-byte-checkpoints-v1']:[])];
     if(job.required_capabilities?.includes('source-byte-checkpoints-v1')&&!protectionEnabled)throw Error('Job requires source checkpoints; explicitly configure source_checkpoints before execution');
+    // Reject impossible initial protection before acquiring a durable lease.
+    // This local admission check is not remote proof: protectSource captures
+    // fresh bytes again after leasing and still requires readback/restoration.
+    if(protectionEnabled&&job.state==='queued')await captureSourceBundle({workspace,repository:job.repository,branch:job.branch,head_sha:job.initial_head_sha,scope:job.objective.paths});
     const version=getVersion();
     if(job.state==='queued')job=(await call('lease',{job_id:job.id,expected_revision:job.revision,expected_head_sha:head,executor_id:config.executor_id,capabilities})).job;
     else if(job.observed_state==='recovery_required'||['failed','cancelled'].includes(job.state)) {
