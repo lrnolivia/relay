@@ -101,7 +101,7 @@ jobs:
               assert.ok(Buffer.byteLength(text) <= 1048576, 'Safety response exceeds limit');
               if (!response.ok) {
                 let failure;try{failure=JSON.parse(text);}catch{}
-                const stage=['github_registration','durable_safety','source_identity','health','deployment_changed','domain_binding','provider_or_verification'].includes(failure?.diagnostic?.stage)?failure.diagnostic.stage:'unknown';
+                const stage=['github_registration','registration_identity','registration_boundary','registration_content','durable_safety','source_identity','health','deployment_changed','domain_binding','provider_or_verification'].includes(failure?.diagnostic?.stage)?failure.diagnostic.stage:'unknown';
                 throw Error('Independent safety request failed with HTTP '+response.status+' at '+stage+(failure?.diagnostic?.rate_limited===true?' (rate limited)':'')+'; reconcile before retrying');
               }
               value = JSON.parse(text);

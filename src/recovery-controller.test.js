@@ -13,6 +13,9 @@ test('request-scoped registration identity is Access-gated, exact-read-only and 
  const reader=recoveryRegistrationReader(token,api);
  for(const [p,options] of [[path,{method:'POST'}],[path,{method:'GET'}],[path.replace('main','other')],[path.replace('relay.json','field.json')],['/user']])assert.throws(()=>reader(p,options),/fixed/);
  assert.equal(reads,0);assert.throws(()=>recoveryRegistrationReader('short'),/bounded/);
+ const opaque='synthetic.opaque-token~with+slash/value==';let opaqueReads=0;
+ await recoveryRegistrationReader(opaque,async actual=>{opaqueReads++;assert.equal(actual.RELAY_GITHUB_TOKEN,opaque);})(path);assert.equal(opaqueReads,1);
+ for(const invalid of ['synthetic token with spaces','synthetic_token\r\nextra','a'.repeat(4097),'synthetic_credential=middle'])assert.throws(()=>recoveryRegistrationReader(invalid),/bounded/);
  const runtime={...env,CLOUDFLARE_ACCOUNT_ID:RECOVERY_RESOURCES.account,CLOUDFLARE_API_TOKEN:'synthetic',EVIDENCE:{}};
  const req=()=>{const r=request({action:'rollback',scope:'relay'});r.headers.set('X-Relay-Registration-Token',token);return r;};
  const control=async(actual,input,deps)=>{assert.equal(actual,runtime);assert.equal(actual.RELAY_GITHUB_TOKEN,undefined);await deps.github(path);return {ok:true};};
