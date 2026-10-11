@@ -47,3 +47,18 @@
 .relay-file-controls .work-control-summary .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 .relay-file-manager .work-controls-footer{background:transparent;padding:0;margin-top:24px}
 .relay-file-manager .work-detail-results{font-size:12px;color:var(--color-text-secondary);margin:12px 0}
+
+.relay-file-row{flex-wrap:wrap}.relay-file-actions{display:flex;align-items:flex-start;gap:8px}
+/* Routine actions share a platter; deletion stays separate and uses semantic red. */
+.relay-file-routine{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--color-surface)}
+.relay-file-manager .relay-file-icon{box-sizing:border-box;width:44px;min-width:44px;height:44px;padding:10px;flex:none}
+.relay-file-manager .relay-file-icon svg{width:20px;height:20px}
+.relay-file-manager .relay-file-routine .relay-file-icon{background:var(--color-surface)}
+.relay-file-manager .relay-file-download{color:color-mix(in srgb,var(--feature-relay) 75%,var(--color-text-primary))}
+.relay-file-actions{align-items:center;gap:12px}
+.relay-file-manager .relay-file-actions>.relay-file-delete{background:var(--color-surface)}
+.relay-file-manager .relay-file-delete{color:color-mix(in srgb,var(--status-danger) 75%,var(--color-text-primary))}
+.relay-file-edit{box-sizing:border-box;width:100%;padding:16px;border-radius:14px;background:var(--color-surface);margin-top:4px}.relay-file-edit label{display:grid;gap:8px;font-size:13px}.relay-file-edit input{box-sizing:border-box;width:100%;min-width:0;min-height:44px;border:0;border-radius:10px;padding:10px 12px;background:var(--color-panel-cap);color:var(--color-text-primary);font:inherit}.relay-file-edit p{font-size:13px;line-height:1.5;color:var(--color-text-secondary);overflow-wrap:anywhere;margin:8px 0 14px}.relay-file-edit-actions{display:flex;justify-content:flex-end;gap:8px}.relay-file-manager .relay-file-save{background:var(--feature-relay);color:#fff}.relay-file-edit .relay-file-edit-error{color:var(--status-danger)}
+.relay-file-manager [data-file-undo]{margin-top:10px;background:var(--color-surface)}
+.relay-file-manager .relay-file-edit-actions .relay-file-delete{background:var(--status-danger);color:var(--color-canvas);font-weight:600}
+@media(max-width:560px){.relay-file-actions{width:calc(100% - 50px);justify-content:flex-end}.relay-file-edit{padding:12px}}

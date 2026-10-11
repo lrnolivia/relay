@@ -93,6 +93,7 @@ jobs:
         id: production-scope
         env:
           EVENT_NAME: ${{ github.event_name }}
+          WORKFLOW_REF: ${{ github.ref }}
           BEFORE_SHA: ${{ github.event.before }}
           HEAD_SHA: ${{ github.sha }}
           RELAY_CI_PREVIEW_REQUIRED: ${{ github.event_name == 'pull_request' && github.event.pull_request.draft == true && ((github.head_ref == 'relay/mcp-rebuild-20261003' && github.event.pull_request.head.repo.full_name == github.repository) || startsWith(github.head_ref, 'relay/retained-interactive-previews-') || startsWith(github.head_ref, 'relay/website-work-queue-views-') || startsWith(github.head_ref, 'relay/2.0-approved-visual-port-') || startsWith(github.head_ref, 'relay/website-project-context-polish-') || startsWith(github.head_ref, 'relay/website-notifications-review-')) }}
@@ -100,9 +101,9 @@ jobs:
         run: |
           node --input-type=module <<'JS'
           import {execFileSync} from 'node:child_process';
-          import {needsProductionVerification} from './apps/web/production-scope.mjs';
+          import {needsProductionVerification,manualProductionVerification} from './apps/web/production-scope.mjs';
           import {writeQualityPlan} from './scripts/ci-stage.mjs';
-          let required=process.env.EVENT_NAME==='workflow_dispatch';
+          let required=manualProductionVerification(process.env.EVENT_NAME,process.env.WORKFLOW_REF);
           if(process.env.EVENT_NAME==='push'){
             const before=process.env.BEFORE_SHA,head=process.env.HEAD_SHA;
             if(!/^[a-f0-9]{40}$/.test(before||'')||!/^([a-f0-9]{40})$/.test(head||''))throw Error('Missing exact push identities');
