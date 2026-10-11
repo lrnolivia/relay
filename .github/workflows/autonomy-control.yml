@@ -35,6 +35,7 @@ jobs:
           SAFETY_REQUESTS: ${{ inputs.requests }}
           CF_ACCESS_CLIENT_ID: ${{ vars.CF_ACCESS_CLIENT_ID }}
           CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF }}
+          RELAY_RECOVERY_CONTROL_URL: ${{ vars.RELAY_RECOVERY_CONTROL_URL }}
         run: |
           node --input-type=module <<'NODE'
           import assert from 'node:assert/strict';
@@ -82,12 +83,26 @@ jobs:
             if (message.result.isError) throw Error('Relay rejected safety request; reconcile before retrying: ' + diagnostic(message.result.content?.filter(item => item.type === 'text').map(item => item.text).join('\n')));
             return message.result;
           }
-          const inventory = await rpc('tools/list', {});
-          const tool = inventory.tools?.find(item => item.name === 'relay_autonomy');
-          assert.ok(tool?.inputSchema?.properties?.action?.enum?.includes('approve'), 'Deployed server must expose the safety contract');
+          const external = process.env.RELAY_RECOVERY_CONTROL_URL;
+          assert.ok(!external || external === 'https://relay.loew.fi/recovery-control', 'Recovery URL must use the fixed existing Access origin');
+          const independent = input => external && ['status', 'hold', 'resume', 'rollback'].includes(input.action) && ['global', 'relay'].includes(input.scope);
+          if (requests.some(input => !independent(input))) {
+            const inventory = await rpc('tools/list', {});
+            const tool = inventory.tools?.find(item => item.name === 'relay_autonomy');
+            assert.ok(tool?.inputSchema?.properties?.action?.enum?.includes('approve'), 'Deployed server must expose the safety contract');
+          }
           const call = async input => {
-            const result = await rpc('tools/call', {name: 'relay_autonomy', arguments: input});
-            const value = result.structuredContent;
+            let value;
+            if (independent(input)) {
+              const response = await fetch(external, {method: 'POST', headers, redirect: 'error', signal: AbortSignal.timeout(90000), body: JSON.stringify(input)});
+              assert.ok(response.ok, 'Independent safety request failed with HTTP ' + response.status + '; reconcile before retrying');
+              const text = await response.text();
+              assert.ok(Buffer.byteLength(text) <= 1048576, 'Safety response exceeds limit');
+              value = JSON.parse(text);
+            } else {
+              const result = await rpc('tools/call', {name: 'relay_autonomy', arguments: input});
+              value = result.structuredContent;
+            }
             assert.ok(value?.ok === true && value.state?.scope === input.scope, 'Complete durable safety receipt is required');
             return value;
           };
