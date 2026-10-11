@@ -1,12 +1,27 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {recoveryControllerResponse,recoveryCloudSnapshot,recoveryBuildHistory,RECOVERY_RESOURCES} from './recovery-controller.js';
+import {recoveryControllerResponse,recoveryCloudSnapshot,recoveryBuildHistory,recoveryRegistrationReader,RECOVERY_RESOURCES} from './recovery-controller.js';
 import {autonomyState,transitionAutonomy} from './autonomy-control.js';
 
 const request=body=>new Request('https://relay.loew.fi/recovery-control',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 const env={RELAY_AUTONOMY_GUARD:'enforced',RELAY_EVENTS:{},RELAY_CANONICAL_REPOSITORY:'lrnolivia/relay',RELAY_CLOUDFLARE_WRITE_SCRIPTS:'relay'};
 const verify=async()=>({token:'synthetic-verified-identity'});
+test('request-scoped registration identity is Access-gated, exact-read-only and never copied into runtime bindings',async()=>{
+ const token='synthetic_registration_read_token',path='/repos/lrnolivia/relay/contents/projects/relay.json?ref=main';let reads=0;
+ const api=async(actual,p,options)=>{reads++;assert.deepEqual(actual,{RELAY_GITHUB_TOKEN:token});assert.equal(p,path);assert.equal(options,undefined);return {type:'file'};};
+ const reader=recoveryRegistrationReader(token,api);
+ for(const [p,options] of [[path,{method:'POST'}],[path,{method:'GET'}],[path.replace('main','other')],[path.replace('relay.json','field.json')],['/user']])assert.throws(()=>reader(p,options),/fixed/);
+ assert.equal(reads,0);assert.throws(()=>recoveryRegistrationReader('short'),/bounded/);
+ const runtime={...env,CLOUDFLARE_ACCOUNT_ID:RECOVERY_RESOURCES.account,CLOUDFLARE_API_TOKEN:'synthetic',EVIDENCE:{}};
+ const req=()=>{const r=request({action:'rollback',scope:'relay'});r.headers.set('X-Relay-Registration-Token',token);return r;};
+ const control=async(actual,input,deps)=>{assert.equal(actual,runtime);assert.equal(actual.RELAY_GITHUB_TOKEN,undefined);await deps.github(path);return {ok:true};};
+ assert.equal((await recoveryControllerResponse(req(),runtime,{verify:async()=>null,control,githubRequest:api})).status,401);assert.equal(reads,0);
+ const response=await recoveryControllerResponse(req(),runtime,{verify,control,githubRequest:api});assert.equal(response.status,200);assert.equal(reads,1);assert.doesNotMatch(await response.text(),/synthetic_registration/);
+ const failed=await recoveryControllerResponse(req(),runtime,{verify,control:async()=>{throw Error(token);},githubRequest:api});assert.doesNotMatch(await failed.text(),/synthetic_registration/);
+ const status=request({action:'status',scope:'relay'});status.headers.set('X-Relay-Registration-Token',token);
+ assert.equal((await recoveryControllerResponse(status,runtime,{verify,control:async(actual,input,deps)=>{assert.equal(deps.github,undefined);return {ok:true};}})).status,200);
+});
 test('recovery diagnostics identify rate limits without disclosing upstream messages or credentials',async()=>{
  const response=await recoveryControllerResponse(request({action:'status',scope:'relay'}),env,{verify,control:async()=>{throw Object.assign(Error('synthetic-secret'),{status:403,code:'rate_limit',github:{provider:'github',rate_limit_reset:123,endpoint:'synthetic-secret'}});}});
  assert.equal(response.status,403);const body=await response.json();assert.deepEqual(body.diagnostic,{stage:'github_registration',rate_limited:true,retry_at:123});assert.doesNotMatch(JSON.stringify(body),/synthetic-secret/);
