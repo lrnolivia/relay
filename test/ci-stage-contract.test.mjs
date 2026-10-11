@@ -125,7 +125,7 @@ test('one canonical runner reuses its exact build and retains every applicable g
   assert.ok(workflow.indexOf('id: verify-reuse')<workflow.indexOf('id: verify-production'));assert.ok(workflow.indexOf('id: verify-reuse')<workflow.indexOf('id: verify-visual-review'));
   assert.match(workflow,/RELAY_REQUIRED_STAGES: \$\{\{ steps.production-scope.outputs.required_stages \}\}/);
   for(const [id,command] of [['production','node apps/web/verify-production.mjs'],['retained','node scripts/retain-web-preview.mjs'],['visual-review','node scripts/retain-web-preview.mjs']])assert.ok(workflow.includes('ci-stage.mjs '+id+' -- '+command));
-  assert.match(workflow,/let required=process.env.EVENT_NAME==='workflow_dispatch'/);assert.match(workflow,/required=needsProductionVerification/);
+  assert.match(workflow,/let required=manualProductionVerification\(process.env.EVENT_NAME,process.env.WORKFLOW_REF\)/);assert.match(workflow,/WORKFLOW_REF: \$\{\{ github.ref \}\}/);assert.match(workflow,/required=needsProductionVerification/);
   assert.match(workflow,/RELAY_CI_PREVIEW_REQUIRED:.*github.event.pull_request.draft == true/);assert.match(workflow,/RELAY_CI_CARD_REQUIRED:/);assert.match(workflow,/await writeQualityPlan/);
   assert.ok(workflow.indexOf('id: checkout-identity')<workflow.indexOf('id: production-scope'));assert.match(workflow,/git config --global --add safe.directory "\$GITHUB_WORKSPACE"/);assert.doesNotMatch(workflow,/safe.directory ['"]\*/);assert.match(workflow,/test "\$source_head" = "\$RELAY_SOURCE_SHA"/);
   assert.doesNotMatch(workflow,/playwright install/);assert.match(workflow,/const browser=await chromium.launch\(\)/);
