@@ -7,6 +7,10 @@ import {autonomyState,transitionAutonomy} from './autonomy-control.js';
 const request=body=>new Request('https://relay.loew.fi/recovery-control',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 const env={RELAY_AUTONOMY_GUARD:'enforced',RELAY_EVENTS:{},RELAY_CANONICAL_REPOSITORY:'lrnolivia/relay',RELAY_CLOUDFLARE_WRITE_SCRIPTS:'relay'};
 const verify=async()=>({token:'synthetic-verified-identity'});
+test('recovery diagnostics identify rate limits without disclosing upstream messages or credentials',async()=>{
+ const response=await recoveryControllerResponse(request({action:'status',scope:'relay'}),env,{verify,control:async()=>{throw Object.assign(Error('synthetic-secret'),{status:403,code:'rate_limit',github:{provider:'github',rate_limit_reset:123,endpoint:'synthetic-secret'}});}});
+ assert.equal(response.status,403);const body=await response.json();assert.deepEqual(body.diagnostic,{stage:'github_registration',rate_limited:true,retry_at:123});assert.doesNotMatch(JSON.stringify(body),/synthetic-secret/);
+});
 test('controller authenticates before durable access and exposes no approval, promotion, arbitrary scope or provider API',async()=>{
  let calls=0;const control=async()=>{calls++;return {ok:true};};
  assert.equal((await recoveryControllerResponse(request({action:'status',scope:'relay'}),env,{verify:async()=>null,control})).status,401);

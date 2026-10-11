@@ -7,6 +7,7 @@ import { webAssets, webBuildId, webSourceSha } from "../web/generated.js";
 import { RELAY_CONTEXT_CARD_URI } from "../../src/relay-chat-ui.js";
 import { RELAY_CONTROL_CENTER_URI } from "../../src/relay-ui.js";
 import { PROGRESS_CONTRACT_VERSION } from "../../src/progress-api.js";
+import { verifiedRecoveryDeployment } from '../web/production-scope.mjs';
 
 const origin = "https://relay.loew.fi";
 const expected = process.env.EXPECTED_SOURCE_SHA;
@@ -116,7 +117,11 @@ try {
     .sort((a, b) => Date.parse(b.created_on) - Date.parse(a.created_on));
   const build = builds[0], deployed = Date.parse(deployment.created_on);
   if (build?.build_trigger_metadata?.commit_hash !== expected) throw new Error("Newest successful production build is not the expected SHA");
-  if (!(deployed >= Date.parse(build.running_on) && deployed <= Date.parse(build.stopped_on))) throw new Error("Active deployment was not created by the expected source build");
+  if (!(deployed >= Date.parse(build.running_on) && deployed <= Date.parse(build.stopped_on))) {
+    const safety=await call('relay_autonomy',{action:'status',scope:'relay'});
+    if(!verifiedRecoveryDeployment(deployment,safety.state,expected))throw new Error('Active deployment lacks expected build timing or an exact verified recovery receipt');
+    results.push({recovery_deployment:deployment.id,operation_id:safety.state.rollback.operation_id});
+  }
   // Each built web path must behave exactly as the exact-source deployed entry does, including intentional ctrl redirects.
   const { default: deployedEntry } = await import("./index.js");
   for (const path of Object.keys(webAssets)) {
