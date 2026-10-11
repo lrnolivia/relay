@@ -5,6 +5,18 @@ import os from 'node:os';
 import path from 'node:path';
 import { createExecutionInbox } from './relay-executor-inbox.mjs';
 
+test('inbox size limit covers the actual serialized bytes and preserves the previous page',async()=>{
+ const directory=await fs.mkdtemp(path.join(os.tmpdir(),'relay-inbox-wire-size-'));let large=false;
+ const entries=()=>large?Array.from({length:20},()=>({content:'x'.repeat(4000),evidence:Array(100).fill(0)})):[{content:'last good page'}];
+ const rpc=async name=>name==='relay_context'?{ok:true,revision:1,entries:entries()}:{ok:true,feedback:{available:true,events:[],conflicts:[]}};
+ try{
+  const inbox=createExecutionInbox({directory,rpc,project:'fixture',assignment:'one'});assert.equal((await inbox.refresh()).available,true);large=true;
+  assert.ok(Buffer.byteLength(JSON.stringify(entries()))<98304,'compact payload fits but pretty-printed payload does not');
+  const result=await inbox.refresh();assert.equal(result.available,false);
+  const bytes=await fs.readFile(inbox.filename);assert.ok(bytes.length<=98304);const saved=JSON.parse(bytes);assert.equal(saved.context.entries[0].content,'last good page');assert.equal(saved.acknowledged,false);assert.equal(saved.consumption_verified,false);
+ }finally{await fs.rm(directory,{recursive:true,force:true});}
+});
+
 test('in-run inbox exposes exact full text and backlog without acknowledgment, and retains data on a failed refresh', async () => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'relay-inbox-'));
   let failing = false, content = 'First decision';

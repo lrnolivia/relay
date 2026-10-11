@@ -2,14 +2,20 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 
+const unavailableReason='Refresh unavailable; last successful data is retained and may be stale.';
+
 // This file exposes task data to an existing process. It never acknowledges it.
 export function createExecutionInbox({ directory, rpc, project, assignment, clock = () => new Date().toISOString() }) {
   const filename = path.join(directory, 'inbox.json');
   let previous = null, contextCursor = null, feedbackCursor = null;
   async function publish(value) {
-    if (Buffer.byteLength(JSON.stringify(value)) > 98304) throw Error('Inbox exceeds 96 KiB; previous snapshot retained');
+    const text=JSON.stringify(value,null,2)+'\n';
+    // Bound the bytes actually written, including room to mark this same page
+    // stale after a failed refresh. Never truncate original task/feedback text.
+    const unavailable=JSON.stringify({...value,available:false,reason:unavailableReason,consumption_verified:false,acknowledged:false},null,2)+'\n';
+    if (Math.max(Buffer.byteLength(text),Buffer.byteLength(unavailable)) > 98304) throw Error('Inbox exceeds 96 KiB; previous snapshot retained');
     const temporary = filename + '.tmp';
-    await fs.writeFile(temporary, JSON.stringify(value, null, 2) + '\n', { mode: 0o600 });
+    await fs.writeFile(temporary, text, { mode: 0o600 });
     await fs.rename(temporary, filename);
   }
   return { filename, async refresh() {
@@ -43,7 +49,7 @@ export function createExecutionInbox({ directory, rpc, project, assignment, cloc
       contextCursor=null;feedbackCursor=null;
       // Do not expose provider errors, which may contain connection credentials.
       const snapshot = { ...(previous || { schema: 1, project, assignment, context: null, feedback: null }), available: false,
-        checked_at: clock(), reason: 'Refresh unavailable; last successful data is retained and may be stale.', consumption_verified: false, acknowledged: false };
+        checked_at: clock(), reason: unavailableReason, consumption_verified: false, acknowledged: false };
       await publish(snapshot); previous = snapshot;
       return { available: false, consumption_verified: false };
     }

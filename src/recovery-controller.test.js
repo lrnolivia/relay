@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {recoveryControllerResponse} from './recovery-controller.js';
+import {recoveryControllerResponse,recoveryCloudSnapshot,recoveryBuildHistory,RECOVERY_RESOURCES} from './recovery-controller.js';
 import {autonomyState,transitionAutonomy} from './autonomy-control.js';
 
 const request=body=>new Request('https://relay.loew.fi/recovery-control',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
@@ -28,7 +28,7 @@ test('controller directly preserves durable holds/CAS/idempotency without invoki
 });
 test('only verified Access context reaches rollback; errors and configuration never disclose provider secrets',async()=>{
  const runtime={...env,CLOUDFLARE_ACCOUNT_ID:'8df30cd302a4d4a4c01db9863c712166',CLOUDFLARE_API_TOKEN:'synthetic-provider-secret',EVIDENCE:{}},input={action:'rollback',scope:'relay'};
- const response=await recoveryControllerResponse(request(input),runtime,{verify,control:async(actual,args,deps)=>{assert.equal(actual,runtime);assert.deepEqual(args,input);assert.deepEqual(deps,{accessJwt:'synthetic-verified-identity'});throw Error('Synthetic provider accidentally echoed synthetic-provider-secret');}});
+ const response=await recoveryControllerResponse(request(input),runtime,{verify,control:async(actual,args,deps)=>{assert.equal(actual,runtime);assert.deepEqual(args,input);assert.equal(deps.accessJwt,'synthetic-verified-identity');assert.equal(typeof deps.snapshot,'function');throw Error('Synthetic provider accidentally echoed synthetic-provider-secret');}});
  assert.equal(response.status,503);assert.doesNotMatch(await response.text(),/synthetic-provider-secret/);
  const config=JSON.parse(await readFile(new URL('../recovery/wrangler.jsonc',import.meta.url),'utf8'));assert.equal(config.name,'relay-recovery');assert.equal(config.workers_dev,false);assert.equal(config.preview_urls,false);assert.deepEqual(config.routes,[]);assert.equal(config.migrations,undefined);assert.equal(config.durable_objects.bindings[0].script_name,'relay');assert.equal(config.vars.CLOUDFLARE_API_TOKEN,undefined);assert.equal(config.triggers,undefined);
 });
@@ -42,4 +42,25 @@ test('independent source inspection binds canonical guarded provider output to a
  const denied=await recoveryControllerResponse(request(input),runtime,{...deps,registration:async()=>({...profile,repository:'another/project'})});assert.equal(denied.status,503);
  const unsupported=await recoveryControllerResponse(request({...input,url:'https://untrusted.example'}),runtime,deps);assert.equal(unsupported.status,400);
  const status=await recoveryControllerResponse(request({action:'cloud_status',scope:'relay'}),runtime,{verify,snapshot:async()=>({deployments:{deployments:[]},versions:{items:[{id:version,private:'omit'}]},domains:[],settings:{secret:'must never disclose'}})});const serialized=await status.text();assert.doesNotMatch(serialized,/private|secret|must never/);
+});
+
+test('recovery provider reads use only pinned resources and never account-wide discovery or settings',async()=>{
+ const runtime={CLOUDFLARE_ACCOUNT_ID:RECOVERY_RESOURCES.account,CLOUDFLARE_BUILDS_API_TOKEN:'synthetic-build-token'},calls=[],root='/accounts/'+RECOVERY_RESOURCES.account;
+ const domain={id:RECOVERY_RESOURCES.domain,zone_id:RECOVERY_RESOURCES.zone,hostname:RECOVERY_RESOURCES.hostname,service:'relay',environment:'production',enabled:true};
+ const api=async(actual,path,options)=>{assert.equal(actual,runtime);calls.push({path,options});if(path===root+'/workers/domains/'+domain.id)return domain;if(path.endsWith('/deployments'))return {deployments:[]};if(path.endsWith('/versions'))return {items:[]};if(path===root+'/builds/workers/'+RECOVERY_RESOURCES.tag+'/builds')return [];throw Error('Unexpected provider access');};
+ assert.deepEqual((await recoveryCloudSnapshot(runtime,'relay',api)).domains,[domain]);
+ assert.deepEqual(await recoveryBuildHistory(runtime,'relay',api),[]);
+ assert.deepEqual(calls.map(c=>c.path),[root+'/workers/scripts/relay/deployments',root+'/workers/scripts/relay/versions',root+'/workers/domains/'+domain.id,root+'/builds/workers/'+RECOVERY_RESOURCES.tag+'/builds']);
+ assert.deepEqual(calls.at(-1).options,{token:'synthetic-build-token'});
+ for(const patch of [{id:'replacement'},{zone_id:'other'},{service:'field'},{hostname:'other.loew.fi'},{environment:'preview'},{enabled:false}])await assert.rejects(recoveryCloudSnapshot(runtime,'relay',async(e,path)=>path.includes('/domains/')?{...domain,...patch}:api(e,path)),/domain binding changed/);
+ const count=calls.length;for(const worker of ['field','../relay']){await assert.rejects(recoveryCloudSnapshot(runtime,worker,api));await assert.rejects(recoveryBuildHistory(runtime,worker,api));}
+ await assert.rejects(recoveryCloudSnapshot({...runtime,CLOUDFLARE_ACCOUNT_ID:'other'},'relay',api));assert.equal(calls.length,count);
+ await assert.rejects(recoveryBuildHistory({CLOUDFLARE_ACCOUNT_ID:RECOVERY_RESOURCES.account},'relay',api));assert.equal(calls.length,count);
+});
+
+test('controller passes its bounded snapshot into rollback verification',async()=>{
+ const runtime={...env,CLOUDFLARE_ACCOUNT_ID:RECOVERY_RESOURCES.account,CLOUDFLARE_API_TOKEN:'synthetic',EVIDENCE:{}};let observed=false;
+ const snapshot=async(actual,worker)=>{assert.equal(actual,runtime);assert.equal(worker,'relay');observed=true;return {ok:true};};
+ const response=await recoveryControllerResponse(request({action:'rollback',scope:'relay'}),runtime,{verify,snapshot,control:async(actual,input,deps)=>{assert.equal(deps.accessJwt,'synthetic-verified-identity');return deps.snapshot('relay');}});
+ assert.equal(response.status,200);assert.equal(observed,true);
 });
