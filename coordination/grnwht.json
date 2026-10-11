@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-11T03:04:24.426Z",
+  "updated_at": "2026-10-11T16:11:35.416Z",
   "legacy_branches": [
     "main"
   ],
@@ -2864,6 +2864,52 @@
       "evidence": "DEPLOYED + MERGED 2026-10-11 with Lauren's explicit chat authorization ('yes and deploy', then 'yes' to merging). Exact head 2784ca5: CI run 38103527604 all 9 green; sealed archive sha256 ec587ea3c2dd989b533a435f2122b1e76e5038382dc78cbe17fa4b0248d94280 matches CI log, internal manifest all OK, gw-source-sha = head. Backup 02:01Z: D1 time-travel bookmark 0000012a-00000000-00005101-e4d5f540c285aec59441b524b8c98b80 + ~/gw-backups/gwfamily-db-pre-0029-20261011T0201Z.sql (sha256 ea038566...6707d). Rehearsed 0029-0034 on real-data copy (only ledger rows added, integrity ok, 0 FK violations, new code loads all 6 active members). Applied 0029-0034 to prod via d1 execute + app_migrations; quick_check ok, 7 new tables present. Worker version aaf67aa0-5d49-4d8e-9f36-9c424f3ab8d5 (tag gw-pr34-2784ca5) deployed 100% at 03:03Z; 24 bindings/secrets identical to previous. Postflight greenwhitefamily.com and gwf.loew.fi: build 75732f7dcbe1cc94075d, /health 200, sw.js 200, react-app.js/css match sealed build, private APIs 401 signed-out, live sign-in renders with no console errors. Merged as cb5b8e3; main tree == deployed head. ROLLBACK: deploy bcca157b-312a-4579-803f-1707d098365f (schema-compatible with additive 0029-0034); do not restore DB after new writes. Splash v3 integrated from tr_a75a3eb6 (acked). Remaining: signed-in owner smoke test, real mailbox/device checks.",
       "work_accounted": true,
       "completed_at": "2026-10-11T03:04:24.426Z"
+    },
+    {
+      "id": "grnwht-splash-center-hotfix-20261011",
+      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
+      "branch": "grnwht/splash-center-hotfix-20261011",
+      "paths": [
+        "src/first-load.jsx",
+        "src/first-load.css",
+        "src/react-app.jsx",
+        "tests/first-load-splash.test.mjs",
+        "tests/first-load-splash-browser.mjs",
+        "tests/recovery-browser.mjs",
+        "dist/build.json",
+        "dist/index.html"
+      ],
+      "resources": [
+        "grnwht-splash-center-hotfix"
+      ],
+      "goal": "Hotfix true viewport-centered loading splash without footer or Fresh Start.",
+      "acceptance": "Lauren requested immediate hotfix at 2026-10-11 16:10Z: actual viewport centering, no footer, no Fresh Start on splash. Preserve error recovery and approved tree/leaf design; isolate no database or family content changes. Verify build, focused/full tests and mobile/desktop geometry before deploy; retain PR34 rollback and data.",
+      "next_action": "Parent personally implements narrow visual hotfix from main cb5b8e3, exact source checks and deploy. User explicitly requested hotfix. No other features or migrations.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "cb5b8e3da66460ca3b507aabfc04e47c953d7640",
+      "state": "active",
+      "created_at": "2026-10-11T16:11:35.416Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Hotfix true viewport-centered loading splash without footer or Fresh Start.",
+          "acceptance": "Lauren requested immediate hotfix at 2026-10-11 16:10Z: actual viewport centering, no footer, no Fresh Start on splash. Preserve error recovery and approved tree/leaf design; isolate no database or family content changes. Verify build, focused/full tests and mobile/desktop geometry before deploy; retain PR34 rollback and data.",
+          "at": "2026-10-11T16:11:35.416Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-splash-center-hotfix-20261011:acceptance:0",
+            "text": "Lauren requested immediate hotfix at 2026-10-11 16:10Z: actual viewport centering, no footer, no Fresh Start on splash. Preserve error recovery and approved tree/leaf design; isolate no database or family content changes. Verify build, focused/full tests and mobile/desktop geometry before deploy; retain PR34 rollback and data.",
+            "at": "2026-10-11T16:11:35.416Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-11T16:11:35.416Z",
+      "lease_until": "2026-10-12T04:11:35.416Z"
     }
   ]
 }
