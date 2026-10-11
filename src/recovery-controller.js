@@ -6,7 +6,7 @@ import {githubApiRequest} from './source.js';
 // Request-scoped CI identity: never persist it, expose it to provider writes,
 // or let a caller choose a repository, path, ref, or HTTP method.
 export function recoveryRegistrationReader(token,api=githubApiRequest){
- if(!/^[A-Za-z0-9_]{20,4096}$/.test(token||''))throw Error('Invalid bounded registration read identity');
+ if(!/^[A-Za-z0-9._~+\/-]{20,4096}={0,2}$/.test(token||''))throw Error('Invalid bounded registration read identity');
  return (path,options)=>{
   if(path!=='/repos/lrnolivia/relay/contents/projects/relay.json?ref=main'||options!==undefined)throw Error('Recovery registration read is fixed');
   return api({RELAY_GITHUB_TOKEN:token},path);
@@ -77,6 +77,9 @@ export async function recoveryControllerResponse(request,env,{verify=verifyAcces
  }
  catch(error){
   const known={
+   'Invalid bounded registration read identity':'registration_identity',
+   'Recovery registration read is fixed':'registration_boundary',
+   'Project registration is incomplete':'registration_content',
    'Production source or recovery compatibility identity does not match':'source_identity',
    'Production critical health endpoint failed':'health',
    'Deployment changed during production verification':'deployment_changed',
