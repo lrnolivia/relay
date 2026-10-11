@@ -11,6 +11,30 @@ import {releaseRecoveryResponse} from '../src/release-recovery.js';
 import {autonomyState,transitionAutonomy,autonomyRequest} from '../src/autonomy-control.js';
 import {recoveryVersionFixture} from '../test/fixtures/recovery-archive.mjs';
 
+test('manual safety workflow survives product outage and fails closed on independent denial',async()=>{
+ const yaml=await readFile(new URL('../.github/workflows/autonomy-control.yml',import.meta.url),'utf8');
+ const code=yaml.split("node --input-type=module <<'NODE'\n")[1].split('\n          NODE')[0].split('\n').map(line=>line.slice(10)).join('\n');
+ for(const mode of ['success','denied','changed','wrong-origin']){
+  const prelude=`
+   const mode=${JSON.stringify(mode)};let calls=0;
+   process.env.SAFETY_REQUESTS=JSON.stringify([{action:'hold',scope:'relay',expected_revision:0,operation_id:'independent-test'}]);
+   process.env.CF_ACCESS_CLIENT_ID='fixture-id';process.env.CF_ACCESS_CLIENT_SECRET='fixture-secret';
+   process.env.RELAY_RECOVERY_CONTROL_URL=mode==='wrong-origin'?'https://example.invalid/recovery-control':'https://relay.loew.fi/recovery-control';
+   globalThis.fetch=async(url,options)=>{
+    if(url!=='https://relay.loew.fi/recovery-control')throw Error('Product endpoint must not be called');
+    calls++;if(options.redirect!=='error')throw Error('Redirects forbidden');
+    if(options.headers['CF-Access-Client-Secret']!=='fixture-secret')throw Error('Missing Access identity');
+    if(mode==='denied')return new Response('denied',{status:403});
+    return Response.json({ok:true,state:{scope:'relay',held:true,revision:mode==='changed'?calls:1}});
+   };
+   try{await import('data:text/javascript;base64,'+${JSON.stringify(Buffer.from(code).toString('base64'))});if(mode!=='success')process.exit(2);}
+   catch(error){if(mode==='success')throw error;}
+   if(calls!==(mode==='wrong-origin'?0:mode==='denied'?1:2))throw Error('Unexpected retry or fallback');
+  `;
+  execFileSync(process.execPath,['--input-type=module','--eval',prelude],{stdio:['ignore','pipe','pipe'],timeout:5000});
+ }
+});
+
 const source='a'.repeat(40),version='11111111-2222-3333-4444-555555555555',hash=x=>createHash('sha256').update(x).digest('hex');
 function fixture(){
  const bytes=Buffer.from('synthetic opaque archive'),objects=new Map(),logs=[],calls=[];
