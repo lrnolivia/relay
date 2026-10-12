@@ -28,15 +28,33 @@ export function oversightView(record,claims,now=Date.now()){
  const available=Boolean(claim&&claim.owner===binding.owner&&claim.branch===binding.branch&&claim.state==='active'&&Date.parse(claim.lease_until)>now);
  return {binding,available,worker_online_verified:false,reason:available?'Canonical assignment bound; worker activity remains unverified.':binding?'Oversight assignment changed or expired; reconcile.':'No oversight assignment bound.'};
 }
-export async function operateNightShift(bucket,args,{claims,sourceJob,sourceReceipt,verifyCommit,submitJob},now=Date.now()){
+// Read the exact Shift job, never the assignment's newest unrelated execution.
+// A broker receipt is attributed process evidence, not independent host proof.
+export async function shiftExecutionView(item,project,claims,readJob){
+ if(!item.shift)return null;
+ const shift=item.shift,claim=claims.find(c=>c.id===shift.assignment);
+ const unavailable=reason=>({available:false,reason,job_id:shift.job_id,state:null,executor_started:false,recipient_acknowledged:false,process_verified:false});
+ if(!claim||claim.owner!==shift.owner||claim.branch!==shift.branch)return unavailable('recipient-binding-changed');
+ if(typeof readJob!=='function')return unavailable('execution-reader-unavailable');
+ try{
+  const result=await readJob({action:'status',project,assignment:shift.assignment,job_id:shift.job_id}),job=result?.job;
+  if(result?.ok!==true||!job)return unavailable('execution-unavailable');
+  if(job.id!==shift.job_id||job.project!==project||job.assignment!==shift.assignment||job.owner!==shift.owner||job.branch!==shift.branch||job.repository!==item.source.repository||job.origin?.kind!=='night-shift'||job.origin.item_id!==item.id||job.origin.source_assignment!==item.source.assignment||job.origin.commit_sha!==item.source.commit_sha||job.origin.repository!==item.source.repository||(shift.head_sha&&job.initial_head_sha!==shift.head_sha))return unavailable('execution-identity-mismatch');
+  return {available:true,job_id:job.id,revision:job.revision,state:job.state,observed_state:job.observed_state||job.state,assignment_state:claim.state,
+   head_sha:job.initial_head_sha,executor_id:job.executor_id||null,executor_started:Boolean(job.process&&job.started_at),started_at:job.started_at||null,finished_at:job.finished_at||null,
+   provenance:'authenticated-executor-reported',recipient_acknowledged:false,process_verified:false,objective_completed:false};
+ }catch{return unavailable('execution-unavailable');}
+}
+export async function operateNightShift(bucket,args,{claims,sourceJob,sourceReceipt,verifyCommit,submitJob,readJob},now=Date.now()){
  let writeStarted=null;
  try{
  const {stored,record}=await readNightShift(bucket,args.project);
  writeStarted=Boolean(record.operations.find(x=>x.id===args.operation_id));
  if(args.action==='read'){
   const start=args.cursor||0,limit=args.limit||20;
+  const items=await Promise.all(record.items.slice(start,start+limit).map(async item=>({...item,shift_execution:await shiftExecutionView(item,args.project,claims,readJob)})));
   const sources=claims.filter(x=>x.state==='completed'&&x.work_accounted===true&&x.evidence?.trim()&&Number.isInteger(x.pr)&&x.owner&&x.branch&&/^[a-f0-9]{40}$/.test(x.merged_head_sha||'')&&/^[a-f0-9]{40}$/.test(x.merge_commit_sha||'')),sourceStart=args.source_cursor||0;
-  return {ok:true,revision:record.revision,items:record.items.slice(start,start+limit),next_cursor:start+limit<record.items.length?start+limit:null,
+  return {ok:true,revision:record.revision,items,next_cursor:start+limit<record.items.length?start+limit:null,
    native_sources:sources.slice(sourceStart,sourceStart+limit).map(x=>({assignment:x.id,owner:x.owner,branch:x.branch,goal:x.goal,pr:x.pr,head_sha:x.merged_head_sha,merge_commit_sha:x.merge_commit_sha,completed_at:x.completed_at||null,requires_source_verification:true})),next_source_cursor:sourceStart+limit<sources.length?sourceStart+limit:null,
    oversight:oversightView(record,claims,now),process_verified:false,away_verified:false};
  }
@@ -77,7 +95,7 @@ export async function operateNightShift(bucket,args,{claims,sourceJob,sourceRece
   if(savedOperation?.state==='complete')return {ok:true,replayed:true,revision:latest.record.revision,...savedOperation.result};
   if(!savedOperation||savedOperation.intent!==intent)throw Error('Prepared Shift operation unavailable; inspect retained job receipt');
   const latestItem=latest.record.items.find(x=>x.id===item.id);
-  const shift={job_id:submitted.job.id,assignment:recipient.id,owner:recipient.owner,branch:recipient.branch,requested_at:new Date(now).toISOString(),initial_state:submitted.job.state,executor_started:false,recipient_acknowledged:false};
+  const shift={job_id:submitted.job.id,assignment:recipient.id,owner:recipient.owner,branch:recipient.branch,head_sha:args.recipient.head_sha,requested_at:new Date(now).toISOString(),initial_state:submitted.job.state,executor_started:false,recipient_acknowledged:false};
   latestItem.shift=shift;savedOperation.state='complete';savedOperation.result={item:latestItem,shift};latest.record.revision++;
   writeStarted=true;
   const written=await bucket.put(storageKey(args.project),JSON.stringify(latest.record),{onlyIf:{etagMatches:latest.stored.etag},httpMetadata:{contentType:'application/json'}});
@@ -139,7 +157,7 @@ export async function callNightShift(args,env,apiOverride){
  if(sourceJob&&sourceJob.repository!==project.registration.repository)throw Error('Execution repository differs from the registered project');
  const result=await operateNightShift(env.EVIDENCE,args,{claims:project.coordination.claims,sourceJob,sourceReceipt,
   verifyCommit:async(repository,commit)=>(await api(`/repos/${repository}/commits/${commit}`))?.sha===commit,
-  submitJob:jobArgs=>callJobs(jobArgs,env,api)});
+  submitJob:jobArgs=>callJobs(jobArgs,env,api),readJob:jobArgs=>operateJob(env.EVIDENCE,jobArgs,null)});
  if(args.action!=='read'){
   const current=await callRunnerControlCore('relay_runner_project',{project:args.project},env,api);
   const actual=current.coordination.claims.find(x=>x.id===args.assignment);

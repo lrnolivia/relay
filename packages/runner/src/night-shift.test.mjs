@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { operateNightShift, oversightView, completedSourceReceipt } from './night-shift.mjs';
+import { operateNightShift, oversightView, completedSourceReceipt, shiftExecutionView } from './night-shift.mjs';
 import { operateJob } from './jobs.mjs';
 import { nightShiftBrowser } from './night-shift-browser.mjs';
 import { callJobs } from './job-control.mjs';
@@ -95,4 +95,29 @@ test('native completed-source backfill verifies original owner and exact merged 
 test('native-source backfill cannot infer away duration from a merge outside the declared window',async()=>{
  const f=fixture();f.dependencies.sourceReceipt={assignment:'native',commit_sha:'d'.repeat(40),source_exists:true,merged_receipt_verified:true,source_event_at:'2026-10-03T18:00:00Z',pr:41};
  await assert.rejects(f.call({action:'record_source',source_assignment:'native',source_commit_sha:'d'.repeat(40),operation_id:'native-outside',expected_revision:0,summary:'No synthetic duration',away_window:{start:'2026-10-03T19:00:00Z',end:'2026-10-03T22:00:00Z'}}),/source event must fit/);
+});
+
+test('Shift readback follows its exact broker execution without mutating the original request receipt',async()=>{
+ const f=fixture(),item=(await f.record()).item;
+ const shifted=await f.call({action:'shift',item_id:item.id,expected_revision:1,operation_id:'shift-live',summary:'Continue source',recipient:{assignment:'recipient',owner:'recipient-owner',branch:'relay/recipient',head_sha:'a'.repeat(40)}});
+ let reads=0;f.dependencies.readJob=async args=>{reads++;assert.equal(args.job_id,shifted.shift.job_id);return operateJob(f.bucket,args,null,{now:f.now});};
+ let read=await f.call({action:'read'});assert.equal(read.items[0].shift_execution.state,'queued');assert.equal(read.items[0].shift_execution.executor_started,false);
+ const common={project:'relay',assignment:'recipient',job_id:shifted.shift.job_id,expected_owner:'recipient-owner',expected_branch:'relay/recipient',executor_id:'fixture'};
+ const leased=await operateJob(f.bucket,{...common,action:'lease',expected_revision:1,expected_head_sha:'a'.repeat(40),capabilities:['codex-cli'],operation_id:'lease'},f.claims[1],{now:f.now});
+ const started=await operateJob(f.bucket,{...common,action:'start',expected_revision:leased.job.revision,lease_token:leased.lease_token,operation_id:'start',process:{pid:42,host:'fixture',version:'fixture',adapter:'codex-cli'}},f.claims[1],{now:f.now});
+ read=await f.call({action:'read'});assert.equal(read.items[0].shift_execution.state,'running');assert.equal(read.items[0].shift_execution.executor_started,true);assert.equal(read.items[0].shift.initial_state,'queued');
+ await operateJob(f.bucket,{...common,action:'finish',expected_revision:started.job.revision,lease_token:leased.lease_token,operation_id:'finish',result:{state:'succeeded',exit_code:0,session_id:'fixture-session',head_sha:'a'.repeat(40),summary:'Fixture exit',evidence:'fixture'}},f.claims[1],{now:f.now});
+ read=await f.call({action:'read'});assert.equal(read.items[0].shift_execution.state,'succeeded');assert.equal(read.items[0].shift_execution.process_verified,false);assert.equal(read.items[0].shift_execution.recipient_acknowledged,false);assert.equal(read.revision,shifted.revision);assert.equal(reads,3);
+ f.claims[1].owner='new-owner';read=await f.call({action:'read'});assert.equal(read.items[0].shift_execution.reason,'recipient-binding-changed');assert.equal(reads,3);
+});
+
+test('Shift readback rejects unrelated jobs and redacts unavailable reads without fabricating working state',async()=>{
+ const f=fixture(),item=(await f.record()).item;
+ const shifted=await f.call({action:'shift',item_id:item.id,expected_revision:1,operation_id:'shift-read',summary:'Continue',recipient:{assignment:'recipient',owner:'recipient-owner',branch:'relay/recipient',head_sha:'a'.repeat(40)}});
+ const exact=(await operateJob(f.bucket,{action:'status',project:'relay',assignment:'recipient',job_id:shifted.shift.job_id},null,{now:f.now})).job;
+ for(const change of [j=>{j.id='job_'+'f'.repeat(64);},j=>{j.owner='other';},j=>{j.initial_head_sha='f'.repeat(40);},j=>{j.origin.repository='other/repo';},j=>{j.origin.item_id='other';},j=>{j.origin.commit_sha='f'.repeat(40);}]){
+  const job=structuredClone(exact);change(job);const view=await shiftExecutionView(shifted.item,'relay',f.claims,async()=>({ok:true,job}));assert.equal(view.available,false);assert.equal(view.reason,'execution-identity-mismatch');assert.equal(view.state,null);
+ }
+ const view=await shiftExecutionView(shifted.item,'relay',f.claims,async()=>{throw Error('secret=private');});assert.equal(view.reason,'execution-unavailable');assert.doesNotMatch(JSON.stringify(view),/private/);
+ assert.equal(await shiftExecutionView({...item,shift:null},'relay',f.claims,()=>{throw Error('must not read');}),null);
 });
