@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-12T16:49:46.160Z",
+  "updated_at": "2026-10-12T17:05:05.026Z",
   "legacy_branches": [
     "main"
   ],
@@ -2960,7 +2960,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "61654c585f63bdd8b1207c467367b57e32412e77",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-12T16:32:07.450Z",
       "objective_history": {
         "baseline": {
@@ -2977,8 +2977,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-12T16:49:46.160Z",
-      "lease_until": "2026-10-13T04:49:46.160Z"
+      "updated_at": "2026-10-12T17:05:05.026Z",
+      "lease_until": "2026-10-13T05:05:05.026Z",
+      "pr": 36,
+      "merged_head_sha": "368f109a63505b9bea976f42217522899fa5d39f",
+      "merge_commit_sha": "c5333491d668a24be892f38b6cfcf869b626be9d",
+      "evidence": "PR36 merged as c5333491d668a24be892f38b6cfcf869b626be9d. All nine CI checks green on candidate 368f109a63505b9bea976f42217522899fa5d39f, run 38279031716. Production deployment 4a97ca29-6c28-48d8-a806-605d9ea7f3ee at 100% version 9938e354-d83a-49d4-b6b9-12230cf97e8f. Live module hash c5b7bbdb62e636f8b132921adc0be5220806f78f395beb6ad87d07d74ad1d10f matches sealed artifact. Health ok, app/assets HTTP200, fresh Chromium sign-up renders without errors or overflow. All 24 bindings and runtime settings unchanged. No migrations, family data changes, or email sends. Rollback 0fba08e3-d502-49f2-a301-659979367f55. Rounded email previews verified in Chromium and WebKit; classic Outlook CSS-radius limitation remains.",
+      "work_accounted": true,
+      "completed_at": "2026-10-12T17:05:05.026Z"
     }
   ]
 }
