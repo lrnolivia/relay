@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-11T21:27:31.170Z",
+  "updated_at": "2026-10-12T16:32:07.450Z",
   "legacy_branches": [
     "main"
   ],
@@ -2935,6 +2935,50 @@
       "evidence": "PR35 merged 61654c585f63bdd8b1207c467367b57e32412e77, tested head 8b6867efe111b5c8ee517c5c5a120b7ad602595c. All nine CI checks passed run38175216575; 1229 frontend tests passed. CI production module hash59171bede5e97f0467afcd3dffe37df2026a32eb193d0917023b3d0850c45561 exactly matched staged version0fba08e3-d502-49f2-a301-659979367f55. Deployed100% at21:24UTC, deploymentc668ca07-e13c-45ab-a750-6f67f54a5b27. Mac Safari verified build60d90a7e3a3b288d8dd9 release0.3.1, health statusok, signed-in Home, centered splash rehearsal without footer or Fresh Start and working Return. No D1/R2 writes. Rollbackaaf67aa0-5d49-4d8e-9f36-9c424f3ab8d5 retains family data.",
       "work_accounted": true,
       "completed_at": "2026-10-11T21:27:31.170Z"
+    },
+    {
+      "id": "grnwht-email-rounded-surface-20261012",
+      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
+      "branch": "grnwht/email-rounded-surface-20261012",
+      "paths": [
+        "backend/src/family-update-email.mjs",
+        "backend/src/transactional-email.mjs",
+        "backend/tests/email-surface.test.mjs",
+        "tests/email-preview-browser.mjs",
+        "tests/transactional-email-browser.mjs",
+        "docs/family-email-preview/"
+      ],
+      "resources": [
+        "grnwht-email-surface"
+      ],
+      "goal": "Lauren requested every email surface rounded in every existing theme; narrow GW email hotfix delegated to isolated Codex checkout. Parent owns merge and deploy; held Relay/Field work remains held.",
+      "acceptance": "All actual update, announcement, sign-in code, sign-in link, family invitation and household invitation shells have inline table/cell radius with separate border model and matching corner backgrounds. Eight existing family presets and both light/dark/fonts covered; auth retains approved stock-green auto light/dark. Fictional focused regressions and representative previews; no sends, credentials/settings/privacy/content change. Publish draft PR and exact checks plus rollback-ready handoff.",
+      "next_action": "Audit six rendering entry points at current main 61654c5, inspect consumer-local screenshot, make bounded surface fix and regression coverage. Production rollback version0fba08e3-d502-49f2-a301-659979367f55; parent will review before merge/deploy.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "61654c585f63bdd8b1207c467367b57e32412e77",
+      "state": "active",
+      "created_at": "2026-10-12T16:32:07.450Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren requested every email surface rounded in every existing theme; narrow GW email hotfix delegated to isolated Codex checkout. Parent owns merge and deploy; held Relay/Field work remains held.",
+          "acceptance": "All actual update, announcement, sign-in code, sign-in link, family invitation and household invitation shells have inline table/cell radius with separate border model and matching corner backgrounds. Eight existing family presets and both light/dark/fonts covered; auth retains approved stock-green auto light/dark. Fictional focused regressions and representative previews; no sends, credentials/settings/privacy/content change. Publish draft PR and exact checks plus rollback-ready handoff.",
+          "at": "2026-10-12T16:32:07.450Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-email-rounded-surface-20261012:acceptance:0",
+            "text": "All actual update, announcement, sign-in code, sign-in link, family invitation and household invitation shells have inline table/cell radius with separate border model and matching corner backgrounds. Eight existing family presets and both light/dark/fonts covered; auth retains approved stock-green auto light/dark. Fictional focused regressions and representative previews; no sends, credentials/settings/privacy/content change. Publish draft PR and exact checks plus rollback-ready handoff.",
+            "at": "2026-10-12T16:32:07.450Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-12T16:32:07.450Z",
+      "lease_until": "2026-10-13T04:32:07.450Z"
     }
   ]
 }
