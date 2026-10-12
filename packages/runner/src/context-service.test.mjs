@@ -17,3 +17,33 @@ test('durable project context verifies source, preserves messages and requires e
  assert.equal(ack.entry.acknowledgements.length,1);assert.equal(ack.entry.conclusion_verified,false);
  await assert.rejects(callContext({...input,operation_id:'stale'},{EVIDENCE:bucket},api),/revision changed/);
 });
+
+test('relationship proposals remain provisional until a verified bound lead curates; staff loading and retraction preserve provenance',async()=>{
+ let stored=null,etag=0;
+ const bucket={get:async()=>stored?{etag:String(etag),json:async()=>JSON.parse(stored)}:null,put:async(k,text,{onlyIf})=>{if(onlyIf instanceof Headers?Boolean(stored):onlyIf.etagMatches!==String(etag))return null;stored=text;return {etag:String(++etag)};}};
+ const file=value=>({type:'file',sha:'b'.repeat(40),encoding:'base64',content:Buffer.from(JSON.stringify(value)).toString('base64')});
+ const record={project:'fixture',queue:[],legacy_branches:[],claims:['worker','lead'].map(id=>({id,owner:id,branch:'fixture/'+id,state:'active',primary_staff:id==='lead'?'julian':'ellis',lease_until:'2099-01-01T00:00:00Z'}))};
+ const api=async path=>path.includes('projects/fixture.json')?file({id:'fixture',managed:true,repository:'lrnolivia/fixture',default_branch:'main',coordination:{status:'enabled',record:'coordination/fixture.json',max_active_branches:4,lease_hours:12},implementation:{branch_prefixes:['fixture/'],excluded_branches:['main']}}):path.includes('coordination/fixture.json')?file(record):{sha:'a'.repeat(40)};
+ const binding={project:'fixture',assignment:'lead',owner:'lead',branch:'fixture/lead',issuer:'verified-issuer',subject:'verified-subject'};
+ const env={EVIDENCE:bucket,RELATIONSHIP_CURATOR_BINDING:JSON.stringify(binding)},identity={verifiedPrincipal:{iss:binding.issuer,sub:binding.subject}};
+ const args={project:'fixture',assignment:'worker',expected_owner:'worker',expected_branch:'fixture/worker'};
+ const proposed=await callContext({...args,action:'record',expected_revision:0,operation_id:'signal',kind:'relationship-signal',content:'Prefers concise progress updates.',commit_sha:'a'.repeat(40),relationship:{staff_id:'ellis',topic:'communication',source:'explicit-feedback',explicit:true,evidence_refs:['user-message:fixture']}},env,api);
+ assert.equal(proposed.entry.relationship.durable,false);
+ const read=()=>callContext({action:'read',project:'fixture',assignment:'worker'},env,api);
+ assert.deepEqual((await read()).staff_relationship.notes,[]);
+ const curate={project:'fixture',assignment:'lead',expected_owner:'lead',expected_branch:'fixture/lead',action:'curate',expected_revision:1,operation_id:'curate',entry_id:proposed.entry.id};
+ await assert.rejects(callContext(curate,env,api),/verified lead/);
+ await assert.rejects(callContext(curate,{EVIDENCE:bucket},api,identity),/verified lead/);
+ await assert.rejects(callContext(curate,env,api,{verifiedPrincipal:{iss:binding.issuer,sub:'another'}}),/verified lead/);
+ record.claims[0].primary_staff='julian';
+ await assert.rejects(callContext({...curate,...args},env,api,identity),/verified lead/);
+ record.claims[0].primary_staff='ellis';
+ const curated=await callContext(curate,env,api,identity);assert.equal(curated.entry.relationship.durable,true);assert.equal(curated.entry.source_entry_id,proposed.entry.id);assert.equal(curated.entry.conclusion_verified,false);
+ assert.equal((await callContext(curate,env,api,identity)).replayed,true);
+ assert.equal((await read()).staff_relationship.notes[0].note,proposed.entry.content);
+ assert.deepEqual((await callContext({action:'read',project:'fixture',assignment:'lead'},env,api)).staff_relationship.notes,[]);
+ await callContext({...args,action:'retract',expected_revision:2,operation_id:'retract',entry_id:proposed.entry.id},env,api);
+ assert.deepEqual((await read()).staff_relationship.notes,[]);
+ await assert.rejects(callContext({...curate,expected_revision:3,operation_id:'recurate'},env,api,identity),/current attributed/);
+ record.claims[1].owner='successor';await assert.rejects(callContext(curate,env,api,identity),/verified lead/);
+});

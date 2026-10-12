@@ -34,7 +34,7 @@ export function createExecutionInbox({ directory, rpc, project, assignment, cloc
         if (full.feedback.status?.applicability?.conflicts?.length) feedback.conflicts.push(full.feedback);
         else events.push(full.feedback);
       }
-      const data = { context: { revision: context.revision, entries: context.entries, page_cursor:contextCursor, next_cursor: context.next_cursor ?? null },
+      const data = { context: { revision: context.revision, staff_relationship:context.staff_relationship||null, entries: context.entries, page_cursor:contextCursor, next_cursor: context.next_cursor ?? null },
         feedback: { events, conflicts: feedback.conflicts, page_cursor:feedbackCursor, next_cursor: feedback.next_cursor ?? null, truncated: Boolean(feedback.truncated) } };
       const digest = createHash('sha256').update(JSON.stringify(data)).digest('hex');
       const snapshot = { schema: 1, project, assignment, checked_at: clock(), available: true, digest, ...data,
