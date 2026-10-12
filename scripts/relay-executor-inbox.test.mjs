@@ -65,6 +65,37 @@ test('uncertain acknowledgement is reconciled read-only from its exact persisted
  assert.doesNotMatch(JSON.stringify(f.state),/private provider token/);
 });
 
+test('a journal at 32 receipts blocks a new report without dispatching or evicting evidence',async()=>{
+ const f=acknowledgementFixture();
+ f.state.receipts=Array.from({length:31},(_,i)=>({report_id:'fbr_'+i.toString(16).padStart(64,'0'),operation_id:'previous-seen-'+i,expected_revision:1,state:'seen',native_delivery_verified:false,fixed:false}));
+ // The last available slot accepts a valid acknowledgement before the limit is reached.
+ assert.equal(await f.handler.consume(f.event),true);assert.equal(f.state.receipts.length,32);
+ assert.deepEqual(f.calls.map(x=>x.name),['relay_runner_feedback_status','relay_runner_feedback_ack']);
+ assert.equal(f.state.pending,null);assert.equal(f.state.receipts.at(-1).report_id,f.request.report_id);
+ // Publish a distinct, otherwise valid report so duplicate suppression cannot satisfy the test.
+ Object.assign(f.report,{report_id:'fbr_'+'c'.repeat(64),revision:1,receipts:[]});
+ f.page.feedback.events=[structuredClone(f.report)];
+ f.request.report_id=f.report.report_id;f.event.item.text=JSON.stringify(f.request);
+ const before=structuredClone({state:f.state,calls:f.calls,saved:f.saved});
+ assert.equal(await f.handler.consume(f.event),false);
+ assert.deepEqual({state:f.state,calls:f.calls,saved:f.saved},before,'full journal must not send, persist, replace or evict receipts');
+});
+
+test('an uncertain pending acknowledgement blocks a distinct valid report without replacing intent',async()=>{
+ const f=acknowledgementFixture();f.setFailWrite();
+ assert.equal(await f.handler.consume(f.event),false);
+ assert.deepEqual(f.calls.map(x=>x.name),['relay_runner_feedback_status','relay_runner_feedback_ack']);
+ assert.equal(f.state.pending.report_id,f.request.report_id);assert.equal(f.state.receipts.length,0);
+ assert.deepEqual(f.saved.at(-1).pending,f.state.pending,'uncertain write retains its durable intent');
+ Object.assign(f.report,{report_id:'fbr_'+'c'.repeat(64),revision:1,receipts:[]});
+ f.page.feedback.events=[structuredClone(f.report)];
+ f.request.report_id=f.report.report_id;f.event.item.text=JSON.stringify(f.request);
+ assert.notEqual(f.request.report_id,f.state.pending.report_id);
+ const before=structuredClone({state:f.state,calls:f.calls,saved:f.saved});
+ assert.equal(await f.handler.consume(f.event),false);
+ assert.deepEqual({state:f.state,calls:f.calls,saved:f.saved},before,'another report must not dispatch or overwrite the unresolved operation');
+});
+
 test('unconfirmed receipt stays pending and a failed durable save never dispatches an acknowledgement',async()=>{
  const f=acknowledgementFixture();f.setFailWrite();await f.handler.consume(f.event);f.report.receipts[0].represented_owner='other';await f.handler.reconcile();assert.ok(f.state.pending);assert.equal(f.state.receipts.length,0);
  const g=acknowledgementFixture();g.setFailSave();assert.equal(await g.handler.consume(g.event),false);assert.deepEqual(g.calls.map(x=>x.name),['relay_runner_feedback_status']);assert.ok(g.state.pending);
