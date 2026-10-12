@@ -7,7 +7,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { createInterface } from 'node:readline';
 import { callSkills } from '../src/skills-service.js';
-import { createExecutionInbox } from './relay-executor-inbox.mjs';
+import { createExecutionInbox, createFeedbackAcknowledgements } from './relay-executor-inbox.mjs';
 import { captureSourceBundle, verifyRemoteSourceCheckpoint, recoverSourceCheckpoint, assertSourceCheckpointRuntime } from './relay-source-checkpoint.mjs';
 
 export function codexArguments({workspace,session_id}) {
@@ -136,6 +136,12 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     }
     const inbox=createExecutionInbox({directory:stateDir,rpc,project:config.project,assignment:config.assignment,clock});
     journal.inbox=await inbox.refresh();await save();
+    let feedback=null;
+    if(config.feedback_acknowledgements===true){
+      journal.feedback_acknowledgements ||= {receipts:[],pending:null};
+      feedback=createFeedbackAcknowledgements({rpc,config,jobId:job.id,snapshot:inbox.snapshot,getHead:()=>git(['rev-parse','HEAD']),state:journal.feedback_acknowledgements,persist:save});
+      await feedback.reconcile();context.feedback_acknowledgement=feedback.instruction;
+    }
     const selection=await callSkills({action:'resolve',project:config.project,capabilities,intent_tags:config.skill_tags||['engineering'],max_skills:5,max_context:4096});
     const skills=[];for(const item of selection.skills||selection.selected||[]) {
       const read=await callSkills({action:'read',id:item.id,project:config.project,capabilities,max_context:4096});skills.push(...read.bundles);
@@ -155,7 +161,7 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     journal.pid=child.pid;journal.started_at=clock();await save();
     const exit=new Promise(resolve=>{child.once('error',error=>resolve({code:null,error:error.message}));child.once('exit',(code,signal)=>resolve({code,signal}));});
     const lines=createInterface({input:child.stdout});
-    const consume=(async()=>{for await(const line of lines){await transcript.write(line+'\n');try{const event=JSON.parse(line);if(event.type==='thread.started'&&typeof event.thread_id==='string'){session=event.thread_id;journal.session_id=session;await save();}if(event.type==='turn.completed')turnCompleted=true;}catch{parseFailed=true;}}})();
+    const consume=(async()=>{for await(const line of lines){await transcript.write(line+'\n');try{const event=JSON.parse(line);if(event.type==='thread.started'&&typeof event.thread_id==='string'){session=event.thread_id;journal.session_id=session;await save();}if(event.type==='turn.completed')turnCompleted=true;if(feedback)await feedback.consume(event);}catch{parseFailed=true;}}})();
     child.stderr.on('data',()=>{}); // provider stderr can contain credentials; final exit is still recorded.
     try{job=(await call('start',{job_id:job.id,expected_revision:job.revision,executor_id:config.executor_id,lease_token:journal.lease_token,process:{pid:child.pid,host:os.hostname(),version,adapter:'codex-cli'}})).job;}
     catch(error){stop();await exit;throw error;}

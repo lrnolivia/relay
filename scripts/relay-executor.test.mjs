@@ -181,7 +181,7 @@ for(const platform of ['win32']) test('executor rejects source protection on '+p
   }finally{await fs.rm(root,{recursive:true,force:true});}
 });
 
-for (const source_checkpoints of [false,true]) test((source_checkpoints?'source-protected ':'legacy ')+'actual subprocess lifecycle persists broker start, session, exit and exact receipt without claiming objective completion',async()=>{
+for (const [source_checkpoints,ackMessage] of [[false,false],[true,false],[true,true]]) test((source_checkpoints?'source-protected ':'legacy ')+(ackMessage?'explicit seen ':'')+'actual subprocess lifecycle persists broker start, session, exit and exact receipt without claiming objective completion',async()=>{
   const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-executor-fixture-')),workspace=path.join(root,'checkout'),stateDir=path.join(root,'receipts');
   await fs.mkdir(workspace);const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8'}).trim();
   try {
@@ -190,10 +190,18 @@ for (const source_checkpoints of [false,true]) test((source_checkpoints?'source-
     const bucket={get:async k=>{const v=values.get(k);return v?{etag:v.etag,json:async()=>JSON.parse(v.text)}:null;},put:async(k,text,{onlyIf})=>{const old=values.get(k);if(onlyIf instanceof Headers?Boolean(old):onlyIf.etagMatches!==old?.etag)return null;const tag=String(++etag);values.set(k,{text,etag:tag});return {etag:tag};}};
     const target={state:'active',owner:'fixture',branch:'relay/fixture',repository:'lrnolivia/fixture',lease_until:'2099-01-01T00:00:00Z',head_sha:git(['rev-parse','HEAD']),goal:'Synthetic process proof',acceptance:['Process receipts verified'],paths:['README.md']};
     await operateJob(bucket,{action:'submit',project:'fixture',assignment:'fixture',expected_owner:'fixture',expected_branch:target.branch,expected_head_sha:target.head_sha,prompt:'Synthetic test only',required_capabilities:['codex-cli',...(source_checkpoints?['source-byte-checkpoints-v1']:[])],operation_id:'submit'},target);
-    let reads=0;
-    const rpc=async(name,args)=>name==='relay_context'?{ok:true,entries:[{content:++reads>2?'new in-run context':'startup context'}],revision:reads}:name==='relay_runner_feedback_peek'?{ok:true,feedback:{available:true,events:[],conflicts:[],truncated:false}}:name==='relay_runner_resume'?{ok:true,synthetic:true}:operateJob(bucket,args,target);
-    const result=await runExecution({workspace,stateDir,config:{project:'fixture',assignment:'fixture',owner:'fixture',branch:'relay/fixture',executor_id:'fixture',source_checkpoints},rpc,pollMs:20,getVersion:()=> 'synthetic adapter test',
-      spawnProcess:(_cmd,_args,options)=>spawn(process.execPath,['-e',`let prompt='';process.stdin.on('data',chunk=>prompt+=chunk);process.stdin.on('end',()=>{const data=JSON.parse(prompt.split('\\n\\n')[1]);console.log(JSON.stringify({type:'thread.started',thread_id:'synthetic-session'}));setTimeout(()=>{const inbox=JSON.parse(require('fs').readFileSync(data.context.inbox.path,'utf8'));console.log(JSON.stringify({type:'synthetic.inbox-read',content:inbox.context.entries[0].content,skillDirectory:data.context.installed_skills?.directory}));console.log(JSON.stringify({type:'turn.completed'}));},100);});`],options)});
+    let reads=0,acks=0;
+    const feedback={report_id:'fbr_'+'a'.repeat(64),revision:1,original_text:'Synthetic feedback only',identity:{project:'fixture',assignment:'fixture',owner:'fixture',branch:target.branch,commit_sha:target.head_sha},receipts:[],status:{applicability:{routing_matches:true}}};
+    const rpc=async(name,args)=>{
+      if(name==='relay_runner_feedback_status')return {ok:true,feedback:structuredClone(feedback)};
+      if(name==='relay_runner_feedback_ack'){
+        const saved=JSON.parse(await fs.readFile(path.join(stateDir,'receipt.json'),'utf8'));assert.deepEqual(saved.feedback_acknowledgements.pending,args);acks++;
+        feedback.receipts.push({kind:'seen',operation_id:args.operation_id,expected_revision:args.expected_revision,represented_owner:'fixture',provenance:'authenticated-caller-reported'});feedback.revision++;return {ok:true,feedback:structuredClone(feedback)};
+      }
+      return name==='relay_context'?{ok:true,entries:[{content:++reads>2?'new in-run context':'startup context'}],revision:reads}:name==='relay_runner_feedback_peek'?{ok:true,feedback:{available:true,events:[structuredClone(feedback)],conflicts:[],truncated:false}}:name==='relay_runner_resume'?{ok:true,synthetic:true}:operateJob(bucket,args,target);
+    };
+    const result=await runExecution({workspace,stateDir,config:{project:'fixture',assignment:'fixture',owner:'fixture',branch:'relay/fixture',executor_id:'fixture',source_checkpoints,feedback_acknowledgements:source_checkpoints},rpc,pollMs:20,getVersion:()=> 'synthetic adapter test',
+      spawnProcess:(_cmd,_args,options)=>spawn(process.execPath,['-e',`let prompt='';process.stdin.on('data',chunk=>prompt+=chunk);process.stdin.on('end',()=>{const data=JSON.parse(prompt.split('\\n\\n')[1]);console.log(JSON.stringify({type:'thread.started',thread_id:'synthetic-session'}));setTimeout(()=>{const inbox=JSON.parse(require('fs').readFileSync(data.context.inbox.path,'utf8'));console.log(JSON.stringify({type:'synthetic.inbox-read',content:inbox.context.entries[0].content,skillDirectory:data.context.installed_skills?.directory}));${ackMessage?`const report=inbox.feedback.events[0];console.log(JSON.stringify({type:'item.completed',item:{type:'agent_message',text:JSON.stringify({type:'relay_feedback_seen',nonce:data.context.feedback_acknowledgement.nonce,report_id:report.report_id,expected_revision:report.revision,text_sha256:require('crypto').createHash('sha256').update(report.original_text).digest('hex')})}}));`:''}console.log(JSON.stringify({type:'turn.completed'}));},100);});`],options)});
     assert.equal(result.state,'succeeded');assert.equal(result.objective_completed,false);
     const journal=JSON.parse(await fs.readFile(result.receipt,'utf8'));
     assert.equal(journal.pid,null);assert.equal(journal.session_id,'synthetic-session');assert.equal(journal.job.result.exit_code,0);assert.ok(journal.job.events.some(event=>event.action==='start'));
@@ -201,6 +209,8 @@ for (const source_checkpoints of [false,true]) test((source_checkpoints?'source-
     assert.equal((await fs.stat(result.receipt)).mode&0o777,0o600);
     assert.match(await fs.readFile(path.join(stateDir,'events-1.jsonl'),'utf8'),/new in-run context/);
     assert.equal(journal.inbox.consumption_verified,false);
+    // Reading alone never acknowledges. The explicit process request does.
+    assert.equal(acks,ackMessage?1:0);if(source_checkpoints)assert.equal(journal.feedback_acknowledgements.receipts.length,ackMessage?1:0);
     assert.equal(journal.skills.installed,true);assert.ok(journal.skills.directory.startsWith(await fs.realpath(stateDir)+path.sep));
     const events=(await fs.readFile(path.join(stateDir,'events-1.jsonl'),'utf8')).trim().split('\n').map(line=>JSON.parse(line));
     assert.equal(events.find(event=>event.type==='synthetic.inbox-read').skillDirectory,journal.skills.directory);
