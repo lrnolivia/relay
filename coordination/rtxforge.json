@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-13T03:46:19.979Z",
+  "updated_at": "2026-10-13T05:56:31.554Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -915,7 +915,7 @@
       ],
       "goal": "Start the Windows port: a native WinUI 3 (Windows App SDK 2.x, C#) desktop shell that mirrors the Linux libadwaita desktop build almost 1:1 in layout, flow and copy, using WinUI 3 components and Fluent theme tokens. Game Mode (couch_shell) stays Linux-only. MFG keeps the current native Streamline DLSS-G Ada route. Lauren authorized this in chat 2026-10-13 ('lets go!').",
       "acceptance": "windows/ contains a buildable WinUI 3 solution whose window structure (header, library list/grid, game detail with NR Strength 0.0-2.0, Sharpening 0.0-1.0, MFG Off/2x-6x controls, settings) maps 1:1 to the Linux desktop GTK screens, with a documented GTK-widget->WinUI-control and libadwaita-token->Fluent-token map. A windows-build workflow builds it on windows-latest. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002).",
-      "next_action": "Lauren hands-on QA round 1 (2026-10-13) addressed in local commit ba63a21 on top of aaee1c4 (preflight passed, 13 paths): Linux ColumnView list, exact-ratio poster/capsule grid, Steam preview artwork, full-bleed game hero with poster/badge, per-game artwork accents (ArtAccent port of artwork_accent/ui_colors), Linux review/progress/done modal, opaque toasts, select-mode checks, browser-sized window. Verified locally: Debug build 0 errors, screenshots of posters/list/select/game page; Release publish installed to %LOCALAPPDATA%\\Programs\\rtxForge and running. Waiting for Lauren to push ba63a21 via GitHub Desktop; then confirm Build rtxForge Windows on PR #17 and continue QA feedback. Lauren said 'you really killed this' (positive, not an acceptance verdict).",
+      "next_action": "Local commits through addcd83 (unpushed; user pushes via GitHub Desktop). Windows app now runs the shared engine via windows/engine-host (Windows adapters only; engine/ and scripts/ untouched, they belong to rtxforge-shared-package-ui-20261002). Verified: real scan, hardware, Steam grid artwork, read-only install/uninstall review. Next: user-confirmed first real install on one game; bundle embeddable Python + engine files in the publish/CI artifact; then Game Mode port.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -939,8 +939,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-13T02:14:54.751Z",
-      "lease_until": "2026-10-13T14:14:54.751Z"
+      "updated_at": "2026-10-13T05:56:31.554Z",
+      "lease_until": "2026-10-13T17:56:31.554Z"
     },
     {
       "id": "rtxforge-gaming-mode-design-preview-20261013",
