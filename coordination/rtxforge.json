@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-13T01:04:33.023Z",
+  "updated_at": "2026-10-13T01:23:54.114Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -897,7 +897,7 @@
       ],
       "goal": "Start the Windows port: a native WinUI 3 (Windows App SDK 2.x, C#) desktop shell that mirrors the Linux libadwaita desktop build almost 1:1 in layout, flow and copy, using WinUI 3 components and Fluent theme tokens. Game Mode (couch_shell) stays Linux-only. MFG keeps the current native Streamline DLSS-G Ada route. Lauren authorized this in chat 2026-10-13 ('lets go!').",
       "acceptance": "windows/ contains a buildable WinUI 3 solution whose window structure (header, library list/grid, game detail with NR Strength 0.0-2.0, Sharpening 0.0-1.0, MFG Off/2x-6x controls, settings) maps 1:1 to the Linux desktop GTK screens, with a documented GTK-widget->WinUI-control and libadwaita-token->Fluent-token map. A windows-build workflow builds it on windows-latest. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002).",
-      "next_action": "Verify claim readback, create branch from live main, inventory the Linux desktop GTK screens/tokens read-only, then scaffold windows/ WinUI 3 project and CI build.",
+      "next_action": "Draft PR #17 open at head 0d9f363f8ddd294797cff1a3eb1078c48737ab7b (21 files, windows/ + windows-build.yml only; published via relay.SOURCE because local git push lacks credentials; local worktree C:\\Users\\lrnol\\Repos\\rtxForge\\rtxForge-windows-port synced to that head). First compile evidence is the 'Build rtxForge Windows' run (WinUI 3 x64/ARM64). Next: read that run; fix compile errors on this same branch (max 2 correction cycles per failure class); once green, hand the x64 preview artifact to Lauren for human side-by-side visual QA against the Linux desktop. Not yet verified: build, runtime, visuals.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -921,8 +921,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-13T00:57:55.228Z",
-      "lease_until": "2026-10-13T12:57:55.228Z"
+      "updated_at": "2026-10-13T01:23:54.114Z",
+      "lease_until": "2026-10-13T13:23:54.114Z"
     },
     {
       "id": "rtxforge-gaming-mode-design-preview-20261013",
