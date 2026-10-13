@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-13T01:03:46.382Z",
+  "updated_at": "2026-10-13T01:04:33.023Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -191,7 +191,7 @@
       "supporting_teams": [],
       "primary_staff": "valentina",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-13T01:03:46.382Z",
       "objective_history": {
         "baseline": {
@@ -923,6 +923,45 @@
       },
       "updated_at": "2026-10-13T00:57:55.228Z",
       "lease_until": "2026-10-13T12:57:55.228Z"
+    },
+    {
+      "id": "rtxforge-gaming-mode-design-preview-20261013",
+      "owner": "codex-gaming-mode-design-20261013",
+      "branch": "rtxforge/gaming-mode-design-preview-20261013",
+      "paths": [
+        "docs/design/gaming-mode-preview/"
+      ],
+      "resources": [
+        "rtxforge-gaming-mode-magicpath-preview"
+      ],
+      "goal": "Build Lauren's reviewable controller-first rtxForge Gaming Mode utility preview, cohesive with desktop and native in Gamescope; never a launcher within a launcher.",
+      "acceptance": "Keep product source read-only. Preserve desktop identity/terminology/functions; adapt density, focus, D-pad/back, hints, dialogs, scrolling and loading/error/empty states. Interactive MagicPath prototype and native test plan; review before replacing shipped GTK. No merge/deploy/PC install/paid purchase/unrelated work.",
+      "next_action": "Inspect exact main GTK couch shell and visuals in isolated task checkout, then create preview and share with parent for review.",
+      "category": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "base_sha": "0778d5e577e95a6d65bdd68ffcf860ea90cff635",
+      "state": "active",
+      "created_at": "2026-10-13T01:04:33.023Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Create a controller-first Gaming Mode design prototype in MagicPath for Lauren's review, grounded in current Linux couch_shell functions and identity. Read-only product source; no shipped GTK replacement.",
+          "acceptance": "Interactive reviewable prototype covers library, details/settings, controller focus/back navigation, dialogs, scrolling, loading/error/empty states. Preserve existing work; distinguish web prototype from verified GTK behavior; focused Linux Gamescope/controller acceptance plan. No merge, deployment, paid purchase, PC install or unrelated work.",
+          "at": "2026-10-13T01:03:46.382Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-gaming-mode-design-preview-20261013:acceptance:0",
+            "text": "Interactive reviewable prototype covers library, details/settings, controller focus/back navigation, dialogs, scrolling, loading/error/empty states. Preserve existing work; distinguish web prototype from verified GTK behavior; focused Linux Gamescope/controller acceptance plan. No merge, deployment, paid purchase, PC install or unrelated work.",
+            "at": "2026-10-13T01:03:46.382Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-13T01:04:33.023Z",
+      "lease_until": "2026-10-13T13:04:33.023Z"
     }
   ]
 }
