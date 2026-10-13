@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-13T02:41:39.642Z",
+  "updated_at": "2026-10-13T02:41:47.534Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -15168,14 +15168,14 @@
       ],
       "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched. Add Lauren-approved AI Cleanup: a bounded project-scoped scan/report and reviewable cleanup-patch capability.",
       "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
-      "next_action": "Implement and test only unreserved AI Cleanup modules/CLI/tests/docs in this checkout. Produce local review artifacts; do not resume or take over held registration/source handlers.",
+      "next_action": "Implement admitted AI Cleanup module and local executable CLI; no source registration changes, push, merge, deploy or historical cleanup.",
       "category": "maintenance",
       "primary_team": "runner",
       "supporting_teams": [],
       "primary_staff": "adrian",
       "supporting_staff": [],
       "base_sha": "c96e4a79b79a55d5f0097d0b85e749b249865c17",
-      "state": "held",
+      "state": "active",
       "created_at": "2026-10-13T01:57:55.446Z",
       "objective_history": {
         "baseline": {
@@ -15198,8 +15198,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-13T02:41:39.642Z",
-      "lease_until": "2026-10-13T14:41:39.642Z",
+      "updated_at": "2026-10-13T02:41:47.534Z",
+      "lease_until": "2026-10-13T14:41:47.534Z",
       "amendment_count": 1,
       "amendments": [
         {
