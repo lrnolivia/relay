@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-13T10:30:58.866Z",
+  "updated_at": "2026-10-13T18:10:39.936Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1042,7 +1042,7 @@
       ],
       "goal": "Native WinUI 3 (Windows App SDK 2.x, C#) rtxForge for Windows: the desktop shell mirroring the Linux libadwaita build, the real Windows engine bridge (shared Python engine via windows/engine-host with a bundled private Python), and Windows Game Mode built natively from Lauren's approved Game Mode design (MagicPath radiant-rock-8795, approved revision 460589410484883456, audited functional revision 460594005034536960) with draft PR #18 couch_shell as the behavior reference. MFG keeps the native Streamline DLSS-G Ada route. Lauren authorized the Windows port 2026-10-13 ('lets go!') and native Game Mode on Linux GTK and Windows WinUI 3 (WINDOWS-CLAUDE-GAME-MODE-HANDOFF, delivered in chat 2026-10-13).",
       "acceptance": "windows/ builds on windows-2025 CI; desktop screens map to Linux with the documented control/token map; the app runs the shared engine unchanged via windows/engine-host with Windows adapters and a bundled Python (no user install); every write is review-then-execute. Windows Game Mode: full-screen native WinUI, controller (Windows.Gaming.Input) and keyboard navigation, Library/Presets/Settings, Details sections, operations flow, Night/Light/Dark, 720p/1080p/4K scaling, per the handoff's WinUI port contract. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002). No merge, release or live Steam changes without Lauren's approval.",
-      "next_action": "Local commits through d1e55e3 (unpushed; Lauren pushes via GitHub Desktop). Windows Game Mode built (Library/Presets/Settings incl. Controller+Keyboard guides, Details with hero actions, Overview store metadata, Notes last, operations flow). Installer added: windows/installer/rtxForge.iss + windows/build/Build-Installer.ps1 (pinned Inno Setup 7.1.0); x64 and ARM64 setup .exe built locally; x64 silent install, bundled-engine scan, and uninstall verified. CI builds both installers and smoke-tests install/uninstall; draft release only on manual draft_release dispatch, no publish without Lauren. Next: Lauren pushes, verify windows-build CI; first real install on one game; RE Engine/provider channels stay with rtxforge-crossos-nr-dlss-unlocked-20261013.",
+      "next_action": "Pushed via relay.SOURCE (Lauren asked me to push): branch rtxforge/windows-winui-port head 3a84a6796016b5eb2ef7d1f4810f7b2d550b2f10, tree verified identical to local; draft PR #17 description updated. App icon now generated at build (Make-Icon.ps1) so the branch carries no binaries. CI signing wired: Azure Artifact Signing via OIDC, active only when AZURE_* repo variables exist, never on PRs. Lauren must create the Azure Artifact Signing account (identity validation + payment are hers). Next: confirm windows-build CI green on 3a84a67 (x64+ARM64 installers, install round-trip); first real install on one game; no release/merge without Lauren.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1072,8 +1072,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-13T10:30:58.866Z",
-      "lease_until": "2026-10-13T22:30:58.866Z",
+      "updated_at": "2026-10-13T18:10:39.936Z",
+      "lease_until": "2026-10-14T06:10:39.936Z",
       "amendment_count": 1,
       "amendments": [
         {
