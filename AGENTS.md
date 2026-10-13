@@ -12,3 +12,5 @@ If Runner is temporarily unreachable, use conservative fallback behavior: refres
 
 
 Canonical source, coordination authority, runtime and MCP binding are `lrnolivia/relay`, project `relay`, and `https://relay.loew.fi/mcp`. Old repository/project names are recovery references only.
+
+For prospective project commit attribution (Codex, Claude and Relay), read `docs/relay/COMMIT_ATTRIBUTION_20261013.md` and use `scripts/project-attribution.mjs`. Preserve legitimate human coauthors.

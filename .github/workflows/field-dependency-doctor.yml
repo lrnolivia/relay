@@ -172,11 +172,12 @@ jobs:
             echo "No state change."
             exit 0
           fi
-          git config user.name "relay"
-          git config user.email "actions@users.noreply.github.com"
+          git config --local user.name "Lauren Olivia"
+          git config --local user.email "lrnoliv@gmail.com"
           git add state/field.json
           git commit -m "doctor: update field dependency state"
           git pull --rebase origin main
+          node scripts/project-attribution.mjs check HEAD
           git push
 
       - name: Summary

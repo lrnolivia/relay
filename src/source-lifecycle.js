@@ -1,4 +1,5 @@
-import { githubApiRequest, githubGraphqlRequest } from "./source.js";
+import { githubApiRequest, githubGraphqlRequest, sourceAuthStatus } from "./source.js";
+import { assertExistingGitHubIdentity, assertGitHubCommit, PROJECT_AUTHOR, stripToolCoauthors, verifyAttributedCommit } from './commit-attribution.js';
 
 const SHA = /^[a-f0-9]{40}$/i;
 const OWNER = "lrnolivia";
@@ -171,9 +172,40 @@ export async function sourcePullRequestAction(env, args, request = githubApiRequ
 
   const method = args.merge_method || "squash";
   if (!["merge", "squash", "rebase"].includes(method)) throw new Error("Invalid merge method");
+  if (method === 'rebase') throw new Error('Rebase merge attribution route is unverified; use a reviewed merge or squash route');
+  if (sourceAuthStatus(env).auth_mode !== 'legacy_token') throw new Error('App-authenticated merge is blocked: final Lauren attribution requires an existing verified human connection; no automatic identity fallback');
+  const profile = await request(env, '/user', {requireAuthenticated: true});
+  const witness = await request(env, `/repos/${PROJECT_AUTHOR.witness_repo}/commits/${PROJECT_AUTHOR.witness_sha}`, {requireAuthenticated: true});
+  assertExistingGitHubIdentity(profile, witness);
+  if (pr?.user?.login !== PROJECT_AUTHOR.login || Number(pr?.user?.id) !== PROJECT_AUTHOR.id) throw new Error('Final-author route requires a pull request created through Lauren\'s existing human connection; App-created pull requests cannot use this merge route');
+  assertGitHubCommit(await request(env, `${base}/commits/${expected}`, {requireAuthenticated: true}), expected);
   const checks = await green(env, base, expected, request);
+  const sourceCommits = await pages(env, request, `${base}/pulls/${number}/commits`);
+  if (sourceCommits.truncated || !Number.isSafeInteger(pr.commits) || pr.commits < 1 || sourceCommits.items.length !== pr.commits || sourceCommits.items.at(-1)?.sha !== expected) throw new Error('Complete exact-head pull request commit inventory required before merge');
+  const humanTrailers = new Set();
+  const messages = [];
+  for (const item of sourceCommits.items) {
+    const preservedMessage = stripToolCoauthors(item?.commit?.message);
+    messages.push(preservedMessage.trimEnd());
+    for (const line of preservedMessage.split('\n')) {
+      if (/^Co-authored-by\s*:/i.test(line)) humanTrailers.add(line);
+    }
+    const identity = item?.commit?.author;
+    if (!identity?.name || !identity?.email || /[<>\r\n\0]/.test(identity.name) || /[<>\s\0]/.test(identity.email)) throw new Error('Source author identity unavailable for preserving human coauthors');
+    const credit = `Co-authored-by: ${identity.name} <${identity.email}>`;
+    if (identity.name !== PROJECT_AUTHOR.name || identity.email !== PROJECT_AUTHOR.email) {
+      if (stripToolCoauthors(credit).trim() && item?.author?.type !== 'Bot') {
+        if (item?.author?.type !== 'User') throw new Error('Unlinked source author requires review before preserving human authorship');
+        humanTrailers.add(credit);
+      }
+    }
+  }
+  if (typeof pr.title !== 'string' || !pr.title.trim() || pr.title.length > 256 || /[\r\n\0]/.test(pr.title)) throw new Error('Exact pull request title unavailable for merge');
+  const implicitCredits = [...humanTrailers].filter(line => !messages.some(message => message.split('\n').includes(line)));
+  const commitMessage = stripToolCoauthors(`Merge pull request #${number}\n\n${messages.join('\n\n')}\n\n${implicitCredits.join('\n')}`);
+  if (commitMessage.length > 200000) throw new Error('Complete preserved merge message exceeds the bounded request limit');
   let result = null, writeError = null;
-  try { result = await request(env, `${base}/pulls/${number}/merge`, { method: "PUT", body: { sha: expected, merge_method: method } }); }
+  try { result = await request(env, `${base}/pulls/${number}/merge`, { method: "PUT", body: { sha: expected, merge_method: method, commit_title: pr.title, commit_message: commitMessage } }); }
   catch (error) { writeError = error; }
   const got = await request(env, `${base}/pulls/${number}`);
   if (String(got?.head?.sha || "").toLowerCase() !== expected || !got?.merged_at) {
@@ -181,9 +213,12 @@ export async function sourcePullRequestAction(env, args, request = githubApiRequ
     if (!result?.merged) throw new Error(result?.message || "GitHub did not merge the pull request");
     throw new Error("Merge outcome cannot be verified on the expected head");
   }
+  const finalSha = commit(got?.merge_commit_sha, 'exact final merged commit SHA');
+  if (result?.sha && result.sha !== finalSha) throw new Error('Merge receipt differs from the exact final commit; reconcile before retrying');
+  const attribution = await verifyAttributedCommit((path, options) => request(env, path, options), base, finalSha);
   return {
     ok: true, repository: `${o}/${repo}`, number, action: args.action, head_sha: expected,
-    merge_method: method, checks, merge: result, reconciled_after_transport_error: Boolean(writeError), pull_request: got
+    merge_method: method, checks, merge: result, final_commit_sha: finalSha, attribution, reconciled_after_transport_error: Boolean(writeError), pull_request: got
   };
 }
 

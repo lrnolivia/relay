@@ -1,4 +1,5 @@
 import test from "node:test";
+import {PROJECT_AUTHOR} from "./commit-attribution.js";
 import assert from "node:assert/strict";
 import { createSourceBranch, sourceInventory, sourcePullRequestAction, workflowInventory } from "./source-lifecycle.js";
 
@@ -79,7 +80,7 @@ test("ready-for-review revalidates exact head after GraphQL mutation", async () 
   assert.equal(got.pull_request.draft, false);
 });
 
-test("merge rejects a non-green exact head without calling merge", async () => {
+test("App merge is refused before any provider merge mutation", async () => {
   const head = "2".repeat(40);
   let merged = false;
   const request = async (_env, path, options = {}) => {
@@ -90,7 +91,7 @@ test("merge rejects a non-green exact head without calling merge", async () => {
   };
   await assert.rejects(
     sourcePullRequestAction({}, { repo: "relay", number: 9, action: "merge", expected_head_sha: head }, request),
-    /not green/
+    /App-authenticated merge/
   );
   assert.equal(merged, false);
 });
@@ -99,9 +100,12 @@ test("merge binds provider mutation to the expected green SHA", async () => {
   const head = "3".repeat(40);
   let reads = 0, mergeBody;
   const request = async (_env, path, options = {}) => {
+    if (path === "/user") return PROJECT_AUTHOR;
+    if (path.includes("/commits/")) { const sha=path.split("/").at(-1); return {sha,author:PROJECT_AUTHOR,committer:PROJECT_AUTHOR,commit:{author:PROJECT_AUTHOR,committer:PROJECT_AUTHOR,message:"clean"}}; }
+    if (path.includes("/pulls/10/commits")) return [{sha:head,commit:{message:"human work",author:PROJECT_AUTHOR}}];
     if (path.endsWith("/pulls/10")) {
       reads += 1;
-      return { state: reads === 1 ? "open" : "closed", draft: false, merged_at: reads === 1 ? null : "2026-09-30T00:00:00Z", head: { sha: head } };
+      return { state: reads === 1 ? "open" : "closed", commits:1,draft: false, merged_at: reads === 1 ? null : "2026-09-30T00:00:00Z", user:PROJECT_AUTHOR,title:"Reviewed change",merge_commit_sha:"4".repeat(40),head: { sha: head } };
     }
     if (path.includes("/check-runs")) return { total_count: 1, check_runs: [{ name: "CI", status: "completed", conclusion: "success" }] };
     if (path.includes("/statuses/")) return [];
@@ -111,7 +115,7 @@ test("merge binds provider mutation to the expected green SHA", async () => {
     }
     throw new Error("unexpected " + path);
   };
-  const got = await sourcePullRequestAction({}, { repo: "relay", number: 10, action: "merge", expected_head_sha: head, merge_method: "squash" }, request);
+  const got = await sourcePullRequestAction({RELAY_GITHUB_TOKEN:"synthetic-human-token"}, { repo: "relay", number: 10, action: "merge", expected_head_sha: head, merge_method: "squash" }, request);
   assert.equal(mergeBody.sha, head);
   assert.equal(mergeBody.merge_method, "squash");
   assert.equal(got.merge.merged, true);

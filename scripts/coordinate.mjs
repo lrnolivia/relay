@@ -4,9 +4,11 @@ import fs from 'node:fs/promises';
 import { callRunnerControl } from '../src/runner-control.js';
 import { execFileSync } from 'node:child_process';
 import { transition, evaluate, occupying, retired } from '../src/coordination.mjs';
+import { attributedCommitBody, verifyAttributedCommit } from '../src/commit-attribution.js';
+import { localWorkPreflight } from '../src/runner-control-core.js';
 
 const [action, project, inputFile] = process.argv.slice(2);
-if (!['queue', 'claim', 'rescope', 'heartbeat', 'hold', 'handoff', 'complete', 'retire', 'reconcile', 'audit', 'cleanup', 'preflight', 'pr-gate'].includes(action) || !/^[a-z0-9-]+$/.test(project ?? '')) throw new Error('Usage: node scripts/coordinate.mjs <action> <project> [request.json]');
+if (!['queue', 'claim', 'rescope', 'heartbeat', 'hold', 'handoff', 'complete', 'retire', 'reconcile', 'audit', 'cleanup', 'local-preflight', 'preflight', 'pr-gate'].includes(action) || !/^[a-z0-9-]+$/.test(project ?? '')) throw new Error('Usage: node scripts/coordinate.mjs <action> <project> [request.json]');
 // gh handles macOS keychain auth locally and GH_TOKEN in Actions; no credential output.
 function api(endpoint, method = 'GET', body) {
   const args = ['api', endpoint, '--method', method];
@@ -46,11 +48,14 @@ const policy = { ...registration.coordination, repository: registration.reposito
   branch_prefixes: registration.implementation.branch_prefixes,
   excluded_branches: registration.implementation.excluded_branches };
 if (!Number.isInteger(policy.max_active_branches) || !policy.lease_hours) throw new Error('Project has no enabled coordination policy.');
-function save(snapshot, value) {
-  return api(`repos/${control}/contents/${recordPath}`, 'PUT', {
+async function save(snapshot, value) {
+  const body = attributedCommitBody({
     branch: 'main', sha: snapshot.sha, message: `coordination: ${action} ${project}`,
     content: Buffer.from(`${JSON.stringify(value, null, 2)}\n`).toString('base64')
   });
+  const saved = api(`repos/${control}/contents/${recordPath}`, 'PUT', body);
+  await verifyAttributedCommit(async (path, options) => api(path.replace(/^\//, ''), options?.method || 'GET', options?.body), `/repos/${control}`, saved?.commit?.sha, body);
+  return saved;
 }
 function mergedProof(claim, number) {
   const pr = api(`repos/${policy.repository}/pulls/${number}`);
@@ -58,7 +63,12 @@ function mergedProof(claim, number) {
   return pr;
 }
 
-if (['retire', 'reconcile', 'handoff', 'complete'].includes(action)) {
+if (action === 'local-preflight') {
+  if (!inputFile) throw new Error('Local preparation requires a request file with id, owner and all changed paths');
+  const request = JSON.parse(await fs.readFile(inputFile, 'utf8'));
+  const receipt = await localWorkPreflight({...request,project}, process.env, async (path, options) => api(path.replace(/^\//,''),options?.method || 'GET',options?.body));
+  console.log(JSON.stringify(receipt,null,2));
+} else if (['retire', 'reconcile', 'handoff', 'complete'].includes(action)) {
   if (!inputFile) throw new Error('A JSON lifecycle request file is required.');
   const { expected_record_sha, ...request } = JSON.parse(await fs.readFile(inputFile, 'utf8'));
   if (!/^[a-f0-9]{40}$/.test(expected_record_sha || '')) throw new Error('Lifecycle mutation requires expected_record_sha.');
@@ -88,7 +98,7 @@ if (['retire', 'reconcile', 'handoff', 'complete'].includes(action)) {
     const snapshot = read(recordPath);
     const next = transition(snapshot.value, request, policy);
     try {
-      save(snapshot, next);
+      await save(snapshot, next);
     } catch (error) {
       if (attempt === 0 && /HTTP (409|422)/.test(error.stderr?.toString() ?? '')) continue;
       throw error;
@@ -131,6 +141,7 @@ if (['retire', 'reconcile', 'handoff', 'complete'].includes(action)) {
     const claim = snapshot.value.claims.find((c) => c.id === request.id && c.owner === request.owner && occupying(c));
     if (!claim || claim.state !== 'active' || new Date(claim.lease_until) <= new Date()) throw new Error('A live active claim is required before edits or publication.');
     if (!Array.isArray(request.paths) || !request.paths.length || request.paths.some((p) => !claim.paths.some((s) => p === s || (s.endsWith('/') && p.startsWith(s))))) throw new Error('Changed paths must be supplied and fit the claim.');
+    if (!branches.some(branch => branch.name === claim.branch)) throw new Error('Publication preflight requires an existing remote task branch; local preparation uses local-preflight');
     if (findings.some((f) => f.type === 'budget' || f.assignment === claim.id || f.assignments?.includes(claim.id))) throw new Error('Coordination gate failed. Inspect audit findings before continuing.');
     report.admitted = claim.id;
   }

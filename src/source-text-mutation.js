@@ -1,4 +1,5 @@
 import { githubApiRequest } from "./source.js";
+import { attributedCommitBody, verifyAttributedCommit, assertProjectRepository } from './commit-attribution.js';
 
 const SHA=/^[a-f0-9]{40}$/i;
 const MAX_BYTES=12*1024*1024;
@@ -145,6 +146,7 @@ export async function mutateSourceText(env,args,request=githubApiRequest){
   if(!["edit","append"].includes(mode)) throw new Error("Unsupported source text mutation");
 
   const base="/repos/"+encodeURIComponent(owner)+"/"+encodeURIComponent(repo);
+  assertProjectRepository(base);
   const meta=await request(env,base);
   const defaultBranch=branch(meta?.default_branch);
   if(br===defaultBranch) throw new Error("relay.SOURCE refuses direct default-branch commits; coordination control state must be mutated through relay.RUNNER");
@@ -182,8 +184,10 @@ export async function mutateSourceText(env,args,request=githubApiRequest){
     base_tree:treeSha,tree:[{path:file,mode:entry.mode||"100644",type:"blob",sha:nextBlob}]
   }});
   const nextTree=sha(tree?.sha,"created tree SHA");
-  const commit=await request(env,base+"/git/commits",{method:"POST",body:{message:args.message,tree:nextTree,parents:[head]}});
+  const commitBody=attributedCommitBody({message:args.message,tree:nextTree,parents:[head]});
+  const commit=await request(env,base+"/git/commits",{method:"POST",body:commitBody});
   const commitSha=sha(commit?.sha,"created commit SHA");
+  await verifyAttributedCommit((path,options)=>request(env,path,options),base,commitSha,commitBody);
 
   let writeError=null;
   try{

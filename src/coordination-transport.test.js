@@ -31,14 +31,19 @@ const fail = status => { process.stderr.write('HTTP ' + status); process.exit(1)
 const blob = (value, sha) => ({ type: 'file', encoding: 'base64', sha, content: Buffer.from(typeof value === 'string' ? value : JSON.stringify(value)).toString('base64') });
 if (path.includes('projects/relay.json')) output(blob(s.registration, '${sha}'));
 else if (path.includes('src/coordination.mjs')) output(blob('', s.engine));
+else if (path.includes('/branches?')) output(s.branches || []);
+else if (path.includes('/pulls?state=open')) output([]);
 else if (path.endsWith('/pulls/9')) output(s.pr);
 else if (path.includes('git/ref/heads/relay%2Fold')) { if (s.headError) fail(s.headError); output({ object: { sha: s.head } }); }
+else if (path.includes('/commits?')) output([{sha:'${revision}'}]);
+else if (path.endsWith('/commits/'+'${revision}')) output({sha:'${revision}',author:{login:'lrnolivia',id:311277794},committer:{login:'lrnolivia',id:311277794},commit:{author:s.commitBody.author,committer:s.commitBody.committer,message:s.commitBody.message},parents:[{sha:'${sha}'}]});
+else if (path.endsWith('coordination/relay.json?ref='+'${sha}')) output(blob({},'${sha}'));
 else if (path.includes('coordination/relay.json')) {
   if (method === 'PUT') {
     const body = JSON.parse(fs.readFileSync(0, 'utf8')); s.writes++;
     if (s.conflict) { fs.writeFileSync(file, JSON.stringify(s)); fail(409); }
     if (body.sha !== s.revision) fail(409);
-    s.record = JSON.parse(Buffer.from(body.content, 'base64')); s.revision = '${revision}';
+    s.record = JSON.parse(Buffer.from(body.content, 'base64')); s.revision = '${revision}'; s.commitBody = body;
     fs.writeFileSync(file, JSON.stringify(s));
     if (s.timeout) fail(504);
     output({ commit: { sha: '${revision}' } });
@@ -66,6 +71,13 @@ test('CLI retirement shares exact CAS/readback and reconciles lost responses wit
   assert.equal(replay.status, 0, replay.stderr);
   assert.equal(JSON.parse(replay.stdout).receipt.replayed, true);
   assert.equal((await f.read()).writes, 1);
+});
+test('native local-preflight permits only local preparation and leaves publication blocked without writes',async t=>{
+  const f=await fixture(t,{record:{project:'relay',claims:[{id:'old',owner:'owner',state:'active',branch:'relay/old',paths:['src/'],resources:[],goal:'Local preparation',acceptance:'No publication',created_at:new Date(Date.now()-2*3600000).toISOString(),lease_until:new Date(Date.now()+3600000).toISOString()}],queue:[],legacy_branches:['main']}});
+  const input={expected_record_sha:undefined,disposition:undefined,operation_id:undefined,reason:undefined,evidence:undefined,expected_head_sha:undefined,paths:['src/index.js']};
+  const local=await f.run(input,'local-preflight');assert.equal(local.status,0,local.stderr);
+  const receipt=JSON.parse(local.stdout);assert.equal(receipt.local_work_admitted,'old');assert.equal(receipt.publication_admitted,false);assert.equal(receipt.admitted,undefined);assert.equal((await f.read()).writes,0);
+  const publication=await f.run(input,'preflight');assert.notEqual(publication.status,0);assert.match(publication.stderr,/existing remote task branch/);assert.equal((await f.read()).writes,0);
 });
 test('CLI rejects stale revision, forged head, policy drift and permission-denied absence', async t => {
   for (const [options, request] of [[{}, { expected_record_sha: revision }], [{ head: revision }, {}], [{ engine: revision }, {}], [{ headError: 403 }, { expected_head_sha: null }], [{}, { verified_head_sha: sha }]]) {

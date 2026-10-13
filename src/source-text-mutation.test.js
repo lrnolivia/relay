@@ -1,4 +1,5 @@
 import test from "node:test";
+import {PROJECT_AUTHOR} from "./commit-attribution.js";
 import assert from "node:assert/strict";
 import {
   callSourceTextMutationTool,
@@ -34,6 +35,7 @@ function fixture(text="hello world\n",options={}){
       seen.commitBody=opts.body;
       return {sha:S.commit};
     }
+    if(path==="/repos/lrnolivia/relay/commits/"+S.commit) return {sha:S.commit,author:PROJECT_AUTHOR,committer:PROJECT_AUTHOR,commit:{...seen.commitBody,tree:{sha:S.nextTree}},parents:[{sha:S.head}]};
     if(path==="/repos/lrnolivia/relay/git/refs/heads/relay/test"&&opts.method==="PATCH"){
       patches++;
       head=S.commit;
