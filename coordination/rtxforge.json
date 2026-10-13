@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-13T01:36:33.490Z",
+  "updated_at": "2026-10-13T01:46:21.434Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -897,7 +897,7 @@
       ],
       "goal": "Start the Windows port: a native WinUI 3 (Windows App SDK 2.x, C#) desktop shell that mirrors the Linux libadwaita desktop build almost 1:1 in layout, flow and copy, using WinUI 3 components and Fluent theme tokens. Game Mode (couch_shell) stays Linux-only. MFG keeps the current native Streamline DLSS-G Ada route. Lauren authorized this in chat 2026-10-13 ('lets go!').",
       "acceptance": "windows/ contains a buildable WinUI 3 solution whose window structure (header, library list/grid, game detail with NR Strength 0.0-2.0, Sharpening 0.0-1.0, MFG Off/2x-6x controls, settings) maps 1:1 to the Linux desktop GTK screens, with a documented GTK-widget->WinUI-control and libadwaita-token->Fluent-token map. A windows-build workflow builds it on windows-latest. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002).",
-      "next_action": "Lauren 2026-10-13: use native Windows corner radii, drop the Corners setting; where GNOME paradigms don't fit WinUI/Fluent, make them Windows-native (e.g. Settings not a separate window). Local commit 245887f on top of remote 5c7ce7d (CI CS0234 namespace fix) restructures the shell: Mica, NavigationView (Library/Packages/Extras/Activity/Settings), Settings page with immediate apply, navigated Game page with SelectorBar, ItemsView library, title-bar search, InfoBar status, Fluent fills + Control/OverlayCornerRadius; preflight passed for its 31 paths. It deletes 4 files, which relay.SOURCE cannot do, and local git has no push credentials, so publication waits for a push of rtxforge/windows-winui-port from worktree C:\\Users\\lrnol\\Repos\\rtxForge\\rtxForge-windows-port (fast-forward). Then: read Build rtxForge Windows run, fix compile errors (max 2 cycles per failure class), hand the x64 preview to Lauren for human visual QA. Previous run on 0d9f363 failed only on CS0234 (global::Windows), fixed in 5c7ce7d.",
+      "next_action": "Head 0904efdb5cedf6cac3dca51c8773f486d024545d (Lauren pushed 245887f Windows-native restructure; CS1061 ThemeController fix via relay.SOURCE). Build rtxForge Windows run 38333505753: WinUI 3 x64 PASS, ARM64 PASS; admission PASS. Artifact rtxForge-windows-x64-preview id 11783573661 (90.6 MB, expires 2026-10-27). Build is compile evidence only. Next: Lauren human visual/runtime QA of the exact 0904efd preview (launch, Mica, navigation, library, game page, settings, themes) vs Linux desktop; then fix findings on this branch. Engine bridge remains a separate follow-up.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -921,8 +921,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-13T01:36:33.490Z",
-      "lease_until": "2026-10-13T13:36:33.490Z"
+      "updated_at": "2026-10-13T01:46:21.434Z",
+      "lease_until": "2026-10-13T13:46:21.434Z"
     },
     {
       "id": "rtxforge-gaming-mode-design-preview-20261013",
