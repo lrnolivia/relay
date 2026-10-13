@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-13T06:11:11.866Z",
+  "updated_at": "2026-10-13T06:39:44.856Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -205,6 +205,50 @@
             "id": "rtxforge-gaming-mode-design-preview-20261013:acceptance:0",
             "text": "Interactive reviewable prototype covers library, details/settings, controller focus/back navigation, dialogs, scrolling, loading/error/empty states. Preserve existing work; distinguish web prototype from verified GTK behavior; focused Linux Gamescope/controller acceptance plan. No merge, deployment, paid purchase, PC install or unrelated work.",
             "at": "2026-10-13T01:03:46.382Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-linux-backport-windows-ui-20261013",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "goal": "Back-port Windows desktop refinements to the Linux GTK/libadwaita build, fitted to GTK (not copied): (1) perceptual accent selection from windows/RtxForge.Windows/Services/ArtAccent.cs (OKLab clustering, area x chroma^2 score, real-pixel averages, UI-safe L/C clamp with sRGB gamut mapping, greyscale fallback) replacing the 24-bucket hue table in gui/rtxforge_gtk.py artwork_accent; custom game_accents always win. (2) Accent suggestions (Signature, Background, Alternate, Light, Deep) and the per-pixel eyedropper loupe in the Pick Accent Color dialog. (3) The navigation sidebar design. (4) The single library toolbar row: Library title, Available/Installed/All filter, search, view switcher, artwork-size slider, Select all (becomes Clear), Refresh, Add folder; hover selection checks instead of Select mode. (5) List view as one surface: alternating shades, rounded first/last rows, 1.5px gaps, rounded capsule art, equal-height primary and overflow actions. (6) One operation step layout for review checking and progress: accent-stroked poster, 'Verb N of M' caption, game name in accent, phase, accent bar.",
+      "acceptance": "Linux GTK matches the listed Windows behaviour in libadwaita idiom, verified with screenshots in light/dark/night; accent algorithm produces the same picks as Windows for the same artwork (shared test fixtures); no engine/provider changes; draft PR only, no merge without Lauren.",
+      "next_action": "Blocked on gui/ and scripts/ ownership (rtxforge-shared-package-ui-20261002). When released or handed off: claim, read the Windows implementations (ArtAccent.cs, GamePage PickAccentAsync, LibraryPage.xaml list/toolbar, Controls/OperationStepPanel.cs), port to GTK, open a draft PR.",
+      "paths": [
+        "gui/rtxforge_gtk.py",
+        "gui/couch_shell.py",
+        "scripts/ui_colors.py",
+        "tests/"
+      ],
+      "resources": [
+        "rtxforge-linux-desktop-ui"
+      ],
+      "category": "implementation",
+      "tags": [
+        "linux",
+        "backport",
+        "accent",
+        "library-ui"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-13T06:39:44.856Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Back-port Windows desktop refinements to the Linux GTK/libadwaita build, fitted to GTK (not copied): (1) perceptual accent selection from windows/RtxForge.Windows/Services/ArtAccent.cs (OKLab clustering, area x chroma^2 score, real-pixel averages, UI-safe L/C clamp with sRGB gamut mapping, greyscale fallback) replacing the 24-bucket hue table in gui/rtxforge_gtk.py artwork_accent; custom game_accents always win. (2) Accent suggestions (Signature, Background, Alternate, Light, Deep) and the per-pixel eyedropper loupe in the Pick Accent Color dialog. (3) The navigation sidebar design. (4) The single library toolbar row: Library title, Available/Installed/All filter, search, view switcher, artwork-size slider, Select all (becomes Clear), Refresh, Add folder; hover selection checks instead of Select mode. (5) List view as one surface: alternating shades, rounded first/last rows, 1.5px gaps, rounded capsule art, equal-height primary and overflow actions. (6) One operation step layout for review checking and progress: accent-stroked poster, 'Verb N of M' caption, game name in accent, phase, accent bar.",
+          "acceptance": "Linux GTK matches the listed Windows behaviour in libadwaita idiom, verified with screenshots in light/dark/night; accent algorithm produces the same picks as Windows for the same artwork (shared test fixtures); no engine/provider changes; draft PR only, no merge without Lauren.",
+          "at": "2026-10-13T06:39:44.856Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-backport-windows-ui-20261013:acceptance:0",
+            "text": "Linux GTK matches the listed Windows behaviour in libadwaita idiom, verified with screenshots in light/dark/night; accent algorithm produces the same picks as Windows for the same artwork (shared test fixtures); no engine/provider changes; draft PR only, no merge without Lauren.",
+            "at": "2026-10-13T06:39:44.856Z"
           }
         ]
       }
