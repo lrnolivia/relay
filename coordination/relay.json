@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-13T20:18:30.252Z",
+  "updated_at": "2026-10-13T20:45:58.976Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -15165,7 +15165,8 @@
         ".github/workflows/field-dependency-doctor.yml",
         ".github/workflows/field-dependency-repair.yml",
         "src/source-attribution.test.js",
-        "scripts/attribution-coordination.mjs"
+        "scripts/attribution-coordination.mjs",
+        "src/coordination-transport.test.js"
       ],
       "resources": [
         "prospective-project-commit-attribution",
@@ -15174,7 +15175,7 @@
       ],
       "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched. Add Lauren-approved AI Cleanup: a bounded project-scoped scan/report and reviewable cleanup-patch capability.",
       "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
-      "next_action": "Lauren authorized local attribution-only integration. Serial11-path carveout complete; keep umbrella held at WIP80b887 with remaining182 paths/resources intact. Validate admission, implement explicit author/committer+known-tool credit guards, exact GitHub readback and fail-closed App squash, native workflow identity and worker prompt rule. Existing human gh route authors control commits. No source push/merge/deploy/auth/history changes; remote task branch intentionally unpublished; retain that publication gate.",
+      "next_action": "Attribution-only integration checkpoint a41f3ec plus local canonical-main merge51d8f71. Full required gate exposed five stale metadata fixtures in the unreserved CLI transport regression file; add only that validation path and update its fake provider to represent exact attributed commit readback. Preserve all assertions, held rebuild182 remaining paths/resources and WIP80b887. No source publication/deploy/auth/history changes. Claude broad audit and native effective/reload proof complete; retain remote missing_branch gate.",
       "category": "maintenance",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -15204,8 +15205,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-13T20:18:30.252Z",
-      "lease_until": "2026-10-14T08:18:30.252Z",
+      "updated_at": "2026-10-13T20:45:58.976Z",
+      "lease_until": "2026-10-14T08:45:58.976Z",
       "amendment_count": 1,
       "amendments": [
         {
