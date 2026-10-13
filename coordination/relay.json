@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-13T21:27:36.623Z",
+  "updated_at": "2026-10-13T21:44:34.717Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -15134,7 +15134,7 @@
     },
     {
       "id": "relay-project-attribution-20261013",
-      "owner": "01a132f7-348f-772b-99fb-aabd339d0037",
+      "owner": "01a136d2-f762-7345-9c23-1509a8c1501a",
       "branch": "relay/project-attribution-20261013",
       "paths": [
         "src/commit-attribution.js",
@@ -15175,7 +15175,7 @@
       ],
       "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched. Add Lauren-approved AI Cleanup: a bounded project-scoped scan/report and reviewable cleanup-patch capability.",
       "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
-      "next_action": "LOCAL_READY a75d165f292b48d7bc47d93e47e2854f252d6d93: exact Node22.23.3 build/check/artifact verification and all5required suites PASS,935passed,2existing skips,0failed. Global task-specific Git/history bans corrected in Codex developer instructions and Claude guidance with private backups; suppression controls intact, empty AGENTS untouched, no security/sandbox/approval changes. Native local-preparation gate passed withpublication_admitted=false; remote branch intentionally absent. Context147decision ctx_e83ecb705bba50158e7cb8838dc5b94c3aeacb72269395b1e131053ec930482b and148held-owner handoff ctx_7f70233510e84ad4d0e5ec782f13c9b7dbea52a6901fecc0010efcc3c3c2a9a6 readback verified; no native delivery or executor start asserted. Keep umbrella182 paths/resources/WIP80b887 held. Recovery /Users/lrnolivia/Codex/2026-10-12/task-3/FINAL_ATTRIBUTION.bundle + FINAL_HANDOFF.md. Next: separately permitted source publication/release via verified existing Lauren gh route and exact final author; no push/merge/deploy/history/auth changes performed.",
+      "next_action": "Parent01a1146d explicitly directed review/integration of completed attribution checkpoint a75d165 and cleanup under this existing assignment, with user publication authorization. Preserve held rebuild WIP80b887 and all182 retained paths; use existing verified Lauren Git/gh route, no credentials/global changes. Refresh current coordination, add only README cleanup to this claim, validate combined exact source, publish through supported admission/human final-metadata route; do not independently release competing candidates.",
       "category": "maintenance",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -15205,8 +15205,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-13T21:27:36.623Z",
-      "lease_until": "2026-10-14T09:27:36.623Z",
+      "updated_at": "2026-10-13T21:44:34.717Z",
+      "lease_until": "2026-10-14T09:44:34.717Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -15228,6 +15228,14 @@
             "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
             "next_action": "Implement and test only unreserved AI Cleanup modules/CLI/tests/docs in this checkout. Produce local review artifacts; do not resume or take over held registration/source handlers."
           }
+        }
+      ],
+      "handoffs": [
+        {
+          "at": "2026-10-13T21:44:34.717Z",
+          "from": "01a132f7-348f-772b-99fb-aabd339d0037",
+          "to": "01a136d2-f762-7345-9c23-1509a8c1501a",
+          "next_action": "Parent01a1146d explicitly directed review/integration of completed attribution checkpoint a75d165 and cleanup under this existing assignment, with user publication authorization. Preserve held rebuild WIP80b887 and all182 retained paths; use existing verified Lauren Git/gh route, no credentials/global changes. Refresh current coordination, add only README cleanup to this claim, validate combined exact source, publish through supported admission/human final-metadata route; do not independently release competing candidates."
         }
       ]
     }
