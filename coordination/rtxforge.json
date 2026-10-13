@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-13T06:39:44.856Z",
+  "updated_at": "2026-10-13T06:43:24.909Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -138,9 +138,9 @@
     {
       "id": "rtxforge-crossos-nr-dlss-unlocked-20261013",
       "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
-      "goal": "Move NR to one cross-OS provider: ShyVortex/dlss-unlocked NR-v0.9.51 (2026-10-09, Streamline 2.14.1; built on wilsjo2 OptiScaler-DLSSNR-PreSR-Multipass), replacing the stale dlss-unlocked v0.3.0 NR pin. Same NR package on Windows (setup exe/standalone zip) and Linux/Proton (standalone zip). Keep the current MFG route (native-streamline-dlssg-ada-v5) unchanged. Keep NR a swappable provider slot so official DLSS 5 RTX 40 support (NVIDIA: 'later this fall', no date) can replace the modded nvngx_dlssnr.dll. Lauren's 2026-10-13 direction: MFG works cross-OS, wants the same for NR.",
-      "acceptance": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; Lauren human QA on Ada confirms NR visibly applies (current recorded verdict: NR does not work with v0.3.0 composition).",
-      "next_action": "Blocked on overlap: providers/, engine/ and resource rtxforge-shared-package-engine are held by rtxforge-shared-package-ui-20261002 (owner 01a10034...). Needs handoff/narrow rescope or that claim's completion before implementation. Meanwhile read-only: download-free verification of NR-v0.9.51 asset hashes and component layout.",
+      "goal": "Move NR to one cross-OS provider: ShyVortex/dlss-unlocked NR-v0.9.51 (2026-10-09, Streamline 2.14.1; built on wilsjo2 OptiScaler-DLSSNR-PreSR-Multipass), replacing the stale pin (current lock: NR-v0.9.33). Same NR package on Windows and Linux/Proton. Keep the current MFG route unchanged and NR a swappable provider slot. ADDED 2026-10-13 (Lauren): engine-aware installs. Scan detects the game engine (RE Engine: re_chunk_000.pak beside the exe; Unreal: *-Win64-Shipping.exe / Engine/Binaries; Unity: UnityPlayer.dll) and the installer applies documented engine fixes: for Capcom RE Engine games, NR-v0.9.51's REPatch/ patched REFramework dinput8.dll (fixes RE Engine boot crashes and XeFG stutter) installed as a managed, backed-up file that shows in the review and is removed on Restore; an existing third-party dinput8.dll (user REFramework) is surfaced in review, never silently overwritten. Optional SpecialK presentation pacer (0.9.50 nightly) only if shipped in the pinned asset. Unreal/Unity: surface detected engine; apply only fixes with a documented cause (OptiScaler INI notes), otherwise keep OptiScaler auto. Engine detection and fixes shared by Linux and Windows (engine-host stays adapter-only).",
+      "acceptance": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; scan rows report detected engine; RE Engine games get the REPatch dinput8.dll as a reviewed, owned, restorable file with tests for detection, conflict (existing dinput8) and restore; Lauren human QA on Ada confirms NR visibly applies and an RE Engine title boots with FG.",
+      "next_action": "Blocked on overlap: providers/, engine/, scripts/ and resource rtxforge-shared-package-engine are held by rtxforge-shared-package-ui-20261002. Needs handoff/narrow rescope or that claim's completion. Meanwhile read-only: verify NR-v0.9.51 asset hashes and REPatch/ contents; list RE Engine titles in Lauren's library.",
       "paths": [
         "provider.json",
         "providers/",
@@ -170,9 +170,39 @@
             "id": "rtxforge-crossos-nr-dlss-unlocked-20261013:acceptance:0",
             "text": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; Lauren human QA on Ada confirms NR visibly applies (current recorded verdict: NR does not work with v0.3.0 composition).",
             "at": "2026-10-13T00:58:09.192Z"
+          },
+          {
+            "id": "rtxforge-crossos-nr-dlss-unlocked-20261013:acceptance:1",
+            "text": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; scan rows report detected engine; RE Engine games get the REPatch dinput8.dll as a reviewed, owned, restorable file with tests for detection, conflict (existing dinput8) and restore; Lauren human QA on Ada confirms NR visibly applies and an RE Engine title boots with FG.",
+            "at": "2026-10-13T06:43:24.909Z",
+            "reason": "Lauren 2026-10-13: installer should detect RE Engine games and apply DLSS-Unlocked's RE Engine fixes, plus any engine-specific fixes. Belongs with the NR-v0.9.51 provider bump (REPatch ships in that release)."
           }
         ]
-      }
+      },
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-13T06:43:24.909Z",
+          "by": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+          "reason": "Lauren 2026-10-13: installer should detect RE Engine games and apply DLSS-Unlocked's RE Engine fixes, plus any engine-specific fixes. Belongs with the NR-v0.9.51 provider bump (REPatch ships in that release).",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Move NR to one cross-OS provider: ShyVortex/dlss-unlocked NR-v0.9.51 (2026-10-09, Streamline 2.14.1; built on wilsjo2 OptiScaler-DLSSNR-PreSR-Multipass), replacing the stale dlss-unlocked v0.3.0 NR pin. Same NR package on Windows (setup exe/standalone zip) and Linux/Proton (standalone zip). Keep the current MFG route (native-streamline-dlssg-ada-v5) unchanged. Keep NR a swappable provider slot so official DLSS 5 RTX 40 support (NVIDIA: 'later this fall', no date) can replace the modded nvngx_dlssnr.dll. Lauren's 2026-10-13 direction: MFG works cross-OS, wants the same for NR.",
+            "acceptance": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; Lauren human QA on Ada confirms NR visibly applies (current recorded verdict: NR does not work with v0.3.0 composition).",
+            "next_action": "Blocked on overlap: providers/, engine/ and resource rtxforge-shared-package-engine are held by rtxforge-shared-package-ui-20261002 (owner 01a10034...). Needs handoff/narrow rescope or that claim's completion before implementation. Meanwhile read-only: download-free verification of NR-v0.9.51 asset hashes and component layout."
+          },
+          "after": {
+            "goal": "Move NR to one cross-OS provider: ShyVortex/dlss-unlocked NR-v0.9.51 (2026-10-09, Streamline 2.14.1; built on wilsjo2 OptiScaler-DLSSNR-PreSR-Multipass), replacing the stale pin (current lock: NR-v0.9.33). Same NR package on Windows and Linux/Proton. Keep the current MFG route unchanged and NR a swappable provider slot. ADDED 2026-10-13 (Lauren): engine-aware installs. Scan detects the game engine (RE Engine: re_chunk_000.pak beside the exe; Unreal: *-Win64-Shipping.exe / Engine/Binaries; Unity: UnityPlayer.dll) and the installer applies documented engine fixes: for Capcom RE Engine games, NR-v0.9.51's REPatch/ patched REFramework dinput8.dll (fixes RE Engine boot crashes and XeFG stutter) installed as a managed, backed-up file that shows in the review and is removed on Restore; an existing third-party dinput8.dll (user REFramework) is surfaced in review, never silently overwritten. Optional SpecialK presentation pacer (0.9.50 nightly) only if shipped in the pinned asset. Unreal/Unity: surface detected engine; apply only fixes with a documented cause (OptiScaler INI notes), otherwise keep OptiScaler auto. Engine detection and fixes shared by Linux and Windows (engine-host stays adapter-only).",
+            "acceptance": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; scan rows report detected engine; RE Engine games get the REPatch dinput8.dll as a reviewed, owned, restorable file with tests for detection, conflict (existing dinput8) and restore; Lauren human QA on Ada confirms NR visibly applies and an RE Engine title boots with FG.",
+            "next_action": "Blocked on overlap: providers/, engine/, scripts/ and resource rtxforge-shared-package-engine are held by rtxforge-shared-package-ui-20261002. Needs handoff/narrow rescope or that claim's completion. Meanwhile read-only: verify NR-v0.9.51 asset hashes and REPatch/ contents; list RE Engine titles in Lauren's library."
+          }
+        }
+      ],
+      "updated_at": "2026-10-13T06:43:24.909Z"
     },
     {
       "id": "rtxforge-gaming-mode-design-preview-20261013",
