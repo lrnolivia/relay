@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-13T03:31:29.372Z",
+  "updated_at": "2026-10-13T20:17:45.652Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -14102,6 +14102,87 @@
       "completed_at": "2026-10-08T23:57:19.222Z"
     },
     {
+      "id": "relay-project-attribution-20261013",
+      "owner": "01a132f7-348f-772b-99fb-aabd339d0037",
+      "branch": "relay/project-attribution-20261013",
+      "paths": [
+        "src/commit-attribution.js",
+        "src/commit-attribution.test.js",
+        "scripts/project-attribution.mjs",
+        "scripts/project-attribution.test.mjs",
+        ".claude/settings.json",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "docs/relay/COMMIT_ATTRIBUTION_20261013.md",
+        "src/ai-cleanup.js",
+        "src/ai-cleanup.test.js",
+        "scripts/ai-cleanup.mjs",
+        "scripts/ai-cleanup.test.mjs",
+        "docs/relay/AI_CLEANUP_20261013.md"
+      ],
+      "resources": [
+        "prospective-project-commit-attribution",
+        "project-scoped-ai-cleanup"
+      ],
+      "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched. Add Lauren-approved AI Cleanup: a bounded project-scoped scan/report and reviewable cleanup-patch capability.",
+      "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
+      "next_action": "Administrative handoff recorded and exact readback verified in Relay context revisions145/146 for heldclaude-open: AI Cleanup registration ctx_052c7e6461ab8c02b56d67d6ac2df7524d092dc82d0d332e67ee4f116db56cc8; attribution writers ctx_a118f47ca4c50828db8a9633d0e2b4be658cd797ac83e7876a2c00a824529726. Local-only353a337 patch/bundle/hash refs preserved, WIP80b887 is the verified context anchor. Sender returns held; rebuild was never resumed, no executor/native delivery asserted. Remaining: narrow serial registration/writer integration admission and intentional unpublished-branch reconciliation; no push/merge/deploy/history/auth changes.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "c96e4a79b79a55d5f0097d0b85e749b249865c17",
+      "state": "held",
+      "created_at": "2026-10-13T01:57:55.446Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched.",
+          "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
+          "at": "2026-10-13T01:57:55.446Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-project-attribution-20261013:acceptance:0",
+            "text": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
+            "at": "2026-10-13T01:57:55.446Z"
+          },
+          {
+            "id": "relay-project-attribution-20261013:acceptance:1",
+            "text": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
+            "at": "2026-10-13T02:41:39.642Z",
+            "reason": "Lauren explicitly approved the AI Cleanup scan-and-reviewable-patch plan via parent delegation."
+          }
+        ]
+      },
+      "updated_at": "2026-10-13T03:31:29.372Z",
+      "lease_until": "2026-10-13T15:31:29.372Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-13T02:41:39.642Z",
+          "by": "01a132f7-348f-772b-99fb-aabd339d0037",
+          "reason": "Lauren explicitly approved the AI Cleanup scan-and-reviewable-patch plan via parent delegation.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched.",
+            "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
+            "next_action": "Lauren approved AI Cleanup scan/report and reviewable patch capability alongside attribution. Implement only new unreserved modules/CLI/tests/docs in the existing isolated checkout. Preserve product AI, legal/human credits, code behavior and docs content. No registration edits, history rewrite, irreversible deletion, auth/access change, push/merge/deploy. Keep rebuild and rtxForge task held/untouched."
+          },
+          "after": {
+            "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched. Add Lauren-approved AI Cleanup: a bounded project-scoped scan/report and reviewable cleanup-patch capability.",
+            "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
+            "next_action": "Implement and test only unreserved AI Cleanup modules/CLI/tests/docs in this checkout. Produce local review artifacts; do not resume or take over held registration/source handlers."
+          }
+        }
+      ]
+    },
+    {
       "id": "relay-mcp-rebuild-continuation-20261003",
       "owner": "claude-open",
       "branch": "relay/mcp-rebuild-20261003",
@@ -14111,7 +14192,6 @@
         ".github/workflows/relay-production-smoke.yml",
         ".github/workflows/release-assurance.yml",
         ".github/workflows/runner-coordination.yml",
-        ".github/workflows/runner.yml",
         ".node-version",
         "LOEW_CHAT_BIBLE.md",
         "apps/mcp/index.js",
@@ -14196,7 +14276,6 @@
         "scripts/build-context-card-model.mjs",
         "scripts/ci-stage.mjs",
         "scripts/ci-test-orchestrator.mjs",
-        "scripts/relay-executor.mjs",
         "scripts/relay-executor.test.mjs",
         "scripts/relay-source-checkpoint-macos.py",
         "scripts/relay-source-checkpoint.mjs",
@@ -14233,7 +14312,6 @@
         "src/github-read-cache.js",
         "src/github-read-cache.test.js",
         "src/human-presentation.js",
-        "src/index.js",
         "src/progress-api.js",
         "src/progress-api.test.js",
         "src/project-cloud.js",
@@ -14263,15 +14341,7 @@
         "src/release-recovery.test.js",
         "src/resume-checkpoints.js",
         "src/resume-checkpoints.test.js",
-        "src/runner-control-core.js",
         "src/runner-control.js",
-        "src/runner-control.test.js",
-        "src/source-lifecycle.js",
-        "src/source-lifecycle.test.js",
-        "src/source-text-mutation.js",
-        "src/source-text-mutation.test.js",
-        "src/source.js",
-        "src/source.test.js",
         "test/autonomy-gate.test.mjs",
         "test/fixtures/recovery-archive.mjs",
         "test/release-toolchain-contract.test.mjs",
@@ -14322,7 +14392,7 @@
       ],
       "goal": "Continue the existing unfinished full Relay MCP rebuild, restoring original1.9 promised capabilities and integrating approved Relay live-panel/site/card work. Archival assignment closure is not proof of functional delivery. Immediate additive priority: streamline CI across ALL projects, with measured reductions and preserved required verification.",
       "acceptance": "Preserve working tools and provenance. Restore the original 1.9 acceptance at commit 434541358d6bfd25e67af5d8e689ba49a5378b91 and all seven stages of the Research and Reflow Plan. Track source implementation, publication, host installation and runtime verification separately. Preserve original objectives and stable acceptance IDs through additive amendments and full-task resume. Separate scope completion from verification; reconcile stale ownership without restarting paused or cancelled work. Repurpose the hourly workflow as a model-free sync safeguard comparing registered tasks, PRs, checks and deployment evidence, with deduplicated continuation recommendations and honest unavailable-evidence states. Complete skill catalog, search, read, resolve, install/vendor, update and audit; pinned licensed portable bundles; integrity and dependency enforcement; all originally promised creative, platform and supporting packs. Prove durable jobs, a real coding executor, capability-based local/remote routing, worker communication and full capability parity. Fold the Relay website, live panel, approved telemetry, Refresh Tools fallback chain, Add MCP to AI actions and compact MCP cards into this same rebuild. Verify actual client rendering/actions. Integrate review-first cards, evidence and device-specific frames, saved answers/replies, project icons and useful workspace overview. Use flat surfaces with shadows/glows. Night Shift records actual autonomous away-time work, with an unused staff lead for oversight, preserved executor provenance, evidence-supported backfill and an idempotent Shift handoff. No new credentials or spending inferred. Documentation-only PRs, fixtures and transferred defects do not establish full delivery.\nFull execution handoff, source recovery and original contract evidence: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RELAY-MCP.md . All latest site/live-panel/telemetry/refresh/add-to-AI, review delivery, NightShift/Shift, canonical asset discovery, lifecycle and original skills/executor goals preserved. Original1.9 verbatim and41 stale queue pairs in sibling documents. Current engine cannot normalize completed queue pairs or handoff queued-only owner; do not bypass. Actual user-started Mac Codex identity pending; parent stops MCP implementation. ctrlfrontend remains separate heldPR7, recovery8WIPfiles preserved. New Relay site concept is not implementation; current plugin ID protected.\n2026-10-03 15:38 motion acceptance: preserve the approved Relay visual language; tighten in-motion card padding and text grouping; retain last good live data during refresh, skeletons only for initial unavailable content, clear loading indicators and animated updates without flicker. Each mosaic block supports touch long press into wiggle/reorder mode, drag, explicit Done and saved order; keep normal scrolling and taps, keyboard/reduced-motion accessibility. User says all these are part of the motion pass. Desktop normal ChatGPT card mount/read-only check now screenshot-proven; iOS user-reported working; browser regression remains open.\n2026-10-03 18:27 card acceptance: Lauren confirms the real iOS status card now loads data (screenshot libfile_4bab4a18f8ac81918f490d8135752922). Active panel must list active jobs, not staff. Present concise itemized job titles/status, readable visual hierarchy and glanceable information; expand full technical details on demand. Preserve established card identity and approved flat surfaces. Native iOS data hydration is evidenced; actions and browser parity remain separate checks.",
-      "next_action": "HELD / OPEN FOR ANY CLAUDE CHAT. Lauren explicitly says pause and hand off rest to Claude, then 'no specific chat just Claude' (via Julian parent01a1146d-0267-735e-8332-fa38cf7fb007). claude-open is a neutral pickup placeholder, not an executor. Do not start automatically. WIP80b887cc457ad7a1c55477cf43bcbbd0b61a6957 on existingbranch; handoff docs/relay/RELATIONSHIP_NIGHT_SHIFT_INTEGRATION_20261012.md, context144. No codingwriter remains. Relationship16focusedtestsPASS; newNightShiftcoordinator untested, notreadytodeploy. Keep originalscope/acceptance/additions/owners; healthyPR225 remainsproduction. SecureBuildstokenreplacement approved but userNotyet; no secretsincheckpoint. Receiving Claude refreshescontext/state and uses supportedCAS pickup under Lauren's authorization; do not infer activation from placeholder.",
+      "next_action": "HELD / OPEN FOR ANY CLAUDE CHAT. Lauren explicitly says pause and hand off rest to Claude, then 'no specific chat just Claude' (via Julian parent01a1146d-0267-735e-8332-fa38cf7fb007). claude-open is a neutral pickup placeholder, not an executor. Do not start automatically. WIP80b887cc457ad7a1c55477cf43bcbbd0b61a6957 on existingbranch; handoff docs/relay/RELATIONSHIP_NIGHT_SHIFT_INTEGRATION_20261012.md, context144. No codingwriter remains. Relationship16focusedtestsPASS; newNightShiftcoordinator untested, notreadytodeploy. Keep originalscope/acceptance/additions/owners; healthyPR225 remainsproduction. SecureBuildstokenreplacement approved but userNotyet; no secretsincheckpoint. Receiving Claude refreshescontext/state and uses supportedCAS pickup under Lauren's authorization; do not infer activation from placeholder.\nAttribution-only serial carveout: Lauren explicitly authorized only prospective attribution writer/template/final-metadata integration via parent01a1146d-0267-735e-8332-fa38cf7fb007 on2026-10-13. Existing Lauren gh identity route supplies verified author/committer for these control transactions. No source publication/deployment/auth/history changes; no umbrella resumption. Eleven writer/template/validation files are removed for transfer to existingrelay-project-attribution-20261013. Preserve all other paths/resources/objectives and WIP80b887cc457ad7a1c55477cf43bcbbd0b61a6957; remain HELD.",
       "ledger_refs": [
         "relay-mcp-rebuild-20261001",
         "relay-mcp-host-proof-20261001",
@@ -14369,8 +14439,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-12T01:06:51.980Z",
-      "lease_until": "2026-10-12T13:06:51.980Z",
+      "updated_at": "2026-10-13T20:17:45.652Z",
+      "lease_until": "2026-10-14T08:17:45.652Z",
       "handoffs": [
         {
           "at": "2026-10-03T08:00:10.297Z",
@@ -15139,87 +15209,6 @@
               "portfolio-ci-efficiency",
               "relay-autonomy-safety"
             ]
-          }
-        }
-      ]
-    },
-    {
-      "id": "relay-project-attribution-20261013",
-      "owner": "01a132f7-348f-772b-99fb-aabd339d0037",
-      "branch": "relay/project-attribution-20261013",
-      "paths": [
-        "src/commit-attribution.js",
-        "src/commit-attribution.test.js",
-        "scripts/project-attribution.mjs",
-        "scripts/project-attribution.test.mjs",
-        ".claude/settings.json",
-        "AGENTS.md",
-        "CLAUDE.md",
-        "docs/relay/COMMIT_ATTRIBUTION_20261013.md",
-        "src/ai-cleanup.js",
-        "src/ai-cleanup.test.js",
-        "scripts/ai-cleanup.mjs",
-        "scripts/ai-cleanup.test.mjs",
-        "docs/relay/AI_CLEANUP_20261013.md"
-      ],
-      "resources": [
-        "prospective-project-commit-attribution",
-        "project-scoped-ai-cleanup"
-      ],
-      "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched. Add Lauren-approved AI Cleanup: a bounded project-scoped scan/report and reviewable cleanup-patch capability.",
-      "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
-      "next_action": "Administrative handoff recorded and exact readback verified in Relay context revisions145/146 for heldclaude-open: AI Cleanup registration ctx_052c7e6461ab8c02b56d67d6ac2df7524d092dc82d0d332e67ee4f116db56cc8; attribution writers ctx_a118f47ca4c50828db8a9633d0e2b4be658cd797ac83e7876a2c00a824529726. Local-only353a337 patch/bundle/hash refs preserved, WIP80b887 is the verified context anchor. Sender returns held; rebuild was never resumed, no executor/native delivery asserted. Remaining: narrow serial registration/writer integration admission and intentional unpublished-branch reconciliation; no push/merge/deploy/history/auth changes.",
-      "category": "maintenance",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "adrian",
-      "supporting_staff": [],
-      "base_sha": "c96e4a79b79a55d5f0097d0b85e749b249865c17",
-      "state": "held",
-      "created_at": "2026-10-13T01:57:55.446Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched.",
-          "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
-          "at": "2026-10-13T01:57:55.446Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "relay-project-attribution-20261013:acceptance:0",
-            "text": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
-            "at": "2026-10-13T01:57:55.446Z"
-          },
-          {
-            "id": "relay-project-attribution-20261013:acceptance:1",
-            "text": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
-            "at": "2026-10-13T02:41:39.642Z",
-            "reason": "Lauren explicitly approved the AI Cleanup scan-and-reviewable-patch plan via parent delegation."
-          }
-        ]
-      },
-      "updated_at": "2026-10-13T03:31:29.372Z",
-      "lease_until": "2026-10-13T15:31:29.372Z",
-      "amendment_count": 1,
-      "amendments": [
-        {
-          "at": "2026-10-13T02:41:39.642Z",
-          "by": "01a132f7-348f-772b-99fb-aabd339d0037",
-          "reason": "Lauren explicitly approved the AI Cleanup scan-and-reviewable-patch plan via parent delegation.",
-          "fields": [
-            "goal",
-            "acceptance",
-            "next_action"
-          ],
-          "before": {
-            "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched.",
-            "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
-            "next_action": "Lauren approved AI Cleanup scan/report and reviewable patch capability alongside attribution. Implement only new unreserved modules/CLI/tests/docs in the existing isolated checkout. Preserve product AI, legal/human credits, code behavior and docs content. No registration edits, history rewrite, irreversible deletion, auth/access change, push/merge/deploy. Keep rebuild and rtxForge task held/untouched."
-          },
-          "after": {
-            "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched. Add Lauren-approved AI Cleanup: a bounded project-scoped scan/report and reviewable cleanup-patch capability.",
-            "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
-            "next_action": "Implement and test only unreserved AI Cleanup modules/CLI/tests/docs in this checkout. Produce local review artifacts; do not resume or take over held registration/source handlers."
           }
         }
       ]
