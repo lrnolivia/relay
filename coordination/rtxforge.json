@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-13T00:57:55.228Z",
+  "updated_at": "2026-10-13T00:58:09.192Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -131,6 +131,45 @@
             "id": "rtxforge-light-icon-asset-20261004:acceptance:0",
             "text": "Approved current dark-icon geometry retained exactly; light grey platter #d5d5d5 and top highlight opacity0.35. Publish editable SVG under assets/branding/rtxforge-icon-light.svg on an isolated non-default branch and provide exact immutable source path to current release owner. Do not modify the active owner's gui/scripts/packaging files or installed app. Auto theme-switch integration remains assigned to the existing native release owner.",
             "at": "2026-10-04T02:22:02.657Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-crossos-nr-dlss-unlocked-20261013",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "goal": "Move NR to one cross-OS provider: ShyVortex/dlss-unlocked NR-v0.9.51 (2026-10-09, Streamline 2.14.1; built on wilsjo2 OptiScaler-DLSSNR-PreSR-Multipass), replacing the stale dlss-unlocked v0.3.0 NR pin. Same NR package on Windows (setup exe/standalone zip) and Linux/Proton (standalone zip). Keep the current MFG route (native-streamline-dlssg-ada-v5) unchanged. Keep NR a swappable provider slot so official DLSS 5 RTX 40 support (NVIDIA: 'later this fall', no date) can replace the modded nvngx_dlssnr.dll. Lauren's 2026-10-13 direction: MFG works cross-OS, wants the same for NR.",
+      "acceptance": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; Lauren human QA on Ada confirms NR visibly applies (current recorded verdict: NR does not work with v0.3.0 composition).",
+      "next_action": "Blocked on overlap: providers/, engine/ and resource rtxforge-shared-package-engine are held by rtxforge-shared-package-ui-20261002 (owner 01a10034...). Needs handoff/narrow rescope or that claim's completion before implementation. Meanwhile read-only: download-free verification of NR-v0.9.51 asset hashes and component layout.",
+      "paths": [
+        "provider.json",
+        "providers/",
+        "engine/",
+        "scripts/engine_bridge.py",
+        "tests/"
+      ],
+      "resources": [
+        "rtxforge-shared-package-engine"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-13T00:58:09.192Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Move NR to one cross-OS provider: ShyVortex/dlss-unlocked NR-v0.9.51 (2026-10-09, Streamline 2.14.1; built on wilsjo2 OptiScaler-DLSSNR-PreSR-Multipass), replacing the stale dlss-unlocked v0.3.0 NR pin. Same NR package on Windows (setup exe/standalone zip) and Linux/Proton (standalone zip). Keep the current MFG route (native-streamline-dlssg-ada-v5) unchanged. Keep NR a swappable provider slot so official DLSS 5 RTX 40 support (NVIDIA: 'later this fall', no date) can replace the modded nvngx_dlssnr.dll. Lauren's 2026-10-13 direction: MFG works cross-OS, wants the same for NR.",
+          "acceptance": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; Lauren human QA on Ada confirms NR visibly applies (current recorded verdict: NR does not work with v0.3.0 composition).",
+          "at": "2026-10-13T00:58:09.192Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-crossos-nr-dlss-unlocked-20261013:acceptance:0",
+            "text": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; Lauren human QA on Ada confirms NR visibly applies (current recorded verdict: NR does not work with v0.3.0 composition).",
+            "at": "2026-10-13T00:58:09.192Z"
           }
         ]
       }
