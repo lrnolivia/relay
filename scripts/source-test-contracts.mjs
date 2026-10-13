@@ -97,14 +97,26 @@ export function planTests({before,after,changed,manifest}){
   return {selected_tests:selected,deferred_tests:deferred,affected_paths:[...affected].sort(),unmapped_changed_paths:unmapped,unresolved_references:unresolved.filter(ref=>affected.has(ref.path)||ref.kind==='syntax-error'),full_required_suites:REQUIRED_SUITES.map(suite=>suite.id),limits:['Static literal imports/reexports/requires and import.meta.url resources, plus reviewed resource/config edges only','Unmapped paths, dynamic links and deferred tests remain subject to all five full suites; early success is not full acceptance']};
 }
 
+export function sourceBase({root,head,explicitBase}){
+  const raw=execFileSync('git',['cat-file','commit',head],{cwd:root,encoding:'utf8',timeout:10000});
+  const parents=raw.split('\n\n',1)[0].split('\n').filter(line=>line.startsWith('parent ')).map(line=>line.slice(7));
+  if(explicitBase)return /^0{40}$/.test(explicitBase)&&parents.length===0?null:explicitBase;
+  return parents[0]||null;
+}
+
 export function diffPaths({root,base,head}){
-  if(!/^[a-f0-9]{40}$/.test(base||'')||/^0+$/.test(base)||!/^[a-f0-9]{40}$/.test(head||''))fail('invalid_source_range','Mapping requires exact nonzero base/head commit SHAs');
+  if((base!==null&&(!/^[a-f0-9]{40}$/.test(base||'')||/^0+$/.test(base)))||!/^[a-f0-9]{40}$/.test(head||''))fail('invalid_source_range','Mapping requires exact nonzero commit SHAs or a verified parentless root');
   const git=args=>execFileSync('git',args,{cwd:root,encoding:'utf8',timeout:10000,maxBuffer:16*1024*1024,stdio:['ignore','pipe','pipe']});
-  for(const sha of [base,head])if(git(['rev-parse',sha+'^{commit}']).trim()!==sha)fail('invalid_source_range','Source range must identify commits');
+  for(const sha of [base,head].filter(sha=>sha!==null))if(git(['rev-parse',sha+'^{commit}']).trim()!==sha)fail('invalid_source_range','Source range must identify commits');
+  if(base===null){
+    if(git(['cat-file','commit',head]).split('\n\n',1)[0].split('\n').some(line=>line.startsWith('parent ')))fail('invalid_source_range','An empty baseline is valid only for an actual parentless root, never missing or shallow history');
+    return git(['ls-tree','-r','--name-only','-z',head]).split('\0').filter(Boolean);
+  }
   return git(['diff','--no-renames','--name-only','-z',base,head,'--']).split('\0').filter(Boolean);
 }
 
 function snapshot(root,sha){
+  if(sha===null)return {};
   const git=args=>execFileSync('git',args,{cwd:root,encoding:'utf8',timeout:10000,maxBuffer:32*1024*1024,stdio:['ignore','pipe','pipe']});
   const paths=git(['ls-tree','-r','--name-only','-z',sha]).split('\0').filter(Boolean);
   return Object.fromEntries(paths.map(path=>[path,code.test(path)?git(['show',sha+':'+path]):'']));
@@ -119,9 +131,10 @@ export async function verifySourceTestContracts({root=process.cwd(),env=process.
     receipt.identity=await inspectToolchain({root,env});
     const head=receipt.identity.source_sha;
     // PR uses its exact base tip, push its exact before tip. Manual runs audit
-    // HEAD's parent; the selected range is always retained in the receipt.
-    const base=env.RELAY_CONTRACT_BASE_SHA||execFileSync('git',['rev-parse','HEAD^'],{cwd:root,encoding:'utf8',timeout:10000}).trim();
-    const changed=diffPaths({root,base,head});receipt.range={base_sha:base,head_sha:head,changed_paths:changed};
+    // HEAD's actual parent, or every tracked input for a verified initial root.
+    // Missing/shallow ancestry is never treated as an empty baseline.
+    const base=sourceBase({root,head,explicitBase:env.RELAY_CONTRACT_BASE_SHA});
+    const changed=diffPaths({root,base,head});receipt.range={base_sha:base,head_sha:head,initial_root:base===null,changed_paths:changed};
     const bytes=await readFile(resolve(root,'test/source-test-contracts.json'));
     receipt.manifest_sha256=createHash('sha256').update(bytes).digest('hex');receipt.parser_version=require('typescript/package.json').version;
     receipt.plan=planTests({before:snapshot(root,base),after:snapshot(root,head),changed,manifest:JSON.parse(bytes)});
