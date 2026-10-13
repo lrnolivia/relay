@@ -1,0 +1,106 @@
+import { githubApiRequest } from "./source.js";
+import { readRunnerFile } from "./runner-control-core.js";
+import { cloudWorkerSummary } from "./cloud.js";
+import { deriveObservedProgress } from "./progress-observation.js";
+
+export const PROGRESS_CONTRACT_VERSION = "1.7.5";
+export const PROGRESS_READ_CONCURRENCY = 8;
+
+async function mapBounded(items, limit, run) {
+  const out = new Array(items.length);
+  let next = 0;
+  const worker = async () => { while (next < items.length) { const index = next++; out[index] = await run(items[index]); } };
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return out;
+}
+
+async function jsonFile(api, base, path) {
+  const file = await readRunnerFile(api, base, path);
+  return JSON.parse(file.content);
+}
+async function pages(api, path) {
+  const out = [];
+  for (let page = 1; page <= 10; page += 1) {
+    const part = await api(`${path}${path.includes("?") ? "&" : "?"}per_page=100&page=${page}`);
+    if (!Array.isArray(part)) throw new Error("Progress inventory is incomplete");
+    out.push(...part);
+    if (part.length < 100) return out;
+  }
+  throw new Error("Progress inventory exceeds bounded pagination");
+}
+
+export function queuedProgress(item) {
+  return {
+    assignment: item.id,
+    state: "queued",
+    stage: "queued",
+    observed: false,
+    last_meaningful_progress_at: null,
+    latest_event: null,
+    identities: {},
+    next_action: item.next_action || null
+  };
+}
+export function progressResponse(project, progress = [], queue = []) {
+  return {
+    contract_version: PROGRESS_CONTRACT_VERSION,
+    observed_progress: true,
+    project,
+    generated_at: new Date().toISOString(),
+    progress,
+    queue
+  };
+}
+
+export async function callProgress(args, env = {}, apiOverride, cloudOverride) {
+  const counts={logical_requests:0,network_requests:0,cache_hits:0,coalesced:0,not_modified:0,blocked:0};
+  let oldest=null,latestQuota=null,observed=false;
+  const onReadObservation=event=>{
+    observed=true;if(Object.hasOwn(counts,event.event))counts[event.event]++;
+    if(event.observed_at&&(!oldest||event.observed_at<oldest))oldest=event.observed_at;
+    if(event.quota)latestQuota={...event.quota,observed_at:event.observed_at};
+  };
+  const transport=apiOverride || ((path, options) => githubApiRequest(env, path, options));
+  const api=(path,options={})=>{counts.logical_requests++;return transport(path,{...options,readCache:args.display_cache===true?'display':'revalidate',onReadObservation});};
+  const controlRepository = String(env?.RELAY_RUNNER_CONTROL_REPOSITORY || "lrnolivia/relay");
+  const control = `/repos/${controlRepository}`;
+  const registration = await jsonFile(api, control, `projects/${args.project}.json`);
+  const record = await jsonFile(api, control, registration.coordination.record);
+  const repoBase = `/repos/${registration.repository}`;
+  const [branches, prs] = await Promise.all([
+    pages(api, `${repoBase}/branches`),
+    pages(api, `${repoBase}/pulls?state=all`)
+  ]);
+  let cloud = null;
+  if (registration.cloud?.provider === "cloudflare" && registration.cloud.worker) {
+    try {
+      cloud = cloudOverride
+        ? await cloudOverride(registration.cloud.worker)
+        : await cloudWorkerSummary(env, registration.cloud.worker);
+    } catch (error) {
+      cloud = { script: registration.cloud.worker, error: error instanceof Error ? error.message : "Cloud evidence unavailable" };
+    }
+  }
+  const claims = record.claims.filter(item => !args.assignment || item.id === args.assignment);
+  const findings = branches
+    .filter(item => !record.claims.some(c => c.branch === item.name) && !record.legacy_branches.includes(item.name))
+    .map(item => ({ type: "unregistered_branch", branch: item.name }));
+  // Per-claim commit and check reads are independent; bounded fan-out keeps claim order and output identical.
+  const progress = await mapBounded(claims, PROGRESS_READ_CONCURRENCY, async claim => {
+    const branch = branches.find(item => item.name === claim.branch) || null;
+    const headSha = branch?.commit?.sha || claim.merged_head_sha || null;
+    const pr = prs.filter(item => item?.head?.ref === claim.branch)
+      .sort((a,b) => Date.parse(b.updated_at || b.created_at || 0) - Date.parse(a.updated_at || a.created_at || 0))[0] || null;
+    const [commit, checks] = headSha ? await Promise.all([
+      api(`${repoBase}/commits/${headSha}`).catch(() => null),
+      api(`${repoBase}/commits/${headSha}/check-runs?per_page=100`).then(got => Array.isArray(got?.check_runs) ? got.check_runs : [], () => [])
+    ]) : [null, []];
+    return deriveObservedProgress({ project: args.project, claim, branch, commit, pullRequest: pr, checks, cloud, findings });
+  });
+  const queue = record.queue
+    .filter(item => item.state === "queued" && (!args.assignment || item.id === args.assignment))
+    .map(queuedProgress);
+  return {...progressResponse(args.project, progress, queue),github_reads:{...counts,network_observed:observed,
+    mode:args.display_cache===true?'display-cache':'upstream-revalidated',max_display_age_ms:args.display_cache===true?15000:0,
+    oldest_observed_at:oldest,last_quota:latestQuota}};
+}

@@ -1,0 +1,56 @@
+/* One summary family for React and Inspector, in DOM reading order. */
+.project-context { margin: -16px 0 28px; min-width: 0; }
+.project-context-label { display: block; color: var(--color-text-secondary); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.project-context .project-tabs { margin: 0; padding-bottom: 4px; }
+.inspector-status { margin: -8px 0 20px; }
+.signal-deck { min-width: 0; margin: 0 0 38px; }
+.signal-track { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 12px; overflow: visible; padding: 2px 0 8px; }
+.signal-card {
+  --status-color: var(--status-quiet);
+  grid-column: span 5; min-width: 0; min-height: 144px;
+  display: grid; grid-template-columns: 58px minmax(0, 1fr) minmax(68px, .4fr);
+  grid-template-rows: auto 1fr; align-items: center; gap: 8px 14px;
+  padding: 20px; border: 0; border-radius: 24px;
+  background: var(--color-contrast); color: var(--color-text-primary);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-panel-cap) 22%, transparent), 0 8px 24px -14px #00000045;
+  animation: signal-arrive .32s ease-out both;
+}
+.signal-card:nth-child(4n + 1), .signal-card:nth-child(4n) { grid-column: span 7; }
+.signal-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.signal-card::before, .signal-card::after { content: none; }
+.signal-card[data-tone="good"], .signal-card[data-tone="done"] { --status-color: var(--status-success); }
+.signal-card[data-tone="act"] { --status-color: var(--status-attention); }
+.signal-card[data-tone="wait"] { --status-color: var(--status-external); }
+.signal-card[data-tone="warn"] { --status-color: var(--status-warning); }
+.signal-card[data-tone="bad"] { --status-color: var(--status-danger); }
+.signal-mark { grid-row: 1 / 3; width: 58px; height: 58px; display: grid; place-items: center; border-radius: 18px; background: var(--color-raised); color: var(--color-text-primary); }
+.signal-mark .relay-glyph { width: 30px; height: 30px; }
+.signal-label { grid-column: 2; color: var(--color-text-primary); font-family: "Momo Trust Display", Inter, system-ui, sans-serif; font-size: 21px; font-weight: 400; line-height: 1.15; }
+.signal-card > strong { grid-column: 3; grid-row: 1 / 3; margin: 0; padding: 14px 8px; border-radius: 16px; background: var(--color-raised); color: var(--status-color); font-size: clamp(22px, 2.6vw, 34px); line-height: 1.1; text-align: center; overflow-wrap: anywhere; }
+.signal-card > strong[data-value-kind="text"] { font-family: Inter, system-ui, sans-serif; font-size: 14px; line-height: 1.35; }
+.signal-card p { grid-column: 2; align-self: start; margin: 0; max-width: 42ch; color: var(--color-text-secondary); font-size: 13px; line-height: 1.4; }
+@keyframes signal-arrive { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (max-width: 1100px) {
+  .signal-card, .signal-card:nth-child(n) { grid-column: span 6; grid-template-columns: 44px minmax(0, 1fr) 68px; gap: 8px 10px; padding: 16px; }
+  .signal-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .signal-mark { width: 44px; height: 44px; border-radius: 14px; }
+  .signal-mark .relay-glyph { width: 26px; height: 26px; }
+  .signal-label { font-size: 19px; }
+}
+@media (max-width: 760px) {
+  .signal-track { grid-template-columns: minmax(0, 1fr); }
+  .signal-card, .signal-card:nth-child(n) { grid-column: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .signal-card { animation: none; transform: none; } }
+
+
+.signal-ratio { align-items:center; gap:8px; font-size:11px; color:var(--color-text-secondary); }
+.signal-ratio svg { width:42px; height:42px; flex:0 0 42px; transform:rotate(-90deg); }
+.signal-ratio circle { fill:none; stroke-width:4; }
+.ratio-track { stroke:var(--color-raised); }
+.ratio-value { stroke:var(--status-color,var(--status-info)); stroke-linecap:round; transition:stroke-dasharray .2s ease-out; }
+:root[data-presentation-richness=rich] .signal-card > strong[data-value-kind=number] { animation:signal-count-change .2s ease-out; }
+@keyframes signal-count-change { from { transform:translateY(3px); filter:blur(1px); } to { transform:none; filter:none; } }
+@media(prefers-reduced-motion:reduce) { .ratio-value { transition:none; } :root[data-presentation-richness=rich] .signal-card > strong { animation:none; } }
+:root[data-presentation-motion=calm] .ratio-value { transition:none; }
+:root[data-presentation-motion=calm][data-presentation-richness=rich] .signal-card > strong { animation:none; }

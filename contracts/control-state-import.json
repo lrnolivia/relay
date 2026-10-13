@@ -1,0 +1,705 @@
+{
+  "source_repository": "lrnolivia/loew-runner",
+  "source_sha": "3972446e667b956961f21eaeeb98d29a99f6b8fb",
+  "files": [
+    {
+      "path": "LOEW_CHAT_BIBLE.md",
+      "blob": "bf1b00d236430c6890d68165bd45639e9d425a98"
+    },
+    {
+      "path": "LOEW_CHAT_BIBLE_CURRENT.md",
+      "blob": "094101fadf3f4c9ebd3e6e448fa1f77da5261c1d"
+    },
+    {
+      "path": "assignments/field-repo-cleanup-reorg.json",
+      "blob": "fedfd1226a2389498af53b57e04bfa64c46d0dc7"
+    },
+    {
+      "path": "assignments/runner-3-human-control-plane.json",
+      "blob": "ce1a7407ff19589f62f323ffd67c515053fa31e0"
+    },
+    {
+      "path": "contracts/human-qa-helper.json",
+      "blob": "eee27dc81bf2805191435a2adeedcb9e27b5a42a"
+    },
+    {
+      "path": "contracts/manifest.json",
+      "blob": "241707de78efa1d280c95376132f08f94e3e2ecf"
+    },
+    {
+      "path": "coordination/bazzite-custom.json",
+      "blob": "227ac9fca5a35b7474a6de4d256b26f476422377"
+    },
+    {
+      "path": "coordination/field.json",
+      "blob": "8823c4c6891f5696c47692db620071a6998337ac"
+    },
+    {
+      "path": "coordination/gamebridge.json",
+      "blob": "bb91ce2153224fb7f9533871aff3f11aacd909c4"
+    },
+    {
+      "path": "coordination/loew-inspector.json",
+      "blob": "dcd0f096923239188486cf5c259159de34ee1dc3"
+    },
+    {
+      "path": "coordination/loew-runner.json",
+      "blob": "5d7b98624d6c2b014b587f013003b6011fd57d11"
+    },
+    {
+      "path": "coordination/loew-shell.json",
+      "blob": "e5b4dbb7ae4f08d32cc292802a8e78fefae9d96d"
+    },
+    {
+      "path": "coordination/loewfi.json",
+      "blob": "67bee3938f8d22f843c29fab2ac75b542e2ff264"
+    },
+    {
+      "path": "coordination/loewtorials.json",
+      "blob": "ee70c8398170c4e2f8197e76cd88c05d9b068312"
+    },
+    {
+      "path": "coordination/rtxforge.json",
+      "blob": "eb1a5fa4610bac0fba180a8d011f321321d84320"
+    },
+    {
+      "path": "coordination/thetake.json",
+      "blob": "09fea0140869b5da42153814d3a60715dfd2f5ac"
+    },
+    {
+      "path": "docs/ACCESS_CONTROL.md",
+      "blob": "fba447e326247ab2cde63bd7e0a47eeb6fb4e04d"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "blob": "6d61f5684e6518ee79dc1fa369537d938133e220"
+    },
+    {
+      "path": "docs/FIELD_GUIDANCE_CLEANUP_MANIFEST.md",
+      "blob": "6f7248a9e17d14c73e7fda5958429fb63fe54dce"
+    },
+    {
+      "path": "docs/FIELD_NIGHT_SHIFT_MIGRATION.md",
+      "blob": "d60c8ab96c55129628f8539f95459295c0cae670"
+    },
+    {
+      "path": "docs/FIELD_REPOSITORY_REORGANIZATION.md",
+      "blob": "a7447895ecc0d2ac9edecc58f40cf9054986417e"
+    },
+    {
+      "path": "docs/HUMAN_QA_HELPER.md",
+      "blob": "718795e1d8bf34c8d7b2d28d94424534a6338887"
+    },
+    {
+      "path": "docs/RUNNER_3_0_HUMAN_CONTROL_PLANE.md",
+      "blob": "43299d5d171d24863f7e2bd1b9994633441f15c5"
+    },
+    {
+      "path": "docs/STATE.md",
+      "blob": "c5c49df48e06bc2307d83bdb6dafa591d57a9288"
+    },
+    {
+      "path": "docs/TERRA_PRIME_DASHBOARD_MAPPING.md",
+      "blob": "50cf4733534d94ed7770decbeed8f45dec3ab2bb"
+    },
+    {
+      "path": "docs/VISUAL_EVIDENCE_POLICY.md",
+      "blob": "79d13e13f8e4d86c62704a8f7ffcb4603af23b87"
+    },
+    {
+      "path": "docs/WORK_COORDINATION.md",
+      "blob": "2973b54ff4e3d4e1eaf4dc5facc610d941471bf6"
+    },
+    {
+      "path": "docs/archive/README-0.6-baseline.md",
+      "blob": "40da2dddbd501a6530186f31a3c69c8ace318ea8"
+    },
+    {
+      "path": "docs/bazzite-custom/ARCHITECTURE.md",
+      "blob": "d154ba90de57ac91c44582c27901b7cabe635864"
+    },
+    {
+      "path": "docs/bazzite-custom/DECISIONS.md",
+      "blob": "bf4aeb126083cd6024b40bad524040cefcfe7bc3"
+    },
+    {
+      "path": "docs/bazzite-custom/NOTES.md",
+      "blob": "4f206989fc7bdb2ca9a29c458f1c917995934796"
+    },
+    {
+      "path": "docs/bazzite-custom/OPERATIONS.md",
+      "blob": "e030acacaf0cd488f0de9d73481b521bcd3a1015"
+    },
+    {
+      "path": "docs/bazzite-custom/README.md",
+      "blob": "efe953880083bc0c49272eaa1152e529a6861cd1"
+    },
+    {
+      "path": "docs/bazzite-custom/RESEARCH.md",
+      "blob": "d98d71d10ac890bc6b5ee686e0cbb225c5aa43d4"
+    },
+    {
+      "path": "docs/bazzite-custom/STATE.md",
+      "blob": "be73182b871312bdc0f7d66528570ec232a4aaa0"
+    },
+    {
+      "path": "docs/bazzite-custom/WORKER_CONTEXT.md",
+      "blob": "8f0488b980fb496d9b7f30256d3a3321fa96bba8"
+    },
+    {
+      "path": "docs/field/README.md",
+      "blob": "6f9913bf7b438ec957be24003f8ebdc8995a64b8"
+    },
+    {
+      "path": "docs/field/handoffs/FIELD_MEDIA_SYSTEM_PLAN.md",
+      "blob": "ce05017170ecbd7fb655ccaaddbd960b2dec4a51"
+    },
+    {
+      "path": "docs/field/handoffs/FIELD_MOBILE_INTERACTION_SHELL_20260929.md",
+      "blob": "bc9d4d2db8a11922f2c85893f93b5ff7a91ac039"
+    },
+    {
+      "path": "docs/field/handoffs/figui3/CONTINUATION_2026-09-27.md",
+      "blob": "9a504bc44ffe74b32504fc353ce5dc3dbdb513c0"
+    },
+    {
+      "path": "docs/field/handoffs/figui3/FIELD_DESIGN_MODE_GAP_AUDIT_20260927.md",
+      "blob": "ada43ffbec7b4693a7cf0b1b69422acd9d0166f5"
+    },
+    {
+      "path": "docs/field/handoffs/figui3/FIELD_FIGUI3_CANVAS_RECOVERY_V2_HANDOFF.md",
+      "blob": "e79aa47622e8f67ac4f3708abf396d527429d17a"
+    },
+    {
+      "path": "docs/field/handoffs/figui3/FIELD_FIGUI3_CANVAS_VISIBILITY_REGRESSION_ADDENDUM.md",
+      "blob": "c30dd1b5633197ea0c58bf1088c41e006077d4df"
+    },
+    {
+      "path": "docs/field/handoffs/figui3/FIELD_FIGUI3_INSPECTOR_PROVENANCE_WRITE_TARGET_WORKER_HANDOFF.md",
+      "blob": "ac87b252050f81e0f791b5126264bd42d5c8013f"
+    },
+    {
+      "path": "docs/field/handoffs/figui3/FIELD_FIGUI3_SELECTION_INSPECTOR_HANDOFF.md",
+      "blob": "56e3f477d8b05c27739f2718d415c60b7bed0b98"
+    },
+    {
+      "path": "docs/field/handoffs/figui3/FIELD_FIGUI3_SELECTION_LOCATE_SKELETON_POLISH_WORKER_HANDOFF.md",
+      "blob": "f6eb81a14d66f8aadb775a92d1a0605c5df8167a"
+    },
+    {
+      "path": "docs/field/product/docs/FIGMA_BEHAVIOR_PARITY.md",
+      "blob": "470d603388701ec609a26fea72e9143338bc7bbd"
+    },
+    {
+      "path": "docs/field/product/docs/PRODUCT_LANGUAGE.md",
+      "blob": "cb31abda45922bda99d85128663c90b3f9890ddd"
+    },
+    {
+      "path": "docs/field/qa/AUTHENTICATED_QA.md",
+      "blob": "415516aed832f4392d43569fe5c211f77a80a9b1"
+    },
+    {
+      "path": "docs/field/qa/BROWSER_PREVIEW_QA_PROTOCOL.md",
+      "blob": "22384fa5469c06081cdec9e76600b0734a20cbe9"
+    },
+    {
+      "path": "docs/field/qa/QA_CLASSIFICATION.md",
+      "blob": "9d3006515d2dfc101408ea1d59fc877dd7a7f951"
+    },
+    {
+      "path": "docs/field/reorganization/2026-09-30-inventory.json",
+      "blob": "474909497506f6c9bd247b83316b1f1e3d11e542"
+    },
+    {
+      "path": "docs/field/reorganization/CANVAS_PROMOTION_RECEIPT_20260930.md",
+      "blob": "066c7d6e88bef8b3ba5346c80aff6a3244bed984"
+    },
+    {
+      "path": "docs/field/reorganization/DASHBOARD_PRODUCT_CHECKPOINT_20260930.md",
+      "blob": "43434490507d117527d741158ca2d77b38612b75"
+    },
+    {
+      "path": "docs/field/reorganization/DEFERRED_CONNECTED_PANEL_REQUIREMENTS_20260930.md",
+      "blob": "86f08cc2986dc433699756c47ed544e6ce0d28e5"
+    },
+    {
+      "path": "docs/field/reorganization/EXECUTION_CHECKPOINT_20260930.md",
+      "blob": "c73c643acce445aa10e575be2266c05ea99ea1a9"
+    },
+    {
+      "path": "docs/field/reorganization/MAIN_FIELD_WORKER_CONSOLIDATION.md",
+      "blob": "73118530b68fa1b592142bba473179c97292a4f1"
+    },
+    {
+      "path": "docs/field/reorganization/PUBLICATION_EVIDENCE_20260930.json",
+      "blob": "a13cd3b15cd5e70436d7eb3e825b675f37196fbb"
+    },
+    {
+      "path": "docs/field/reorganization/PUBLICATION_HANDOFF_20260930.md",
+      "blob": "9cae31027610b74ffb494664d597cef3ae32e6e9"
+    },
+    {
+      "path": "docs/field/reorganization/recovery/dashboard-unpublished-20260930.patch",
+      "blob": "62df8c34d21a11a35ea3d5168a3c4724dbb0ef80"
+    },
+    {
+      "path": "docs/field/reorganization/recovery/reserved-shared-validation-NOT-APPLIED.patch",
+      "blob": "b4ca08906b1e8c20642f9860fb2865d2cdcf13ed"
+    },
+    {
+      "path": "docs/gamebridge/README.md",
+      "blob": "e1bcaf95a54dbd50321f280a14b318b2e6a8fa91"
+    },
+    {
+      "path": "docs/loew-inspector/README.md",
+      "blob": "37ee06132b574c4474a2ad5795f6009ea4ae5d00"
+    },
+    {
+      "path": "docs/loew-inspector/STATE.md",
+      "blob": "42b38518236ef97a163dab4ceddf1c1624f45ba0"
+    },
+    {
+      "path": "docs/loew-inspector/handoffs/RELAY_WORKER_HANDOFF.md",
+      "blob": "d3359e5abeb0fa174577d7805a272756613c5efb"
+    },
+    {
+      "path": "docs/loew-runner/README.md",
+      "blob": "ccc70acf74b8cb0773c97ab5b7dc27327214b3d0"
+    },
+    {
+      "path": "docs/loew-runner/guides/motion-guide-for-claude.md",
+      "blob": "dc4c16d63fd64f45bb9bd357aef8c8f0452901c3"
+    },
+    {
+      "path": "docs/loew-shell/IMPLEMENTATION_PLAN.md",
+      "blob": "d6947ab65fede4592c5462c55e79ae846bb46077"
+    },
+    {
+      "path": "docs/loew-shell/README.md",
+      "blob": "f1634ea3adefca22e531aa657fb1b059abdf68ba"
+    },
+    {
+      "path": "docs/loewfi/AGENT_RULES.md",
+      "blob": "9a21143adbfbb1823d4bf88a02b0c5a983a7a137"
+    },
+    {
+      "path": "docs/loewfi/ARCHITECTURE.md",
+      "blob": "ad1b345e593b6ec9127011a532951fc29d97d469"
+    },
+    {
+      "path": "docs/loewfi/DECISIONS.md",
+      "blob": "95aaa7f6c9b6cf1fb661f20ac536e7c9f2bf5311"
+    },
+    {
+      "path": "docs/loewfi/NOTES.md",
+      "blob": "2e598048fc8a0085148b6d9f2b12520cac7be95b"
+    },
+    {
+      "path": "docs/loewfi/OPERATIONS.md",
+      "blob": "1e93cb3ec089a8db2f6540f7b0de5eb076dac909"
+    },
+    {
+      "path": "docs/loewfi/README.md",
+      "blob": "e159aed392afa9ad1b66a0fb2755d5c1cb65a400"
+    },
+    {
+      "path": "docs/loewfi/RESEARCH.md",
+      "blob": "67f0abc7cd2efe98e502776e66310f6f0f17813e"
+    },
+    {
+      "path": "docs/loewfi/STATE.md",
+      "blob": "9d22c2f3788d936a32a5ec981175f1513050c52d"
+    },
+    {
+      "path": "docs/loewfi/TURNSTILE-DASHBOARD-STEPS.md",
+      "blob": "84358b80de1bef08e2741765a87b4231fd038865"
+    },
+    {
+      "path": "docs/loewfi/WORKER_CONTEXT.md",
+      "blob": "c9a29e6c62901a303d7ec38eb697479a78c29e01"
+    },
+    {
+      "path": "docs/loewfi/archive/README.md",
+      "blob": "3f1d4ef56cd5e332fa21553ec8c292a03610793f"
+    },
+    {
+      "path": "docs/loewfi/archive/architecture/MILESTONE-1-AUDIT.md",
+      "blob": "d7bf8818b9ac2b5e349f102092ded8cd25e963c7"
+    },
+    {
+      "path": "docs/loewfi/archive/architecture/MILESTONE-10-DRAFTS-AUTOSAVE.md",
+      "blob": "46dd0f27bcbaeedcb69fcd56976ab68caa4709b7"
+    },
+    {
+      "path": "docs/loewfi/archive/architecture/MILESTONE-2-CONTENT-MODEL.md",
+      "blob": "a902de08c3de08e89cdbf625378b84d948ded8f0"
+    },
+    {
+      "path": "docs/loewfi/archive/architecture/MILESTONE-3-RENDERER.md",
+      "blob": "7a8f513e68dcc6c3ec244bcf153b2f97c9b613bd"
+    },
+    {
+      "path": "docs/loewfi/archive/architecture/MILESTONE-4-CMS-API.md",
+      "blob": "c7e54ab31b40bc7ebea2268bd0fb341b303d303f"
+    },
+    {
+      "path": "docs/loewfi/archive/architecture/MILESTONE-5-ADMIN-ARCHITECTURE.md",
+      "blob": "f5023e3cacc52945a2cffd18f07a5ad10b1b54cb"
+    },
+    {
+      "path": "docs/loewfi/archive/architecture/MILESTONE-6-PROJECT-MANAGEMENT.md",
+      "blob": "f2c7cdc190afcb1052df83e27f01fb0e1a2de172"
+    },
+    {
+      "path": "docs/loewfi/archive/architecture/MILESTONE-7-DESIGN-PROJECT-EDITOR.md",
+      "blob": "3500ec80a292166762777ad274839134142578ea"
+    },
+    {
+      "path": "docs/loewfi/archive/architecture/MILESTONE-8-PHOTOGRAPHY-EDITOR.md",
+      "blob": "8c3600f70f56576330e8277756d4d03b6172749b"
+    },
+    {
+      "path": "docs/loewfi/archive/architecture/MILESTONE-9-MEDIA-PIPELINE.md",
+      "blob": "fe1f78090769dc3257a82436e344733ec37e7f2f"
+    },
+    {
+      "path": "docs/loewfi/archive/architecture/SYSTEM-BOUNDARIES.md",
+      "blob": "0cab7c0d36db65c98459362209181ea6932d6607"
+    },
+    {
+      "path": "docs/loewfi/product/portfolio/ASSET-NAMING.md",
+      "blob": "3da89a1caa4558932f6ec0f6512467e69bb7b4d5"
+    },
+    {
+      "path": "docs/loewfi/product/portfolio/README.md",
+      "blob": "93433f28a9341ce1edff6e1594b96b0faafb14b1"
+    },
+    {
+      "path": "docs/loewtorials/CLOUDFLARE-SETUP.md",
+      "blob": "e6110c5c55e0cdadd3b831b3c2e87381df577749"
+    },
+    {
+      "path": "docs/loewtorials/HANDOFF.md",
+      "blob": "218b957ca4ef0980b12327ac82df7d7761159f8b"
+    },
+    {
+      "path": "docs/loewtorials/LLM-HELP-SETUP.md",
+      "blob": "7b2c5f118fe98479b629c94abe69f7d3fd2cf360"
+    },
+    {
+      "path": "docs/loewtorials/PROJECT-GUIDE.md",
+      "blob": "7d30ee6bd70370bf88d6068687ab0437d5a230d5"
+    },
+    {
+      "path": "docs/loewtorials/README.md",
+      "blob": "361df8c338c7e313d2e844416bab63ab5d6b9370"
+    },
+    {
+      "path": "docs/rtxforge-mfg/README.md",
+      "blob": "1ff59d40cb9450931ff0b0f5874c201bfe6054f7"
+    },
+    {
+      "path": "docs/rtxforge/APPIMAGE.md",
+      "blob": "0994c008a1a8ed7713d53d136e3e880b301651ec"
+    },
+    {
+      "path": "docs/rtxforge/AUDIT.md",
+      "blob": "e61ff358f3aa8999b82d1445520a19294f4a3033"
+    },
+    {
+      "path": "docs/rtxforge/PROVENANCE.md",
+      "blob": "f1de0446946067629579975a091e6190b14daafe"
+    },
+    {
+      "path": "docs/rtxforge/README.md",
+      "blob": "30e97368073b95c6513ee07b76fa08c75f8bd4eb"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.3.1.md",
+      "blob": "19c3fdafc2f47ae4bf20a91b819f5735e1bf4f53"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.4.2.md",
+      "blob": "b15e21ebc2e53c94e8daba17dff85e7969e59671"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.4.3.md",
+      "blob": "d87e0c79530b5701b1f8de2ff2361cf41022f957"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.0.md",
+      "blob": "185887fa4f6b73ead277171b9dd858f06bda1a0d"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.1.md",
+      "blob": "acecb7af07f10b259b179ca5220ad9238fc60073"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.2.md",
+      "blob": "cbbe9c7f89680594840267edb1db91689b81a741"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.3.md",
+      "blob": "74efc079d3e84072c47616438c9c58e2573dc7e8"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.4.md",
+      "blob": "83d36184bfb8fbdb7c2d40bb2935f783c197853d"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.5.md",
+      "blob": "8889000d9c0522f675c8599837bfdb455f0e7911"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.6.md",
+      "blob": "9ceb6fdb396c4be042ff67b79f3c706e57457349"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.7.md",
+      "blob": "4694d8b050433a2bf664a3d19a43699b91dc2be4"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.8.md",
+      "blob": "edac9786fd55b8187ddff5ef2ce9daaffccf794f"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.9.1.md",
+      "blob": "426d076af60c816eb9b9fc726078d37da3e9843a"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.9.2.md",
+      "blob": "a5b801a85afb293c381a28124432ad31a99f1ba4"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.9.3.md",
+      "blob": "ef6d6e28ee8ad00775d25cb47a55a67391f79c91"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.9.4.md",
+      "blob": "7e7891fe8e23bd7c1be44bbf70506de11cbd1993"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.5.9.md",
+      "blob": "015ba46d8585e80d538a485bce386add1227bc7c"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.6.0.md",
+      "blob": "8cd49b382d046c24c3099dacf859b0953261d3a9"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.6.1.md",
+      "blob": "e28475f069e5c97c9db8602983ce4972d7948290"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.6.2.md",
+      "blob": "db7709aae952139402c61d1dde9c6a9317215705"
+    },
+    {
+      "path": "docs/rtxforge/RELEASE-0.7.0.md",
+      "blob": "863a5272e48a01c3c751a6fe1416ddb62e591ca3"
+    },
+    {
+      "path": "docs/rtxforge/WINDOWS_REBUILD.md",
+      "blob": "51a63b4ccf3b78748916a6031e7e5a5663fc06ba"
+    },
+    {
+      "path": "docs/rtxforge/archive/patches/rtxforge-card-list-accent-pass-v2.patch",
+      "blob": "6b66c885feaa2d41c7cf18805e0dd7dadb1131e0"
+    },
+    {
+      "path": "docs/rtxforge/archive/patches/rtxforge-column-view-list.patch",
+      "blob": "8a45d119b5779923cdf8c771c61417593e620957"
+    },
+    {
+      "path": "docs/rtxforge/archive/patches/rtxforge-columnview-finish.patch",
+      "blob": "b231dc7c59822a4332d1ace42fbe6b8e9d890892"
+    },
+    {
+      "path": "docs/rtxforge/archive/patches/rtxforge-columnview-polish-v2.patch",
+      "blob": "c7a1fd93f8d30f61eab0f1f9719640eaa6f9ab77"
+    },
+    {
+      "path": "docs/rtxforge/archive/patches/rtxforge-columnview-surgical-fix-v2.patch",
+      "blob": "3bd9c7a2113bdfac1725eb85669b0a9106daea1a"
+    },
+    {
+      "path": "docs/rtxforge/archive/patches/rtxforge-hero-list-polish.patch",
+      "blob": "7af616612b8dabacf618e80f1d0052c9237b5b9e"
+    },
+    {
+      "path": "docs/rtxforge/archive/patches/rtxforge-list-alignment-fix.patch",
+      "blob": "b98c27d45636880db5532a57db96911fca39b96f"
+    },
+    {
+      "path": "docs/rtxforge/archive/patches/rtxforge-public-cleanup.patch",
+      "blob": "4ee9ee6a87c37fe0f516e5850f31a08ad6ef3a79"
+    },
+    {
+      "path": "docs/rtxforge/archive/patches/ui-request.patch",
+      "blob": "26e7f018ef3f9100071f9000bb31e0c1ca345ca9"
+    },
+    {
+      "path": "docs/rtxforge/baselines/mfg-v1.json",
+      "blob": "9f4a2af9c8185ff88f3505767887833ee31c1e1b"
+    },
+    {
+      "path": "docs/rtxforge/baselines/mfg-v2.json",
+      "blob": "af1d2f090d18164568ebdc36f447b4ba13869cf3"
+    },
+    {
+      "path": "docs/rtxforge/baselines/proton-nr-layer-v1.json",
+      "blob": "6d0de493f7c0a0057d09d61f7aaa4e6f162450cb"
+    },
+    {
+      "path": "docs/rtxforge/baselines/standalone-diff.json",
+      "blob": "bde60ee3d7a1687a4317bc9443683c66d322760b"
+    },
+    {
+      "path": "docs/rtxforge/notes.md",
+      "blob": "fff3bd27101dcebfde952acfbd22b9d8a6933f5f"
+    },
+    {
+      "path": "docs/rtxforge/product/docs/DESKTOP.md",
+      "blob": "ce553f65cc1671b5f02541a19acd6bd4d79ae2ba"
+    },
+    {
+      "path": "docs/rtxforge/product/docs/DLSS-FILES.md",
+      "blob": "fc448f41b45493edb601d792048ace848d4bb9e4"
+    },
+    {
+      "path": "docs/rtxforge/product/docs/NR-PROTON-LAYER.md",
+      "blob": "b11b9ae6537bab285f699b5e4c458a620f9fb985"
+    },
+    {
+      "path": "docs/rtxforge/product/docs/NR-STRENGTH-DESIGN.md",
+      "blob": "4a4b509fb6762e132e5e6ef162fba051ab648b5c"
+    },
+    {
+      "path": "docs/rtxforge/product/docs/redesign/LIBADWAITA-REDESIGN-GUIDE.md",
+      "blob": "483ff8adc7c53f2c8f187e17fb1d16b88a0712c9"
+    },
+    {
+      "path": "docs/rtxforge/redesign/ASTRA-CLASSIC-UI-HANDOFF-2026-09-19.md",
+      "blob": "468877b4d243e5d524c0bfd7b39e0e5518a7cd93"
+    },
+    {
+      "path": "docs/rtxforge/redesign/CURRENT-STATUS.md",
+      "blob": "4c23968369c63b5f5f8073b8434b2c42d853dea0"
+    },
+    {
+      "path": "docs/rtxforge/redesign/DEVELOPMENT-HANDOFF.md",
+      "blob": "254a9a9c5d6577b2bde7585bf7e87560c87736c2"
+    },
+    {
+      "path": "docs/rtxforge/redesign/DLSS-UNLOCKED-ADA-MFG-HANDOFF.md",
+      "blob": "88d812e3b60955edb1370e2d768977d13aec928d"
+    },
+    {
+      "path": "docs/rtxforge/redesign/FRESH-CHAT-CONTINUATION.md",
+      "blob": "ebb67ab980cba22545aac75af33a9abe752827bc"
+    },
+    {
+      "path": "docs/rtxforge/redesign/FUTURE-WORKER-GUIDE.md",
+      "blob": "ca2212e0ed2f3947aeb12d6c648f65d7efa5abeb"
+    },
+    {
+      "path": "docs/thetake/CLOUDFLARE_SETUP.md",
+      "blob": "ec52da7f203a4ecb6247648e8cbea4c14316dc78"
+    },
+    {
+      "path": "docs/thetake/README.md",
+      "blob": "ded5969d3a4d4f88fe1227474e3db57796cf2f60"
+    },
+    {
+      "path": "night-shift/ASSIGNMENT_AUTHORING.md",
+      "blob": "816f3cbc429b681191a96519c17366fa1e68cfbf"
+    },
+    {
+      "path": "night-shift/BLOCKER_POLICY.md",
+      "blob": "c6f424c23b66be0be72c1eb19f219f6460d4007f"
+    },
+    {
+      "path": "night-shift/CONTRACT.md",
+      "blob": "96be4047bb9684205faf58f68214ee2c0fe49c2b"
+    },
+    {
+      "path": "night-shift/PROMOTION_POLICY.md",
+      "blob": "de5574a94a4aa364967b9d5bc0ca172afb715497"
+    },
+    {
+      "path": "projects/bazzite-custom.json",
+      "blob": "2f140b7c7201a494f4d52ac6d4452f915a737a61"
+    },
+    {
+      "path": "projects/field.json",
+      "blob": "47acf31deead295bd2da0edaa6ea71a4b3a5697f"
+    },
+    {
+      "path": "projects/gamebridge.json",
+      "blob": "9b6e53d662f5b0aaab0728995b098580d7a968ee"
+    },
+    {
+      "path": "projects/loew-inspector.json",
+      "blob": "e339e98210db753755b58db30d34391bd406bd13"
+    },
+    {
+      "path": "projects/loew-runner.json",
+      "blob": "455bc572174e5783c625c67dedcebabc22f8b5a1"
+    },
+    {
+      "path": "projects/loew-shell.json",
+      "blob": "bbbfbe93ced3a9ab562194932f55500678ff77e0"
+    },
+    {
+      "path": "projects/loewfi.json",
+      "blob": "559ac514edfce8f3084b9d0719edd761ffb5b643"
+    },
+    {
+      "path": "projects/loewtorials.json",
+      "blob": "614c651f1aece15f41ec87974f7b6839f806a13b"
+    },
+    {
+      "path": "projects/rtxforge-mfg.json",
+      "blob": "ffe92e9c26f3b019105cb39b0ed559e962189099"
+    },
+    {
+      "path": "projects/rtxforge.json",
+      "blob": "291a38c3518c8dfdf283d5521561d91355b38180"
+    },
+    {
+      "path": "projects/thetake.json",
+      "blob": "6671d4150ba6003d622b0bd5117bd6b2971256cf"
+    },
+    {
+      "path": "reports/field-product-architecture.md",
+      "blob": "925173c1466e7bb859255c5aeaeecef43e751f58"
+    },
+    {
+      "path": "reports/field.md",
+      "blob": "45f9d31c48947cfa0571c429fb67315e90a9c640"
+    },
+    {
+      "path": "state/field.json",
+      "blob": "6276511ec1649a486b7e079611196f41723fa3b4"
+    },
+    {
+      "path": "templates/project.json",
+      "blob": "7916b33c8715e8b1f1afb9c5f0257cf3343c7e09"
+    },
+    {
+      "path": "workers/field.json",
+      "blob": "eb92a8b65a6881225ce55deaaa56aac7825d910f"
+    }
+  ],
+  "counts": {
+    "coordination": 10,
+    "projects": 11,
+    "contracts": 2,
+    "workers": 1,
+    "state": 1,
+    "assignments": 2,
+    "reports": 2,
+    "docs": 136
+  },
+  "r2": "Existing EVIDENCE binding and object keys remain unchanged; no byte migration."
+}

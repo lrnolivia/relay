@@ -1,0 +1,92 @@
+{
+  "id": "relay",
+  "name": "relay",
+  "repository": "lrnolivia/relay",
+  "managed": true,
+  "default_branch": "main",
+  "implementation": {
+    "branch_prefixes": [
+      "relay/",
+      "loew-inspector/"
+    ],
+    "excluded_branches": [
+      "main"
+    ],
+    "draft_pr_required": true,
+    "merge_method": "squash"
+  },
+  "runtime": {
+    "kind": "node",
+    "node_version": "22",
+    "package_manager": "npm",
+    "lockfile": "package-lock.json",
+    "install": "npm ci"
+  },
+  "validation": {
+    "test": "npm test",
+    "required": [
+      "install",
+      "test"
+    ]
+  },
+  "qa": {
+    "authority": "lrnolivia/relay@main/LOEW_CHAT_BIBLE.md#11-qa-law",
+    "runner_first": true,
+    "runtime_required_for_web_visible_changes": true,
+    "routine_engine": "deterministic-inspector-github-chromium",
+    "browser_run": "exploratory-or-session-only"
+  },
+  "promotion": {
+    "automatic": true,
+    "repair_artificial_blockers": true,
+    "exact_sha_gate": true,
+    "max_transient_retries": 2,
+    "auto_update_branch": true,
+    "auto_create_pr": true,
+    "auto_merge": true
+  },
+  "safety": {
+    "force_push": false,
+    "bypass_required_checks": false,
+    "semantic_conflict_resolution": "block",
+    "dependency_intent_changes": "block"
+  },
+  "guidance": {
+    "universal_authority": "lrnolivia/relay@main/LOEW_CHAT_BIBLE.md",
+    "local_bootstrap": "AGENTS.md",
+    "historical_repository_targets_are_non_authoritative": true
+  },
+  "coordination": {
+    "contract": "docs/WORK_COORDINATION.md",
+    "record": "coordination/relay.json",
+    "max_active_branches": 4,
+    "lease_hours": 12,
+    "one_active_branch_per_owner": true,
+    "resume_existing_assignment": true,
+    "atomic_claim_required": true,
+    "expired_claim_retains_ownership": true,
+    "audit_workflow": "coordination.yml",
+    "cleanup": "merged-managed-branches-only",
+    "status": "enabled",
+    "admission_workflow": "lrnolivia/relay:.github/workflows/runner-coordination.yml",
+    "cleanup_workflow": "lrnolivia/relay:.github/workflows/runner-coordination.yml"
+  },
+  "migrated_repository_from": "lrnolivia/loew-inspector",
+  "cloud": {
+    "provider": "cloudflare",
+    "worker": "relay",
+    "write": true,
+    "transport": "workers-builds",
+    "production_branch": "main",
+    "build_command": "npm run build",
+    "deploy_command": "node scripts/autonomy-gate.mjs relay && npx wrangler deploy",
+    "manual_upload": "disabled",
+    "rollback": {
+      "identity_url": "https://relay.loew.fi/",
+      "health_url": "https://relay.loew.fi/health",
+      "source_header": "X-Relay-Source-Sha",
+      "compatibility_header": "X-Relay-Release-Compatibility",
+      "compatibility_id": "relay-autonomy-v1"
+    }
+  }
+}

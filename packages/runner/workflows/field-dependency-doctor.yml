@@ -1,0 +1,225 @@
+name: field dependency doctor
+
+on:
+  workflow_dispatch:
+    inputs:
+      field_ref:
+        description: Field branch, tag, or SHA to verify
+        required: false
+        default: main
+        type: string
+  schedule:
+    - cron: "23 10 * * 1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: field-dependency-doctor-v2
+  cancel-in-progress: false
+
+jobs:
+  doctor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout runner
+        uses: actions/checkout@v6
+        with:
+          path: runner
+
+      - name: Checkout field
+        uses: actions/checkout@v6
+        with:
+          repository: lrnolivia/field
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.field_ref || 'main' }}
+          path: target
+
+      - name: Record target Field revision
+        working-directory: target
+        run: |
+          echo "field_ref=${{ github.event_name == 'workflow_dispatch' && inputs.field_ref || 'main' }}"
+          echo "field_sha=$(git rev-parse HEAD)"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: target/package-lock.json
+
+      - name: Environment
+        id: environment
+        run: |
+          mkdir -p doctor
+          echo "node=$(node --version)" >> "$GITHUB_OUTPUT"
+          echo "npm=$(npm --version)" >> "$GITHUB_OUTPUT"
+          {
+            echo "node: $(node --version)"
+            echo "npm: $(npm --version)"
+            echo "os: $(uname -a)"
+          } | tee doctor/environment.txt
+
+      - name: Clean dependency install
+        id: install
+        timeout-minutes: 10
+        continue-on-error: true
+        working-directory: target
+        run: |
+          set -o pipefail
+          npm ci 2>&1 | tee ../doctor/npm-ci.log
+
+      - name: Classify initial install failure
+        if: ${{ always() && steps.install.outcome != 'success' }}
+        continue-on-error: true
+        run: |
+          node runner/scripts/classify-install.mjs doctor/npm-ci.log > doctor/report.md
+          node runner/scripts/classify-install.mjs doctor/npm-ci.log --json > doctor/result.json
+          cat doctor/report.md
+
+      - name: Generate lockfile repair candidate
+        id: repair_generate
+        timeout-minutes: 10
+        if: ${{ always() && steps.install.outcome != 'success' }}
+        continue-on-error: true
+        working-directory: target
+        run: |
+          set -o pipefail
+          npm install --package-lock-only --ignore-scripts 2>&1 | tee ../doctor/repair-generate.log
+          cp package-lock.json ../doctor/package-lock.repaired.json
+          git diff -- package-lock.json > ../doctor/package-lock.diff
+          git diff --stat -- package-lock.json | tee ../doctor/package-lock.stat
+
+      - name: Verify repaired clean install
+        id: repair_install
+        timeout-minutes: 10
+        if: ${{ always() && steps.install.outcome != 'success' && steps.repair_generate.outcome == 'success' }}
+        continue-on-error: true
+        working-directory: target
+        run: |
+          set -o pipefail
+          npm ci 2>&1 | tee ../doctor/npm-ci-repaired.log
+
+      - name: Build all field surfaces
+        id: build
+        timeout-minutes: 10
+        if: ${{ always() && (steps.install.outcome == 'success' || steps.repair_install.outcome == 'success') }}
+        continue-on-error: true
+        working-directory: target
+        run: npm run build:all
+
+      - name: Unit tests
+        id: tests
+        timeout-minutes: 5
+        if: ${{ always() && (steps.install.outcome == 'success' || steps.repair_install.outcome == 'success') }}
+        continue-on-error: true
+        working-directory: target
+        run: |
+          set -o pipefail
+          npm run test:run -- --reporter=verbose 2>&1 | tee ../doctor/tests.log
+
+      - name: Isolate failing or hanging test
+        if: ${{ always() && steps.tests.outcome != 'success' && (steps.install.outcome == 'success' || steps.repair_install.outcome == 'success') }}
+        timeout-minutes: 5
+        continue-on-error: true
+        working-directory: target
+        run: |
+          : > ../doctor/test-isolation.log
+          while IFS= read -r file; do
+            echo "=== $file ===" | tee -a ../doctor/test-isolation.log
+            set +e
+            timeout --signal=TERM 45s npx vitest run "$file" --reporter=verbose >> ../doctor/test-isolation.log 2>&1
+            code=$?
+            set -e
+            if [ "$code" -eq 124 ]; then
+              echo "HUNG: $file" | tee -a ../doctor/test-isolation.log
+              exit 0
+            fi
+            if [ "$code" -ne 0 ]; then
+              echo "FAILED: $file (exit $code)" | tee -a ../doctor/test-isolation.log
+              exit 0
+            fi
+          done < <(find src -type f \( -name '*.test.ts' -o -name '*.test.tsx' \) | sort)
+          echo "No single file reproduced the failure; suite-level teardown or concurrency is suspect." | tee -a ../doctor/test-isolation.log
+
+      - name: Lint
+        id: lint
+        timeout-minutes: 10
+        if: ${{ always() && (steps.install.outcome == 'success' || steps.repair_install.outcome == 'success') }}
+        continue-on-error: true
+        working-directory: target
+        run: npm run lint
+
+      - name: Persist dashboard diagnosis
+        if: always() && (github.event_name == 'schedule' || inputs.field_ref == 'main')
+        working-directory: runner
+        env:
+          INSTALL_OUTCOME: ${{ steps.install.outcome }}
+          REPAIR_GENERATE_OUTCOME: ${{ steps.repair_generate.outcome }}
+          REPAIR_INSTALL_OUTCOME: ${{ steps.repair_install.outcome }}
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          TESTS_OUTCOME: ${{ steps.tests.outcome }}
+          LINT_OUTCOME: ${{ steps.lint.outcome }}
+          DOCTOR_NODE: ${{ steps.environment.outputs.node }}
+          DOCTOR_NPM: ${{ steps.environment.outputs.npm }}
+          DOCTOR_WORKFLOW_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: node scripts/persist-dependency-state.mjs field ../doctor/npm-ci.log ../doctor/test-isolation.log
+
+      - name: Commit dashboard state
+        if: always() && (github.event_name == 'schedule' || inputs.field_ref == 'main')
+        working-directory: runner
+        run: |
+          if git diff --quiet -- state/field.json; then
+            echo "No state change."
+            exit 0
+          fi
+          git config user.name "loew-runner"
+          git config user.email "actions@users.noreply.github.com"
+          git add state/field.json
+          git commit -m "doctor: update field dependency state"
+          git pull --rebase origin main
+          git push
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "# field dependency doctor"
+            echo
+            echo "| check | outcome |"
+            echo "| --- | --- |"
+            echo "| initial npm ci | ${{ steps.install.outcome }} |"
+            echo "| lockfile repair generation | ${{ steps.repair_generate.outcome }} |"
+            echo "| repaired npm ci | ${{ steps.repair_install.outcome }} |"
+            echo "| build | ${{ steps.build.outcome }} |"
+            echo "| tests | ${{ steps.tests.outcome }} |"
+            echo "| lint | ${{ steps.lint.outcome }} |"
+            echo
+            if [ -f doctor/report.md ]; then cat doctor/report.md; fi
+            if [ -f doctor/package-lock.stat ]; then
+              echo
+              echo "## Repair candidate"
+              echo '~~~'
+              cat doctor/package-lock.stat
+              echo '~~~'
+            fi
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: field-dependency-doctor
+          path: doctor/
+          if-no-files-found: ignore
+
+      - name: Enforce dependency repair gates
+        if: always()
+        run: |
+          if [ "${{ steps.install.outcome }}" != "success" ] && [ "${{ steps.repair_install.outcome }}" != "success" ]; then
+            echo "No clean install path succeeded."
+            exit 1
+          fi
+          test "${{ steps.build.outcome }}" = "success"
+          if [ "${{ steps.tests.outcome }}" != "success" ] || [ "${{ steps.lint.outcome }}" != "success" ]; then
+            echo "::warning::Dependency repair passed install/build, but project tests and/or lint have separate failures. Repair will remain draft-only."
+          fi

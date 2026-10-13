@@ -1,0 +1,169 @@
+{
+  "read_only": true,
+  "not_executed": true,
+  "source": {
+    "repository": "lrnolivia/relay",
+    "ref": "main observed 2026-10-03T04:46Z",
+    "engine_sha": "00d3aa78fac5bbe38b101ca87e8f3c0b72dcef59",
+    "adapter_blob_sha": "f841ce46a1887c086b28c0d498a194eaba000e70",
+    "links": {
+      "schema": "https://github.com/lrnolivia/relay/blob/main/src/runner-control-core.js#L155-L179",
+      "engine": "https://github.com/lrnolivia/relay/blob/main/src/coordination.mjs#L105-L277",
+      "contract": "https://github.com/lrnolivia/relay/blob/main/docs/WORK_COORDINATION.md",
+      "original_skills": "https://github.com/lrnolivia/relay/blob/434541358d6bfd25e67af5d8e689ba49a5378b91/coordination/relay.json"
+    }
+  },
+  "allowed_request_keys": {
+    "hold": [
+      "id",
+      "owner",
+      "next_action"
+    ],
+    "handoff": [
+      "id",
+      "owner",
+      "successor",
+      "next_action"
+    ],
+    "retire": [
+      "id",
+      "owner",
+      "disposition",
+      "reason",
+      "evidence",
+      "operation_id",
+      "expected_head_sha",
+      "superseded_by"
+    ],
+    "amend": [
+      "id",
+      "owner",
+      "paths",
+      "resources",
+      "goal",
+      "acceptance",
+      "next_action",
+      "task_class",
+      "ledger_refs",
+      "category",
+      "labels",
+      "tags",
+      "primary_role",
+      "supporting_roles",
+      "primary_staff",
+      "supporting_staff",
+      "primary_team",
+      "supporting_teams",
+      "reason"
+    ]
+  },
+  "templates_not_ready_to_execute": [
+    {
+      "action": "hold",
+      "project": "ctrl",
+      "expected_record_sha": "READ_FRESH_RECORD_SHA",
+      "request": {
+        "id": "ctrl-review-delivery-20261003",
+        "owner": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+        "next_action": "Paused by Lauren while Relay documentation and readiness cleanup is completed. Preserve PR7 head 629c961e63af5668e1b7a7e21ba2b27749280670 and separate uncommitted Inspector/reply work. Exact-head admission passed; quality failed on a non-unique .feature-heading locator in test/browser.mjs. No fix, merge or deployment during the pause. On authorized continuation, re-read complete acceptance and current evidence before resuming."
+      }
+    },
+    {
+      "action": "handoff",
+      "project": "rtxforge",
+      "expected_record_sha": "READ_FRESH_RECORD_SHA",
+      "request": {
+        "id": "rtxforge-shared-package-ui-20261002",
+        "owner": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+        "successor": "VERIFIED_EXISTING_USER_STARTED_CODEX_OWNER_ID",
+        "next_action": "Implementation transferred to Lauren's existing user-started Codex task. Preserve the current held state, PR6 head abd243e7b6d03b7e49bc67b1447be2521831d8db, all original and latest acceptance, approved icon integration and remaining runtime verification. This handoff starts no worker and authorizes no release by itself. Read the complete handoff and reconcile writer quiescence before source work."
+      }
+    },
+    {
+      "action": "retire",
+      "project": "relay",
+      "expected_record_sha": "READ_FRESH_RECORD_SHA",
+      "request": {
+        "id": "EXACT_RESERVED_CLAIM_ID",
+        "owner": "EXACT_CURRENT_OWNER_ID",
+        "disposition": "superseded",
+        "reason": "Bounded owner-authorized replacement; all remaining acceptance is preserved in the existing successor.",
+        "evidence": "EXACT_WRITER_QUIESCENCE_AND_RETAINED_WORK_EVIDENCE",
+        "operation_id": "UNIQUE_STABLE_OPERATION_ID",
+        "expected_head_sha": "EXACT_CURRENT_40_HEX_HEAD_OR_NULL_IF_AUTHENTICATED_ABSENCE",
+        "superseded_by": "EXISTING_NONTERMINAL_SUCCESSOR_ID"
+      }
+    }
+  ],
+  "critical_constraints": [
+    "Refresh records before each mutation; examples contain placeholders and are not ready to execute.",
+    "hold preserves reservation and ownership and only changes state/next_action, while renewing lease.",
+    "handoff requires an occupying existing claim; queued-only work cannot use it. It changes owner/next_action while preserving held/active state and branch, and refuses successor with another occupying claim in the same project.",
+    "handoff and complete do not synchronize matching queue rows; source owner/state divergence is a known current engine gap.",
+    "amend cannot change owner or state, explicitly refuses completed/retired claims, and chooses claims before queued rows. Preserve original acceptance by writing the full replacement plus additive updates, not an abbreviated rewrite.",
+    "retire chooses claim before queue; only reserved claims or queued-only state=queued rows qualify. completed claims cannot be retired merely to normalize their stale queue row.",
+    "retire superseded requires existing nonterminal successor; a completed successor is rejected.",
+    "retire requires current owner, stopped/quiescent writers and retained-work disposition. Same fresh branch head is checked server-side; queued-only retirement must omit expected_head_sha. Never supply verified_head_sha.",
+    "retirement cannot be restored through heartbeat and does not stop processes, launch a worker, close a PR or delete a branch.",
+    "No exposed action safely normalizes the 41 stale queue rows. Do not use repeat complete, amend, retire, direct main overwrite or alternate CLI to bypass terminal guards. Preserve reconciliation map and hand the engine gap to the existing implementation owner.",
+    "Queued Relay continuation ownership cannot be transferred through current handoff. Amend its next_action with verified destination/context while preserving owner, or use a separately reviewed supported queued-handoff extension. Do not fake claim or owner identity to force a transfer.",
+    "Absence of a task in Runner does not prove absence of a user assignment; Arc, Accented and Steam are outside current managed registrations."
+  ],
+  "original_skills_acceptance": {
+    "id": "relay-1.9-skills-runtime-creative-20260930",
+    "owner": "relay-1.9-skills-runtime-creative-20260930",
+    "goal": "Ship Relay 1.9 as the skills-runtime and creative-intelligence release: add a first-class relay.SKILLS system that discovers, validates, versions, resolves and loads portable expertise on demand, then use it to make Relay substantially stronger at aesthetic direction, interaction/flow, motion, platform-native UI craft and performance across web, macOS, Windows, Android and Linux/GNOME while expanding its engineering, GitHub and Cloudflare expertise without bloating the permanent MCP/tool surface.",
+    "acceptance": "Release-facing metadata/docs identify Relay 1.9.0. Introduce a first-class skills registry/runtime with stable catalog/search/read/resolve/install-or-vendor/update/audit behavior and a manifest that records id/name/version/source, Relay-authored vs licensed-upstream vs private-project origin, license/provenance/source URL or repository+revision, integrity/hash, tags, dependencies, required/optional MCP capabilities, supported platforms, compatibility and update policy. Portable SKILL.md bundles may include references/scripts/assets, but untrusted executable content never gains ambient authority; validation, path containment, size/context budgets and dependency/capability checks fail closed. Skills are selected and loaded just-in-time from task intent/capability requirements rather than injected wholesale; resolution is deterministic/explainable and can report why a skill was chosen, rejected or unavailable. Add an upstream ingestion policy/pipeline that license-audits and pins redistributable skills instead of copying proprietary installed skills; preserve attribution and make update drift auditable. Creative priority packs cover aesthetic/art direction and anti-slop judgment, information architecture and interaction flow, design systems/tokens/components, motion/animation/microinteraction, visual-reference analysis and visual QA, plus platform-native guidance for web, macOS/SwiftUI, Windows/WinUI, Android/Material and Linux/GNOME/GTK/libadwaita. Figma-bound skills may orchestrate the real Figma MCP when present but must declare that dependency and degrade cleanly when absent; Relay does not counterfeit external tools. Performance/optimization is co-equal with creative quality: packs cover asset/image/font budgets, animation/compositor discipline, JS/CSS/runtime cost, rendering/hydration, network/cache/CDN strategy, Core Web Vitals or platform-equivalent profiling, and performance-aware visual effects; aesthetically ambitious output must carry explicit performance checks/budgets rather than disabling effects by default. Supporting packs cover build/frontend engineering, research/source-driven development, documentation, release engineering, testing/QA, accessibility and security; these are lower product priority for the current solo workflow but must provide a safe production baseline and be composable with creative packs. Expand GitHub skills around branch/PR/check/release/repository workflows and Cloudflare skills around Workers, builds/deployments, bindings, Access, cache/CDN/R2/browser/evidence flows, always reusing Relay's bounded SOURCE/CLOUD mutation primitives and exact-head/readback safety rather than bypassing them. Provide project-private skill overlays so Terra Prime/Field/other loew doctrine can extend general skills without forking upstream bundles. Add tests for manifest validation, provenance/license policy, deterministic resolution, JIT context limits, dependency/tool gating, hostile/pathological bundles, update/version drift and representative cross-pack composition. Existing Relay 1.8 contextual UI/progress contracts remain compatible. No giant prompt dump, no one-tool-per-skill explosion, no new standing credentials. Required install/tests, exact-head admission, release verification and durable 1.9 completion receipt must pass.",
+    "next_action": "Begin only after Relay 1.8 is merged or its skill-facing contracts are stable enough not to collide. Phase A: specify the skill manifest, provenance/license model, trust boundaries, resolver and JIT context budget. Phase B: implement registry/read/resolve/audit with a tiny MCP surface and representative fixture skills. Phase C: seed the high-priority Creative pack (aesthetic, flow, motion, visual QA, performance) plus platform adapters for web/macOS/Windows/Android/GNOME and Figma dependency bindings. Phase D: add build/research/docs/release/testing/accessibility/security plus GitHub and Cloudflare operational packs. Phase E: add upstream import/update auditing, project-private overlays, cross-pack composition tests, docs and 1.9 release verification. Treat public upstream candidates such as Impeccable/MengTo-style design skill libraries only as candidates until their exact license/provenance is verified at import time.",
+    "paths": [
+      "packages/skills/",
+      "skills/",
+      "contracts/skills/",
+      "src/skills-registry.js",
+      "src/skills-resolver.js",
+      "src/skills-runtime.js",
+      "src/skills-audit.js",
+      "src/skills-upstream.js",
+      "src/relay-entry.js",
+      "apps/mcp/",
+      "apps/web/",
+      "test/skills/",
+      "docs/relay/RELAY_1_9_RELEASE.md",
+      "docs/skills/"
+    ],
+    "resources": [
+      "relay-1.9-release",
+      "relay-skills-runtime",
+      "relay-skill-registry",
+      "relay-skill-provenance",
+      "relay-jit-skill-loading",
+      "relay-creative-intelligence",
+      "relay-aesthetic-direction",
+      "relay-flow-ia",
+      "relay-motion-animation",
+      "relay-platform-design",
+      "relay-performance-optimization",
+      "relay-figma-orchestration",
+      "relay-build-skills",
+      "relay-research-skills",
+      "relay-documentation-skills",
+      "relay-release-engineering-skills",
+      "relay-testing-skills",
+      "relay-accessibility-skills",
+      "relay-security-skills",
+      "relay-github-skills",
+      "relay-cloudflare-skills",
+      "relay-project-skill-overlays"
+    ],
+    "state": "queued",
+    "created_at": "2026-09-30T22:12:36.691Z"
+  },
+  "duplicate_counts": {
+    "relay": 39,
+    "field": 2
+  },
+  "inventory_files": [
+    "/workspace/shared/relay-cleanup-inventory-20261003.json",
+    "/workspace/shared/relay-stale-queue-rows-20261003.json"
+  ]
+}

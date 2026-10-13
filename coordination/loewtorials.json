@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "project": "loewtorials",
+  "updated_at": "2026-10-08T01:27:17.925Z",
+  "legacy_branches": [
+    "codex/llm-help-integration",
+    "docs/move-to-runner",
+    "main",
+    "runner/universal-authority"
+  ],
+  "queue": [
+    {
+      "id": "loewtorials-personal-wiki-reliability-20261001",
+      "owner": "Julian-PM",
+      "goal": "Queued for later: evolve loewtorials into a dependable personal wiki while preserving its distinctive design and Article/Guided model. Implement the evidence-backed product review in bounded stages; no worker or chat starts from this queue action.",
+      "acceptance": "Source review: Library libfile_70bb7a7354848191af635824a19de22a, Loewtorials-Product-Review.md, inspected main a2f4821ac059d03247cc9aaf65f2f5a065e84205 and https://loewtorials.loew.fi/; refresh source/runtime before work. Stage1 trust/continuity: durable notes and unfinished run/checklist/current-step state across modes/reload/reopen; truthful local/sync pending/saved/error status; HTTP/storage failures surfaced; preserve unsynced work, recoverable snapshots and versioned conflict-safe writes, no silent stale-tab overwrite; intentional offline choice persists for session; semantic keyboard-accessible Open/search controls. Stage2 retrieval/maintenance: shared search across title/body/commands/notes with relevant section results; edit content with preview/cancel; explicit Add new vs Update existing import preserving stable identity, links/history and recoverable previous revision; Article/Guided reference parity. Stage3 low-friction capture/applicability: quick Markdown/link capture, optional Inbox/recent/pinned, optional last-verified/environment/source metadata; distinguish library state from completed-run outcomes. Stage4 public publishing only after explicit scope decision: separate selected public snapshots from private notes/drafts/run logs/system profile and review linked dependencies; do not publish private material automatically. Retain typography/assets/tactile visual identity and purposeful reduced-motion support; no speculative collaboration suite or blanket rewrite. Design proposals in review are recommendations to resolve before each stage, not invented user choices. Verify relevant interruption/offline/two-device conflicts, accessibility and mobile with exact-artifact evidence; prior browser timeout/private-content limits were not product failures. No execution, code changes, external subscriptions, new credentials, paid infrastructure or deployment authorized by merely queuing this assignment.",
+      "next_action": "Remain queued for later, without claim/branch/executor/chat launch. When Lauren resumes, read full review and current project policy/ownership, choose bounded Stage1 scope, inspect actual current code, preserve data and establish acceptance before implementation.",
+      "paths": [
+        "assets/",
+        "wizard.html",
+        "index.html",
+        "worker/",
+        "README.md",
+        "templates/"
+      ],
+      "resources": [
+        "loewtorials-personal-library",
+        "loewtorials-sync-continuity"
+      ],
+      "task_class": "design",
+      "category": "design",
+      "labels": [
+        {
+          "key": "source",
+          "value": "Lauren voice request 2026-10-01; product review libfile_70bb7a7354848191af635824a19de22a"
+        },
+        {
+          "key": "execution",
+          "value": "later-no-chat-launch"
+        }
+      ],
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-01T23:09:51.971Z"
+    }
+  ],
+  "claims": [
+    {
+      "id": "loewtorials-coordination-bootstrap-20260930",
+      "owner": "normal-chat-project-registry-20260930",
+      "branch": "loewtorials/coordination-bootstrap",
+      "paths": [
+        ".github/workflows/runner-coordination.yml"
+      ],
+      "resources": [
+        "runner-work-admission"
+      ],
+      "goal": "Install Field-style Runner coordination admission and managed branch hygiene for lrnolivia/loewtorials.",
+      "acceptance": "Pull requests are gated by a live Runner claim; scheduled/manual audit and cleanup use the canonical loew-runner coordination engine; no product files are changed.",
+      "next_action": "Create the claimed bootstrap branch, add the parameterized coordination workflow, open the draft PR, verify admission, then merge with squash.",
+      "base_sha": "1c7b0a891c5b25de9e2194ba986ac4bab6297be7",
+      "state": "completed",
+      "created_at": "2026-09-30T09:06:02.353Z",
+      "updated_at": "2026-09-30T09:14:03.172Z",
+      "lease_until": "2026-09-30T21:14:03.172Z",
+      "pr": 3,
+      "merged_head_sha": "6717d5f3de2211bcef33633da99eb3480bb0f4c7",
+      "merge_commit_sha": "a2f4821ac059d03247cc9aaf65f2f5a065e84205",
+      "evidence": "https://github.com/lrnolivia/loewtorials/pull/3",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T09:14:03.172Z"
+    },
+    {
+      "id": "loewtorials-canonical-workflow-20261006",
+      "owner": "01a10d01-eb49-71e1-9403-3a14f65bf0e1",
+      "branch": "loewtorials/canonical-workflow-20261006",
+      "paths": [
+        ".github/workflows/runner-coordination.yml"
+      ],
+      "resources": [
+        "loewtorials-coordination-workflow"
+      ],
+      "goal": "Repair stale workflow checkout to canonical Relay without changing permissions or admission and cleanup safeguards.",
+      "acceptance": "Exact workflow diff changes retired loew-runner repository to relay; existing actions and permissions preserved; exact-head coordination check passes; publish only under authorized guarded merge with rollback.",
+      "next_action": "Create exact-base branch, change two checkout references, open draft PR and verify.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "a2f4821ac059d03247cc9aaf65f2f5a065e84205",
+      "state": "completed",
+      "created_at": "2026-10-06T02:13:19.023Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Repair stale workflow checkout to canonical Relay without changing permissions or admission and cleanup safeguards.",
+          "acceptance": "Exact workflow diff changes retired loew-runner repository to relay; existing actions and permissions preserved; exact-head coordination check passes; publish only under authorized guarded merge with rollback.",
+          "at": "2026-10-06T02:13:19.023Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "loewtorials-canonical-workflow-20261006:acceptance:0",
+            "text": "Exact workflow diff changes retired loew-runner repository to relay; existing actions and permissions preserved; exact-head coordination check passes; publish only under authorized guarded merge with rollback.",
+            "at": "2026-10-06T02:13:19.023Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-06T03:09:28.447Z",
+      "lease_until": "2026-10-06T15:09:28.447Z",
+      "pr": 4,
+      "merged_head_sha": "5732d1db33305feb8197008c21a8e4c6436e9aa5",
+      "merge_commit_sha": "99d73eac097ddb46fa5aa29b43f751965b8e9cb2",
+      "evidence": "https://github.com/lrnolivia/loewtorials/pull/4",
+      "work_accounted": true,
+      "completed_at": "2026-10-06T03:09:28.447Z"
+    },
+    {
+      "id": "loewtorials-ci-efficiency-20261008",
+      "owner": "01a118b2-63d5-7a63-8d3a-55bf649b1f89",
+      "branch": "loewtorials/ci-efficiency-20261008",
+      "paths": [
+        ".github/workflows/runner-coordination.yml"
+      ],
+      "resources": [
+        "loewtorials-ci-efficiency"
+      ],
+      "goal": "Reduce unnecessary GitHub Actions usage as part of Lauren's ALL-projects CI streamlining request.",
+      "acceptance": "Preserve immediate exact-head PR admission and every required quality/runtime/release check. Replace twice-hourly completed-branch cleanup with a daily safety sweep and retain manual recovery. Cancel superseded PR-only checks safely. Validate workflow structure and the exact published candidate; record measured or explicitly estimated savings in Relay.",
+      "next_action": "User explicitly resumed with keep going. Continue ALL-project CI and autonomous release safety plan from docs/relay/ALL_PROJECT_CI_20261008.md. Preserve last healthy and separately user-approved rollback targets; no repeated routine approvals. Verify staged candidates, finish source batches and implement enforced safety controls.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "99d73eac097ddb46fa5aa29b43f751965b8e9cb2",
+      "state": "completed",
+      "created_at": "2026-10-08T00:51:26.217Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Reduce unnecessary GitHub Actions usage as part of Lauren's ALL-projects CI streamlining request.",
+          "acceptance": "Preserve immediate exact-head PR admission and every required quality/runtime/release check. Replace twice-hourly completed-branch cleanup with a daily safety sweep and retain manual recovery. Cancel superseded PR-only checks safely. Validate workflow structure and the exact published candidate; record measured or explicitly estimated savings in Relay.",
+          "at": "2026-10-08T00:51:26.217Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "loewtorials-ci-efficiency-20261008:acceptance:0",
+            "text": "Preserve immediate exact-head PR admission and every required quality/runtime/release check. Replace twice-hourly completed-branch cleanup with a daily safety sweep and retain manual recovery. Cancel superseded PR-only checks safely. Validate workflow structure and the exact published candidate; record measured or explicitly estimated savings in Relay.",
+            "at": "2026-10-08T00:51:26.217Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T01:27:17.925Z",
+      "lease_until": "2026-10-08T13:27:17.925Z",
+      "pr": 5,
+      "merged_head_sha": "c5097e848212f0034fd496df3cb6d32ec8e82fd3",
+      "merge_commit_sha": "70db9e6b0ae2121c3f21d203db1deb88e9ac212b",
+      "evidence": "https://github.com/lrnolivia/loewtorials/pull/5; required exact-head admission and existing quality/build checks passed. Current main workflow readback equals reviewed candidate byte-for-byte (blob 0fcd47e961fb9e188181f352745976d223e520e3). Changed workflow bytes restored and hash-verified in isolated recovery directory. Daily hygiene, immediate admission and required assertions preserved. CI-only slice complete; other product work preserved.",
+      "work_accounted": true,
+      "completed_at": "2026-10-08T01:27:17.925Z"
+    }
+  ]
+}

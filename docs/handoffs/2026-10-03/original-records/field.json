@@ -1,0 +1,120 @@
+{
+  "id": "field",
+  "record_sha": "ffa7e5b40c4aa565166a1e5f2b13927303d591de",
+  "queue": [
+    {
+      "id": "field-connected-panel-followup-20260930",
+      "owner": "01a0f0ae-4e8c-7e62-ae7a-3b02faa398f5",
+      "goal": "Deferred user-reported connected landscape chrome, Inspector top bar and Insert detail panel geometry; instructions only until user resumes.",
+      "acceptance": "docs/field/reorganization/DEFERRED_CONNECTED_PANEL_REQUIREMENTS_20260930.md; landscape uses desktop connected Float geometry, portrait preserves sheets, exact-head touch/browser and iOS gates.",
+      "next_action": "Remain queued; user deferred implementation. On explicit resume, reconcile serial ownership with the existing Mobile owner before admission; do not create a new worker.",
+      "paths": [
+        "src/App.tsx",
+        "src/editor/ChromeIslands.tsx",
+        "src/editor/FloatingLeftPanelHost.tsx",
+        "src/editor/ToolbarPanelHost.tsx",
+        "src/editor/header/RightHeader.tsx",
+        "src/editor/left-toolbar/panels/insert/index.tsx"
+      ],
+      "resources": [
+        "mobile-shell",
+        "workspace-floating-geometry"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T05:23:55.218Z"
+    },
+    {
+      "id": "field-unified-chrome-neutrachrome-20261002",
+      "owner": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+      "goal": "Finish Field's shared panel chrome and tool menu presentation, add verified Terra Prime green/pink and neutrachrome accents.",
+      "acceptance": "Lauren04:48-04:50QA: floating Inspector top belongs to unified chrome, not separate square bar; Media belongs in far-left panel and its bottom-toolbar affordance is a real menu with chevron. Keep approved tile appearance but two wide/narrow horizontal tiles per row. Primary2or4 choices as icon tiles, remaining choices as list rows; include Move/Hand/Scale and Pen, preserve all actions/shortcuts and keyboard/touch operation. Use theme-aware accent color in small menus, lighter variants in dark, darker in light while meeting contrast. Slightly lighten card/section surfaces in Inspector and port same styling to left panels via shared tokens/components. Add canonical Terra Prime green and pink options from real design tokens, do not guess hues. Add warm-neutral accent neutrachrome (corrected spelling Sentinel_e38ed4c9ae808191804cc8926a0492de), dark/light variants tuned to gray surfaces. Preserve Field identity and Figma behavior, not visual-clone redesign. Reference screenshots libfile_9865c9cf61108191aefe9168e8ac077f and libfile_a68fd60431988191b2b5643478115898 inspected: square detached upper-right bar and dark blending section cards visible, no runtime hash embedded. Keep recovered Mobile PR138 regression fixes intact. Direct Relay only, no workers.\nAudit Gallery Inspector functionality and panel consistency while preserving the praised Gallery modal. Lighten and distinguish button surfaces across modals and settings (Sentinel_fb8bb23700cc8191abc13afc3f795efb; Sentinel_551e0125660c8191be28fb3867f50dd7).\nSUPERSEDING PORTRAIT DIRECTION Sentinel_fdb55c209dfc8191886df276eb020fa3: mobile portrait toolbar needs a FAB blending Material Design and current iOS27 principles. Existing portrait sheets are rejected as merely resized left/right desktop panels; design a purpose-built portrait interaction paradigm, preserving touch/camera fixes but not releasing the rejected portrait shell. Show proposed flow before implementation. No workers; no merge/deployment authorization.\n05:08UTC user Sentinel_75cc2397ccbc81919abd542547af3249 likes portrait direction but rejects extra Edit tap. Object pointer-down prepares drag; movement drags, tap without drag opens context editor with minimal delay. Parent proposes opening on release to prevent panel stealing drag. Test jitter, slow drags, pointer cancel and second-finger takeover. Desktop tool palette requested; user suggests two-finger tap or middle-click, final binding undecided. Parent recommends middle-click palette, middle-drag pan, retain trackpad right-click context menu and supply a conflict-free shortcut. Do not claim that recommendation already exists or is tested.\n05:09UTC user Sentinel_0fbfd59305908191af6f2a0914a7372e: the whole left panel needs its own paradigm as well as Inspector. Parent proposes persistent Browse beside Tools; purpose-built Pages cards/search, Layers hierarchy with breadcrumbs/multiselect/reorder, Media/Library visual selection followed by explicit canvas placement, CMS/deeper dedicated task screens. Preserve navigation location, canvas position and selection. Exact Browse arrangement still proposal. Include visible touch flows for nested-object selection, multi-select and undo/redo.",
+      "next_action": "Keep refinement queued and work read-only on portrait interaction design and gallery audit. Reconcile preserved PR124 shared chrome/contrast code before duplicate implementation. Mobile PR138 exact-head tests/build/browser pass with 58 shared baseline failures, zero added test/lint findings, physical iPhone not run. Hold release due to new portrait redesign; no code changes until scope/admission reconciled.",
+      "paths": [
+        "src/editor/",
+        "src/shared/builder-themes.ts",
+        "src/shared/editor-neutral-theme.ts",
+        "src/styles/"
+      ],
+      "resources": [],
+      "category": "implementation",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-02T04:51:56.008Z",
+      "amendment_count": 3,
+      "amendments": [
+        {
+          "at": "2026-10-02T05:05:29.413Z",
+          "by": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "reason": "Lauren added Gallery audit, button contrast, and a new portrait-mobile paradigm on October 2; preserve all scope before implementation.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Lauren04:48-04:50QA: floating Inspector top belongs to unified chrome, not separate square bar; Media belongs in far-left panel and its bottom-toolbar affordance is a real menu with chevron. Keep approved tile appearance but two wide/narrow horizontal tiles per row. Primary2or4 choices as icon tiles, remaining choices as list rows; include Move/Hand/Scale and Pen, preserve all actions/shortcuts and keyboard/touch operation. Use theme-aware accent color in small menus, lighter variants in dark, darker in light while meeting contrast. Slightly lighten card/section surfaces in Inspector and po...",
+            "next_action": "Read existing LOEW_THEME and builder theme/chrome components, resolve canonical Terra Prime palette, prepare scoped refinement after current Mobile integration without letting new notes displace it. Need actual runtime/theme contrast and menu interaction verification; no source edits under queued task and no merge/deploy implied."
+          },
+          "after": {
+            "acceptance": "Lauren04:48-04:50QA: floating Inspector top belongs to unified chrome, not separate square bar; Media belongs in far-left panel and its bottom-toolbar affordance is a real menu with chevron. Keep approved tile appearance but two wide/narrow horizontal tiles per row. Primary2or4 choices as icon tiles, remaining choices as list rows; include Move/Hand/Scale and Pen, preserve all actions/shortcuts and keyboard/touch operation. Use theme-aware accent color in small menus, lighter variants in dark, darker in light while meeting contrast. Slightly lighten card/section surfaces in Inspector and po...",
+            "next_action": "Keep refinement queued and work read-only on portrait interaction design and gallery audit. Reconcile preserved PR124 shared chrome/contrast code before duplicate implementation. Mobile PR138 exact-head tests/build/browser pass with 58 shared baseline failures, zero added test/lint findings, physical iPhone not run. Hold release due to new portrait redesign; no code changes until scope/admission reconciled."
+          }
+        },
+        {
+          "at": "2026-10-02T05:09:05.676Z",
+          "by": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "reason": "Lauren refined portrait tap versus drag and requested desktop access to the tool palette.",
+          "fields": [
+            "acceptance"
+          ],
+          "before": {
+            "acceptance": "Lauren04:48-04:50QA: floating Inspector top belongs to unified chrome, not separate square bar; Media belongs in far-left panel and its bottom-toolbar affordance is a real menu with chevron. Keep approved tile appearance but two wide/narrow horizontal tiles per row. Primary2or4 choices as icon tiles, remaining choices as list rows; include Move/Hand/Scale and Pen, preserve all actions/shortcuts and keyboard/touch operation. Use theme-aware accent color in small menus, lighter variants in dark, darker in light while meeting contrast. Slightly lighten card/section surfaces in Inspector and po..."
+          },
+          "after": {
+            "acceptance": "Lauren04:48-04:50QA: floating Inspector top belongs to unified chrome, not separate square bar; Media belongs in far-left panel and its bottom-toolbar affordance is a real menu with chevron. Keep approved tile appearance but two wide/narrow horizontal tiles per row. Primary2or4 choices as icon tiles, remaining choices as list rows; include Move/Hand/Scale and Pen, preserve all actions/shortcuts and keyboard/touch operation. Use theme-aware accent color in small menus, lighter variants in dark, darker in light while meeting contrast. Slightly lighten card/section surfaces in Inspector and po..."
+          }
+        },
+        {
+          "at": "2026-10-02T05:10:27.893Z",
+          "by": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "reason": "Lauren explicitly extends portrait redesign to the entire left panel, not just Inspector.",
+          "fields": [
+            "acceptance"
+          ],
+          "before": {
+            "acceptance": "Lauren04:48-04:50QA: floating Inspector top belongs to unified chrome, not separate square bar; Media belongs in far-left panel and its bottom-toolbar affordance is a real menu with chevron. Keep approved tile appearance but two wide/narrow horizontal tiles per row. Primary2or4 choices as icon tiles, remaining choices as list rows; include Move/Hand/Scale and Pen, preserve all actions/shortcuts and keyboard/touch operation. Use theme-aware accent color in small menus, lighter variants in dark, darker in light while meeting contrast. Slightly lighten card/section surfaces in Inspector and po..."
+          },
+          "after": {
+            "acceptance": "Lauren04:48-04:50QA: floating Inspector top belongs to unified chrome, not separate square bar; Media belongs in far-left panel and its bottom-toolbar affordance is a real menu with chevron. Keep approved tile appearance but two wide/narrow horizontal tiles per row. Primary2or4 choices as icon tiles, remaining choices as list rows; include Move/Hand/Scale and Pen, preserve all actions/shortcuts and keyboard/touch operation. Use theme-aware accent color in small menus, lighter variants in dark, darker in light while meeting contrast. Slightly lighten card/section surfaces in Inspector and po..."
+          }
+        }
+      ],
+      "updated_at": "2026-10-02T05:10:27.893Z"
+    }
+  ],
+  "nonterminal_claims": [
+    {
+      "id": "field-mobile-focus",
+      "owner": "existing-mobile-owner",
+      "branch": "field/mobile-focus-touch-camera-20260929",
+      "paths": [
+        ".github/workflows/mobile-focus-verify.yml"
+      ],
+      "resources": [
+        "mobile-historical-qa-accounting"
+      ],
+      "goal": "Retain original Mobile PR #123 and historical verification provenance during user-authorized consolidation",
+      "acceptance": "Original branch and runtime/iPhone evidence retained; product implementation moves to consolidated #136 under explicit user authorization",
+      "next_action": "User explicitly removed Mobile protection and authorized current worker on 2026-09-30. Product paths released to consolidated recovery claim; preserve original #123 branch/workflow as provenance until all code and iPhone QA accounted.",
+      "base_sha": "64fa810a66fc54d73c2f46ed2e352a8c3a3e568d",
+      "state": "active",
+      "created_at": "2026-09-30T05:06:12.798659Z",
+      "updated_at": "2026-09-30T10:44:09.559Z",
+      "lease_until": "2026-09-30T22:44:09.559Z",
+      "reserved": true,
+      "lease_expired": true
+    }
+  ]
+}

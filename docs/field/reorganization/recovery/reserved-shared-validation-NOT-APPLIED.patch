@@ -1,0 +1,50 @@
+--- a/src/canvas/mouse/CanvasMouseController.ts
++++ b/src/canvas/mouse/CanvasMouseController.ts
+@@ -134,7 +134,7 @@
+ import { enterComponentFile } from '../component-navigation';
+ import { getPageTemplate, listTemplates } from '@/code/project/template-ops';
+ import { generateNodeId } from '@/shared/id-utils';
+-import { createNode, getContentRoot, findNodeRect, findNodeComputedStyle, clearBridgeReadCaches, findFitInnerTextId } from '../node-ops';
++import { createNode, getContentRoot, findNodeRect, clearBridgeReadCaches, findFitInnerTextId } from '../node-ops';
+ import { zoomToFit, zoomToFitSelection, zoomToFitCanvasBounds, panToNode, transformManager, cameraStash } from '@/canvas/transform';
+ import { parseCanvasConfig } from '@/code/project/canvas-config';
+ import { queueMutation, flushNow } from '@/code/mutation/mutation-queue';
+--- a/src/canvas/transform/CameraCommands.ts
++++ b/src/canvas/transform/CameraCommands.ts
+@@ -363,10 +363,10 @@
+   const settleTop = area.centerY - settleH / 2;
+   const settleBottom = area.centerY + settleH / 2;
+ 
+-  let projectedLeft = c.left * targetScale + x;
+-  let projectedRight = (c.left + c.width) * targetScale + x;
+-  let projectedTop = c.top * targetScale + y;
+-  let projectedBottom = (c.top + c.height) * targetScale + y;
++  const projectedLeft = c.left * targetScale + x;
++  const projectedRight = (c.left + c.width) * targetScale + x;
++  const projectedTop = c.top * targetScale + y;
++  const projectedBottom = (c.top + c.height) * targetScale + y;
+   const projectedW = projectedRight - projectedLeft;
+   const projectedH = projectedBottom - projectedTop;
+ 
+diff --git a/package-lock.json b/package-lock.json
+index d485cdf..dc5401c 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -6160,6 +6160,17 @@
+         }
+       }
+     },
++    "node_modules/next-intl/node_modules/@swc/helpers": {
++      "version": "0.5.23",
++      "resolved": "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.23.tgz",
++      "integrity": "sha512-5lSsMOTXURePglDfvuAQUqkGek9Hg2kksOYay2m0+XR++b2NWYL/4sWyuvVBIs8oKnJaxkdi9whaL/sqN13afw==",
++      "license": "Apache-2.0",
++      "optional": true,
++      "peer": true,
++      "dependencies": {
++        "tslib": "^2.8.0"
++      }
++    },
+     "node_modules/next-themes": {
+       "version": "0.4.6",
+       "resolved": "https://registry.npmjs.org/next-themes/-/next-themes-0.4.6.tgz",

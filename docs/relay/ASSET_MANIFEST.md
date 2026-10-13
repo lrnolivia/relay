@@ -1,0 +1,7 @@
+# Product assets
+
+A registered project can declare `relay.assets.json` at its repository root (the Relay web app also supports `apps/web/public/relay.assets.json`). The manifest has `schema: 1`, its exact registered `project` ID, and a `variants` object. `primary` is the project-strip icon. Each variant declares a repository-relative `path`, lowercase SHA-256, and exact byte count. Relay resolves blobs from the registered repository only, verifies the bytes and sanitizes SVG before returning an icon.
+
+The Relay manifest references the existing canonical `/icons` assets; it does not export, replace or reinterpret the user's pending Figma artwork. Optional product variants can name light/dark, wordmark, monochrome or application-specific assets without changing the primary choice. For projects without a manifest, the existing declared-favicon/native-hicolor discovery remains available. A broken explicit declaration returns unavailable instead of silently substituting a guessed logo.
+
+Responses carry repository path, Git blob identity, SHA-256 and byte count. Consumers use the existing authenticated `/api/projects/:id/icon` response and preserve its data URL rather than copying, recreating or downloading a visually similar asset. Source changes invalidate the bounded discovery cache using the existing cache policy. Missing assets are reported explicitly; loewOS's final user-selected icon remains a separate unresolved choice.

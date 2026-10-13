@@ -1,0 +1,28 @@
+name: Schedule field Preview QA
+
+on:
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: field-preview-qa-scheduler
+  cancel-in-progress: false
+
+jobs:
+  schedule:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Dispatch QA for new field Preview heads
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/schedule-preview-qa.mjs

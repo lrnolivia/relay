@@ -1,0 +1,46 @@
+// Canonical Field glyph behavior, lifted without retuning.
+// Source: lrnolivia/field@9ce5bb839050ef94e434e13079cab319a3e64711
+// src/editor/glyph/field-glyph.tsx and src/editor/motion/field-motion.ts
+const rest = { x: 0, y: 0, rotate: 0, scale: 1, scaleX: 1, scaleY: 1 };
+export const fieldGlyphVariants = {
+  generic: { rest, hover: { y: -1, scale: 1.08 }, tap: { y: 0.5, scale: 0.82 } },
+  plus: { rest, hover: { rotate: 0, scale: 1.12 }, tap: { rotate: 0, scale: 0.82 } },
+  minus: { rest, hover: { scaleX: 0.7, scaleY: 1, x: -0.6 }, tap: { scaleX: 0.54, scaleY: 0.84, x: 0 } },
+  chevron: { rest, hover: { x: 1.5, scale: 1.08 }, tap: { x: 0.5, scale: 0.84 } },
+  eye: { rest, hover: { scaleX: 1.04, scaleY: 0.78 }, tap: { scaleX: 0.9, scaleY: 0.62 } },
+  lock: { rest, hover: { y: -1, scale: 1.08 }, tap: { y: 0.75, scale: 0.82 } },
+  pin: { rest, hover: { y: 1, scale: 0.96 }, tap: { y: 1.5, scale: 0.82 } },
+  delete: { rest, hover: { y: -1, rotate: -6, scale: 1.08 }, tap: { y: 0.5, rotate: 3, scale: 0.8 } },
+  ellipsis: { rest, hover: { scaleX: 1.16, scaleY: 1.08 }, tap: { scaleX: 0.78, scaleY: 0.88 } },
+  copy: { rest, hover: { x: 1.25, y: -1, scale: 1.05 }, tap: { x: 0.5, y: 0.5, scale: 0.82 } },
+  gear: { rest, hover: { rotate: 18, scale: 1.06 }, tap: { rotate: -8, scale: 0.82 } },
+  'step-up': { rest, hover: { y: -1.75, scale: 1.08 }, tap: { y: -0.5, scale: 0.82 } },
+  'step-down': { rest, hover: { y: 1.75, scale: 1.08 }, tap: { y: 0.5, scale: 0.82 } },
+  'align-left': { rest, hover: { x: -2, scale: 1.05 }, tap: { x: -0.75, scale: 0.84 } },
+  'align-center-h': { rest, hover: { scaleX: 0.9, scaleY: 1.08 }, tap: { scaleX: 0.78, scaleY: 0.86 } },
+  'align-right': { rest, hover: { x: 2, scale: 1.05 }, tap: { x: 0.75, scale: 0.84 } },
+  'align-top': { rest, hover: { y: -2, scale: 1.05 }, tap: { y: -0.75, scale: 0.84 } },
+  'align-center-v': { rest, hover: { scaleX: 1.08, scaleY: 0.9 }, tap: { scaleX: 0.86, scaleY: 0.78 } },
+  'align-bottom': { rest, hover: { y: 2, scale: 1.05 }, tap: { y: 0.75, scale: 0.84 } },
+  stack: { rest, hover: { x: 1.5, y: -1.5, scale: 1.08 }, tap: { x: 0, y: 0.5, scale: 0.84 } },
+  layers: { rest, hover: { y: -2, scale: 1.1 }, tap: { y: 0.5, scale: 0.82 } },
+  media: { rest, hover: { rotate: -5, y: -1, scale: 1.08 }, tap: { rotate: 2, scale: 0.82 } },
+  globe: { rest, hover: { rotate: 18, scale: 1.07 }, tap: { rotate: -5, scale: 0.83 } },
+  branch: { rest, hover: { x: 2, scale: 1.06 }, tap: { x: 0.5, scale: 0.83 } },
+  code: { rest, hover: { scaleX: 1.18, scaleY: 1.04 }, tap: { scaleX: 0.82, scaleY: 0.84 } },
+  presets: { rest, hover: { rotate: -8, y: -1, scale: 1.07 }, tap: { rotate: 3, scale: 0.83 } },
+};
+export const fieldMotion = {
+  response: { type: 'spring', stiffness: 560, damping: 26, mass: 0.42 },
+  glyph: { type: 'spring', stiffness: 500, damping: 22, mass: 0.44 },
+  toggle: { type: 'spring', stiffness: 430, damping: 22, mass: 0.62 },
+  disclosure: { type: 'spring', stiffness: 420, damping: 23, mass: 0.6 },
+  spatial: { type: 'spring', stiffness: 360, damping: 25, mass: 0.72 },
+  expressive: { type: 'spring', stiffness: 330, damping: 21, mass: 0.78 },
+  buttonHoverScale: 1.02,
+  buttonHoverY: -1.25,
+  buttonTapScale: 0.955,
+  actionTapScale: 0.97,
+  swatchHoverScale: 1.1,
+  swatchTapScale: 0.92,
+};

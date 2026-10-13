@@ -1,0 +1,26 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://relay.loew.fi/contracts/tools/agentic-tool-v1.schema.json",
+  "title":"Relay Agentic Tool Contract v1",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["version","kind","family","side_effects","retry_policy","dependency_hints","output","security"],
+  "properties":{
+    "version":{"const":"1.0.0"},
+    "kind":{"enum":["query","command","discovery","recipe"]},
+    "family":{"enum":["control","runner","source","cloud","verify","staff","skills","ui","operations"]},
+    "side_effects":{"type":"boolean"},
+    "retry_policy":{"enum":["safe","readback-first","never-unchanged","operation-status-first"]},
+    "dependency_hints":{"type":"array","maxItems":8,"items":{"type":"string","minLength":1,"maxLength":120}},
+    "output":{"type":"object","additionalProperties":false,"required":["bounded","structured"],"properties":{
+      "bounded":{"type":"boolean"},
+      "structured":{"type":"boolean"},
+      "progressive_detail":{"type":"boolean"}
+    }},
+    "security":{"type":"object","additionalProperties":false,"required":["server_side_credentials","permission_gate"],"properties":{
+      "server_side_credentials":{"type":"boolean"},
+      "permission_gate":{"type":"string","minLength":1,"maxLength":200},
+      "scope":{"type":"string","maxLength":200}
+    }}
+  }
+}

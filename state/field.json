@@ -1,0 +1,43 @@
+{
+  "id": "field",
+  "status": "blocked",
+  "session_id": null,
+  "last_output_id": null,
+  "run_count": 0,
+  "last_run_at": null,
+  "next_run_at": null,
+  "last_summary": "The lockfile repair restores a clean install, but project verification is not healthy. Test isolation diagnostics were captured.",
+  "next_focus": "Dependency repair is verified through install and build; project tests/lint have separate failures. Repair may open a draft PR with those warnings.",
+  "last_error": "OpenAI 429: {\"error\":{\"message\":\"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\"type\":\"insufficient_quota\",\"param\":null,\"code\":\"credit_balance_exhausted\"}}",
+  "last_usage": null,
+  "dependency_health": "repairable",
+  "project_health": "failed",
+  "dependency": {
+    "checked_at": "2026-09-30T08:45:06.163Z",
+    "classification": "lockfile",
+    "reason": "Missing: @swc/helpers@0.5.23 from lock file",
+    "missing": [
+      "@swc/helpers@0.5.23 from lock file"
+    ],
+    "node": "v22.23.2",
+    "npm": "10.9.8",
+    "workflow_url": "https://github.com/lrnolivia/loew-runner/actions/runs/36690863239",
+    "repair_verified": true,
+    "checks": {
+      "initial_install": "failure",
+      "repair_lockfile_generation": "success",
+      "repaired_clean_install": "success",
+      "build": "success",
+      "tests": "failure",
+      "lint": "failure",
+      "test_diagnostic": " WITHOUT reloading — the site is already open behind it\u001b[32m 49\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m✓\u001b[39m src/RemixWorkspacePicker.test.tsx\u001b[2m > \u001b[22massigning\u001b[2m > \u001b[22mpreselects the personal workspace, so one click keeps it where it is\u001b[32m 43\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m✓\u001b[39m src/RemixWorkspacePicker.test.tsx\u001b[2m > \u001b[22massigning\u001b[2m > \u001b[22mmoves it to the workspace actually picked\u001b[32m 40\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m✓\u001b[39m src/RemixWorkspacePicker.test.tsx\u001b[2m > \u001b[22massigning\u001b[2m > \u001b[22msurfaces a refusal and stays open to retry\u001b[32m 59\u001b[2mms\u001b[22m\u001b[39m\n\n\u001b[31m⎯⎯⎯⎯⎯⎯⎯\u001b[39m\u001b[1m\u001b[41m Failed Tests 1 \u001b[49m\u001b[22m\u001b[31m⎯⎯⎯⎯⎯⎯⎯\u001b[39m\n\n\u001b[41m\u001b[1m FAIL \u001b[22m\u001b[49m src/RemixWorkspacePicker.test.tsx\u001b[2m > \u001b[22mthe workspace choice is obligatory\u001b[2m > \u001b[22ma backdrop click does NOT dismiss it\n\u001b[31m\u001b[1mAssertionError\u001b[22m: backdrop should exist: expected null to be truthy\u001b[39m\n\n\u001b[32m- Expected:\u001b[39m\ntrue\n\n\u001b[31m+ Received:\u001b[39m\nnull\n\n\u001b[36m \u001b[2m❯\u001b[22m src/RemixWorkspacePicker.test.tsx:\u001b[2m58:47\u001b[22m\u001b[39m\n    \u001b[90m 56|\u001b[39m     \u001b[35mawait\u001b[39m screen\u001b[33m.\u001b[39m\u001b[34mfindByText\u001b[39m(\u001b[32m'My workspace'\u001b[39m)\u001b[33m;\u001b[39m\n    \u001b[90m 57|\u001b[39m     const backdrop = document.querySelector('[data-modal-root] .bg-bla…\n    \u001b[90m 58|\u001b[39m     \u001b[34mexpect\u001b[39m(backdrop\u001b[33m,\u001b[39m \u001b[32m'backdrop should exist'\u001b[39m)\u001b[33m.\u001b[39m\u001b[34mtoBeTruthy\u001b[39m()\u001b[33m;\u001b[39m\n    \u001b[90m   |\u001b[39m                                               \u001b[31m^\u001b[39m\n    \u001b[90m 59|\u001b[39m     fireEvent\u001b[33m.\u001b[39m\u001b[34mclick\u001b[39m(backdrop\u001b[33m!\u001b[39m)\u001b[33m;\u001b[39m\n    \u001b[90m 60|\u001b[39m     await waitFor(() => expect(screen.getByText('Continue')).toBeTruth…\n\n\u001b[31m\u001b[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\u001b[22m\u001b[39m\n\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[31m1 failed\u001b[39m\u001b[22m\u001b[90m (1)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[31m1 failed\u001b[39m\u001b[22m\u001b[2m | \u001b[22m\u001b[1m\u001b[32m6 passed\u001b[39m\u001b[22m\u001b[90m (7)\u001b[39m\n\u001b[2m   Start at \u001b[22m 08:43:29\n\u001b[2m   Duration \u001b[22m 3.16s\u001b[2m (transform 289ms, setup 0ms, import 854ms, tests 535ms, environment 1.51s)\u001b[22m\n\nFAILED: src/RemixWorkspacePicker.test.tsx (exit 1)\n"
+    }
+  },
+  "updated_at": "2026-09-30T08:45:06.163Z",
+  "budget": {
+    "day": "2026-09-27",
+    "runs": 0,
+    "tokens": 0,
+    "last_accounted_response_id": null
+  }
+}

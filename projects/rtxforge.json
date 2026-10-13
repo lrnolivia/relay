@@ -1,0 +1,65 @@
+{
+  "id": "rtxforge",
+  "name": "rtxForge",
+  "repository": "lrnolivia/rtxForge",
+  "managed": true,
+  "default_branch": "main",
+  "implementation": {
+    "branch_prefixes": [
+      "rtxforge/"
+    ],
+    "excluded_branches": [
+      "main"
+    ],
+    "draft_pr_required": true,
+    "merge_method": "squash"
+  },
+  "runtime": {
+    "kind": "python",
+    "bootstrap_source": "AGENTS.md"
+  },
+  "validation": {
+    "source": "AGENTS.md",
+    "repo_defined": true
+  },
+  "qa": {
+    "authority": "lrnolivia/relay@main/LOEW_CHAT_BIBLE.md#11-qa-law",
+    "runner_first": true,
+    "runtime_required_for_web_visible_changes": false
+  },
+  "promotion": {
+    "automatic": true,
+    "repair_artificial_blockers": true,
+    "exact_sha_gate": true,
+    "max_transient_retries": 2,
+    "auto_update_branch": true,
+    "auto_create_pr": true,
+    "auto_merge": true
+  },
+  "safety": {
+    "force_push": false,
+    "bypass_required_checks": false,
+    "semantic_conflict_resolution": "block",
+    "dependency_intent_changes": "block"
+  },
+  "guidance": {
+    "universal_authority": "lrnolivia/relay@main/LOEW_CHAT_BIBLE.md",
+    "local_bootstrap": "AGENTS.md",
+    "historical_repository_targets_are_non_authoritative": true
+  },
+  "coordination": {
+    "contract": "docs/WORK_COORDINATION.md",
+    "record": "coordination/rtxforge.json",
+    "max_active_branches": 4,
+    "lease_hours": 12,
+    "one_active_branch_per_owner": true,
+    "resume_existing_assignment": true,
+    "atomic_claim_required": true,
+    "expired_claim_retains_ownership": true,
+    "audit_workflow": "coordination.yml",
+    "cleanup": "merged-managed-branches-only",
+    "status": "enabled",
+    "admission_workflow": "lrnolivia/rtxForge:.github/workflows/runner-coordination.yml",
+    "cleanup_workflow": "lrnolivia/rtxForge:.github/workflows/runner-coordination.yml"
+  }
+}

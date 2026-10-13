@@ -1,0 +1,79 @@
+{
+  "id": "ctrl",
+  "record_sha": "fa16e8946e75dfb998b2a4c4e62dbf69ae74f8e4",
+  "queue": [],
+  "nonterminal_claims": [
+    {
+      "id": "ctrl-review-delivery-20261003",
+      "owner": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+      "branch": "ctrl/review-delivery-20261003",
+      "paths": [
+        "apps/web/public/",
+        "apps/web/src/",
+        "packages/shared-ui/",
+        "test/"
+      ],
+      "resources": [
+        "ctrl-review-delivery"
+      ],
+      "goal": "Repair ctrl navigation and whole-page Inspector regressions while preserving the accepted project strip and completing review delivery.",
+      "acceptance": "First checkpoint: new icon-only mobile bottom dock, selected glow retained, above-icon press label with Field spring motion, drag/cancel and reduced-motion handling, small backgroundless Settings right. Larger feature-header marks and tighter title/subtitle spacing. Review screenshots before publication. Project strip retains committed global membership during refresh, uses initial skeletons, small header loading indicator, atomic real updates and no separate loading-only bar; failures remain visible. Desktop and mobile regression coverage. Preserve original Inspector scope: direct evidence links independent of slow catalogue, render images promptly, unresolved state not pending/completed, preserve legacy/modern review semantics, cancellation and drafts, nonempty fixtures. Full artifact-bound feedback bridge and approved mosaic remain separately accountable.\nLatest superseding design decision: PR7 mobile dock REJECTED; research and clarify requested Apple floating tab-bar proportions in solid ctrl surfaces, no Liquid Glass, preview before publish. New project-strip design APPROVED. Correct compact gear horizontal center and expanded gear right alignment, breadcrumb full content width, trailing badge padding. Inspector current compact Visual rows belong List; recover approved prior Visual cards. Fix filter disclosure opening AND closing and polish controls. Verify populated content, slow/failure responses and actual screenshots across desktop/mobile; no HTTP200-only acceptance. Coordinate reply repair release when verified; do not abandon any original scope.",
+      "next_action": "Fix confirmed sidebar flex-axis/header-width issues and add geometric assertions; audit and restore Inspector cards/controls/project strip; await Apple tab-bar reference clarification. Draft only until reviewed.",
+      "category": "implementation",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "base_sha": "5c662ae19dae2fc4dd088ba7beb98aae0bdd23e4",
+      "state": "active",
+      "created_at": "2026-10-03T03:28:29.214Z",
+      "updated_at": "2026-10-03T04:30:23.784Z",
+      "lease_until": "2026-10-03T16:30:23.784Z",
+      "amendment_count": 2,
+      "amendments": [
+        {
+          "at": "2026-10-03T04:04:12.045Z",
+          "by": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "reason": "User rejects released mobile nav and adds project-strip stability/header corrections; prioritize a reviewable polish checkpoint while preserving unfinished Inspector repair.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Make Inspector review entry responsive and preserve truthful review state while preparing the approved review-first flow.",
+            "acceptance": "Direct evidence links open independently of the slow capture catalogue. Render capture identity/image promptly; unresolved review state is explicitly unknown, never inferred pending/completed. Preserve legacy completed/stale/archive semantics and source revisions. Disable organizing only items whose review state is unresolved. Bound and cancel requests across navigation; no late results overwrite current context or drafts. Add non-empty fixture tests. Full durable feedback bridge, approved hero telemetry and actual agent receipt remain explicit later checks rather than implied delivered.",
+            "next_action": "Implement the bounded front-end loading/deep-link slice against exact deployed source, then test late/failed hydration, navigation, legacy reviews and direct review entry. Coordinate backend feedback bridge separately under existing MCP continuation."
+          },
+          "after": {
+            "goal": "Repair ctrl mobile navigation and project loading, then finish responsive Inspector review entry and truthful delivery states.",
+            "acceptance": "First checkpoint: new icon-only mobile bottom dock, selected glow retained, above-icon press label with Field spring motion, drag/cancel and reduced-motion handling, small backgroundless Settings right. Larger feature-header marks and tighter title/subtitle spacing. Review screenshots before publication. Project strip retains committed global membership during refresh, uses initial skeletons, small header loading indicator, atomic real updates and no separate loading-only bar; failures remain visible. Desktop and mobile regression coverage. Preserve original Inspector scope: direct evidence...",
+            "next_action": "Publish a draft of urgent mobile/header/project-strip changes from separate ctrl-polish2-work; keep uncommitted Inspector WIP and its identified races isolated in ctrl-work until fixed and tested. Show real mobile screenshots. Then resume Inspector delivery slice; no premature full completion."
+          }
+        },
+        {
+          "at": "2026-10-03T04:30:23.784Z",
+          "by": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "reason": "Fresh Mac review rejects mobile dock and identifies Inspector/sidebar regressions. Preserve accepted project strip and coordinate complete correction before publication.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Repair ctrl mobile navigation and project loading, then finish responsive Inspector review entry and truthful delivery states.",
+            "acceptance": "First checkpoint: new icon-only mobile bottom dock, selected glow retained, above-icon press label with Field spring motion, drag/cancel and reduced-motion handling, small backgroundless Settings right. Larger feature-header marks and tighter title/subtitle spacing. Review screenshots before publication. Project strip retains committed global membership during refresh, uses initial skeletons, small header loading indicator, atomic real updates and no separate loading-only bar; failures remain visible. Desktop and mobile regression coverage. Preserve original Inspector scope: direct evidence...",
+            "next_action": "Publish a draft of urgent mobile/header/project-strip changes from separate ctrl-polish2-work; keep uncommitted Inspector WIP and its identified races isolated in ctrl-work until fixed and tested. Show real mobile screenshots. Then resume Inspector delivery slice; no premature full completion."
+          },
+          "after": {
+            "goal": "Repair ctrl navigation and whole-page Inspector regressions while preserving the accepted project strip and completing review delivery.",
+            "acceptance": "First checkpoint: new icon-only mobile bottom dock, selected glow retained, above-icon press label with Field spring motion, drag/cancel and reduced-motion handling, small backgroundless Settings right. Larger feature-header marks and tighter title/subtitle spacing. Review screenshots before publication. Project strip retains committed global membership during refresh, uses initial skeletons, small header loading indicator, atomic real updates and no separate loading-only bar; failures remain visible. Desktop and mobile regression coverage. Preserve original Inspector scope: direct evidence...",
+            "next_action": "Fix confirmed sidebar flex-axis/header-width issues and add geometric assertions; audit and restore Inspector cards/controls/project strip; await Apple tab-bar reference clarification. Draft only until reviewed."
+          }
+        }
+      ],
+      "reserved": true,
+      "lease_expired": false
+    }
+  ]
+}

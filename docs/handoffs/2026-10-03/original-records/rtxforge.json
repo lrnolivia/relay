@@ -1,0 +1,131 @@
+{
+  "id": "rtxforge",
+  "record_sha": "00651e50f7e8276912c95492ce9c979e109c81e5",
+  "queue": [
+    {
+      "id": "rtxforge-figma-fidelity-20261001",
+      "owner": "01a0cbec-6302-7aa0-a0c8-546f9b46587d",
+      "goal": "PAUSED by user: correct production Figma designs against repository source/captures. Source path is READ-ONLY reference, not authorization to edit code. User rejected previous result as ugly/inaccurate; previous completion claim is invalid.",
+      "acceptance": "Editable designs visually match repo captures and source, with shared Foundations/Components propagating into Library, Details, Progress/Dialogs, QA. Inter is a fallback because Adwaita Sans unavailable in Figma; exact font fidelity unresolved.",
+      "next_action": "DO NOT RESUME until user explicitly asks. Stopped after FAILED visual review of Details29:475 and Graphics30:685: hero hidden by gradient; sidebar labels black on dark, selection fills fully opaque; footer dividers too bright. Next diagnose variable paint/gradient opacity; reset glyphs in header23:62/64/66/68 swapped to51:329. Then continue Library/List/Progress/Dialogs/QA correction. Retained file https://www.figma.com/design/UV0o89IkpCbYfXQmO3EziZ . References /home/loew/Repos/rtxForge/dist/{gnome-library,gnome-game-settings,gnome-settings,gnome-progress,list-final,install-presets-final}.png plus gui/rtxforge_gtk.py. CP assets18:6/18:7/18:8 replaced from actual demo media; hero hash a36c70e3a27387b8997948aacda0303b41572605. Added Adwaita icons64:2789..64:2812 and Sidebar Row64:2815; changed sidebars28:93,30:675; preference rows56px with regular titles, buttons minWidth70. Hero28:426 gradient currently faulty. Details/Settings grouped row frames64:3344..64:3363. No product/game writes. Preserve unrelated local documentation changes. Separate installation Relay assignment untouched.",
+      "paths": [
+        "gui/rtxforge_gtk.py"
+      ],
+      "resources": [
+        "figma:UV0o89IkpCbYfXQmO3EziZ"
+      ],
+      "category": "design",
+      "labels": [
+        {
+          "key": "execution",
+          "value": "paused-by-user"
+        }
+      ],
+      "primary_role": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-01T22:47:12.113Z"
+    },
+    {
+      "id": "rtxforge-native-kde-hyprland-corner-choice-later-20261001",
+      "owner": "01a0f997-7f61-7e62-9b39-ae49f311792d",
+      "goal": "Later: port rtxForge presentation to native KDE Plasma and Hyprland desktop integration, and let every user choose square or rounded window edges.",
+      "acceptance": "Native desktop integration considered for KDE Plasma and Hyprland; square/rounded edge preference available to all desktop users. User explicitly deferred implementation until later.",
+      "next_action": "Deferred by user on 2026-10-01. Revisit after full runtime package and scaling/HDR work; inspect native desktop toolkit/decorations before choosing implementation.",
+      "paths": [
+        "gui/"
+      ],
+      "resources": [
+        "desktop-presentation-portability",
+        "window-corner-preference"
+      ],
+      "category": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-02T00:09:24.187Z"
+    },
+    {
+      "id": "rtxforge-post-release-mfg-nr-qa-20261002",
+      "owner": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+      "goal": "Preserve Lauren's post-release game QA for the shipped rtxForge package; record only, no worker launch.",
+      "acceptance": "Verbatim Lauren report2026-10-02T01:44UTC messageSentinel_59276d1506748191aa0803178189589e: \"record that Avatar's MFG worked, Witcher 3 MFG worked. Crimson Desert loaded and MFG worked. NR didn't work anywhere it's installed yet. but this is crazy great progress.\" These are user-observed runtime MFG passes for3games and NRfailure in testedinstallations, no automated verification or diagnosedcause. Package reference PR5 testedhead28cb6a10b4d44236037eaba5512e37b45d957cf2 mergedacd71e9a3da59a86c04794247ac8ead60fdbb95a; exactruntimebinaryhash/settings not supplied. PriorOW2userMFGpass is inPR5.\nLauren's final verdict at 2026-10-02 01:51 UTC, message Sentinel_9386434786d48191bb5e919277c37ea5, verbatim: \"MFG is just working officially. that\u2019s the call it\u2019s working on Cyberpunk too. and NR is not working, that\u2019s the other call lol.\" MFG is confirmed working by Lauren across Cyberpunk, Avatar, Witcher 3, Crimson Desert and previously The Outer Worlds 2. NR is confirmed not working in her tested installations. Preserve these as human runtime results; exact binary hashes/settings remain unspecified and no cause is inferred.",
+      "next_action": "Saved human QA verdict: MFG WORKS; NR DOES NOT WORK. Keep queued without a worker, branch, claim or automatic execution. Preserve package history. Do not mark this as native-worker delivery or independent automated verification.",
+      "paths": [
+        "docs/INSTALLATION.md"
+      ],
+      "resources": [
+        "rtxforge-post-release-game-qa"
+      ],
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-02T01:46:27.944Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-02T01:52:39.110Z",
+          "by": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "reason": "Lauren supplied a final human QA verdict and added Cyberpunk to the passing MFG games.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Verbatim Lauren report2026-10-02T01:44UTC messageSentinel_59276d1506748191aa0803178189589e: \"record that Avatar's MFG worked, Witcher 3 MFG worked. Crimson Desert loaded and MFG worked. NR didn't work anywhere it's installed yet. but this is crazy great progress.\" These are user-observed runtime MFG passes for3games and NRfailure in testedinstallations, no automated verification or diagnosedcause. Package reference PR5 testedhead28cb6a10b4d44236037eaba5512e37b45d957cf2 mergedacd71e9a3da59a86c04794247ac8ead60fdbb95a; exactruntimebinaryhash/settings not supplied. PriorOW2userMFGpass is inPR5.",
+            "next_action": "Saved QA only. Remain queued, no claim/branch/worker/systemchanges. Prior terminalinstallassignment is preserved; terminalfeedback mutation was refused. Future user-authorized investigation must reconcile exactgame/build/profile/NRsymptoms. This is not delivery or acknowledgement by a nativeworker. docs/INSTALLATION.md is reference scope only, not a requested edit."
+          },
+          "after": {
+            "acceptance": "Verbatim Lauren report2026-10-02T01:44UTC messageSentinel_59276d1506748191aa0803178189589e: \"record that Avatar's MFG worked, Witcher 3 MFG worked. Crimson Desert loaded and MFG worked. NR didn't work anywhere it's installed yet. but this is crazy great progress.\" These are user-observed runtime MFG passes for3games and NRfailure in testedinstallations, no automated verification or diagnosedcause. Package reference PR5 testedhead28cb6a10b4d44236037eaba5512e37b45d957cf2 mergedacd71e9a3da59a86c04794247ac8ead60fdbb95a; exactruntimebinaryhash/settings not supplied. PriorOW2userMFGpass is inPR5....",
+            "next_action": "Saved human QA verdict: MFG WORKS; NR DOES NOT WORK. Keep queued without a worker, branch, claim or automatic execution. Preserve package history. Do not mark this as native-worker delivery or independent automated verification."
+          }
+        }
+      ],
+      "updated_at": "2026-10-02T01:52:39.110Z"
+    }
+  ],
+  "nonterminal_claims": [
+    {
+      "id": "rtxforge-shared-package-ui-20261002",
+      "owner": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+      "branch": "rtxforge/shared-package-ui-20261002",
+      "paths": [
+        "gui/",
+        "redesign/",
+        "scripts/",
+        "engine/",
+        "tests/",
+        "providers/",
+        "packaging/",
+        ".github/workflows/",
+        "README.md"
+      ],
+      "resources": [
+        "rtxforge-shared-package-engine",
+        "rtxforge-classic-redesign-selector"
+      ],
+      "goal": "Preserve canonical Library while adding shared recommended/custom package flows in Classic and redesign, persisted UI/start-page selection and native Linux portability foundation.",
+      "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.",
+      "next_action": "PAUSED by Lauren at2026-10-03 01:42 UTC: Field and ctrl take priority, rtxForge least important. Retain PR6 draft atabd243e7b6d03b7e49bc67b1447be2521831d8db; all CI green, newer Classic/preset/panel/corner work NOT published (continuous695d292e remains). Resume after Field/ctrl are in good place: inspect latest screenshots, finish native Dark/Light token mapping preserving customNight, metadatafallback, nativeQtClassicparity/controllercouch, NRruntimeverification/packagecatalog/structuredbetaReactportalrtxforge.loew.fi + RelayQA. Preserve allapprovedrequests andtests; no gamewrites.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "acd71e9a3da59a86c04794247ac8ead60fdbb95a",
+      "state": "held",
+      "created_at": "2026-10-02T17:32:51.823Z",
+      "updated_at": "2026-10-03T01:43:44.806Z",
+      "lease_until": "2026-10-03T13:43:44.806Z",
+      "reserved": true,
+      "lease_expired": false
+    }
+  ]
+}

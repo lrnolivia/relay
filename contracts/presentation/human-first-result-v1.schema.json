@@ -1,0 +1,45 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://relay.loew.fi/contracts/presentation/human-first-result-v1.schema.json",
+  "title":"Relay Human-First Result v1",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["human","technical_evidence"],
+  "properties":{
+    "human":{
+      "type":"object",
+      "additionalProperties":false,
+      "required":["health","outcome","responsible_staff","next_step","needs_user"],
+      "properties":{
+        "health":{"enum":["healthy","degraded","blocked","waiting"]},
+        "outcome":{"type":"string","minLength":1,"maxLength":700},
+        "responsible_staff":{
+          "type":["object","null"],
+          "properties":{
+            "id":{"type":"string"},
+            "display_name":{"type":"string"},
+            "role":{"type":["string","null"]}
+          },
+          "required":["id","display_name","role"],
+          "additionalProperties":false
+        },
+        "what_changed":{"type":["string","null"],"maxLength":700},
+        "next_step":{"type":["string","null"],"maxLength":700},
+        "needs_user":{"type":"boolean"},
+        "blocker":{"type":["string","null"],"maxLength":700},
+        "qa":{
+          "type":["object","null"],
+          "additionalProperties":false,
+          "properties":{
+            "surface":{"type":"string","minLength":1,"maxLength":300},
+            "intended_result":{"type":"string","minLength":1,"maxLength":500},
+            "evidence_identity":{"type":["string","null"],"maxLength":500},
+            "checks":{"type":"array","minItems":1,"maxItems":3,"items":{"type":"string","minLength":1,"maxLength":300}}
+          },
+          "required":["surface","intended_result","checks"]
+        }
+      }
+    },
+    "technical_evidence":{"type":"object"}
+  }
+}

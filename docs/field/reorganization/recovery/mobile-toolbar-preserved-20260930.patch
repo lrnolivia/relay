@@ -1,0 +1,176 @@
+diff --git a/src/editor/BottomToolbar.tsx b/src/editor/BottomToolbar.tsx
+index 4397a40..8accaa6 100644
+--- a/src/editor/BottomToolbar.tsx
++++ b/src/editor/BottomToolbar.tsx
+@@ -566,10 +566,51 @@ function LibraryDropdown({ open, setOpen }: { open: boolean; setOpen: (open: boo
+   );
+ }
+ 
++const NARROW_TOOLBAR_QUERY = '(max-width: 600px)';
++
++function useNarrowToolbarLayout(): boolean {
++  const [narrow, setNarrow] = useState(() =>
++    typeof window !== 'undefined' && window.matchMedia(NARROW_TOOLBAR_QUERY).matches,
++  );
++
++  useEffect(() => {
++    const media = window.matchMedia(NARROW_TOOLBAR_QUERY);
++    const sync = () => setNarrow(media.matches);
++    sync();
++    media.addEventListener('change', sync);
++    return () => media.removeEventListener('change', sync);
++  }, []);
++
++  return narrow;
++}
++
++function ActiveMobileToolGlyph({
++  toolMode,
++  commentModeActive,
++}: {
++  toolMode: ToolMode;
++  commentModeActive: boolean;
++}) {
++  if (commentModeActive) return <CommentBubbleIcon className="h-[18px] w-[18px]" />;
++  if (toolMode === 'hand') return <HandToolbarIcon className="h-[18px] w-[18px]" />;
++  if (toolMode === 'scale') return <ScaleToolbarIcon className="h-[18px] w-[18px]" />;
++  if (toolMode === 'frame') return <FrameToolbarIcon className="h-[18px] w-[18px]" />;
++  if (toolMode === 'text') return <TextToolbarIcon className="h-[18px] w-[18px]" />;
++  if (toolMode === 'shape-ellipse') return <ShapeCircleIcon className="h-[18px] w-[18px]" />;
++  if (toolMode === 'shape-triangle') return <ShapeTriangleIcon className="h-[18px] w-[18px]" />;
++  if (toolMode === 'shape-line') return <LineToolbarIcon className="h-[18px] w-[18px]" />;
++  if (toolMode === 'shape-path') return <ShapePathIcon className="h-[18px] w-[18px]" />;
++  if (toolMode === 'sketch') return <SketchPencilIcon className="h-[18px] w-[18px]" size={18} />;
++  if (toolMode === 'shape-rect') return <ShapeSquareIcon className="h-[18px] w-[18px]" />;
++  return <CursorIcon className="h-[18px] w-[18px] translate-y-px" />;
++}
++
+ // ─── Main BottomToolbar ─────────────────────────────────────────────────────
+ 
+ export default function BottomToolbar() {
+   const [toolMode, setToolMode] = useAtom(toolModeAtom);
++  const isNarrowToolbar = useNarrowToolbarLayout();
++  const [compactToolbarOpen, setCompactToolbarOpen] = useState(false);
+   const [openMenu, setOpenMenu] = useState<'cursor' | 'frame' | 'shape' | 'media' | 'library' | 'pen' | 'text' | null>(null);
+   const menuProps = (menu: 'cursor' | 'frame' | 'shape' | 'media' | 'library' | 'pen' | 'text') => ({
+     open: openMenu === menu,
+@@ -612,10 +653,11 @@ export default function BottomToolbar() {
+     trace.action('toolbar:tool-click', { mode });
+     setOpenMenu(null);
+     setToolMode(mode);
++    if (isNarrowToolbar) setCompactToolbarOpen(false);
+     // Picking a creator tool exits comment mode (mutually exclusive,
+     // mirrors the builder's behavior).
+     if (commentModeActive) setCommentModeActive(false);
+-  }, [setToolMode, commentModeActive, setCommentModeActive]);
++  }, [setToolMode, commentModeActive, setCommentModeActive, isNarrowToolbar]);
+ 
+   // Cursor / Hand selection — same as picking any tool, comment mode is
+   // mutually exclusive so selecting the cursor exits it. Clicking the
+@@ -624,8 +666,9 @@ export default function BottomToolbar() {
+     trace.action('toolbar:select-tool', { mode });
+     setOpenMenu(null);
+     setToolMode(mode);
++    if (isNarrowToolbar) setCompactToolbarOpen(false);
+     if (commentModeActive) setCommentModeActive(false);
+-  }, [setToolMode, commentModeActive, setCommentModeActive]);
++  }, [setToolMode, commentModeActive, setCommentModeActive, isNarrowToolbar]);
+ 
+   const handleCommentClick = useCallback(() => {
+     // Offline → commenting is unavailable (button hidden + this guard
+@@ -647,6 +690,12 @@ export default function BottomToolbar() {
+     if (isOffline && commentModeActive) setCommentModeActive(false);
+   }, [isOffline, commentModeActive, setCommentModeActive]);
+ 
++  // Crossing out of narrow geometry restores the accepted desktop/landscape
++  // toolbar immediately. Width — not device identity — decides presentation.
++  useEffect(() => {
++    if (!isNarrowToolbar) setCompactToolbarOpen(false);
++  }, [isNarrowToolbar]);
++
+   // Ctrl+Alt+C → toggle comment mode (matches the builder shortcut).
+   useEffect(() => {
+     const onKey = (e: KeyboardEvent) => {
+@@ -661,15 +710,52 @@ export default function BottomToolbar() {
+     return () => window.removeEventListener('keydown', onKey);
+   }, [handleCommentClick]);
+ 
++  if (isNarrowToolbar && !compactToolbarOpen) {
++    return (
++      <div
++        data-mobile-toolbar-launcher
++        className="fixed left-1/2 z-[9998] -translate-x-1/2 select-none"
++        style={{
++          bottom: 'calc(12px + env(safe-area-inset-bottom, 0px) + var(--field-visible-bottom, 0px))',
++          willChange: 'transform',
++          isolation: 'isolate',
++        }}
++      >
++        <button
++          type="button"
++          aria-label="Open tools"
++          aria-expanded="false"
++          onClick={() => setCompactToolbarOpen(true)}
++          className="relative flex h-[46px] w-[46px] items-center justify-center rounded-[14px] border border-[var(--border-light)] bg-[var(--bg-toolbar)] text-[var(--text-primary)] shadow-[var(--shadow-md)]"
++          style={{ cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}
++        >
++          <ActiveMobileToolGlyph toolMode={toolMode} commentModeActive={commentModeActive} />
++          <span
++            aria-hidden
++            className="absolute bottom-[4px] right-[4px] flex h-[10px] w-[10px] items-center justify-center text-[var(--text-tertiary)]"
++          >
++            <FigmaChevronDownIcon size={9} />
++          </span>
++        </button>
++      </div>
++    );
++  }
++
+   return (
+     <div
++      data-mobile-toolbar-expanded={isNarrowToolbar || undefined}
+       className="fixed left-1/2 -translate-x-1/2 z-[9998] flex justify-center select-none"
+       // CommandPalette measures the live bar rect, so anchored UI tracks it.
+-      style={{ bottom: 18, willChange: 'transform', isolation: 'isolate' }}
++      style={{
++        bottom: isNarrowToolbar ? 'calc(12px + env(safe-area-inset-bottom, 0px) + var(--field-visible-bottom, 0px))' : 18,
++        width: isNarrowToolbar ? 'calc(100vw - 24px)' : undefined,
++        willChange: 'transform',
++        isolation: 'isolate',
++      }}
+     >
+       <div
+         id="bottom-toolbar-container"
+-        className="relative flex items-center px-2 py-2 gap-0.5"
++        className={`relative flex items-center px-2 py-2 gap-0.5 ${isNarrowToolbar ? 'w-full flex-wrap justify-center' : ''}`}
+         // isolation: the cut backdrop below sits at z -1; isolating keeps it
+         // inside this container instead of sliding under the page.
+         style={{ isolation: 'isolate' }}
+@@ -690,7 +776,10 @@ export default function BottomToolbar() {
+           } as React.CSSProperties}
+         />
+         {/* Figma-like authoring cluster: grouped tool families, no duplicate layout/media surfaces. */}
+-        <div data-toolbar-cluster="authoring" className="flex items-center gap-0.5">
++        <div
++          data-toolbar-cluster="authoring"
++          className={`flex items-center gap-0.5 ${isNarrowToolbar ? 'flex-wrap justify-center' : ''}`}
++        >
+           <CursorDropdown toolMode={toolMode} commentModeActive={commentModeActive} onSelect={handleSelectTool} allowScale={!isViewer} {...menuProps('cursor')} />
+ 
+           {!isViewer && <>
+@@ -749,13 +838,13 @@ export default function BottomToolbar() {
+           </>}
+         </div>
+ 
+-        <Separator />
++        {!isNarrowToolbar && <Separator />}
+ 
+         {/* Secondary utility cluster stays intentionally tiny: routine fit,
+             command search, comments, and account upgrade only. */}
+         <div
+           data-toolbar-cluster="utility"
+-          className="flex items-center gap-0.5"
++          className={`flex items-center gap-0.5 ${isNarrowToolbar ? 'w-full justify-center border-t border-[var(--border-light)] pt-1' : ''}`}
+         >
+           <SmartZoomButton selectedId={selectedId} />
+ 

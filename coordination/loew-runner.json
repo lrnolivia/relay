@@ -1,0 +1,479 @@
+{
+  "schema": 1,
+  "project": "loew-runner",
+  "updated_at": "2026-09-30T15:29:37.189Z",
+  "legacy_branches": [
+    "control",
+    "main",
+    "runner/3-a-control-plane",
+    "runner/3-b-guarded-controls",
+    "runner/3-c-consolidation",
+    "runner/3-d-infrastructure-view",
+    "runner/3-e-runtime-closeout",
+    "shared-repair-reconciler",
+    "status/field-runner-authority-20260929",
+    "test/relay-smoke"
+  ],
+  "queue": [
+    {
+      "id": "runner-visuals-media-lifecycle-20260930",
+      "owner": "normal-chat-runner-visuals-media-20260930",
+      "goal": "Implement the merged Runner Visuals policy: asynchronous screenshot/video ingestion, bounded storage, and post-main compact archival with working-blob purge.",
+      "acceptance": "Visuals accepts screenshots and MP4/WebM video; registration returns a durable evidence ID with queued/uploading state before byte completion; producer never has to poll for stored; background retry/reconciliation exposes failed state without silent loss; content hashing/dedup and configurable byte watermarks enforce storage bounds; exact merge-to-default-branch makes working blobs archive/purge eligible; compact archive bundles go to a dedicated configured visual evidence archive repository and preserve manifest, hashes, metadata, compressed review stills/keyframes, and only compact motion copies when justified; raw full-res media is not committed to Git; purge occurs only after archive commit/readback; dashboard renders upload/archive/expiry state and video playback; tests cover lifecycle, limits, merge eligibility, archive-before-delete, and failures.",
+      "next_action": "Wait for runner-human-qa-shell-20260930 to release the overlapping Visuals files, then claim this queued assignment without broadening scope.",
+      "paths": [
+        "src/visual-evidence.mjs",
+        "src/cloudflare-worker.mjs",
+        "dashboard/app.js",
+        "dashboard/index.html",
+        "dashboard/styles.css",
+        "test/cloudflare-worker.test.mjs"
+      ],
+      "resources": [
+        "runner-visual-evidence",
+        "runner-visual-media-ingest",
+        "runner-visual-archive"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T12:12:42.107Z"
+    },
+    {
+      "id": "runner-qa-publication-receipts-20260930",
+      "owner": "normal-chat-relay-qa-integration-20260930",
+      "goal": "Wire Relay publication/operation receipts into the existing Runner human QA shell so review, evidence, verdicts and publication state share one UI and one durable identity.",
+      "acceptance": "qa-shell reads the same durable operation/publication receipt contract used by Relay chat; each QA packet binds project + exact source/head/PR/check state + Visuals evidence/run IDs + merge/version/deployment/runtime identities + recovery/rollback state; targeted questions, notes and looks-good/needs-work/not-sure verdicts attach to that exact receipt/artifact rather than a separate UI record; stale head/evidence invalidates the relevant review state; publication progress and recovery are visible in the floating QA panel; no second review dashboard/store/approval registry is introduced; all existing Runner/Relay safety gates remain authoritative.",
+      "next_action": "Wait for runner-human-qa-shell-20260930 and runner-visuals-media-lifecycle-20260930 to release the overlapping QA/Visuals surface, then claim this integration task against the stable Relay receipt contract without replacing qa-shell.",
+      "paths": [
+        "src/cloudflare-worker.mjs",
+        "src/human-qa.mjs",
+        "dashboard/qa.js",
+        "dashboard/qa-panel.js",
+        "dashboard/friendly.js",
+        "test/human-qa.test.mjs"
+      ],
+      "resources": [
+        "runner-human-qa",
+        "runner-visual-evidence",
+        "relay-publication-receipts"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T12:47:51.587Z"
+    },
+    {
+      "id": "loew-utility-suite-brand-20260930",
+      "owner": "loew-utility-suite-brand-20260930",
+      "goal": "Define and brand Runner, Relay and Inspector as one seamless loew.fi utility suite with distinct product roles, shared navigation/identity, and an implementation-ready design/IA contract.",
+      "acceptance": "Produce a concise product architecture and brand system that defines the suite name/umbrella identity, relationship of Runner/Relay/Inspector, subdomain roles, shared navigation model, naming/tone, shared visual language/tokens, product differentiation, icon/mark direction and cross-surface information architecture; Runner is defined as orchestration/coordination, Relay as control/operations/MCP app, and Inspector as visual review/verification unless the user approves a different role split; the suite can feel like one dashboard while preserving clear product identity; no product rename is executed until the user selects/approves the suite naming direction; output includes an implementation-ready contracts/suite-shell.json consumed by web surfaces.",
+      "next_action": "Develop 2-4 strong suite naming/brand directions plus one recommended architecture for user review, then lock the approved shared shell/identity contract before dashboard integration work claims overlapping UI resources.",
+      "paths": [
+        "docs/suite/",
+        "contracts/suite-shell.json"
+      ],
+      "resources": [
+        "loew-utility-suite-brand",
+        "suite-product-architecture",
+        "suite-shared-shell"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T13:27:08.179Z"
+    },
+    {
+      "id": "suite-dashboard-shell-20260930",
+      "owner": "suite-dashboard-shell-20260930",
+      "goal": "Evolve Runner's web dashboard into the canonical shared suite shell so runner.loew.fi, relay.loew.fi and inspector.loew.fi behave like one integrated utility across subdomains.",
+      "acceptance": "The shared shell provides consistent brand chrome, navigation, project/context continuity, status affordances and deep-link conventions across Runner/Relay/Inspector while making the active product obvious; navigation between subdomains feels seamless and preserves project/operation/evidence context where possible; each product consumes its own authoritative state rather than duplicating stores; Runner remains focused on orchestration/project work, Relay on operations/control, Inspector on visual review/verification; once Inspector visual review is live, Runner's visual-review UI becomes a handoff/deep-link rather than a competing full review surface; the shell consumes the approved suite brand/IA contract and the current Runner operator redesign rather than replacing either with another dashboard concept.",
+      "next_action": "Wait for runner-operator-redesign-20260930 to land and for the suite brand/shell contract to be approved. Then implement the shared shell in Runner first and publish the integration contract consumed by Relay and Inspector web dashboards.",
+      "paths": [
+        "dashboard/index.html",
+        "dashboard/styles.css",
+        "dashboard/suite-shell/",
+        "src/cloudflare-worker.mjs",
+        "test/cloudflare-worker.test.mjs"
+      ],
+      "resources": [
+        "suite-shared-shell",
+        "runner-operator-ui",
+        "runner-project-overview"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T13:27:14.001Z"
+    }
+  ],
+  "claims": [
+    {
+      "id": "loew-runner-coordination-bootstrap-20260930",
+      "owner": "normal-chat-project-registry-20260930",
+      "branch": "loew-runner/coordination-bootstrap",
+      "paths": [
+        ".github/workflows/runner-coordination.yml"
+      ],
+      "resources": [
+        "runner-work-admission"
+      ],
+      "goal": "Install Field-style Runner coordination admission and managed branch hygiene for lrnolivia/loew-runner.",
+      "acceptance": "Pull requests are gated by a live Runner claim; scheduled/manual audit and cleanup use the canonical loew-runner coordination engine; no product files are changed.",
+      "next_action": "Create the claimed bootstrap branch, add the parameterized coordination workflow, open the draft PR, verify admission, then merge with squash.",
+      "base_sha": "91fc982767e60afd7a86111a59d3fc57cdb37a0e",
+      "state": "completed",
+      "created_at": "2026-09-30T09:05:57.416Z",
+      "updated_at": "2026-09-30T09:13:07.329Z",
+      "lease_until": "2026-09-30T21:13:07.329Z",
+      "pr": 32,
+      "merged_head_sha": "a080dc5ad940dc01c43e84671750f811447b4394",
+      "merge_commit_sha": "0879fc6b0af942713b40781b7db7a92cec61da75",
+      "evidence": "https://github.com/lrnolivia/loew-runner/pull/32",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T09:13:07.329Z"
+    },
+    {
+      "id": "field-canvas-promotion-docs-20260930",
+      "owner": "01a0f1bf-3464-7b61-a3ac-f5d494bf7ef3",
+      "branch": "loew-runner/field-preview-closeout-20260930",
+      "paths": [
+        "assignments/field-repo-cleanup-reorg.json",
+        "docs/field/reorganization/CANVAS_PROMOTION_RECEIPT_20260930.md",
+        "docs/field/reorganization/EXECUTION_CHECKPOINT_20260930.md",
+        "docs/field/reorganization/PUBLICATION_HANDOFF_20260930.md"
+      ],
+      "resources": [
+        "field-reorganization-records"
+      ],
+      "goal": "Persist verified Field Canvas merge and exact Preview evidence",
+      "acceptance": "Exact merged/deployed identities and passed Registry/Preview results are durable; older blocker snapshot superseded without touching infrastructure code",
+      "next_action": "Repair missed documentation admission: admit correct branch, rename existing PR #33 branch without history rewrite, rerun exact ownership gate, then merge verified receipt.",
+      "base_sha": "dee9cd40d3555dab30f35661fb914f82bcd1083f",
+      "state": "completed",
+      "created_at": "2026-09-30T10:18:56.013Z",
+      "updated_at": "2026-09-30T10:22:13.020Z",
+      "lease_until": "2026-09-30T22:22:13.020Z",
+      "pr": 34,
+      "merged_head_sha": "67f4701b4e844599b547314605a54f6d9318cd5e",
+      "merge_commit_sha": "9689fef445e214d6e033cf9d68999544562aabf1",
+      "evidence": "https://github.com/lrnolivia/loew-runner/pull/34; Canvas promotion receipt and assignment/checkpoints merged as 9689fef445e214d6e033cf9d68999544562aabf1. Source/runtime identities preserved, no infrastructure implementation changes.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T10:22:13.020Z"
+    },
+    {
+      "id": "loew-runner-relay-closeout-20260930",
+      "owner": "codex-relay-finalization-20260930",
+      "branch": "loew-runner/relay-closeout",
+      "paths": [
+        "docs/ACCESS_CONTROL.md",
+        "docs/loew-inspector/STATE.md"
+      ],
+      "resources": [
+        "relay-closeout-docs"
+      ],
+      "goal": "Record completed Relay credentials and in-place Inspector rename with exact deployment evidence.",
+      "acceptance": "Runner state records merged PRs, current Worker name/ID/deployment, retained bindings/domains and successful live tools without inventing legacy retirement.",
+      "next_action": "Completed: docs merged after test, admission and Builds checks passed. Relay credential and Worker rename closeout fully recorded.",
+      "base_sha": "9689fef445e214d6e033cf9d68999544562aabf1",
+      "state": "completed",
+      "created_at": "2026-09-30T10:21:55.165Z",
+      "updated_at": "2026-09-30T10:24:31.194Z",
+      "lease_until": "2026-09-30T22:21:55.165Z",
+      "pr": 35,
+      "merged_head_sha": "c91e132efef072f29afdf1961a32269222516c68",
+      "merge_commit_sha": "8a44092b5ab67f4d46f4c97c8ad397c520ceb3a7",
+      "evidence": "https://github.com/lrnolivia/loew-runner/pull/35",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T10:24:31.194Z"
+    },
+    {
+      "id": "loew-runner-relay-worker-handoff-20260930",
+      "owner": "codex-relay-finalization-20260930",
+      "branch": "loew-runner/relay-worker-handoff",
+      "paths": [
+        "docs/loew-inspector/handoffs/RELAY_WORKER_HANDOFF.md",
+        "docs/loew-inspector/README.md"
+      ],
+      "resources": [
+        "relay-worker-handoff"
+      ],
+      "goal": "Persist consolidated Relay roadmap and review-centered MCP app UI handoff for the existing Relay worker.",
+      "acceptance": "Roadmap, ownership, baseline, conflicts, screenshots, approvals, phased criteria and worker startup instructions are merged into Runner and linked from its project docs.",
+      "next_action": "Documentation completed: six-batch Relay worker handoff merged, tools/templates first, with explicit Composio-free normal workflow gate. Existing Relay worker to adopt and admit implementation scope.",
+      "base_sha": "c59af9afb59d58a89a94770ba0766ca5901e96ef",
+      "state": "completed",
+      "created_at": "2026-09-30T10:29:05.753Z",
+      "updated_at": "2026-09-30T10:34:08.012Z",
+      "lease_until": "2026-09-30T22:29:05.753Z",
+      "pr": 36,
+      "merged_head_sha": "353090ad852195a164e2dfc0eb80d8f66eca6af9",
+      "merge_commit_sha": "1cf8b15acfd19761b7a318634c8336c287f3ea0e",
+      "evidence": "https://github.com/lrnolivia/loew-runner/pull/36",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T10:34:08.012Z"
+    },
+    {
+      "id": "field-dashboard-product-checkpoint-20260930",
+      "owner": "01a0f1bf-3464-7b61-a3ac-f5d494bf7ef3",
+      "branch": "loew-runner/field-dashboard-product-checkpoint-20260930",
+      "paths": [
+        "assignments/field-repo-cleanup-reorg.json",
+        "docs/field/reorganization/DASHBOARD_PRODUCT_CHECKPOINT_20260930.md"
+      ],
+      "resources": [
+        "field-reorganization-records"
+      ],
+      "goal": "Persist published Dashboard recovery and remaining Controls dispositions",
+      "acceptance": "Exact current source and honest validation limits recorded; protect Mobile and deferred panels",
+      "next_action": "Record Dashboard #136 current head, tested behavior, pending gates and Controls #83 comparison without production infrastructure changes.",
+      "base_sha": "081365251ca3674161eb040f3ab832ba6faf343c",
+      "state": "completed",
+      "created_at": "2026-09-30T10:37:44.011Z",
+      "updated_at": "2026-09-30T10:41:00.952Z",
+      "lease_until": "2026-09-30T22:41:00.952Z",
+      "pr": 37,
+      "merged_head_sha": "77e8a2c6e2fe855a1ee20aedd6e5b70263fe6bfb",
+      "merge_commit_sha": "1c0099385c76a1e7085bd06b1fda08c39b69144d",
+      "evidence": "Runner #37: Dashboard product checkpoint and assignment record published; exact Field head 9fd1357, 57/58 Dashboard checks with unchanged baseline failure, current-head Registry 36703709649 pending, authenticated persistence unproven; Controls #83 disposition preserved.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T10:41:00.952Z"
+    },
+    {
+      "id": "relay-batch-ledger",
+      "owner": "codex-relay-worker-20260930",
+      "branch": "loew-runner/relay-batch-ledger",
+      "paths": [
+        "docs/loew-inspector/RELAY_CAPABILITIES.md",
+        "docs/loew-inspector/RELAY_BATCH_LEDGER.md"
+      ],
+      "resources": [
+        "relay-batch-reporting"
+      ],
+      "goal": "Maintain Relay capability matrix, deterministic contracts and batch evidence ledger.",
+      "acceptance": "Every handoff operation has backend/status/acceptance and exact implementation evidence is persisted without claiming unshipped work.",
+      "next_action": "Resume after explicit user instruction. Reconcile Runner batch ledger and capability matrix to Relay 1.3.0 source-lifecycle deployment, record client-schema cache mismatch, then admit the next bounded unfinished Relay slice.",
+      "base_sha": "8cb00e9573128cbbf14f31f0aa6998c9cc7c07f8",
+      "state": "active",
+      "created_at": "2026-09-30T10:38:25.615Z",
+      "updated_at": "2026-09-30T11:39:34.601Z",
+      "lease_until": "2026-09-30T23:39:34.601Z"
+    },
+    {
+      "id": "runner-project-authority-view-20260930",
+      "owner": "normal-chat-runner-authority-fix-20260930",
+      "branch": "loew-runner/project-authority-view",
+      "paths": [
+        "src/cloudflare-worker.mjs",
+        "test/cloudflare-worker.test.mjs"
+      ],
+      "resources": [
+        "runner-worker-api-authority"
+      ],
+      "goal": "Make Runner's worker API distinguish legacy read-only automation targets from canonical managed project authority so Relay does not treat lrnolivia/field@main read_only as Field's execution authority.",
+      "acceptance": "GET /api/workers retains the automation target for compatibility but returns authoritative managed-project metadata from projects/<id>.json and coordination/<id>.json, showing coordination-enabled branch/PR writes and no direct main writes; tests cover the distinction.",
+      "next_action": "Inspect current Worker API tests, implement the smallest authority projection, run check/test, open draft PR, and promote only after exact-head admission and validation.",
+      "base_sha": "59311d9fdd919ca4d84c96b203326be04087d341",
+      "state": "completed",
+      "created_at": "2026-09-30T11:29:43.512Z",
+      "updated_at": "2026-09-30T11:34:18.518Z",
+      "lease_until": "2026-09-30T23:34:18.518Z",
+      "pr": 39,
+      "merged_head_sha": "d7127f3ca98c7b067c4ff336f06b404af323755a",
+      "merge_commit_sha": "cdb77b324a250da1bcd787eea0b8026e971462d3",
+      "evidence": "PR #39 merged exact green head d7127f3ca98c7b067c4ff336f06b404af323755a as cdb77b324a250da1bcd787eea0b8026e971462d3 after test, Runner coordination admission, and Workers Builds passed. Production runner.loew.fi /api/workers verified HTTP 200 through relay.VERIFY with target_role=automation_observation and authority.write_authority={mode:managed_coordination,enabled:true,direct_default_branch_writes:false,branch_prefixes:[field/],draft_pr_required:true}. relay.RUNNER worker query independently returned the same authority object and coordination record e9fff283a620c3845fe4fc447e55847e4a17c9af.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T11:34:18.518Z"
+    },
+    {
+      "id": "runner-visuals-evidence-rule-20260930",
+      "owner": "normal-chat-runner-visuals-rule-20260930",
+      "branch": "loew-runner/visuals-evidence-rule",
+      "paths": [
+        "docs/WORK_COORDINATION.md",
+        "docs/VISUAL_EVIDENCE_POLICY.md"
+      ],
+      "resources": [
+        "runner-visuals-policy"
+      ],
+      "goal": "Make Runner Visuals the durable home for screenshot and video QA evidence, with bounded storage and asynchronous upload accounting.",
+      "acceptance": "Universal QA law requires screenshot/video evidence to be registered in Runner Visuals; producers may continue once a durable queued/uploading receipt exists; metadata persists after blob expiry; configurable storage quotas/retention, deduplication, pinning, and failure retry rules prevent unbounded growth; work_accounted references the Visuals receipt when visual evidence exists.",
+      "next_action": "Publish the universal Visuals evidence policy in a dedicated Runner policy doc and wire coordination completion law to it. Queue implementation behind the active human-QA Visuals branch.",
+      "base_sha": "fd6fc8015f37cdce5764bf93131e6e3013dbad9e",
+      "state": "completed",
+      "created_at": "2026-09-30T12:06:09.505Z",
+      "updated_at": "2026-09-30T12:12:03.688Z",
+      "lease_until": "2026-10-01T00:12:03.688Z",
+      "pr": 40,
+      "merged_head_sha": "b1e26d91cd4e65f21d1f47f1f785668d7bfc3236",
+      "merge_commit_sha": "ee0475e39a54d78491f101e86d25c8c3e920c2e6",
+      "evidence": "https://github.com/lrnolivia/loew-runner/pull/40 — Runner Visuals policy merged with screenshot/video registration, async queued/uploading handoff, bounded storage, and post-main archive-before-purge rules.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T12:12:03.688Z"
+    },
+    {
+      "id": "runner-human-qa-shell-20260930",
+      "owner": "normal-chat-runner-ux-20260930",
+      "branch": "loew-runner/human-qa-shell",
+      "paths": [
+        "dashboard/index.html",
+        "dashboard/styles.css",
+        "dashboard/hierarchy.css",
+        "dashboard/qa.css",
+        "dashboard/qa.js",
+        "dashboard/qa-panel.js",
+        "dashboard/friendly.js",
+        "dashboard/friendly.css",
+        "src/cloudflare-worker.mjs",
+        "src/human-qa.mjs",
+        "test/human-qa.test.mjs",
+        "package.json"
+      ],
+      "resources": [
+        "runner-human-qa",
+        "runner-visual-evidence"
+      ],
+      "goal": "Turn Runner visual evidence into a human QA workspace with full-screen live preview and a floating Runner companion for targeted questions, notes, and verdicts.",
+      "acceptance": "Live preview owns the screen when the captured environment is still reachable; Runner floats above it in a compact accessible panel with targeted QA questions, notes, looks-good/needs-work/not-sure responses, screenshot fallback when preview is dead, and technical evidence behind progressive disclosure. No existing Relay/Runner safety gates are weakened.",
+      "next_action": "Visually review exact branch head 660d87437d4edc5b5b97226cd22b6b30bae838df. Hierarchy pass is implemented: smaller secondary titles, warm-light emphasis on the first human summary, selected review run, and active QA question card. Exact-head test, Runner admission, Cloudflare build, preflight, and audit are green; keep PR #41 unmerged until visual review.",
+      "base_sha": "5ce9f02fbdbe0004c3249934d0f642fb2ffa5bce",
+      "state": "completed",
+      "created_at": "2026-09-30T11:52:04.751Z",
+      "updated_at": "2026-09-30T12:55:18.031Z",
+      "lease_until": "2026-10-01T00:55:18.031Z",
+      "pr": 41,
+      "merged_head_sha": "660d87437d4edc5b5b97226cd22b6b30bae838df",
+      "merge_commit_sha": "45b57d09bb2391c766f426aa89979b92456d3e31",
+      "evidence": "User visually blessed the exact feature state before merge. PR #41 merged from exact green head 660d87437d4edc5b5b97226cd22b6b30bae838df as squash commit 45b57d09bb2391c766f426aa89979b92456d3e31. Post-merge test and Workers build succeeded. Cloudflare production deployment version 159 (13521c21-a0d7-4146-babc-2e55450e1c8c) is at 100%, and authenticated fetch of https://runner.loew.fi/ returned 200 with qa.css, friendly.css, hierarchy.css, status/review labels, and the new QA scripts present.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T12:55:18.031Z"
+    },
+    {
+      "id": "runner-human-qa-helper-contract-20260930",
+      "owner": "normal-chat-human-qa-contract-20260930",
+      "branch": "loew-runner/human-qa-helper-contract",
+      "paths": [
+        "contracts/manifest.json",
+        "contracts/human-qa-helper.json",
+        "docs/HUMAN_QA_HELPER.md",
+        "docs/VISUAL_EVIDENCE_POLICY.md",
+        "docs/WORK_COORDINATION.md",
+        "test/contracts.test.mjs"
+      ],
+      "resources": [
+        "runner-human-qa-contract"
+      ],
+      "goal": "Define the canonical agent contract for populating and using Runner's human QA helper with targeted questions and checklists tied to exact evidence/artifacts.",
+      "acceptance": "Runner publishes a machine-readable QA-helper contract and human docs; agents must bind QA packets to exact project/artifact/evidence identity; questions/checklists are concise, criterion-specific and user-judgment-oriented; deterministic checks stay agent-owned; stale evidence invalidates affected review prompts; Visuals and work-accounting docs reference the contract; no qa-shell UI/design files are changed.",
+      "next_action": "Update the contract test for manifest 2026-09-30.2 and assert the new human-QA helper contract pointers, then rerun exact-head checks.",
+      "base_sha": "43a5ca100dcdff645de04ffb14ca229bf70cf720",
+      "state": "completed",
+      "created_at": "2026-09-30T12:53:58.626Z",
+      "updated_at": "2026-09-30T13:06:10.165Z",
+      "lease_until": "2026-10-01T01:06:10.165Z",
+      "pr": 42,
+      "merged_head_sha": "38d79b43456d4a16cae8b0181c13c0febe21b76f",
+      "merge_commit_sha": "0ef502ff6fac26ef727a8f24d3ce6c20a682f1e7",
+      "evidence": "https://github.com/lrnolivia/loew-runner/pull/42 — human QA helper contract/docs merged after exact-head tests, Runner admission, and Worker preview build passed.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T13:06:10.165Z"
+    },
+    {
+      "id": "runner-operator-redesign-20260930",
+      "owner": "normal-chat-runner-operator-redesign-20260930",
+      "branch": "loew-runner/operator-redesign",
+      "paths": [
+        "dashboard/index.html",
+        "dashboard/operator.js",
+        "dashboard/operator-projects.js",
+        "dashboard/operator-today.js",
+        "dashboard/operator-review.js",
+        "dashboard/operator.css",
+        "dashboard/qa.js"
+      ],
+      "resources": [
+        "runner-operator-ui",
+        "runner-project-overview",
+        "runner-human-qa"
+      ],
+      "goal": "Replace the developer-dashboard flow with a novice-friendly operator experience for QA, projects, and tasks while preserving existing Runner capabilities.",
+      "acceptance": "Runner has three clear jobs: Today, Projects, Review. The same dashboard is not repeated across surfaces; Review is an inbox that opens directly into full-screen QA instead of rendering technical evidence below; Projects expose current/queued work in plain language; worker actions are contextual and unsupported controls are not shown; technical metadata is progressive disclosure; existing safety and QA persistence remain authoritative.",
+      "next_action": "Implement the redesign as small task-specific modules: shell navigation, Today, Projects, Review. Preserve full-screen QA and remove the old dashboard presentation from the shipped page.",
+      "base_sha": "700b69946b9705251597bce611e13fa9ce699a01",
+      "state": "completed",
+      "created_at": "2026-09-30T13:04:26.421Z",
+      "updated_at": "2026-09-30T13:41:26.690Z",
+      "lease_until": "2026-10-01T01:41:26.690Z",
+      "pr": 43,
+      "merged_head_sha": "faacdfdb1a8355b3008326e320041809fc3863c4",
+      "merge_commit_sha": "4e581179bb6dcab519c73dfdab4cfb6e34f44e6d",
+      "evidence": "https://github.com/lrnolivia/loew-runner/pull/43 — exact-head tests, Runner admission and Worker build passed; operator redesign merged intact before night shift identity migration.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T13:41:26.690Z"
+    },
+    {
+      "id": "night-shift-product-rebrand-20260930",
+      "owner": "normal-chat-relay-ui-rebrand-20260930",
+      "branch": "loew-runner/night-shift-rebrand",
+      "paths": [
+        "docs/NIGHT_SHIFT_PRODUCT.md"
+      ],
+      "resources": [
+        "night-shift-migration-evidence"
+      ],
+      "goal": "Rebrand the human-facing loew runner product to lowercase `night shift` while preserving durable technical ids/repository/coordination compatibility and positioning it inside lowercase `dash`.",
+      "acceptance": "User-facing product identity is `night shift`; project registry display name is updated; README/bootstrap/package metadata explain `night shift` and `dash`; durable ids such as loew-runner repo/project/coordination record remain stable unless a separate migration is proven safe; Cloudflare config adds/uses the new night shift web identity without removing compatibility paths; existing current UI work is not overwritten; contract tests cover the identity migration; all names are lowercase in product copy.",
+      "next_action": "Historical evidence only. Do not ship standalone Night Shift branding. Relay is the canonical product; Night Shift may survive only as an internal Relay feature/view after consolidation.",
+      "base_sha": "9d488cb5ddbff8b4649892d4c39ad334b322a8ad",
+      "state": "held",
+      "created_at": "2026-09-30T13:37:08.427Z",
+      "updated_at": "2026-09-30T14:02:38.410Z",
+      "lease_until": "2026-10-01T02:02:38.410Z"
+    },
+    {
+      "id": "relay-repo-registration-bridge-20260930",
+      "owner": "relay-repo-registration-bridge-20260930",
+      "branch": "loew-runner/relay-repo-registration-bridge",
+      "paths": [
+        "projects/loew-inspector.json"
+      ],
+      "resources": [
+        "relay-source-identity"
+      ],
+      "goal": "Bridge Runner's existing loew-inspector project registration to the renamed canonical repository lrnolivia/relay so exact PR admission works during consolidation.",
+      "acceptance": "Only the registered repository identity changes from lrnolivia/loew-inspector to lrnolivia/relay; project id, coordination record, branch policy, QA authority and durable state remain unchanged; exact-head checks and Runner admission pass after the bridge.",
+      "next_action": "Create the exact-main branch, update the repository field only, open a draft PR, verify, merge, then rerun Relay Batch 1 admission.",
+      "base_sha": "49fc1ffeb990e59fbf808f45e36c9f613e6804bf",
+      "state": "completed",
+      "created_at": "2026-09-30T14:33:27.818Z",
+      "updated_at": "2026-09-30T14:35:37.292Z",
+      "lease_until": "2026-10-01T02:35:37.292Z",
+      "pr": 44,
+      "merged_head_sha": "0a40f08cb74fa7ab61aa0db1932fa5350089d6c3",
+      "merge_commit_sha": "66b9ea1745bdf382e38be5ea541335cbb2306dc2",
+      "evidence": "https://github.com/lrnolivia/loew-runner/pull/44 — project registration now points to lrnolivia/relay; exact-head tests and Runner admission passed; squash merge 66b9ea1745bdf382e38be5ea541335cbb2306dc2.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T14:35:37.292Z"
+    },
+    {
+      "id": "relay-control-migration-freeze-20260930",
+      "owner": "relay-control-migration-freeze-20260930",
+      "branch": "loew-runner/relay-control-migration-freeze",
+      "paths": [
+        "src/coordination.mjs",
+        "scripts/coordinate.mjs",
+        "test/coordination.test.mjs",
+        "coordination/"
+      ],
+      "resources": [
+        "control-migration-freeze"
+      ],
+      "goal": "Add an enforced migration freeze so old coordination records cannot accept stranded writes after Relay authority switch.",
+      "acceptance": "Normal coordination unchanged; records with a migration_frozen marker reject mutations; CLI fails closed when marker present; tests pass.",
+      "next_action": "Freeze live coordination records in reviewed PR #45 after source snapshot comparison, then migrate those records with original ownership and unfreeze only canonical Relay copies.",
+      "base_sha": "4e74c707282c1eaac8fba63289a8bd295897d38c",
+      "state": "completed",
+      "created_at": "2026-09-30T15:04:34.468Z",
+      "updated_at": "2026-09-30T15:29:37.189Z",
+      "lease_until": "2026-10-01T03:29:37.189Z",
+      "pr": 45,
+      "merged_head_sha": "ec9ca19c9d4ef84e05b64c97feaa2b838acd6bde",
+      "merge_commit_sha": "3972446e667b956961f21eaeeb98d29a99f6b8fb",
+      "evidence": "https://github.com/lrnolivia/loew-runner/pull/45; exact head ec9ca19c9d4ef84e05b64c97feaa2b838acd6bde tests/admission passed; merged 3972446e667b956961f21eaeeb98d29a99f6b8fb. Original control records compared value-for-value then frozen. Canonical copies and shared engine imported by Relay #42, preserving every owner/id/branch/queue; live Relay canonical reads/preflight now pass on deployment 9c85680b-f992-4320-bdfc-a8b4d7585ccc. No claim takeover. Scheduler workflows paused to prevent duplicate or stranded state writes during the handover.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T15:29:37.189Z"
+    }
+  ]
+}

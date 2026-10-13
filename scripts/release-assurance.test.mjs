@@ -1,0 +1,259 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {mkdtemp,writeFile,readFile,rm,access} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {execFileSync} from 'node:child_process';
+import {releaseEvent,runReleaseAssurance,runFailedReleaseRecovery,runApprovedReleaseRetention} from './release-assurance.mjs';
+import {callAutonomyControl} from '../src/project-cloud.js';
+import {releaseRecoveryResponse} from '../src/release-recovery.js';
+import {autonomyState,transitionAutonomy,autonomyRequest} from '../src/autonomy-control.js';
+import {recoveryVersionFixture} from '../test/fixtures/recovery-archive.mjs';
+
+test('manual safety workflow survives product outage and fails closed on independent denial',async()=>{
+ const yaml=await readFile(new URL('../.github/workflows/autonomy-control.yml',import.meta.url),'utf8');
+ const code=yaml.split("node --input-type=module <<'NODE'\n")[1].split('\n          NODE')[0].split('\n').map(line=>line.slice(10)).join('\n');
+ for(const mode of ['success','rollback','denied','changed','wrong-origin']){
+  const prelude=`
+   const mode=${JSON.stringify(mode)};let calls=0;
+   process.env.SAFETY_REQUESTS=JSON.stringify([{action:mode==='rollback'?'rollback':'hold',scope:'relay',expected_revision:0,operation_id:'independent-test'}]);
+   process.env.GH_TOKEN='synthetic_registration_read_token';
+   process.env.CF_ACCESS_CLIENT_ID='fixture-id';process.env.CF_ACCESS_CLIENT_SECRET='fixture-secret';
+   process.env.RELAY_RECOVERY_CONTROL_URL=mode==='wrong-origin'?'https://example.invalid/recovery-control':'https://relay.loew.fi/recovery-control';
+   globalThis.fetch=async(url,options)=>{
+    if(url!=='https://relay.loew.fi/recovery-control')throw Error('Product endpoint must not be called');
+    calls++;if(options.redirect!=='error')throw Error('Redirects forbidden');
+    if(options.headers['CF-Access-Client-Secret']!=='fixture-secret')throw Error('Missing Access identity');
+    const action=JSON.parse(options.body).action;
+    if(options.headers['X-Relay-Registration-Token']!==(action==='rollback'?process.env.GH_TOKEN:undefined))throw Error('Unexpected registration credential destination');
+    if(mode==='denied')return new Response('denied',{status:403});
+    return Response.json({ok:true,state:{scope:'relay',held:true,revision:mode==='changed'?calls:1}});
+   };
+   try{await import('data:text/javascript;base64,'+${JSON.stringify(Buffer.from(code).toString('base64'))});if(!['success','rollback'].includes(mode))process.exit(2);}
+   catch(error){if(['success','rollback'].includes(mode))throw error;}
+   if(calls!==(mode==='wrong-origin'?0:mode==='denied'?1:2))throw Error('Unexpected retry or fallback');
+  `;
+  execFileSync(process.execPath,['--input-type=module','--eval',prelude],{stdio:['ignore','pipe','pipe'],timeout:5000});
+ }
+});
+
+const source='a'.repeat(40),version='11111111-2222-3333-4444-555555555555',hash=x=>createHash('sha256').update(x).digest('hex');
+function fixture(){
+ const bytes=Buffer.from('synthetic opaque archive'),objects=new Map(),logs=[],calls=[];
+ const run={id:7,head_sha:source,run_attempt:1,path:'.github/workflows/ci.yml',event:'push',head_branch:'main',head_repository:{full_name:'lrnolivia/relay',id:99},repository:{full_name:'lrnolivia/relay',id:99},status:'completed',conclusion:'success'};
+ const artifact={id:8,name:'relay-worker-runtime-'+source+'-7-1',expired:false,size_in_bytes:bytes.length,digest:'sha256:'+hash(bytes),workflow_run:{id:7,head_sha:source,head_branch:'main',repository_id:99,head_repository_id:99}};
+ const event={repository:{full_name:'lrnolivia/relay'},workflow_run:run};
+ let state={...autonomyState('relay'),last_user_approved:{source_sha:'b'.repeat(40),approval:{text:'Synthetic approved release'}}};
+ const bucket={async get(key){if(!objects.has(key))return null;const bytes=objects.get(key);return {size:bytes.length,arrayBuffer:async()=>bytes};},async put(key,bytes){objects.set(key,Buffer.from(bytes));}};
+ const api=async path=>path.endsWith('/runs/7')?run:path.endsWith('/artifacts/8')?artifact:path.includes('/jobs?')?{total_count:1,jobs:[{name:'quality',status:'completed',conclusion:'success',steps:['Run workspace, contract, API, browser and React tests','Verify bundled Worker in local workerd','Verify exact live source and capture actual website pages','Retain and verify exact interactive sample build'].map(name=>({name,status:'completed',conclusion:'success'}))}]}:{type:'file',encoding:'base64',size:2,content:'e30='};
+ const env={CF_ACCESS_CLIENT_ID:'synthetic-service-id',CF_ACCESS_CLIENT_SECRET:'synthetic-service-secret'};
+ const f={bytes,objects,logs,calls,run,artifact,event,env,get state(){return state;},setApproval(value){state.last_user_approved=value;},hold:false,raceHold:false,corruptReadback:false};
+ f.github=async(path,binary)=>binary?bytes:path.includes('/artifacts?')?{total_count:1,artifacts:[artifact]}:run;
+ f.restore=async(_bytes,sha,digest)=>({schema:1,source_sha:sha,archive_sha256:digest,file_count:5,host_restore_verified:true,compiled_ci_runtime_evidence_verified:true,runtime_reexecuted:false,production_rollback_performed:false,files:['bundle/README.md','bundle/index.js','bundle/index.js.map','probe.json','result.json'].map(path=>({path,bytes:2,sha256:'c'.repeat(64)}))});
+ f.request=async(url,options)=>{
+  assert.ok(url.startsWith('https://relay.loew.fi/'));assert.equal(options.redirect,'manual');assert.equal(options.headers['CF-Access-Client-Secret'],env.CF_ACCESS_CLIENT_SECRET);
+  if(url==='https://relay.loew.fi/recovery-control'){
+   const input=JSON.parse(options.body);calls.push(input);assert.equal(input.action,'status','Independent controller must not promote healthy or record approval');return Response.json({ok:true,state:input.scope==='global'?{...autonomyState('global'),held:f.hold}:state});
+  }
+  if(url.includes('/mcp')){
+   const message=JSON.parse(options.body);let result;
+   if(message.method==='tools/list')result={tools:[{name:'relay_autonomy',inputSchema:{properties:{target:{properties:{recovery:{}}}}}}]};
+   else{const input=message.params.arguments;calls.push(input);
+    if(input.action==='status')result={structuredContent:{ok:true,state:input.scope==='global'?{...autonomyState('global'),held:f.hold}:state}};
+    else{if(f.raceHold)state=transitionAutonomy(state,{action:'hold',scope:'relay',expected_revision:state.revision,operation_id:'concurrent-stop-fixture',reason:'Synthetic concurrent user stop'}).state;
+     try{state=transitionAutonomy(state,input).state;result={structuredContent:{ok:true,state}};}catch{result={isError:true};}
+    }
+   }
+   return Response.json({jsonrpc:'2.0',id:message.id,result});
+  }
+  if(f.corruptReadback&&options.method==='GET')return new Response('changed',{headers:{'Content-Type':'application/zip'}});
+  return releaseRecoveryResponse(new Request(url,options),{EVIDENCE:bucket},{api,resolveTarget:async()=>({worker:'relay',version_id:version,source_sha:source,compatibility_id:'relay-autonomy-v1',evidence:'Synthetic fixture'}),resolveConfiguration:async()=>recoveryVersionFixture(version)});
+ };
+ f.execute=()=>runReleaseAssurance({...f,log:value=>logs.push(value)});return f;
+}
+
+test('completed release uses the same artifact through retained restoration and exact CAS healthy registration',async()=>{
+ const f=fixture(),approval=structuredClone(f.state.last_user_approved),result=await f.execute();
+ assert.equal(result.state.last_healthy.source_sha,source);assert.equal(result.state.revision,1);assert.deepEqual(result.state.last_user_approved,approval);
+ assert.equal(f.objects.size,3);assert.ok(result.state.last_healthy.recovery.restore_sha256);assert.equal(f.calls.filter(c=>c.action==='healthy').length,1);
+ await f.execute();assert.equal(f.calls.filter(c=>c.action==='healthy').length,1,'Successful healthy operation must not replay');assert.equal(f.state.revision,1);
+ assert.doesNotMatch(f.logs.join('\n'),/synthetic-service-id|synthetic-service-secret/);
+});
+function approvedFixture(){
+ const f=fixture();f.setApproval({worker:'relay',version_id:version,source_sha:source,compatibility_id:'relay-autonomy-v1',evidence:'Original exact release evidence',approval:{text:'Approve this exact release',source:'Original human message',recorded_at:'2026-01-01T00:00:00.000Z',provenance:'attributed-explicit-user-instruction'}});
+ f.env={...f.env,GITHUB_EVENT_NAME:'workflow_dispatch',GITHUB_REF:'refs/heads/main',GITHUB_ACTOR:'lrnolivia'};
+ f.event={repository:{full_name:'lrnolivia/relay'},inputs:{approved_ci_run:'7'}};
+ f.execute=()=>runApprovedReleaseRetention({...f,log:value=>f.logs.push(value)});return f;
+}
+test('manual historical retention enriches only the existing approval and preserves its provenance and healthy target',async()=>{
+ const f=approvedFixture(),approved=structuredClone(f.state.last_user_approved),result=await f.execute();
+ assert.deepEqual(result.state.last_user_approved,{...approved,recovery:result.receipt.target.recovery});assert.equal(result.state.last_healthy,null);assert.equal(result.state.held,false);assert.equal(f.calls.filter(x=>x.action==='approve').length,1);assert.equal(f.calls.filter(x=>x.action==='healthy').length,0);assert.equal(f.objects.size,3);
+ await f.execute();assert.equal(f.calls.filter(x=>x.action==='approve').length,1);assert.equal(f.state.revision,1);
+});
+test('historical retention refuses wrong source, dispatcher or changed approval and honors concurrent holds',async()=>{
+ const wrong=approvedFixture();wrong.run.head_sha='b'.repeat(40);await assert.rejects(wrong.execute(),/existing approval/);assert.equal(wrong.objects.size,0);
+ const actor=approvedFixture();actor.env.GITHUB_ACTOR='other';await assert.rejects(actor.execute());assert.equal(actor.calls.length,0);
+ const held=approvedFixture();held.hold=true;assert.equal((await held.execute()).held,true);assert.equal(held.state.last_user_approved.recovery,undefined);
+ const race=approvedFixture(),original=structuredClone(race.state.last_user_approved);race.raceHold=true;await assert.rejects(race.execute(),/reconcile before retrying/);assert.deepEqual(race.state.last_user_approved,original);assert.equal(race.state.held,true);
+ const changed=approvedFixture(),request=changed.request;let reads=0;changed.request=async(url,options)=>{const args=url.endsWith('/mcp')?JSON.parse(options.body).params?.arguments:null;if(args?.action==='status'&&args.scope==='relay'&&++reads===2)changed.setApproval({...changed.state.last_user_approved,source_sha:'c'.repeat(40)});return request(url,options);};await assert.rejects(changed.execute(),/approval changed/);assert.equal(changed.calls.filter(x=>x.action==='approve').length,0);
+});
+test('global stop preserves archives without promotion; a concurrent project stop wins CAS',async()=>{
+ const held=fixture();held.hold=true;const result=await held.execute();assert.equal(result.held,true);assert.equal(held.objects.size,3);assert.equal(held.calls.filter(c=>c.action==='healthy').length,0);
+ const race=fixture();race.raceHold=true;await assert.rejects(race.execute(),/reconcile before retrying/);assert.equal(race.state.held,true);assert.equal(race.state.last_healthy,null);assert.equal(race.state.operations.length,1);
+});
+test('artifact, storage or restoration mismatch cannot advance healthy',async()=>{
+ const corrupt=fixture();corrupt.corruptReadback=true;await assert.rejects(corrupt.execute());assert.equal(corrupt.calls.filter(c=>c.action==='healthy').length,0);
+ const restore=fixture();restore.restore=async()=>({host_restore_verified:false});await assert.rejects(restore.execute(),/restoration/);assert.equal(restore.objects.size,2);assert.equal(restore.calls.filter(c=>c.action==='healthy').length,0);
+ const digest=fixture();digest.artifact.digest='sha256:'+'d'.repeat(64);await assert.rejects(digest.execute());assert.equal(digest.objects.size,0);
+ const failed=fixture();failed.run.conclusion='failure';await assert.rejects(failed.execute());assert.equal(failed.objects.size,0);
+});
+test('fork, PR, other branch and unsuccessful events are rejected before authenticated requests',()=>{
+ for(const mutate of [x=>x.repository.full_name='fork/relay',x=>x.workflow_run.head_repository.full_name='fork/relay',x=>x.workflow_run.event='pull_request',x=>x.workflow_run.head_branch='feature',x=>x.workflow_run.conclusion='cancelled']){const e=structuredClone(fixture().event);mutate(e);assert.throws(()=>releaseEvent(e));}
+});
+test('isolated Python restore checks actual ZIP entries and compiled CI hashes without executing the bundle',async()=>{
+ const directory=await mkdtemp(join(tmpdir(),'relay-restore-contract-'));
+ try{
+  const bundle={'README.md':Buffer.from('fixture'),'index.js':Buffer.from('throw Error("must never execute archived code")'),'index.js.map':Buffer.from('{}')};
+  const checks=[{criterion:'worker-health',status:200},{criterion:'website-source',status:200,source_sha:source},...['/mcp','/api/panel'].map(path=>({criterion:'unauthenticated-rejection',path,status:401})),...['global','relay'].map(scope=>({criterion:'durable-safety-status',scope,held:false}))];
+  const result={schema:1,kind:'relay-worker-runtime',state:'passed',stage:'complete',runtime:'local-workerd',identity:{source_sha:source},bundle:{status:'passed',exit_code:0},artifacts:Object.entries(bundle).map(([path,bytes])=>({path,bytes:bytes.length,sha256:hash(bytes)})),checks};
+  const files={...Object.fromEntries(Object.entries(bundle).map(([p,b])=>['bundle/'+p,b.toString()])), 'result.json':JSON.stringify(result),'probe.json':JSON.stringify({checks})};
+  const input=join(directory,'files.json'),archive=join(directory,'fixture.zip');await writeFile(input,JSON.stringify(files));
+  const zip="import json,sys,zipfile\nwith zipfile.ZipFile(sys.argv[2],'w',zipfile.ZIP_DEFLATED) as z:\n for name,data in json.load(open(sys.argv[1])).items(): z.writestr(name,data)\n";
+  execFileSync('python3',['-c',zip,input,archive]);const digest=hash(await readFile(archive));
+  const restored=JSON.parse(execFileSync('python3',['scripts/restore-release-archive.py',archive,join(directory,'restore'),source,digest],{encoding:'utf8'}));assert.equal(restored.host_restore_verified,true);assert.equal(restored.runtime_reexecuted,false);assert.equal(restored.file_count,5);
+  files['../escape']='hostile';await writeFile(input,JSON.stringify(files));execFileSync('python3',['-c',zip,input,archive]);
+  assert.throws(()=>execFileSync('python3',['scripts/restore-release-archive.py',archive,join(directory,'invalid'),source,hash(Buffer.from('wrong'))],{stdio:'pipe'}));
+  const hostileDigest=hash(await readFile(archive));assert.throws(()=>execFileSync('python3',['scripts/restore-release-archive.py',archive,join(directory,'hostile'),source,hostileDigest],{stdio:'pipe'}));await assert.rejects(access(join(directory,'escape')));
+ }finally{await rm(directory,{recursive:true,force:true});}
+});
+test('follow-up has read-only permissions, protected main code, event guards and no duplicate build pipeline',async()=>{
+ const workflow=await readFile(new URL('../.github/workflows/release-assurance.yml',import.meta.url),'utf8');
+ assert.match(workflow,/workflow_run:/);assert.match(workflow,/types: \[completed\]/);assert.match(workflow,/contents: read\n  actions: read/);assert.match(workflow,/ref: main\n          persist-credentials: false/);
+ for(const field of ['event','head_branch','head_repository.full_name','conclusion'])assert.ok(workflow.includes('github.event.workflow_run.'+field));
+ assert.doesNotMatch(workflow,/npm (ci|test|run build)|download-artifact|exec.*bundle|contents: write|actions: write/);
+});
+
+// Integrate the controller with the actual durable transition and rollback
+// orchestration. Provider responses are synthetic; no production is changed.
+function failedFixture(){
+ const failed='d'.repeat(40),failedVersion='66666666-7777-8888-9999-aaaaaaaaaaaa';
+ const healthy={worker:'relay',version_id:version,source_sha:source,compatibility_id:'relay-autonomy-v1',evidence:'Synthetic prior verified release',recovery:{archive_sha256:'a'.repeat(64),manifest_sha256:'b'.repeat(64),restore_sha256:'c'.repeat(64),artifact_id:1,ci_run:2}};
+ const approval={...healthy,source_sha:'b'.repeat(40),approval:{text:'Synthetic explicit approval',source:'Synthetic user message'}};
+ let state={...autonomyState('relay'),last_healthy:healthy,last_user_approved:approval},active={source_sha:failed,version_id:failedVersion,compatibility_id:healthy.compatibility_id};
+ const run={id:9,head_sha:failed,run_attempt:1,path:'.github/workflows/ci.yml',event:'push',head_branch:'main',head_repository:{full_name:'lrnolivia/relay'},repository:{full_name:'lrnolivia/relay'},status:'completed',conclusion:'failure'};
+ const production={name:'Verify exact live source and capture actual website pages',status:'completed',conclusion:'failure'};
+ const jobs={total_count:1,jobs:[{name:'quality',status:'completed',conclusion:'failure',steps:[production]}]},calls=[],logs=[];
+ const env={RELAY_AUTONOMY_GUARD:'enforced',RELAY_CLOUDFLARE_WRITE_SCRIPTS:'relay',CF_ACCESS_CLIENT_ID:'synthetic-service-id',CF_ACCESS_CLIENT_SECRET:'synthetic-service-secret',RELAY_EVENTS:{idFromName:x=>x,get:name=>({fetch:async(_url,options)=>{
+  try{const input=JSON.parse(options.body);if(name==='autonomy:global')return Response.json({ok:true,state:{...autonomyState('global'),held:f.globalHold}});state=transitionAutonomy(state,input).state;return Response.json({ok:true,state});}
+  catch(error){return Response.json({error:error.message},{status:error.status||409});}
+ }})}};
+ const snapshot=async()=>({ok:true,script:'relay',deployments:{deployments:[{id:'synthetic-deployment',versions:[{version_id:active.version_id,percentage:100}]}]},versions:{items:[{id:version},{id:active.version_id}]},domains:[{service:'relay',hostname:'relay.loew.fi',enabled:true}]});
+ const profile={identity_url:'https://relay.loew.fi/',health_url:'https://relay.loew.fi/health',source_header:'X-Relay-Source-Sha',compatibility_header:'X-Relay-Release-Compatibility',compatibility_id:healthy.compatibility_id};
+ const f={run,jobs,production,calls,logs,env,event:{repository:{full_name:'lrnolivia/relay'},workflow_run:run},get state(){return state;},get active(){return active;},globalHold:false,raceHold:false,loseResponse:false,loseBeforeCommit:false,compiled:false,productOutage:0,providerProofUnavailable:false,identityLag:0,waits:[],writes:0};
+ f.github=async path=>path.endsWith('/runs/9')?run:jobs;
+ const deps={github:async()=>({type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{provider:'cloudflare',worker:'relay',write:true,rollback:profile}})).toString('base64')}),snapshot,active:async()=>({version_id:active.version_id,deployment_id:'synthetic-deployment'}),fetch:async url=>{if(url.endsWith('/health'))return Response.json({ok:true,service:'relay'});const source=active.source_sha===healthy.source_sha&&f.identityLag-->0?failed:active.source_sha;return new Response('fixture',{headers:{'X-Relay-Source-Sha':source,'X-Relay-Release-Compatibility':active.compatibility_id}});},recover:async()=>{
+  if(f.loseBeforeCommit)throw Error('Synthetic unconfirmed provider write');
+  if(f.compiled){
+   if(!state.rollback.restoration){
+    const hashes={module_sha256:'e'.repeat(64),configuration_sha256:'f'.repeat(64)};
+    await autonomyRequest(env,{action:'prepare_restore_upload',scope:'relay',expected_revision:state.revision,operation_id:state.rollback.operation_id+'-upload',reason:state.reason,result:hashes});
+    await autonomyRequest(env,{action:'finish_restore_upload',scope:'relay',expected_revision:state.revision,operation_id:state.rollback.operation_id+'-record',reason:state.reason,result:{...hashes,version_id:'bbbbbbbb-cccc-dddd-eeee-ffffffffffff'}});
+   }
+   if(active.version_id!==state.rollback.target.version_id){f.writes++;active={...state.rollback.target};if(f.loseResponse){f.loseResponse=false;throw Error('Synthetic provider response lost');}}
+   return {ok:true,effective_target:state.rollback.target};
+  }
+  if(active.version_id!==healthy.version_id){assert.equal(active.version_id,failedVersion);f.writes++;active={...healthy};if(f.loseResponse){f.loseResponse=false;throw Error('Synthetic provider response lost');}}return {ok:true};
+ }};
+ f.request=async(url,options)=>{
+  if(url==='https://relay.loew.fi/'){
+   if(active.source_sha===failed&&f.productOutage){if(f.productOutage==='network')throw Error('Synthetic product HTTP failure');return new Response('Synthetic unavailable product',{status:f.productOutage});}
+   return deps.fetch(url);
+  }
+  const external=url==='https://relay.loew.fi/recovery-control';
+  const message=external?{params:{name:'controller',arguments:JSON.parse(options.body)}}:JSON.parse(options.body),args=message.params.arguments;calls.push({name:message.params.name,...args});
+  let result;
+  try{
+   if(message.params.name==='relay_cloud_worker'||(external&&args.action==='cloud_status'))result=await snapshot();
+   else if(external&&args.action==='inspect_release'){
+    if(f.providerProofUnavailable||args.source_sha!==failed||args.version_id!==active.version_id)throw Error('Synthetic provider source mismatch');
+    result={ok:true,source_sha:failed,version_id:active.version_id,verification:'canonical-provider-build+active-deployment'};
+   }
+   else{if(args.action==='rollback'&&f.raceHold)state=transitionAutonomy(state,{action:'hold',scope:'relay',expected_revision:state.revision,operation_id:'synthetic-concurrent-hold',reason:'Concurrent user stop'}).state;result=await callAutonomyControl(env,args,deps);}
+   return external?Response.json(result):Response.json({jsonrpc:'2.0',id:message.id,result:{structuredContent:result}});
+  }catch{return external?Response.json({ok:false},{status:503}):Response.json({jsonrpc:'2.0',id:message.id,result:{isError:true}});}
+ };
+ f.execute=()=>runFailedReleaseRecovery({...f,log:value=>logs.push(value),wait:async ms=>{f.waits.push(ms);await f.onWait?.();}});
+ f.stopDuringWait=()=>{state=transitionAutonomy(state,{action:'hold',scope:'relay',expected_revision:state.revision,operation_id:'synthetic-wait-stop',reason:'Concurrent user stop'}).state;};f.changeSource=sha=>{active.source_sha=sha;};f.keepHealthyLive=()=>{active={...healthy};};f.removeHealthy=()=>{state.last_healthy=null;};return f;
+}
+
+test('failed production restores the durable healthy target once and preserves the user approval and hold',async()=>{
+ const f=failedFixture(),approval=structuredClone(f.state.last_user_approved),healthy=structuredClone(f.state.last_healthy);
+ const result=await f.execute();assert.equal(result.recovered,true);assert.equal(f.writes,1);assert.equal(f.active.source_sha,healthy.source_sha);assert.equal(f.state.held,true);assert.equal(f.state.rollback.state,'verified');assert.deepEqual(f.state.last_user_approved,approval);assert.deepEqual(f.state.last_healthy,healthy);
+ await f.execute();assert.equal(f.writes,1,'Successful recovery must reconcile without another provider write');assert.equal(f.calls.filter(x=>x.action==='resume').length,0);assert.doesNotMatch(f.logs.join('\n'),/synthetic-service-id|synthetic-service-secret/);
+});
+test('failed-event recovery rejects stale run identities and never rolls back a newer observed release',async()=>{
+ const f=failedFixture();f.changeSource('e'.repeat(40));assert.equal((await f.execute()).superseded,true);assert.equal(f.writes,0);assert.equal(f.state.revision,0);
+ const invalid=failedFixture();invalid.run.path='.github/workflows/untrusted.yml';await assert.rejects(invalid.execute());assert.equal(invalid.calls.length,0);
+ const unrelated=failedFixture();unrelated.production.conclusion='skipped';assert.equal((await unrelated.execute()).eligible,false);assert.equal(unrelated.calls.length,0);
+ const delayed=failedFixture();delayed.keepHealthyLive();assert.equal((await delayed.execute()).pendingPublication,true);assert.equal(delayed.state.held,true);assert.equal(delayed.writes,0);
+});
+test('global/project stops and concurrent CAS loss prevent new recovery; missing target holds only',async()=>{
+ const global=failedFixture();global.globalHold=true;assert.equal((await global.execute()).held,true);assert.equal(global.writes,0);
+ const race=failedFixture();race.raceHold=true;await assert.rejects(race.execute(),/reconcile before retrying/);assert.equal(race.writes,0);assert.equal(race.state.held,true);
+ const missing=failedFixture();missing.removeHealthy();await assert.rejects(missing.execute(),/distinct compatible/);assert.equal(missing.state.held,true);assert.equal(missing.writes,0);
+ assert.equal((await missing.execute()).held,true);
+});
+test('uncertain provider response reconciles automatically with one provider write and no resume',async()=>{
+ const f=failedFixture();f.loseResponse=true;assert.equal((await f.execute()).recovered,true);assert.equal(f.state.held,true);assert.equal(f.state.rollback.state,'verified');assert.equal(f.writes,1);assert.deepEqual(f.waits,[2000]);assert.equal(f.calls.filter(x=>x.action==='rollback').length,2);assert.equal(f.calls.filter(x=>x.action==='resume').length,0);
+});
+test('post-deployment identity lag reconciles through a fresh invocation; persistent mismatch stays held after one retry',async()=>{
+ const f=failedFixture();f.identityLag=1;assert.equal((await f.execute()).recovered,true);assert.equal(f.writes,1);assert.deepEqual(f.waits,[2000]);assert.equal(f.state.rollback.state,'verified');
+ const stuck=failedFixture();stuck.identityLag=10;await assert.rejects(stuck.execute(),/reconcile before retrying/);assert.equal(stuck.state.held,true);assert.equal(stuck.state.rollback.state,'pending');assert.equal(stuck.writes,1);assert.deepEqual(stuck.waits,[2000]);assert.equal(stuck.calls.filter(x=>x.action==='rollback').length,2);
+});
+test('a concurrent project or global stop during reconciliation prevents another invocation',async()=>{
+ for(const scope of ['global','relay']){
+  const f=failedFixture();f.identityLag=1;f.onWait=()=>{if(scope==='global')f.globalHold=true;else f.stopDuringWait();};
+  await assert.rejects(f.execute());assert.equal(f.calls.filter(x=>x.action==='rollback').length,1);assert.equal(f.state.held,true);assert.equal(f.writes,1);
+ }
+});
+test('an uncertain write without the exact target active is never replayed automatically',async()=>{
+ const f=failedFixture();f.loseBeforeCommit=true;await assert.rejects(f.execute());assert.equal(f.state.held,true);assert.equal(f.state.rollback.state,'pending');assert.equal(f.writes,0);assert.equal(f.calls.filter(x=>x.action==='rollback').length,1);assert.deepEqual(f.waits,[]);
+});
+
+test('compiled fallback verifies the new provider UUID while preserving original release/approval across uncertain reconciliation',async()=>{
+ for(const lost of [false,true]){
+  const f=failedFixture();f.compiled=true;f.loseResponse=lost;const healthy=structuredClone(f.state.last_healthy),approval=structuredClone(f.state.last_user_approved);
+  assert.equal((await f.execute()).recovered,true);assert.equal(f.writes,1);assert.equal(f.state.rollback.state,'verified');assert.equal(f.state.revision,5);assert.equal(f.state.held,true);assert.notEqual(f.active.version_id,healthy.version_id);assert.deepEqual(f.state.rollback.original_target,healthy);assert.deepEqual(f.state.last_healthy,healthy);assert.deepEqual(f.state.last_user_approved,approval);
+  await f.execute();assert.equal(f.writes,1);
+ }
+});
+
+test('enabled independent controller recovers a failed product HTTP handler only with exact active provider source proof',async()=>{
+ for(const outage of [500,404,'network']){
+  const f=failedFixture();f.env.RELAY_RECOVERY_CONTROL_URL='https://relay.loew.fi/recovery-control';f.productOutage=outage;
+  assert.equal((await f.execute()).recovered,true);assert.equal(f.writes,1);assert.equal(f.state.held,true);assert.equal(f.state.rollback.state,'verified');assert.equal(f.calls.filter(x=>x.action==='inspect_release').length,1);assert.ok(f.calls.every(x=>x.name==='controller'),'Recovery must not depend on the product MCP handler');
+ }
+ const unavailable=failedFixture();unavailable.env.RELAY_RECOVERY_CONTROL_URL='https://relay.loew.fi/recovery-control';unavailable.productOutage=500;unavailable.providerProofUnavailable=true;await assert.rejects(unavailable.execute());assert.equal(unavailable.writes,0);
+ for(const status of [302,401,403,429]){
+  const denied=failedFixture();denied.env.RELAY_RECOVERY_CONTROL_URL='https://relay.loew.fi/recovery-control';denied.productOutage=status;await assert.rejects(denied.execute());assert.equal(denied.writes,0);assert.equal(denied.calls.filter(x=>x.action==='inspect_release').length,0,'An access/transport denial is not a product failure');
+ }
+ const wrong=failedFixture();wrong.env.RELAY_RECOVERY_CONTROL_URL='https://untrusted.example/recovery-control';await assert.rejects(wrong.execute());assert.equal(wrong.calls.length,0);
+});
+
+test('enabled controller still sends healthy promotion through the verified product path',async()=>{
+ const f=fixture();f.env.RELAY_RECOVERY_CONTROL_URL='https://relay.loew.fi/recovery-control';assert.equal((await f.execute()).state.last_healthy.source_sha,source);assert.equal(f.calls.filter(x=>x.action==='healthy').length,1);
+});
+
+test('ephemeral repository read token travels only to exact independent registration-reading actions',async()=>{
+ const f=failedFixture();f.env.RELAY_RECOVERY_CONTROL_URL='https://relay.loew.fi/recovery-control';f.env.GH_TOKEN='synthetic_registration_read_token';f.productOutage=503;
+ const request=f.request,seen=[];
+ f.request=async(url,options)=>{
+  const action=url===f.env.RELAY_RECOVERY_CONTROL_URL?JSON.parse(options.body).action:null;
+  const token=options.headers?.['X-Relay-Registration-Token'];
+  assert.equal(token,['rollback','inspect_release'].includes(action)?f.env.GH_TOKEN:undefined);
+  if(token)seen.push(action);
+  return request(url,options);
+ };
+ assert.equal((await f.execute()).recovered,true);assert.deepEqual(seen,['inspect_release','rollback']);assert.doesNotMatch(f.logs.join('\n'),/synthetic_registration_read_token/);
+});

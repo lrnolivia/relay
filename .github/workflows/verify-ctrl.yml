@@ -1,0 +1,30 @@
+name: Verify protected ctrl production
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['scripts/verify-ctrl.mjs', '.github/workflows/verify-ctrl.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CF_ACCESS_CLIENT_ID: ${{ vars.CF_ACCESS_CLIENT_ID }}
+      CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/verify-ctrl.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ctrl-production-verification
+          path: qa-evidence/ctrl-production/
+          if-no-files-found: error

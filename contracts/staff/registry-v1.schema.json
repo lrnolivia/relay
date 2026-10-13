@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relay.loew.fi/contracts/staff/registry-v1.schema.json",
+  "title": "Relay Staff Registry v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy",
+    "staff"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity_is_sticky",
+        "identity_is_authority",
+        "auto_replace_retired_names",
+        "personality_affects_truth",
+        "canned_jokes"
+      ],
+      "properties": {
+        "identity_is_sticky": {
+          "const": true
+        },
+        "identity_is_authority": {
+          "const": false
+        },
+        "auto_replace_retired_names": {
+          "const": false
+        },
+        "personality_affects_truth": {
+          "const": false
+        },
+        "canned_jokes": {
+          "const": false
+        }
+      }
+    },
+    "staff": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "display_name",
+          "status",
+          "role",
+          "role_affinities",
+          "subnets",
+          "subsystems",
+          "worker_bindings"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,63}$"
+          },
+          "display_name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 80
+          },
+          "status": {
+            "enum": [
+              "active",
+              "reserve",
+              "retired"
+            ]
+          },
+          "role": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "title"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 80
+              }
+            }
+          },
+          "role_affinities": {
+            "type": "array",
+            "maxItems": 16,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{0,63}$"
+            }
+          },
+          "subnets": {
+            "type": "array",
+            "maxItems": 16,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{0,63}$"
+            }
+          },
+          "subsystems": {
+            "type": "array",
+            "maxItems": 16,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 80
+            }
+          },
+          "worker_bindings": {
+            "type": "array",
+            "maxItems": 32,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            }
+          },
+          "personality": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": false,
+            "required": [
+              "voice",
+              "temperament",
+              "collaboration",
+              "humor_tolerance",
+              "strengths",
+              "quirks"
+            ],
+            "properties": {
+              "voice": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 240
+              },
+              "temperament": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 240
+              },
+              "collaboration": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 320
+              },
+              "humor_tolerance": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high",
+                  "lead"
+                ]
+              },
+              "strengths": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 8,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 80
+                }
+              },
+              "quirks": {
+                "type": "array",
+                "maxItems": 6,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 120
+                }
+              }
+            }
+          },
+          "retired_reason": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 240
+          },
+          "home_team": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "inspector",
+              "runner",
+              "night-shift",
+              "source",
+              "cloud",
+              "release",
+              "skills",
+              null
+            ]
+          },
+          "team_memberships": {
+            "type": "array",
+            "maxItems": 7,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "inspector",
+                "runner",
+                "night-shift",
+                "source",
+                "cloud",
+                "release",
+                "skills"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

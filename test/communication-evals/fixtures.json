@@ -1,0 +1,65 @@
+[
+  {
+    "name":"healthy-release",
+    "human":{
+      "health":"healthy",
+      "outcome":"the release is verified and ready to continue",
+      "staff_id":"roman",
+      "what_changed":"The coordination changes passed their release checks.",
+      "next_step":"merge and deploy the verified patch",
+      "needs_user":false
+    },
+    "technical_evidence":{
+      "branch":"relay/example",
+      "head_sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "runtime_version":"1.9.6"
+    },
+    "expect":{
+      "contains":["Roman","verified","Next:"],
+      "omits":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","relay/example","1.9.6"]
+    }
+  },
+  {
+    "name":"client-blocker",
+    "human":{
+      "health":"blocked",
+      "outcome":"the server is healthy but this chat still has the old tool list",
+      "staff_id":"rafael",
+      "blocker":"the Relay app tools need to be refreshed in ChatGPT",
+      "next_step":"refresh the Relay app tools and reopen the chat",
+      "needs_user":true
+    },
+    "technical_evidence":{
+      "missing_tool":"relay_runner_updates",
+      "schema_version":"old-session"
+    },
+    "expect":{
+      "contains":["Rafael","Blocker:","refresh","You need to act"],
+      "omits":["old-session","relay_runner_updates"]
+    }
+  },
+  {
+    "name":"qa-critical",
+    "human":{
+      "health":"waiting",
+      "outcome":"the interface change is ready for visual review",
+      "staff_id":"margot",
+      "next_step":"review the live preview",
+      "needs_user":true,
+      "qa":{
+        "surface":"Relay Today status card",
+        "intended_result":"status pulse and lowercase labels read clearly without extra chrome",
+        "evidence_identity":"preview relay-ui-196",
+        "checks":["pulse communicates state","labels are lowercase","no gradients"]
+      }
+    },
+    "technical_evidence":{
+      "preview_url":"https://example.invalid/preview",
+      "head_sha":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "expect":{
+      "contains":["Margot","QA: Relay Today status card","preview relay-ui-196","no gradients"],
+      "omits":["bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","https://example.invalid/preview"]
+    }
+  }
+]

@@ -1,0 +1,170 @@
+name: inspect loew browser
+
+run-name: "relay browser / ${{ inputs.request_id }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Browser operation"
+        required: true
+        default: "snapshot"
+        type: choice
+        options:
+          - snapshot
+          - screenshot
+          - open
+          - interact
+          - capture
+          - close
+          - recipe
+      url:
+        description: "HTTPS loew.fi URL for snapshot/screenshot/open"
+        required: false
+        type: string
+      session_id:
+        description: "Browser session id for interact/capture/close"
+        required: false
+        type: string
+      target_id:
+        description: "Optional browser target id"
+        required: false
+        type: string
+      interaction:
+        description: "click, double_click, hover, type, press, select, scroll, wait"
+        required: false
+        type: string
+      locator_type:
+        description: "role, text, test_id, or css"
+        required: false
+        type: string
+      locator_value:
+        description: "Locator value"
+        required: false
+        type: string
+      locator_name:
+        description: "Optional accessible name for role locator"
+        required: false
+        type: string
+      value:
+        description: "Value for type/select"
+        required: false
+        type: string
+      key:
+        description: "Key for press"
+        required: false
+        type: string
+      full_page:
+        description: "Capture full page"
+        required: true
+        default: false
+        type: boolean
+      selector:
+        description: "Optional CSS selector for screenshot"
+        required: false
+        type: string
+      recipe:
+        description: "Named field QA recipe"
+        required: false
+        type: string
+      project_id:
+        description: "Real field project id for recipe context"
+        required: false
+        type: string
+      request_id:
+        description: "Correlation id"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    outputs:
+      status: ${{ steps.browser.outputs.status }}
+      qa_passed: ${{ steps.browser.outputs.qa_passed }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Call browser inspector
+        id: browser
+        shell: bash
+        env:
+          ACTION: ${{ inputs.action }}
+          TARGET_URL: ${{ inputs.url }}
+          SESSION_ID: ${{ inputs.session_id }}
+          TARGET_ID: ${{ inputs.target_id }}
+          INTERACTION: ${{ inputs.interaction }}
+          LOCATOR_TYPE: ${{ inputs.locator_type }}
+          LOCATOR_VALUE: ${{ inputs.locator_value }}
+          LOCATOR_NAME: ${{ inputs.locator_name }}
+          VALUE: ${{ inputs.value }}
+          KEY: ${{ inputs.key }}
+          FULL_PAGE: ${{ inputs.full_page }}
+          SELECTOR: ${{ inputs.selector }}
+          RECIPE: ${{ inputs.recipe }}
+          PROJECT_ID: ${{ inputs.project_id }}
+          REQUEST_ID: ${{ inputs.request_id }}
+          CF_ACCESS_CLIENT_ID: ${{ vars.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF }}
+        run: |
+          set -euo pipefail
+          : "${CF_ACCESS_CLIENT_ID:?missing CF_ACCESS_CLIENT_ID repository variable}"
+          : "${CF_ACCESS_CLIENT_SECRET:?missing CF repository secret}"
+          if ! [[ "$REQUEST_ID" =~ ^[a-zA-Z0-9._-]{1,80}$ ]]; then exit 2; fi
+
+          args="$(node <<'NODE'
+          const action = process.env.ACTION;
+          const args = {};
+          if (["snapshot","screenshot","open","recipe"].includes(action)) {
+            if (!process.env.TARGET_URL) process.exit(2);
+            const u = new URL(process.env.TARGET_URL);
+            const host = u.hostname.toLowerCase();
+            if (u.protocol !== "https:" || !(host === "loew.fi" || host.endsWith(".loew.fi")) || u.username || u.password || u.port || u.hash) process.exit(2);
+            args.url = u.toString();
+          } else {
+            if (!process.env.SESSION_ID) process.exit(2);
+            args.session_id = process.env.SESSION_ID;
+            if (process.env.TARGET_ID) args.target_id = process.env.TARGET_ID;
+          }
+          if (["snapshot","screenshot","capture","recipe"].includes(action)) {
+            args.request_id = process.env.REQUEST_ID;
+            args.full_page = process.env.FULL_PAGE === "true";
+          }
+          if (action === "screenshot" && process.env.SELECTOR) args.selector = process.env.SELECTOR;
+          if (action === "recipe") {
+            if (!process.env.RECIPE || !process.env.PROJECT_ID) process.exit(2);
+            args.recipe = process.env.RECIPE;
+            args.context = { project: "field", project_id: process.env.PROJECT_ID, environment: "qa", surface: "editor", route_kind: "qa-work" };
+          }
+          if (action === "interact") {
+            args.action = process.env.INTERACTION;
+            if (process.env.LOCATOR_TYPE && process.env.LOCATOR_VALUE) {
+              args.locator = { type: process.env.LOCATOR_TYPE, value: process.env.LOCATOR_VALUE };
+              if (process.env.LOCATOR_NAME) args.locator.name = process.env.LOCATOR_NAME;
+            }
+            if (process.env.VALUE) args.value = process.env.VALUE;
+            if (process.env.KEY) args.key = process.env.KEY;
+          }
+          process.stdout.write(JSON.stringify(args));
+          NODE
+          )"
+
+          tool="browser_$ACTION"
+          body="$(TOOL="$tool" ARGS="$args" node -e 'process.stdout.write(JSON.stringify({jsonrpc:"2.0",id:process.env.REQUEST_ID,method:"tools/call",params:{name:process.env.TOOL,arguments:JSON.parse(process.env.ARGS)}}))')"
+          body_file="$(mktemp)"
+          trap 'rm -f "$body_file"' EXIT
+          printf '%s' "$body" > "$body_file"
+          node scripts/browser-call.mjs "$body_file"
+      - name: Save browser operation result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: "browser-result-${{ inputs.request_id }}"
+          path: qa-evidence/browser-result.json
+          if-no-files-found: ignore

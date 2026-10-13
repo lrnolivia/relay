@@ -1,0 +1,167 @@
+name: inspect loew url
+
+run-name: "relay / ${{ inputs.request_id }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "HTTPS loew.fi URL to inspect"
+        required: true
+        type: string
+      method:
+        description: "HTTP method"
+        required: true
+        default: "GET"
+        type: choice
+        options:
+          - GET
+          - HEAD
+      request_id:
+        description: "Correlation id"
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      url:
+        required: true
+        type: string
+      method:
+        required: true
+        type: string
+      request_id:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    steps:
+      - name: Validate target
+        shell: bash
+        env:
+          TARGET_URL: ${{ inputs.url }}
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const raw = process.env.TARGET_URL;
+          let u;
+          try { u = new URL(raw); } catch { process.exit(2); }
+          const host = u.hostname.toLowerCase();
+          const okHost = host === "loew.fi" || host.endsWith(".loew.fi");
+          if (u.protocol !== "https:" || !okHost || u.username || u.password || u.port) {
+            console.error("invalid relay target");
+            process.exit(2);
+          }
+          NODE
+
+      - name: Call inspector
+        id: inspect
+        shell: bash
+        env:
+          TARGET_URL: ${{ inputs.url }}
+          TARGET_METHOD: ${{ inputs.method }}
+          REQUEST_ID: ${{ inputs.request_id }}
+          CF_ACCESS_CLIENT_ID: ${{ vars.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF }}
+        run: |
+          set -euo pipefail
+          : "${CF_ACCESS_CLIENT_ID:?missing CF_ACCESS_CLIENT_ID repository variable}"
+          : "${CF_ACCESS_CLIENT_SECRET:?missing CF repository secret}"
+
+          body="$(node <<'NODE'
+          process.stdout.write(JSON.stringify({
+            jsonrpc: "2.0",
+            id: process.env.REQUEST_ID,
+            method: "tools/call",
+            params: {
+              name: "fetch_loew_url",
+              arguments: {
+                url: process.env.TARGET_URL,
+                method: process.env.TARGET_METHOD
+              }
+            }
+          }));
+          NODE
+          )"
+
+          auth_header="$(node <<'NODE'
+          process.stdout.write(JSON.stringify({
+            "cf-access-client-id": process.env.CF_ACCESS_CLIENT_ID,
+            "cf-access-client-secret": process.env.CF_ACCESS_CLIENT_SECRET
+          }));
+          NODE
+          )"
+
+          body_file="$(mktemp)"
+          trap 'rm -f "$body_file"' EXIT
+
+          status="$(
+            curl --silent --show-error \
+              --output "$body_file" \
+              --write-out '%{http_code}' \
+              -X POST "https://relay.loew.fi/mcp" \
+              -H "Authorization: $auth_header" \
+              -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+              -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
+              -H "Content-Type: application/json" \
+              --data "$body"
+          )"
+
+          echo "INSPECTOR_HTTP_STATUS=$status"
+
+          if [ "$status" != "200" ]; then
+            echo "INSPECTOR_ERROR_PREFIX_BEGIN"
+            head -c 160 "$body_file" | tr '\n' ' '
+            echo
+            echo "INSPECTOR_ERROR_PREFIX_END"
+            exit 22
+          fi
+
+          node - "$body_file" <<'NODE'
+          const fs = require("node:fs");
+          const raw = fs.readFileSync(process.argv[2], "utf8");
+          let parsed;
+          try { parsed = JSON.parse(raw); } catch {
+            console.error("inspector returned invalid JSON");
+            process.exit(1);
+          }
+          if (parsed.error) {
+            console.error(JSON.stringify({ ok:false, rpc_error:parsed.error }));
+            process.exit(1);
+          }
+          if (parsed?.result?.isError) {
+            console.error(JSON.stringify({
+              ok:false,
+              inspector_error:parsed.result.content?.[0]?.text ?? "unknown inspector error"
+            }));
+            process.exit(1);
+          }
+          const out = parsed?.result?.structuredContent;
+          if (!out) {
+            console.error("inspector returned no structuredContent");
+            process.exit(1);
+          }
+          if (out.status !== 200) {
+            console.error(JSON.stringify({
+              ok:false,
+              target_status:out.status,
+              content_type:out.content_type,
+              final_url:out.final_url,
+              body_prefix:out.body?.slice(0, 160)
+            }));
+            process.exit(1);
+          }
+          console.log("LOEW_INSPECTOR_RESULT=" + JSON.stringify({
+            ok:true,
+            request_id:process.env.REQUEST_ID,
+            target:process.env.TARGET_URL,
+            method:process.env.TARGET_METHOD,
+            result:out
+          }));
+          NODE

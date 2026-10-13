@@ -1,0 +1,2987 @@
+{
+  "schema": 1,
+  "assignment": "field-repo-cleanup-reorg-20260929",
+  "captured_at": "2026-09-30T04:53:30Z",
+  "status": "reviewed_inventory_ready_for_main_worker",
+  "main": "0ea02501704e61d5133477d69fe677ad53295a56",
+  "branch_count": 132,
+  "open_pr_count": 19,
+  "method": "All API branch pages plus full Git clone; symbolic origin/HEAD excluded; git rev-list and git cherry; open and closed PR inventories; branch net-path/blob comparison; current Runner reports and historical field/control assignment metadata.",
+  "limits": [
+    "Patch equivalence is not workstream completion.",
+    "373 distinct unique non-merge commits; review unique merge-resolution commits separately.",
+    "No fresh runtime QA or full deterministic validation run in this review.",
+    "No source branch published, PR closed, branch deleted, or merge performed."
+  ],
+  "user_direction": "Preserve all branches until work is reviewed and planned; existing main field worker must consolidate. No new first-class workers.",
+  "branches": [
+    {
+      "branch": "codex/field-chrome-batch-1",
+      "sha": "9c425f45e6fe177928c2f8405428e642095e969a",
+      "ahead": 2,
+      "behind": 228,
+      "unique": [
+        "79eb671605a4a6887920c6b89b6b7f765d58b071",
+        "9c425f45e6fe177928c2f8405428e642095e969a"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "codex/field-chrome-batch-2",
+      "sha": "4fdf9d387a781ae5adc12fafefe63cf1819c5b18",
+      "ahead": 6,
+      "behind": 228,
+      "unique": [
+        "79eb671605a4a6887920c6b89b6b7f765d58b071",
+        "a2664d40f7cd4716f3a736d234c8de414fe59ab4",
+        "2e98b61f6fe96e81290dd4eb1f316965b4bfb6b0",
+        "078f0e776d03acbc28c8612a0776dec3d3381a96",
+        "9c425f45e6fe177928c2f8405428e642095e969a"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "codex/field-chrome-batch-3",
+      "sha": "04c7e8e7e579074b22790b0439b1550cf7d28fcd",
+      "ahead": 8,
+      "behind": 228,
+      "unique": [
+        "79eb671605a4a6887920c6b89b6b7f765d58b071",
+        "a2664d40f7cd4716f3a736d234c8de414fe59ab4",
+        "2e98b61f6fe96e81290dd4eb1f316965b4bfb6b0",
+        "078f0e776d03acbc28c8612a0776dec3d3381a96",
+        "92ec79166316de742939d3fb4957f7947b0bebdf",
+        "9c425f45e6fe177928c2f8405428e642095e969a"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "codex/field-chrome-batch-4",
+      "sha": "7228e082404383077686cf1fa523e5690c990134",
+      "ahead": 13,
+      "behind": 226,
+      "unique": [
+        "79eb671605a4a6887920c6b89b6b7f765d58b071",
+        "a2664d40f7cd4716f3a736d234c8de414fe59ab4",
+        "2e98b61f6fe96e81290dd4eb1f316965b4bfb6b0",
+        "078f0e776d03acbc28c8612a0776dec3d3381a96",
+        "92ec79166316de742939d3fb4957f7947b0bebdf",
+        "d2d8fd9e6534bfccec82afa7b82ecace119441e6",
+        "9c425f45e6fe177928c2f8405428e642095e969a",
+        "98715b9af156df3e6d9c2c29ed52d95b4898651d",
+        "2f65097984c347c4735af9f86c13865ab6077721"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 54,
+          "merged_at": "2026-09-29T02:43:58Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/final-toolbar-media-consolidation-20260929",
+      "sha": "c4bb0d3be4fff18ea5ba448c8fcfdfab14253c0b",
+      "ahead": 0,
+      "behind": 11,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 125,
+          "merged_at": "2026-09-29T21:36:47Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/functional-effect-previews-20260929",
+      "sha": "12469d3ab440a19d3b0255f81ff879cb63ade88a",
+      "ahead": 0,
+      "behind": 86,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 105,
+          "merged_at": "2026-09-29T10:03:42Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/general-settings-depth-20260929",
+      "sha": "dd50259dd63fc0d85295aa236dfcc59945083550",
+      "ahead": 0,
+      "behind": 190,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 76,
+          "merged_at": "2026-09-29T05:33:47Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/general-settings-tabs-20260929",
+      "sha": "223bd9afff26b021da584d67589a808e3b966f94",
+      "ahead": 0,
+      "behind": 122,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 99,
+          "merged_at": "2026-09-29T08:58:21Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/lowercase-headings-toggle-20260929",
+      "sha": "19d8d01448100948e003ab0b561f6b36877ccc6c",
+      "ahead": 0,
+      "behind": 200,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 69,
+          "merged_at": "2026-09-29T05:03:44Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/media-visual-polish-20260929",
+      "sha": "7520ea0194189161e4fb6d6b16ece186f9fdb5c7",
+      "ahead": 0,
+      "behind": 117,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "assets",
+      "closed_prs": [
+        {
+          "number": 101,
+          "merged_at": "2026-09-29T09:12:32Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/panel-width-presets-lock-20260929",
+      "sha": "84781373db2c781090f8e1af74a5c48d0182941a",
+      "ahead": 0,
+      "behind": 112,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 102,
+          "merged_at": "2026-09-29T09:19:43Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/popup-tabs-media-polish-20260929",
+      "sha": "61148c551c8ec50ca93dde6c0aa92ef2c8b607f7",
+      "ahead": 0,
+      "behind": 104,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 103,
+          "merged_at": "2026-09-29T09:42:04Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/settings-architecture-20260928",
+      "sha": "a5c458e91d39f663b4519d033ba797d075a45224",
+      "ahead": 0,
+      "behind": 218,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 63,
+          "merged_at": "2026-09-29T04:20:34Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/settings-preview-visual-refresh-20260929",
+      "sha": "4967a386eb86dc657002382865b90016e08796c0",
+      "ahead": 0,
+      "behind": 129,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 97,
+          "merged_at": "2026-09-29T08:51:55Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/settings-surface-split-20260929",
+      "sha": "9862e9d3669d106baa991dcbef6f252bb3edb00a",
+      "ahead": 0,
+      "behind": 197,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 72,
+          "merged_at": "2026-09-29T05:13:49Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/settings-visual-polish-20260929",
+      "sha": "f07493eed6c681adcf935af633b9977f37964067",
+      "ahead": 0,
+      "behind": 213,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 65,
+          "merged_at": "2026-09-29T04:28:28Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/sleep-batch-toolbar-media-effects-20260929",
+      "sha": "cabfb164ae1e3d8cec284f2f36a71aa1fca1092d",
+      "ahead": 0,
+      "behind": 15,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 107,
+          "merged_at": "2026-09-29T21:27:49Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/toolbar-media-card-style-20260929",
+      "sha": "8f21914a22ae54cd94ea2e65f8c6ccc467c31c1e",
+      "ahead": 0,
+      "behind": 4,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 127,
+          "merged_at": "2026-09-29T22:06:22Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/toolbar-media-final-pass-20260929",
+      "sha": "75ef6a25892c9d7892bf8303b6338682eb0a3d1f",
+      "ahead": 3,
+      "behind": 50,
+      "unique": [
+        "5baf071de74b3908ca06708c544da341398b2c5f",
+        "ae3cb4f2ad777dd30c362ae6421c77279b48448b",
+        "75ef6a25892c9d7892bf8303b6338682eb0a3d1f"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 110,
+          "merged_at": null
+        }
+      ]
+    },
+    {
+      "branch": "codex/ui-heading-case-20260929",
+      "sha": "3c97f0cff4b6f638a58ef2fdb00348eee44d8597",
+      "ahead": 0,
+      "behind": 204,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 67,
+          "merged_at": "2026-09-29T04:48:47Z"
+        }
+      ]
+    },
+    {
+      "branch": "codex/universal-tabs-media-padding-rotate-fix-20260929",
+      "sha": "b44a87accbb9f15539b9daf53d53b106f058dade",
+      "ahead": 0,
+      "behind": 97,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 104,
+          "merged_at": "2026-09-29T09:54:28Z"
+        }
+      ]
+    },
+    {
+      "branch": "docs/product-language",
+      "sha": "7ce984c722f7488a37444078118f3493003dca41",
+      "ahead": 1,
+      "behind": 211,
+      "unique": [
+        "7ce984c722f7488a37444078118f3493003dca41"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "feat/fill-page-colors-batch-8",
+      "sha": "d492107ebcd353e2254d094fb09fd21dd546a50a",
+      "ahead": 0,
+      "behind": 125,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 98,
+          "merged_at": "2026-09-29T08:54:15Z"
+        }
+      ]
+    },
+    {
+      "branch": "feat/fill-picker-shell-batch-1",
+      "sha": "08f3f55e9ffda84d951b1bdb34f0921e236382b8",
+      "ahead": 0,
+      "behind": 184,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 85,
+          "merged_at": "2026-09-29T05:59:03Z"
+        }
+      ]
+    },
+    {
+      "branch": "feat/fill-shell-hardening-batch-5",
+      "sha": "675328750a7dbdb2dbd4e8eccaf99aac71f9d7ce",
+      "ahead": 0,
+      "behind": 151,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 93,
+          "merged_at": "2026-09-29T08:35:34Z"
+        }
+      ]
+    },
+    {
+      "branch": "feat/gradient-libraries-batch-6",
+      "sha": "e0deded3bf1ac5edc813e0b5a37a5767178ae670",
+      "ahead": 0,
+      "behind": 133,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 94,
+          "merged_at": "2026-09-29T08:43:39Z"
+        }
+      ]
+    },
+    {
+      "branch": "feat/native-pattern-fill-batch-2",
+      "sha": "0d23d29faf8bc43774002aa41d34d98fde1fcb7f",
+      "ahead": 0,
+      "behind": 173,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 86,
+          "merged_at": "2026-09-29T06:37:35Z"
+        }
+      ]
+    },
+    {
+      "branch": "feat/oklch-color-mode-batch-9",
+      "sha": "c950f5305d962e545a7ed9779ccc43ff0dbec0d2",
+      "ahead": 1,
+      "behind": 121,
+      "unique": [
+        "c950f5305d962e545a7ed9779ccc43ff0dbec0d2"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "controls",
+      "closed_prs": []
+    },
+    {
+      "branch": "feat/pattern-media-source-batch-7",
+      "sha": "2471da635fbda6b6bb36cd476f54d8d26b2ac0fd",
+      "ahead": 0,
+      "behind": 131,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 96,
+          "merged_at": "2026-09-29T08:50:00Z"
+        }
+      ]
+    },
+    {
+      "branch": "feat/pattern-monster-library-batch-3",
+      "sha": "25cfcbc1d26f1c5d31826c7c85d8193b6a7cab82",
+      "ahead": 0,
+      "behind": 169,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 88,
+          "merged_at": "2026-09-29T06:52:58Z"
+        }
+      ]
+    },
+    {
+      "branch": "feat/shader-fill-batch-4",
+      "sha": "c3a30f852c1428242206e3fda5430642ed2788c7",
+      "ahead": 0,
+      "behind": 164,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 91,
+          "merged_at": "2026-09-29T08:20:06Z"
+        }
+      ]
+    },
+    {
+      "branch": "feat/universal-paint-picker-20260929",
+      "sha": "67b3e92e3c7a300fbee4c849fcb13d9aaf558960",
+      "ahead": 14,
+      "behind": 70,
+      "unique": [
+        "298baf7fe8fe5bd6e2ebbe029362efee83ce81c6",
+        "b68215004ad156f9438715a6ad81bf5ffca09132",
+        "1fe1a5224b2566b2bb25863f1cc755133b7479b5",
+        "2e279fa87f9c89953644baa962549d0035281ce3",
+        "c730263df6aa0a8f2534641285f2db66783ad2e8",
+        "55ded61865e9e7a599394fb2a8b69bb0b03c25db",
+        "81367af21b8c638e3b50e957106ffb9c5fb75fab",
+        "d733766f6388bf980edc2e62d03df1872a4b5bb1",
+        "ea39344998123ffc76f4c0887e73c38283aca1ed",
+        "64b4ef9893b7b07944e35296d1fd883d9df18e64",
+        "d91ab061f95810bc262e6b25cc0cf1ff9374b9ef",
+        "8b32c7c9c0b57e40d06a5572740ea466f6049ed8",
+        "5133e7ffaf487ee76b3089ed641c72a37e69af39",
+        "67b3e92e3c7a300fbee4c849fcb13d9aaf558960"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 108,
+          "merged_at": "2026-09-29T21:48:35Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/about-build-info",
+      "sha": "65a837d929825b73419c9028debc8ba67cfcfba3",
+      "ahead": 3,
+      "behind": 224,
+      "unique": [
+        "0c285d4149a74c9d327d4dc06d81bff7a8b71cd7",
+        "673a959b526c062b889591ecd1ab0b3f89d601ca",
+        "65a837d929825b73419c9028debc8ba67cfcfba3"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 57,
+          "merged_at": "2026-09-29T03:16:22Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/brand-casing-final",
+      "sha": "d980b26d6475239b2107fb6ef5197179ef360acc",
+      "ahead": 4,
+      "behind": 192,
+      "unique": [
+        "263989176b016f95dccde9f76389cd6f3c4da09d",
+        "dabf5c0ec1d2e8fe428cdd72e90c9b65877323f0",
+        "ee6efbbe6d8b2baa1df372d7ea12b0beb01dcb46"
+      ],
+      "equivalent": [],
+      "prs": [
+        74
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/browser-preview-qa-canonical",
+      "sha": "c5e62c9b1af130213543edbb09aa40320b435417",
+      "ahead": 0,
+      "behind": 365,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 16,
+          "merged_at": "2026-09-27T04:11:16Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/canonical-collapse-state",
+      "sha": "3ebfaece77d092e4be31b5c90be05b3dd685bdf1",
+      "ahead": 1,
+      "behind": 234,
+      "unique": [],
+      "equivalent": [
+        "3ebfaece77d092e4be31b5c90be05b3dd685bdf1"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 48,
+          "merged_at": "2026-09-29T00:16:24Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/canonical-docked-wrappers",
+      "sha": "2e5ecd14d28b7bdaa8d785cf0c9d37b6bad146f4",
+      "ahead": 1,
+      "behind": 232,
+      "unique": [],
+      "equivalent": [
+        "2e5ecd14d28b7bdaa8d785cf0c9d37b6bad146f4"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 49,
+          "merged_at": "2026-09-29T00:22:05Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/chrome-global-utilities",
+      "sha": "33fdeaadee9ec848e2aa312ac75cc54205adc281",
+      "ahead": 2,
+      "behind": 225,
+      "unique": [
+        "2c22ba14c80cbfa8b3830883d06ca6658f49ed3a",
+        "33fdeaadee9ec848e2aa312ac75cc54205adc281"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 56,
+          "merged_at": "2026-09-29T03:02:10Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/ci-lockfile-repair",
+      "sha": "61a7159b9730f7bcdc2586c948fd89555c5858ef",
+      "ahead": 1,
+      "behind": 1,
+      "unique": [
+        "61a7159b9730f7bcdc2586c948fd89555c5858ef"
+      ],
+      "equivalent": [],
+      "prs": [
+        129
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "maintenance",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/control",
+      "sha": "176367f4b7d95940ac0761077014c29a775f3542",
+      "ahead": 124,
+      "behind": 385,
+      "unique": [
+        "c2194a6e7e87d200b89248a4681d91448ef03ddd",
+        "618197d097ba5ee57805d4342ca7438fec556bf9",
+        "dd1ec69d5b9d751fe082e00ff889c12b7509ca9f",
+        "8de6c854b417dc3c0f7629854c6f06e6edb3dff7",
+        "c0747899dc1a4bcd7dd25f9ca0470bc83eeb7352",
+        "9753e5a341dc6438884998bba21c645abc5ad8c0",
+        "aad846b60e379b9fab93647b5e0e67237909a4e3",
+        "abad33f0f50b71d04cf1108f94fb40c985e1b711",
+        "b62a8cacda71992f02f5e755b8abbccd0338bc68",
+        "f4d032d62bffade62487ce59776cbd07db8829ef",
+        "6b27f5e553b1c0c8a155f5854ca72d088c393a8f",
+        "3cebd1af0c39ac1e9a42276dea1e11b1747c90aa",
+        "9e2287eb41a91229d73c668a742937052e6c4563",
+        "e257a97e137b559f2d381f208ed959a6ef2717cc",
+        "92a1b590b841c5324db5e55832a3372f6dbd31e5",
+        "dc5337a21bc8fc280544425c9188a099058a16a5",
+        "8baae7d04b1999913f18227e0ff6c8f39c72d500",
+        "535038941e2510daa97c4a7a5c297fbeccf5cca1",
+        "2d7c99cbd42cf8c66b7e9cefadeca81759b4da81",
+        "542a678290631dc604665150a3b2c5ba6aeb599f",
+        "a3d6016abec24a4785cf845c45413bcbfc40b08b",
+        "dbf76aaca2bbcc6f71c3e89ab5f278c3382e2a97",
+        "efe4b699c788b2e7d97a434339f26fce10d2f15f",
+        "5e6e79b305e890854a3c4641ebf985654f51a855",
+        "cd9a24aea2a88e42393b7e1169b1a3129260bace",
+        "9e439bb61043e6374844312fccbc5c1e94314ee3",
+        "23dcdb5972d55ff0e04adb1150e7316635310505",
+        "b47e9915f16848f870aabd1919b4ce14accff326",
+        "61e8e8df139bb624b079e755541d00b1469887a3",
+        "d99f9ca9cb6990d58946292f7dd23f32a93a8293",
+        "a89328c7995ee7a578cbef93dc72b67341bdc4cb",
+        "1eb37fa023188e1ce820e82dc05ca41dd8f3e879",
+        "e27405c3ac8b0c13d584f65c8a2aaf0836a0bd28",
+        "e5b64699bed30b56bb3f173fdbf1b6af186407a8",
+        "549293f2abd7ec42819313cc66ed0270aeaf3ce5",
+        "f46d0171b50dbc9be8ebfa357c6c960ed77d135f",
+        "74663f804443316ef7ab77e427a4e6a9e5efbb8f",
+        "36e23f7eb7c29ad061043790b4865cf03f3ba1e6",
+        "33bdd2182091b9f7d6350c5fead54f2f0cbb7783",
+        "66accbd879fb25c1914a98e98c15eac7720b85ee",
+        "7b56461bb31ed30bf61a1ffb739247e13dcb34fa",
+        "9654f6d392ddd164b67383bc0eeb0b16e829cfbd",
+        "652724263a522afa92bd349af4b5ff5e15f9f11d",
+        "b4abef73f6061c4486dc049e78033c361aa179a9",
+        "f02076a0991ee6ea1819526141563d5b807c9855",
+        "32a62ff840c471e7b5e60b6979d129416a4a980c",
+        "4b72ba4162afb859245d9392334e773b8d19a58f",
+        "9641923473a55c9d474f4ec31e96dc5a8a77eafb",
+        "16f96dc9bd460697e81a49a0227361218a08e677",
+        "1db3c40558992d622bb1d517fe8f44d715331e53",
+        "7d213fe042488d0e5ccc4332f4b32241cc18ba75",
+        "7c35bdaf67d178f3ffdb953a02d7dffa17c00997",
+        "89af8e3917473e6fc5d11d781f06729f2de166a9",
+        "c1128e135dc4d205d344c9cdfc9e012f96624359",
+        "77fe7319ad53526fb8c5a9901d0280d4fdeb3c28",
+        "18330a9006c6ffdee27444d519eb0e0c212af8fc",
+        "04c60fb85d1fd34c84ab570e03d4db5adf9cf073",
+        "43a3a6c7fa4c5c6963f4136d419c99719bab3f3d",
+        "69bae59334c65b0d12de7ca16f66a0a2fb71b139",
+        "12d761de614290fcbbbcd89998a55c51270db3c4",
+        "51e2ea53c9d13bf3c5975a46b87297692bbe4dcf",
+        "a1909f1e1cfe4ea7eb0cbf3acc4e5bc5d1a31da2",
+        "e47cd2b8dd7c09d259c09e96e3f8cdc1bc8a5bce",
+        "2a84bdf59f3801349519920ed255b72d3a1ac56d",
+        "4fdd78f110559ca5c96d42b9b58075dea0cbb9f1",
+        "4d0746086b5032814d5cdf0be00c0c46eacd9d94",
+        "5ae0e9f0527263d70c88d15449673e3d93db17fc",
+        "e6632f1a7de767b6be6273ba3c85741ffd0d5c4d",
+        "8daa182b2c342f4ad8ca4e6e95d8c42b39a6c456",
+        "68b4a33485e7bad498a25051b2c6b796872c1a28",
+        "c8058731039eddc8ffe3db8812e9e6e845b96155",
+        "002643350088979798799ebe93bcacb1f64475f1",
+        "b191a32b94f864a9bcc73ab0fe78b3db09343478",
+        "29c056265f2042b0867b2cbbec6d655953b9296c",
+        "0bea9670e53674eaee2b186263e545583b8e4ceb",
+        "89e96279abce5b068404b40d76bd7c1ecbf45b8a",
+        "874f83ec135615e713b3191fed86f7d9dac33ae3",
+        "d3235f6b64e214d3d2db9325b264ac19785ad908",
+        "06afbd6ff2318f495e35ac2a8be21e86cf0e928f",
+        "e5f420f9893acfdf60212195389568552a427581",
+        "af5f16c2891bba5463ef89e227bd8568ea0d80e5",
+        "a096e56b7beeebb9f6fc04f5ca5b2939b9bf524a",
+        "84e91f4c088855f6bd6b722cf01eb13b7e50b613",
+        "e126c1058283c3e654726081d0c01377768606be",
+        "8f422e98fa863e4b62d010303c5c1b1acfa5e423",
+        "d9628c4f05649cf03fdacfc95bbba8fc57310c3b",
+        "8cdd7b0622efe70ab54322caaffcefde7856bc57",
+        "0cb9392dae6b675743b2fdae14e11764c48d7502",
+        "5b83f1a62d0c8fb82aefcc1dae188ba73c59be10",
+        "60dc01a5eb86d3246d0de8379cfd11cf5ae81636",
+        "ac22e2c62562ca8413fdbe1c53ad18bfc01db7ea",
+        "425f35897b8cd712ccb9ddb03ae0925a6da5c2bd",
+        "b5f65b6a4fc04c4f2b9e9eaf4fe84d6a92f1ec94",
+        "9d1fad94b9d2aa94e7532c510e2f4ee971393cb0",
+        "fdf36ab2141eff989057caba7fdc5b8efd985a7b",
+        "83c8ea83af827f28385c727a618648b1965f508e",
+        "e8b137d5630afe110a845e50d490bd92cd49cb8a",
+        "456739e687ce89ec0fa4c6bc83fa47930aee724b",
+        "fd7a61c6a15b68b76aebbc6a15bf31c625dbebc3",
+        "993f0f4ca710976860494398d4a6fb7514a7530e",
+        "a85fc61a2722d6075caf90902854eefe426ae895",
+        "2d5406d9703acad24ea74ecbbe985a84b4fd8b7b",
+        "f7c0b53a43e1162863619cbaef6715fdbccc4d28",
+        "820562f71b0b4b7a3c91bb05881902c609e122e5",
+        "b02d18c2e88f3fdbf3fad8c2a0b98eab3bec6a5a",
+        "5c130c0335c80f52bde46224acbfb7112032914f",
+        "3d9fc96f8ac28674589fd378188a61814c0e53a4",
+        "55fef9f22419a6513f92ecc6c94b6f1d55e197fc",
+        "aa14f950d9a47a7fc2a3df14a75d3724e997f02f",
+        "f20e2650320b33101f8bb30137305b52d99fb210",
+        "73709508fb81c95936e026025a45397439fa29f9",
+        "9f566d605067dc002c0f83e77330169f2c22f179",
+        "c1365a21aedfd1d3daeb8063067fc28a24b55548",
+        "572f1deedc750c743a10de7d0d2da0728b863145",
+        "f970c020dbfbe74a945c4094b3cd27661aae4763",
+        "acd39418713fa5f860506cd588a4ed50a428baa6",
+        "fecbf49507813e9d198063f2b02fae3f041784fb",
+        "552226438180208c4bb08c83cbb3ab4064542d72",
+        "ed3c2e6e1d26885700e9101cc5f29dfa0a383322",
+        "8ae3de16dca10c597b0859cad3c25b5fb3cffa4c",
+        "ca7e56ba6afa856c460d9a16387e509538c03710",
+        "176367f4b7d95940ac0761077014c29a775f3542"
+      ],
+      "equivalent": [
+        "4f4840660153845e09355ee816f91425d32ef018",
+        "9c83622dc4d8b188aebd737b39746106b1b06b55"
+      ],
+      "prs": [],
+      "disposition": "KEEP EXCLUDED",
+      "reason": "Historical coordination/provenance retained; never merge into main.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/dashboard-collection-semantics",
+      "sha": "d357212178f18280b932b0fd0d1be51c3d7f2427",
+      "ahead": 4,
+      "behind": 358,
+      "unique": [
+        "f3b337fd535ad02658bb0b3cf449ed4c8aad276f",
+        "007d20c42c01fdf716b668af6868086c9dbd12f9"
+      ],
+      "equivalent": [],
+      "prs": [
+        13
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/dashboard-editor-left-rail-handoff",
+      "sha": "3c7b5cd9dbcd1f89c8fe208e92f66c1666930a6f",
+      "ahead": 0,
+      "behind": 301,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 32,
+          "merged_at": "2026-09-27T07:20:29Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/dashboard-empty-state-semantics",
+      "sha": "79e64730ff918899d55002bae334a78ee6496c18",
+      "ahead": 3,
+      "behind": 358,
+      "unique": [
+        "6c82217787a4e4c40f32d6f4da09b35deb289b54"
+      ],
+      "equivalent": [],
+      "prs": [
+        14
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/dashboard-interaction-polish",
+      "sha": "736ddfafb34ee561fadd0bd6f039726a44afae2b",
+      "ahead": 3,
+      "behind": 358,
+      "unique": [
+        "932af6d67c84fc0b9eccab46d6f78ad5aade49cf"
+      ],
+      "equivalent": [],
+      "prs": [
+        5
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/dashboard-manual-refresh",
+      "sha": "e5201599abed7fd0d5bc659e8203803facb1e180",
+      "ahead": 2,
+      "behind": 227,
+      "unique": [
+        "1720ee857f4b8a901cece2ca8c93b58b669cdc6c",
+        "e5201599abed7fd0d5bc659e8203803facb1e180"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 55,
+          "merged_at": "2026-09-29T02:30:07Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/dashboard-new-project-focus-flow",
+      "sha": "e1527fe71eaf30319555601f05406fd3be68ada6",
+      "ahead": 4,
+      "behind": 358,
+      "unique": [
+        "5d91038c934307e2f799080f817874134231ce26",
+        "fa46e7e675812423b6826a0d79bc3957283c22ad"
+      ],
+      "equivalent": [],
+      "prs": [
+        10
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/dashboard-open-thumbnails",
+      "sha": "ceef65d79928195b7e8cd1d566567653e8acb07c",
+      "ahead": 1,
+      "behind": 229,
+      "unique": [],
+      "equivalent": [
+        "ceef65d79928195b7e8cd1d566567653e8acb07c"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 52,
+          "merged_at": "2026-09-29T00:36:23Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/dashboard-rename-dialog-hardening",
+      "sha": "24294802256a1b19d4774dafbe861cf9ae6444e9",
+      "ahead": 5,
+      "behind": 358,
+      "unique": [
+        "f03f40cef8c78509ace900d70d0377c89b7850aa",
+        "2965b06ce4c406fb28436361d3a464e0f274dcb3",
+        "bc89cdcceb0958890d40ef1756738bf298d714fd"
+      ],
+      "equivalent": [],
+      "prs": [
+        8
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/dashboard-sidebar-navigation-semantics",
+      "sha": "f33552d437b3f761f4b669b4107d3f9d1d439849",
+      "ahead": 3,
+      "behind": 358,
+      "unique": [
+        "d3447ee73a0037c30ccdb81960568914c3cffe76"
+      ],
+      "equivalent": [],
+      "prs": [
+        11
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/editor-chrome-media-effects-continuation-20260929",
+      "sha": "64fa810a66fc54d73c2f46ed2e352a8c3a3e568d",
+      "ahead": 0,
+      "behind": 1,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/field-branch-preview-live-qa",
+      "sha": "9863bd5412096b0893d794ce083169bedcce0cb2",
+      "ahead": 0,
+      "behind": 368,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 15,
+          "merged_at": "2026-09-27T03:22:02Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/field-glyph-completion-sweep",
+      "sha": "1a0e349c2b8c7b825d589d390d2db72fb2e353b6",
+      "ahead": 0,
+      "behind": 266,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 41,
+          "merged_at": "2026-09-27T11:09:11Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/field-glyph-explicit-coverage",
+      "sha": "587aca210a2b2ee329aeaf6f0f83b72f35fed96f",
+      "ahead": 2,
+      "behind": 265,
+      "unique": [
+        "dd5a0c1c228fa4ca73f9538f08e8ad9d438dd33e",
+        "587aca210a2b2ee329aeaf6f0f83b72f35fed96f"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/field-glyph-semantic-states",
+      "sha": "e96f8e0d64881c13c559c53e8ffd9a14e815a31a",
+      "ahead": 3,
+      "behind": 272,
+      "unique": [
+        "dfff3dfd040e265e1aafa7ce5086c3c566095320",
+        "06dde99f0415a6f0014c086388a3d849e56cd988",
+        "e96f8e0d64881c13c559c53e8ffd9a14e815a31a"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 39,
+          "merged_at": "2026-09-27T10:25:20Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/field-glyph-system",
+      "sha": "af9775d47ae1f63fe8b8ecb8d99efd02c75ff3b1",
+      "ahead": 0,
+      "behind": 280,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 30,
+          "merged_at": "2026-09-27T09:24:27Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/field-glyph-test-path",
+      "sha": "dd421ab556ca1cea0cba378c339efc647e754c63",
+      "ahead": 0,
+      "behind": 264,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 42,
+          "merged_at": "2026-09-27T15:48:34Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/field-motion-quality",
+      "sha": "1df55eae326651c2a51d752b9ad3cee16f6ddb6f",
+      "ahead": 9,
+      "behind": 192,
+      "unique": [
+        "8dfaad39b1d5e1a06115437c366c70b412831292",
+        "23fc49e96c4ea34af56accd1687d90a53f4da5e0",
+        "de86b0cd353c22b0c33fe0374ddfd8b9969c4ca8",
+        "082e8310dd2c4b961de219ac11129679a5424e00",
+        "2622e51c8e7dd4cce6286aaabdd5188bc3dbffce",
+        "5bc95dadafd33b538e3aebf97584294740673847",
+        "9f1f711727c1947068910c39ca66b596157a1fc5"
+      ],
+      "equivalent": [],
+      "prs": [
+        73
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/field-motion-semantic-controls",
+      "sha": "dedd1864e8f9da0d304352d760f09a3673651e33",
+      "ahead": 0,
+      "behind": 340,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 12,
+          "merged_at": "2026-09-27T06:37:51Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/field-preview-canvas-host-routing",
+      "sha": "4fb9352004f879d13f614c295dec71380d57a7f9",
+      "ahead": 4,
+      "behind": 359,
+      "unique": [
+        "f25d827955c6596db6f4d3d85e45522ebdeea5d1",
+        "e1d4ed3c977a1aeaf0ce2697837566bbdc08cf33",
+        "c871cc9afaf7dfae517665c5c8f2eea8f37ebe77"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 19,
+          "merged_at": "2026-09-27T05:53:17Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/field-root-instruction-cleanup",
+      "sha": "f90c6483b4d7c2e05cd7871ada43ac1ff2397145",
+      "ahead": 0,
+      "behind": 376,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 7,
+          "merged_at": "2026-09-26T15:26:36Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/field-worker-coordination-v2",
+      "sha": "06e984d84f3ebf68ca478ec1407ddb78f809ad63",
+      "ahead": 8,
+      "behind": 384,
+      "unique": [
+        "b98b3b5a3abc68766bff49c3d205e23a4ccc1b91",
+        "b00499e2838303a4a1061b8089c7137c6a301746",
+        "5fc4140a6b71461bb23a93cd42753635817df794",
+        "19ec5704b8214e324097ac3e7e19fd5d5edc1fd5",
+        "fc4c8decd9f099adfa1502891e76144edd04b097",
+        "b73c4a6e2fe5ce34695fcf11d3b8d9802ddadb40",
+        "06e984d84f3ebf68ca478ec1407ddb78f809ad63"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 2,
+          "merged_at": "2026-09-26T10:20:20Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/figui3-canvas-inspector-recovery-20260927",
+      "sha": "f113cc483fd8a509e0da8d8950aa5f5e0b25788b",
+      "ahead": 0,
+      "behind": 367,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/fix-left-rail-floating",
+      "sha": "c05305623a8d15f844f9754a5032d5d428a2270b",
+      "ahead": 4,
+      "behind": 196,
+      "unique": [
+        "f1a3a45e28e74c3fb55d18afdcf1e3c8096cf10f",
+        "310f47651d435aa0823c2f63c98dade4b67a7d16",
+        "c05305623a8d15f844f9754a5032d5d428a2270b"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 70,
+          "merged_at": "2026-09-29T05:18:20Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/fix-lockfile-swc-helper",
+      "sha": "03205f3ac490c99b109d3ad4eb5202e3f117bf7b",
+      "ahead": 4,
+      "behind": 0,
+      "unique": [
+        "af7a66b45285e3294b47010b67009fc807d7b6c7",
+        "09f3a737a1fd065cf48c7dec303d4608bb7cb454",
+        "7122708e6f725fa46a28e9e7d1484e3bae69fa36",
+        "03205f3ac490c99b109d3ad4eb5202e3f117bf7b"
+      ],
+      "equivalent": [],
+      "prs": [
+        132
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "maintenance",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/focus-camera-hardening",
+      "sha": "820f88a5b3737b20e88f913d4c43d5db146888b8",
+      "ahead": 0,
+      "behind": 207,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 66,
+          "merged_at": "2026-09-29T04:39:46Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/focus-camera-text-session",
+      "sha": "01531291174a1ea1a77bba5b740a30e8e66a7d24",
+      "ahead": 7,
+      "behind": 220,
+      "unique": [
+        "8e24ed4fd21e3cc4720797e89563b9b812073818",
+        "9b49074a7565da822fdc898653128ad32ef8f010",
+        "073bdf3edc06fcd704a7200fc70c2baed01d921e",
+        "01531291174a1ea1a77bba5b740a30e8e66a7d24"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 60,
+          "merged_at": "2026-09-29T04:13:58Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/frame-hug-autolayout-padding",
+      "sha": "848f140141e608388beb7ccfdca34c8ec0cefdf9",
+      "ahead": 1,
+      "behind": 230,
+      "unique": [],
+      "equivalent": [
+        "848f140141e608388beb7ccfdca34c8ec0cefdf9"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 51,
+          "merged_at": "2026-09-29T00:30:33Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/handoff-kit-canonical-source",
+      "sha": "b6fdda6955cba77bbe1d1232227b0bb48b7d9520",
+      "ahead": 1,
+      "behind": 339,
+      "unique": [
+        "b6fdda6955cba77bbe1d1232227b0bb48b7d9520"
+      ],
+      "equivalent": [],
+      "prs": [
+        27
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/inspector-autohide-arrow-layout",
+      "sha": "999a9eb203febda270130b0718b136b99bbce799",
+      "ahead": 2,
+      "behind": 241,
+      "unique": [
+        "8ab78a539632846f749a3ec5671a0f0ddbedfdda",
+        "999a9eb203febda270130b0718b136b99bbce799"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 45,
+          "merged_at": "2026-09-28T07:53:56Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/inspector-controls-zoom",
+      "sha": "ef7b69faf8544425016a8d8ea5221d9fe7e43cca",
+      "ahead": 1,
+      "behind": 235,
+      "unique": [],
+      "equivalent": [
+        "ef7b69faf8544425016a8d8ea5221d9fe7e43cca"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 46,
+          "merged_at": "2026-09-29T00:08:49Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/inspector-pane-motion",
+      "sha": "cf68ca177d95da0181fe429652084b6e6645b80d",
+      "ahead": 1,
+      "behind": 221,
+      "unique": [],
+      "equivalent": [
+        "cf68ca177d95da0181fe429652084b6e6645b80d"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 61,
+          "merged_at": "2026-09-29T03:50:16Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/inspector-provenance-write-targets",
+      "sha": "3c75fcdf4312dc9f37e220336faaac21562a6713",
+      "ahead": 10,
+      "behind": 358,
+      "unique": [
+        "0c3ee5edcde07a0a7a082460f26457efdad2fec6",
+        "8272420af0291d8b804a974259e52c8cc78c5c66",
+        "5a79eb1fed6bf62610b69a88edb639c7dc61f545",
+        "4fc8c6e406aed1b8ef1478a95f235060c57e6ac2",
+        "9e546b2f8cb538cf8a296fcc3dd4f50a14ec3c6b",
+        "3da094954cc15f52003561c3a7530089aac10b2e",
+        "98963dd94afc6d807cd952058f63aa9b3905047c",
+        "7cf9bdc5a114a570eac679c260759acca2ec6fbc",
+        "bfbe99fbd644db78d0869c9ed019aaee20d0187c",
+        "3c75fcdf4312dc9f37e220336faaac21562a6713"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 26,
+          "merged_at": "2026-09-27T06:29:59Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/inspector-system-visual-qa",
+      "sha": "64fa810a66fc54d73c2f46ed2e352a8c3a3e568d",
+      "ahead": 0,
+      "behind": 1,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/interrupted-ready-batch",
+      "sha": "bbf2bec8e4d057b83b233bc232e69c2e5de0660e",
+      "ahead": 1,
+      "behind": 243,
+      "unique": [],
+      "equivalent": [
+        "bbf2bec8e4d057b83b233bc232e69c2e5de0660e"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 43,
+          "merged_at": "2026-09-28T07:23:50Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/layout-pill-identity",
+      "sha": "8110675895332c1e142029df90494b6ede94df5f",
+      "ahead": 1,
+      "behind": 235,
+      "unique": [],
+      "equivalent": [
+        "8110675895332c1e142029df90494b6ede94df5f"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 47,
+          "merged_at": "2026-09-29T00:14:59Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/left-panel-inspector-parity-20260929",
+      "sha": "3dd8ca23d54aa9a10c5ea4ee458cd59ad90ee860",
+      "ahead": 18,
+      "behind": 38,
+      "unique": [
+        "367392e8573c4f3b7ede3481ccc7230ca55a1cb3",
+        "27ebbbfeae6f14955743ad6fe1be755d9bf633a7",
+        "4cf8a8a4c0411cf79c1c0267cc6281a47691885c",
+        "b77f04f6746e7a044d73fcb02fbf9426c5d4e8b2",
+        "8cda8fc8c22d556b3a224b2534c7738ea8eb4c7d",
+        "f100ddba887b0a342ffae4f0866e0c0a7385a68e",
+        "df3bac89858673a90fcab03ad03f9ef4ebeb15d5",
+        "6762658376a13ce3960ad6969eea4d13c25421df",
+        "2897e03c5acdb47b66a08972f0a1e6ce84e5ee26",
+        "a2cbc7d8cfb1f686377acc8dbe6716ef6c97f3e0",
+        "73f051dced395f9cf7f6fb0c3e63e3c6148308ae",
+        "66ebe372f97ddaae1580e2b95dc163c4b8aa4a9c",
+        "bc6ea0ac2f5ecbd005f36ed0bb4356b19ed4b34f",
+        "64d782e45ad8bc5b9c9c0bef14e70d1cd5d6c1f9",
+        "233c308f00794fcde0e577b88fa3cd1e4dd66f4b",
+        "adc2cc5298ce88bccc7d5970f86f7a60f0b65daf",
+        "3dd8ca23d54aa9a10c5ea4ee458cd59ad90ee860"
+      ],
+      "equivalent": [],
+      "prs": [
+        124
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/main-menu-natural-height",
+      "sha": "9dfd501d769ae32bc9753295baf5a58360d3f3b8",
+      "ahead": 1,
+      "behind": 222,
+      "unique": [],
+      "equivalent": [
+        "9dfd501d769ae32bc9753295baf5a58360d3f3b8"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 59,
+          "merged_at": "2026-09-29T03:25:47Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/media-system-architecture",
+      "sha": "64fa810a66fc54d73c2f46ed2e352a8c3a3e568d",
+      "ahead": 0,
+      "behind": 1,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "assets",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/media-system-foundation",
+      "sha": "d6c6fe496661010d55d4a6f9050201a862cc4b37",
+      "ahead": 29,
+      "behind": 221,
+      "unique": [
+        "ddd89b4aa8a87cccf5894d085a5b1f29c1bfd80e",
+        "13f21568a3477d887c1d1936603747f6761bace7",
+        "d3786f53b4684024a1f7ff0766492a6a521d1b72",
+        "87445a64f4bfe13a4af021a2c047892ac4dc8cbf",
+        "76a8760e753033c877f7739f9af43553e20c8c5f",
+        "8efea761788deb1f85cf5ddf3bf386c01fd6d4cc",
+        "5e9db89e85910127a1c843537716ae0d767dedcd",
+        "8d256cc743c873eed09439d531560a60f44d794a",
+        "3f9c7eed9b7faeb0de63b528268f2f2b8b3c831b",
+        "719c7ddc7cc4e2a487486f22c558c819575133f9",
+        "043fde812d7eec113633393437ff7d2006bb26d9",
+        "84b0121c5dbd1ce7edce63d7987c297c4d6b7ba5",
+        "d27998bcfb777d8ebaa38c8bb0a8be610d2686cf",
+        "87f2d8ecae670e4cc2c2f84ff045a11399c08eca",
+        "c79b4ead31beed267abd6af16c9f3b1d93abd739",
+        "701ded43a4728d015510c590c99dab5a0a81ab5f",
+        "4deb7db1cb1484f0747ca539a674ee8257e6260a",
+        "bd7d41cb10666c72f6351a1818a0a9bc0deb87e9",
+        "471cbe52b886cad0736d57f6e70a6bafb1748ef6",
+        "1b7c5064c7fd3c1b0f4654550a062385e8ac0692",
+        "9b95a16308968eb19f6f0e32762a6a33ab1e190e",
+        "0b60c184322928440980f4841f9fd4fa5dd3b3da",
+        "4f1cf682834aba01ad229aa75cde1b6d0a7e0ff5",
+        "6036ad94f8dd7886b104937c93e49ef19d808ec4",
+        "4bd80ddb9e129569d8c93328a097907bc623a46d",
+        "6bf1562cf65e23b3d959d1fdd93a566f42e94861",
+        "0f6e11549b4075f1185e0397abeb062408fd8fbc",
+        "4933d445f2a7791d14d0a6ed165d557ccfaf2100",
+        "d6c6fe496661010d55d4a6f9050201a862cc4b37"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "assets",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/mobile-docs-qa-20260929",
+      "sha": "8cd3501964986ef8e9c379ac86a17e3a18fee0f3",
+      "ahead": 1,
+      "behind": 1,
+      "unique": [
+        "8cd3501964986ef8e9c379ac86a17e3a18fee0f3"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "mobile",
+      "closed_prs": [
+        {
+          "number": 130,
+          "merged_at": null
+        }
+      ]
+    },
+    {
+      "branch": "field/mobile-focus-touch-camera-20260929",
+      "sha": "0a4c2cef6ce9a76dcc9011466956266bd00feb73",
+      "ahead": 13,
+      "behind": 1,
+      "unique": [
+        "898a9ed3e0c56559ce2a9c0f0c07f2e6e1c5b789",
+        "2fe58a9748cc769034e09ac93604d4a2581433d8",
+        "2ae6a7b3ecf528b59692cd138beada6d4c174bf1",
+        "e5d6059ab2b741722bd1ee35c5809e3029b76411",
+        "7a601e4a2ae5e15f8faa817700eb59f7995182b4",
+        "b64ec64a806fe1ac33398c563202d174759268b2",
+        "213646f5273908bad9658aa3794a3c75440c2056",
+        "700b5741526edb2112faec13598936794a4ca48f",
+        "14c7a5e45498598bf234ddba15527833c537cbac",
+        "0a4c2cef6ce9a76dcc9011466956266bd00feb73"
+      ],
+      "equivalent": [],
+      "prs": [
+        123
+      ],
+      "disposition": "KEEP ACTIVE",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "mobile",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/native-gallery-qol-creation-flow",
+      "sha": "d256a74b1bab779c7dd10e69df4e8a3532898505",
+      "ahead": 0,
+      "behind": 306,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "assets",
+      "closed_prs": [
+        {
+          "number": 3,
+          "merged_at": "2026-09-27T07:09:50Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/native-group-lifecycle-integrity",
+      "sha": "b901843f37e5884db3a73b88bf4f1be949ada185",
+      "ahead": 6,
+      "behind": 339,
+      "unique": [
+        "5c481e240c11c2f97c9cdcf468b33040537b225d",
+        "aec58f15915a6e72b4518f58c2aa5d5f8729d7c6",
+        "58d1e6a22f4de4777abe4642c15b4bbd599c0fe4"
+      ],
+      "equivalent": [
+        "2d6b9e44d4de777b3d45cba4c190a1318b544466"
+      ],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 18,
+          "merged_at": "2026-09-27T07:01:32Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/native-scale-visual-metrics-repair",
+      "sha": "751bbe9dae4f55ee0207245e82c6e8eed48b4dab",
+      "ahead": 4,
+      "behind": 358,
+      "unique": [
+        "fbd2000c7d14a2dd9b62bbc06135e67c50b72144",
+        "2980b73c216349f7f42ecea31305bf77bacd99a6"
+      ],
+      "equivalent": [],
+      "prs": [
+        9
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "canvas",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/night-shift-blocker-repair-policy",
+      "sha": "e0287121be47880af1fb209119d341c26a61b60e",
+      "ahead": 0,
+      "behind": 381,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 6,
+          "merged_at": "2026-09-26T10:39:26Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/options-panel-effects",
+      "sha": "3de117bf32cd27176141b26a814e8c5d2687108a",
+      "ahead": 6,
+      "behind": 192,
+      "unique": [
+        "d0b1ad33aa889aa8e79549da90f97be41c38efc0",
+        "3d0e47e6eec818bca772737b1219f7038f8777f2",
+        "46c343f076219e2ba897fc363bf2e4e76bf0d87b",
+        "01fbc703f5c46d25ac27becd98d8facbb601c0f4",
+        "5f3512cc9afcb3ec11d1e9403ca3a5af34229773"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 79,
+          "merged_at": null
+        }
+      ]
+    },
+    {
+      "branch": "field/options-panel-effects-v2",
+      "sha": "60fca67256225cc8db7f27aac7342235365ed85e",
+      "ahead": 2,
+      "behind": 186,
+      "unique": [
+        "60fca67256225cc8db7f27aac7342235365ed85e"
+      ],
+      "equivalent": [
+        "cc3fd8d17fb14d08863a282077d4594dc87a7c8a"
+      ],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 81,
+          "merged_at": null
+        }
+      ]
+    },
+    {
+      "branch": "field/options-panel-effects-v3",
+      "sha": "e09f3940df94d141fcde3b85e53090333aa8a2f8",
+      "ahead": 3,
+      "behind": 174,
+      "unique": [
+        "d50ac12f6fefab49cc1b1dee67f57a48fea9af3d",
+        "e09f3940df94d141fcde3b85e53090333aa8a2f8"
+      ],
+      "equivalent": [],
+      "prs": [
+        83
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "controls",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/options-panel-finish",
+      "sha": "f54253cd7e66e855e3dc1f91214dd2e42cc1431f",
+      "ahead": 1,
+      "behind": 172,
+      "unique": [],
+      "equivalent": [
+        "f54253cd7e66e855e3dc1f91214dd2e42cc1431f"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 87,
+          "merged_at": "2026-09-29T06:48:58Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/options-panel-foundation",
+      "sha": "d227c1b09317c950e2a3abd7967412aba6f051b7",
+      "ahead": 5,
+      "behind": 187,
+      "unique": [
+        "d0b1ad33aa889aa8e79549da90f97be41c38efc0",
+        "ceb34f3f50ca9d1f682fc7e65ecfd822168489f4",
+        "d227c1b09317c950e2a3abd7967412aba6f051b7"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 75,
+          "merged_at": "2026-09-29T05:48:36Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/options-panel-stroke",
+      "sha": "01fbc703f5c46d25ac27becd98d8facbb601c0f4",
+      "ahead": 3,
+      "behind": 192,
+      "unique": [
+        "d0b1ad33aa889aa8e79549da90f97be41c38efc0",
+        "3d0e47e6eec818bca772737b1219f7038f8777f2",
+        "01fbc703f5c46d25ac27becd98d8facbb601c0f4"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 78,
+          "merged_at": null
+        }
+      ]
+    },
+    {
+      "branch": "field/options-panel-stroke-v2",
+      "sha": "cc3fd8d17fb14d08863a282077d4594dc87a7c8a",
+      "ahead": 1,
+      "behind": 186,
+      "unique": [],
+      "equivalent": [
+        "cc3fd8d17fb14d08863a282077d4594dc87a7c8a"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 80,
+          "merged_at": "2026-09-29T05:54:45Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/pane-control-polish",
+      "sha": "f3ca75538a6d16164b98180fb29a702f71e84103",
+      "ahead": 1,
+      "behind": 223,
+      "unique": [],
+      "equivalent": [
+        "f3ca75538a6d16164b98180fb29a702f71e84103"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 58,
+          "merged_at": "2026-09-29T03:20:30Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/product-language-rebase",
+      "sha": "2bbfe27d9a05a3f480739e6e962f68d660335d3f",
+      "ahead": 0,
+      "behind": 177,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 82,
+          "merged_at": "2026-09-29T05:58:21Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/product-language-sweep",
+      "sha": "02b364bed46412720c182ec144328229611e9d18",
+      "ahead": 13,
+      "behind": 203,
+      "unique": [
+        "7ce984c722f7488a37444078118f3493003dca41",
+        "b9abd636c4ff18d8ba2629b3e05e408f4304142d",
+        "0d39884a3bebc2b0266edb644fbed10e89c9fde6",
+        "ce6a7cff799fda7dbfd76c24e06888794482c751",
+        "eea8e6af55a1ef2a5ee3e678152a7c177d18c2d0",
+        "80a4fb9a25db4afe1e51c2430bccb1a71c00bcdd",
+        "e14e3d591290b285ca703df912770a45e3541391",
+        "44216f30cc12755f674e406fab53ce9ea7ea8b8d",
+        "c811dd992cf1e1ab9f07de9792546856048fdb33",
+        "cbe95f87b116f067fff2a8da6819aae7a2b8c5b2",
+        "3bb721503151d343127bbfb16d5bbcf1599a9834",
+        "02b364bed46412720c182ec144328229611e9d18"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 68,
+          "merged_at": null
+        }
+      ]
+    },
+    {
+      "branch": "field/project-loading-veil",
+      "sha": "e334b2fac13a8e81cb2a52fe1e4e21ff22217960",
+      "ahead": 0,
+      "behind": 298,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 34,
+          "merged_at": "2026-09-27T07:34:02Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/project-loading-veil-dark-mark",
+      "sha": "d424f8126b0b11b98777c6fc0d18a73e7813f8ee",
+      "ahead": 0,
+      "behind": 292,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/project-loading-veil-figma-match",
+      "sha": "5cdab405114687c590ffa58092dee9b8c7b6280e",
+      "ahead": 0,
+      "behind": 293,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 37,
+          "merged_at": "2026-09-27T08:24:15Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/project-loading-veil-native-mesh",
+      "sha": "bbee73a02f4032934190ab2e0d5aad53530cdd64",
+      "ahead": 22,
+      "behind": 263,
+      "unique": [
+        "2e1b3a8469d1acca9e913ee4af712e90b1ae77de",
+        "cdde3234bb2c7ffb2f62d0aa6b1375a1d4737235",
+        "979ef3af04c31a0f97b2b466d0fdbb0b3ee845e4",
+        "c2e611f8ac5d05e3d946325bec46472ed3265d48",
+        "053d3be52381dcd91ba3b56291c8999e28f70bde",
+        "6c27158c8f70c3c646363306d097ea34ac1e236c",
+        "cb08273cd474de300801f37973aa13f467d7a4da",
+        "0e65de8e789b17555ac31c083ac7565001f6d79f",
+        "ff7c1608613ebf1197a330b3e78af56d9a6b9e48",
+        "fd71f0c0803b927b919acdfff19e859bc2323eb6",
+        "e8a96a452a38081acc429b5ff3c9376da7621367",
+        "69c63895112df650f236810fdc1efe1c3e150dc5",
+        "e9a02eb99f907d9d4d13393e393a0820aaf63de0",
+        "9bb8b9c96fc3a9066ebdd24305e615c6043f57ec",
+        "e34d85dc20d37d0add933aeb2cbb8561c1ce0860",
+        "54d5c47301aa3668a5024fc4e2ccbddb22110eb5",
+        "17b002116a4c12ea629d6353eadb72023a4ead1c",
+        "1a84f978dc5f4a16439c65046d509aa29cb3029e",
+        "d3fdcaf8fe450ed5476ab04526d2159a293f07f5",
+        "f5a84f82fc1f17411f5e8c970d753a13450bbf30",
+        "bbee73a02f4032934190ab2e0d5aad53530cdd64"
+      ],
+      "equivalent": [],
+      "prs": [
+        38
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/project-switch-isolation",
+      "sha": "ba73f15774854c18ec76bff37979025d6e829dfd",
+      "ahead": 3,
+      "behind": 228,
+      "unique": [
+        "ab33eb7bccac4a9291c160afdc6ef9b8fa7c03b5",
+        "ba73f15774854c18ec76bff37979025d6e829dfd"
+      ],
+      "equivalent": [
+        "75d5e3ff810746957a0a8a6832b73b0a3ffa146a"
+      ],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 53,
+          "merged_at": "2026-09-29T02:14:30Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/selection-color-camera-restore",
+      "sha": "b3a0943abd84ab6fdda5a984217c4c5e1422dc2b",
+      "ahead": 1,
+      "behind": 242,
+      "unique": [],
+      "equivalent": [
+        "b3a0943abd84ab6fdda5a984217c4c5e1422dc2b"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 44,
+          "merged_at": "2026-09-28T07:41:49Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/shared-repair-ledger",
+      "sha": "e183add529e0f98589a3bb4ae3cc9c3539603780",
+      "ahead": 82,
+      "behind": 385,
+      "unique": [
+        "c2194a6e7e87d200b89248a4681d91448ef03ddd",
+        "618197d097ba5ee57805d4342ca7438fec556bf9",
+        "dd1ec69d5b9d751fe082e00ff889c12b7509ca9f",
+        "8de6c854b417dc3c0f7629854c6f06e6edb3dff7",
+        "c0747899dc1a4bcd7dd25f9ca0470bc83eeb7352",
+        "9753e5a341dc6438884998bba21c645abc5ad8c0",
+        "aad846b60e379b9fab93647b5e0e67237909a4e3",
+        "abad33f0f50b71d04cf1108f94fb40c985e1b711",
+        "b62a8cacda71992f02f5e755b8abbccd0338bc68",
+        "f4d032d62bffade62487ce59776cbd07db8829ef",
+        "6b27f5e553b1c0c8a155f5854ca72d088c393a8f",
+        "3cebd1af0c39ac1e9a42276dea1e11b1747c90aa",
+        "9e2287eb41a91229d73c668a742937052e6c4563",
+        "e257a97e137b559f2d381f208ed959a6ef2717cc",
+        "92a1b590b841c5324db5e55832a3372f6dbd31e5",
+        "dc5337a21bc8fc280544425c9188a099058a16a5",
+        "8baae7d04b1999913f18227e0ff6c8f39c72d500",
+        "535038941e2510daa97c4a7a5c297fbeccf5cca1",
+        "2d7c99cbd42cf8c66b7e9cefadeca81759b4da81",
+        "542a678290631dc604665150a3b2c5ba6aeb599f",
+        "a3d6016abec24a4785cf845c45413bcbfc40b08b",
+        "dbf76aaca2bbcc6f71c3e89ab5f278c3382e2a97",
+        "efe4b699c788b2e7d97a434339f26fce10d2f15f",
+        "5e6e79b305e890854a3c4641ebf985654f51a855",
+        "cd9a24aea2a88e42393b7e1169b1a3129260bace",
+        "9e439bb61043e6374844312fccbc5c1e94314ee3",
+        "23dcdb5972d55ff0e04adb1150e7316635310505",
+        "b47e9915f16848f870aabd1919b4ce14accff326",
+        "61e8e8df139bb624b079e755541d00b1469887a3",
+        "d99f9ca9cb6990d58946292f7dd23f32a93a8293",
+        "a89328c7995ee7a578cbef93dc72b67341bdc4cb",
+        "1eb37fa023188e1ce820e82dc05ca41dd8f3e879",
+        "e27405c3ac8b0c13d584f65c8a2aaf0836a0bd28",
+        "e5b64699bed30b56bb3f173fdbf1b6af186407a8",
+        "549293f2abd7ec42819313cc66ed0270aeaf3ce5",
+        "f46d0171b50dbc9be8ebfa357c6c960ed77d135f",
+        "74663f804443316ef7ab77e427a4e6a9e5efbb8f",
+        "36e23f7eb7c29ad061043790b4865cf03f3ba1e6",
+        "33bdd2182091b9f7d6350c5fead54f2f0cbb7783",
+        "66accbd879fb25c1914a98e98c15eac7720b85ee",
+        "7b56461bb31ed30bf61a1ffb739247e13dcb34fa",
+        "9654f6d392ddd164b67383bc0eeb0b16e829cfbd",
+        "652724263a522afa92bd349af4b5ff5e15f9f11d",
+        "b4abef73f6061c4486dc049e78033c361aa179a9",
+        "f02076a0991ee6ea1819526141563d5b807c9855",
+        "32a62ff840c471e7b5e60b6979d129416a4a980c",
+        "4b72ba4162afb859245d9392334e773b8d19a58f",
+        "9641923473a55c9d474f4ec31e96dc5a8a77eafb",
+        "16f96dc9bd460697e81a49a0227361218a08e677",
+        "1db3c40558992d622bb1d517fe8f44d715331e53",
+        "7d213fe042488d0e5ccc4332f4b32241cc18ba75",
+        "7c35bdaf67d178f3ffdb953a02d7dffa17c00997",
+        "89af8e3917473e6fc5d11d781f06729f2de166a9",
+        "c1128e135dc4d205d344c9cdfc9e012f96624359",
+        "77fe7319ad53526fb8c5a9901d0280d4fdeb3c28",
+        "18330a9006c6ffdee27444d519eb0e0c212af8fc",
+        "04c60fb85d1fd34c84ab570e03d4db5adf9cf073",
+        "43a3a6c7fa4c5c6963f4136d419c99719bab3f3d",
+        "69bae59334c65b0d12de7ca16f66a0a2fb71b139",
+        "12d761de614290fcbbbcd89998a55c51270db3c4",
+        "51e2ea53c9d13bf3c5975a46b87297692bbe4dcf",
+        "a1909f1e1cfe4ea7eb0cbf3acc4e5bc5d1a31da2",
+        "e47cd2b8dd7c09d259c09e96e3f8cdc1bc8a5bce",
+        "2a84bdf59f3801349519920ed255b72d3a1ac56d",
+        "4fdd78f110559ca5c96d42b9b58075dea0cbb9f1",
+        "4d0746086b5032814d5cdf0be00c0c46eacd9d94",
+        "5ae0e9f0527263d70c88d15449673e3d93db17fc",
+        "e6632f1a7de767b6be6273ba3c85741ffd0d5c4d",
+        "8daa182b2c342f4ad8ca4e6e95d8c42b39a6c456",
+        "68b4a33485e7bad498a25051b2c6b796872c1a28",
+        "c8058731039eddc8ffe3db8812e9e6e845b96155",
+        "002643350088979798799ebe93bcacb1f64475f1",
+        "b191a32b94f864a9bcc73ab0fe78b3db09343478",
+        "29c056265f2042b0867b2cbbec6d655953b9296c",
+        "0bea9670e53674eaee2b186263e545583b8e4ceb",
+        "89e96279abce5b068404b40d76bd7c1ecbf45b8a",
+        "874f83ec135615e713b3191fed86f7d9dac33ae3",
+        "d3235f6b64e214d3d2db9325b264ac19785ad908",
+        "170ccc40bff19812a9b72ec82bb0fb3fbda07bf6",
+        "06afbd6ff2318f495e35ac2a8be21e86cf0e928f",
+        "f61b5004d0f1a62ad9f5389a438d6720e5cdb58f"
+      ],
+      "equivalent": [],
+      "prs": [
+        28
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/text-hover-glyph-shine",
+      "sha": "ad5722dbf28b9229692446e14ee7cc0661070774",
+      "ahead": 1,
+      "behind": 232,
+      "unique": [],
+      "equivalent": [
+        "ad5722dbf28b9229692446e14ee7cc0661070774"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 50,
+          "merged_at": "2026-09-29T00:24:14Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/toolbar-glyph-stage-fix",
+      "sha": "72db38355c05cb33de348d007311ac58ccdf4abf",
+      "ahead": 1,
+      "behind": 273,
+      "unique": [
+        "72db38355c05cb33de348d007311ac58ccdf4abf"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 40,
+          "merged_at": null
+        }
+      ]
+    },
+    {
+      "branch": "field/universal-paint-picker-continuation-20260929",
+      "sha": "64fa810a66fc54d73c2f46ed2e352a8c3a3e568d",
+      "ahead": 0,
+      "behind": 1,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/universal-runner-authority",
+      "sha": "d4d3da5585fd49d0436c106ae9ed6c059900e173",
+      "ahead": 2,
+      "behind": 337,
+      "unique": [
+        "22647c970b0e1f724bcf17230ac37d1de8edb314",
+        "d4d3da5585fd49d0436c106ae9ed6c059900e173"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 31,
+          "merged_at": "2026-09-27T07:10:30Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/viewport-header-lockstep",
+      "sha": "8fb0b68345a9ab9448fe1ca65e670871e07755b3",
+      "ahead": 4,
+      "behind": 68,
+      "unique": [
+        "0bee1d438102ccbc1ef5ae225ea266165370a221",
+        "90ea5f6f5c7658d654b432d787c5e9a83691104c",
+        "11d5eda2b0c22f43f45ea3ad05b6e01114473822",
+        "8fb0b68345a9ab9448fe1ca65e670871e07755b3"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "canvas",
+      "closed_prs": []
+    },
+    {
+      "branch": "field/visual-hierarchy-pass",
+      "sha": "2cd248de5a748177e98041931a1a3169096e4daa",
+      "ahead": 1,
+      "behind": 215,
+      "unique": [],
+      "equivalent": [
+        "2cd248de5a748177e98041931a1a3169096e4daa"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 64,
+          "merged_at": "2026-09-29T04:25:12Z"
+        }
+      ]
+    },
+    {
+      "branch": "field/workspace-layout-names",
+      "sha": "3c7b57c5aebc7b5a9187bf248b4bcf2788aae949",
+      "ahead": 2,
+      "behind": 220,
+      "unique": [
+        "a89ffff88150ddcaf93f042539517c6b4b590594",
+        "3c7b57c5aebc7b5a9187bf248b4bcf2788aae949"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 62,
+          "merged_at": "2026-09-29T04:15:03Z"
+        }
+      ]
+    },
+    {
+      "branch": "figui3-locate-padding-inspector-pass",
+      "sha": "d424f8126b0b11b98777c6fc0d18a73e7813f8ee",
+      "ahead": 0,
+      "behind": 292,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": []
+    },
+    {
+      "branch": "figui3-selection-inspector-canvas-readiness",
+      "sha": "7b33e76613af3a085b5e8121fdc4ebe4be68f6dc",
+      "ahead": 10,
+      "behind": 367,
+      "unique": [
+        "e9bcc6a8fa0fdf779211091d98432728727b76d0",
+        "35e6332b1c53e4472ea489ac42d52aa4e83ef7cd",
+        "3dc2a1d4bb1fab06986dbce60a4457083ca3e0a2",
+        "523928672862c6d3ad84ff3b923666d6e8a977cb",
+        "84e3626103311fc4b05a15dfbdbb0e36d41ee18d",
+        "51c6cfebfbc6fd2e28560dcb64b040bad4a56df9",
+        "e6d55c3bc90c0cd653677b0bfcf7a1a69ea589e8",
+        "ba787aa7d964e91e0afeb8b81c99f4592bf43424",
+        "4a8cc67e38db2b592f95c64a5da037db3be92176",
+        "7b33e76613af3a085b5e8121fdc4ebe4be68f6dc"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 17,
+          "merged_at": "2026-09-27T04:14:55Z"
+        }
+      ]
+    },
+    {
+      "branch": "figui3-toolbar-locate-pass",
+      "sha": "8cf5723b48c231b49976ff94b0801a8157b73b9c",
+      "ahead": 3,
+      "behind": 296,
+      "unique": [
+        "a596d5b381a58f46ca8b46b8bdc9773fda92ffd5",
+        "1517dea402b097c72b53cb107b6b084fc8b77b52",
+        "8cf5723b48c231b49976ff94b0801a8157b73b9c"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 36,
+          "merged_at": "2026-09-27T08:09:20Z"
+        }
+      ]
+    },
+    {
+      "branch": "fix/compact-paint-picker-20260929",
+      "sha": "8194864cb8fdf7398244a9c016c211a67da67df3",
+      "ahead": 1,
+      "behind": 6,
+      "unique": [
+        "8194864cb8fdf7398244a9c016c211a67da67df3"
+      ],
+      "equivalent": [],
+      "prs": [
+        126
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "controls",
+      "closed_prs": []
+    },
+    {
+      "branch": "fix/compact-paint-picker-v2-20260929",
+      "sha": "c0db40507ab377b7a58ddccbdb992e69231115f9",
+      "ahead": 1,
+      "behind": 6,
+      "unique": [
+        "c0db40507ab377b7a58ddccbdb992e69231115f9"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "controls",
+      "closed_prs": []
+    },
+    {
+      "branch": "fix/compact-paint-picker-v3-20260929",
+      "sha": "e0c0eff2896c918ee78b30000e1d12f11441ce9b",
+      "ahead": 8,
+      "behind": 6,
+      "unique": [
+        "4401c07719facccd17a70847cff3dbad89372a91",
+        "fd107d6841e8de02f782b67b3de93423acae7417",
+        "ea4c439a39384d481900f13dcaa8ecd1f2d29ef8",
+        "2e548bad912f580c91d671d79b7ad40782b4081c",
+        "e15cd359c079800fa87ac72494b43c7da1607a37",
+        "8fffe9461c90a096f9bba714373d26e947036360",
+        "7e95f52ab14c8aa67af1be640d8790da289d9c4c",
+        "e0c0eff2896c918ee78b30000e1d12f11441ce9b"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 128,
+          "merged_at": "2026-09-29T22:08:18Z"
+        }
+      ]
+    },
+    {
+      "branch": "fix/real-project-qa-access",
+      "sha": "4adb9d870c29877638dc15fd0ca65db9d19978d2",
+      "ahead": 1,
+      "behind": 168,
+      "unique": [],
+      "equivalent": [
+        "4adb9d870c29877638dc15fd0ca65db9d19978d2"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 89,
+          "merged_at": "2026-09-29T07:30:50Z"
+        }
+      ]
+    },
+    {
+      "branch": "fix/selection-color-locate-keyline",
+      "sha": "f7afbbba761f94ce7d6d0a049d21bf927edcb878",
+      "ahead": 4,
+      "behind": 300,
+      "unique": [
+        "6b69595394956f910568297b55ec3a4689655afe",
+        "b9ddf7fb275aa48f87fcb04e65a30a1bf90f5d77",
+        "53deca97079f63ab1da6a83635048f3a9d544cfe",
+        "f7afbbba761f94ce7d6d0a049d21bf927edcb878"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 33,
+          "merged_at": "2026-09-27T07:26:18Z"
+        }
+      ]
+    },
+    {
+      "branch": "fix/selection-color-painted-geometry",
+      "sha": "e02d809dc084b12871a845fdd99cff012f46cfaa",
+      "ahead": 4,
+      "behind": 339,
+      "unique": [
+        "4b4678e086fb9929438e921d3d2348f9b1a04a76",
+        "1bf8843417a11ec457f17b25bb18cc18858a93df",
+        "09e130dd2ab903b19104722cf73d00978332aa24",
+        "e02d809dc084b12871a845fdd99cff012f46cfaa"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 29,
+          "merged_at": "2026-09-27T07:01:04Z"
+        }
+      ]
+    },
+    {
+      "branch": "fix/selection-color-three-layer-glow",
+      "sha": "17d5a25593fe8f85ac20c5c967afa346f794b370",
+      "ahead": 1,
+      "behind": 297,
+      "unique": [],
+      "equivalent": [
+        "17d5a25593fe8f85ac20c5c967afa346f794b370"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 35,
+          "merged_at": "2026-09-27T07:37:28Z"
+        }
+      ]
+    },
+    {
+      "branch": "main",
+      "sha": "0ea02501704e61d5133477d69fe677ad53295a56",
+      "ahead": 0,
+      "behind": 0,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "KEEP MAIN",
+      "reason": "Integration truth; no direct writes.",
+      "domain": "integration",
+      "closed_prs": []
+    },
+    {
+      "branch": "qa/frame-group-baseline",
+      "sha": "a2f2f53aad07a89e7e3e03283f43950fa6f623e0",
+      "ahead": 1,
+      "behind": 50,
+      "unique": [
+        "a2f2f53aad07a89e7e3e03283f43950fa6f623e0"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "canvas",
+      "closed_prs": []
+    },
+    {
+      "branch": "qa/preview-host-fix",
+      "sha": "f9c881f3d3e14cee9e6b47b3e067ad177dac639b",
+      "ahead": 2,
+      "behind": 165,
+      "unique": [
+        "59915fd79415c8d8d1210f75039816f42f4ed1ef",
+        "f9c881f3d3e14cee9e6b47b3e067ad177dac639b"
+      ],
+      "equivalent": [],
+      "prs": [
+        92
+      ],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": []
+    },
+    {
+      "branch": "relay-write-proof",
+      "sha": "be920459bbcf07ae87a5b551fa0983c1b2e4f89d",
+      "ahead": 1,
+      "behind": 393,
+      "unique": [
+        "be920459bbcf07ae87a5b551fa0983c1b2e4f89d"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "KEEP EXCLUDED",
+      "reason": "Excluded proof branch; retain unless separately approved for retirement.",
+      "domain": "coordination / infrastructure",
+      "closed_prs": [
+        {
+          "number": 1,
+          "merged_at": null
+        }
+      ]
+    },
+    {
+      "branch": "stage0/canvas-preview-parity-closeout",
+      "sha": "74270771a52d3a435949deae3f0912266f131aaf",
+      "ahead": 0,
+      "behind": 135,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 84,
+          "merged_at": "2026-09-29T08:39:00Z"
+        }
+      ]
+    },
+    {
+      "branch": "stage0/figma-frame-group-parity",
+      "sha": "a54e1f99782cff76b3ecdc65859de46866c3f827",
+      "ahead": 4,
+      "behind": 50,
+      "unique": [
+        "d162786101e2cbcd8178d010e78bddd62ac53f5c",
+        "89e0d31c362a7b7c4142afeb28950584fdecfe92",
+        "c245499b304d770feedc16038cae7a15273d6229",
+        "a54e1f99782cff76b3ecdc65859de46866c3f827"
+      ],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "QUARANTINE — SEMANTIC REVIEW",
+      "reason": "Unique non-merge commits recorded; original branch retained for semantic review.",
+      "domain": "canvas",
+      "closed_prs": []
+    },
+    {
+      "branch": "stage0/figma-hierarchy-parity",
+      "sha": "fa9eafbf99749044ae808d57894ae8b409ddcadc",
+      "ahead": 0,
+      "behind": 52,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 109,
+          "merged_at": "2026-09-29T11:14:38Z"
+        }
+      ]
+    },
+    {
+      "branch": "stage0/figma-selection-parity",
+      "sha": "7c201da20b2aba7600aa17cc56c5812c3e9656e5",
+      "ahead": 0,
+      "behind": 75,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 106,
+          "merged_at": "2026-09-29T10:19:55Z"
+        }
+      ]
+    },
+    {
+      "branch": "stage0/geometry-inspector-consolidation",
+      "sha": "0816107adae03a8d83e9534d98721f897d3a64d6",
+      "ahead": 0,
+      "behind": 193,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "controls",
+      "closed_prs": [
+        {
+          "number": 71,
+          "merged_at": "2026-09-29T05:30:24Z"
+        }
+      ]
+    },
+    {
+      "branch": "stage0/layers-lock-selection-closeout",
+      "sha": "005d8b9532dfbb4ac83b7a7e16d2a02ff56528c4",
+      "ahead": 0,
+      "behind": 188,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 77,
+          "merged_at": "2026-09-29T05:43:52Z"
+        }
+      ]
+    },
+    {
+      "branch": "stage0/preview-runtime-url-single-source",
+      "sha": "4b4cc589ed4989b889366aa8669df205090d65d6",
+      "ahead": 0,
+      "behind": 96,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "workspace",
+      "closed_prs": [
+        {
+          "number": 100,
+          "merged_at": "2026-09-29T09:51:41Z"
+        }
+      ]
+    },
+    {
+      "branch": "stage0/text-edit-inspector-selection",
+      "sha": "5d01127765c5863b0a21c9e0575e389ba91d37f1",
+      "ahead": 0,
+      "behind": 154,
+      "unique": [],
+      "equivalent": [],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 90,
+          "merged_at": "2026-09-29T08:23:42Z"
+        }
+      ]
+    },
+    {
+      "branch": "worker/figui3-selection-locate-skeleton",
+      "sha": "05b4ca731d7a3d0cc2ebeb32f52acedd3d2cc1c2",
+      "ahead": 1,
+      "behind": 362,
+      "unique": [],
+      "equivalent": [
+        "05b4ca731d7a3d0cc2ebeb32f52acedd3d2cc1c2"
+      ],
+      "prs": [],
+      "disposition": "INTEGRATED / PATCH-EQUIVALENT — COMPLETION REVIEW REQUIRED",
+      "reason": "Code reachability/patch equivalence proven; workstream completion and current QA are NOT inferred.",
+      "domain": "canvas",
+      "closed_prs": [
+        {
+          "number": 21,
+          "merged_at": "2026-09-27T05:21:14Z"
+        }
+      ]
+    }
+  ],
+  "open_prs": [
+    {
+      "number": 132,
+      "title": "fix: repair npm lockfile peer dependency",
+      "branch": "field/fix-lockfile-swc-helper",
+      "head": "03205f3ac490c99b109d3ad4eb5202e3f117bf7b",
+      "draft": true,
+      "disposition": "VERIFY / LAND FIRST",
+      "next_action": "One-file lock repair; exact-head Cloudflare passed. Install/build historical evidence exists; full required test/lint gates are not cleared."
+    },
+    {
+      "number": 129,
+      "title": "fix: repair npm 10 lockfile and restore reproducible media CI",
+      "branch": "field/ci-lockfile-repair",
+      "head": "61a7159b9730f7bcdc2586c948fd89555c5858ef",
+      "draft": true,
+      "disposition": "COMPARE / SALVAGE CI INTENT",
+      "next_action": "Same nested helper entry as #132 apart from formatting; adds strict npm ci, dependency path triggers, and cancellation. Do not discard the CI improvements as duplicate lock work."
+    },
+    {
+      "number": 126,
+      "title": "Compact the universal PaintPicker",
+      "branch": "fix/compact-paint-picker-20260929",
+      "head": "8194864cb8fdf7398244a9c016c211a67da67df3",
+      "draft": false,
+      "disposition": "LIKELY SUPERSEDED — VERIFY FIRST",
+      "next_action": "Later merged #128 has compact picker plus nested launcher fix. Ten changed-path blobs match current main; three differ. Verify remaining contracts before closure."
+    },
+    {
+      "number": 124,
+      "title": "feat: unify left-panel chrome with Inspector",
+      "branch": "field/left-panel-inspector-parity-20260929",
+      "head": "3dd8ca23d54aa9a10c5ea4ee458cd59ad90ee860",
+      "draft": false,
+      "disposition": "RECOVER LEFT-PANEL WORK",
+      "next_action": "Preserve new shared CSS and panel work; reconcile against current main Float/Inspector and protected Mobile overlap. Current-main shell behavior wins."
+    },
+    {
+      "number": 123,
+      "title": "[field] mobile Focus editor — touch, adaptive panels and keyboard",
+      "branch": "field/mobile-focus-touch-camera-20260929",
+      "head": "0a4c2cef6ce9a76dcc9011466956266bd00feb73",
+      "draft": true,
+      "disposition": "KEEP ACTIVE — PROTECTED",
+      "next_action": "Existing Mobile owner; no rename, closure, branch rewrite or takeover. Camera test and physical-phone gates remain with that owner."
+    },
+    {
+      "number": 92,
+      "title": "QA: immutable Preview host fix",
+      "branch": "qa/preview-host-fix",
+      "head": "f9c881f3d3e14cee9e6b47b3e067ad177dac639b",
+      "draft": true,
+      "disposition": "LIKELY SUPERSEDED QA MARKER",
+      "next_action": "Diff is a temporary QA doc and source-touch comment. Current main uses shared Preview URL helper. Verify immutable host behavior with infrastructure owner, not a routing rewrite."
+    },
+    {
+      "number": 83,
+      "title": "Migrate effects to Inspector options panels",
+      "branch": "field/options-panel-effects-v3",
+      "head": "e09f3940df94d141fcde3b85e53090333aa8a2f8",
+      "draft": false,
+      "disposition": "AUDIT CONTROLS COVERAGE",
+      "next_action": "Current main has newer effects grammar and canonical PaintPicker. Compare remaining semantics and tests; preserve any real gap before closure."
+    },
+    {
+      "number": 74,
+      "title": "[field] Apply product language and Brand casing",
+      "branch": "field/brand-casing-final",
+      "head": "d980b26d6475239b2107fb6ef5197179ef360acc",
+      "draft": false,
+      "disposition": "AUDIT PRODUCT-LANGUAGE INTENT",
+      "next_action": "Old Brand casing reconstructs sentence case; main's newer single boolean preserves authored text when off. Preserve durable docs, not the older competing formatter."
+    },
+    {
+      "number": 73,
+      "title": "Polish field chrome motion quality",
+      "branch": "field/field-motion-quality",
+      "head": "1df55eae326651c2a51d752b9ad3cee16f6ddb6f",
+      "draft": true,
+      "disposition": "RECOVER USEFUL MOTION PRIMITIVES",
+      "next_action": "field.MOTION is partly integrated; quality branch has unique projection/coalescing/motion observatory changes. Review shared shell overlap and reduced-motion behavior."
+    },
+    {
+      "number": 38,
+      "title": "[field] Refine loading veil with uploaded logo and pulse glow",
+      "branch": "field/project-loading-veil-native-mesh",
+      "head": "bbee73a02f4032934190ab2e0d5aad53530cdd64",
+      "draft": true,
+      "disposition": "REVIEW LOADER DECISION / COVERAGE",
+      "next_action": "Native-mesh loader and asset are absent on current main; do not assume old desired visuals are obsolete. Compare newer loading lifecycle and product decisions before salvage or retirement."
+    },
+    {
+      "number": 28,
+      "title": "[field/control] Add shared repair baseline ledger",
+      "branch": "field/shared-repair-ledger",
+      "head": "e183add529e0f98589a3bb4ae3cc9c3539603780",
+      "draft": false,
+      "disposition": "PRESERVE CONTROL HISTORY / RECONCILE",
+      "next_action": "Historical repair ledger and control metadata; compare Runner canonical records, preserve history, do not merge field/control into main."
+    },
+    {
+      "number": 27,
+      "title": "[field] Make main canonical for handoff-kit process",
+      "branch": "field/handoff-kit-canonical-source",
+      "head": "b6fdda6955cba77bbe1d1232227b0bb48b7d9520",
+      "draft": false,
+      "disposition": "REVIEW AS SUPERSEDED EXECUTION LAW",
+      "next_action": "Old main-canonical handoff kit conflicts with Runner-first authority. Preserve only useful tooling coverage; never resurrect its local authority."
+    },
+    {
+      "number": 14,
+      "title": "[field] dashboard-empty-state-semantics",
+      "branch": "field/dashboard-empty-state-semantics",
+      "head": "79e64730ff918899d55002bae334a78ee6496c18",
+      "draft": true,
+      "disposition": "RECOVER DASHBOARD EMPTY STATES",
+      "next_action": "Unique source/test delta absent from main; review meaningful collection-empty versus no-project messaging and coverage."
+    },
+    {
+      "number": 13,
+      "title": "[field] dashboard-collection-semantics",
+      "branch": "field/dashboard-collection-semantics",
+      "head": "d357212178f18280b932b0fd0d1be51c3d7f2427",
+      "draft": true,
+      "disposition": "RECOVER DASHBOARD COLLECTION SEMANTICS",
+      "next_action": "Unique count labels, grid/card semantics and coverage; tests absent on main."
+    },
+    {
+      "number": 11,
+      "title": "[field] dashboard-sidebar-navigation-semantics",
+      "branch": "field/dashboard-sidebar-navigation-semantics",
+      "head": "f33552d437b3f761f4b669b4107d3f9d1d439849",
+      "draft": true,
+      "disposition": "RECOVER DASHBOARD NAVIGATION",
+      "next_action": "Unique sidebar semantics/coverage absent from main; preserve keyboard/current-state behavior."
+    },
+    {
+      "number": 10,
+      "title": "[field] dashboard-new-project-focus-flow",
+      "branch": "field/dashboard-new-project-focus-flow",
+      "head": "e1527fe71eaf30319555601f05406fd3be68ada6",
+      "draft": true,
+      "disposition": "RECOVER NEW-PROJECT FOCUS",
+      "next_action": "Unique wizard focus implementation/test coverage; reconcile current wizard."
+    },
+    {
+      "number": 9,
+      "title": "[field] native-scale-visual-metrics-repair",
+      "branch": "field/native-scale-visual-metrics-repair",
+      "head": "751bbe9dae4f55ee0207245e82c6e8eed48b4dab",
+      "draft": true,
+      "disposition": "RECOVER / VERIFY SCALE CORRECTNESS",
+      "next_action": "Unique SVG stroke/dash visual-metric persistence and tests; previous runtime-closeout record is not current pass."
+    },
+    {
+      "number": 8,
+      "title": "[field] dashboard-rename-dialog-hardening",
+      "branch": "field/dashboard-rename-dialog-hardening",
+      "head": "24294802256a1b19d4774dafbe861cf9ae6444e9",
+      "draft": true,
+      "disposition": "RECOVER RENAME HARDENING",
+      "next_action": "Unique rename focus/selection and tests; reconcile current dialogs rather than copying outdated UI."
+    },
+    {
+      "number": 5,
+      "title": "[field] dashboard-interaction-polish",
+      "branch": "field/dashboard-interaction-polish",
+      "head": "736ddfafb34ee561fadd0bd6f039726a44afae2b",
+      "draft": true,
+      "disposition": "RECOVER PROJECT ACTIONS",
+      "next_action": "Delete dialog and interaction tests absent from main; compare current delete/menu flow and preserve accessibility and destructive-action safeguards."
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "version": "2026-09-30.2",
+  "authority": "lrnolivia/relay@main",
+  "contract": "LOEW_CHAT_BIBLE.md",
+  "single_bible": true,
+  "retired_contracts": [
+    "LOEW_CHAT_BIBLE_CURRENT.md"
+  ],
+  "applies_to": "all lrnolivia/loew project execution chats unless explicitly overridden by the user",
+  "documentation_ownership": {
+    "section": "18",
+    "runner_owns_all_non_product_docs": true,
+    "repos_own_product_truth_only": true,
+    "repo_may_keep": [
+      "product-truth docs",
+      "README, LICENSE, NOTICE and tooling-required files",
+      "thin AGENTS.md stub"
+    ],
+    "non_product_docs_path": "docs/<project-id>/",
+    "product_mirror_path": "docs/<project-id>/product/<same-path>",
+    "repo_copy_authoritative_for_product_docs": true,
+    "agents_write_non_product_docs_to_runner": true
+  },
+  "required_bootstrap": [
+    "contracts/manifest.json",
+    "LOEW_CHAT_BIBLE.md",
+    "current target project registry record when Runner manages the project",
+    "<target-repo>/AGENTS.md",
+    "applicable role contract",
+    "current assignment/control/QA state",
+    "fresh Git/runtime truth",
+    "contracts/human-qa-helper.json when human QA, Visuals review questions, or checklists are involved"
+  ],
+  "watchdog": {
+    "identical_failure_attempts": 2,
+    "stale_blocked_state_must_be_revalidated": true,
+    "repeated_next_action_without_evidence_change_is_stall": true
+  },
+  "transport": {
+    "composio_remote_available": true,
+    "authorized_local_clone_allowed": true,
+    "local_clone_does_not_disable_composio": true
+  },
+  "emergency_invariants": [
+    "fresh-state-before-action",
+    "no-invented-evidence",
+    "bounded-identical-retries",
+    "no-third-identical-retry",
+    "repair-own-machinery-when-safe",
+    "park-local-blocker-continue-safe-work",
+    "post-write-verification",
+    "persist-next-action"
+  ],
+  "qa_authority": {
+    "contract": "LOEW_CHAT_BIBLE.md",
+    "section": "11",
+    "runner_first": true,
+    "project_qa_is_overlay": true,
+    "helper_contract": "contracts/human-qa-helper.json",
+    "helper_docs": "docs/HUMAN_QA_HELPER.md",
+    "visual_policy": "docs/VISUAL_EVIDENCE_POLICY.md",
+    "agents_populate_questions_and_checklists": true,
+    "deterministic_checks_remain_agent_owned": true,
+    "helper_questions_bind_exact_artifact_and_evidence": true
+  },
+  "target_resolution": {
+    "runner_project_registry_first": true,
+    "historical_repository_names_are_non_authoritative": true
+  },
+  "coordination": {
+    "contract": "docs/WORK_COORDINATION.md",
+    "bible_section": "20",
+    "atomic_claim_required_for_registered_projects": true,
+    "new_task_branches_require_admission": true,
+    "relay_uses_same_registry": true
+  },
+  "migrated_from": "lrnolivia/loew-runner"
+}

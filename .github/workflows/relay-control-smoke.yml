@@ -1,0 +1,46 @@
+name: Relay native control smoke
+run-name: 'relay-control / ${{ inputs.request_id }}'
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: Registered project
+        type: string
+        required: true
+        default: relay
+      assignment:
+        description: Optional current assignment for same-owner heartbeat smoke
+        type: string
+      owner:
+        description: Owner of optional assignment
+        type: string
+      request_id:
+        description: Correlation id
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Exercise native control contracts
+        env:
+          CF_ACCESS_CLIENT_ID: ${{ vars.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF }}
+          COORD_PROJECT: ${{ inputs.project }}
+          COORD_ASSIGNMENT: ${{ inputs.assignment }}
+          COORD_OWNER: ${{ inputs.owner }}
+          SMOKE_RESULT_PATH: ${{ runner.temp }}/relay-control-smoke.json
+        run: node scripts/control-smoke.mjs
+      - name: Retain exact results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-control-smoke
+          path: ${{ runner.temp }}/relay-control-smoke.json

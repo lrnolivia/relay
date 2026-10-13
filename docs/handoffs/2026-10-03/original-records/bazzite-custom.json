@@ -1,0 +1,28 @@
+{
+  "id": "bazzite-custom",
+  "record_sha": "940a930b9bb08a038f7fad45bba44802d78dd1e5",
+  "queue": [],
+  "nonterminal_claims": [
+    {
+      "id": "bazzite-custom-coordination-bootstrap-20260930",
+      "owner": "normal-chat-project-registry-20260930",
+      "branch": "bazzite-custom/coordination-bootstrap",
+      "paths": [
+        ".github/workflows/runner-coordination.yml"
+      ],
+      "resources": [
+        "runner-work-admission"
+      ],
+      "goal": "Install Field-style Runner coordination admission and managed branch hygiene for lrnolivia/bazzite-custom.",
+      "acceptance": "Pull requests are gated by a live Runner claim; scheduled/manual audit and cleanup use the canonical loew-runner coordination engine; no product files are changed.",
+      "next_action": "Create the claimed bootstrap branch, add the parameterized coordination workflow, open the draft PR, verify admission, then merge with squash.",
+      "base_sha": "db26c68ef49d3428bcdc64f3dda14ae425ad466b",
+      "state": "active",
+      "created_at": "2026-09-30T09:06:49.009Z",
+      "updated_at": "2026-09-30T09:06:49.009Z",
+      "lease_until": "2026-09-30T21:06:49.009Z",
+      "reserved": true,
+      "lease_expired": true
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "project": "thetake",
+  "updated_at": "2026-10-08T01:35:30.477Z",
+  "legacy_branches": [
+    "docs/move-to-runner",
+    "main",
+    "runner/universal-authority"
+  ],
+  "queue": [],
+  "claims": [
+    {
+      "id": "thetake-coordination-bootstrap-20260930",
+      "owner": "normal-chat-project-registry-20260930",
+      "branch": "thetake/coordination-bootstrap",
+      "paths": [
+        ".github/workflows/runner-coordination.yml"
+      ],
+      "resources": [
+        "runner-work-admission"
+      ],
+      "goal": "Install Field-style Runner coordination admission and managed branch hygiene for lrnolivia/thetake.",
+      "acceptance": "Pull requests are gated by a live Runner claim; scheduled/manual audit and cleanup use the canonical loew-runner coordination engine; no product files are changed.",
+      "next_action": "Create the claimed bootstrap branch, add the parameterized coordination workflow, open the draft PR, verify admission, then merge with squash.",
+      "base_sha": "4bcaf37748cbbfab75cd407395946bf896045eb4",
+      "state": "completed",
+      "created_at": "2026-09-30T09:06:01.719Z",
+      "updated_at": "2026-09-30T09:12:58.076Z",
+      "lease_until": "2026-09-30T21:12:58.076Z",
+      "pr": 3,
+      "merged_head_sha": "fe2a9d2147d9e1174c5da3ff2db08d6dc095fa59",
+      "merge_commit_sha": "3645a887b75d1a83ade5969ab2bdc8e45936b2cc",
+      "evidence": "https://github.com/lrnolivia/thetake/pull/3",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T09:12:58.076Z"
+    },
+    {
+      "id": "thetake-inventory-20261005",
+      "owner": "01a10d01-eb49-71e1-9403-3a14f65bf0e1",
+      "branch": "thetake/inventory-20261005",
+      "paths": [
+        "index.html",
+        "public/inventory/",
+        "public/sw.js",
+        "src/",
+        "worker/",
+        "migrations/",
+        "package.json",
+        "package-lock.json",
+        "wrangler.jsonc",
+        "scripts/"
+      ],
+      "resources": [
+        "thetake-inventory",
+        "thetake-auth",
+        "thetake-production"
+      ],
+      "goal": "Publish CHOP inventory using The Take design, with app switch, authentication and private cross-device persistence.",
+      "acceptance": "Phone-friendly counting and reorder export; authenticated cross-device count history; private account isolation; existing calculator preserved; browser and exact-SHA checks pass; deployment verified with rollback.",
+      "next_action": "Lauren explicitly authorizes this chat01a118b2 to take over CI-only and release it after completion. Only GW is active per her direct instruction. Workflow blobs on retained branch equal current main; no unpublished workflow bytes are discarded. Preserve original product branch/objectives/reservations and original owner. Resume product work only after fresh admission; CI scope moves to separate bounded assignment.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "3645a887b75d1a83ade5969ab2bdc8e45936b2cc",
+      "state": "active",
+      "created_at": "2026-10-05T18:31:08.131Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish CHOP inventory using The Take design, with app switch, authentication and private cross-device persistence.",
+          "acceptance": "Phone-friendly counting and reorder export; authenticated cross-device count history; private account isolation; existing calculator preserved; browser and exact-SHA checks pass; deployment verified with rollback.",
+          "at": "2026-10-05T18:31:08.131Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "thetake-inventory-20261005:acceptance:0",
+            "text": "Phone-friendly counting and reorder export; authenticated cross-device count history; private account isolation; existing calculator preserved; browser and exact-SHA checks pass; deployment verified with rollback.",
+            "at": "2026-10-05T18:31:08.131Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T01:09:24.422Z",
+      "lease_until": "2026-10-08T13:09:24.422Z"
+    },
+    {
+      "id": "thetake-ci-efficiency-20261008",
+      "owner": "01a118b2-63d5-7a63-8d3a-55bf649b1f89",
+      "branch": "thetake/ci-efficiency-20261008",
+      "paths": [
+        ".github/workflows/"
+      ],
+      "resources": [
+        "thetake-ci-efficiency"
+      ],
+      "goal": "Streamline CI under Lauren's explicit ALL-project request and CI-only takeover authorization.",
+      "acceptance": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
+      "next_action": "Refresh workflow bytes and candidate identity; apply bounded reductions, run canonical gates and complete CI ownership.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "b75ac387008c59cdb7b1f729a3ffb65b522465b9",
+      "state": "completed",
+      "created_at": "2026-10-08T01:09:29.314Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Streamline CI under Lauren's explicit ALL-project request and CI-only takeover authorization.",
+          "acceptance": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
+          "at": "2026-10-08T01:09:29.314Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "thetake-ci-efficiency-20261008:acceptance:0",
+            "text": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
+            "at": "2026-10-08T01:09:29.314Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T01:35:30.477Z",
+      "lease_until": "2026-10-08T13:35:30.477Z",
+      "pr": 5,
+      "merged_head_sha": "f86a1a86082a9d7626adb3994c97450b878b8fe0",
+      "merge_commit_sha": "f9e47f26016b0ee2071d6e7f5356e3b5f7b92f2b",
+      "evidence": "https://github.com/lrnolivia/thetake/pull/5; all exact-head required checks passed. Merge f9e47f26016b0ee2071d6e7f5356e3b5f7b92f2b changed workflows read back byte-for-byte, Git blob hashes checked after isolated restoration. Daily hygiene and obsolete-PR cancellation preserve all commands/permissions/platforms/assertions. CI slice completed and released; product branches retained.",
+      "work_accounted": true,
+      "completed_at": "2026-10-08T01:35:30.477Z"
+    }
+  ]
+}

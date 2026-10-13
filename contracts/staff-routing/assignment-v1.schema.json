@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relay.loew.fi/contracts/staff-routing/assignment-v1.schema.json",
+  "title": "Canonical Relay assignment staff routing",
+  "description": "Sticky directory IDs; names and roles are resolved from the registry. Routing grants no authorization. Active staff are chosen deterministically for new work, reserve staff require explicit selection, retired staff cannot be assigned. Existing reads do not manufacture bindings.",
+  "type": "object",
+  "required": ["primary_staff", "supporting_staff"],
+  "properties": {
+    "primary_staff": {"type": ["string", "null"], "pattern": "^[a-z][a-z0-9-]{0,63}$"},
+    "supporting_staff": {"type": "array", "maxItems": 8, "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9-]{0,63}$"}}
+  }
+}

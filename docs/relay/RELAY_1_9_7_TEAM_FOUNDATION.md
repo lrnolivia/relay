@@ -1,0 +1,13 @@
+# Relay 1.9.7 prerequisite: feature teams
+
+The queued org-routing lineage `relay-1.9.6.2-staff-routing-20261001` now belongs to `relay-1.9-wrapup-20261001` through an explicit canonical claim and handoff. Its already-shipped individual staff portion is accounted for by the completed operational 1.9.6.2 assignment. This patch finishes the real feature-team prerequisite for 1.9.7 skills; it does not manufacture another numbered release.
+
+Canonical lowercase teams are inspector, runner, night-shift, source, cloud, release and skills. Approved staff have a sticky home team and explicit cross-team memberships. Assignment primary/supporting teams persist through queue, claim, audited amendment, resume, updates and communication. Existing staff IDs remain sticky. Directory reads with a project include live assignment bindings and canonical record identity. Organizational identity never changes machine owner, access, admission or exact-head authority.
+
+Team routing uses explicit team overrides first, primary role, bounded tags/resources/labels, then category. Active staff selection occurs inside the routed team memberships. Explicit staff overrides retain their approved identity, including reserve staff; retired staff never route. Unknown role fits remain unassigned. Cross-team collaboration does not rewrite anyone's home team.
+
+The corrected operational 1.9.6.2 release passed exact-head CI, merged through PR #75 as `085d35ac00b57695b5089e78681504f7b7b8a6ee`, and deployed Worker version `54dafa9e-abf6-4ba9-abe1-1a1f8a2d675d` at 100% via `c6f3bb27-0f53-4f14-92c6-4c1b787ef604`. Runtime, source, cloud and resume readback matched. ChatGPT tools were refreshed; a fresh temporary consumer displayed the actual compact card with Julian, Ellis and Roman, subordinate evidence, Refresh and explicit Open Relay. The refreshed schema exposed both staff fields. The consumer assistant's textual claim that the card did not paint was contradicted by the visible iframe and DOM; rendered evidence is authoritative.
+
+During takeover, rescope exposed a pre-existing lineage defect: handoff updates the active claim owner while the historical queue owner remains old; rescope reconstructs a claim and rejects that historical owner. Canonical audited amend safely admitted the required paths without replacing branch/base or bypassing ownership. The tool-hardening successor should account for this defect.
+
+Validation and source/runtime receipts for this prerequisite remain bound to its own exact artifact. Creative/platform/performance content and runtime integration remain owned by the queued 1.9.7 successor. Agentic-tool hardening remains 1.9.8; the unified ChatGPT-native experience remains 1.9.9; the umbrella remains open.

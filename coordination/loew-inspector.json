@@ -1,0 +1,744 @@
+{
+  "schema": 1,
+  "project": "loew-inspector",
+  "updated_at": "2026-09-30T14:58:55.630Z",
+  "legacy_branches": [
+    "fix/browser-ci-capacity",
+    "fix/chatgpt-inspector-oauth-20260929",
+    "fix/public-field-qa-verifier",
+    "fix/real-project-preview-qa",
+    "gen2-1/evidence-controller",
+    "gen2-1/evidence-hotfix",
+    "gen2-1/evidence-ingest-hardening",
+    "gen2-1/layout-recipe-hotfix",
+    "gen2-1/qa-runs",
+    "gen2-1/recipe-system",
+    "gen2/browser-runtime",
+    "gen2/capture-workflow-fix",
+    "gen2/controlled-interaction",
+    "gen2/deployment-context",
+    "gen2/visual-evidence",
+    "gen2/visual-qa",
+    "main",
+    "research/revyme-memory-baseline",
+    "runner/universal-authority",
+    "shared-repair-baseline-gate"
+  ],
+  "queue": [
+    {
+      "id": "relay-operation-framework-20260930",
+      "owner": "relay-operation-framework-20260930",
+      "goal": "Turn Relay's production primitives into a durable resumable operation framework so agents invoke policy-defined workflows instead of manually conducting every GitHub, Cloudflare, Runner and QA step.",
+      "acceptance": "Every substantial workflow can create a stable operation_id with persisted stage/state, exact source/head/PR/check/merge/version/deployment/runtime identities, timestamps, retry/reconciliation history, blocker/waiting-for-human state and recovery/rollback state; reconnecting agents can resume from the durable receipt without reconstructing chat history; server-side recipes cover at least ship-change, publish-worker, qa-then-merge and rollback-release; ambiguous mutations reconcile by readback before retry; event/webhook updates can advance operation state without chat polling; release policy supports bounded canary/verify/promote/rollback semantics without protection bypass; operation status/history is queryable for UI; tool-surface growth stays minimal by preferring recipes/resources/contracts over one tool per step.",
+      "next_action": "Define and test the operation/receipt schema and transition invariants first. Reuse existing Relay source/cloud/verify primitives; do not fork their auth or safety rules.",
+      "paths": [
+        "src/operations.js",
+        "src/operation-receipts.js",
+        "src/operation-recipes.js",
+        "src/operation-events.js",
+        "src/release-policy.js",
+        "src/relay-entry.js",
+        "src/operations.test.js",
+        "src/operation-receipts.test.js",
+        "src/operation-recipes.test.js"
+      ],
+      "resources": [
+        "relay-operation-framework",
+        "relay-publication-receipts",
+        "relay-release-orchestration"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T13:25:45.579Z"
+    },
+    {
+      "id": "relay-mcp-app-ui-20260930",
+      "owner": "relay-mcp-app-ui-20260930",
+      "goal": "Make Relay's primary product experience an interactive in-chat MCP App rather than a prose wrapper around headless tools.",
+      "acceptance": "ChatGPT can render compact live operation cards, project status, release/deployment state and human-QA requests directly in conversation; human-QA UI consumes the canonical Runner QA-helper contract and Visuals IDs, supports targeted questions/checklists/notes/verdicts, and can expand into a full-screen review experience without creating a parallel store; render surfaces reuse durable Relay operation receipts and existing bounded mutation tools; headless production tools remain mostly headless; UI can send bounded follow-up actions/messages, refresh state, and preserve exact artifact identity; stale artifact/evidence state is visibly invalidated; mobile/desktop layouts remain useful; picture-in-picture/persistent mini-status may be explored where supported but is not required for correctness.",
+      "next_action": "Begin after the durable operation receipt shape is stable enough to consume. Treat the current qa-shell design as authoritative for human review interaction; wire to it rather than redesigning it.",
+      "paths": [
+        "src/relay-chat-ui.js",
+        "src/relay-operation-ui.js",
+        "src/relay-qa-ui.js",
+        "src/relay-project-ui.js",
+        "src/relay-release-ui.js",
+        "src/relay-ui.js",
+        "src/relay-entry.js",
+        "src/relay-chat-ui.test.js"
+      ],
+      "resources": [
+        "relay-mcp-app-ui",
+        "relay-operation-framework",
+        "runner-human-qa",
+        "relay-publication-receipts"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T13:25:51.183Z"
+    },
+    {
+      "id": "relay-web-dashboard-20260930",
+      "owner": "relay-web-dashboard-20260930",
+      "goal": "Expose Relay's MCP App dashboard as a first-class authenticated web dashboard on relay.loew.fi with parity to the in-chat state model and controls.",
+      "acceptance": "relay.loew.fi presents the same projects, durable operations, publication receipts, QA handoffs, release state, recovery/rollback actions and history as the MCP App without duplicating state; shared components/data adapters are reused where practical; deep links can open a specific project/operation/release/QA item; auth and mutations use Relay's existing bounded control plane; web and in-chat surfaces remain behaviorally consistent; the dashboard consumes the future shared suite shell/navigation so Relay feels like one utility with Runner and Inspector rather than a separate website.",
+      "next_action": "Implement after the operation framework and core MCP App view-model/components are stable; do not create a second state or approval system for web.",
+      "paths": [
+        "web/relay/",
+        "src/relay-web.js",
+        "src/relay-ui.js",
+        "src/index.js",
+        "src/relay-web.test.js"
+      ],
+      "resources": [
+        "relay-web-dashboard",
+        "relay-mcp-app-ui",
+        "suite-shared-shell"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T13:25:57.685Z"
+    },
+    {
+      "id": "inspector-visual-review-web-20260930",
+      "owner": "inspector-visual-review-web-20260930",
+      "goal": "Make inspector.loew.fi the suite's dedicated visual-review dashboard, moving the visual review experience out of Runner's product surface while keeping Runner as the coordination/evidence authority.",
+      "acceptance": "Inspector web renders screenshots, videos, live-preview availability, targeted QA-helper questions/checklists, notes/verdicts, upload/archive/expiry state and exact operation/publication context from Runner/Relay; Runner remains authoritative for Visuals receipts, QA identity and coordination rather than duplicating those stores in Inspector; Inspector supports direct links to exact evidence/run/artifact and full-screen review; Runner dashboard links/deep-links into Inspector for visual review instead of maintaining a competing review UI once migration is complete; the design consumes the shared suite shell and feels seamless with runner.loew.fi and relay.loew.fi; migration preserves historical review/evidence identity.",
+      "next_action": "Start only after Runner's current operator/qa-shell design and Visuals backend contracts settle enough to consume. Treat this as a presentation migration/integration, not an evidence-authority migration.",
+      "paths": [
+        "web/inspector/",
+        "src/inspector-ui.js",
+        "src/inspector-runner-bridge.js",
+        "src/index.js",
+        "src/inspector-ui.test.js"
+      ],
+      "resources": [
+        "inspector-web-dashboard",
+        "runner-human-qa",
+        "runner-visual-evidence",
+        "suite-shared-shell"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T13:26:02.774Z"
+    },
+    {
+      "id": "relay-consolidation-b1-identity-bridge-20260930",
+      "owner": "relay-consolidation-b1-identity-bridge-20260930",
+      "goal": "Batch 1: remove hard dependencies on the old loew-inspector/loew-runner identities and make Relay source/MCP control ready for a canonical relay repo/project/runtime without changing production routing yet.",
+      "acceptance": "Canonical source repository references resolve lrnolivia/relay directly with no reliance on GitHub rename redirects; MCP source annotations, upload/source lifecycle logic and repository allowlists understand relay; Runner-control repository/project identity is configurable or migration-aware rather than permanently hardcoded to loew-runner; the existing live MCP remains usable throughout this batch; tests cover identity/config migration and fail closed on ambiguous control authority; no old production hostname/script is deleted or switched in this batch.",
+      "next_action": "Claim only after program preflight. Implement the non-destructive identity bridge and prove MCP tool/resource discovery still works before Batch 2.",
+      "paths": [
+        "src/runner-control.js",
+        "src/relay-entry.js",
+        "src/source-lifecycle.js",
+        "src/cloud-upload.js",
+        "wrangler.jsonc",
+        "package.json",
+        "README.md",
+        "AGENTS.md",
+        "test/"
+      ],
+      "resources": [
+        "relay-product-identity",
+        "relay-mcp-continuity",
+        "relay-source-identity"
+      ],
+      "state": "claimed",
+      "created_at": "2026-09-30T14:06:55.351Z"
+    },
+    {
+      "id": "relay-consolidation-b2-monorepo-import-20260930",
+      "owner": "relay-consolidation-b2-monorepo-import-20260930",
+      "goal": "Batch 2: import loew-runner code and history into lrnolivia/relay and establish the monorepo layout where runner and inspector are internal subsystems and night shift is a Relay feature.",
+      "acceptance": "Relay contains an implementation-ready monorepo layout with MCP/web apps plus runner and inspector subsystem packages; loew-runner source and meaningful Git history/provenance are preserved in the consolidation rather than copied as anonymous files; existing Inspector/Relay history remains intact from the repository rename; package/workspace/test/build boundaries are explicit; night shift is represented as a Relay feature/view, not another product; no production routing or old repository deletion occurs yet; exact source and history import are independently verifiable before Batch 3.",
+      "next_action": "Start only after Batch 1 is merged and verified. Import history/code first, then normalize package boundaries without rewriting provenance.",
+      "paths": [
+        "apps/",
+        "packages/",
+        "features/",
+        "package.json",
+        "README.md",
+        ".github/workflows/",
+        "docs/"
+      ],
+      "resources": [
+        "relay-monorepo",
+        "relay-runner-subsystem",
+        "relay-inspector-subsystem"
+      ],
+      "state": "claimed",
+      "created_at": "2026-09-30T14:07:00.575Z"
+    },
+    {
+      "id": "relay-consolidation-b3-control-state-20260930",
+      "owner": "relay-consolidation-b3-control-state-20260930",
+      "goal": "Batch 3: migrate durable coordination, QA, Visuals and operation authority into Relay so the canonical managed project/control identity becomes relay and the MCP no longer depends on a separate loew-runner repository.",
+      "acceptance": "Canonical managed project id is relay; current active/held/completed coordination history, queued roadmap, QA helper contracts, Visuals identity and publication/operation receipts are migrated without loss or duplication; runner remains an internal coordination engine rather than a separate product/repo; inspector remains an internal verification/evidence engine; Relay MCP runner-control tools read/write the new canonical state and preserve exact-head/readback safety; old loew-runner/loew-inspector ids are no longer required for active control; stale pre-consolidation queued work is explicitly migrated or marked superseded rather than remaining actionable.",
+      "next_action": "Start after Batch 2 history/package import is verified. Migrate state with before/after manifests and exact-count/readback checks before switching MCP authority.",
+      "paths": [
+        "packages/runner/",
+        "packages/inspector/",
+        "packages/shared/",
+        "contracts/",
+        "projects/",
+        "coordination/",
+        "src/",
+        "test/",
+        "docs/"
+      ],
+      "resources": [
+        "relay-control-state",
+        "relay-operation-framework",
+        "relay-publication-receipts",
+        "runner-human-qa",
+        "runner-visual-evidence"
+      ],
+      "state": "claimed",
+      "created_at": "2026-09-30T14:07:05.927Z"
+    },
+    {
+      "id": "relay-consolidation-b4-unified-ui-20260930",
+      "owner": "relay-consolidation-b4-unified-ui-20260930",
+      "goal": "Batch 4: ship one Relay experience across web and in-chat MCP UI, with runner and inspector exposed as capabilities rather than separate applications and night shift as the while-you-were-away view.",
+      "acceptance": "Relay web and in-chat MCP surfaces consume the same durable state/receipt model; web navigation centers on human jobs such as Today, Projects, Review, Automations/operations and Night Shift rather than subsystem branding; visual review, screenshots/video/live preview, QA questions/checklists/notes/verdicts live inside Relay; runner and inspector may appear in technical details but not as separate products users must navigate to; no separate Runner/Inspector dashboard is required; deep links preserve project/operation/review context; mobile/desktop and full-screen review are usable; deterministic checks remain agent-owned.",
+      "next_action": "Start after Batch 3 makes Relay the canonical state authority. Reuse the merged operator/QA work instead of redesigning from zero.",
+      "paths": [
+        "apps/web/",
+        "apps/mcp/",
+        "features/night-shift/",
+        "packages/runner/",
+        "packages/inspector/",
+        "packages/shared-ui/",
+        "test/"
+      ],
+      "resources": [
+        "relay-mcp-app-ui",
+        "relay-web-dashboard",
+        "relay-human-qa-ui",
+        "relay-night-shift-view",
+        "suite-shared-shell"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T14:07:11.227Z"
+    },
+    {
+      "id": "relay-consolidation-b5-cloudflare-cutover-20260930",
+      "owner": "relay-consolidation-b5-cloudflare-cutover-20260930",
+      "goal": "Batch 5: create and cut production over to the canonical Relay Worker/runtime at relay.loew.fi while preserving useful Cloudflare infrastructure and proving MCP/web continuity before any destructive cleanup.",
+      "acceptance": "Canonical Worker/script identity is relay and exact merged Relay source is deployed to it; relay.loew.fi serves the unified web app and /mcp endpoint; existing useful secrets, Browser binding, R2 data/binding, account identity and Access policy/application are preserved or retargeted instead of needlessly recreated; Access/OAuth/self-hosted-domain/callback metadata points at relay.loew.fi only where product routing is concerned; Cloudflare write allowlists and deployment annotations use relay; the full MCP tool/resource/skill surface, web app, GitHub operations, QA/evidence and release flows are verified on the new runtime; old scripts/domains remain untouched until verification is complete.",
+      "next_action": "Start after Batch 4 exact-head merge. Create/deploy the new Relay runtime, retarget Access and hostname bindings, then run end-to-end verification. Do not delete legacy resources in this batch.",
+      "paths": [
+        "wrangler.jsonc",
+        "apps/mcp/",
+        "apps/web/",
+        "src/",
+        "test/",
+        "docs/"
+      ],
+      "resources": [
+        "relay-cloudflare-runtime",
+        "relay-mcp-production",
+        "relay-access",
+        "relay-release-orchestration"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T14:07:17.597Z"
+    },
+    {
+      "id": "relay-consolidation-b6-retirement-20260930",
+      "owner": "relay-consolidation-b6-retirement-20260930",
+      "goal": "Batch 6: remove the old product identities and legacy runtime surfaces after Relay has passed end-to-end production verification.",
+      "acceptance": "runner.loew.fi, inspector.loew.fi and relay-inspector.loew.fi are removed from active Cloudflare custom domains/routes and Access application domain lists; old loew-inspector/loew-runner Worker or gateway identities are deleted or renamed when no longer required; obsolete Inspector/Runner-specific Access apps/policies are removed or consolidated while reusable underlying credentials/storage remain intact; loew-runner repository is retired only after its source/history/state import is proven complete; no active config, registry, MCP receipt, workflow, docs or UI requires loew-runner or loew-inspector ids; old queued assignments are closed/superseded; relay.loew.fi and lrnolivia/relay are the only canonical product surfaces. Platform-managed GitHub rename redirects may exist, but Relay does not reference or depend on them.",
+      "next_action": "Run only after Batch 5 production proof is complete and rollback is known-good. Inventory every legacy reference/resource, remove in dependency order, and finish with a clean search/readback plus live MCP/web verification.",
+      "paths": [
+        "README.md",
+        "AGENTS.md",
+        "wrangler.jsonc",
+        ".github/workflows/",
+        "docs/",
+        "test/"
+      ],
+      "resources": [
+        "relay-legacy-retirement",
+        "relay-cloudflare-runtime",
+        "relay-control-state"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T14:07:23.167Z"
+    }
+  ],
+  "claims": [
+    {
+      "id": "loew-inspector-coordination-bootstrap-20260930",
+      "owner": "normal-chat-project-registry-20260930",
+      "branch": "loew-inspector/coordination-bootstrap",
+      "paths": [
+        ".github/workflows/runner-coordination.yml"
+      ],
+      "resources": [
+        "runner-work-admission"
+      ],
+      "goal": "Install Field-style Runner coordination admission and managed branch hygiene for lrnolivia/loew-inspector.",
+      "acceptance": "Pull requests are gated by a live Runner claim; scheduled/manual audit and cleanup use the canonical loew-runner coordination engine; no product files are changed.",
+      "next_action": "Create the claimed bootstrap branch, add the parameterized coordination workflow, open the draft PR, verify admission, then merge with squash.",
+      "base_sha": "7f5820cd0c2bab3c0540f9efbe59f5399e3e6d5d",
+      "state": "completed",
+      "created_at": "2026-09-30T09:05:56.666Z",
+      "updated_at": "2026-09-30T09:12:56.538Z",
+      "lease_until": "2026-09-30T21:12:56.538Z",
+      "pr": 27,
+      "merged_head_sha": "b70df23015d83a18172687e7a28007173808eb9f",
+      "merge_commit_sha": "746f2eb5b1fcf40bfee29c24b69b5c4027967d61",
+      "evidence": "https://github.com/lrnolivia/loew-inspector/pull/27",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T09:12:56.538Z"
+    },
+    {
+      "id": "loew-inspector-wrangler-runtime-vars-20260930",
+      "owner": "normal-chat-relay-wrangler-sync-20260930",
+      "branch": "loew-inspector/wrangler-runtime-vars",
+      "paths": [
+        "wrangler.jsonc"
+      ],
+      "resources": [
+        "relay-runtime-config"
+      ],
+      "goal": "Sync the non-secret Relay production runtime variables into wrangler.jsonc.",
+      "acceptance": "wrangler.jsonc contains CLOUDFLARE_ACCOUNT_ID, RELAY_CLOUDFLARE_WRITE_SCRIPTS, and RELAY_GITHUB_APP_ID; RELAY_GITHUB_APP_PRIVATE_KEY remains Cloudflare Secret only; required checks pass.",
+      "next_action": "Create the claimed branch from live main, apply the safe Wrangler vars, open a draft PR, and verify admission.",
+      "base_sha": "746f2eb5b1fcf40bfee29c24b69b5c4027967d61",
+      "state": "completed",
+      "created_at": "2026-09-30T09:22:52.858Z",
+      "updated_at": "2026-09-30T09:25:46.826Z",
+      "lease_until": "2026-09-30T21:25:46.826Z",
+      "pr": 29,
+      "merged_head_sha": "7047cf6754368b461851502f5a1f1233d83a4680",
+      "merge_commit_sha": "52204b6ad15610f19b3c1fee99bfd692704aa9cd",
+      "evidence": "https://github.com/lrnolivia/loew-inspector/pull/29",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T09:25:46.826Z"
+    },
+    {
+      "id": "loew-inspector-cloud-builds-token-20260930",
+      "owner": "normal-chat-relay-cloud-builds-20260930",
+      "branch": "loew-inspector/cloud-builds-token",
+      "paths": [
+        "src/cloud.js",
+        "src/cloud.test.js"
+      ],
+      "resources": [
+        "relay-cloud-auth"
+      ],
+      "goal": "Use the dedicated user-scoped Cloudflare token only for Workers Builds API calls while preserving the account-scoped token for all other relay.CLOUD operations.",
+      "acceptance": "relay_cloud_builds authenticates with CLOUDFLARE_BUILDS_API_TOKEN, existing relay.CLOUD reads/writes continue using CLOUDFLARE_API_TOKEN, status reports Builds-token readiness, and tests pass.",
+      "next_action": "Completed: merged PR #30; test and admission passed; deployed version 33; live Builds returned ok:true/builds:[]; primary Cloud auth verified.",
+      "base_sha": "52204b6ad15610f19b3c1fee99bfd692704aa9cd",
+      "state": "completed",
+      "created_at": "2026-09-30T09:54:56.983Z",
+      "updated_at": "2026-09-30T10:13:10.908Z",
+      "lease_until": "2026-09-30T21:54:56.983Z",
+      "pr": 30,
+      "merged_head_sha": "3e198bbd63da625910346a18d14fe6c6c393bf95",
+      "merge_commit_sha": "53c0bf0556d881969c2701be28de4021f9fcbde9",
+      "evidence": "https://github.com/lrnolivia/loew-inspector/pull/30",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T10:13:10.908Z"
+    },
+    {
+      "id": "loew-inspector-worker-rename-20260930",
+      "owner": "codex-relay-finalization-20260930",
+      "branch": "loew-inspector/worker-rename",
+      "paths": [
+        "wrangler.jsonc",
+        "src/cloud.js",
+        "src/cloud.test.js",
+        ".github/workflows/ci.yml"
+      ],
+      "resources": [
+        "relay-runtime-config",
+        "relay-cloud-auth",
+        "cloudflare-worker-identity"
+      ],
+      "goal": "Rename existing Cloudflare Worker to loew-inspector with source and runtime allowlist aligned; preserve credentials and custom domains.",
+      "acceptance": "Same Worker identity and secrets retained; custom domains work; source config and allowlist use loew-inspector; tests and live SOURCE/CLOUD/Builds pass.",
+      "next_action": "Completed: Inspector PR #31 tests/admission passed and merged; same Worker renamed in place; version 34 exact merged source deployed; SOURCE/CLOUD/Builds and protected Runner JSON verified. Operational receipt is Runner PR #35.",
+      "base_sha": "53c0bf0556d881969c2701be28de4021f9fcbde9",
+      "state": "completed",
+      "created_at": "2026-09-30T10:13:51.394Z",
+      "updated_at": "2026-09-30T10:23:43.618Z",
+      "lease_until": "2026-09-30T22:13:51.394Z",
+      "pr": 31,
+      "merged_head_sha": "84639addf0e40ed67c77207c2dcc935b54a4a2f9",
+      "merge_commit_sha": "5648b9147c63f68d34517c31d903a0f8464c5670",
+      "evidence": "https://github.com/lrnolivia/loew-runner/pull/35",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T10:23:43.618Z"
+    },
+    {
+      "id": "relay-native-coordination",
+      "owner": "codex-relay-worker-20260930",
+      "branch": "loew-inspector/relay-native-coordination",
+      "paths": [
+        "src/index.js",
+        "src/runner-control.js",
+        "src/runner-control.test.js",
+        "src/coordination-engine.js",
+        "scripts/sync-coordination-engine.mjs",
+        ".github/workflows/relay-control-smoke.yml",
+        "scripts/control-smoke.mjs"
+      ],
+      "resources": [
+        "relay-runner-coordination-adapter"
+      ],
+      "goal": "Expose native Relay project and atomic coordination operations using Runner canonical deterministic engine.",
+      "acceptance": "Native registered-project reads and CAS coordination transitions preserve reservation, exact scopes and verified completion; meaningful adapter and shared-policy tests pass.",
+      "next_action": "Add bounded authenticated runtime smoke for native project/preflight and same-owner heartbeat, then merge and verify deployment.",
+      "base_sha": "5648b9147c63f68d34517c31d903a0f8464c5670",
+      "state": "completed",
+      "created_at": "2026-09-30T10:37:51.534Z",
+      "updated_at": "2026-09-30T10:55:48.593Z",
+      "lease_until": "2026-09-30T22:55:48.593Z",
+      "pr": 32,
+      "merged_head_sha": "c6f898256f47ece27cfc5efba8deda551ae13852",
+      "merge_commit_sha": "4d18720d757abb8d44d14173154ce74cc6ca6214",
+      "evidence": "https://github.com/lrnolivia/loew-runner/blob/loew-runner/relay-batch-ledger/docs/loew-inspector/RELAY_BATCH_LEDGER.md; exact tested/merged/deployed identities and smoke run 36705197743 recorded. Remaining roadmap capabilities explicitly unclaimed.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T10:55:48.593Z"
+    },
+    {
+      "id": "relay-mcp-normal-chat-invariant-20260930",
+      "owner": "normal-chat-relay-mcp-surface-20260930",
+      "branch": "loew-inspector/mcp-normal-chat-invariant",
+      "paths": [
+        "src/skills.js"
+      ],
+      "resources": [
+        "relay-chat-surface-policy"
+      ],
+      "goal": "Make Relay's MCP-published guidance enforce a normal-ChatGPT-only execution surface and forbid Work mode handoffs.",
+      "acceptance": "Relay's published MCP skill resources explicitly forbid routing, handoff, redirection, or suggestions to move Relay/loew.fi work to ChatGPT Work mode; missing capabilities are reported in the current chat.",
+      "next_action": "Create the admitted branch, update MCP skill resources, open a draft PR, run tests/admission, and promote if checks pass.",
+      "base_sha": "4d18720d757abb8d44d14173154ce74cc6ca6214",
+      "state": "completed",
+      "created_at": "2026-09-30T11:16:56.777Z",
+      "updated_at": "2026-09-30T11:28:26.400Z",
+      "lease_until": "2026-09-30T23:28:26.400Z",
+      "pr": 33,
+      "merged_head_sha": "7573ac713ef9f58625b853882ac280232bb13d34",
+      "merge_commit_sha": "b1cc18f9e7f69e67f5000d983d2e1fba45c590b1",
+      "evidence": "PR #33 merged as b1cc18f9e7f69e67f5000d983d2e1fba45c590b1 after exact-head test and Runner coordination admission passed. Cloudflare Worker loew-inspector version 37 (463a1188-8123-4ee6-bcb9-e95b983b05ef) deployed at 100% via deployment d76b9d79-b11e-43a1-930e-47f01aee90b9. Live bundle verification returned all five skill URIs present, five Chat surface invariant sections, all five new SHA-256 skill digests present, and the stale relay-control digest absent.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T11:28:26.400Z"
+    },
+    {
+      "id": "relay-source-lifecycle-20260930",
+      "owner": "normal-chat-relay-batch1c-20260930",
+      "branch": "loew-inspector/relay-source-lifecycle",
+      "paths": [
+        "src/source.js",
+        "src/source-lifecycle.js",
+        "src/source-lifecycle.test.js",
+        "src/relay-entry.js",
+        "src/relay-entry.test.js",
+        "wrangler.jsonc"
+      ],
+      "resources": [
+        "relay-source-lifecycle"
+      ],
+      "goal": "Add bounded source inventory and exact-head PR lifecycle primitives, including branch creation from an exact commit SHA.",
+      "acceptance": "Relay can inspect branch/head inventory; create a managed branch from an exact SHA; update PR metadata/ready state and merge only when the expected head still matches, without bypassing required checks; tests and Runner admission pass.",
+      "next_action": "Implement the source lifecycle as a small authenticated MCP extension wrapper, preserving index.js and changing only the Worker entrypoint.",
+      "base_sha": "4d18720d757abb8d44d14173154ce74cc6ca6214",
+      "state": "completed",
+      "created_at": "2026-09-30T11:13:11.855Z",
+      "updated_at": "2026-09-30T11:31:24.832Z",
+      "lease_until": "2026-09-30T23:31:24.832Z",
+      "pr": 34,
+      "merged_head_sha": "7173c9ce47a15cb97ca7bdf492eef851f75a77c7",
+      "merge_commit_sha": "c0f4e93f60e3dca76676612f90e2fc782dec55e8",
+      "evidence": "https://github.com/lrnolivia/loew-inspector/pull/34 \u2014 tested/merged head 7173c9ce47a15cb97ca7bdf492eef851f75a77c7; test run 36708849678 passed; Runner admission run 36708849601 passed; squash merge c0f4e93f60e3dca76676612f90e2fc782dec55e8.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T11:31:24.832Z"
+    },
+    {
+      "id": "relay-native-cleanup-20260930",
+      "owner": "normal-chat-relay-cleanup-20260930",
+      "branch": "loew-inspector/relay-native-cleanup",
+      "paths": [
+        "src/relay-entry.js",
+        "src/relay-entry.test.js",
+        "src/runner-cleanup.js",
+        "src/runner-cleanup.test.js"
+      ],
+      "resources": [
+        "relay-runner-cleanup"
+      ],
+      "goal": "Expose Runner's existing policy-eligible managed branch cleanup as one bounded native Relay operation.",
+      "acceptance": "Dry-run and execute modes only consider completed, work-accounted, non-legacy, non-excluded managed branches; exact merged PR/head identity and current ownership/head are revalidated before deletion; post-merge commits and active ownership are retained; deletion readback is mandatory; tests and Runner admission pass.",
+      "next_action": "Update the existing extension-version test for Relay 1.4.0, rerun exact-head CI, then promote only if tests and Runner admission pass.",
+      "base_sha": "c0f4e93f60e3dca76676612f90e2fc782dec55e8",
+      "state": "completed",
+      "created_at": "2026-09-30T11:42:32.252Z",
+      "updated_at": "2026-09-30T11:50:39.053Z",
+      "lease_until": "2026-09-30T23:50:39.053Z",
+      "pr": 36,
+      "merged_head_sha": "0d3fd77ad2555e43a0d79f1d896ea81ecbb1e775",
+      "merge_commit_sha": "df2223abab501d1134f70dc7c6ae7921edc74ece",
+      "evidence": "https://github.com/lrnolivia/loew-inspector/pull/36 \u2014 exact-head tests and Runner admission passed; Relay native ready/merge succeeded.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T11:50:39.053Z"
+    },
+    {
+      "id": "relay-cloud-source-upload-20260930",
+      "owner": "normal-chat-relay-cloud-upload-20260930",
+      "branch": "loew-inspector/relay-cloud-source-upload",
+      "paths": [
+        "src/cloud-upload.js",
+        "src/cloud-upload.test.js",
+        "src/relay-entry.js",
+        "src/relay-entry.test.js",
+        "src/runner-cleanup.test.js"
+      ],
+      "resources": [
+        "relay-cloud-source-upload"
+      ],
+      "goal": "Add a bounded native Relay operation that uploads an undeployed Cloudflare Worker version from an exact GitHub commit without exposing arbitrary cloud writes.",
+      "acceptance": "Upload accepts an exact source commit and allowlisted Worker only; derives entrypoint/compatibility from committed Wrangler config; includes only bounded relative JS modules from that commit; inherits existing binding identities in strict mode; never deploys implicitly; reconciles duplicate or timed-out writes by exact commit annotation/version readback; tests and Runner admission pass.",
+      "next_action": "Implement the isolated cloud upload adapter and Relay extension registration, then open a draft PR and validate exact-head tests/admission.",
+      "base_sha": "df2223abab501d1134f70dc7c6ae7921edc74ece",
+      "state": "completed",
+      "created_at": "2026-09-30T11:52:33.597Z",
+      "updated_at": "2026-09-30T12:00:38.741Z",
+      "lease_until": "2026-10-01T00:00:38.741Z",
+      "pr": 37,
+      "merged_head_sha": "fc042aa2d648cc79dc8b267a00d43a674034f648",
+      "merge_commit_sha": "5edb12474f3ac86bc265b8a197bcdecb17b70d62",
+      "evidence": "https://github.com/lrnolivia/loew-inspector/pull/37 \u2014 exact-head tests and Runner admission passed; Relay native ready/merge succeeded.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T12:00:38.741Z"
+    },
+    {
+      "id": "relay-human-qa-skill-20260930",
+      "owner": "normal-chat-human-qa-skill-20260930",
+      "branch": "loew-inspector/human-qa-skill",
+      "paths": [
+        "src/qa-skill.js",
+        "src/qa-skill.test.js",
+        "src/relay-entry.js",
+        "src/relay-entry.test.js"
+      ],
+      "resources": [
+        "relay-human-qa-skill"
+      ],
+      "goal": "Publish a dedicated Relay MCP human-QA skill that teaches agents how to populate Runner qa-shell with targeted questions/checklists bound to exact Visuals/artifact identity.",
+      "acceptance": "MCP skills/list and resources/list expose a human-qa skill; skills/get and resources/read return its guidance; the skill points agents to Runner's human QA helper contract/docs, requires criterion-specific questions/checklists, keeps deterministic checks agent-owned, binds answers to exact artifact/evidence identity, and does not alter qa-shell design/runtime files; tests and Runner admission pass.",
+      "next_action": "Create the branch from exact main, add the small QA skill module, extend Relay's wrapper discovery/read paths, update extension tests, then open a draft PR and verify exact-head checks.",
+      "base_sha": "5edb12474f3ac86bc265b8a197bcdecb17b70d62",
+      "state": "completed",
+      "created_at": "2026-09-30T12:58:38.307Z",
+      "updated_at": "2026-09-30T13:04:56.038Z",
+      "lease_until": "2026-10-01T01:04:56.038Z",
+      "pr": 38,
+      "merged_head_sha": "dfa75d2a1944b42f4084381a737ab4789fb2e164",
+      "merge_commit_sha": "57378a504025ff5816959c423f34fe0824b82f2d",
+      "evidence": "https://github.com/lrnolivia/loew-inspector/pull/38 \u2014 exact-head tests and Runner admission passed; human-qa skill published through native MCP Skills/Resources discovery.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T13:04:56.038Z"
+    },
+    {
+      "id": "relay-loew-naming-skill-20260930",
+      "owner": "normal-chat-relay-loew-naming-20260930",
+      "branch": "loew-inspector/loew-naming-skill",
+      "paths": [
+        "src/loew-naming-skill.js",
+        "src/loew-naming-skill.test.js",
+        "src/relay-entry.js",
+        "src/relay-entry.test.js"
+      ],
+      "resources": [
+        "relay-skill-catalog",
+        "loew-product-naming"
+      ],
+      "goal": "Add a native Relay skill for naming loew.fi products, subsystems, services, and internal capabilities while preserving the established loew.fi naming ethos.",
+      "acceptance": "Relay publishes a sixth importable skill named loew-naming; its guidance distinguishes product, subsystem, and internal primitive naming; existing skills remain unchanged; digest/catalog tests pass; Runner admission passes.",
+      "next_action": "Implement loew-naming as a standalone native skill extension following the human-qa pattern; register it in Relay discovery; test discovery and content.",
+      "base_sha": "57378a504025ff5816959c423f34fe0824b82f2d",
+      "state": "completed",
+      "created_at": "2026-09-30T13:37:48.351Z",
+      "updated_at": "2026-09-30T13:45:29.562Z",
+      "lease_until": "2026-10-01T01:45:29.562Z",
+      "pr": 39,
+      "merged_head_sha": "dd0924776d96bc3b6881f1292c326fd23dd6924e",
+      "merge_commit_sha": "907de20f18209d6fee400c9d74cfde16f8623cba",
+      "evidence": "https://github.com/lrnolivia/loew-inspector/pull/39 \u2014 exact head dd0924776d96bc3b6881f1292c326fd23dd6924e; test and Runner admission passed; squash merge 907de20f18209d6fee400c9d74cfde16f8623cba.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T13:45:29.562Z"
+    },
+    {
+      "id": "relay-monorepo-consolidation-20260930",
+      "owner": "normal-chat-relay-consolidation-20260930",
+      "branch": "loew-inspector/relay-consolidation",
+      "paths": [
+        "docs/CONSOLIDATION_PROGRAM.md"
+      ],
+      "resources": [
+        "relay-consolidation-program"
+      ],
+      "goal": "Consolidate Relay, Runner and Inspector into one canonical lowercase `relay` product, repository, MCP app and web app. Runner and Inspector become internal subsystems/packages; night shift becomes a Relay feature/view; separate product subdomains and duplicated dashboards are retired.",
+      "acceptance": "Canonical repository is lrnolivia/relay; existing loew-inspector history is preserved by rename and loew-runner history/code is imported into the Relay monorepo without losing provenance; Relay has one shared state/receipt model, one MCP app and one web app; runner becomes the coordination/automation package, inspector becomes verification/evidence/visual-review package, and night shift is a feature/view; old runner/inspector web subdomains are removed or redirect to Relay deep links; existing open PRs/branches remain reachable through GitHub rename redirects and are explicitly reconciled; Runner coordination/project registration is migrated to canonical project id relay; Cloudflare production runs from Relay with old endpoints retained only as bounded compatibility redirects during cutover; tests and live verification pass before old runtime identities are retired.",
+      "next_action": "Authoritative execution order is: identity bridge -> monorepo import -> control/state migration -> Cloudflare/runtime cutover -> legacy retirement -> unified web + in-chat UI. Treat the originally numbered b4 UI assignment as the final implementation gate, after old runtime/product surfaces are retired. Exact-head tests/readback are required between every stage.",
+      "base_sha": "907de20f18209d6fee400c9d74cfde16f8623cba",
+      "state": "active",
+      "created_at": "2026-09-30T13:57:50.279Z",
+      "updated_at": "2026-09-30T14:11:12.570Z",
+      "lease_until": "2026-10-01T02:11:12.570Z"
+    },
+    {
+      "id": "relay-consolidation-b1-identity-bridge-20260930",
+      "owner": "relay-consolidation-b1-identity-bridge-20260930",
+      "branch": "loew-inspector/relay-b1-identity-bridge",
+      "paths": [
+        "src/runner-control.js",
+        "src/relay-entry.js",
+        "src/source-lifecycle.js",
+        "src/cloud-upload.js",
+        "wrangler.jsonc",
+        "package.json",
+        "README.md",
+        "AGENTS.md",
+        "test/",
+        "src/runner-control.test.js",
+        "src/source-lifecycle.test.js",
+        "src/cloud-upload.test.js",
+        "src/relay-entry.test.js",
+        "src/runner-cleanup.js",
+        "src/runner-cleanup.test.js",
+        "src/cloud.js",
+        "src/cloud.test.js",
+        "src/runner-control-core.js"
+      ],
+      "resources": [
+        "relay-product-identity",
+        "relay-mcp-continuity",
+        "relay-source-identity"
+      ],
+      "goal": "Batch 1: remove hard dependencies on the old loew-inspector/loew-runner identities and make Relay source/MCP control ready for a canonical relay repo/project/runtime without changing production routing yet.",
+      "acceptance": "Canonical source repository references resolve lrnolivia/relay directly with no reliance on GitHub rename redirects; MCP source annotations, upload/source lifecycle logic and repository allowlists understand relay; Runner-control repository/project identity is configurable or migration-aware rather than permanently hardcoded to loew-runner; the existing live MCP remains usable throughout this batch; tests cover identity/config migration and fail closed on ambiguous control authority; no old production hostname/script is deleted or switched in this batch.",
+      "next_action": "Split Runner control into a small public tool/schema wrapper plus a configurable authority core module, then finish the Relay identity bridge tests and config without production cutover.",
+      "base_sha": "907de20f18209d6fee400c9d74cfde16f8623cba",
+      "state": "completed",
+      "created_at": "2026-09-30T14:13:54.913Z",
+      "updated_at": "2026-09-30T14:37:28.301Z",
+      "lease_until": "2026-10-01T02:37:28.301Z",
+      "pr": 40,
+      "merged_head_sha": "9f94676a1f8c6e432e03851159917c682ef33940",
+      "merge_commit_sha": "2ddc8fdbbda871ad91e563fc657bcc4c382fd236",
+      "evidence": "https://github.com/lrnolivia/relay/pull/40 \u2014 Batch 1 identity bridge merged at exact tested head 9f94676a1f8c6e432e03851159917c682ef33940; tests and Runner admission passed after control-plane registration was bridged to lrnolivia/relay; squash merge 2ddc8fdbbda871ad91e563fc657bcc4c382fd236.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T14:37:28.301Z"
+    },
+    {
+      "id": "relay-consolidation-b2-monorepo-import-20260930",
+      "owner": "codex-relay-consolidation-b2-20260930",
+      "branch": "loew-inspector/relay-b2-monorepo-import",
+      "paths": [
+        "apps/",
+        "packages/",
+        "features/",
+        "package.json",
+        "package-lock.json",
+        "README.md",
+        ".github/workflows/",
+        "docs/MONOREPO_LAYOUT.md",
+        "docs/RUNNER_IMPORT_PROVENANCE.md"
+      ],
+      "resources": [
+        "relay-monorepo",
+        "relay-runner-subsystem",
+        "relay-inspector-subsystem"
+      ],
+      "goal": "Batch 2: import loew-runner code and history into lrnolivia/relay and establish the monorepo layout where runner and inspector are internal subsystems and night shift is a Relay feature.",
+      "acceptance": "Relay contains an implementation-ready monorepo layout with MCP/web apps plus runner and inspector subsystem packages; loew-runner source and meaningful Git history/provenance are preserved in the consolidation rather than copied as anonymous files; existing Inspector/Relay history remains intact from the repository rename; package/workspace/test/build boundaries are explicit; night shift is represented as a Relay feature/view, not another product; no production routing or old repository deletion occurs yet; exact source and history import are independently verifiable before Batch 3.",
+      "next_action": "Resume Batch 2 exact-head history-preserving import; user has authorized sequential consolidation through Batch 6 after each batch admission, checks and accounting.",
+      "base_sha": "2ddc8fdbbda871ad91e563fc657bcc4c382fd236",
+      "state": "completed",
+      "created_at": "2026-09-30T14:39:45.880Z",
+      "updated_at": "2026-09-30T14:56:46.210Z",
+      "lease_until": "2026-10-01T02:56:46.210Z",
+      "pr": 41,
+      "merged_head_sha": "fdefc6c724f94cbf9605cfa72665208380a7ee2b",
+      "merge_commit_sha": "fc3eb586931d33c887d5e2b58c63a8e002fecf33",
+      "evidence": "https://github.com/lrnolivia/relay/pull/41; exact head fdefc6c724f94cbf9605cfa72665208380a7ee2b passed 76 Inspector, 45 Runner, 3 provenance/layout tests plus CI and Runner admission. Runner 71a5fdbae3303b28a840579d816dc846aaae5186 and all 246 original ancestors preserved with two-parent import and merge commit; both source and Relay ancestry verified against remote main. docs/MONOREPO_LAYOUT.md and docs/RUNNER_IMPORT_PROVENANCE.md account code/history boundaries; live control state and runtime untouched.",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T14:56:46.210Z"
+    },
+    {
+      "id": "relay-consolidation-b3-control-state-20260930",
+      "owner": "relay-consolidation-b3-control-state-20260930",
+      "branch": "loew-inspector/relay-b3-control-state",
+      "paths": [
+        "packages/",
+        "contracts/",
+        "projects/",
+        "coordination/",
+        "src/",
+        "test/",
+        "scripts/",
+        "workers/",
+        "state/",
+        "assignments/",
+        "reports/",
+        "night-shift/",
+        "templates/",
+        "LOEW_CHAT_BIBLE.md",
+        "LOEW_CHAT_BIBLE_CURRENT.md",
+        "AGENTS.md",
+        "package.json",
+        "package-lock.json",
+        ".gitignore",
+        "wrangler.jsonc",
+        ".github/workflows/",
+        "docs/ACCESS_CONTROL.md",
+        "docs/WORK_COORDINATION.md",
+        "docs/HUMAN_QA_HELPER.md",
+        "docs/VISUAL_EVIDENCE_POLICY.md",
+        "docs/CONTROL_STATE_MIGRATION.md",
+        "docs/MONOREPO_LAYOUT.md",
+        "docs/RUNNER_IMPORT_PROVENANCE.md",
+        "docs/ARCHITECTURE.md",
+        "docs/FIELD_GUIDANCE_CLEANUP_MANIFEST.md",
+        "docs/FIELD_NIGHT_SHIFT_MIGRATION.md",
+        "docs/FIELD_REPOSITORY_REORGANIZATION.md",
+        "docs/RUNNER_3_0_HUMAN_CONTROL_PLANE.md",
+        "docs/STATE.md",
+        "docs/TERRA_PRIME_DASHBOARD_MAPPING.md",
+        "docs/archive/",
+        "docs/bazzite-custom/",
+        "docs/field/",
+        "docs/gamebridge/",
+        "docs/loew-inspector/",
+        "docs/loew-runner/",
+        "docs/loew-shell/",
+        "docs/loewfi/",
+        "docs/loewtorials/",
+        "docs/rtxforge-mfg/",
+        "docs/rtxforge/",
+        "docs/thetake/"
+      ],
+      "resources": [
+        "relay-control-state",
+        "relay-operation-framework",
+        "relay-publication-receipts",
+        "runner-human-qa",
+        "runner-visual-evidence"
+      ],
+      "goal": "Migrate canonical coordination authority, registries, contracts and durable state to Relay with exact snapshot manifest and lossless history.",
+      "acceptance": "All live records retained, canonical project relay, shared deterministic engine and exact-head CAS preserved; no runtime rename or retirement; before/after readback proven.",
+      "next_action": "Import exact state snapshot and migrate canonical authority with source hash/count manifest; preserve active claims, source writes must reconcile before authority switch.",
+      "base_sha": "fc3eb586931d33c887d5e2b58c63a8e002fecf33",
+      "state": "active",
+      "created_at": "2026-09-30T14:57:47.568Z",
+      "updated_at": "2026-09-30T14:58:55.630Z",
+      "lease_until": "2026-10-01T02:58:55.630Z"
+    }
+  ],
+  "alias_of": "relay",
+  "migration_status": "compatibility-snapshot"
+}

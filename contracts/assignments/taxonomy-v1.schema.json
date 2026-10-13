@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relay.loew.fi/contracts/assignments/taxonomy-v1.schema.json",
+  "title": "Relay Assignment Taxonomy v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "category",
+    "labels",
+    "tags",
+    "primary_role",
+    "supporting_roles"
+  ],
+  "properties": {
+    "category": {
+      "enum": [
+        "architecture",
+        "design",
+        "implementation",
+        "research",
+        "qa-verification",
+        "maintenance",
+        "release",
+        "coordination"
+      ]
+    },
+    "labels": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "value"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9.-]{0,63}$"
+          },
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+      }
+    },
+    "primary_role": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-z][a-z0-9-]{0,63}$"
+    },
+    "supporting_roles": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]{0,63}$"
+      }
+    },
+    "primary_staff": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-z][a-z0-9-]{0,63}$"
+    },
+    "supporting_staff": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]{0,63}$"
+      }
+    },
+    "primary_team": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "inspector",
+        "runner",
+        "night-shift",
+        "source",
+        "cloud",
+        "release",
+        "skills",
+        null
+      ]
+    },
+    "supporting_teams": {
+      "type": "array",
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "inspector",
+          "runner",
+          "night-shift",
+          "source",
+          "cloud",
+          "release",
+          "skills"
+        ]
+      }
+    }
+  }
+}

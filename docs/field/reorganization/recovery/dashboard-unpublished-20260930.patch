@@ -1,0 +1,1077 @@
+diff --git a/src/Dashboard.tsx b/src/Dashboard.tsx
+index efec03a..6e66094 100644
+--- a/src/Dashboard.tsx
++++ b/src/Dashboard.tsx
+@@ -21,6 +21,7 @@ import DashboardThumbnailBackfill from '@/dashboard/DashboardThumbnailBackfill';
+ import EmptyState from '@/dashboard/EmptyState';
+ import ProjectGrid from '@/dashboard/ProjectGrid';
+ import RenameProjectDialog from '@/dashboard/RenameProjectDialog';
++import DeleteProjectDialog from '@/dashboard/DeleteProjectDialog';
+ import { createNewProjectData, DEFAULT_NEW_PROJECT_SETTINGS } from '@/dashboard/new-project-model';
+ import { formatDashboardActionError, getDashboardEmptyState, selectFieldProjects, type DashboardView } from '@/dashboard/project-meta';
+ import { createDashboardLoadingController } from '@/dashboard/dashboard-loading';
+@@ -40,6 +41,7 @@ export default function Dashboard({ active = true }: { active?: boolean }) {
+   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+   const [openingProjectId, setOpeningProjectId] = useState<string | null>(null);
+   const [renameTarget, setRenameTarget] = useState<FieldProjectMeta | null>(null);
++  const [deleteTarget, setDeleteTarget] = useState<FieldProjectMeta | null>(null);
+   const [error, setError] = useState<string | null>(null);
+   const [user, setUser] = useState<RevymeUser | null>(null);
+ 
+@@ -217,8 +219,6 @@ export default function Dashboard({ active = true }: { active?: boolean }) {
+   };
+ 
+   const permanentDelete = async (project: FieldProjectMeta) => {
+-    setOpenMenuId(null);
+-    if (!window.confirm(`Permanently delete “${project.name || 'Untitled'}”? This cannot be undone.`)) return;
+     setBusyId(project.id);
+     setError(null);
+     try {
+@@ -228,6 +228,7 @@ export default function Dashboard({ active = true }: { active?: boolean }) {
+       setError(cause instanceof Error ? cause.message : String(cause));
+     } finally {
+       setBusyId(null);
++      setDeleteTarget(null);
+     }
+   };
+ 
+@@ -280,7 +281,10 @@ export default function Dashboard({ active = true }: { active?: boolean }) {
+               onToggleStar={(project) => void runProjectAction(project, () => setFieldProjectStarred(project.id, !project.starred))}
+               onTrash={(project) => void runProjectAction(project, () => trashFieldProject(project.id))}
+               onRestore={(project) => void runProjectAction(project, () => restoreFieldProject(project.id))}
+-              onPermanentDelete={(project) => void permanentDelete(project)}
++              onPermanentDelete={(project) => {
++                setOpenMenuId(null);
++                setDeleteTarget(project);
++              }}
+             />
+           ) : (
+             <EmptyState title={emptyState.title} detail={emptyState.detail} />
+@@ -329,6 +333,18 @@ export default function Dashboard({ active = true }: { active?: boolean }) {
+         />
+       )}
+ 
++      <DeleteProjectDialog
++        project={deleteTarget}
++        deleting={Boolean(deleteTarget && busyId === deleteTarget.id)}
++        onClose={() => {
++          if (!deleteTarget || busyId !== deleteTarget.id) setDeleteTarget(null);
++        }}
++        onConfirm={() => {
++          if (deleteTarget) void permanentDelete(deleteTarget);
++        }}
++      />
++
++
+     </div>
+   );
+ }
+diff --git a/src/dashboard/DashboardHeader.tsx b/src/dashboard/DashboardHeader.tsx
+index 0717627..08dfe83 100644
+--- a/src/dashboard/DashboardHeader.tsx
++++ b/src/dashboard/DashboardHeader.tsx
+@@ -22,7 +22,7 @@ export default function DashboardHeader({ view, count, creating, refreshing, onC
+     <header className="field-dashboard-header">
+       <div className="field-dashboard-heading-wrap">
+         <h1>{titles[view]}</h1>
+-        <span>{count}</span>
++        <span aria-label={`${count} ${count === 1 ? 'project' : 'projects'}`}>{count}</span>
+       </div>
+       <div className="field-dashboard-header-actions">
+         <button
+diff --git a/src/dashboard/DashboardLoadingGrid.tsx b/src/dashboard/DashboardLoadingGrid.tsx
+index 3bcecbb..a952516 100644
+--- a/src/dashboard/DashboardLoadingGrid.tsx
++++ b/src/dashboard/DashboardLoadingGrid.tsx
+@@ -4,7 +4,7 @@ const INITIAL_SKELETON_COUNT = 6;
+ 
+ export default function DashboardLoadingGrid() {
+   return (
+-    <div className="field-project-grid" aria-label="Loading projects" aria-busy="true">
++    <div className="field-project-grid" role="status" aria-label="Loading projects" aria-busy="true">
+       {Array.from({ length: INITIAL_SKELETON_COUNT }, (_, index) => (
+         <ProjectCardSkeleton key={index} />
+       ))}
+diff --git a/src/dashboard/DashboardSidebar.tsx b/src/dashboard/DashboardSidebar.tsx
+index c4d83f8..57914dd 100644
+--- a/src/dashboard/DashboardSidebar.tsx
++++ b/src/dashboard/DashboardSidebar.tsx
+@@ -48,6 +48,12 @@ export default function DashboardSidebar({ view, query, user, onViewChange, onQu
+           type="search"
+           value={query}
+           onChange={(event) => onQueryChange(event.target.value)}
++          onKeyDown={(event) => {
++            if (event.key !== 'Escape' || !query) return;
++            event.preventDefault();
++            event.stopPropagation();
++            onQueryChange('');
++          }}
+           placeholder="Search"
+           aria-label="Search projects"
+         />
+@@ -59,6 +65,7 @@ export default function DashboardSidebar({ view, query, user, onViewChange, onQu
+             key={item.id}
+             type="button"
+             className="field-dashboard-nav-row"
++            aria-current={view === item.id ? 'page' : undefined}
+             data-view={item.id}
+             data-active={view === item.id ? 'true' : undefined}
+             onClick={() => onViewChange(item.id)}
+diff --git a/src/dashboard/DeleteProjectDialog.test.tsx b/src/dashboard/DeleteProjectDialog.test.tsx
+new file mode 100644
+index 0000000..c90128e
+--- /dev/null
++++ b/src/dashboard/DeleteProjectDialog.test.tsx
+@@ -0,0 +1,81 @@
++import { fireEvent, render, screen, waitFor } from '@testing-library/react';
++import { describe, expect, it, vi } from 'vitest';
++import type { FieldProjectMeta } from '@/backend/field-projects';
++import DeleteProjectDialog from './DeleteProjectDialog';
++
++const project: FieldProjectMeta = {
++  id: 'project-1',
++  name: 'Portfolio',
++  createdAt: '2026-09-26T00:00:00Z',
++  updatedAt: '2026-09-26T01:00:00Z',
++  starred: false,
++  trashedAt: '2026-09-26T02:00:00Z',
++  thumbnail: null,
++};
++
++describe('DeleteProjectDialog', () => {
++  it('keeps the safe Cancel action focused by default', async () => {
++    render(
++      <DeleteProjectDialog
++        project={project}
++        deleting={false}
++        onClose={vi.fn()}
++        onConfirm={vi.fn()}
++      />,
++    );
++
++    await waitFor(() => {
++      expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Cancel' }));
++    });
++  });
++
++  it('dismisses on Escape and backdrop press when idle', () => {
++    const onClose = vi.fn();
++    render(
++      <DeleteProjectDialog
++        project={project}
++        deleting={false}
++        onClose={onClose}
++        onConfirm={vi.fn()}
++      />,
++    );
++
++    fireEvent.keyDown(window, { key: 'Escape' });
++    fireEvent.mouseDown(screen.getByRole('presentation'));
++
++    expect(onClose).toHaveBeenCalledTimes(2);
++  });
++
++  it('does not dismiss while deletion is in flight', () => {
++    const onClose = vi.fn();
++    render(
++      <DeleteProjectDialog
++        project={project}
++        deleting
++        onClose={onClose}
++        onConfirm={vi.fn()}
++      />,
++    );
++
++    fireEvent.keyDown(window, { key: 'Escape' });
++    fireEvent.mouseDown(screen.getByRole('presentation'));
++
++    expect(onClose).not.toHaveBeenCalled();
++  });
++
++  it('runs permanent deletion only from the explicit destructive action', () => {
++    const onConfirm = vi.fn();
++    render(
++      <DeleteProjectDialog
++        project={project}
++        deleting={false}
++        onClose={vi.fn()}
++        onConfirm={onConfirm}
++      />,
++    );
++
++    fireEvent.click(screen.getByRole('button', { name: 'Delete permanently' }));
++
++    expect(onConfirm).toHaveBeenCalledTimes(1);
++  });
++});
+diff --git a/src/dashboard/DeleteProjectDialog.tsx b/src/dashboard/DeleteProjectDialog.tsx
+new file mode 100644
+index 0000000..a7bf679
+--- /dev/null
++++ b/src/dashboard/DeleteProjectDialog.tsx
+@@ -0,0 +1,74 @@
++import { useEffect, useRef } from 'react';
++import type { FieldProjectMeta } from '@/backend/field-projects';
++
++type Props = {
++  project: FieldProjectMeta | null;
++  deleting: boolean;
++  onClose: () => void;
++  onConfirm: () => void;
++};
++
++export default function DeleteProjectDialog({
++  project,
++  deleting,
++  onClose,
++  onConfirm,
++}: Props) {
++  const cancelRef = useRef<HTMLButtonElement>(null);
++
++  useEffect(() => {
++    if (!project || deleting) return;
++    const frame = requestAnimationFrame(() => cancelRef.current?.focus());
++    const onKeyDown = (event: KeyboardEvent) => {
++      if (event.key !== 'Escape') return;
++      event.preventDefault();
++      onClose();
++    };
++    window.addEventListener('keydown', onKeyDown);
++    return () => {
++      cancelAnimationFrame(frame);
++      window.removeEventListener('keydown', onKeyDown);
++    };
++  }, [deleting, onClose, project]);
++
++  if (!project) return null;
++  const name = project.name || 'Untitled';
++
++  return (
++    <div
++      className="field-dashboard-modal-backdrop"
++      role="presentation"
++      onMouseDown={(event) => {
++        if (!deleting && event.target === event.currentTarget) onClose();
++      }}
++    >
++      <div
++        className="field-dashboard-modal field-dashboard-delete-modal"
++        role="dialog"
++        aria-modal="true"
++        aria-labelledby="field-delete-project-title"
++        aria-describedby="field-delete-project-detail"
++      >
++        <div className="field-dashboard-modal-copy">
++          <h2 id="field-delete-project-title">Delete project permanently?</h2>
++          <p id="field-delete-project-detail">
++            “{name}” will be permanently deleted. This can’t be undone.
++          </p>
++        </div>
++        <div className="field-dashboard-modal-actions">
++          <button ref={cancelRef} type="button" onClick={onClose} disabled={deleting}>
++            Cancel
++          </button>
++          <button
++            type="button"
++            className="field-dashboard-modal-danger"
++            onClick={onConfirm}
++            disabled={deleting}
++          >
++            {deleting ? 'Deleting…' : 'Delete permanently'}
++          </button>
++        </div>
++      </div>
++    </div>
++  );
++}
+diff --git a/src/dashboard/EmptyState.tsx b/src/dashboard/EmptyState.tsx
+index 39e849f..9d442c9 100644
+--- a/src/dashboard/EmptyState.tsx
++++ b/src/dashboard/EmptyState.tsx
+@@ -5,9 +5,9 @@ type Props = {
+ 
+ export default function EmptyState({ title, detail }: Props) {
+   return (
+-    <div className="field-dashboard-empty">
++    <div className="field-dashboard-empty" role="status">
+       <div className="field-dashboard-empty-mark" aria-hidden="true">f</div>
+-      <strong>{title}</strong>
++      <strong role="heading" aria-level={2}>{title}</strong>
+       <span>{detail}</span>
+     </div>
+   );
+diff --git a/src/dashboard/NewProjectWizard.tsx b/src/dashboard/NewProjectWizard.tsx
+index 2c7b2be..0132c71 100644
+--- a/src/dashboard/NewProjectWizard.tsx
++++ b/src/dashboard/NewProjectWizard.tsx
+@@ -26,6 +26,7 @@ export default function NewProjectWizard({ open, onClose, onCreate, onDone }: Pr
+   const [doneProject, setDoneProject] = useState<FieldProjectMeta | null>(null);
+   const doneTimerRef = useRef<number | null>(null);
+   const nameRef = useRef<HTMLInputElement>(null);
++  const titleRef = useRef<HTMLHeadingElement>(null);
+ 
+   const responsiveOptions = useMemo(
+     () => availableResponsiveCanvasPresets(draft.canvasPresetId),
+@@ -40,10 +41,21 @@ export default function NewProjectWizard({ open, onClose, onCreate, onDone }: Pr
+     setSaving(false);
+     setError(null);
+     setDoneProject(null);
+-    const frame = requestAnimationFrame(() => nameRef.current?.select());
+-    return () => cancelAnimationFrame(frame);
+   }, [open]);
+ 
++  useEffect(() => {
++    if (!open || saving || doneProject) return;
++    const frame = requestAnimationFrame(() => {
++      if (step === 1) {
++        nameRef.current?.focus();
++        nameRef.current?.select();
++        return;
++      }
++      titleRef.current?.focus();
++    });
++    return () => cancelAnimationFrame(frame);
++  }, [doneProject, open, saving, step]);
++
+   useEffect(() => () => {
+     if (doneTimerRef.current !== null) window.clearTimeout(doneTimerRef.current);
+   }, []);
+@@ -139,7 +151,7 @@ export default function NewProjectWizard({ open, onClose, onCreate, onDone }: Pr
+         <header className="field-new-project-head">
+           <div>
+             <span className="field-new-project-eyebrow">New project</span>
+-            <h2 id="field-new-project-title">{step === 1 ? 'Start with the essentials' : 'Responsive canvases'}</h2>
++            <h2 ref={titleRef} tabIndex={-1} id="field-new-project-title">{step === 1 ? 'Start with the essentials' : 'Responsive canvases'}</h2>
+           </div>
+           <span className="field-new-project-step">{step} / 2</span>
+         </header>
+diff --git a/src/dashboard/ProjectCard.tsx b/src/dashboard/ProjectCard.tsx
+index 0c9c487..67132e1 100644
+--- a/src/dashboard/ProjectCard.tsx
++++ b/src/dashboard/ProjectCard.tsx
+@@ -165,6 +165,7 @@ export default function ProjectCard(props: Props) {
+   return (
+     <article
+       className="field-project-card"
++      role="listitem"
+       onClick={openFromCardSurface}
+       aria-busy={props.refreshing || undefined}
+       data-refreshing={props.refreshing ? 'true' : undefined}
+diff --git a/src/dashboard/ProjectCardMenu.test.tsx b/src/dashboard/ProjectCardMenu.test.tsx
+new file mode 100644
+index 0000000..360c2f9
+--- /dev/null
++++ b/src/dashboard/ProjectCardMenu.test.tsx
+@@ -0,0 +1,79 @@
++import { fireEvent, render, screen } from '@testing-library/react';
++import { describe, expect, it, vi } from 'vitest';
++import type { FieldProjectMeta } from '@/backend/field-projects';
++import ProjectCardMenu from './ProjectCardMenu';
++
++const project: FieldProjectMeta = {
++  id: 'project-1',
++  name: 'Portfolio',
++  createdAt: '2026-09-26T00:00:00Z',
++  updatedAt: '2026-09-26T01:00:00Z',
++  starred: false,
++  trashedAt: null,
++  thumbnail: null,
++};
++
++function renderOpenMenu() {
++  const onOpenChange = vi.fn();
++
++  render(
++    <article className="field-project-card">
++      <button className="field-project-more" type="button">More</button>
++      <ProjectCardMenu
++        project={project}
++        open
++        onOpenChange={onOpenChange}
++        onOpenProject={vi.fn()}
++        onRename={vi.fn()}
++        onDuplicate={vi.fn()}
++        onToggleStar={vi.fn()}
++        onTrash={vi.fn()}
++        onRestore={vi.fn()}
++        onPermanentDelete={vi.fn()}
++      />
++    </article>,
++  );
++
++  return {
++    onOpenChange,
++    trigger: screen.getByRole('button', { name: 'More' }),
++    menu: screen.getByRole('menu'),
++  };
++}
++
++describe('ProjectCardMenu dismissal', () => {
++  it('dismisses when the user presses outside the project menu', () => {
++    const { onOpenChange } = renderOpenMenu();
++
++    fireEvent.pointerDown(document.body);
++
++    expect(onOpenChange).toHaveBeenCalledWith(false);
++  });
++
++  it('does not dismiss from pointer presses inside the menu or on its trigger', () => {
++    const { menu, onOpenChange, trigger } = renderOpenMenu();
++
++    fireEvent.pointerDown(menu);
++    fireEvent.pointerDown(trigger);
++
++    expect(onOpenChange).not.toHaveBeenCalled();
++  });
++
++  it('dismisses on Escape and returns focus to the project menu trigger', () => {
++    const { onOpenChange, trigger } = renderOpenMenu();
++    screen.getByRole('menuitem', { name: 'Open' }).focus();
++
++    fireEvent.keyDown(window, { key: 'Escape' });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false);
++    expect(document.activeElement).toBe(trigger);
++  });
++
++  it('ignores unrelated keyboard input', () => {
++    const { onOpenChange } = renderOpenMenu();
++
++    fireEvent.keyDown(window, { key: 'Enter' });
++
++    expect(onOpenChange).not.toHaveBeenCalled();
++  });
++});
+diff --git a/src/dashboard/ProjectCardMenu.tsx b/src/dashboard/ProjectCardMenu.tsx
+index a1cba9a..646f485 100644
+--- a/src/dashboard/ProjectCardMenu.tsx
++++ b/src/dashboard/ProjectCardMenu.tsx
+@@ -1,3 +1,4 @@
++import { useEffect, useRef } from 'react';
+ import type { FieldProjectMeta } from '@/backend/field-projects';
+ 
+ type Props = {
+@@ -25,6 +26,50 @@ export default function ProjectCardMenu({
+   onRestore,
+   onPermanentDelete,
+ }: Props) {
++  const menuRef = useRef<HTMLDivElement>(null);
++
++  useEffect(() => {
++    if (!open) return;
++
++    const closeFromPointer = (event: PointerEvent) => {
++      const target = event.target;
++      if (!(target instanceof Node)) {
++        onOpenChange(false);
++        return;
++      }
++
++      const menu = menuRef.current;
++      if (menu?.contains(target)) return;
++
++      const trigger = menu
++        ?.closest('.field-project-card')
++        ?.querySelector<HTMLElement>('.field-project-more');
++      if (trigger?.contains(target)) return;
++
++      onOpenChange(false);
++    };
++
++    const closeFromKeyboard = (event: KeyboardEvent) => {
++      if (event.key !== 'Escape') return;
++      event.preventDefault();
++      event.stopPropagation();
++
++      const trigger = menuRef.current
++        ?.closest('.field-project-card')
++        ?.querySelector<HTMLElement>('.field-project-more');
++
++      onOpenChange(false);
++      trigger?.focus();
++    };
++
++    document.addEventListener('pointerdown', closeFromPointer, true);
++    window.addEventListener('keydown', closeFromKeyboard);
++    return () => {
++      document.removeEventListener('pointerdown', closeFromPointer, true);
++      window.removeEventListener('keydown', closeFromKeyboard);
++    };
++  }, [onOpenChange, open]);
++
+   if (!open) return null;
+   const trashed = Boolean(project.trashedAt);
+ 
+@@ -34,7 +79,7 @@ export default function ProjectCardMenu({
+   };
+ 
+   return (
+-    <div className="field-project-menu" role="menu">
++    <div ref={menuRef} className="field-project-menu" role="menu">
+       {!trashed ? (
+         <>
+           <button role="menuitem" type="button" onClick={() => run(onOpenProject)}>Open</button>
+diff --git a/src/dashboard/ProjectGrid.tsx b/src/dashboard/ProjectGrid.tsx
+index 8dabd3f..74c44a3 100644
+--- a/src/dashboard/ProjectGrid.tsx
++++ b/src/dashboard/ProjectGrid.tsx
+@@ -18,7 +18,7 @@ type Props = {
+ 
+ export default function ProjectGrid({ projects, refreshingProjectIds, openMenuId, openingProjectId, onOpenMenuId, ...actions }: Props) {
+   return (
+-    <div className="field-project-grid">
++    <div className="field-project-grid" role="list">
+       {projects.map((project) => (
+         <ProjectCard
+           key={project.id}
+diff --git a/src/dashboard/RenameProjectDialog.tsx b/src/dashboard/RenameProjectDialog.tsx
+index ba0ecba..ffb3a54 100644
+--- a/src/dashboard/RenameProjectDialog.tsx
++++ b/src/dashboard/RenameProjectDialog.tsx
+@@ -14,24 +14,62 @@ export default function RenameProjectDialog({ project, saving, onClose, onSave }
+ 
+   useEffect(() => {
+     setValue(project?.name ?? '');
+-    if (project) requestAnimationFrame(() => inputRef.current?.select());
++    if (!project) return;
++
++    const frame = requestAnimationFrame(() => {
++      inputRef.current?.focus();
++      inputRef.current?.select();
++    });
++    return () => cancelAnimationFrame(frame);
+   }, [project]);
+ 
++  useEffect(() => {
++    if (!project || saving) return;
++
++    const onKeyDown = (event: KeyboardEvent) => {
++      if (event.key !== 'Escape') return;
++      event.preventDefault();
++      event.stopPropagation();
++      onClose();
++    };
++
++    window.addEventListener('keydown', onKeyDown);
++    return () => window.removeEventListener('keydown', onKeyDown);
++  }, [onClose, project, saving]);
++
+   if (!project) return null;
+ 
+   return (
+-    <div className="field-dashboard-modal-backdrop" role="presentation" onMouseDown={(event) => {
+-      if (event.target === event.currentTarget) onClose();
+-    }}>
+-      <form className="field-dashboard-modal" role="dialog" aria-modal="true" aria-labelledby="field-rename-title" onSubmit={(event) => {
+-        event.preventDefault();
+-        const name = value.trim();
+-        if (name) onSave(name);
+-      }}>
++    <div
++      className="field-dashboard-modal-backdrop"
++      role="presentation"
++      onMouseDown={(event) => {
++        if (!saving && event.target === event.currentTarget) onClose();
++      }}
++    >
++      <form
++        className="field-dashboard-modal"
++        role="dialog"
++        aria-modal="true"
++        aria-labelledby="field-rename-title"
++        aria-busy={saving || undefined}
++        onSubmit={(event) => {
++          event.preventDefault();
++          const name = value.trim();
++          if (name && !saving) onSave(name);
++        }}
++      >
+         <h2 id="field-rename-title">Rename project</h2>
+-        <input ref={inputRef} value={value} onChange={(event) => setValue(event.target.value)} maxLength={200} />
++        <input
++          ref={inputRef}
++          value={value}
++          disabled={saving}
++          aria-label="Project name"
++          onChange={(event) => setValue(event.target.value)}
++          maxLength={200}
++        />
+         <div className="field-dashboard-modal-actions">
+-          <button type="button" onClick={onClose}>Cancel</button>
++          <button type="button" onClick={onClose} disabled={saving}>Cancel</button>
+           <button type="submit" className="field-dashboard-modal-primary" disabled={saving || !value.trim()}>
+             {saving ? 'Saving…' : 'Save'}
+           </button>
+diff --git a/src/styles/dashboard.css b/src/styles/dashboard.css
+index 2599fbd..6740a90 100644
+--- a/src/styles/dashboard.css
++++ b/src/styles/dashboard.css
+@@ -759,6 +759,38 @@ body:has(.field-dashboard-page),
+   font-weight: 620;
+ }
+ 
++.field-dashboard-modal-copy {
++  display: flex;
++  flex-direction: column;
++  gap: 5px;
++}
++
++.field-dashboard-modal-copy p {
++  margin: 0;
++  color: var(--text-secondary);
++  font-size: 10px;
++  line-height: 1.45;
++}
++
++.field-dashboard-modal-danger {
++  height: 28px;
++  padding: 0 10px;
++  border: 1px solid color-mix(in srgb, #d84f4f 80%, transparent);
++  border-radius: var(--radius-md);
++  color: #fff;
++  background: #d84f4f;
++  font-size: 10px;
++  font-weight: 560;
++}
++
++.field-dashboard-modal-danger:hover:not(:disabled) {
++  background: color-mix(in srgb, #d84f4f 88%, #000);
++}
++
++.field-dashboard-modal-danger:disabled {
++  opacity: .55;
++}
++
+ .field-dashboard-modal input {
+   height: 28px;
+   padding: 0 8px;
+@@ -780,7 +812,7 @@ body:has(.field-dashboard-page),
+   gap: 6px;
+ }
+ 
+-.field-dashboard-modal-actions > button:not(.field-dashboard-modal-primary) {
++.field-dashboard-modal-actions > button:not(.field-dashboard-modal-primary):not(.field-dashboard-modal-danger) {
+   height: 28px;
+   padding: 0 10px;
+   border: 1px solid var(--border-default);
+diff --git a/src/dashboard/DashboardCollectionSemantics.test.tsx b/src/dashboard/DashboardCollectionSemantics.test.tsx
+new file mode 100644
+index 0000000..1b88502
+--- /dev/null
++++ b/src/dashboard/DashboardCollectionSemantics.test.tsx
+@@ -0,0 +1,60 @@
++import { render, screen, within } from '@testing-library/react';
++import { describe, expect, it, vi } from 'vitest';
++import type { FieldProjectMeta } from '@/backend/field-projects';
++import DashboardHeader from './DashboardHeader';
++import DashboardLoadingGrid from './DashboardLoadingGrid';
++import ProjectGrid from './ProjectGrid';
++
++const project = {
++  id: 'project-1',
++  name: 'Portfolio',
++  updatedAt: '2026-09-26T12:00:00.000Z',
++  thumbnail: null,
++  starred: false,
++  trashedAt: null,
++} as FieldProjectMeta;
++
++const actions = {
++  onOpen: vi.fn(),
++  onRename: vi.fn(),
++  onDuplicate: vi.fn(),
++  onToggleStar: vi.fn(),
++  onTrash: vi.fn(),
++  onRestore: vi.fn(),
++  onPermanentDelete: vi.fn(),
++};
++
++describe('Dashboard collection semantics', () => {
++  it('exposes the project grid as a list with project cards as list items', () => {
++    render(
++      <ProjectGrid
++        projects={[project]}
++        refreshingProjectIds={new Set()}
++        openMenuId={null}
++        openingProjectId={null}
++        onOpenMenuId={vi.fn()}
++        {...actions}
++      />,
++    );
++
++    const list = screen.getByRole('list');
++    expect(within(list).getAllByRole('listitem')).toHaveLength(1);
++  });
++
++  it('gives the visible project count contextual singular and plural names', () => {
++    const { rerender } = render(
++      <DashboardHeader view="all" count={1} creating={false} refreshing={false} onCreate={vi.fn()} onRefresh={vi.fn()} />,
++    );
++    expect(screen.getByLabelText('1 project').textContent).toBe('1');
++
++    rerender(<DashboardHeader view="all" count={3} creating={false} refreshing={false} onCreate={vi.fn()} onRefresh={vi.fn()} />);
++    expect(screen.getByLabelText('3 projects').textContent).toBe('3');
++  });
++
++  it('exposes initial project loading as a named busy status', () => {
++    render(<DashboardLoadingGrid />);
++
++    const status = screen.getByRole('status', { name: 'Loading projects' });
++    expect(status.getAttribute('aria-busy')).toBe('true');
++  });
++});
+diff --git a/src/dashboard/DashboardSidebar.test.tsx b/src/dashboard/DashboardSidebar.test.tsx
+new file mode 100644
+index 0000000..e8f11d2
+--- /dev/null
++++ b/src/dashboard/DashboardSidebar.test.tsx
+@@ -0,0 +1,74 @@
++import { fireEvent, render, screen } from '@testing-library/react';
++import { describe, expect, it, vi } from 'vitest';
++
++vi.mock('@/shared/loew-figma-icons', () => ({
++  FigmaGridIcon: () => <span aria-hidden="true">grid</span>,
++  FigmaSearchIcon: () => <span aria-hidden="true">search</span>,
++}));
++
++import DashboardSidebar from './DashboardSidebar';
++
++function renderSidebar({
++  view = 'recents',
++  query = '',
++  onViewChange = vi.fn(),
++  onQueryChange = vi.fn(),
++}: {
++  view?: 'recents' | 'all' | 'starred' | 'trash';
++  query?: string;
++  onViewChange?: (view: 'recents' | 'all' | 'starred' | 'trash') => void;
++  onQueryChange?: (query: string) => void;
++} = {}) {
++  render(
++    <DashboardSidebar
++      view={view}
++      query={query}
++      user={null}
++      onViewChange={onViewChange}
++      onQueryChange={onQueryChange}
++    />,
++  );
++
++  return { onViewChange, onQueryChange };
++}
++
++describe('DashboardSidebar navigation semantics', () => {
++  it('marks only the active project view as current', () => {
++    renderSidebar({ view: 'starred' });
++
++    expect(screen.getByRole('button', { name: 'Starred' }).getAttribute('aria-current')).toBe('page');
++    expect(screen.getByRole('button', { name: 'Recents' }).getAttribute('aria-current')).toBeNull();
++    expect(screen.getByRole('button', { name: 'All projects' }).getAttribute('aria-current')).toBeNull();
++    expect(screen.getByRole('button', { name: 'Trash' }).getAttribute('aria-current')).toBeNull();
++  });
++
++  it('preserves view-change behavior', () => {
++    const onViewChange = vi.fn();
++    renderSidebar({ onViewChange });
++
++    fireEvent.click(screen.getByRole('button', { name: 'Trash' }));
++
++    expect(onViewChange).toHaveBeenCalledWith('trash');
++  });
++
++  it('clears a non-empty search with Escape and keeps focus in search', () => {
++    const onQueryChange = vi.fn();
++    renderSidebar({ query: 'portfolio', onQueryChange });
++
++    const search = screen.getByRole('searchbox', { name: 'Search projects' });
++    search.focus();
++    fireEvent.keyDown(search, { key: 'Escape' });
++
++    expect(onQueryChange).toHaveBeenCalledWith('');
++    expect(document.activeElement).toBe(search);
++  });
++
++  it('does not emit a redundant clear for an empty search', () => {
++    const onQueryChange = vi.fn();
++    renderSidebar({ query: '', onQueryChange });
++
++    fireEvent.keyDown(screen.getByRole('searchbox', { name: 'Search projects' }), { key: 'Escape' });
++
++    expect(onQueryChange).not.toHaveBeenCalled();
++  });
++});
+diff --git a/src/dashboard/EmptyState.test.tsx b/src/dashboard/EmptyState.test.tsx
+new file mode 100644
+index 0000000..c204b0b
+--- /dev/null
++++ b/src/dashboard/EmptyState.test.tsx
+@@ -0,0 +1,14 @@
++import { render, screen } from '@testing-library/react';
++import { describe, expect, it } from 'vitest';
++import EmptyState from './EmptyState';
++
++describe('EmptyState semantics', () => {
++  it('exposes the empty result as a status with a level-2 heading', () => {
++    render(<EmptyState title="No projects found" detail="Try a different search." />);
++
++    const status = screen.getByRole('status');
++    expect(status.textContent).toContain('No projects found');
++    expect(status.textContent).toContain('Try a different search.');
++    expect(screen.getByRole('heading', { level: 2, name: 'No projects found' })).toBeTruthy();
++  });
++});
+diff --git a/src/dashboard/NewProjectWizard.test.tsx b/src/dashboard/NewProjectWizard.test.tsx
+new file mode 100644
+index 0000000..a8463ec
+--- /dev/null
++++ b/src/dashboard/NewProjectWizard.test.tsx
+@@ -0,0 +1,119 @@
++import { fireEvent, render, screen, waitFor } from '@testing-library/react';
++import { describe, expect, it, vi } from 'vitest';
++import type { FieldProjectMeta } from '@/backend/field-projects';
++
++vi.mock('./new-project-model', () => ({
++  DEFAULT_NEW_PROJECT_SETTINGS: {
++    name: 'Untitled',
++    canvasPresetId: 'desktop',
++    pageColor: '#ffffff',
++    styleSetId: 'none',
++    additionalViewportIds: [],
++  },
++  NEW_PROJECT_CANVAS_PRESETS: [
++    { id: 'desktop', label: 'Desktop', detail: '1440 × 900', width: 1440, height: 900 },
++    { id: 'mobile', label: 'Mobile', detail: '390 × 844', width: 390, height: 844 },
++  ],
++  NEW_PROJECT_STYLE_SETS: [
++    { id: 'none', label: 'None', detail: 'No preset styles', suggestedPageColor: '#ffffff' },
++  ],
++  availableResponsiveCanvasPresets: (canvasPresetId: string) => (
++    canvasPresetId === 'desktop'
++      ? [{ id: 'mobile', label: 'Mobile', detail: '390 × 844', width: 390, height: 844 }]
++      : []
++  ),
++  normalizeProjectColor: (value: string) => (
++    /^#[0-9a-f]{6}$/i.test(value.trim()) ? value.trim() : '#ffffff'
++  ),
++}));
++
++import NewProjectWizard from './NewProjectWizard';
++
++const createdProject: FieldProjectMeta = {
++  id: 'project-created',
++  name: 'Untitled',
++  createdAt: '2026-09-26T00:00:00Z',
++  updatedAt: '2026-09-26T00:00:00Z',
++  starred: false,
++  trashedAt: null,
++  thumbnail: null,
++};
++
++function renderWizard(overrides: Partial<{
++  onClose: () => void;
++  onCreate: () => Promise<FieldProjectMeta>;
++  onDone: (project: FieldProjectMeta) => void;
++}> = {}) {
++  const onClose = overrides.onClose ?? vi.fn();
++  const onCreate = overrides.onCreate ?? vi.fn().mockResolvedValue(createdProject);
++  const onDone = overrides.onDone ?? vi.fn();
++
++  render(
++    <NewProjectWizard
++      open
++      onClose={onClose}
++      onCreate={onCreate}
++      onDone={onDone}
++    />,
++  );
++
++  return { onClose, onCreate, onDone };
++}
++
++describe('NewProjectWizard focus flow', () => {
++  it('focuses and selects Project name when opened', async () => {
++    renderWizard();
++
++    const input = screen.getByRole('textbox', { name: 'Project name' }) as HTMLInputElement;
++
++    await waitFor(() => {
++      expect(document.activeElement).toBe(input);
++    });
++    expect(input.selectionStart).toBe(0);
++    expect(input.selectionEnd).toBe(input.value.length);
++  });
++
++  it('moves focus into Responsive canvases and restores Project name focus on Back', async () => {
++    renderWizard();
++
++    fireEvent.click(screen.getByRole('button', { name: 'More options' }));
++
++    const heading = await screen.findByRole('heading', { name: 'Responsive canvases' });
++    await waitFor(() => {
++      expect(document.activeElement).toBe(heading);
++    });
++
++    fireEvent.click(screen.getByRole('button', { name: 'Back' }));
++
++    const input = screen.getByRole('textbox', { name: 'Project name' }) as HTMLInputElement;
++    await waitFor(() => {
++      expect(document.activeElement).toBe(input);
++    });
++    expect(input.selectionStart).toBe(0);
++    expect(input.selectionEnd).toBe(input.value.length);
++  });
++
++  it('dismisses on Escape while idle', () => {
++    const onClose = vi.fn();
++    renderWizard({ onClose });
++
++    fireEvent.keyDown(window, { key: 'Escape' });
++
++    expect(onClose).toHaveBeenCalledTimes(1);
++  });
++
++  it('does not dismiss while creation is in flight', async () => {
++    const onClose = vi.fn();
++    const onCreate = vi.fn(() => new Promise<FieldProjectMeta>(() => {}));
++    renderWizard({ onClose, onCreate });
++
++    fireEvent.click(screen.getByRole('button', { name: 'Create' }));
++
++    await screen.findByRole('button', { name: 'Creating…' });
++    fireEvent.keyDown(window, { key: 'Escape' });
++    fireEvent.mouseDown(screen.getByRole('presentation'));
++
++    expect(onCreate).toHaveBeenCalledTimes(1);
++    expect(onClose).not.toHaveBeenCalled();
++  });
++});
+diff --git a/src/dashboard/RenameProjectDialog.test.tsx b/src/dashboard/RenameProjectDialog.test.tsx
+new file mode 100644
+index 0000000..4aee20f
+--- /dev/null
++++ b/src/dashboard/RenameProjectDialog.test.tsx
+@@ -0,0 +1,124 @@
++import { fireEvent, render, screen, waitFor } from '@testing-library/react';
++import { describe, expect, it, vi } from 'vitest';
++import type { FieldProjectMeta } from '@/backend/field-projects';
++import RenameProjectDialog from './RenameProjectDialog';
++
++const project: FieldProjectMeta = {
++  id: 'project-1',
++  name: 'Portfolio',
++  createdAt: '2026-09-26T00:00:00Z',
++  updatedAt: '2026-09-26T01:00:00Z',
++  starred: false,
++  trashedAt: null,
++  thumbnail: null,
++};
++
++describe('RenameProjectDialog', () => {
++  it('focuses and selects the current project name when opened', async () => {
++    render(
++      <RenameProjectDialog
++        project={project}
++        saving={false}
++        onClose={vi.fn()}
++        onSave={vi.fn()}
++      />,
++    );
++
++    const input = screen.getByRole('textbox', { name: 'Project name' }) as HTMLInputElement;
++
++    await waitFor(() => {
++      expect(document.activeElement).toBe(input);
++    });
++    expect(input.selectionStart).toBe(0);
++    expect(input.selectionEnd).toBe(project.name.length);
++  });
++
++  it('dismisses on Escape while idle', () => {
++    const onClose = vi.fn();
++    render(
++      <RenameProjectDialog
++        project={project}
++        saving={false}
++        onClose={onClose}
++        onSave={vi.fn()}
++      />,
++    );
++
++    fireEvent.keyDown(window, { key: 'Escape' });
++
++    expect(onClose).toHaveBeenCalledTimes(1);
++  });
++
++  it('dismisses from the backdrop while idle', () => {
++    const onClose = vi.fn();
++    render(
++      <RenameProjectDialog
++        project={project}
++        saving={false}
++        onClose={onClose}
++        onSave={vi.fn()}
++      />,
++    );
++
++    fireEvent.mouseDown(screen.getByRole('presentation'));
++
++    expect(onClose).toHaveBeenCalledTimes(1);
++  });
++
++  it('locks dismissal controls while a save is in flight', () => {
++    const onClose = vi.fn();
++    render(
++      <RenameProjectDialog
++        project={project}
++        saving
++        onClose={onClose}
++        onSave={vi.fn()}
++      />,
++    );
++
++    fireEvent.keyDown(window, { key: 'Escape' });
++    fireEvent.mouseDown(screen.getByRole('presentation'));
++    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
++
++    expect((screen.getByRole('button', { name: 'Cancel' }) as HTMLButtonElement).disabled).toBe(true);
++    expect((screen.getByRole('textbox', { name: 'Project name' }) as HTMLInputElement).disabled).toBe(true);
++    expect(onClose).not.toHaveBeenCalled();
++  });
++
++  it('submits a trimmed project name', () => {
++    const onSave = vi.fn();
++    render(
++      <RenameProjectDialog
++        project={project}
++        saving={false}
++        onClose={vi.fn()}
++        onSave={onSave}
++      />,
++    );
++
++    const input = screen.getByRole('textbox', { name: 'Project name' });
++    fireEvent.change(input, { target: { value: '  Case study  ' } });
++    fireEvent.submit(input.closest('form')!);
++
++    expect(onSave).toHaveBeenCalledWith('Case study');
++  });
++
++  it('does not submit an empty project name', () => {
++    const onSave = vi.fn();
++    render(
++      <RenameProjectDialog
++        project={project}
++        saving={false}
++        onClose={vi.fn()}
++        onSave={onSave}
++      />,
++    );
++
++    const input = screen.getByRole('textbox', { name: 'Project name' });
++    fireEvent.change(input, { target: { value: '   ' } });
++    fireEvent.submit(input.closest('form')!);
++
++    expect(onSave).not.toHaveBeenCalled();
++    expect((screen.getByRole('button', { name: 'Save' }) as HTMLButtonElement).disabled).toBe(true);
++  });
++});

@@ -1,0 +1,37 @@
+:root { --motion-spring: cubic-bezier(.16,.9,.28,1.08); --motion-control: 220ms; --motion-blur: 1px; }
+/* One curve for controls, glyphs, the stable rail and Inspector review layers. */
+:is(.operator-topbar,.operator-brand img,.nav-copy,.nav-chevron,.utility-label,.utility-arrow,.relay-glyph,.glyph-detail,.signal-mark,.project-tab,.progress-row,.tool-mark,.project-icon img,.utility-button,.operator-button,.attention-action button,.review-filters button,.review-action,.react-operator-nav a,.work-card,.qa-exit,.qa-answer) { transition-timing-function: var(--motion-spring); }
+:is(.status-light,.status-light::after,.chat-card-mark::after,.skeleton-block,.operator-connection::before,.qa-companion) { animation-timing-function: var(--motion-spring) !important; }
+@media (min-width: 901px) { .operator-topbar:is(:hover,:focus-within) .nav-copy { animation: relay-reveal var(--motion-control) var(--motion-spring) backwards; } }
+.presentation-menu[open] .presentation-panel { animation: relay-panel-enter var(--motion-control) var(--motion-spring) backwards; }
+@keyframes relay-panel-enter { from { opacity: 0; transform: translateY(-4px) scale(.99); } 70% { opacity: 1; transform: translateY(1px); } to { transform: none; } }
+@keyframes relay-reveal { from { opacity: 0; transform: translateX(-4px); filter: blur(var(--motion-blur)); } 70% { opacity: 1; transform: translateX(1px); filter: blur(.2px); } to { transform: none; filter: none; } }
+/* Rings are tiny decorative layers: brief blur during travel, clear at rest. */
+.status-light::after { filter: none; }
+@keyframes relay-status-pulse { 0% {opacity:0;transform:scale(.72);filter:none;} 28% {opacity:.72;filter:blur(.5px);} 75% {filter:none;} 100% {opacity:0;transform:scale(1.55);filter:none;} }
+@keyframes relay-status-breathe { 0%,100% {opacity:.62;transform:scale(.98);filter:none;} 30% {filter:blur(.2px);} 50% {opacity:1;transform:scale(1.04);filter:none;} }
+@keyframes relay-status-breathe-ring { 0%,100% {opacity:.06;transform:scale(.82);filter:none;} 30% {filter:blur(.4px);} 50% {opacity:.5;transform:scale(1.2);filter:none;} }
+@keyframes relay-status-attention { 0% {opacity:0;transform:scale(.78);filter:none;} 36% {opacity:.82;filter:blur(.5px);} 75% {filter:none;} 100% {opacity:0;transform:scale(1.7);filter:none;} }
+@keyframes relay-status-danger { 0%,18% {opacity:0;transform:scale(.82);filter:none;} 34% {opacity:.88;filter:blur(.5px);} 75% {filter:none;} 100% {opacity:0;transform:scale(1.62);filter:none;} }
+@keyframes inspector-card-pulse { 0% {opacity:0;transform:scale(.84);filter:none;} 28% {opacity:.75;filter:blur(.4px);} 75% {filter:none;} 100% {opacity:0;transform:scale(1.18);filter:none;} }
+@keyframes inspector-card-breathe { 0%,100% {opacity:.1;transform:scale(.9);filter:none;} 30% {filter:blur(.3px);} 50% {opacity:.62;transform:scale(1.08);filter:none;} }
+@media (max-width: 900px) { :root { --motion-blur: .6px; } }
+/* Preference changes cancel WAAPI effects too, in bindMotion. Static camera and
+   docking transforms remain functional; only animated travel is disabled. */
+:root[data-presentation-motion="calm"] *, :root[data-presentation-motion="calm"] *::before, :root[data-presentation-motion="calm"] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+:root[data-presentation-motion="calm"] .status-light::after { display: none; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } .status-light::after { display: none; } }
+
+/* Legacy QA wiggles use an important shorthand, so suppress them explicitly. */
+:root[data-presentation-motion="calm"] .qa-companion.qa-edge-wiggle { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { :root .qa-companion.qa-edge-wiggle { animation: none !important; } }
+
+.qa-companion.qa-edge-wiggle[data-docked] { animation-timing-function: var(--motion-spring) !important; }
+.signal-card, .signal-data-visual i { animation-timing-function: var(--motion-spring); }
+
+
+/* Field owns semantic glyph feedback; avoid stacking older hover transitions. */
+[data-loew-glyph] { transform-box:fill-box; transform-origin:center; transition:none !important; }
+:root .presentation-menu[open] .presentation-panel[data-loew-spring=true] { animation:none !important; }
+@media(prefers-reduced-motion:reduce){[data-loew-glyph]{transform:none !important;}}
+:root[data-presentation-motion=calm] [data-loew-glyph]{transform:none !important;}

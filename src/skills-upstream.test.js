@@ -1,0 +1,5 @@
+import test from "node:test";import assert from "node:assert/strict";import {canIngestUpstream,compareUpstream,planUpstreamUpdate} from "./skills-upstream.js";
+const m={origin:"upstream",license:"MIT",provenance:{revision:"a".repeat(40)},integrity:"sha256:"+"a".repeat(64),update_policy:"pinned",executable:false};
+test("upstream ingestion requires pinned licensed non-executable provenance",()=>{assert.equal(canIngestUpstream(m).ok,true);assert.equal(canIngestUpstream({...m,license:"unknown"}).ok,false);assert.equal(canIngestUpstream({...m,executable:true}).ok,false);});
+test("pinned drift never auto-updates",()=>{const x=compareUpstream(m,{revision:"def"});assert.equal(x.changed,true);assert.equal(x.action,"stay-pinned");assert.equal(planUpstreamUpdate(m,{revision:"def"}).allowed,false);});
+test("license drift always requires review",()=>{const x=planUpstreamUpdate({...m,update_policy:"tracked"},{license:"Apache-2.0"});assert.equal(x.allowed,false);assert.equal(x.action,"license-review");});

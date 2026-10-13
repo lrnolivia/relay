@@ -1,0 +1,9 @@
+# Runner import provenance
+
+Source: `lrnolivia/loew-runner` main at `71a5fdbae3303b28a840579d816dc846aaae5186`, refreshed after the Batch 2 heartbeat. Existing Relay first-parent base: `2ddc8fdbbda871ad91e563fc657bcc4c382fd236`.
+
+The import commit has two parents: the exact Relay branch base first, and the unmodified Runner source commit second. Runner's original commit objects, authors, messages, timestamps, merge edges, trees and blobs are preserved unchanged; no filter/rewrite or anonymous flat-copy history is used. The selected implementation blobs are placed under `packages/runner/` and listed in `import-manifest.json`. Durable state remains only in the old live authority working tree during Batch 2, although historical trees remain naturally accessible through Git ancestry.
+
+Relay cannot transfer another repository's complete object graph or create a two-parent file commit. The narrow exception is Git's receive-pack object transfer to the already admitted, exact-head Batch 2 branch, with no force push and no main write. All admission, PR creation, ready, checks, merge and remote readback use Relay. A merge commit (not squash/rebase) is required for this batch to retain Runner ancestry on Relay main; this is the explicit provenance exception to the project's normal squash preference.
+
+Verification: import/layout tests hash every imported blob against the manifest; `git merge-base --is-ancestor 71a5fdbae3303b28a840579d816dc846aaae5186 HEAD` proves Runner ancestry; the same check against the Relay base proves existing history remains reachable. `git rev-list --count 71a5fdbae3303b28a840579d816dc846aaae5186` records the preserved source graph size. After merge, both ancestry checks must be repeated against remote main, along with exact merged PR/head readback. No live control records, production configuration or old repository retirement is included in this batch.

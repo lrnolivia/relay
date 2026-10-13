@@ -1,0 +1,315 @@
+{
+  "schema": 1,
+  "purpose": "durable continuation packet; current Relay is ownership authority",
+  "prepared_at": "2026-10-07T09:11:03.804586+00:00",
+  "snapshot": {
+    "observed_at": "2026-10-07T09:07:58.516Z",
+    "record_sha": "f6c80c87742ef14a97394e97c22e6eade68cb349",
+    "policy_sha": "f100beb1c8455f59da2b4a152878ddab2ceccdee",
+    "engine_sha": "591d0155555a74db4769fda289e5212b07609e65",
+    "assignment": "relay-mcp-rebuild-continuation-20261003",
+    "owner_before": "01a11484-a484-7191-baa7-5e64f424f68b",
+    "successor": "01a1146d-0267-735e-8332-fa38cf7fb007",
+    "branch": "relay/mcp-rebuild-20261003",
+    "goal": "Continue the existing unfinished full Relay MCP rebuild, restoring original1.9 promised capabilities and integrating approved Relay live-panel/site/card work. Archival assignment closure is not proof of functional delivery.",
+    "ledger_refs": [
+      "relay-mcp-rebuild-20261001",
+      "relay-mcp-host-proof-20261001",
+      "relay-mcp-feedback-routing-20261001",
+      "relay-1.9-skills-runtime-creative-20260930"
+    ]
+  },
+  "authorization": {
+    "source_chat": "01a11484-a484-7191-baa7-5e64f424f68b",
+    "direct_user_text": "i'm passing the rest of your work to Julian to run on internal work. prepare what you must.",
+    "implementation_here": "stopped; documentation preservation only"
+  },
+  "verified_product": {
+    "repository": "lrnolivia/relay",
+    "commit": "1b949160cd43e879efbf405da52f6333ffa61843",
+    "tree": "a3655affe1779d0e5a76937ee325447d70ea8639",
+    "reviewed_head": "b9f5aa9262d34703198578de502a78eddb806092",
+    "pr": "https://github.com/lrnolivia/relay/pull/175",
+    "serving_observed_by": "2026-10-07T08:49:08.628Z",
+    "build": "dfdc4f9e-8424-4001-9783-05467feb1e79",
+    "deployment": "24accc92-b05c-40d7-b3cb-0ca9c0a588ae",
+    "version": "822badf0-7c27-47bb-a449-e29c74b163ee",
+    "traffic_percent": 100
+  },
+  "toolchain": {
+    "node": "22.23.3",
+    "npm": "10.9.9",
+    "wrangler": "4.148.0",
+    "workerd": "1.20261006.1",
+    "playwright": "1.60.0",
+    "lock_sha256": "302f01f74eef065ae1bea00a1fe6d0922b8cc60fe181e36ecd1c1e7ae24aa034"
+  },
+  "files": {
+    "TO_JULIAN.md": {
+      "bytes": 17011,
+      "sha256": "be8fa51aab2a75db24b447f6c8142468e3341dd6c19960fb6701379336fb1ba6"
+    },
+    "acceptance.md": {
+      "bytes": 4023,
+      "sha256": "bd2051ba249ff4590559affee31881c261da889288e22a011ed72eaa9cc488f0"
+    },
+    "human-language-proposal.md": {
+      "bytes": 65892,
+      "sha256": "4a4a119d0b5414d2c970297fa086ac82ff7bd3be49cfd125f20ed5ea114381e8"
+    },
+    "screenshot-evidence-proposal.md": {
+      "bytes": 61503,
+      "sha256": "2da2c8407f24945e2926e0c582c5e8851fe45c7c27f65af48f3ce91ef10753cf"
+    }
+  },
+  "supplementary_local_receipts": "qa-evidence/local-github-workflow/; no unpublished product source; preserve until successor recovery",
+  "handoff_commit_identity": "recorded separately in immutable Relay context and PR; not self-referential",
+  "source_recovery": "existing release independently restore-verified; incremental handoff remote fetch, fsck and hash-checked restoration required before transfer",
+  "proposal_library_refs": {
+    "human-language-proposal.md": "libfile_3adfc8a6abc08191af5e6491fdb2f90b version 0",
+    "screenshot-evidence-proposal.md": "libfile_ec0bb87065dc819184bcd26d008cd68a"
+  },
+  "hosted_quality_receipt": {
+    "head": "b9f5aa9262d34703198578de502a78eddb806092",
+    "run_id": "37594693262",
+    "suites": [
+      {
+        "id": "inspector",
+        "status": "passed",
+        "exit_code": 0
+      },
+      {
+        "id": "runner",
+        "status": "passed",
+        "exit_code": 0
+      },
+      {
+        "id": "layout",
+        "status": "passed",
+        "exit_code": 0
+      },
+      {
+        "id": "contracts",
+        "status": "passed",
+        "exit_code": 0
+      },
+      {
+        "id": "web",
+        "status": "passed",
+        "exit_code": 0
+      }
+    ],
+    "source_contracts": "passed",
+    "runtime": "local-workerd passed",
+    "stages": [
+      {
+        "stage": "browser",
+        "exit_code": 0,
+        "log_sha256": "7991316abe6276fa9b44201b1f7767c47b2d5b0e7f7ecda32265a67668165bb2"
+      },
+      {
+        "stage": "build",
+        "exit_code": 0,
+        "log_sha256": "4bed360d36168587f48b8e232094dea747de42b428d452865e2ab803fe52c0e9"
+      },
+      {
+        "stage": "context-card",
+        "exit_code": 0,
+        "log_sha256": "cf0f86acab68805a593798b435854a91013fd6483e46ea06dbd8ce3f1de80705"
+      },
+      {
+        "stage": "contracts",
+        "exit_code": 0,
+        "log_sha256": "6edb5a702bc9fd4e3795da616c7a84659216cb3073a04bd0847d17859918b9ff"
+      },
+      {
+        "stage": "focused",
+        "exit_code": 0,
+        "log_sha256": "393f1d7b06aca6eba5fba737423604ab840e8bc1a315ad646d9f3ce04de34f3e"
+      },
+      {
+        "stage": "install",
+        "exit_code": 0,
+        "log_sha256": "a007bc7c8b338d3d1f10aae12ac771e2f5d74757d71b81684284aaba5ca529fc"
+      },
+      {
+        "stage": "runtime",
+        "exit_code": 0,
+        "log_sha256": "09b6898a62ac3a7c329fbf34a8d3d4076fcf078e603ef2fb5a11467faf940877"
+      },
+      {
+        "stage": "toolchain",
+        "exit_code": 0,
+        "log_sha256": "a9f9573f2c8f62bdea168aac165a520998a6ce7b12c1f9c81991408d0e2d5d7a"
+      },
+      {
+        "stage": "typecheck",
+        "exit_code": 0,
+        "log_sha256": "e1cbcca7b99958530285ae2b670070db224f2e65ae7460fb34d7a94dd5b62aec"
+      }
+    ],
+    "captures": 10,
+    "readback_and_local_hashes_verified": true
+  },
+  "production_receipt": {
+    "source": "1b949160cd43e879efbf405da52f6333ffa61843",
+    "run_id": "37595323077",
+    "quality": "all5passed",
+    "production": "authenticated exact-source passed",
+    "web_build": "f1f353e16f2638c33b1ce0365a9ca5385be4781faf062239e8ed4c8df05c2702",
+    "production_captures": [
+      {
+        "surface": "relay-1440",
+        "evidence_id": "vis_cab980fd-38a3-4a10-afff-4ec560aa3b04",
+        "sha256": "e2d68802811ca93555172a41229dca525209188b9c41fd0f4b09b50a048d0c5c"
+      },
+      {
+        "surface": "files-1440",
+        "evidence_id": "vis_cd0259d6-c6d2-4950-a312-68013f38976a",
+        "sha256": "2e4d77a3dd6d8d30600f7db1374a38ce367cd0dad9466cd502720cf677252044"
+      },
+      {
+        "surface": "relay-390",
+        "evidence_id": "vis_d8416966-7108-40dd-83cc-abb523019d57",
+        "sha256": "e867559bc8fac5c02a21bb742cf05c8bbbcf67f103ce9a3da45abcbb9336d71e"
+      },
+      {
+        "surface": "files-390",
+        "evidence_id": "vis_6167e0ef-edfa-4609-bac6-f5d8ee87e9f5",
+        "sha256": "4551c4c00d131cee1b345b156aeab209946d152b32bd5b47d032fc88b029361f"
+      }
+    ],
+    "files_lifecycle": "passed",
+    "retained_captures": 4,
+    "stages": [
+      {
+        "job": "quality",
+        "stage": "browser",
+        "exit_code": 0,
+        "log_sha256": "e8d76487bb7a51e5eb5aba43dbda357464db8ad13f83cb6654b77dc3ee62fd65"
+      },
+      {
+        "job": "quality",
+        "stage": "build",
+        "exit_code": 0,
+        "log_sha256": "51b677e338a863142c3fd3fcfd43a5be31b4f9de769158110baba7094829ae12"
+      },
+      {
+        "job": "quality",
+        "stage": "contracts",
+        "exit_code": 0,
+        "log_sha256": "a8d01e916e66e1c14764884c273adcd4d2bc1a4b8e28ee15235c3004cac77c6b"
+      },
+      {
+        "job": "quality",
+        "stage": "focused",
+        "exit_code": 0,
+        "log_sha256": "06982bc6b25e32c32308edb62de5c1bbebf5ae0e666d9d16afab454333a951b2"
+      },
+      {
+        "job": "quality",
+        "stage": "install",
+        "exit_code": 0,
+        "log_sha256": "86dde02c2ceaed11823fd69146bb3ceb501fd560f2a327bf2e3cae12a9914daf"
+      },
+      {
+        "job": "quality",
+        "stage": "runtime",
+        "exit_code": 0,
+        "log_sha256": "09b6898a62ac3a7c329fbf34a8d3d4076fcf078e603ef2fb5a11467faf940877"
+      },
+      {
+        "job": "quality",
+        "stage": "toolchain",
+        "exit_code": 0,
+        "log_sha256": "a9f9573f2c8f62bdea168aac165a520998a6ce7b12c1f9c81991408d0e2d5d7a"
+      },
+      {
+        "job": "quality",
+        "stage": "typecheck",
+        "exit_code": 0,
+        "log_sha256": "e1cbcca7b99958530285ae2b670070db224f2e65ae7460fb34d7a94dd5b62aec"
+      },
+      {
+        "job": "website-production",
+        "stage": "browser",
+        "exit_code": 0,
+        "log_sha256": "c7a2256f44af7259305989d3900ea23e342675907c8c6129346e2e9bb26965d5"
+      },
+      {
+        "job": "website-production",
+        "stage": "build",
+        "exit_code": 0,
+        "log_sha256": "2df8c6710ff3943c2f400b00dc15728587bb9e0ac6a0a5437367db0e2e345c9b"
+      },
+      {
+        "job": "website-production",
+        "stage": "install",
+        "exit_code": 0,
+        "log_sha256": "a007bc7c8b338d3d1f10aae12ac771e2f5d74757d71b81684284aaba5ca529fc"
+      },
+      {
+        "job": "website-production",
+        "stage": "production",
+        "exit_code": 0,
+        "log_sha256": "4f09bf807a5a5b79f174ac7ae8385e2e106027f683505133c69a04d9b9ba75d4"
+      },
+      {
+        "job": "website-production",
+        "stage": "retained",
+        "exit_code": 0,
+        "log_sha256": "2a7e95ea5ab88d9104681274c1ed5bab3a3d1de058df9595d71090b42ab8b939"
+      },
+      {
+        "job": "website-production",
+        "stage": "toolchain",
+        "exit_code": 0,
+        "log_sha256": "a9f9573f2c8f62bdea168aac165a520998a6ce7b12c1f9c81991408d0e2d5d7a"
+      }
+    ],
+    "images_readback_and_local_hashes_verified": true
+  },
+  "incremental_release_restore_receipt": {
+    "source": "b9f5aa9262d34703198578de502a78eddb806092",
+    "tree": "0abfa8ef727025b54dc3a54f9853855d75439531",
+    "archive_sha256": "359c69705082319493dcbb6279ae0f9a61ffa88b663936167d70b0dedadfe3a9",
+    "restored_directory": "/var/folders/fp/nnkhn54j5m16sj4qkmppcq180000gn/T/relay-platform-restored-LjjN8R",
+    "files": [
+      {
+        "path": "scripts/relay-executor.mjs",
+        "sha256": "955db8456f18deba7b7207451912ca1eeddd701975d9b1bbd7056df79fc071bf"
+      },
+      {
+        "path": "scripts/relay-executor.test.mjs",
+        "sha256": "072163bcd61089850a81b2a4f498c8f40687d56f5b18cdf53c1215581df5c5e0"
+      },
+      {
+        "path": "docs/relay/SOURCE_CHECKPOINT_REPAIR_20261007.md",
+        "sha256": "026077596e08402cf63a9ed3ed07e3c90a4dd108b5ed916696fc74f314f28225"
+      }
+    ],
+    "remote_readback": true,
+    "restore_verified": true,
+    "observed_at": "2026-10-07T08:34:38.541Z"
+  },
+  "merged_release_bytes_receipt": {
+    "source": "1b949160cd43e879efbf405da52f6333ffa61843",
+    "restore_verified_base": "b9f5aa9262d34703198578de502a78eddb806092",
+    "incremental_source_files": [
+      {
+        "path": "scripts/relay-executor.mjs",
+        "sha256": "955db8456f18deba7b7207451912ca1eeddd701975d9b1bbd7056df79fc071bf"
+      },
+      {
+        "path": "scripts/relay-executor.test.mjs",
+        "sha256": "072163bcd61089850a81b2a4f498c8f40687d56f5b18cdf53c1215581df5c5e0"
+      },
+      {
+        "path": "docs/relay/SOURCE_CHECKPOINT_REPAIR_20261007.md",
+        "sha256": "026077596e08402cf63a9ed3ed07e3c90a4dd108b5ed916696fc74f314f28225"
+      }
+    ],
+    "merged_bytes_match_restored_source": true,
+    "tree": "a3655affe1779d0e5a76937ee325447d70ea8639"
+  }
+}

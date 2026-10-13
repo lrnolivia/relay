@@ -1,0 +1,1185 @@
+{
+  "id": "relay",
+  "record_sha": "133addaf6b4b6e0289ba434330eb2bac727cf045",
+  "queue": [
+    {
+      "id": "relay-operation-framework-20260930",
+      "owner": "relay-operation-framework-20260930",
+      "goal": "Turn Relay's production primitives into a durable resumable operation framework so agents invoke policy-defined workflows instead of manually conducting every GitHub, Cloudflare, Runner and QA step.",
+      "acceptance": "Every substantial workflow can create a stable operation_id with persisted stage/state, exact source/head/PR/check/merge/version/deployment/runtime identities, timestamps, retry/reconciliation history, blocker/waiting-for-human state and recovery/rollback state; reconnecting agents can resume from the durable receipt without reconstructing chat history; server-side recipes cover at least ship-change, publish-worker, qa-then-merge and rollback-release; ambiguous mutations reconcile by readback before retry; event/webhook updates can advance operation state without chat polling; release policy supports bounded canary/verify/promote/rollback semantics without protection bypass; operation status/history is queryable for UI; tool-surface growth stays minimal by preferring recipes/resources/contracts over one tool per step. Tool-pattern contract: operation recipes and their exposed tool interfaces consume the Relay 1.9.8 tool-design standard derived from Arcade's Agentic Tool Patterns. Recipes should prefer explicit task bundles/tool chains over forcing agents to manually orchestrate repetitive low-level calls, expose durable operation IDs and progressive status, classify failures with retry/user/auth/permanent semantics plus recovery guidance, preserve idempotent/readback/transaction boundaries, keep outputs structured/token-efficient, and enforce permission/secret/scope rules server-side. Deviations from applicable patterns must be explicit and justified; do not multiply tools merely to satisfy a pattern mechanically.",
+      "next_action": "Define the operation/receipt schema and transition invariants first, but consume the Relay 1.9.8 agentic-tool standard for recipe/tool boundaries, errors, discovery, output shaping and security. Reuse existing source/cloud/verify primitives and prefer durable high-level recipes where they eliminate fragile manual tool chains.",
+      "paths": [
+        "src/operations.js",
+        "src/operation-receipts.js",
+        "src/operation-recipes.js",
+        "src/operation-events.js",
+        "src/release-policy.js",
+        "src/relay-entry.js",
+        "src/operations.test.js",
+        "src/operation-receipts.test.js",
+        "src/operation-recipes.test.js"
+      ],
+      "resources": [
+        "relay-operation-framework",
+        "relay-publication-receipts",
+        "relay-release-orchestration",
+        "relay-agentic-tool-standard",
+        "arcade-agentic-tool-patterns",
+        "relay-tool-conformance-evals"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T13:25:45.579Z",
+      "ledger_refs": [
+        "RFS-034"
+      ],
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-01T03:16:27.124Z",
+          "by": "relay-operation-framework-20260930",
+          "reason": "Make durable operations conform to the same production-grade agentic-tool standard instead of treating tool-pattern hardening as a separate documentation exercise.",
+          "fields": [
+            "acceptance",
+            "next_action",
+            "resources",
+            "ledger_refs"
+          ],
+          "before": {
+            "acceptance": "Every substantial workflow can create a stable operation_id with persisted stage/state, exact source/head/PR/check/merge/version/deployment/runtime identities, timestamps, retry/reconciliation history, blocker/waiting-for-human state and recovery/rollback state; reconnecting agents can resume from the durable receipt without reconstructing chat history; server-side recipes cover at least ship-change, publish-worker, qa-then-merge and rollback-release; ambiguous mutations reconcile by readback before retry; event/webhook updates can advance operation state without chat polling; release polic...",
+            "next_action": "Define and test the operation/receipt schema and transition invariants first. Reuse existing Relay source/cloud/verify primitives; do not fork their auth or safety rules.",
+            "resources": [
+              "relay-operation-framework",
+              "relay-publication-receipts",
+              "relay-release-orchestration"
+            ],
+            "ledger_refs": null
+          },
+          "after": {
+            "acceptance": "Every substantial workflow can create a stable operation_id with persisted stage/state, exact source/head/PR/check/merge/version/deployment/runtime identities, timestamps, retry/reconciliation history, blocker/waiting-for-human state and recovery/rollback state; reconnecting agents can resume from the durable receipt without reconstructing chat history; server-side recipes cover at least ship-change, publish-worker, qa-then-merge and rollback-release; ambiguous mutations reconcile by readback before retry; event/webhook updates can advance operation state without chat polling; release polic...",
+            "next_action": "Define the operation/receipt schema and transition invariants first, but consume the Relay 1.9.8 agentic-tool standard for recipe/tool boundaries, errors, discovery, output shaping and security. Reuse existing source/cloud/verify primitives and prefer durable high-level recipes where they eliminate fragile manual tool chains.",
+            "resources": [
+              "relay-operation-framework",
+              "relay-publication-receipts",
+              "relay-release-orchestration",
+              "relay-agentic-tool-standard",
+              "arcade-agentic-tool-patterns",
+              "relay-tool-conformance-evals"
+            ],
+            "ledger_refs": [
+              "RFS-034"
+            ]
+          }
+        }
+      ],
+      "updated_at": "2026-10-01T03:16:27.124Z"
+    },
+    {
+      "id": "relay-mcp-app-ui-20260930",
+      "owner": "relay-mcp-app-ui-20260930",
+      "goal": "Historical lineage only: the standalone opened-Relay MCP App workspace track was absorbed into Relay 1.9.9 so the opened app's interactive chat/workspace and inline response cards are designed and shipped together.",
+      "acceptance": "No independent implementation should start from this assignment. Its persistent ChatGPT app workspace, QA/review, cross-project navigation, sustained interaction and operation-receipt intent are owned by successor assignment relay-1.9.9-chatgpt-native-experience-20261001.",
+      "next_action": "Do not claim independently. Continue the opened Relay app workspace and interactive in-app chat under relay-1.9.9-chatgpt-native-experience-20261001.",
+      "paths": [
+        "docs/relay/RELAY_MCP_APP_UI_LINEAGE.md"
+      ],
+      "resources": [
+        "relay-superseded-lineage"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T13:25:51.183Z",
+      "amendment_count": 3,
+      "amendments": [
+        {
+          "at": "2026-10-01T02:51:08.664Z",
+          "by": "relay-mcp-app-ui-20260930",
+          "reason": "Clarify the product boundary exposed by the first successful MCP render: inline response UI and the opened Relay app are distinct experiences and should not share one composition.",
+          "fields": [
+            "acceptance",
+            "next_action",
+            "resources"
+          ],
+          "before": {
+            "acceptance": "ChatGPT can render compact live operation cards, project status, release/deployment state and human-QA requests directly in conversation; human-QA UI consumes the canonical Runner QA-helper contract and Visuals IDs, supports targeted questions/checklists/notes/verdicts, and can expand into a full-screen review experience without creating a parallel store; render surfaces reuse durable Relay operation receipts and existing bounded mutation tools; headless production tools remain mostly headless; UI can send bounded follow-up actions/messages, refresh state, and preserve exact artifact identi...",
+            "next_action": "Begin after the durable operation receipt shape is stable enough to consume. Treat the current qa-shell design as authoritative for human review interaction; wire to it rather than redesigning it.",
+            "resources": [
+              "relay-mcp-app-ui",
+              "relay-operation-framework",
+              "runner-human-qa",
+              "relay-publication-receipts"
+            ]
+          },
+          "after": {
+            "acceptance": "ChatGPT can render compact live operation cards, project status, release/deployment state and human-QA requests directly in conversation; human-QA UI consumes the canonical Runner QA-helper contract and Visuals IDs, supports targeted questions/checklists/notes/verdicts, and can expand into a full-screen review experience without creating a parallel store; render surfaces reuse durable Relay operation receipts and existing bounded mutation tools; headless production tools remain mostly headless; UI can send bounded follow-up actions/messages, refresh state, and preserve exact artifact identi...",
+            "next_action": "Design Relay as three coordinated surfaces sharing one state model: compact contextual in-chat response cards; a rich persistent Relay app workspace when the app is opened inside ChatGPT; and the standalone relay.loew.fi web dashboard. Build inline cards first for operation/project/release/staff/blocker/verification/QA responses, while preserving a separate app-shell/navigation experience for opened-app use.",
+            "resources": [
+              "relay-mcp-app-ui",
+              "relay-operation-framework",
+              "runner-human-qa",
+              "relay-publication-receipts",
+              "relay-inline-response-cards",
+              "relay-opened-app-workspace",
+              "relay-three-surface-ui-contract",
+              "relay-progressive-disclosure-ui"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-01T02:55:59.313Z",
+          "by": "relay-mcp-app-ui-20260930",
+          "reason": "Separate opened-app workspace ownership from the inline conversational card design system so Relay 1.9.8 can own cards without path/contract collision.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action",
+            "paths",
+            "resources"
+          ],
+          "before": {
+            "goal": "Make Relay's primary product experience an interactive in-chat MCP App rather than a prose wrapper around headless tools.",
+            "acceptance": "ChatGPT can render compact live operation cards, project status, release/deployment state and human-QA requests directly in conversation; human-QA UI consumes the canonical Runner QA-helper contract and Visuals IDs, supports targeted questions/checklists/notes/verdicts, and can expand into a full-screen review experience without creating a parallel store; render surfaces reuse durable Relay operation receipts and existing bounded mutation tools; headless production tools remain mostly headless; UI can send bounded follow-up actions/messages, refresh state, and preserve exact artifact identi...",
+            "next_action": "Design Relay as three coordinated surfaces sharing one state model: compact contextual in-chat response cards; a rich persistent Relay app workspace when the app is opened inside ChatGPT; and the standalone relay.loew.fi web dashboard. Build inline cards first for operation/project/release/staff/blocker/verification/QA responses, while preserving a separate app-shell/navigation experience for opened-app use.",
+            "paths": [
+              "src/relay-chat-ui.js",
+              "src/relay-operation-ui.js",
+              "src/relay-qa-ui.js",
+              "src/relay-project-ui.js",
+              "src/relay-release-ui.js",
+              "src/relay-ui.js",
+              "src/relay-entry.js",
+              "src/relay-chat-ui.test.js"
+            ],
+            "resources": [
+              "relay-mcp-app-ui",
+              "relay-operation-framework",
+              "runner-human-qa",
+              "relay-publication-receipts",
+              "relay-inline-response-cards",
+              "relay-opened-app-workspace",
+              "relay-three-surface-ui-contract",
+              "relay-progressive-disclosure-ui"
+            ]
+          },
+          "after": {
+            "goal": "Build Relay's persistent ChatGPT app workspace as a rich control-center experience distinct from inline conversational response cards.",
+            "acceptance": "When Relay is opened as an app inside ChatGPT, it provides a persistent workspace/control-center experience with cross-project navigation, Today, operations, release/deployment state, history, QA/review flows, and sustained interaction. It consumes canonical Runner/Source/Cloud/Verify state and durable receipts without creating parallel state. Human-QA uses the canonical QA-helper/Visuals contracts and may expand into focused review surfaces. The opened-app workspace is optimized for the ChatGPT app container and may reuse shared Relay components/view-models, but it does not own the inline ...",
+            "next_action": "Begin after the durable operation framework is stable enough to consume. Focus on the opened Relay app workspace/control-center shell and sustained workflows; consume the 1.9.8 inline card system rather than designing or owning inline conversational cards here.",
+            "paths": [
+              "src/relay-app-ui.js",
+              "src/relay-project-ui.js",
+              "src/relay-release-ui.js",
+              "src/relay-qa-ui.js",
+              "src/relay-ui.js",
+              "src/relay-entry.js",
+              "src/relay-app-ui.test.js"
+            ],
+            "resources": [
+              "relay-opened-app-workspace",
+              "relay-operation-framework",
+              "runner-human-qa",
+              "relay-publication-receipts",
+              "relay-three-surface-ui-contract"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-01T02:58:41.388Z",
+          "by": "relay-mcp-app-ui-20260930",
+          "reason": "Absorb the separate opened-app track into the user's unified 1.9.9 ChatGPT-native experience release.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action",
+            "paths",
+            "resources"
+          ],
+          "before": {
+            "goal": "Build Relay's persistent ChatGPT app workspace as a rich control-center experience distinct from inline conversational response cards.",
+            "acceptance": "When Relay is opened as an app inside ChatGPT, it provides a persistent workspace/control-center experience with cross-project navigation, Today, operations, release/deployment state, history, QA/review flows, and sustained interaction. It consumes canonical Runner/Source/Cloud/Verify state and durable receipts without creating parallel state. Human-QA uses the canonical QA-helper/Visuals contracts and may expand into focused review surfaces. The opened-app workspace is optimized for the ChatGPT app container and may reuse shared Relay components/view-models, but it does not own the inline ...",
+            "next_action": "Begin after the durable operation framework is stable enough to consume. Focus on the opened Relay app workspace/control-center shell and sustained workflows; consume the 1.9.8 inline card system rather than designing or owning inline conversational cards here.",
+            "paths": [
+              "src/relay-app-ui.js",
+              "src/relay-project-ui.js",
+              "src/relay-release-ui.js",
+              "src/relay-qa-ui.js",
+              "src/relay-ui.js",
+              "src/relay-entry.js",
+              "src/relay-app-ui.test.js"
+            ],
+            "resources": [
+              "relay-opened-app-workspace",
+              "relay-operation-framework",
+              "runner-human-qa",
+              "relay-publication-receipts",
+              "relay-three-surface-ui-contract"
+            ]
+          },
+          "after": {
+            "goal": "Historical lineage only: the standalone opened-Relay MCP App workspace track was absorbed into Relay 1.9.9 so the opened app's interactive chat/workspace and inline response cards are designed and shipped together.",
+            "acceptance": "No independent implementation should start from this assignment. Its persistent ChatGPT app workspace, QA/review, cross-project navigation, sustained interaction and operation-receipt intent are owned by successor assignment relay-1.9.9-chatgpt-native-experience-20261001.",
+            "next_action": "Do not claim independently. Continue the opened Relay app workspace and interactive in-app chat under relay-1.9.9-chatgpt-native-experience-20261001.",
+            "paths": [
+              "docs/relay/RELAY_MCP_APP_UI_LINEAGE.md"
+            ],
+            "resources": [
+              "relay-superseded-lineage"
+            ]
+          }
+        }
+      ],
+      "updated_at": "2026-10-01T02:58:41.388Z"
+    },
+    {
+      "id": "relay-web-dashboard-20260930",
+      "owner": "relay-web-dashboard-20260930",
+      "goal": "Expose Relay's MCP App dashboard as a first-class authenticated web dashboard on relay.loew.fi with parity to the in-chat state model and controls.",
+      "acceptance": "relay.loew.fi presents the same projects, durable operations, publication receipts, QA handoffs, release state, recovery/rollback actions and history as the MCP App without duplicating state; shared components/data adapters are reused where practical; deep links can open a specific project/operation/release/QA item; auth and mutations use Relay's existing bounded control plane; web and in-chat surfaces remain behaviorally consistent; the dashboard consumes the future shared suite shell/navigation so Relay feels like one utility with Runner and Inspector rather than a separate website. Surface parity means canonical state, actions, receipts, identity and behavioral outcomes remain consistent across inline chat cards, the opened ChatGPT app workspace and relay.loew.fi; it does not require identical composition. VISUAL CANON: the current Inspector chat-card preview gallery is the near-canonical Relay visual language and the dashboard should visibly inherit it: Terra Prime dark surfaces, rounded geometry, Momo display hierarchy, strong feature marks, restrained status color, compact human-first telemetry, and the same spacing/radius/type/icon/token family. The dashboard should feel like that visual system expanded into a persistent workspace, not like a separate redesign. Do not literally stretch inline cards into pages: the web dashboard owns broader navigation, deep links, history, multi-card signal decks, and persistent controls; the opened ChatGPT app may use a denser app-specific workspace; inline cards remain contextual and minimal. Shared components/view-models are encouraged where they preserve each surface's distinct interaction job. No future dashboard redesign should replace the Inspector-preview visual language without explicit owner approval.",
+      "next_action": "When dashboard work resumes, begin from the current Inspector preview gallery and shared card tokens as the visual reference, then adapt them to workspace-scale navigation and information density rather than inventing a new skin. Preserve the established 2.0 content flows where approved. Treat divergence from the preview language as a review blocker unless explicitly approved.",
+      "paths": [
+        "web/relay/",
+        "src/relay-web.js",
+        "src/relay-ui.js",
+        "src/index.js",
+        "src/relay-web.test.js"
+      ],
+      "resources": [
+        "relay-web-dashboard",
+        "relay-mcp-app-ui",
+        "suite-shared-shell",
+        "relay-surface-parity-without-layout-parity"
+      ],
+      "state": "queued",
+      "created_at": "2026-09-30T13:25:57.685Z",
+      "amendment_count": 2,
+      "amendments": [
+        {
+          "at": "2026-10-01T02:51:32.361Z",
+          "by": "relay-web-dashboard-20260930",
+          "reason": "Prevent 'same experience' from being interpreted as identical layouts across Relay's three UI surfaces.",
+          "fields": [
+            "acceptance",
+            "next_action",
+            "resources"
+          ],
+          "before": {
+            "acceptance": "relay.loew.fi presents the same projects, durable operations, publication receipts, QA handoffs, release state, recovery/rollback actions and history as the MCP App without duplicating state; shared components/data adapters are reused where practical; deep links can open a specific project/operation/release/QA item; auth and mutations use Relay's existing bounded control plane; web and in-chat surfaces remain behaviorally consistent; the dashboard consumes the future shared suite shell/navigation so Relay feels like one utility with Runner and Inspector rather than a separate website.",
+            "next_action": "Implement after the operation framework and core MCP App view-model/components are stable; do not create a second state or approval system for web.",
+            "resources": [
+              "relay-web-dashboard",
+              "relay-mcp-app-ui",
+              "suite-shared-shell"
+            ]
+          },
+          "after": {
+            "acceptance": "relay.loew.fi presents the same projects, durable operations, publication receipts, QA handoffs, release state, recovery/rollback actions and history as the MCP App without duplicating state; shared components/data adapters are reused where practical; deep links can open a specific project/operation/release/QA item; auth and mutations use Relay's existing bounded control plane; web and in-chat surfaces remain behaviorally consistent; the dashboard consumes the future shared suite shell/navigation so Relay feels like one utility with Runner and Inspector rather than a separate website. Surfa...",
+            "next_action": "Implement after the MCP App view-model is stable. Share canonical state/actions and reusable components, but let relay.loew.fi, the opened ChatGPT app workspace and inline response cards use different compositions appropriate to web workspace, app workspace and conversation respectively.",
+            "resources": [
+              "relay-web-dashboard",
+              "relay-mcp-app-ui",
+              "suite-shared-shell",
+              "relay-surface-parity-without-layout-parity"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-01T17:20:32.752Z",
+          "by": "relay-web-dashboard-20260930",
+          "reason": "Owner clarified that the current Inspector chat-card previews are the near-canonical visual language Relay 2.0 dashboard work was intended to inherit. Record that relationship explicitly so future dashboard work preserves the visual system without copying inline-card composition.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "relay.loew.fi presents the same projects, durable operations, publication receipts, QA handoffs, release state, recovery/rollback actions and history as the MCP App without duplicating state; shared components/data adapters are reused where practical; deep links can open a specific project/operation/release/QA item; auth and mutations use Relay's existing bounded control plane; web and in-chat surfaces remain behaviorally consistent; the dashboard consumes the future shared suite shell/navigation so Relay feels like one utility with Runner and Inspector rather than a separate website. Surfa...",
+            "next_action": "Implement after the MCP App view-model is stable. Share canonical state/actions and reusable components, but let relay.loew.fi, the opened ChatGPT app workspace and inline response cards use different compositions appropriate to web workspace, app workspace and conversation respectively."
+          },
+          "after": {
+            "acceptance": "relay.loew.fi presents the same projects, durable operations, publication receipts, QA handoffs, release state, recovery/rollback actions and history as the MCP App without duplicating state; shared components/data adapters are reused where practical; deep links can open a specific project/operation/release/QA item; auth and mutations use Relay's existing bounded control plane; web and in-chat surfaces remain behaviorally consistent; the dashboard consumes the future shared suite shell/navigation so Relay feels like one utility with Runner and Inspector rather than a separate website. Surfa...",
+            "next_action": "When dashboard work resumes, begin from the current Inspector preview gallery and shared card tokens as the visual reference, then adapt them to workspace-scale navigation and information density rather than inventing a new skin. Preserve the established 2.0 content flows where approved. Treat divergence from the preview language as a review blocker unless explicitly approved."
+          }
+        }
+      ],
+      "updated_at": "2026-10-01T17:20:32.752Z"
+    },
+    {
+      "id": "relay-findings-rfs-023-20260930",
+      "owner": "relay-findings-rfs-023-20260930",
+      "goal": "Document RFS-023 through RFS-033, including feature teams as the canonical organizational layer between assignments and named staff.",
+      "acceptance": "Append RFS-023 through RFS-028 to the canonical findings ledger and link each to Relay 1.9 for consideration.\n\nRFS-023 \u2014 release-contract propagation friction: umbrella/child requirements currently need manual restatement and can hit acceptance-size/ownership-overlap limits. Consider summarized parent/child contract propagation or reconciliation without stealing ownership.\n\nRFS-024 \u2014 live amendment delivery: running chats can miss canonical amendments. Use monotonic consumed-revision cursors and bounded relevant-change checks at safe sync points; no-change injects nothing; scope-changing/blocking updates reconcile before conflicting work.\n\nRFS-025 \u2014 caught-up recovery: workers can stop making progress without a true blocker until the user interrupts. Detect no-op/repeated failures/circular replanning/stale progress, recover from canonical checkpoints, state stall point, resume with bounded retries; do not confuse real external waits/auth/client/scope/destructive ambiguity with recoverable stalls.\n\nRFS-026 \u2014 recovery learning: validated better capability routes discovered while unsticking work should become reusable guidance. Record constraint, preferred route, fallback, authority boundary and evidence; promote through findings/planning. Example: binary assets prefer binary-capable GitHub transport while Relay retains branch/Runner/PR/deploy/verification authority; UTF-8 base64/chunking is fallback.\n\nRFS-027 \u2014 large-asset intake: when GitHub is the better transport, ask the user to upload large/binary files directly to the exact admitted repo/branch/folder with a direct link. Then validate/hash/inspect/rename/move/normalize within scope. Chat transport is fallback.\n\nRFS-028 \u2014 workflow-time telemetry: current canonical timestamps support coarse claim\u2192PR/check/merge/wait timing but not reliable active-vs-wait-vs-stall attribution. Add bounded phase/wait/recovery telemetry derived from canonical events/checkpoints. Aggregate by task class, capability/skill, tool family, failure/recovery reason and workflow phase. Staff identity may filter context but never become a productivity score/ranking. Surface recurring bottlenecks and feed validated improvements back into planning/recovery learning.\n\nRFS-029 \u2014 executive communication must be implemented as a skill/result contract, not only a narration policy. Normal Relay chat/status should expose a compact human layer (health/outcome, responsible staff, what changed, next step) and keep branches/SHAs/schema/runtime/tool internals in subordinate technical evidence unless they explain a blocker, QA decision or explicit technical request. Add communication-skill guidance, presentation-ready result shaping and eval fixtures that prove technical outputs become plain-language staff-aware updates without losing truth or traceability.\n\nRFS-030 \u2014 operational staff routing: Relay has canonical staff identities and assignment roles/taxonomy, but live assignments still require a human to infer who is working on what because staff bindings are not persisted. Add deterministic primary/supporting staff resolution from explicit override + role/category/labels/resources/subnet affinity, persist sticky bindings on the assignment, surface them in staff directory/resume/status, and allow explicit canonical reassignment. Staff identity remains presentation/routing context, never authorization or productivity scoring.",
+      "next_action": "When branch capacity opens, append RFS-023 through RFS-033 to suggestions.md in one docs-only maintenance change. RFS-033: route assignment -> lowercase feature team -> role -> named staff; preserve sticky home teams plus cross-team memberships; team identity affects routing/presentation, never authorization or productivity scoring. Merge and complete. No Worker deployment.",
+      "paths": [
+        "docs/relay/findings/suggestions.md"
+      ],
+      "resources": [
+        "relay-publishing-findings",
+        "relay-maintenance"
+      ],
+      "task_class": "maintenance",
+      "ledger_refs": [
+        "RFS-023",
+        "RFS-024",
+        "RFS-025",
+        "RFS-026",
+        "RFS-027",
+        "RFS-028",
+        "RFS-029",
+        "RFS-030",
+        "RFS-031",
+        "RFS-032",
+        "RFS-033"
+      ],
+      "state": "queued",
+      "created_at": "2026-10-01T01:04:02.031Z",
+      "amendment_count": 9,
+      "amendments": [
+        {
+          "at": "2026-10-01T01:06:03.436Z",
+          "by": "relay-findings-rfs-023-20260930",
+          "reason": "Combine the related 1.9 coordination findings into one bounded docs-only successor rather than creating another branch reservation.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action",
+            "ledger_refs"
+          ],
+          "before": {
+            "goal": "Document RFS-023: Relay should reduce manual release-contract propagation friction across umbrella/child assignments.",
+            "acceptance": "Append RFS-023 to the canonical findings ledger with the observed sequence from the 1.9 staff-aware narration change: requirement existed in a child slice but not the umbrella; manual promotion hit the 4,000-character acceptance ceiling; a follow-up attempt hit legitimate ownership overlap; the worker then compacted/reframed scope to record the integration contract. Capture impact and suggest automatic parent/child contract propagation or reconciliation that preserves ownership boundaries, summarizes instead of duplicating long acceptance text, and routes changed release-level requirements ...",
+            "next_action": "Claim a docs-only maintenance branch, append RFS-023, open and merge the docs PR, then complete the assignment. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023"
+            ]
+          },
+          "after": {
+            "goal": "Document RFS-023 and RFS-024: eliminate manual release-contract propagation friction and safely deliver new amendments to active workers/chats.",
+            "acceptance": "Append RFS-023 and RFS-024 to the canonical findings ledger and link both to Relay 1.9 for consideration.\n\nRFS-023 documents manual release-contract propagation friction observed while promoting staff-aware narration from a child slice to the 1.9 umbrella: manual promotion hit the 4,000-character acceptance ceiling, then legitimate ownership overlap, requiring compaction/reframing. Suggest automatic parent/child contract propagation or reconciliation that preserves ownership boundaries, summarizes instead of duplicating long acceptance text, and routes changed release-level requirements wit...",
+            "next_action": "When branch capacity opens, claim one docs-only maintenance branch, append RFS-023 and RFS-024 to suggestions.md, merge the docs PR, and complete the assignment. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-01T01:10:56.877Z",
+          "by": "relay-findings-rfs-023-20260930",
+          "reason": "Capture the recurring caught-up/manual-restart failure mode alongside the related 1.9 coordination findings.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action",
+            "ledger_refs"
+          ],
+          "before": {
+            "goal": "Document RFS-023 and RFS-024: eliminate manual release-contract propagation friction and safely deliver new amendments to active workers/chats.",
+            "acceptance": "Append RFS-023 and RFS-024 to the canonical findings ledger and link both to Relay 1.9 for consideration.\n\nRFS-023 documents manual release-contract propagation friction observed while promoting staff-aware narration from a child slice to the 1.9 umbrella: manual promotion hit the 4,000-character acceptance ceiling, then legitimate ownership overlap, requiring compaction/reframing. Suggest automatic parent/child contract propagation or reconciliation that preserves ownership boundaries, summarizes instead of duplicating long acceptance text, and routes changed release-level requirements wit...",
+            "next_action": "When branch capacity opens, claim one docs-only maintenance branch, append RFS-023 and RFS-024 to suggestions.md, merge the docs PR, and complete the assignment. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024"
+            ]
+          },
+          "after": {
+            "goal": "Document RFS-023, RFS-024 and RFS-025: reduce manual contract propagation, deliver live amendments safely, and eliminate recurring recoverable worker stalls.",
+            "acceptance": "Append RFS-023 and RFS-024 to the canonical findings ledger and link both to Relay 1.9 for consideration.\n\nRFS-023 documents manual release-contract propagation friction observed while promoting staff-aware narration from a child slice to the 1.9 umbrella: manual promotion hit the 4,000-character acceptance ceiling, then legitimate ownership overlap, requiring compaction/reframing. Suggest automatic parent/child contract propagation or reconciliation that preserves ownership boundaries, summarizes instead of duplicating long acceptance text, and routes changed release-level requirements wit...",
+            "next_action": "When branch capacity opens, append RFS-023, RFS-024 and RFS-025 to suggestions.md in one docs-only maintenance change, merge, and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-01T01:13:22.857Z",
+          "by": "relay-findings-rfs-023-20260930",
+          "reason": "Capture the binary-asset transport lesson as a reusable recovery-learning finding so future workers do not rediscover the same workaround.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action",
+            "ledger_refs"
+          ],
+          "before": {
+            "goal": "Document RFS-023, RFS-024 and RFS-025: reduce manual contract propagation, deliver live amendments safely, and eliminate recurring recoverable worker stalls.",
+            "acceptance": "Append RFS-023 and RFS-024 to the canonical findings ledger and link both to Relay 1.9 for consideration.\n\nRFS-023 documents manual release-contract propagation friction observed while promoting staff-aware narration from a child slice to the 1.9 umbrella: manual promotion hit the 4,000-character acceptance ceiling, then legitimate ownership overlap, requiring compaction/reframing. Suggest automatic parent/child contract propagation or reconciliation that preserves ownership boundaries, summarizes instead of duplicating long acceptance text, and routes changed release-level requirements wit...",
+            "next_action": "When branch capacity opens, append RFS-023, RFS-024 and RFS-025 to suggestions.md in one docs-only maintenance change, merge, and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025"
+            ]
+          },
+          "after": {
+            "goal": "Document RFS-023 through RFS-026: contract propagation, live amendments, caught-up recovery, and recovery learning from validated capability routes.",
+            "acceptance": "Append RFS-023 and RFS-024 to the canonical findings ledger and link both to Relay 1.9 for consideration.\n\nRFS-023 documents manual release-contract propagation friction observed while promoting staff-aware narration from a child slice to the 1.9 umbrella: manual promotion hit the 4,000-character acceptance ceiling, then legitimate ownership overlap, requiring compaction/reframing. Suggest automatic parent/child contract propagation or reconciliation that preserves ownership boundaries, summarizes instead of duplicating long acceptance text, and routes changed release-level requirements wit...",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-026 to suggestions.md in one docs-only maintenance change, merge, and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-01T01:25:58.453Z",
+          "by": "relay-findings-rfs-023-20260930",
+          "reason": "Record the user's canonical direct-GitHub upload preference for large/binary assets as reusable workflow guidance.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action",
+            "ledger_refs"
+          ],
+          "before": {
+            "goal": "Document RFS-023 through RFS-026: contract propagation, live amendments, caught-up recovery, and recovery learning from validated capability routes.",
+            "acceptance": "Append RFS-023 and RFS-024 to the canonical findings ledger and link both to Relay 1.9 for consideration.\n\nRFS-023 documents manual release-contract propagation friction observed while promoting staff-aware narration from a child slice to the 1.9 umbrella: manual promotion hit the 4,000-character acceptance ceiling, then legitimate ownership overlap, requiring compaction/reframing. Suggest automatic parent/child contract propagation or reconciliation that preserves ownership boundaries, summarizes instead of duplicating long acceptance text, and routes changed release-level requirements wit...",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-026 to suggestions.md in one docs-only maintenance change, merge, and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026"
+            ]
+          },
+          "after": {
+            "goal": "Document RFS-023 through RFS-027: contract propagation, live amendments, caught-up recovery, recovery learning, and canonical direct-GitHub intake for large binary assets.",
+            "acceptance": "Append RFS-023 and RFS-024 to the canonical findings ledger and link both to Relay 1.9 for consideration.\n\nRFS-023 documents manual release-contract propagation friction observed while promoting staff-aware narration from a child slice to the 1.9 umbrella: manual promotion hit the 4,000-character acceptance ceiling, then legitimate ownership overlap, requiring compaction/reframing. Suggest automatic parent/child contract propagation or reconciliation that preserves ownership boundaries, summarizes instead of duplicating long acceptance text, and routes changed release-level requirements wit...",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-027 to suggestions.md in one docs-only maintenance change, merge, and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026",
+              "RFS-027"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-01T01:35:23.045Z",
+          "by": "relay-findings-rfs-023-20260930",
+          "reason": "Compact the queued findings assignment so all six canonical findings fit Runner limits while preserving the full intended ledger content.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action",
+            "ledger_refs"
+          ],
+          "before": {
+            "goal": "Document RFS-023 through RFS-027: contract propagation, live amendments, caught-up recovery, recovery learning, and canonical direct-GitHub intake for large binary assets.",
+            "acceptance": "Append RFS-023 and RFS-024 to the canonical findings ledger and link both to Relay 1.9 for consideration.\n\nRFS-023 documents manual release-contract propagation friction observed while promoting staff-aware narration from a child slice to the 1.9 umbrella: manual promotion hit the 4,000-character acceptance ceiling, then legitimate ownership overlap, requiring compaction/reframing. Suggest automatic parent/child contract propagation or reconciliation that preserves ownership boundaries, summarizes instead of duplicating long acceptance text, and routes changed release-level requirements wit...",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-027 to suggestions.md in one docs-only maintenance change, merge, and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026",
+              "RFS-027"
+            ]
+          },
+          "after": {
+            "goal": "Document RFS-023 through RFS-028: coordination propagation, live amendments, recovery/learning, direct large-asset intake, and workflow-time bottleneck telemetry.",
+            "acceptance": "Append RFS-023 through RFS-028 to the canonical findings ledger and link each to Relay 1.9 for consideration.\n\nRFS-023 \u2014 release-contract propagation friction: umbrella/child requirements currently need manual restatement and can hit acceptance-size/ownership-overlap limits. Consider summarized parent/child contract propagation or reconciliation without stealing ownership.\n\nRFS-024 \u2014 live amendment delivery: running chats can miss canonical amendments. Use monotonic consumed-revision cursors and bounded relevant-change checks at safe sync points; no-change injects nothing; scope-changing/bl...",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-028 to suggestions.md in one docs-only maintenance change, merge, and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026",
+              "RFS-027",
+              "RFS-028"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-01T02:02:19.498Z",
+          "by": "relay-findings-rfs-023-20260930",
+          "reason": "Capture the executive-communication implementation lesson so it remains part of Relay's improvement loop beyond the current 1.9.6 assignment.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action",
+            "ledger_refs"
+          ],
+          "before": {
+            "goal": "Document RFS-023 through RFS-028: coordination propagation, live amendments, recovery/learning, direct large-asset intake, and workflow-time bottleneck telemetry.",
+            "acceptance": "Append RFS-023 through RFS-028 to the canonical findings ledger and link each to Relay 1.9 for consideration.\n\nRFS-023 \u2014 release-contract propagation friction: umbrella/child requirements currently need manual restatement and can hit acceptance-size/ownership-overlap limits. Consider summarized parent/child contract propagation or reconciliation without stealing ownership.\n\nRFS-024 \u2014 live amendment delivery: running chats can miss canonical amendments. Use monotonic consumed-revision cursors and bounded relevant-change checks at safe sync points; no-change injects nothing; scope-changing/bl...",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-028 to suggestions.md in one docs-only maintenance change, merge, and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026",
+              "RFS-027",
+              "RFS-028"
+            ]
+          },
+          "after": {
+            "goal": "Document RFS-023 through RFS-029, including executive communication as a real skill/result-shaping contract rather than prose-only policy.",
+            "acceptance": "Append RFS-023 through RFS-028 to the canonical findings ledger and link each to Relay 1.9 for consideration.\n\nRFS-023 \u2014 release-contract propagation friction: umbrella/child requirements currently need manual restatement and can hit acceptance-size/ownership-overlap limits. Consider summarized parent/child contract propagation or reconciliation without stealing ownership.\n\nRFS-024 \u2014 live amendment delivery: running chats can miss canonical amendments. Use monotonic consumed-revision cursors and bounded relevant-change checks at safe sync points; no-change injects nothing; scope-changing/bl...",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-029 to suggestions.md in one docs-only maintenance change, merge, and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026",
+              "RFS-027",
+              "RFS-028",
+              "RFS-029"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-01T02:39:53.941Z",
+          "by": "relay-findings-rfs-023-20260930",
+          "reason": "Capture the gap between staff identity/taxonomy and actual assignment bindings so Relay can make the org chart operational rather than inferred.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action",
+            "ledger_refs"
+          ],
+          "before": {
+            "goal": "Document RFS-023 through RFS-029, including executive communication as a real skill/result-shaping contract rather than prose-only policy.",
+            "acceptance": "Append RFS-023 through RFS-028 to the canonical findings ledger and link each to Relay 1.9 for consideration.\n\nRFS-023 \u2014 release-contract propagation friction: umbrella/child requirements currently need manual restatement and can hit acceptance-size/ownership-overlap limits. Consider summarized parent/child contract propagation or reconciliation without stealing ownership.\n\nRFS-024 \u2014 live amendment delivery: running chats can miss canonical amendments. Use monotonic consumed-revision cursors and bounded relevant-change checks at safe sync points; no-change injects nothing; scope-changing/bl...",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-029 to suggestions.md in one docs-only maintenance change, merge, and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026",
+              "RFS-027",
+              "RFS-028",
+              "RFS-029"
+            ]
+          },
+          "after": {
+            "goal": "Document RFS-023 through RFS-030, including operational staff routing so canonical roles resolve into durable named assignment teams.",
+            "acceptance": "Append RFS-023 through RFS-028 to the canonical findings ledger and link each to Relay 1.9 for consideration.\n\nRFS-023 \u2014 release-contract propagation friction: umbrella/child requirements currently need manual restatement and can hit acceptance-size/ownership-overlap limits. Consider summarized parent/child contract propagation or reconciliation without stealing ownership.\n\nRFS-024 \u2014 live amendment delivery: running chats can miss canonical amendments. Use monotonic consumed-revision cursors and bounded relevant-change checks at safe sync points; no-change injects nothing; scope-changing/bl...",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-030 to suggestions.md in one docs-only maintenance change, merge, and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026",
+              "RFS-027",
+              "RFS-028",
+              "RFS-029",
+              "RFS-030"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-01T02:59:17.037Z",
+          "by": "relay-findings-rfs-023-20260930",
+          "reason": "Link the card-system and unified ChatGPT-native experience findings without exceeding Runner acceptance-size limits.",
+          "fields": [
+            "goal",
+            "next_action",
+            "ledger_refs"
+          ],
+          "before": {
+            "goal": "Document RFS-023 through RFS-030, including operational staff routing so canonical roles resolve into durable named assignment teams.",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-030 to suggestions.md in one docs-only maintenance change, merge, and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026",
+              "RFS-027",
+              "RFS-028",
+              "RFS-029",
+              "RFS-030"
+            ]
+          },
+          "after": {
+            "goal": "Document RFS-023 through RFS-032, including the mature inline-card system and unified ChatGPT-native Relay app/chat experience.",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-032 to suggestions.md in one docs-only maintenance change, using the canonical 1.9.9 assignment as the full source for RFS-031/032 intent. Merge and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026",
+              "RFS-027",
+              "RFS-028",
+              "RFS-029",
+              "RFS-030",
+              "RFS-031",
+              "RFS-032"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-01T03:02:49.067Z",
+          "by": "relay-findings-rfs-023-20260930",
+          "reason": "Record the canonical feature-team routing model introduced across 1.9.6.2, 1.9.7 and 1.9.9.",
+          "fields": [
+            "goal",
+            "next_action",
+            "ledger_refs"
+          ],
+          "before": {
+            "goal": "Document RFS-023 through RFS-032, including the mature inline-card system and unified ChatGPT-native Relay app/chat experience.",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-032 to suggestions.md in one docs-only maintenance change, using the canonical 1.9.9 assignment as the full source for RFS-031/032 intent. Merge and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026",
+              "RFS-027",
+              "RFS-028",
+              "RFS-029",
+              "RFS-030",
+              "RFS-031",
+              "RFS-032"
+            ]
+          },
+          "after": {
+            "goal": "Document RFS-023 through RFS-033, including feature teams as the canonical organizational layer between assignments and named staff.",
+            "next_action": "When branch capacity opens, append RFS-023 through RFS-033 to suggestions.md in one docs-only maintenance change. RFS-033: route assignment -> lowercase feature team -> role -> named staff; preserve sticky home teams plus cross-team memberships; team identity affects routing/presentation, never authorization or productivity scoring. Merge and complete. No Worker deployment.",
+            "ledger_refs": [
+              "RFS-023",
+              "RFS-024",
+              "RFS-025",
+              "RFS-026",
+              "RFS-027",
+              "RFS-028",
+              "RFS-029",
+              "RFS-030",
+              "RFS-031",
+              "RFS-032",
+              "RFS-033"
+            ]
+          }
+        }
+      ],
+      "updated_at": "2026-10-01T03:02:49.067Z"
+    },
+    {
+      "id": "relay-1.9.6.1-mcp-ui-bootstrap-20261001",
+      "owner": "relay-1.9.6.1-mcp-ui-bootstrap-20261001",
+      "goal": "Fix Relay MCP inline control-center blank rendering before 1.9.7 by rotating the control-center UI resource cache key and making host-bridge failure visible instead of a silent blank.",
+      "acceptance": "Control-center tool/resource/context-card references all use a new UI resource URI; old v1 remains unused for the control center. Bridge initialization keeps the shell renderable and turns host initialization failure into a bounded explicit connection error rather than a silent 30s void. Tests prove resource URI linkage and bridge behavior. Ship as an exact-head 1.9.6.1 hotfix before 1.9.7.",
+      "next_action": "Claim from current main, patch resource URI + bridge resilience + regression tests, run Runner preflight/CI, merge/deploy exact source, refresh Relay app and verify inline control center renders.",
+      "paths": [
+        "src/relay-ui.js",
+        "src/relay-ui.test.js",
+        "src/relay-chat-ui.js",
+        "src/relay-chat-ui.test.js",
+        "apps/web/mcp-bridge.js",
+        "apps/web/test/",
+        "docs/relay/RELAY_1_9_6_1_RELEASE.md"
+      ],
+      "resources": [
+        "relay-mcp-ui-resource-cache-key",
+        "relay-mcp-app-bootstrap"
+      ],
+      "task_class": "architecture",
+      "state": "queued",
+      "created_at": "2026-10-01T02:32:45.947Z"
+    },
+    {
+      "id": "relay-1.9.8.1-context-card-launcher-20261001",
+      "owner": "relay-1.9.8.1-context-card-launcher-20261001",
+      "goal": "Ship a post-1.9.8 systems hotfix that gives Relay contextual cards an explicit standards-first MCP Apps launcher path and proves exactly where ChatGPT mounting succeeds or fails.",
+      "acceptance": "Add a dedicated read-only `relay_ui_context_card` presentation tool that owns `_meta.ui.resourceUri` for the existing context-card resource and returns only canonical Relay structured state supplied to it. Preserve the existing card resource and existing contextual-tool metadata for compatibility, but document the dedicated render tool as the canonical decoupled mount path. Wire the tool through Relay's extension tool list and handler. Tests must prove the launcher descriptor advertises `ui://relay/context-card/v4.html`, the resource is `text/html;profile=mcp-app`, the render call preserves canonical state without inventing progress, duplicate resources/tools are not registered, and unrelated data tools remain usable headlessly. Final ChatGPT acceptance is a visible card in an ordinary conversation; if the host routes Relay through a Code Mode wrapper that cannot forward nested MCP App UI metadata, record that exact boundary rather than claiming render success.",
+      "next_action": "Claim from current main, implement the render launcher and tests, open a draft PR, pass exact-head CI/admission, merge/deploy if green, refresh ChatGPT tools, then smoke-test `relay_ui_context_card` in the live consumer.",
+      "paths": [
+        "src/relay-chat-ui.js",
+        "src/relay-chat-ui.test.js",
+        "src/relay-entry.js",
+        "src/relay-entry.test.js",
+        "docs/relay/RELAY_1_9_8_1_CARD_LAUNCHER.md"
+      ],
+      "resources": [
+        "relay-context-card-render-tool",
+        "relay-mcp-app-launcher-contract",
+        "relay-chatgpt-visible-card-gate",
+        "relay-code-mode-ui-boundary"
+      ],
+      "task_class": "architecture",
+      "category": "architecture",
+      "labels": [
+        {
+          "key": "release",
+          "value": "1.9.8.1"
+        },
+        {
+          "key": "domain",
+          "value": "mcp-app-launcher"
+        }
+      ],
+      "tags": [
+        "mcp-app",
+        "cards",
+        "plumbing",
+        "systems",
+        "chatgpt"
+      ],
+      "primary_role": "architect",
+      "supporting_roles": [
+        "builder",
+        "verifier"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "ellis",
+      "supporting_staff": [
+        "nico",
+        "roman"
+      ],
+      "state": "queued",
+      "created_at": "2026-10-01T04:43:12.115Z"
+    },
+    {
+      "id": "relay-2.0-inspector-feedback-loop-20261001",
+      "owner": "relay-2.0-inspector-feedback-loop-20261001",
+      "goal": "Validate and document the Inspector-to-worker feedback loop after its implementation lands in the main Relay 2.0 release lane.",
+      "acceptance": "Do not duplicate implementation. Confirm that Inspector feedback is durable, visible to the correct active/resuming assignment, acknowledged without repeated delivery, and preserved across reconnect/resume; document evidence and any remaining gaps.",
+      "next_action": "Do not claim for implementation. The active relay-2.0-today-runner-react-slice-20261001 lane now owns the feedback inbox/events/polling/acknowledgement work. Use this record only as a post-implementation validation checkpoint.",
+      "paths": [
+        "apps/web/",
+        "packages/runner/",
+        "src/worker-communication.js",
+        "src/progress-api.js",
+        "docs/relay/"
+      ],
+      "resources": [
+        "inspector-feedback-inbox",
+        "inspector-feedback-events",
+        "runner-feedback-polling",
+        "runner-feedback-acknowledgement",
+        "relay-2.0-live-app"
+      ],
+      "task_class": "architecture",
+      "category": "architecture",
+      "labels": [
+        {
+          "key": "release",
+          "value": "2.0"
+        },
+        {
+          "key": "surface",
+          "value": "inspector"
+        },
+        {
+          "key": "domain",
+          "value": "human-feedback"
+        }
+      ],
+      "tags": [
+        "inspector",
+        "feedback",
+        "workers",
+        "polling",
+        "live-app",
+        "human-qa"
+      ],
+      "primary_role": "architect",
+      "supporting_roles": [
+        "builder",
+        "verifier",
+        "product-lead"
+      ],
+      "primary_team": "inspector",
+      "supporting_teams": [
+        "runner"
+      ],
+      "primary_staff": null,
+      "supporting_staff": [
+        "nico",
+        "roman",
+        "vivienne"
+      ],
+      "state": "queued",
+      "created_at": "2026-10-01T05:59:49.675Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-01T07:13:56.854Z",
+          "by": "relay-2.0-inspector-feedback-loop-20261001",
+          "reason": "Implementation ownership has been absorbed into the active Relay 2.0 release lane to avoid a duplicate worker editing the same feedback paths.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Make Inspector human feedback a live, durable work input for Relay agents instead of passive saved review data.",
+            "acceptance": "Inspector notes, answers and review/disposition changes must remain attached to exact project/assignment/artifact/evidence identity, while also emitting a durable feedback event with a monotonic cursor. Active workers poll or receive the feedback stream at normal synchronization points and surface unread relevant feedback without relying on chat history. A worker resuming after being idle must fetch all unacknowledged feedback since its last acknowledged cursor before continuing work. Feedback delivery must be identity-safe: if assignment/branch/head/evidence no longer matches, Relay marks ...",
+            "next_action": "During the Relay 2.0 live-app rebuild, design the canonical feedback event/inbox contract first, then wire Inspector saves to emit events and wire active/resuming workers to poll and acknowledge them through Runner synchronization."
+          },
+          "after": {
+            "goal": "Validate and document the Inspector-to-worker feedback loop after its implementation lands in the main Relay 2.0 release lane.",
+            "acceptance": "Do not duplicate implementation. Confirm that Inspector feedback is durable, visible to the correct active/resuming assignment, acknowledged without repeated delivery, and preserved across reconnect/resume; document evidence and any remaining gaps.",
+            "next_action": "Do not claim for implementation. The active relay-2.0-today-runner-react-slice-20261001 lane now owns the feedback inbox/events/polling/acknowledgement work. Use this record only as a post-implementation validation checkpoint."
+          }
+        }
+      ],
+      "updated_at": "2026-10-01T07:13:56.854Z"
+    },
+    {
+      "id": "relay-cross-chat-lane-lease-guard-20261001",
+      "owner": "relay-cross-chat-lane-lease-guard-20261001",
+      "goal": "Eliminate accidental cross-chat work collisions in Relay. Two chats must never be able to silently act as the same active worker on one assignment just because they share the same machine owner or Relay app identity.",
+      "acceptance": "Runner distinguishes machine/staff ownership from an active chat/workstream lane. Claim/resume issues a bounded opaque lane lease/fencing token to the active chat; canonical assignment state stores only the active lane identity/epoch and heartbeat metadata, not a reusable secret. Assignment mutations and branch-affecting coordination writes require the current lane lease and fail closed with a conflict when called from another chat, even when owner matches. Read-only progress/resume remains available to observers but clearly reports observer/read-only status. Another chat may submit a pending amendment/note without changing live next_action, scope, paths, state or branch; the active lane can accept/reject it. Explicit handoff/takeover rotates the lane epoch/token and records an audit event. Stale lanes may be reclaimed only through an explicit takeover flow with CAS against the latest canonical record. Resume never leaks a current fencing token to a different chat. Tests cover same-owner/different-lane collisions, stale retries, explicit handoff, takeover, observer reads, queued suggestions, and token rotation. Existing path/resource ownership checks remain in force as a second layer.",
+      "next_action": "Begin immediately after Relay 1.9.9 closes. First document the lane-lease state machine and compatibility path. Then add lane identity/epoch to canonical coordination, require it on assignment mutations, add observer-mode resume/progress, add a pending-amendment inbox for cross-chat suggestions, and implement explicit handoff/takeover with CAS and token rotation. Prove that two simulated chats sharing the same owner cannot mutate the same assignment concurrently.",
+      "paths": [
+        "contracts/coordination/",
+        "src/coordination-engine.js",
+        "src/coordination.mjs",
+        "src/runner-control.js",
+        "src/runner-control-core.js",
+        "src/runner-control.test.js",
+        "src/resume-checkpoints.js",
+        "src/resume-checkpoints.test.js",
+        "src/amendment-sync.js",
+        "src/amendment-sync.test.js",
+        "docs/relay/CROSS_CHAT_COORDINATION_GUARD.md"
+      ],
+      "resources": [
+        "relay-cross-chat-lane-lease",
+        "relay-conversation-fencing-token",
+        "relay-explicit-takeover",
+        "relay-read-only-observer-mode",
+        "relay-pending-amendment-inbox",
+        "relay-same-owner-collision-guard"
+      ],
+      "task_class": "architecture",
+      "category": "coordination",
+      "labels": [
+        {
+          "key": "domain",
+          "value": "coordination-safety"
+        },
+        {
+          "key": "priority",
+          "value": "p0-post-1.9.9"
+        }
+      ],
+      "tags": [
+        "coordination",
+        "concurrency",
+        "chat-lanes",
+        "leases",
+        "fencing",
+        "runner"
+      ],
+      "primary_role": "architect",
+      "supporting_roles": [
+        "builder",
+        "verifier"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "ellis",
+      "supporting_staff": [
+        "roman",
+        "nico"
+      ],
+      "state": "queued",
+      "created_at": "2026-10-01T06:02:23.499Z"
+    },
+    {
+      "id": "relay-mcp-icon-parity-hotfix-20261001",
+      "owner": "relay-mcp-icon-parity-hotfix-20261001",
+      "goal": "Restore MCP branding parity after the newly committed Relay icon changed the PNG bytes but not the generated embedded icon payload/test expectation, so unrelated CI no longer blocks card bisect PR #92.",
+      "acceptance": "apps/mcp/relay-icon.js and apps/mcp/relay-icon.png represent identical PNG bytes; test/mcp-branding.test.mjs derives or asserts the new canonical hash/size; exact-head branding/workspace tests pass; no card or runtime behavior changes.",
+      "next_action": "Claim from current main, regenerate the embedded relay-icon.js payload from the newly committed relay-icon.png without altering the icon artwork, update the exact expected hash if needed, run exact-head tests, merge, then refresh PR #92 against green main.",
+      "paths": [
+        "apps/mcp/relay-icon.js",
+        "apps/mcp/relay-icon.png",
+        "test/mcp-branding.test.mjs"
+      ],
+      "resources": [
+        "relay-mcp-icon-parity"
+      ],
+      "task_class": "maintenance",
+      "category": "implementation",
+      "tags": [
+        "mcp",
+        "icon",
+        "branding",
+        "ci",
+        "hotfix"
+      ],
+      "primary_role": "builder",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-01T09:17:07.727Z"
+    },
+    {
+      "id": "relay-card-v9-nonblocking-bootstrap-20261001",
+      "owner": "relay-card-v9-nonblocking-bootstrap-20261001",
+      "goal": "Resolve the post-v9 cross-client Relay card split proven by same-turn testing: iPhone mounts and paints but remains unhydrated in Connecting state; ChatGPT web mounts a blank MCP frame; native macOS desktop does not mount the card surface at all.",
+      "acceptance": "Treat iPhone, web, and native macOS as distinct consumer gates. iPhone must hydrate canonical tool results after the already-working immediate paint/size handshake; web must paint the mounted MCP frame and hydrate canonical results; native macOS must mount the card surface again. Preserve the approved card design and do not paper over failures with client-specific prose fallbacks. DESIGN CANON: the current Inspector chat-card preview gallery is the visual source of truth for Relay inline conversational cards. Do not redesign, reskin, restyle, or substitute dashboard composition while fixing MCP transport/mounting. Preserve the existing Terra Prime card language, current feature art/state mapping, dark surfaces, rounded geometry, Momo display typography, strong approximately 76px feature mark, feature name only modestly smaller, and removal of the redundant small 'relay' eyebrow. Remaining visual work is polish only: tighten card footprint and vertical density, improve use of available space, correct left-side spacing/alignment, maintain clear human-first hierarchy, and make responsive sizing feel intentional without changing the recognized composition. Inline cards are contextual conversation objects, not miniature dashboards: one purpose, one dominant state/headline, compact supporting telemetry/content, normally no more than two primary actions, no global/sidebar navigation, and expand/open Relay for deeper workflows. Inspector/dashboard signal cards may share tokens/components and visual DNA but are a separate persistent composition. UI interactions should feed selection/action context back into the conversation where supported. Add regression coverage for immediate paint, result hydration, resource delivery, and mount metadata; use a fresh resource identity for changed resource bytes; verify the same ordinary-chat render on iPhone, web, and native macOS before completion.",
+      "next_action": "Continue the three-client MCP host diagnosis from the 12:24 ET evidence without touching the canonical Inspector-preview visual composition. Fix hydration/resource/mount behavior first. Any CSS change must be limited to the recorded polish items (footprint/density/use of space/left alignment/responsiveness) and must be compared against the current Inspector preview gallery before merge. Do not import the Relay dashboard shell, navigation, or page composition into the inline card.",
+      "paths": [
+        "src/relay-chat-ui.js",
+        "src/relay-chat-ui.test.js",
+        "src/relay-entry.test.js",
+        "docs/relay/CHATGPT_CARD_V9_BOOTSTRAP.md",
+        "apps/mcp/production-smoke.mjs"
+      ],
+      "resources": [
+        "relay-context-card-v9",
+        "relay-chatgpt-bootstrap",
+        "relay-card-size-reporting"
+      ],
+      "task_class": "maintenance",
+      "category": "implementation",
+      "tags": [
+        "chatgpt",
+        "mcp-apps",
+        "inline-card",
+        "v9",
+        "bootstrap",
+        "hotfix"
+      ],
+      "primary_role": "builder",
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector",
+        "release"
+      ],
+      "primary_staff": "nico",
+      "supporting_staff": [
+        "ellis"
+      ],
+      "state": "queued",
+      "created_at": "2026-10-01T09:57:55.276Z",
+      "amendment_count": 2,
+      "amendments": [
+        {
+          "at": "2026-10-01T16:26:20.409Z",
+          "by": "relay-card-v9-nonblocking-bootstrap-20261001",
+          "reason": "User supplied decisive post-v9 screenshots from iPhone, web, and native macOS showing three different failure modes in the same test.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Ship the card v9 non-blocking bootstrap and size-reporting fixes without redesigning the Relay card, preserving the legacy bridge control exactly.",
+            "acceptance": "Rotate the contextual card URI to v9; patch v8 HTML at serve time so legacy cardHtml() output remains unchanged; paint immediately from window.openai globals; run ui/initialize in parallel with a 4s timeout; prefer window.openai.callTool; report intrinsic size and ui/notifications/size-changed; show the host diagnostic line; add regression coverage for immediate globals paint and size reporting; update relay-entry URI pins; add the v9 bootstrap doc; update stale production smoke pins if still present; npm test passes; open one draft PR and do not merge before desktop and browser consumer te...",
+            "next_action": "Claim the assignment from current main on the Runner-approved branch relay/card-v9-nonblocking-bootstrap, apply only the exact handoff edits after verifying each target string, run preflight and tests, open a draft PR, then verify consumer behavior with the direct render tool and legacy bridge control."
+          },
+          "after": {
+            "goal": "Resolve the post-v9 cross-client Relay card split proven by same-turn testing: iPhone mounts and paints but remains unhydrated in Connecting state; ChatGPT web mounts a blank MCP frame; native macOS desktop does not mount the card surface at all.",
+            "acceptance": "Treat the three clients as distinct gates. iPhone: canonical tool result hydrates the already-painted card so status leaves Connecting/current-state placeholder while preserving working globals handshake and size reporting. Web: the mounted MCP frame paints static card UI and then hydrates canonical result instead of remaining blank. Native macOS desktop: the tool invocation mounts a card surface again, matching the previously known-good desktop behavior. Preserve the approved card design; do not paper over failures with client-specific prose fallbacks. Add regression coverage for immediate...",
+            "next_action": "Start from the user-supplied same-turn evidence at 12:24 ET after merged v9: iPhone shows full card chrome plus 'Waiting for the Relay result\u2026', 'Connecting', em dash current state, Open Relay, and diagnostic 'host check: globals yes \u00b7 handshake ok 24ms \u00b7 height 403'; web shows a large mounted gray MCP frame with only a tiny loading mark and no card paint; native macOS desktop shows Relay tool activity and assistant prose but no card surface. This proves v9 fixed iPhone bootstrap/size reporting but not result hydration, did not fix web document paint, and did not restore desktop mount. Repr..."
+          }
+        },
+        {
+          "at": "2026-10-01T17:19:54.267Z",
+          "by": "relay-card-v9-nonblocking-bootstrap-20261001",
+          "reason": "Owner clarified the existing Inspector chat-card preview gallery is the canonical visual design. Consolidate previously scattered polish notes and prevent MCP host debugging or 2.0 dashboard work from redesigning the approved cards.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Treat the three clients as distinct gates. iPhone: canonical tool result hydrates the already-painted card so status leaves Connecting/current-state placeholder while preserving working globals handshake and size reporting. Web: the mounted MCP frame paints static card UI and then hydrates canonical result instead of remaining blank. Native macOS desktop: the tool invocation mounts a card surface again, matching the previously known-good desktop behavior. Preserve the approved card design; do not paper over failures with client-specific prose fallbacks. Add regression coverage for immediate...",
+            "next_action": "Start from the user-supplied same-turn evidence at 12:24 ET after merged v9: iPhone shows full card chrome plus 'Waiting for the Relay result\u2026', 'Connecting', em dash current state, Open Relay, and diagnostic 'host check: globals yes \u00b7 handshake ok 24ms \u00b7 height 403'; web shows a large mounted gray MCP frame with only a tiny loading mark and no card paint; native macOS desktop shows Relay tool activity and assistant prose but no card surface. This proves v9 fixed iPhone bootstrap/size reporting but not result hydration, did not fix web document paint, and did not restore desktop mount. Repr..."
+          },
+          "after": {
+            "acceptance": "Treat iPhone, web, and native macOS as distinct consumer gates. iPhone must hydrate canonical tool results after the already-working immediate paint/size handshake; web must paint the mounted MCP frame and hydrate canonical results; native macOS must mount the card surface again. Preserve the approved card design and do not paper over failures with client-specific prose fallbacks. DESIGN CANON: the current Inspector chat-card preview gallery is the visual source of truth for Relay inline conversational cards. Do not redesign, reskin, restyle, or substitute dashboard composition while fixing...",
+            "next_action": "Continue the three-client MCP host diagnosis from the 12:24 ET evidence without touching the canonical Inspector-preview visual composition. Fix hydration/resource/mount behavior first. Any CSS change must be limited to the recorded polish items (footprint/density/use of space/left alignment/responsiveness) and must be compared against the current Inspector preview gallery before merge. Do not import the Relay dashboard shell, navigation, or page composition into the inline card."
+          }
+        }
+      ],
+      "updated_at": "2026-10-01T17:19:54.267Z"
+    },
+    {
+      "id": "relay-desktop-card-parity-20261002",
+      "owner": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+      "goal": "Resolve remaining actual desktop card absence while preserving proven original connection test browser/iPhone operation.",
+      "acceptance": "Record actual 20261001.1 original connection test observations independently of new PR115 A/B/C. Browser screenshot libfile_34ed2f317b808191a485a9dab4035f13 at03:47 shows all6 milestones including read-only button, size768x457; initialsampleecf246b4-3fb1-4c9f-bd02-19049a978c60, actionsample353800ec-c46e-4a9b-a9b0-105e10a4ced4. iPhone screenshot libfile_c46865be55d081918c1ba11092cc95da at03:49 shows all6 including action, size388x509; initialsampleb55a8509-71d4-4a06-aa59-4e38b31757ed, actionsamplebc9e491b-bf63-4676-abe2-0e0427195e43. Desktop screenshot libfile_56e4993e235081919c895c83be35ba3e shows textual successful build20261001.1/sampleb4c53209-7c01-4100-828d-70020cc1cfbb but no visible card. User says nothing in desktop; OS/app exact version pending clarification. Preserve historical Mac Work PASS and ordinary Mac failures, don't generalize one app/mode. Original diagnostic unchanged; do not attribute these passes to unrelated upload repair. New A/B/C native tests still pending, production contextual v10 card proof and full MCP ordinary-chat parity remain open. No workers or card art redesign.",
+      "next_action": "Confirmed user Sentinel_71ee7b0d350481918a99930e1be8d204: failed desktop test is Linux app. Same OS Linux browser passes original connection test; iPhone original passes. Await requested Linux desktop standard static card test A (no scripts) to distinguish mount from lifecycle. App build/mode exact values remain unknown. No source edits or worker launch.",
+      "paths": [
+        "docs/relay/CARD_MOUNT_VARIANTS_20261002.md"
+      ],
+      "resources": [],
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-02T03:52:30.194Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-02T03:54:27.306Z",
+          "by": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "reason": "User explicitly identifies failed desktop as Linux.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Await desktop OS/app clarification. If needed use already deployed static A/B and lifecycle C on failing desktop to isolate mounting metadata from script issues; do not repeatedly retest passing browser/iPhone. Direct read-only investigation first; admit any source fixes separately."
+          },
+          "after": {
+            "next_action": "Confirmed user Sentinel_71ee7b0d350481918a99930e1be8d204: failed desktop test is Linux app. Same OS Linux browser passes original connection test; iPhone original passes. Await requested Linux desktop standard static card test A (no scripts) to distinguish mount from lifecycle. App build/mode exact values remain unknown. No source edits or worker launch."
+          }
+        }
+      ],
+      "updated_at": "2026-10-02T03:54:27.306Z"
+    },
+    {
+      "id": "relay-mcp-rebuild-continuation-20261003",
+      "owner": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+      "goal": "Continue the existing unfinished full Relay MCP rebuild, restoring original1.9 promised capabilities and integrating approved Relay live-panel/site/card work. Archival assignment closure is not proof of functional delivery.",
+      "acceptance": "Preserve working tools and provenance. Restore the original 1.9 acceptance at commit 434541358d6bfd25e67af5d8e689ba49a5378b91 and all seven stages of the Research and Reflow Plan. Track source implementation, publication, host installation and runtime verification separately. Preserve original objectives and stable acceptance IDs through additive amendments and full-task resume. Separate scope completion from verification; reconcile stale ownership without restarting paused or cancelled work. Repurpose the hourly workflow as a model-free sync safeguard comparing registered tasks, PRs, checks and deployment evidence, with deduplicated continuation recommendations and honest unavailable-evidence states. Complete skill catalog, search, read, resolve, install/vendor, update and audit; pinned licensed portable bundles; integrity and dependency enforcement; all originally promised creative, platform and supporting packs. Prove durable jobs, a real coding executor, capability-based local/remote routing, worker communication and full capability parity. Fold the Relay website, live panel, approved telemetry, Refresh Tools fallback chain, Add MCP to AI actions and compact MCP cards into this same rebuild. Verify actual client rendering/actions. Integrate review-first cards, evidence and device-specific frames, saved answers/replies, project icons and useful workspace overview. Use flat surfaces with shadows/glows. Night Shift records actual autonomous away-time work, with an unused staff lead for oversight, preserved executor provenance, evidence-supported backfill and an idempotent Shift handoff. No new credentials or spending inferred. Documentation-only PRs, fixtures and transferred defects do not establish full delivery.",
+      "next_action": "Use five dependency batches: (1) lifecycle, objective continuity, ownership and sync safeguard; (2) end-to-end review, preview and reply flow; (3) Night Shift lead, attribution and Shift handoff; (4) approved shared telemetry and design; (5) remaining full MCP integrations, including Relay site/controls/cards and recovered skills/executor scope. Land already-ready scoped fixes independently. Field and ctrl remain first; rtxForge is held. Reconcile older stage records and admit bounded implementation steps without duplicate projects or restarting stopped coding workers. Parent implements through Relay.",
+      "paths": [
+        "src/",
+        "skills/",
+        "contracts/",
+        "packages/skills/",
+        "packages/runner/",
+        "packages/inspector/",
+        "apps/mcp/",
+        "docs/relay/",
+        ".github/workflows/runner.yml"
+      ],
+      "resources": [
+        "relay-mcp-rebuild-program"
+      ],
+      "ledger_refs": [
+        "relay-mcp-rebuild-20261001",
+        "relay-mcp-host-proof-20261001",
+        "relay-mcp-feedback-routing-20261001",
+        "relay-1.9-skills-runtime-creative-20260930"
+      ],
+      "category": "architecture",
+      "tags": [
+        "mcp-rebuild",
+        "original-scope-recovery",
+        "review-first"
+      ],
+      "primary_team": "skills",
+      "supporting_teams": [],
+      "primary_staff": "ellis",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-03T03:17:42.108Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-03T03:18:47.742Z",
+          "by": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "reason": "Keep the restored program acceptance and implementation batches readable without changing scope.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Preserve all working tools/provenance. Restore original1.9 acceptance at434541358d6bfd25e67af5d8e689ba49a5378b91 and original7-stage ReflowPlan. Track source implementation, published exposure, host installation and runtime verification separately. Finish original-objective/stable-acceptance preservation, additive amendments, full resume, truthful closure/stale-ownership reconciliation and optional/deferred verification. Retain hourly workflow as deterministic sync guard for known tasks/PRs/checks/deploy receipts and unfinished-work recommendations; no modelcredit dependency, duplicate owne...",
+            "next_action": "Organize5 dependencybatches:1 lifecycle/scope/ownership/syncguard;2 verifiedreview/preview/replyflow;3 NightShiftlead/attribution/Shift;4 approvedsharedtelemetry/design;5 existingMCPprogramintegrations including Relaywebsite/controls/cards and recoveredskill/executor scope. Finishready scopedfixes independently. Fieldandctrl first,rtxForgeheld. Reconcile oldstage records and split admitted boundedexecution steps without duplicateprojects or wakingstoppedworkers. ParentcodesviaRelay."
+          },
+          "after": {
+            "acceptance": "Preserve working tools and provenance. Restore the original 1.9 acceptance at commit 434541358d6bfd25e67af5d8e689ba49a5378b91 and all seven stages of the Research and Reflow Plan. Track source implementation, publication, host installation and runtime verification separately. Preserve original objectives and stable acceptance IDs through additive amendments and full-task resume. Separate scope completion from verification; reconcile stale ownership without restarting paused or cancelled work. Repurpose the hourly workflow as a model-free sync safeguard comparing registered tasks, PRs, check...",
+            "next_action": "Use five dependency batches: (1) lifecycle, objective continuity, ownership and sync safeguard; (2) end-to-end review, preview and reply flow; (3) Night Shift lead, attribution and Shift handoff; (4) approved shared telemetry and design; (5) remaining full MCP integrations, including Relay site/controls/cards and recovered skills/executor scope. Land already-ready scoped fixes independently. Field and ctrl remain first; rtxForge is held. Reconcile older stage records and admit bounded implementation steps without duplicate projects or restarting stopped coding workers. Parent implements thr..."
+          }
+        }
+      ],
+      "updated_at": "2026-10-03T03:18:47.742Z"
+    }
+  ],
+  "nonterminal_claims": [
+    {
+      "id": "relay-1.9.9.1-production-smoke-sync-20261001",
+      "owner": "relay-1.9.9.1-production-smoke-sync-20261001",
+      "branch": "relay/1.9.9.1-production-smoke-sync-20261001",
+      "paths": [
+        "apps/mcp/production-smoke.mjs"
+      ],
+      "resources": [
+        "relay-production-smoke",
+        "relay-1.9.9-release-verification"
+      ],
+      "goal": "Repair the canonical external Relay production smoke so it verifies the shipped 1.9.9 resource versions and current dashboard navigation instead of failing on removed v1 UI resources.",
+      "acceptance": "The production smoke uses the current Relay context-card/control-center resource URIs exported by 1.9.9, verifies the current horizontal project-tab navigation rather than retired #project-list markup, preserves exact deployed-source verification and authenticated web/MCP checks, and passes against the currently deployed 1.9.9 Worker without weakening any assertion.",
+      "next_action": "Claim from current main, update apps/mcp/production-smoke.mjs only, run exact-head tests/admission, merge, then dispatch the production smoke against deployed source 197f43801ac2298efa3a99aebc3159240350cd34 and require success.",
+      "task_class": "maintenance",
+      "category": "qa-verification",
+      "labels": [
+        {
+          "key": "release",
+          "value": "1.9.9.1"
+        },
+        {
+          "key": "domain",
+          "value": "production-qa"
+        }
+      ],
+      "tags": [
+        "production-smoke",
+        "inspector",
+        "mcp-app"
+      ],
+      "primary_role": "verifier",
+      "supporting_roles": [
+        "builder"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "roman",
+      "supporting_staff": [
+        "nico"
+      ],
+      "base_sha": "15ccf60f235974eac58c03be9af10a479cfc7e68",
+      "state": "active",
+      "created_at": "2026-10-01T06:20:20.044Z",
+      "updated_at": "2026-10-01T06:20:20.044Z",
+      "lease_until": "2026-10-01T18:20:20.044Z",
+      "reserved": true,
+      "lease_expired": true
+    },
+    {
+      "id": "relay-mcp-minimal-probe-20261001",
+      "owner": "relay-mcp-minimal-probe-20261001",
+      "branch": "relay/mcp-minimal-probe-20261001",
+      "paths": [
+        "src/relay-v2-probe.js"
+      ],
+      "resources": [
+        "relay-mcp-minimal-probe"
+      ],
+      "goal": "Create a minimal MCP App host probe that isolates ChatGPT mounting from Relay card complexity and oversized structuredContent.",
+      "acceptance": "Use the existing extension resource hook only; advertise a fresh static ui:// Relay probe resource on a small read-only Relay tool result; return no Runner assignment dump; resource renders static text without custom handshake, window.openai dependency, self-refresh, or Relay card design; preserve current v9 and legacy cards untouched; exact-head tests/CI pass; deploy temporary exact-head Worker for cross-client consumer test before merge.",
+      "next_action": "PR #96 exact head e4080bbb2ac30b7f51fb5716fd685d9d4683c8b2 is fully green and contains the static minimal-v2 host probe with both nested ui.resourceUri and flat ui/resourceUri metadata. Temporary Worker upload is blocked only because relay_cloud_upload_version cannot read the current oversized apps/web/generated.js. Wait for the owning release lane's fully green PR #97 generated-payload split to merge, then cut/rebase this probe from repaired main, rerun CI, upload/deploy temporarily, and invoke assignment-scoped relay_runner_progress across iPhone/web/native desktop. Do not modify or merge PR #97 from this lane.",
+      "task_class": "maintenance",
+      "category": "qa-verification",
+      "tags": [
+        "chatgpt",
+        "mcp-apps",
+        "probe",
+        "inline-ui",
+        "host"
+      ],
+      "primary_role": "builder",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "a79bc74350e003b53f39cac066cd044e27651a07",
+      "state": "held",
+      "created_at": "2026-10-01T16:38:20.309Z",
+      "updated_at": "2026-10-01T16:48:32.059Z",
+      "lease_until": "2026-10-02T04:48:32.059Z",
+      "reserved": true,
+      "lease_expired": true
+    }
+  ]
+}

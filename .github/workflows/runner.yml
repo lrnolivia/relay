@@ -1,0 +1,70 @@
+name: runner sync and explicit observer
+
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch:
+    inputs:
+      worker_id:
+        description: "Optional worker id to run immediately instead of the normal due-work tick"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: relay-night-shift
+  cancel-in-progress: false
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+
+      - name: Synchronize source and deployment evidence without a model
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/runner-sync.mjs --out "$RUNNER_TEMP/relay-sync.json"
+
+      - name: Preserve synchronization receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: relay-provider-sync
+          path: ${{ runner.temp }}/relay-sync.json
+          retention-days: 30
+
+      - name: Run explicitly requested read-only observer
+        if: github.event_name == 'workflow_dispatch' && inputs.worker_id != ''
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAIKEY }}
+          RUNNER_GITHUB_TOKEN: ${{ github.token }}
+          REQUESTED_WORKER: ${{ inputs.worker_id }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "Night Shift model execution is parked: OPENAIKEY is not configured. Canonical state is preserved; deterministic UI/coordination remains available." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "$REQUESTED_WORKER" ]; then
+            npm run run -- "$REQUESTED_WORKER"
+          else
+            npm run tick
+          fi
+
+      - name: Persist runner state
+        if: github.event_name == 'workflow_dispatch' && inputs.worker_id != ''
+        run: |
+          if git diff --quiet -- state reports; then
+            echo "No state changes."
+            exit 0
+          fi
+          git config --local user.name "Lauren Olivia"
+          git config --local user.email "lrnoliv@gmail.com"
+          git add state reports
+          git commit -m "runner: persist worker state"
+          node scripts/project-attribution.mjs check HEAD
+          git push

@@ -1,0 +1,298 @@
+{
+  "schema": 1,
+  "id": "field-repo-cleanup-reorg-20260929",
+  "project": "field",
+  "status": "in_progress",
+  "mode": "plan-to-action",
+  "type": "repository-reorganization",
+  "execution_class": "first-class-worker",
+  "control_repository": "lrnolivia/loew-runner",
+  "target_repository": "lrnolivia/field",
+  "plan": "docs/FIELD_REPOSITORY_REORGANIZATION.md",
+  "authority": [
+    "contracts/manifest.json",
+    "LOEW_CHAT_BIBLE.md",
+    "projects/field.json",
+    "lrnolivia/field@main/AGENTS.md",
+    "live Git/Runner/Inspector state"
+  ],
+  "snapshot": {
+    "captured_at": "2026-09-29T22:55:52Z",
+    "field_main": "64fa810a66fc54d73c2f46ed2e352a8c3a3e568d",
+    "open_pr_count": 17,
+    "note": "Snapshot only. Re-read live Git state before every mutation."
+  },
+  "goal": "Convert field from chat-shaped historical branch/PR ownership into a clean architecture-shaped repository and worker topology without losing unique work or disrupting active Mobile and Runner/Inspector lanes.",
+  "owner_policy": {
+    "preserve_existing_mobile_worker": true,
+    "preserve_runner_inspector_infrastructure_owner": true,
+    "historical_field_worker_scopes_are_closing_inventory": true,
+    "cleanup_worker_does_not_become_product_subsystem_owner": true,
+    "new_first_class_workers_must_be_prepared_for_user_authorized_launch": true
+  },
+  "target_domains": [
+    {
+      "id": "canvas",
+      "name": "Canvas & Interaction",
+      "future_branch_prefix": "canvas/"
+    },
+    {
+      "id": "workspace",
+      "name": "Workspace Shell",
+      "future_branch_prefix": "workspace/"
+    },
+    {
+      "id": "controls",
+      "name": "Inspector & Design Controls",
+      "future_branch_prefix": "controls/"
+    },
+    {
+      "id": "assets",
+      "name": "Assets & Media",
+      "future_branch_prefix": "assets/"
+    },
+    {
+      "id": "mobile",
+      "name": "Mobile Focus",
+      "future_branch_prefix": "mobile/",
+      "existing_owner": true
+    }
+  ],
+  "transitional_branch_policy": {
+    "current_allowed_prefix": "field/",
+    "do_not_change_enforcement_until_verified": true,
+    "desired_future_prefixes": [
+      "canvas/",
+      "workspace/",
+      "controls/",
+      "assets/",
+      "mobile/"
+    ],
+    "future_roadmap_prefixes": [
+      "figma/",
+      "model/"
+    ],
+    "branch_lifetime": "short-lived bounded task branch; delete after merge/promotion",
+    "no_chat_continuation_branches": true
+  },
+  "owned_paths": [
+    "Runner control records for this assignment",
+    "field branch/PR inventory and cleanup metadata",
+    "field coordination/bootstrap docs only where required by the migration"
+  ],
+  "approved_shared_paths": [
+    "product source paths only when transplanting already-proven unique work into the correct fresh domain branch"
+  ],
+  "protected_paths": [
+    "PR #123 and its active Mobile branch except coordination-only reads",
+    "loew-runner implementation owned by the Runner/Inspector infrastructure agent",
+    "loew-inspector implementation owned by the Runner/Inspector infrastructure agent",
+    "field/main direct writes",
+    "unrelated product code"
+  ],
+  "tranches": [
+    {
+      "id": "0",
+      "name": "live inventory and truth recovery",
+      "mutation_allowed": false,
+      "required_output": "complete branch/PR cleanup ledger with unique-commit accounting and validation failure classification"
+    },
+    {
+      "id": "1",
+      "name": "salvage and transplant",
+      "mutation_allowed": true,
+      "rule": "fresh bounded domain branches from current main; transplant valuable deltas instead of preserving stale architecture"
+    },
+    {
+      "id": "2",
+      "name": "repository cleanup",
+      "mutation_allowed": true,
+      "rule": "close/delete only after unique work is accounted for"
+    },
+    {
+      "id": "3",
+      "name": "canonical ownership and branch policy",
+      "mutation_allowed": true,
+      "rule": "switch prefix enforcement only after Runner/GitHub workflow compatibility is proven"
+    },
+    {
+      "id": "4",
+      "name": "successor ownership packages",
+      "mutation_allowed": false,
+      "rule": "prepare first-class launch packages; do not silently create or impersonate workers"
+    }
+  ],
+  "initial_disposition_hints": [
+    {
+      "pr": 123,
+      "action": "KEEP ACTIVE",
+      "reason": "Mobile Focus is the protected continuing workstream."
+    },
+    {
+      "pr": 124,
+      "action": "TRANSPLANT",
+      "reason": "Left-panel work is valuable but deeply overlaps newer main; current main wins for Float/Inspector semantics."
+    },
+    {
+      "branch": "stage0/figma-frame-group-parity",
+      "action": "TRANSPLANT",
+      "target": "Canvas & Interaction"
+    },
+    {
+      "branch": "field/viewport-header-lockstep",
+      "action": "TRANSPLANT",
+      "target": "Canvas & Interaction"
+    },
+    {
+      "pr": 126,
+      "action": "VERIFY THEN CLOSE AS SUPERSEDED",
+      "reason": "Current main already contains the later merged compact PaintPicker implementation."
+    },
+    {
+      "pr": 83,
+      "action": "AUDIT UNIQUE COVERAGE THEN CLOSE OR TRANSPLANT",
+      "target": "Inspector & Design Controls"
+    },
+    {
+      "pr": 73,
+      "action": "SALVAGE ONLY STILL-USEFUL MOTION PRIMITIVES",
+      "target": "Workspace Shell"
+    },
+    {
+      "pr": 74,
+      "action": "AUDIT DURABLE PRODUCT-LANGUAGE DELTAS THEN CLOSE OR TRANSPLANT"
+    },
+    {
+      "pr": 27,
+      "action": "VERIFY THEN LIKELY CLOSE AS SUPERSEDED BY RUNNER-FIRST AUTHORITY"
+    },
+    {
+      "pr": 92,
+      "action": "RE-EVALUATE AGAINST CURRENT RUNNER/INSPECTOR QA ARCHITECTURE"
+    },
+    {
+      "pr": 28,
+      "action": "AUDIT WHETHER RUNNER HAS SUPERSEDED ITS COORDINATION PURPOSE"
+    },
+    {
+      "prs": [
+        5,
+        8,
+        9,
+        10,
+        11,
+        13,
+        14,
+        38
+      ],
+      "action": "QUARANTINE AND COMPARE AGAINST CURRENT MAIN BEFORE DECISION"
+    }
+  ],
+  "validation_failure_classes": [
+    "product_failure",
+    "qa_assertion",
+    "dependency_drift",
+    "auth",
+    "provider_quota",
+    "rate_limit",
+    "transport",
+    "provider_outage",
+    "stale_run"
+  ],
+  "non_goals": [
+    "Do not implement the entire Stage 0 roadmap.",
+    "Do not absorb Runner/Inspector infrastructure work.",
+    "Do not redesign Mobile Focus.",
+    "Do not force-push or rewrite published history.",
+    "Do not delete branches merely because they are old.",
+    "Do not treat red CI as product failure without classification.",
+    "Do not create first-class Workers without user authorization."
+  ],
+  "acceptance_criteria": [
+    "Paginate and classify all field remote branches and every open PR against fresh main.",
+    "Account for every unique unmerged commit before closure/deletion.",
+    "Preserve active Mobile work and Runner/Inspector infrastructure ownership.",
+    "Transplant valuable stranded work into fresh bounded domain branches from current main.",
+    "Close superseded/replaced PRs only after proof and leave concise reasons.",
+    "Delete obsolete remote branches only after their unique work is accounted for.",
+    "Record the durable Canvas, Workspace, Controls, Assets, and Mobile ownership boundaries in Runner.",
+    "Verify new branch prefixes against current automation before changing active enforcement.",
+    "Prepare first-class launch packages for Canvas, Workspace, Controls, and Assets if those owners do not already exist.",
+    "Persist a final cleanup ledger, current active-branch/PR set, and ordered Stage 0 successor queue in Runner.",
+    "Leave field/main functional and use no force-push/history rewrite."
+  ],
+  "required_report": [
+    "Findings",
+    "Changes",
+    "Validation",
+    "Risks",
+    "Open Questions",
+    "Final cleanup ledger",
+    "Successor ownership/assignment queue"
+  ],
+  "execution": {
+    "started_at": "2026-09-30T04:50:00Z",
+    "reviewed_main": "760774a6bd628827f93190fb0abaf7a6e26acbea",
+    "inventory_branches": 132,
+    "open_prs": 19,
+    "ledger": "docs/field/reorganization/2026-09-30-inventory.json",
+    "handoff": "docs/field/reorganization/MAIN_FIELD_WORKER_CONSOLIDATION.md",
+    "phase": "User-authorized serial hotfix #137 then preserved Dashboard/Mobile #136; final consolidation incomplete",
+    "user_direction": "User explicitly assigns #136, hotfix and all consolidation to existing chat 01a0f0ae-4e8c-7e62-ae7a-3b02faa398f5. No new workers. Connected landscape panel geometry remains deferred.",
+    "mutations_in_field": [
+      {
+        "pr": 133,
+        "branch": "field/consolidation-validation-baseline-20260930",
+        "head": "cc38e107fedd1b33088bf64dd6534f6d3d97965f",
+        "state": "draft; install/build and Media CI pass; full tests/lint not cleared"
+      },
+      {
+        "pr": 135,
+        "branch": "field/consolidation-canvas-20260930",
+        "head": "57f4765b591286c6c456439ba217d8de282c38c9",
+        "state": "Merged at 2026-09-30T10:14:32Z as 854038a3e84f41cd590a4ad18b24fcd4127e2fba after Registry 36697728462 and exact-head Preview QA 36700859927 / 36700862882 passed."
+      },
+      {
+        "pr": 136,
+        "branch": "field/consolidation-workspace-20260930",
+        "head": "9fd1357d54841e255efb0596b2be4162958fc879",
+        "state": "Draft: recovered 19 Dashboard paths plus retryable errors and keyboard focus/navigation fixes. Current focused tests pass; prior full Dashboard suite had one unchanged main assertion failure. Build passed at b84ce2d. Current-head Registry and authenticated persistence remain pending."
+      }
+    ],
+    "next_action": "Finish #137 exact-head Registry/Preview, merge and complete claim; atomically return held #136 to current consolidation chat and finish preserved work; then ordered semantic history accounting.",
+    "deferred_panel_requirements": "docs/field/reorganization/DEFERRED_CONNECTED_PANEL_REQUIREMENTS_20260930.md",
+    "panel_implementation": "deferred by user on 2026-09-30; instructions only; uncommitted experiments withdrawn",
+    "implementation_checkpoint": "docs/field/reorganization/EXECUTION_CHECKPOINT_20260930.md",
+    "publication_handoff": "docs/field/reorganization/PUBLICATION_HANDOFF_20260930.md",
+    "validation_evidence": {
+      "current_head": "57f4765b591286c6c456439ba217d8de282c38c9",
+      "diagnostic_head": "eff4047b82a8185ba67530fd25f2572da36e1096",
+      "diagnostic_registry_run": 36694828578,
+      "diagnostic_registry_job": 109820178700,
+      "branch_failures": 57,
+      "exact_main_failures": 61,
+      "branch_only_failures": [],
+      "baseline_only_failures": [
+        "src/canvas/gallery/crop-math.test.ts :: gallery crop math computes the actual cover overflow instead of using frame dimensions",
+        "src/canvas/transform/CameraAnimator.test.ts :: CameraAnimator reduced motion detects the OS reduced-motion preference",
+        "src/canvas/transform/CameraAnimator.test.ts :: CameraAnimator reduced motion snaps focus motion directly to the exact target under reduced motion",
+        "src/editor/workspace-layout.test.ts :: floating Inspector drag contract treats the viewport padding as a hard margin instead of an edge-dock trigger"
+      ],
+      "current_registry_run": 36697728462,
+      "current_registry_job": 109829617442,
+      "preview_blocker": "Relay Worker fetch returns 1053; direct HTTP and GitHub Chromium prove exact-head custom-host Preview works",
+      "relay_preview_failure_evidence": "vis_ec1567cf-2eab-4779-997c-ee641fb2ef9d",
+      "relay_production_control_evidence": "vis_5f651b2a-7b7a-4016-8f35-c89d4a83bbb0",
+      "current_registry_status": "success",
+      "preview_preflight_run": 36700859927,
+      "preview_stage0_run": 36700862882,
+      "preview_deployment_id": "6255045b-1ed2-4cea-81b4-d44d353923c9",
+      "preview_status": "PASS",
+      "merge_commit": "854038a3e84f41cd590a4ad18b24fcd4127e2fba",
+      "production_deployment_id": "2ae1aa2f-dbc1-4aed-b883-0951c9da32af",
+      "promotion_receipt": "docs/field/reorganization/CANVAS_PROMOTION_RECEIPT_20260930.md"
+    },
+    "dashboard_checkpoint": "docs/field/reorganization/DASHBOARD_PRODUCT_CHECKPOINT_20260930.md",
+    "live_ownership_receipt": "docs/field/reorganization/LIVE_OWNERSHIP_RECEIPT_20260930.md"
+  }
+}

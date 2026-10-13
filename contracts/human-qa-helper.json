@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "version": "2026-09-30.1",
+  "authority": "lrnolivia/relay@main",
+  "name": "runner-human-qa-helper",
+  "purpose": "Canonical contract for agents populating Runner's human QA helper with artifact-bound questions, checklists, notes, verdicts, and Visuals evidence.",
+  "applies_when": [
+    "a human visual or behavioral judgment is required",
+    "a deterministic QA path reaches a documented human-QA handoff",
+    "an agent asks the user to review screenshot or video evidence",
+    "an agent requests product-direction, visual-quality, usability, or interaction feedback"
+  ],
+  "exact_identity": {
+    "required": [
+      "project",
+      "artifact"
+    ],
+    "artifact_required": [
+      "repository",
+      "head_sha"
+    ],
+    "artifact_optional": [
+      "pr",
+      "branch",
+      "environment",
+      "route",
+      "deployment_id",
+      "worker_version_id"
+    ],
+    "visual_identity": "Include Visuals evidence_ids and/or run_id whenever visual media exists.",
+    "stale_when": [
+      "head_sha changes",
+      "reviewed deployment/version changes materially",
+      "the relevant evidence set is replaced",
+      "the reviewed route/state changes materially",
+      "acceptance criteria materially change"
+    ]
+  },
+  "helper_packet": {
+    "required": [
+      "title",
+      "purpose",
+      "questions",
+      "overall_verdict"
+    ],
+    "optional": [
+      "summary",
+      "checklist",
+      "known_issues",
+      "deterministic_evidence",
+      "visuals",
+      "reproduction",
+      "recovery"
+    ],
+    "overall_verdict": {
+      "values": [
+        "looks_good",
+        "needs_work",
+        "not_sure"
+      ],
+      "note": "Overall verdict is separate from targeted questions; do not use a generic targeted question as a substitute."
+    }
+  },
+  "questions": {
+    "min_items": 1,
+    "max_items": 6,
+    "preferred_items": "2-4",
+    "fields": [
+      "id",
+      "prompt",
+      "reason",
+      "criterion_id",
+      "kind"
+    ],
+    "kinds": [
+      "yes_no_not_sure",
+      "choice",
+      "short_text"
+    ],
+    "rules": [
+      "Ask one concrete judgment per question.",
+      "Tie every question to an acceptance criterion, known ambiguity, or product decision.",
+      "Use plain language and describe what to look at or try.",
+      "Ask only for human judgment the agent cannot prove deterministically.",
+      "Do not ask the user to verify tests, status codes, source identity, deployment identity, logs, or other facts the agent can verify.",
+      "Do not ask generic questions such as 'does this look good?' when a more specific visual or interaction criterion exists.",
+      "Put blocker or decision-critical questions first.",
+      "Do not repeat the same criterion in both a question and checklist item unless one is judgment and the other is an observable prerequisite."
+    ]
+  },
+  "checklist": {
+    "min_items": 0,
+    "max_items": 10,
+    "preferred_items": "3-6 when the review has multiple observable conditions",
+    "fields": [
+      "id",
+      "label",
+      "reason",
+      "criterion_id"
+    ],
+    "rules": [
+      "Use checklist items for observable states or steps the user can confirm by looking or interacting.",
+      "Keep each item short enough to scan while the preview is visible.",
+      "Do not turn deterministic assertions into user checklist work.",
+      "Do not require a checklist for a truly single-criterion review.",
+      "Group or order items in the sequence the user will naturally inspect them."
+    ]
+  },
+  "agent_population": {
+    "derive_from": [
+      "assignment acceptance criteria",
+      "current QA overlay",
+      "known failures or uncertainty",
+      "Visuals evidence context",
+      "exact preview route and interaction path",
+      "user-requested design/product decisions"
+    ],
+    "required_behavior": [
+      "Populate the helper before asking the user to review.",
+      "Generate the questions/checklist for the user; do not ask the user to author them.",
+      "Attach exact evidence and artifact identity.",
+      "Include deterministic evidence as context, not as homework.",
+      "If there is no meaningful human judgment left, do not manufacture a human-QA request."
+    ]
+  },
+  "review_lifecycle": {
+    "notes": "Freeform user notes attach to the exact reviewed artifact/evidence receipt.",
+    "answers": "Question and checklist responses attach to the exact packet version.",
+    "invalidation": "A stale artifact/evidence identity preserves historical answers but they no longer authorize or satisfy review for the new identity.",
+    "async_media": "The packet may be registered while media is queued/uploading, but visual criteria are not human-proven until the referenced media or live preview is actually viewable.",
+    "no_gate_bypass": "Human QA never overrides mandatory tests, security gates, branch protection, or other deterministic policy."
+  }
+}

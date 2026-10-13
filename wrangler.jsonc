@@ -1,0 +1,53 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "relay",
+  "main": "apps/mcp/index.js",
+  "compatibility_date": "2026-09-29",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "relay.loew.fi",
+      "custom_domain": true
+    }
+  ],
+  "vars": {
+    "RELAY_AUTONOMY_GUARD": "enforced",
+    "CLOUDFLARE_ACCOUNT_ID": "8df30cd302a4d4a4c01db9863c712166",
+    "RELAY_CLOUDFLARE_WRITE_SCRIPTS": "relay,field,loewfi,loewtorials,thetake,ctrl,gwfamily",
+    "RELAY_RUNNER_CONTROL_REPOSITORY": "lrnolivia/relay",
+    "RELAY_CANONICAL_REPOSITORY": "lrnolivia/relay",
+    "RELAY_GITHUB_APP_ID": "5133504"
+  },
+  "browser": {
+    "binding": "BROWSER",
+    "remote": true
+  },
+  "r2_buckets": [
+    {
+      "binding": "EVIDENCE",
+      "bucket_name": "loew-inspector-evidence"
+    }
+  ],
+  "preview_urls": false,
+  "triggers": { "crons": ["17 * * * *"] },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "RELAY_EVENTS",
+        "class_name": "RelayEvents"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "ctrl-events-v1",
+      "new_sqlite_classes": [
+        "RelayEvents"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://relay.loew.fi/contracts/skills/manifest-v1.schema.json",
+  "title":"Relay Skill Manifest v1",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["id","version","origin","license","provenance","integrity","entrypoint","context_budget","required_capabilities","optional_capabilities","platforms","update_policy"],
+  "properties":{
+    "name":{"type":"string","minLength":1,"maxLength":160},
+    "license_integrity":{"type":"string","pattern":"^sha256:[a-f0-9]{64}$"},
+    "id":{"type":"string","pattern":"^[a-z][a-z0-9.-]{1,95}$"},
+    "version":{"type":"string","pattern":"^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"},
+    "origin":{"enum":["relay","upstream","project-private"]},
+    "license":{"type":"string","minLength":1,"maxLength":120},
+    "provenance":{"type":"object","additionalProperties":false,"required":["source","revision"],"properties":{
+      "source":{"type":"string","minLength":1,"maxLength":500},
+      "revision":{"type":"string","minLength":1,"maxLength":200},
+      "retrieved_at":{"type":["string","null"],"format":"date-time"}
+    }},
+    "integrity":{"type":"string","pattern":"^sha256:[a-f0-9]{64}$"},
+    "entrypoint":{"type":"string","minLength":1,"maxLength":240},
+    "tags":{"type":"array","maxItems":32,"uniqueItems":true,"items":{"type":"string","pattern":"^[a-z0-9][a-z0-9.-]{0,63}$"}},
+    "dependencies":{"type":"array","maxItems":32,"uniqueItems":true,"items":{"type":"string","pattern":"^[a-z][a-z0-9.-]{1,95}$"}},
+    "required_capabilities":{"type":"array","maxItems":32,"uniqueItems":true,"items":{"type":"string","minLength":1,"maxLength":120}},
+    "optional_capabilities":{"type":"array","maxItems":32,"uniqueItems":true,"items":{"type":"string","minLength":1,"maxLength":120}},
+    "platforms":{"type":"array","maxItems":16,"uniqueItems":true,"items":{"enum":["web","macos","windows","android","gnome","generic"]}},
+    "context_budget":{"type":"integer","minimum":256,"maximum":32768},
+    "update_policy":{"enum":["pinned","manual","tracked"]},
+    "staff_affinities":{"type":"array","maxItems":16,"uniqueItems":true,"items":{"type":"string","pattern":"^[a-z][a-z0-9-]{0,63}$"}},
+    "extends":{"type":["string","null"],"pattern":"^[a-z][a-z0-9.-]{1,95}$"},
+    "project":{"type":["string","null"],"minLength":1,"maxLength":120},
+    "executable":{"type":"boolean","default":false}
+  }
+}

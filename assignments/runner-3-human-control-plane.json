@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "id": "runner-3-human-control-plane",
+  "project": "loew-runner",
+  "status": "ready",
+  "mode": "plan-to-action",
+  "type": "product-platform-upgrade",
+  "execution_class": "first-class-worker",
+  "target_release": "3.0",
+  "plan": "docs/RUNNER_3_0_HUMAN_CONTROL_PLANE.md",
+  "goal": "Rebuild the Runner dashboard into a project-first human control plane for projects, first-class agents, assignments, ownership, overlap, repository hygiene, QA, consolidation, handoffs and infrastructure state, with no paid AI requirement for core workflows.",
+  "current_verified_ui": {
+    "version_label": "0.6",
+    "primary_sections": [
+      "workers",
+      "visual"
+    ],
+    "current_controls": [
+      "worker enable/pause",
+      "run now",
+      "runner settings",
+      "field dependency doctor",
+      "field dependency repair",
+      "visual evidence review"
+    ],
+    "missing_first_class_surfaces": [
+      "projects",
+      "assignments",
+      "team topology",
+      "ownership",
+      "overlap",
+      "repo hygiene",
+      "notes/tracker consolidation",
+      "handoff generation",
+      "cross-project attention"
+    ]
+  },
+  "product_decisions": {
+    "project_first_home": true,
+    "current_scheduler_workers_move_to_infrastructure_automations": true,
+    "first_class_agents_get_separate_registry": true,
+    "zero_ai_core_mode_required": true,
+    "overlap_engine_is_deterministic": true,
+    "safe_cleanup_requires_proof": true,
+    "llm_features_optional_later": true,
+    "release_label_after_migration": "Runner 3.0"
+  },
+  "protected_ownership": {
+    "runner_inspector_infrastructure_agent": "owns provider capacity, retry/defer policy, execution scheduling and Inspector evidence infrastructure; 3.0 UI consumes those capabilities rather than reimplementing them",
+    "project_product_truth": "target repositories remain authoritative for product truth"
+  },
+  "tranches": [
+    {
+      "id": "3.0-A",
+      "name": "data model + read-only project control plane",
+      "required": [
+        "projects index and attention home",
+        "project workspace",
+        "agents registry distinct from scheduler automations",
+        "assignment UI",
+        "branch/PR inventory",
+        "repo hygiene",
+        "deterministic overlap engine",
+        "deterministic attention engine",
+        "notes/tracker inventory"
+      ]
+    },
+    {
+      "id": "3.0-B",
+      "name": "guarded assignment + repo actions",
+      "required": [
+        "assignment mutation",
+        "ownership approvals",
+        "safe cleanup dry run and execution",
+        "repo doctor",
+        "project freeze",
+        "activity events"
+      ]
+    },
+    {
+      "id": "3.0-C",
+      "name": "consolidation + handoff tools",
+      "required": [
+        "Consolidate status",
+        "Reconcile trackers",
+        "Archive stale reports",
+        "Generate handoff",
+        "Copy Codex packet",
+        "Copy ChatGPT packet",
+        "worker resume packet"
+      ]
+    },
+    {
+      "id": "3.0-D",
+      "name": "infrastructure/capacity integration",
+      "coordination_required_with": "existing Runner/Inspector infrastructure owner"
+    },
+    {
+      "id": "3.0-E",
+      "name": "polish + migration",
+      "required": [
+        "project-first navigation",
+        "preserve visual evidence",
+        "move existing scheduler controls to Automations",
+        "accessibility/responsive states",
+        "ship Runner 3.0 label"
+      ]
+    }
+  ],
+  "proposed_records": [
+    "projects/<id>.json expanded",
+    "agents/<project>/<id>.json",
+    "assignments/<id>.json expanded",
+    "ownership/<project>.json",
+    "snapshots/<project>.json derived",
+    "events/* append-only where practical"
+  ],
+  "safety": {
+    "no_force_push_ui": true,
+    "no_direct_main_product_writes": true,
+    "destructive_actions_require_dry_run_and_confirmation": true,
+    "branch_delete_requires_no_active_assignment_and_no_unaccounted_unique_commits": true,
+    "semantic_conflicts_require_human_review": true
+  },
+  "non_goals": [
+    "embedded ChatGPT",
+    "embedded Codex",
+    "mandatory OpenAI API usage",
+    "autonomous product-direction decisions",
+    "semantic reconciliation of contradictory prose without human review",
+    "replacing GitHub or Inspector"
+  ],
+  "acceptance_criteria": [
+    "A user can see every managed project and attention state from one dashboard.",
+    "A project view shows stage, workers, assignments, branches, PRs, QA, overlap and blockers.",
+    "First-class project agents are distinct from Runner scheduler automations.",
+    "Overlap is derived deterministically and exposes exact causative paths.",
+    "Assignments can be managed from the dashboard with guarded writes.",
+    "Repo hygiene can identify orphan, stale, merged and superseded work.",
+    "Safe cleanup can execute from the dashboard without force operations.",
+    "Structured status and trackers can be consolidated without paid inference.",
+    "Codex/ChatGPT handoff packets can be generated with one click without model calls.",
+    "QA failure classes distinguish product failures from provider/harness states.",
+    "Infrastructure capacity can be viewed from Runner.",
+    "All control actions are auditable.",
+    "Core 3.0 remains fully useful with no OPENAI_API_KEY."
+  ],
+  "implementation_note": "Do not build the whole release as one mega-branch. Implement each 3.0 tranche through bounded short-lived branches/PRs and preserve the existing visual evidence surface and current control functionality during migration."
+}

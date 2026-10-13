@@ -1,0 +1,36 @@
+export const LOEW_NAMING_SKILL_URI = "skill://relay/loew-naming/SKILL.md";
+
+const LOEW_NAMING_SKILL_DESCRIPTION = "Name loew.fi products, subsystems, services, and internal capabilities. Preserve the loew.fi family: short, confident, evocative names with a functional shadow; distinguish product branding from subsystem and implementation naming; avoid generic SaaS/AI naming.";
+
+const LOEW_NAMING_SKILL_TEXT = "---\nname: loew-naming\ndescription: Name loew.fi products, subsystems, services, and internal capabilities. Preserve the loew.fi family: short, confident, evocative names with a functional shadow; distinguish product branding from subsystem and implementation naming; avoid generic SaaS/AI naming.\n---\n\n# loew.fi naming\n\nUse this skill when creating, comparing, refining, or explaining names for a loew.fi product, subsystem, service, feature family, protocol, internal capability, or adjacent brand.\n\nThe goal is not to make every technical noun sound branded. The goal is to give the things that deserve identity a name that feels native to the same world as loew.fi.\n\nExisting names such as `field`, `relay`, `runner`, `inspector`, `arc`, and `revyme` are semantic precedent, not a word bank. Do not clone their exact metaphors or bolt their nouns onto new concepts.\n\n## first classify the thing\n\nBefore naming, decide which layer it belongs to.\n\n### product\n\nA top-level product should feel complete on its own.\n\nPrefer:\n- one strong word, usually short;\n- a real word, near-word, or restrained respelling;\n- a name with a conceptual metaphor and a functional shadow;\n- something easy to say aloud and remember after hearing once;\n- something that can survive both `name by loew.fi` and ordinary conversation.\n\nA product name does not need to describe the implementation. It should imply the role, mood, motion, place, or relationship the product creates.\n\n### subsystem\n\nA subsystem may be more operational.\n\nPrefer a compact noun or verb that describes what role it plays inside the parent system without becoming generic enterprise jargon. It should sound intentional beside the parent product, but it does not need the independence of a top-level brand.\n\nUse the parent name in documentation when context matters. Do not force every subsystem into a standalone brand.\n\n### primitive or implementation detail\n\nDefault to clear functional naming.\n\nLibraries, adapters, queues, schemas, bridges, workers, stores, contracts, and one-off helpers should usually be named for what they do. Promote an internal primitive into branded naming only when it is user-facing, repeatedly discussed as a concept, shared across products, or strategically important enough to deserve durable identity.\n\n## loew.fi character\n\nGood loew.fi names are:\n- concise;\n- confident rather than loud;\n- slightly evocative or enigmatic without becoming obscure;\n- easy to pronounce;\n- visually clean in lowercase;\n- credible in a repo name, interface label, sentence, and product page;\n- specific enough to avoid blending into generic software language;\n- capable of carrying meaning as the product grows.\n\nA useful name often points indirectly at the job through a metaphor such as movement, exchange, place, boundary, signal, structure, viewpoint, memory, craft, or coordination.\n\nThe metaphor should illuminate the product. It should not become lore the user has to learn.\n\n## avoid\n\nDo not default to:\n- `AI`, `GPT`, `smart`, `cloud`, `hub`, `suite`, `platform`, `pro`, `flow`, or `labs` as empty differentiation;\n- obvious two-word startup compounds;\n- fake enterprise names;\n- random mythology, astronomy, or faux-Latin with no relationship to the product;\n- names that sound like a crypto token, cybersecurity vendor, or productivity SaaS template;\n- spelling gimmicks that make pronunciation uncertain;\n- cute names that undercut a serious utility;\n- naming every implementation detail as if it were a flagship product.\n\nSuffixes such as `OS`, `Studio`, `Kit`, `Cloud`, or `AI` are acceptable only when they communicate a real category or product boundary.\n\n## naming process\n\n1. Write the job of the thing in one plain sentence.\n2. Identify the layer: product, subsystem, or primitive.\n3. Extract the most important relationship, motion, place, transformation, or point of view in that job.\n4. Explore several metaphor families instead of generating synonyms from one idea.\n5. Produce a broad set, then remove names that are generic, awkward aloud, too close to an existing loew.fi name, or too dependent on explanation.\n6. For the strongest candidates, test spoken pronunciation, lowercase appearance, repo/CLI friendliness, `name by loew.fi`, use in a normal sentence, and family fit without sounding derivative.\n7. Present a compact shortlist with a one-line rationale for each.\n\nWhen useful, separate candidates into:\n- direct: clearest functional shadow;\n- evocative: stronger metaphor and brand character;\n- stylized: restrained invented or altered forms.\n\nDo not rank purely by novelty. Prefer the name that best fits the actual product boundary and relationship to the rest of loew.fi.\n\n## family collisions\n\nCheck the proposed name against the current loew.fi product and subsystem family before recommending it. Reject semantic collisions as well as exact duplicates. Do not give two products nearly identical movement or orchestration metaphors unless the relationship is deliberate.\n\nIf current repository names, product registrations, or project state matter, use Relay to read the current source of truth before finalizing suggestions.\n\nDo not claim a trademark, domain, package name, or social handle is available unless availability was explicitly checked through an appropriate current source.\n\n## casing and presentation\n\nPreserve established casing for existing products. For a new consumer-facing name, default to lowercase in loew.fi brand copy unless the concept has a deliberate reason to use another canonical form.\n\nTechnical identifiers may use the casing required by the environment, but the brand name and code identifier do not have to be identical.\n\n## output\n\nFor a normal naming request, return a focused shortlist rather than a wall of names. Include enough rationale to show the metaphor and family fit.\n\nWhen the user is choosing between existing candidates, compare their semantic role, sound, memorability, and fit with the product architecture. Do not invent new candidates unless that helps the decision.\n";
+
+const LOEW_NAMING_SKILL_DIGEST = "sha256:daf364c346927a6601b285875bfd709b3d9c23b51c61f7dc4d3f9cc383d3cedb";
+
+export function loewNamingSkillCatalogEntry() {
+  return {
+    uri: LOEW_NAMING_SKILL_URI,
+    frontmatter: {
+      name: "loew-naming",
+      description: LOEW_NAMING_SKILL_DESCRIPTION
+    },
+    resources: [{ uri: LOEW_NAMING_SKILL_URI, digest: LOEW_NAMING_SKILL_DIGEST }]
+  };
+}
+
+export function loewNamingSkillResourceDescriptor() {
+  return {
+    uri: LOEW_NAMING_SKILL_URI,
+    name: "loew-naming",
+    title: "loew-naming",
+    description: LOEW_NAMING_SKILL_DESCRIPTION,
+    mimeType: "text/markdown"
+  };
+}
+
+export function loewNamingSkillResource() {
+  return {
+    uri: LOEW_NAMING_SKILL_URI,
+    mimeType: "text/markdown",
+    text: LOEW_NAMING_SKILL_TEXT
+  };
+}

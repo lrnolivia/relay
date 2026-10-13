@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relay.loew.fi/contracts/assignments/worker-message-v1.schema.json",
+  "title": "Relay Worker Message v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "sender",
+    "recipient",
+    "machine",
+    "impact",
+    "requested_action",
+    "summary"
+  ],
+  "properties": {
+    "kind": {
+      "enum": [
+        "fyi",
+        "request",
+        "blocker",
+        "decision",
+        "handoff",
+        "scope-change"
+      ]
+    },
+    "sender": {
+      "type": "object"
+    },
+    "recipient": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "machine": {
+      "type": "object"
+    },
+    "impact": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "requested_action": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 500
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 800
+    },
+    "collaborators": {
+      "type": "array",
+      "maxItems": 16
+    },
+    "authoritative": {
+      "const": false
+    },
+    "requires_runner_action": {
+      "type": "boolean"
+    },
+    "fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{24}$"
+    },
+    "team": {
+      "type": "object",
+      "required": [
+        "primary_staff",
+        "supporting_staff"
+      ],
+      "properties": {
+        "primary_staff": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "supporting_staff": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "object"
+          }
+        },
+        "primary_team": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "inspector",
+            "runner",
+            "night-shift",
+            "source",
+            "cloud",
+            "release",
+            "skills",
+            null
+          ]
+        },
+        "supporting_teams": {
+          "type": "array",
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "inspector",
+              "runner",
+              "night-shift",
+              "source",
+              "cloud",
+              "release",
+              "skills"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

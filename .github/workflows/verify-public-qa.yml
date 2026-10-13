@@ -1,0 +1,80 @@
+name: Verify public field QA lane
+
+run-name: "public field QA / ${{ inputs.request_id }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: "Real field project ID to load read-only"
+        required: true
+        type: string
+      request_id:
+        description: "Correlation id"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Verify public QA lane and protected editor routes
+        shell: bash
+        env:
+          PROJECT_ID: ${{ inputs.project_id }}
+          REQUEST_ID: ${{ inputs.request_id }}
+        run: |
+          set -euo pipefail
+          if [[ ! "$PROJECT_ID" =~ ^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$ ]]; then
+            echo "invalid project id" >&2
+            exit 2
+          fi
+          if [[ ! "$REQUEST_ID" =~ ^[A-Za-z0-9._-]{1,80}$ ]]; then
+            echo "invalid request id" >&2
+            exit 2
+          fi
+
+          check_public_html() {
+            local name="$1" url="$2" body="$3" headers="$4"
+            status="$(curl --silent --show-error --max-time 20 --location --output "$body" --dump-header "$headers" --write-out '%{http_code}' "$url")"
+            echo "$name status=$status"
+            test "$status" = "200"
+          }
+
+          qa_url="https://field.loew.fi/qa/work/$PROJECT_ID"
+          work_url="https://field.loew.fi/work/$PROJECT_ID"
+          api_url="https://field.loew.fi/api/field/projects/$PROJECT_ID"
+          canvas_url="https://canvas.field.loew.fi/"
+          preview_url="https://preview.field.loew.fi/"
+
+          check_public_html "qa" "$qa_url" qa.html qa.headers
+          grep -q '__FIELD_QA_PROJECT__' qa.html
+          grep -qi '^x-robots-tag:.*noindex' qa.headers
+          grep -qi '^cache-control:.*no-store' qa.headers
+
+          check_public_html "canvas" "$canvas_url" canvas.html canvas.headers
+          grep -qi '^cross-origin-resource-policy:.*cross-origin' canvas.headers
+          grep -qi '^cross-origin-opener-policy:.*same-origin' canvas.headers
+          grep -qi '^cross-origin-embedder-policy:.*credentialless' canvas.headers
+
+          check_public_html "preview" "$preview_url" preview.html preview.headers
+
+          work_status="$(curl --silent --show-error --max-time 20 --output /dev/null --write-out '%{http_code}' "$work_url")"
+          api_status="$(curl --silent --show-error --max-time 20 --output /dev/null --write-out '%{http_code}' "$api_url")"
+          echo "protected work status=$work_status"
+          echo "protected api status=$api_status"
+
+          if [[ "$work_status" == "200" ]]; then
+            echo "/work unexpectedly public" >&2
+            exit 1
+          fi
+          if [[ "$api_status" == "200" ]]; then
+            echo "project API unexpectedly public" >&2
+            exit 1
+          fi
+
+          echo "LOEW_PUBLIC_QA_RESULT={\"ok\":true,\"request_id\":\"$REQUEST_ID\",\"project_id\":\"$PROJECT_ID\",\"qa_status\":200,\"canvas_status\":200,\"preview_status\":200,\"work_status\":$work_status,\"api_status\":$api_status}"

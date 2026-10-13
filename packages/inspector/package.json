@@ -1,0 +1,13 @@
+{
+  "name": "@relay/inspector",
+  "version": "1.6.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "scripts": {
+    "test": "node --test ../../src/*.test.js ../../scripts/browser-call.test.mjs",
+    "check": "node --check index.js"
+  }
+}

@@ -1,0 +1,13 @@
+name: Relay cutover test inventory (retired)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Cutover inventory diagnostics retired; no source mutation is performed."

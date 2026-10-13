@@ -1,0 +1,1159 @@
+{
+  "schema": 1,
+  "project": "rtxforge",
+  "updated_at": "2026-10-13T19:20:38.920Z",
+  "legacy_branches": [
+    "backup/github-main-before-0.5.8",
+    "backup/main-0.5.8-ada",
+    "docs/move-to-runner",
+    "integrate/0.5.8.1-ada",
+    "main",
+    "runner/universal-authority"
+  ],
+  "queue": [
+    {
+      "id": "rtxforge-figma-fidelity-20261001",
+      "owner": "01a0cbec-6302-7aa0-a0c8-546f9b46587d",
+      "goal": "PAUSED by user: correct production Figma designs against repository source/captures. Source path is READ-ONLY reference, not authorization to edit code. User rejected previous result as ugly/inaccurate; previous completion claim is invalid.",
+      "acceptance": "Editable designs visually match repo captures and source, with shared Foundations/Components propagating into Library, Details, Progress/Dialogs, QA. Inter is a fallback because Adwaita Sans unavailable in Figma; exact font fidelity unresolved.",
+      "next_action": "DO NOT RESUME until user explicitly asks. Stopped after FAILED visual review of Details29:475 and Graphics30:685: hero hidden by gradient; sidebar labels black on dark, selection fills fully opaque; footer dividers too bright. Next diagnose variable paint/gradient opacity; reset glyphs in header23:62/64/66/68 swapped to51:329. Then continue Library/List/Progress/Dialogs/QA correction. Retained file https://www.figma.com/design/UV0o89IkpCbYfXQmO3EziZ . References /home/loew/Repos/rtxForge/dist/{gnome-library,gnome-game-settings,gnome-settings,gnome-progress,list-final,install-presets-final}.png plus gui/rtxforge_gtk.py. CP assets18:6/18:7/18:8 replaced from actual demo media; hero hash a36c70e3a27387b8997948aacda0303b41572605. Added Adwaita icons64:2789..64:2812 and Sidebar Row64:2815; changed sidebars28:93,30:675; preference rows56px with regular titles, buttons minWidth70. Hero28:426 gradient currently faulty. Details/Settings grouped row frames64:3344..64:3363. No product/game writes. Preserve unrelated local documentation changes. Separate installation Relay assignment untouched.",
+      "paths": [
+        "gui/rtxforge_gtk.py"
+      ],
+      "resources": [
+        "figma:UV0o89IkpCbYfXQmO3EziZ"
+      ],
+      "category": "design",
+      "labels": [
+        {
+          "key": "execution",
+          "value": "paused-by-user"
+        }
+      ],
+      "primary_role": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-01T22:47:12.113Z"
+    },
+    {
+      "id": "rtxforge-native-kde-hyprland-corner-choice-later-20261001",
+      "owner": "01a0f997-7f61-7e62-9b39-ae49f311792d",
+      "goal": "Later: port rtxForge presentation to native KDE Plasma and Hyprland desktop integration, and let every user choose square or rounded window edges.",
+      "acceptance": "Native desktop integration considered for KDE Plasma and Hyprland; square/rounded edge preference available to all desktop users. User explicitly deferred implementation until later.",
+      "next_action": "Deferred by user on 2026-10-01. Revisit after full runtime package and scaling/HDR work; inspect native desktop toolkit/decorations before choosing implementation.",
+      "paths": [
+        "gui/"
+      ],
+      "resources": [
+        "desktop-presentation-portability",
+        "window-corner-preference"
+      ],
+      "category": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-02T00:09:24.187Z"
+    },
+    {
+      "id": "rtxforge-post-release-mfg-nr-qa-20261002",
+      "owner": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+      "goal": "Preserve Lauren's post-release game QA for the shipped rtxForge package; record only, no worker launch.",
+      "acceptance": "Verbatim Lauren report2026-10-02T01:44UTC messageSentinel_59276d1506748191aa0803178189589e: \"record that Avatar's MFG worked, Witcher 3 MFG worked. Crimson Desert loaded and MFG worked. NR didn't work anywhere it's installed yet. but this is crazy great progress.\" These are user-observed runtime MFG passes for3games and NRfailure in testedinstallations, no automated verification or diagnosedcause. Package reference PR5 testedhead28cb6a10b4d44236037eaba5512e37b45d957cf2 mergedacd71e9a3da59a86c04794247ac8ead60fdbb95a; exactruntimebinaryhash/settings not supplied. PriorOW2userMFGpass is inPR5.\nLauren's final verdict at 2026-10-02 01:51 UTC, message Sentinel_9386434786d48191bb5e919277c37ea5, verbatim: \"MFG is just working officially. that’s the call it’s working on Cyberpunk too. and NR is not working, that’s the other call lol.\" MFG is confirmed working by Lauren across Cyberpunk, Avatar, Witcher 3, Crimson Desert and previously The Outer Worlds 2. NR is confirmed not working in her tested installations. Preserve these as human runtime results; exact binary hashes/settings remain unspecified and no cause is inferred.",
+      "next_action": "Saved human QA verdict: MFG WORKS; NR DOES NOT WORK. Keep queued without a worker, branch, claim or automatic execution. Preserve package history. Do not mark this as native-worker delivery or independent automated verification.",
+      "paths": [
+        "docs/INSTALLATION.md"
+      ],
+      "resources": [
+        "rtxforge-post-release-game-qa"
+      ],
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-02T01:46:27.944Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-02T01:52:39.110Z",
+          "by": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "reason": "Lauren supplied a final human QA verdict and added Cyberpunk to the passing MFG games.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Verbatim Lauren report2026-10-02T01:44UTC messageSentinel_59276d1506748191aa0803178189589e: \"record that Avatar's MFG worked, Witcher 3 MFG worked. Crimson Desert loaded and MFG worked. NR didn't work anywhere it's installed yet. but this is crazy great progress.\" These are user-observed runtime MFG passes for3games and NRfailure in testedinstallations, no automated verification or diagnosedcause. Package reference PR5 testedhead28cb6a10b4d44236037eaba5512e37b45d957cf2 mergedacd71e9a3da59a86c04794247ac8ead60fdbb95a; exactruntimebinaryhash/settings not supplied. PriorOW2userMFGpass is inPR5.",
+            "next_action": "Saved QA only. Remain queued, no claim/branch/worker/systemchanges. Prior terminalinstallassignment is preserved; terminalfeedback mutation was refused. Future user-authorized investigation must reconcile exactgame/build/profile/NRsymptoms. This is not delivery or acknowledgement by a nativeworker. docs/INSTALLATION.md is reference scope only, not a requested edit."
+          },
+          "after": {
+            "acceptance": "Verbatim Lauren report2026-10-02T01:44UTC messageSentinel_59276d1506748191aa0803178189589e: \"record that Avatar's MFG worked, Witcher 3 MFG worked. Crimson Desert loaded and MFG worked. NR didn't work anywhere it's installed yet. but this is crazy great progress.\" These are user-observed runtime MFG passes for3games and NRfailure in testedinstallations, no automated verification or diagnosedcause. Package reference PR5 testedhead28cb6a10b4d44236037eaba5512e37b45d957cf2 mergedacd71e9a3da59a86c04794247ac8ead60fdbb95a; exactruntimebinaryhash/settings not supplied. PriorOW2userMFGpass is inPR5....",
+            "next_action": "Saved human QA verdict: MFG WORKS; NR DOES NOT WORK. Keep queued without a worker, branch, claim or automatic execution. Preserve package history. Do not mark this as native-worker delivery or independent automated verification."
+          }
+        }
+      ],
+      "updated_at": "2026-10-02T01:52:39.110Z"
+    },
+    {
+      "id": "rtxforge-light-icon-asset-20261004",
+      "owner": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+      "goal": "Publish Lauren's approved light-mode vector icon as a repository asset for the pending 1.0 RC integration.",
+      "acceptance": "Approved current dark-icon geometry retained exactly; light grey platter #d5d5d5 and top highlight opacity0.35. Publish editable SVG under assets/branding/rtxforge-icon-light.svg on an isolated non-default branch and provide exact immutable source path to current release owner. Do not modify the active owner's gui/scripts/packaging files or installed app. Auto theme-switch integration remains assigned to the existing native release owner.",
+      "next_action": "Claim asset-only path, validate SVG and admission, publish exact source and inform release owner through Relay.",
+      "paths": [
+        "assets/branding/rtxforge-icon-light.svg"
+      ],
+      "resources": [
+        "rtxforge-light-icon-asset"
+      ],
+      "category": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "state": "claimed",
+      "created_at": "2026-10-04T02:22:02.657Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish Lauren's approved light-mode vector icon as a repository asset for the pending 1.0 RC integration.",
+          "acceptance": "Approved current dark-icon geometry retained exactly; light grey platter #d5d5d5 and top highlight opacity0.35. Publish editable SVG under assets/branding/rtxforge-icon-light.svg on an isolated non-default branch and provide exact immutable source path to current release owner. Do not modify the active owner's gui/scripts/packaging files or installed app. Auto theme-switch integration remains assigned to the existing native release owner.",
+          "at": "2026-10-04T02:22:02.657Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-light-icon-asset-20261004:acceptance:0",
+            "text": "Approved current dark-icon geometry retained exactly; light grey platter #d5d5d5 and top highlight opacity0.35. Publish editable SVG under assets/branding/rtxforge-icon-light.svg on an isolated non-default branch and provide exact immutable source path to current release owner. Do not modify the active owner's gui/scripts/packaging files or installed app. Auto theme-switch integration remains assigned to the existing native release owner.",
+            "at": "2026-10-04T02:22:02.657Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-crossos-nr-dlss-unlocked-20261013",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "goal": "One cross-OS NR provider (ShyVortex/dlss-unlocked) with user-selected versions instead of a hard pin (Lauren 2026-10-13: 'we can let users pin'). Default channel Latest stable, resolved at install time from GitHub releases (currently NR-v0.9.51); Nightly is opt-in and labelled; users can pin a specific release in Packages. Integrity without a baked pin: verify each downloaded asset against GitHub's published SHA-256 asset digest, keep the engine's package-layout validation, refuse on mismatch; the review and per-game install record show the exact tag and digest (Restore/update use the recorded version). Same package on Windows and Linux/Proton; MFG route unchanged; NR stays a swappable slot. Engine-aware installs: scan detects engine (RE Engine re_chunk_000.pak; Unreal *-Win64-Shipping.exe / Engine/Binaries; Unity UnityPlayer.dll); when the resolved release ships REPatch/, RE Engine games get the patched REFramework dinput8.dll as a reviewed, owned, restorable file; an existing third-party dinput8.dll is surfaced, never overwritten. Unreal/Unity: show engine; only documented fixes. Shared by Linux and Windows (engine-host stays adapter-only).",
+      "acceptance": "Provider resolves Latest stable / Nightly / pinned tag; downloads verified against GitHub asset sha256 digests plus layout checks, refusal on mismatch or missing digest; Packages UI (both OSes) offers channel and pin; review and install record show tag + digest; NR installs identically on Linux and Windows; MFG route and tests unchanged; engine detection in scan rows; RE Engine REPatch install/conflict/restore tests; Lauren QA on Ada: NR visibly applies and PRAGMATA (RE Engine) boots with FG.",
+      "next_action": "Blocked on providers/, engine/, scripts/ ownership (rtxforge-shared-package-ui-20261002). Read-only meanwhile: confirm GitHub API exposes asset digests for dlss-unlocked releases (NR-v0.9.51) and REPatch/ layout. Only RE Engine title in Lauren's library: PRAGMATA (no existing dinput8.dll).",
+      "paths": [
+        "provider.json",
+        "providers/",
+        "engine/",
+        "scripts/engine_bridge.py",
+        "tests/"
+      ],
+      "resources": [
+        "rtxforge-shared-package-engine"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-13T00:58:09.192Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Move NR to one cross-OS provider: ShyVortex/dlss-unlocked NR-v0.9.51 (2026-10-09, Streamline 2.14.1; built on wilsjo2 OptiScaler-DLSSNR-PreSR-Multipass), replacing the stale dlss-unlocked v0.3.0 NR pin. Same NR package on Windows (setup exe/standalone zip) and Linux/Proton (standalone zip). Keep the current MFG route (native-streamline-dlssg-ada-v5) unchanged. Keep NR a swappable provider slot so official DLSS 5 RTX 40 support (NVIDIA: 'later this fall', no date) can replace the modded nvngx_dlssnr.dll. Lauren's 2026-10-13 direction: MFG works cross-OS, wants the same for NR.",
+          "acceptance": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; Lauren human QA on Ada confirms NR visibly applies (current recorded verdict: NR does not work with v0.3.0 composition).",
+          "at": "2026-10-13T00:58:09.192Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-crossos-nr-dlss-unlocked-20261013:acceptance:0",
+            "text": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; Lauren human QA on Ada confirms NR visibly applies (current recorded verdict: NR does not work with v0.3.0 composition).",
+            "at": "2026-10-13T00:58:09.192Z"
+          },
+          {
+            "id": "rtxforge-crossos-nr-dlss-unlocked-20261013:acceptance:1",
+            "text": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; scan rows report detected engine; RE Engine games get the REPatch dinput8.dll as a reviewed, owned, restorable file with tests for detection, conflict (existing dinput8) and restore; Lauren human QA on Ada confirms NR visibly applies and an RE Engine title boots with FG.",
+            "at": "2026-10-13T06:43:24.909Z",
+            "reason": "Lauren 2026-10-13: installer should detect RE Engine games and apply DLSS-Unlocked's RE Engine fixes, plus any engine-specific fixes. Belongs with the NR-v0.9.51 provider bump (REPatch ships in that release)."
+          },
+          {
+            "id": "rtxforge-crossos-nr-dlss-unlocked-20261013:acceptance:2",
+            "text": "Provider resolves Latest stable / Nightly / pinned tag; downloads verified against GitHub asset sha256 digests plus layout checks, refusal on mismatch or missing digest; Packages UI (both OSes) offers channel and pin; review and install record show tag + digest; NR installs identically on Linux and Windows; MFG route and tests unchanged; engine detection in scan rows; RE Engine REPatch install/conflict/restore tests; Lauren QA on Ada: NR visibly applies and PRAGMATA (RE Engine) boots with FG.",
+            "at": "2026-10-13T06:44:14.177Z",
+            "reason": "Lauren 2026-10-13: no hard pin; let users choose/pin versions. Replaces the NR-v0.9.51 hard-pin plan with channel + verified-digest resolution."
+          }
+        ]
+      },
+      "amendment_count": 2,
+      "amendments": [
+        {
+          "at": "2026-10-13T06:43:24.909Z",
+          "by": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+          "reason": "Lauren 2026-10-13: installer should detect RE Engine games and apply DLSS-Unlocked's RE Engine fixes, plus any engine-specific fixes. Belongs with the NR-v0.9.51 provider bump (REPatch ships in that release).",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Move NR to one cross-OS provider: ShyVortex/dlss-unlocked NR-v0.9.51 (2026-10-09, Streamline 2.14.1; built on wilsjo2 OptiScaler-DLSSNR-PreSR-Multipass), replacing the stale dlss-unlocked v0.3.0 NR pin. Same NR package on Windows (setup exe/standalone zip) and Linux/Proton (standalone zip). Keep the current MFG route (native-streamline-dlssg-ada-v5) unchanged. Keep NR a swappable provider slot so official DLSS 5 RTX 40 support (NVIDIA: 'later this fall', no date) can replace the modded nvngx_dlssnr.dll. Lauren's 2026-10-13 direction: MFG works cross-OS, wants the same for NR.",
+            "acceptance": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; Lauren human QA on Ada confirms NR visibly applies (current recorded verdict: NR does not work with v0.3.0 composition).",
+            "next_action": "Blocked on overlap: providers/, engine/ and resource rtxforge-shared-package-engine are held by rtxforge-shared-package-ui-20261002 (owner 01a10034...). Needs handoff/narrow rescope or that claim's completion before implementation. Meanwhile read-only: download-free verification of NR-v0.9.51 asset hashes and component layout."
+          },
+          "after": {
+            "goal": "Move NR to one cross-OS provider: ShyVortex/dlss-unlocked NR-v0.9.51 (2026-10-09, Streamline 2.14.1; built on wilsjo2 OptiScaler-DLSSNR-PreSR-Multipass), replacing the stale pin (current lock: NR-v0.9.33). Same NR package on Windows and Linux/Proton. Keep the current MFG route unchanged and NR a swappable provider slot. ADDED 2026-10-13 (Lauren): engine-aware installs. Scan detects the game engine (RE Engine: re_chunk_000.pak beside the exe; Unreal: *-Win64-Shipping.exe / Engine/Binaries; Unity: UnityPlayer.dll) and the installer applies documented engine fixes: for Capcom RE Engine games, NR-v0.9.51's REPatch/ patched REFramework dinput8.dll (fixes RE Engine boot crashes and XeFG stutter) installed as a managed, backed-up file that shows in the review and is removed on Restore; an existing third-party dinput8.dll (user REFramework) is surfaced in review, never silently overwritten. Optional SpecialK presentation pacer (0.9.50 nightly) only if shipped in the pinned asset. Unreal/Unity: surface detected engine; apply only fixes with a documented cause (OptiScaler INI notes), otherwise keep OptiScaler auto. Engine detection and fixes shared by Linux and Windows (engine-host stays adapter-only).",
+            "acceptance": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; scan rows report detected engine; RE Engine games get the REPatch dinput8.dll as a reviewed, owned, restorable file with tests for detection, conflict (existing dinput8) and restore; Lauren human QA on Ada confirms NR visibly applies and an RE Engine title boots with FG.",
+            "next_action": "Blocked on overlap: providers/, engine/, scripts/ and resource rtxforge-shared-package-engine are held by rtxforge-shared-package-ui-20261002. Needs handoff/narrow rescope or that claim's completion. Meanwhile read-only: verify NR-v0.9.51 asset hashes and REPatch/ contents; list RE Engine titles in Lauren's library."
+          }
+        },
+        {
+          "at": "2026-10-13T06:44:14.177Z",
+          "by": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+          "reason": "Lauren 2026-10-13: no hard pin; let users choose/pin versions. Replaces the NR-v0.9.51 hard-pin plan with channel + verified-digest resolution.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Move NR to one cross-OS provider: ShyVortex/dlss-unlocked NR-v0.9.51 (2026-10-09, Streamline 2.14.1; built on wilsjo2 OptiScaler-DLSSNR-PreSR-Multipass), replacing the stale pin (current lock: NR-v0.9.33). Same NR package on Windows and Linux/Proton. Keep the current MFG route unchanged and NR a swappable provider slot. ADDED 2026-10-13 (Lauren): engine-aware installs. Scan detects the game engine (RE Engine: re_chunk_000.pak beside the exe; Unreal: *-Win64-Shipping.exe / Engine/Binaries; Unity: UnityPlayer.dll) and the installer applies documented engine fixes: for Capcom RE Engine games, NR-v0.9.51's REPatch/ patched REFramework dinput8.dll (fixes RE Engine boot crashes and XeFG stutter) installed as a managed, backed-up file that shows in the review and is removed on Restore; an existing third-party dinput8.dll (user REFramework) is surfaced in review, never silently overwritten. Optional SpecialK presentation pacer (0.9.50 nightly) only if shipped in the pinned asset. Unreal/Unity: surface detected engine; apply only fixes with a documented cause (OptiScaler INI notes), otherwise keep OptiScaler auto. Engine detection and fixes shared by Linux and Windows (engine-host stays adapter-only).",
+            "acceptance": "provider.json/lock pin NR-v0.9.51 standalone assets with sha256; NR installs identically on Linux and Windows; existing MFG route, hashes and tests unchanged; scan rows report detected engine; RE Engine games get the REPatch dinput8.dll as a reviewed, owned, restorable file with tests for detection, conflict (existing dinput8) and restore; Lauren human QA on Ada confirms NR visibly applies and an RE Engine title boots with FG.",
+            "next_action": "Blocked on overlap: providers/, engine/, scripts/ and resource rtxforge-shared-package-engine are held by rtxforge-shared-package-ui-20261002. Needs handoff/narrow rescope or that claim's completion. Meanwhile read-only: verify NR-v0.9.51 asset hashes and REPatch/ contents; list RE Engine titles in Lauren's library."
+          },
+          "after": {
+            "goal": "One cross-OS NR provider (ShyVortex/dlss-unlocked) with user-selected versions instead of a hard pin (Lauren 2026-10-13: 'we can let users pin'). Default channel Latest stable, resolved at install time from GitHub releases (currently NR-v0.9.51); Nightly is opt-in and labelled; users can pin a specific release in Packages. Integrity without a baked pin: verify each downloaded asset against GitHub's published SHA-256 asset digest, keep the engine's package-layout validation, refuse on mismatch; the review and per-game install record show the exact tag and digest (Restore/update use the recorded version). Same package on Windows and Linux/Proton; MFG route unchanged; NR stays a swappable slot. Engine-aware installs: scan detects engine (RE Engine re_chunk_000.pak; Unreal *-Win64-Shipping.exe / Engine/Binaries; Unity UnityPlayer.dll); when the resolved release ships REPatch/, RE Engine games get the patched REFramework dinput8.dll as a reviewed, owned, restorable file; an existing third-party dinput8.dll is surfaced, never overwritten. Unreal/Unity: show engine; only documented fixes. Shared by Linux and Windows (engine-host stays adapter-only).",
+            "acceptance": "Provider resolves Latest stable / Nightly / pinned tag; downloads verified against GitHub asset sha256 digests plus layout checks, refusal on mismatch or missing digest; Packages UI (both OSes) offers channel and pin; review and install record show tag + digest; NR installs identically on Linux and Windows; MFG route and tests unchanged; engine detection in scan rows; RE Engine REPatch install/conflict/restore tests; Lauren QA on Ada: NR visibly applies and PRAGMATA (RE Engine) boots with FG.",
+            "next_action": "Blocked on providers/, engine/, scripts/ ownership (rtxforge-shared-package-ui-20261002). Read-only meanwhile: confirm GitHub API exposes asset digests for dlss-unlocked releases (NR-v0.9.51) and REPatch/ layout. Only RE Engine title in Lauren's library: PRAGMATA (no existing dinput8.dll)."
+          }
+        }
+      ],
+      "updated_at": "2026-10-13T06:44:14.177Z"
+    },
+    {
+      "id": "rtxforge-gaming-mode-design-preview-20261013",
+      "owner": "codex-gaming-mode-design-20261013",
+      "goal": "Create a controller-first Gaming Mode design prototype in MagicPath for Lauren's review, grounded in current Linux couch_shell functions and identity. Read-only product source; no shipped GTK replacement.",
+      "acceptance": "Interactive reviewable prototype covers library, details/settings, controller focus/back navigation, dialogs, scrolling, loading/error/empty states. Preserve existing work; distinguish web prototype from verified GTK behavior; focused Linux Gamescope/controller acceptance plan. No merge, deployment, paid purchase, PC install or unrelated work.",
+      "next_action": "Claim narrow preview scope; inspect current source/visual fixtures in isolated local checkout and create MagicPath preview; hand review deliverable to parent.",
+      "paths": [
+        "docs/design/gaming-mode-preview/"
+      ],
+      "resources": [
+        "rtxforge-gaming-mode-magicpath-preview"
+      ],
+      "category": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "state": "cancelled",
+      "created_at": "2026-10-13T01:03:46.382Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Create a controller-first Gaming Mode design prototype in MagicPath for Lauren's review, grounded in current Linux couch_shell functions and identity. Read-only product source; no shipped GTK replacement.",
+          "acceptance": "Interactive reviewable prototype covers library, details/settings, controller focus/back navigation, dialogs, scrolling, loading/error/empty states. Preserve existing work; distinguish web prototype from verified GTK behavior; focused Linux Gamescope/controller acceptance plan. No merge, deployment, paid purchase, PC install or unrelated work.",
+          "at": "2026-10-13T01:03:46.382Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-gaming-mode-design-preview-20261013:acceptance:0",
+            "text": "Interactive reviewable prototype covers library, details/settings, controller focus/back navigation, dialogs, scrolling, loading/error/empty states. Preserve existing work; distinguish web prototype from verified GTK behavior; focused Linux Gamescope/controller acceptance plan. No merge, deployment, paid purchase, PC install or unrelated work.",
+            "at": "2026-10-13T01:03:46.382Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-13T07:31:45.291Z",
+      "retirement": {
+        "at": "2026-10-13T07:31:45.291Z",
+        "intent": {
+          "operation_id": "gaming-preview-pause-release-20261013",
+          "owner": "codex-gaming-mode-design-20261013",
+          "disposition": "cancelled",
+          "reason": "Lauren explicitly stops this worker and releases its preview reservation (Sentinel_fd30388224c081918323685b63210709). Preserve the approved live design and frozen local artifacts; no deletion or unfinished acceptance completion.",
+          "evidence": "Preview writer stopped. MagicPath project460561620121325568/component460561802951012352, https://designs.magicpath.ai/v1/radiant-rock-8795, approved visual revision460589410484883456/currentfunctional460594005034536960 retained. frozen-preview-checkpoint and audited-preview-checkpoint source/assets/manifests in Mac task-2 preserved. Branch rtxforge/gaming-mode-design-preview-20261013 is absent; expected_head_sha null. Native draftPR18 clean ee3884bc49c10e7ff6c4266cabfc37003384f7e3 and completed Fedora run38361838844 retained; native reservation already released without marking work complete. Windows owner unchanged. Remaining visual/hardware/setup acceptance documented in pause handoff. No paid purchase, merge, deploy, install, live game/Steam/security changes.",
+          "superseded_by": null,
+          "branch": "rtxforge/gaming-mode-design-preview-20261013",
+          "head_sha": null
+        }
+      }
+    },
+    {
+      "id": "rtxforge-linux-backport-windows-ui-20261013",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "goal": "Back-port Windows desktop refinements to the Linux GTK/libadwaita build, fitted to GTK (not copied): (1) perceptual accent selection from windows/RtxForge.Windows/Services/ArtAccent.cs (OKLab clustering, area x chroma^2 score, real-pixel averages, UI-safe L/C clamp with sRGB gamut mapping, greyscale fallback) replacing the 24-bucket hue table in gui/rtxforge_gtk.py artwork_accent; custom game_accents always win. (2) Accent suggestions (Signature, Background, Alternate, Light, Deep) and the per-pixel eyedropper loupe in the Pick Accent Color dialog. (3) The navigation sidebar design. (4) The single library toolbar row: Library title, Available/Installed/All filter, search, view switcher, artwork-size slider, Select all (becomes Clear), Refresh, Add folder; hover selection checks instead of Select mode. (5) List view as one surface: alternating shades, rounded first/last rows, 1.5px gaps, rounded capsule art, equal-height primary and overflow actions. (6) One operation step layout for review checking and progress: accent-stroked poster, 'Verb N of M' caption, game name in accent, phase, accent bar.",
+      "acceptance": "Linux GTK matches the listed Windows behaviour in libadwaita idiom, verified with screenshots in light/dark/night; accent algorithm produces the same picks as Windows for the same artwork (shared test fixtures); no engine/provider changes; draft PR only, no merge without Lauren.",
+      "next_action": "Blocked on gui/ and scripts/ ownership (rtxforge-shared-package-ui-20261002). When released or handed off: claim, read the Windows implementations (ArtAccent.cs, GamePage PickAccentAsync, LibraryPage.xaml list/toolbar, Controls/OperationStepPanel.cs), port to GTK, open a draft PR.",
+      "paths": [
+        "gui/rtxforge_gtk.py",
+        "gui/couch_shell.py",
+        "scripts/ui_colors.py",
+        "tests/"
+      ],
+      "resources": [
+        "rtxforge-linux-desktop-ui"
+      ],
+      "category": "implementation",
+      "tags": [
+        "linux",
+        "backport",
+        "accent",
+        "library-ui"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-13T06:39:44.856Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Back-port Windows desktop refinements to the Linux GTK/libadwaita build, fitted to GTK (not copied): (1) perceptual accent selection from windows/RtxForge.Windows/Services/ArtAccent.cs (OKLab clustering, area x chroma^2 score, real-pixel averages, UI-safe L/C clamp with sRGB gamut mapping, greyscale fallback) replacing the 24-bucket hue table in gui/rtxforge_gtk.py artwork_accent; custom game_accents always win. (2) Accent suggestions (Signature, Background, Alternate, Light, Deep) and the per-pixel eyedropper loupe in the Pick Accent Color dialog. (3) The navigation sidebar design. (4) The single library toolbar row: Library title, Available/Installed/All filter, search, view switcher, artwork-size slider, Select all (becomes Clear), Refresh, Add folder; hover selection checks instead of Select mode. (5) List view as one surface: alternating shades, rounded first/last rows, 1.5px gaps, rounded capsule art, equal-height primary and overflow actions. (6) One operation step layout for review checking and progress: accent-stroked poster, 'Verb N of M' caption, game name in accent, phase, accent bar.",
+          "acceptance": "Linux GTK matches the listed Windows behaviour in libadwaita idiom, verified with screenshots in light/dark/night; accent algorithm produces the same picks as Windows for the same artwork (shared test fixtures); no engine/provider changes; draft PR only, no merge without Lauren.",
+          "at": "2026-10-13T06:39:44.856Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-backport-windows-ui-20261013:acceptance:0",
+            "text": "Linux GTK matches the listed Windows behaviour in libadwaita idiom, verified with screenshots in light/dark/night; accent algorithm produces the same picks as Windows for the same artwork (shared test fixtures); no engine/provider changes; draft PR only, no merge without Lauren.",
+            "at": "2026-10-13T06:39:44.856Z"
+          }
+        ]
+      }
+    }
+  ],
+  "claims": [
+    {
+      "id": "rtxforge-coordination-bootstrap-20260930",
+      "owner": "normal-chat-project-registry-20260930",
+      "branch": "rtxforge/coordination-bootstrap",
+      "paths": [
+        ".github/workflows/runner-coordination.yml"
+      ],
+      "resources": [
+        "runner-work-admission"
+      ],
+      "goal": "Install Field-style Runner coordination admission and managed branch hygiene for lrnolivia/rtxForge.",
+      "acceptance": "Pull requests are gated by a live Runner claim; scheduled/manual audit and cleanup use the canonical loew-runner coordination engine; no product files are changed.",
+      "next_action": "Create the claimed bootstrap branch, add the parameterized coordination workflow, open the draft PR, verify admission, then merge with squash.",
+      "base_sha": "2ec7fa374bc1854f173d3785ad4f089b9c9eca9a",
+      "state": "completed",
+      "created_at": "2026-09-30T09:06:03.688Z",
+      "updated_at": "2026-09-30T09:12:55.001Z",
+      "lease_until": "2026-09-30T21:12:55.001Z",
+      "pr": 4,
+      "merged_head_sha": "dfebd5ed611e9ff43b4de47c1dd47efc23c749ba",
+      "merge_commit_sha": "4156ec19515f10af519564699aaebe6adf75c850",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/4",
+      "work_accounted": true,
+      "completed_at": "2026-09-30T09:12:55.001Z"
+    },
+    {
+      "id": "rtxforge-bazzite-4070-install-package-20261001",
+      "owner": "01a0f997-7f61-7e62-9b39-ae49f311792d",
+      "branch": "rtxforge/bazzite-4070-install-package",
+      "paths": [
+        "packaging/",
+        "scripts/setup.py",
+        "scripts/hardware.py",
+        "scripts/packages.py",
+        "scripts/desktop_install.py",
+        "tests/test_setup.py",
+        "tests/test_package_download.py",
+        "README.md",
+        "docs/INSTALLATION.md",
+        ".github/workflows/linux-build.yml",
+        ".github/workflows/runner-coordination.yml",
+        "providers/lock.json",
+        "provider.json",
+        "engine/",
+        "scripts/engine_bridge.py",
+        "scripts/library_media.py",
+        "scripts/desktop_service.py",
+        "scripts/ui.py",
+        "scripts/profiles.py",
+        "tests/",
+        "scripts/engine_cli.py",
+        "gui/rtxforge_gtk.py"
+      ],
+      "resources": [
+        "bazzite-installation-package",
+        "provider-preparation",
+        "appimage-installation",
+        "runner-work-admission",
+        "native-ada-mfg-configuration"
+      ],
+      "goal": "Deliver a reproducible Bazzite GNOME x86_64 RTX 4070 installation package using the existing rtxForge UI and pinned DLSS-Unlocked runtime options, local file writes and guarded GitHub sync.",
+      "acceptance": "Verified AppImage and installer; read-only host checks; explicit selectable MFG/NR modes; preserve existing settings/backups; verified downloads and repeatable recovery tests. Actual NVIDIA/game/HDR behavior remains unverified until exercised on the user's PC.",
+      "next_action": "Final package head 28cb6a10b4d44236037eaba5512e37b45d957cf2 is published; build36947032197 and admission36946947192 passed. Installed full v0.9.33 payload to five authorized games with native files preserved. Update PR5 exact evidence, mark ready and squash-merge through green-check gate, then verify merge and complete this package assignment. NR rendering remains unproven; machine HDR diagnosis continues separately.",
+      "category": "implementation",
+      "primary_role": "implementation",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "base_sha": "4156ec19515f10af519564699aaebe6adf75c850",
+      "state": "completed",
+      "created_at": "2026-10-01T21:59:59.674Z",
+      "updated_at": "2026-10-02T00:46:51.952Z",
+      "lease_until": "2026-10-02T12:46:51.952Z",
+      "pr": 5,
+      "merged_head_sha": "28cb6a10b4d44236037eaba5512e37b45d957cf2",
+      "merge_commit_sha": "acd71e9a3da59a86c04794247ac8ead60fdbb95a",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/5 — squashed and independently verified merged at acd71e9a3da59a86c04794247ac8ead60fdbb95a from tested head 28cb6a10b4d44236037eaba5512e37b45d957cf2; both trees c1e11e3fb0c85e6727d4bcaa9c2ecef6e8e08aab. Exact-head AppImage build 36947032197 and admission 36946947192 succeeded; local engine/package/setup/GTK checks and installed-artifact verification recorded in PR. Full v0.9.33 deployed to five authorized games with native files/backups preserved. User confirmed MFG in OW2 and current runtime records 3x. NR rendering remains unexercised/unproven, and separate machine-specific HDR diagnosis is not a package acceptance claim. Existing local history/worktrees retained; no force/reset/cleanup. Deferred KDE/Hyprland and Figma work untouched. Package delivered; do not resume implementation on the completed branch.",
+      "work_accounted": true,
+      "completed_at": "2026-10-02T00:46:51.952Z"
+    },
+    {
+      "id": "rtxforge-light-icon-asset-20261004",
+      "owner": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+      "branch": "rtxforge/light-icon-asset-20261004",
+      "paths": [
+        "assets/branding/rtxforge-icon-light.svg"
+      ],
+      "resources": [
+        "rtxforge-light-icon-asset"
+      ],
+      "goal": "Publish Lauren's approved light-mode vector icon as a repository asset for the pending 1.0 RC integration.",
+      "acceptance": "Approved current dark-icon geometry retained exactly; light grey platter #d5d5d5 and top highlight opacity0.35. Publish editable SVG under assets/branding/rtxforge-icon-light.svg on an isolated non-default branch and provide exact immutable source path to current release owner. Do not modify the active owner's gui/scripts/packaging files or installed app. Auto theme-switch integration remains assigned to the existing native release owner.",
+      "next_action": "Claim asset-only path, validate SVG and admission, publish exact source and inform release owner through Relay.",
+      "category": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "base_sha": "698c0776e69894afb7ea18242a0a18f6e6f1131d",
+      "state": "active",
+      "created_at": "2026-10-04T02:29:36.854Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish Lauren's approved light-mode vector icon as a repository asset for the pending 1.0 RC integration.",
+          "acceptance": "Approved current dark-icon geometry retained exactly; light grey platter #d5d5d5 and top highlight opacity0.35. Publish editable SVG under assets/branding/rtxforge-icon-light.svg on an isolated non-default branch and provide exact immutable source path to current release owner. Do not modify the active owner's gui/scripts/packaging files or installed app. Auto theme-switch integration remains assigned to the existing native release owner.",
+          "at": "2026-10-04T02:22:02.657Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-light-icon-asset-20261004:acceptance:0",
+            "text": "Approved current dark-icon geometry retained exactly; light grey platter #d5d5d5 and top highlight opacity0.35. Publish editable SVG under assets/branding/rtxforge-icon-light.svg on an isolated non-default branch and provide exact immutable source path to current release owner. Do not modify the active owner's gui/scripts/packaging files or installed app. Auto theme-switch integration remains assigned to the existing native release owner.",
+            "at": "2026-10-04T02:22:02.657Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-04T02:29:36.854Z",
+      "lease_until": "2026-10-04T14:29:36.854Z"
+    },
+    {
+      "id": "rtxforge-ci-efficiency-20261008",
+      "owner": "01a118b2-63d5-7a63-8d3a-55bf649b1f89",
+      "branch": "rtxforge/ci-efficiency-20261008",
+      "paths": [
+        ".github/workflows/",
+        "tests/ui_couch_review.py"
+      ],
+      "resources": [
+        "rtxforge-ci-efficiency"
+      ],
+      "goal": "Streamline CI under Lauren's explicit ALL-project request and CI-only takeover authorization.",
+      "acceptance": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
+      "next_action": "Repair actual PR16 native CI failure with bounded GTK frame-readiness handling, retaining every screenshot and behavior assertion. Preserve product implementation. Verify readiness/timeout plus actual native CI and merge only when all checks pass.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "3a3f7e49c877bdb66fdc5ddac254acd97f62f1e7",
+      "state": "completed",
+      "created_at": "2026-10-08T01:09:12.483Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Streamline CI under Lauren's explicit ALL-project request and CI-only takeover authorization.",
+          "acceptance": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
+          "at": "2026-10-08T01:09:12.483Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-ci-efficiency-20261008:acceptance:0",
+            "text": "Reduce redundant scheduled cleanup and obsolete PR runs, preserve all required quality/native/runtime/release gates, verify exact workflow candidate, retain original product work and release this CI assignment on completion.",
+            "at": "2026-10-08T01:09:12.483Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-08T01:45:37.331Z",
+      "lease_until": "2026-10-08T13:45:37.331Z",
+      "pr": 16,
+      "merged_head_sha": "3576dc91213ee64c09f4fe58735d905bfd80be68",
+      "merge_commit_sha": "0778d5e577e95a6d65bdd68ffcf860ea90cff635",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/16 merge 0778d5e577e95a6d65bdd68ffcf860ea90cff635; exact reviewed head 3576dc91213ee64c09f4fe58735d905bfd80be68 passed native, KDE, Wayland and admission. Three files read back and restored with Git blob + SHA256 integrity checks. Every native image/assertion retained; frame readiness bounded at 5s. CI workflow scope is released; original product branch preserved.",
+      "work_accounted": true,
+      "completed_at": "2026-10-08T01:45:37.331Z"
+    },
+    {
+      "id": "rtxforge-shared-package-ui-20261002",
+      "owner": "01a132c7-fa0d-7410-ac69-4cbefd80902d",
+      "branch": "rtxforge/shared-package-ui-20261002",
+      "paths": [
+        "gui/",
+        "redesign/",
+        "scripts/",
+        "engine/",
+        "providers/",
+        "packaging/",
+        "README.md",
+        "VERSION",
+        "tests/"
+      ],
+      "resources": [
+        "rtxforge-shared-package-engine",
+        "rtxforge-classic-redesign-selector"
+      ],
+      "goal": "User Codex handoff: finish rtxForge Classic, package/runtime correctness, native themes and remaining portability/QA goals. Julian implementation stopped.",
+      "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserve all original requirements, shared safe package engine and runtime MFG evidence. Verify per-game presets and NR failure; native Dark/Light stock greys, custom Night. Native KDE/Hyprland/controller/Gamescope/metadata/extras/beta portal and consent-aware QA retained. Approved final Papirus launcher and unplated in-app SVGs are in handoff recovery/, not installed. PR6 draftabd243e7 remains held/unmerged; published preview695d292e. Separate paused Figma fidelity task not resumed. User-started receiver identity not yet known; no invented owner or automatic launch.\n2026-10-03 current user scope: finish all GTK app work and perform NR diagnosis. Defer Qt/Kirigami and SteamOS/CachyOS-specific work; table the beta website. Continue desktop/Game Mode/controller support, metadata/tools, safe package handling, Classic visual polish and app-side support as applicable. Installed game access remains read-only unless a scoped test write is explicitly authorized. Preserve known-good MFG. No new production merge/release approval is inferred.\nExplicit user authorization supersedes read-only test restriction: controlled reversible tests on any game with NR installed, plus Cyberpunk, Avowed, Forza, Witcher 3 and Avatar. Preserve backups and known-good MFG.\nUser refined controller UX: a game-like tool menu with large directional choices; traditional Classic controls only during keyboard/mouse use. Dedicated couch surface shares the safe engine. User reports F10 may not have worked in controlled Avatar run; investigate exact installed hotkey handler.\n2026-10-03 16:42 UTC resume batch: PR6 is now merged as 96c18d34b46c48a7f1d8c2f34e5238dfb6a3a7df and the continuous Linux preview is published; older held/unmerged wording above is historical. Lauren authorizes one Sol 6.1 medium local Linux Codex worker, preferably resuming her previous session. Implement Settings UI scaling (proposed 150% default at 4K, adjustable, avoid double OS scaling); game-mode dashboard poster/wide artwork, left/right library shelf and visible row count; persistent top/bottom navigation across all game-mode screens; compact integrated auto-hiding controller hints with bottom navigation, optional auto-hide in normal layout while keeping current always-visible default. Preserve approved current dashboard and shared safe engine. Verify native fullscreen, scaling, focus/navigation and 4K screenshots without claiming physical controller input unless actually tested. Julian retains icon/artwork and ctrl/Relay. Do not start Windows port or Steam Store publication. Optional installer Add to Steam artwork integration may follow when Julian supplies approved assets. Root makes no simultaneous RTX source edits; actual receiving session ID must be verified before ownership handoff. Existing wider acceptance remains accounted, not declared complete.\n2026-10-04 16:28–16:31 UTC: completed verified portions may ship incrementally for Lauren's review. Shipping tested implemented scope does not claim final 1.0 RC, live API credentials, physical SteamOS/GPU or hardware acceptance. Preserve remaining full scope.",
+      "next_action": "Temporary serial Linux Game Mode/Steam-state implementation, explicitly authorized by Lauren and parent01a1146d-0267-735e-8332-fa38cf7fb007. This Mac task01a132c7 will preserve shared goal/acceptance/resources and all WIP, including unpublished README0214ec50162a6475f7706686270421476e5ed1d5 over remotee676713. Work in a separate isolated checkout; only gui/couch_shell.py, narrow gui/rtxforge_gtk.py/controller_input hooks and affected tests, plus safe Steam transaction separation/pending capability in scripts/engine_bridge.py/operation_session and app-owned intent modules with meaningful fixture tests. Do not edit providers/packaging/README/VERSION, NR routes, WinUI owner windows/ or unrelated work. Approved visual589/currentfunctional594 preserved in task-2 checkpoints. Native GTK demo/runtime verification on Mac may be blocked; fixtures are not Gamescope/controller acceptance. No merge/deploy/install/release or real Steam/game writes; commits if needed verifiedLauren identity only. After recoverable local checkpoint and evidence, return shared assignment to01a10034 with exact native source/remaining gates; Windowsba63a21 remains with its active owner.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "acd71e9a3da59a86c04794247ac8ead60fdbb95a",
+      "state": "cancelled",
+      "created_at": "2026-10-02T17:32:51.823Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "User Codex handoff: finish rtxForge Classic, package/runtime correctness, native themes and remaining portability/QA goals. Julian implementation stopped.",
+          "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserve all original requirements, shared safe package engine and runtime MFG evidence. Verify per-game presets and NR failure; native Dark/Light stock greys, custom Night. Native KDE/Hyprland/controller/Gamescope/metadata/extras/beta portal and consent-aware QA retained. Approved final Papirus launcher and unplated in-app SVGs are in handoff recovery/, not installed. PR6 draftabd243e7 remains held/unmerged; published preview695d292e. Separate paused Figma fidelity task not resumed. User-started receiver identity not yet known; no invented owner or automatic launch.\n2026-10-03 current user scope: finish all GTK app work and perform NR diagnosis. Defer Qt/Kirigami and SteamOS/CachyOS-specific work; table the beta website. Continue desktop/Game Mode/controller support, metadata/tools, safe package handling, Classic visual polish and app-side support as applicable. Installed game access remains read-only unless a scoped test write is explicitly authorized. Preserve known-good MFG. No new production merge/release approval is inferred.\nExplicit user authorization supersedes read-only test restriction: controlled reversible tests on any game with NR installed, plus Cyberpunk, Avowed, Forza, Witcher 3 and Avatar. Preserve backups and known-good MFG.\nUser refined controller UX: a game-like tool menu with large directional choices; traditional Classic controls only during keyboard/mouse use. Dedicated couch surface shares the safe engine. User reports F10 may not have worked in controlled Avatar run; investigate exact installed hotkey handler.",
+          "at": "2026-10-03T07:39:08.375Z",
+          "source": "first-observed-current-record"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-shared-package-ui-20261002:acceptance:0",
+            "text": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserve all original requirements, shared safe package engine and runtime MFG evidence. Verify per-game presets and NR failure; native Dark/Light stock greys, custom Night. Native KDE/Hyprland/controller/Gamescope/metadata/extras/beta portal and consent-aware QA retained. Approved final Papirus launcher and unplated in-app SVGs are in handoff recovery/, not installed. PR6 draftabd243e7 remains held/unmerged; published preview695d292e. Separate paused Figma fidelity task not resumed. User-started receiver identity not yet known; no invented owner or automatic launch.\n2026-10-03 current user scope: finish all GTK app work and perform NR diagnosis. Defer Qt/Kirigami and SteamOS/CachyOS-specific work; table the beta website. Continue desktop/Game Mode/controller support, metadata/tools, safe package handling, Classic visual polish and app-side support as applicable. Installed game access remains read-only unless a scoped test write is explicitly authorized. Preserve known-good MFG. No new production merge/release approval is inferred.\nExplicit user authorization supersedes read-only test restriction: controlled reversible tests on any game with NR installed, plus Cyberpunk, Avowed, Forza, Witcher 3 and Avatar. Preserve backups and known-good MFG.\nUser refined controller UX: a game-like tool menu with large directional choices; traditional Classic controls only during keyboard/mouse use. Dedicated couch surface shares the safe engine. User reports F10 may not have worked in controlled Avatar run; investigate exact installed hotkey handler.",
+            "at": "2026-10-03T07:39:08.375Z"
+          },
+          {
+            "id": "rtxforge-shared-package-ui-20261002:acceptance:10",
+            "text": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserve all original requirements, shared safe package engine and runtime MFG evidence. Verify per-game presets and NR failure; native Dark/Light stock greys, custom Night. Native KDE/Hyprland/controller/Gamescope/metadata/extras/beta portal and consent-aware QA retained. Approved final Papirus launcher and unplated in-app SVGs are in handoff recovery/, not installed. PR6 draftabd243e7 remains held/unmerged; published preview695d292e. Separate paused Figma fidelity task not resumed. User-started receiver identity not yet known; no invented owner or automatic launch.\n2026-10-03 current user scope: finish all GTK app work and perform NR diagnosis. Defer Qt/Kirigami and SteamOS/CachyOS-specific work; table the beta website. Continue desktop/Game Mode/controller support, metadata/tools, safe package handling, Classic visual polish and app-side support as applicable. Installed game access remains read-only unless a scoped test write is explicitly authorized. Preserve known-good MFG. No new production merge/release approval is inferred.\nExplicit user authorization supersedes read-only test restriction: controlled reversible tests on any game with NR installed, plus Cyberpunk, Avowed, Forza, Witcher 3 and Avatar. Preserve backups and known-good MFG.\nUser refined controller UX: a game-like tool menu with large directional choices; traditional Classic controls only during keyboard/mouse use. Dedicated couch surface shares the safe engine. User reports F10 may not have worked in controlled Avatar run; investigate exact installed hotkey handler.\n2026-10-03 16:42 UTC resume batch: PR6 is now merged as 96c18d34b46c48a7f1d8c2f34e5238dfb6a3a7df and the continuous Linux preview is published; older held/unmerged wording above is historical. Lauren authorizes one Sol 6.1 medium local Linux Codex worker, preferably resuming her previous session. Implement Settings UI scaling (proposed 150% default at 4K, adjustable, avoid double OS scaling); game-mode dashboard poster/wide artwork, left/right library shelf and visible row count; persistent top/bottom navigation across all game-mode screens; compact integrated auto-hiding controller hints with bottom navigation, optional auto-hide in normal layout while keeping current always-visible default. Preserve approved current dashboard and shared safe engine. Verify native fullscreen, scaling, focus/navigation and 4K screenshots without claiming physical controller input unless actually tested. Julian retains icon/artwork and ctrl/Relay. Do not start Windows port or Steam Store publication. Optional installer Add to Steam artwork integration may follow when Julian supplies approved assets. Root makes no simultaneous RTX source edits; actual receiving session ID must be verified before ownership handoff. Existing wider acceptance remains accounted, not declared complete.",
+            "at": "2026-10-03T16:42:50.308Z",
+            "reason": "Record Lauren's latest local Codex resume batch and verified release without dropping earlier acceptance."
+          },
+          {
+            "id": "rtxforge-shared-package-ui-20261002:acceptance:24",
+            "text": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserve all original requirements, shared safe package engine and runtime MFG evidence. Verify per-game presets and NR failure; native Dark/Light stock greys, custom Night. Native KDE/Hyprland/controller/Gamescope/metadata/extras/beta portal and consent-aware QA retained. Approved final Papirus launcher and unplated in-app SVGs are in handoff recovery/, not installed. PR6 draftabd243e7 remains held/unmerged; published preview695d292e. Separate paused Figma fidelity task not resumed. User-started receiver identity not yet known; no invented owner or automatic launch.\n2026-10-03 current user scope: finish all GTK app work and perform NR diagnosis. Defer Qt/Kirigami and SteamOS/CachyOS-specific work; table the beta website. Continue desktop/Game Mode/controller support, metadata/tools, safe package handling, Classic visual polish and app-side support as applicable. Installed game access remains read-only unless a scoped test write is explicitly authorized. Preserve known-good MFG. No new production merge/release approval is inferred.\nExplicit user authorization supersedes read-only test restriction: controlled reversible tests on any game with NR installed, plus Cyberpunk, Avowed, Forza, Witcher 3 and Avatar. Preserve backups and known-good MFG.\nUser refined controller UX: a game-like tool menu with large directional choices; traditional Classic controls only during keyboard/mouse use. Dedicated couch surface shares the safe engine. User reports F10 may not have worked in controlled Avatar run; investigate exact installed hotkey handler.\n2026-10-03 16:42 UTC resume batch: PR6 is now merged as 96c18d34b46c48a7f1d8c2f34e5238dfb6a3a7df and the continuous Linux preview is published; older held/unmerged wording above is historical. Lauren authorizes one Sol 6.1 medium local Linux Codex worker, preferably resuming her previous session. Implement Settings UI scaling (proposed 150% default at 4K, adjustable, avoid double OS scaling); game-mode dashboard poster/wide artwork, left/right library shelf and visible row count; persistent top/bottom navigation across all game-mode screens; compact integrated auto-hiding controller hints with bottom navigation, optional auto-hide in normal layout while keeping current always-visible default. Preserve approved current dashboard and shared safe engine. Verify native fullscreen, scaling, focus/navigation and 4K screenshots without claiming physical controller input unless actually tested. Julian retains icon/artwork and ctrl/Relay. Do not start Windows port or Steam Store publication. Optional installer Add to Steam artwork integration may follow when Julian supplies approved assets. Root makes no simultaneous RTX source edits; actual receiving session ID must be verified before ownership handoff. Existing wider acceptance remains accounted, not declared complete.\n2026-10-04 16:28–16:31 UTC: completed verified portions may ship incrementally for Lauren's review. Shipping tested implemented scope does not claim final 1.0 RC, live API credentials, physical SteamOS/GPU or hardware acceptance. Preserve remaining full scope.",
+            "at": "2026-10-04T16:46:49.851Z",
+            "reason": "Lauren authorizes completed ready incremental releases across projects and will review live; no workers, Relay only."
+          }
+        ]
+      },
+      "updated_at": "2026-10-13T07:29:20.316Z",
+      "lease_until": "2026-10-13T15:46:19.979Z",
+      "amendment_count": 28,
+      "amendments": [
+        {
+          "at": "2026-10-03T05:02:14.481Z",
+          "by": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "reason": "User transfers all rtxForge implementation to her own Codex; preserve complete discussed scope and approved code/assets in execution handoff.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Preserve canonical Library while adding shared recommended/custom package flows in Classic and redesign, persisted UI/start-page selection and native Linux portability foundation.",
+            "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.",
+            "next_action": "PAUSED by Lauren at2026-10-03 01:42 UTC: Field and ctrl take priority, rtxForge least important. Retain PR6 draft atabd243e7b6d03b7e49bc67b1447be2521831d8db; all CI green, newer Classic/preset/panel/corner work NOT published (continuous695d292e remains). Resume after Field/ctrl are in good place: inspect latest screenshots, finish native Dark/Light token mapping preserving customNight, metadatafallback, nativeQtClassicparity/controllercouch, NRruntimeverification/packagecatalog/structuredbetaReactportalrtxforge.loew.fi + RelayQA. Preserve allapprovedrequests andtests; no gamewrites."
+          },
+          "after": {
+            "goal": "User Codex handoff: finish rtxForge Classic, package/runtime correctness, native themes and remaining portability/QA goals. Julian implementation stopped.",
+            "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserv...",
+            "next_action": "HELD FOR USER CODEX. Read full RTXFORGE.md handoff and exact PR6 code/assets. Receiving session must establish actual persistent owner and supported handoff before edits. Julian stops all RTX implementation, including icon integration. Preserve rollback, human/runtime vs automated evidence, and all unverified scope."
+          }
+        },
+        {
+          "at": "2026-10-03T05:38:18.513Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "Lauren explicitly requested remaining app completion and NR diagnosis, with Qt/Kirigami, SteamOS/CachyOS and beta website deferred.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserv...",
+            "next_action": "Latest b07e446acf2106a666283cb9076500b5255c5ea4 pushed to draft PR6 after user reported compact icon wrong. Corrected old22px to40px, centered icon/title with8px gap and preserved header height. Write-disabled native GTK review recaptured and inspected; AppImage rebuilt at exact head. Earlier721d3a3 icon integration had39 tests+10subtests, packaged smoke and all native/KDE/Wayland/admission CI green; latest CI pending. Clean isolated worktree /home/loew/.local/share/distrobox-homes/chatgpt-cdi/.codex/worktrees/rtxforge-shared-package-ui/rtxForge; latest preview dist/classic-compact.png. No ..."
+          },
+          "after": {
+            "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserv...",
+            "next_action": "Audit actual GTK gaps; implement native theme/motion and remaining desktop app features; diagnose NR from current upstream plus installed config/log evidence; verify meaningful behavior on disposable fixtures and native write-disabled UI."
+          }
+        },
+        {
+          "at": "2026-10-03T05:47:10.472Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User explicitly broadened game test authorization.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserv...",
+            "next_action": "Audit actual GTK gaps; implement native theme/motion and remaining desktop app features; diagnose NR from current upstream plus installed config/log evidence; verify meaningful behavior on disposable fixtures and native write-disabled UI."
+          },
+          "after": {
+            "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserv...",
+            "next_action": "Implement remaining GTK app gaps and read evidence for a reversible Avatar NR control."
+          }
+        },
+        {
+          "at": "2026-10-03T06:14:41.838Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User explicitly refined the Game Mode view and supplied NR hotkey feedback.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserv...",
+            "next_action": "Implement remaining GTK app gaps and read evidence for a reversible Avatar NR control."
+          },
+          "after": {
+            "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserv...",
+            "next_action": "Build dedicated game-menu controller view, preview it, diagnose v0.9.33 F10, preserve/restore Avatar test state, then finish app validation and PR6."
+          }
+        },
+        {
+          "at": "2026-10-03T06:34:54.549Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User rejected the rendered game-menu design and explicitly requests an Apple-designed gaming interface.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Build dedicated game-menu controller view, preview it, diagnose v0.9.33 F10, preserve/restore Avatar test state, then finish app validation and PR6."
+          },
+          "after": {
+            "next_action": "Replace rejected couch composition with an Apple TV inspired gaming tool interface, capture real native UI for user review, then finish app checks. Prior lime game-menu design is not approved; safe backend work is retained."
+          }
+        },
+        {
+          "at": "2026-10-03T06:52:54.678Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User explicitly approved replacement as PERFECT, with refinement: same main-app game artwork and accent colors must carry over to highlighted controls.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Replace rejected couch composition with an Apple TV inspired gaming tool interface, capture real native UI for user review, then finish app checks. Prior lime game-menu design is not approved; safe backend work is retained."
+          },
+          "after": {
+            "next_action": "Preserve approved Apple-inspired controller layout exactly; share existing per-game artwork and accent resolver, then recapture highlights and finish exact-head package/PR validation. NR experiment restored byte-for-byte; runtime execution proven, F10 delivery and visible output unverified."
+          }
+        },
+        {
+          "at": "2026-10-03T06:55:57.061Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User approved design and clarified IA: current cinematic shelf is the entry Dashboard; separate controller Library must offer poster, wide capsule and list layouts, retaining main-app artwork and accents.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Preserve approved Apple-inspired controller layout exactly; share existing per-game artwork and accent resolver, then recapture highlights and finish exact-head package/PR validation. NR experiment restored byte-for-byte; runtime execution proven, F10 delivery and visible output unverified."
+          },
+          "after": {
+            "next_action": "Add a separate controller Library with poster/capsule/list views while preserving approved Dashboard and same main-app artwork/accent data. Verify grid/list directional focus, view switching, return selection, compact layouts and safe operation entry points, then finish exact-head build and draft PR."
+          }
+        },
+        {
+          "at": "2026-10-03T07:39:08.375Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User explicitly authorizes publishing the verified build to the normal continuous update channel and updating the local installed app.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Draft PR6 final head33a910a00e3e0b8e5e6df3f2eedab7e44c96a308 pushed. GTK tools/controller Dashboard/Library/Presets/DLSS Files complete; Settings gear, update-all/selected-Library DLSS and Install-to-all review added. 92 tests+10 subtests,213 engine,12 updater rerun,19 native captures,exact-head packaged smoke pass. Finish SHIP; native/KDE/Wayland/admission CI GREEN. AppImage in worktree/dist; installed release unchanged. Evidence .codex/visualizations/2026/10/03/01a10034-0e3d-7162-886f-0038c226a8c9/rtxforge-evidence; docs queue rtxforge-app-evidence-20261003. Physical Game Mode/GPU renderer and F10/visible NR remain unverified; Avatar INI restored. Qt/Kirigami,SteamOS/CachyOS,beta website deferred. No merge/release."
+          },
+          "after": {
+            "next_action": "Publish exact reviewed head33a910a00e3e0b8e5e6df3f2eedab7e44c96a308 via existing linux-build.yml publish_preview workflow; preserve release rollback. Verify published manifest/artifact, then use built-in updater to atomically replace local app and verify installed identity/rollback. No game writes or unrelated branch merge."
+          }
+        },
+        {
+          "at": "2026-10-03T08:39:14.228Z",
+          "by": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "reason": "Lauren assigned direct Julian game-mode/runtime and desktop polish follow-up after released33a910a; no workers tonight.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Lauren explicitly requests Julian direct takeover tonight, no more workers. Preserve completed worker checkpoints and current source; no worker restart. Root will finish authorized remaining fixes and verification with Relay, preserve review and access gates, and report exact ready/blocked status. Field current user-owned batch remains separate."
+          },
+          "after": {
+            "next_action": "Direct root batch from33a910a: adaptive Gamescope fullscreen; real controller Menu/View/Back targets and clickable prompts; discoverable smooth shelf + Library link; layout choices in Settings; prominent install-all; global Presets explicit all/selected eligible games vs inline game_presets; menu glyphs/exit; neutral top navigation, shared typography and useful source/profile/test metadata; launcher artwork padding. Desktop compact controls stop stretching, menu configuration moves to reorganized Settings. Preserve approved visuals and safe transaction review; reconcile prior install-flow notes, capture desktop and game-mode install screenshots. Local syntax + SDL virtual controller +3 real-method scope tests pass; native CI/visual confirmation pending. No installed game writes. Source changes remain draft until checks/review."
+          }
+        },
+        {
+          "at": "2026-10-03T16:42:50.308Z",
+          "by": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "reason": "Record Lauren's latest local Codex resume batch and verified release without dropping earlier acceptance.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserve all original requirements, shared safe package engine and runtime MFG evidence. Verify per-game presets and NR failure; native Dark/Light stock greys, custom Night. Native KDE/Hyprland/controller/Gamescope/metadata/extras/beta portal and consent-aware QA retained. Approved final Papirus launcher and unplated in-app SVGs are in handoff recovery/, not installed. PR6 draftabd243e7 remains held/unmerged; published preview695d292e. Separate paused Figma fidelity task not resumed. User-started receiver identity not yet known; no invented owner or automatic launch.\n2026-10-03 current user scope: finish all GTK app work and perform NR diagnosis. Defer Qt/Kirigami and SteamOS/CachyOS-specific work; table the beta website. Continue desktop/Game Mode/controller support, metadata/tools, safe package handling, Classic visual polish and app-side support as applicable. Installed game access remains read-only unless a scoped test write is explicitly authorized. Preserve known-good MFG. No new production merge/release approval is inferred.\nExplicit user authorization supersedes read-only test restriction: controlled reversible tests on any game with NR installed, plus Cyberpunk, Avowed, Forza, Witcher 3 and Avatar. Preserve backups and known-good MFG.\nUser refined controller UX: a game-like tool menu with large directional choices; traditional Classic controls only during keyboard/mouse use. Dedicated couch surface shares the safe engine. User reports F10 may not have worked in controlled Avatar run; investigate exact installed hotkey handler.",
+            "next_action": "Lauren explicitly approved Relay, ctrl and rtxForge publication in Sentinel_a3a8e636a2d48191bcb563b6824e10cc at15:22UTC. Finish exact-head readiness, merge approved tested changes and verify publication. Preserve rollback and report implementation separately from remaining real-device/executor/client proof."
+          },
+          "after": {
+            "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserve all original requirements, shared safe package engine and runtime MFG evidence. Verify per-game presets and NR failure; native Dark/Light stock greys, custom Night. Native KDE/Hyprland/controller/Gamescope/metadata/extras/beta portal and consent-aware QA retained. Approved final Papirus launcher and unplated in-app SVGs are in handoff recovery/, not installed. PR6 draftabd243e7 remains held/unmerged; published preview695d292e. Separate paused Figma fidelity task not resumed. User-started receiver identity not yet known; no invented owner or automatic launch.\n2026-10-03 current user scope: finish all GTK app work and perform NR diagnosis. Defer Qt/Kirigami and SteamOS/CachyOS-specific work; table the beta website. Continue desktop/Game Mode/controller support, metadata/tools, safe package handling, Classic visual polish and app-side support as applicable. Installed game access remains read-only unless a scoped test write is explicitly authorized. Preserve known-good MFG. No new production merge/release approval is inferred.\nExplicit user authorization supersedes read-only test restriction: controlled reversible tests on any game with NR installed, plus Cyberpunk, Avowed, Forza, Witcher 3 and Avatar. Preserve backups and known-good MFG.\nUser refined controller UX: a game-like tool menu with large directional choices; traditional Classic controls only during keyboard/mouse use. Dedicated couch surface shares the safe engine. User reports F10 may not have worked in controlled Avatar run; investigate exact installed hotkey handler.\n2026-10-03 16:42 UTC resume batch: PR6 is now merged as 96c18d34b46c48a7f1d8c2f34e5238dfb6a3a7df and the continuous Linux preview is published; older held/unmerged wording above is historical. Lauren authorizes one Sol 6.1 medium local Linux Codex worker, preferably resuming her previous session. Implement Settings UI scaling (proposed 150% default at 4K, adjustable, avoid double OS scaling); game-mode dashboard poster/wide artwork, left/right library shelf and visible row count; persistent top/bottom navigation across all game-mode screens; compact integrated auto-hiding controller hints with bottom navigation, optional auto-hide in normal layout while keeping current always-visible default. Preserve approved current dashboard and shared safe engine. Verify native fullscreen, scaling, focus/navigation and 4K screenshots without claiming physical controller input unless actually tested. Julian retains icon/artwork and ctrl/Relay. Do not start Windows port or Steam Store publication. Optional installer Add to Steam artwork integration may follow when Julian supplies approved assets. Root makes no simultaneous RTX source edits; actual receiving session ID must be verified before ownership handoff. Existing wider acceptance remains accounted, not declared complete.",
+            "next_action": "Ready for user-resumed Linux Codex session on Sol6.1 medium. Receiver reports its actual session/owner ID to Julian before handoff and admission. No new worker launched; computer remote task access remains unavailable."
+          }
+        },
+        {
+          "at": "2026-10-03T17:26:06.699Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "Record completed local UI batch and exact-head verification while preserving wider acceptance.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Resume verified local Settings/scaling/game-mode layout batch at f836275; inspect released96c18d34 tree parity, run preflight before edits, preserve dirty original checkout and safe shared engine."
+          },
+          "after": {
+            "next_action": "Settings/scaling/Game Mode batch ready in draft PR7 at ef4b56b23c518b1964eb78629c56217b77d083f9, tree9095d46d734cee8f63111677a391378ccf4f4131. Thirty tests/native X11+Wayland controller/4K fullscreen layout/pointer+panel routing/classic smoke pass; native/KDE/Wayland/admission CI success. Julian notified for review before promotion; keep broader acceptance accounted. Physical controller/Gamescope and visible NR/F10 unverified. Installed app/games/icons unchanged. Qt/Kirigami, SteamOS/CachyOS,beta website deferred."
+          }
+        },
+        {
+          "at": "2026-10-03T22:56:34.339Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "Lauren explicitly authorizes public publication and local app update in this chat.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Settings/scaling/Game Mode batch ready in draft PR7 at ef4b56b23c518b1964eb78629c56217b77d083f9, tree9095d46d734cee8f63111677a391378ccf4f4131. Thirty tests/native X11+Wayland controller/4K fullscreen layout/pointer+panel routing/classic smoke pass; native/KDE/Wayland/admission CI success. Julian notified for review before promotion; keep broader acceptance accounted. Physical controller/Gamescope and visible NR/F10 unverified. Installed app/games/icons unchanged. Qt/Kirigami, SteamOS/CachyOS,beta website deferred."
+          },
+          "after": {
+            "next_action": "PR7 verified squash merged as698c0776e69894afb7ea18242a0a18f6e6f1131d; tree9095 unchanged from tested source. Public Linux workflow37160087898 in progress. Verify continuous release manifest/artifact at exact merge SHA, then atomically install via built-in updater and verify local hash/build/smoke with rollback preserved. No game writes. Broader unverified controller/Gamescope/NR and deferred platforms/site remain accounted."
+          }
+        },
+        {
+          "at": "2026-10-03T23:05:56.264Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "Public publication and local installation completed under direct user authorization.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "PR7 verified squash merged as698c0776e69894afb7ea18242a0a18f6e6f1131d; tree9095 unchanged from tested source. Public Linux workflow37160087898 in progress. Verify continuous release manifest/artifact at exact merge SHA, then atomically install via built-in updater and verify local hash/build/smoke with rollback preserved. No game writes. Broader unverified controller/Gamescope/NR and deferred platforms/site remain accounted."
+          },
+          "after": {
+            "next_action": "Settings/scaling batch publicly shipped: PR7 merged698c077, exact tested tree9095; continuous workflow37160087898 SUCCESS. Local installed AppImage698c077 hash353efe4e89cd65f25efcbfab471ad8c81fcaf1b984e7f6163b40b239e938f861 matches public manifest, extracted BUILD_INFO/module and packaged smoke PASS. Old local app and public preview-backup-96c18d34b46c verified. Julian notified. Wider acceptance remains open: physical controller/actual Gamescope and visible NR/F10 unverified; Qt/Kirigami,SteamOS/CachyOS,beta site deferred. No game writes."
+          }
+        },
+        {
+          "at": "2026-10-03T23:39:54.210Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User supplied new UI feedback and requested Gaming Mode controls, Settings polish and unobstructed scroll fades.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Settings/scaling batch publicly shipped: PR7 merged698c077, exact tested tree9095; continuous workflow37160087898 SUCCESS. Local installed AppImage698c077 hash353efe4e89cd65f25efcbfab471ad8c81fcaf1b984e7f6163b40b239e938f861 matches public manifest, extracted BUILD_INFO/module and packaged smoke PASS. Old local app and public preview-backup-96c18d34b46c verified. Julian notified. Wider acceptance remains open: physical controller/actual Gamescope and visible NR/F10 unverified; Qt/Kirigami,SteamOS/CachyOS,beta site deferred. No game writes."
+          },
+          "after": {
+            "next_action": "Local refinement commit087dd9b95c4e275a6b8fcad7cb219aa05d55bad6 installed, hash8b2f2b7d82ed6140613318f4a46e11c9c269d910cf5c9d09893dc5ba853366b1; previous local retained. Includes menu spacing29c5d83, shared review artwork in Extras, native desktop content removed from zoom wrapper, Gaming Mode section with Big Picture disable and all display/input options, Appearance Theme/Window/Library groups, reliable dark glyph on light hero, roomier mode tabs, bottom gradients clear at scroll end. Thirty tests, native X11/Wayland dropdown/theme/close checks, 4K layout harness and Classic smoke PASS. Original crash core shows GTK widget ancestor/style-provider traversal; new native desktop lifecycle avoids custom zoom ancestry. This refinement remains LOCAL/unpublished; public continuous remains698c077. Evidence local visualizations/rtxforge-ui-refinements. Broader runtime/deferred acceptance retained; no game writes."
+          }
+        },
+        {
+          "at": "2026-10-04T00:06:47.999Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User requested full install previews, review for All actions, human errors, neutral white accents and compact action tiles with optional glyphs.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Local refinement commit087dd9b95c4e275a6b8fcad7cb219aa05d55bad6 installed, hash8b2f2b7d82ed6140613318f4a46e11c9c269d910cf5c9d09893dc5ba853366b1; previous local retained. Includes menu spacing29c5d83, shared review artwork in Extras, native desktop content removed from zoom wrapper, Gaming Mode section with Big Picture disable and all display/input options, Appearance Theme/Window/Library groups, reliable dark glyph on light hero, roomier mode tabs, bottom gradients clear at scroll end. Thirty tests, native X11/Wayland dropdown/theme/close checks, 4K layout harness and Classic smoke PASS. Original crash core shows GTK widget ancestor/style-provider traversal; new native desktop lifecycle avoids custom zoom ancestry. This refinement remains LOCAL/unpublished; public continuous remains698c077. Evidence local visualizations/rtxforge-ui-refinements. Broader runtime/deferred acceptance retained; no game writes."
+          },
+          "after": {
+            "next_action": "Local commit762a8b9bbe57a4e7bb931722ab2a16dba992b190 installed at SHA2562763cce5b76782cbb6c476cf6302844d8abf8adb387a5b2b01cac8d13be560c4, previous087dd9b retained. Install All/Restore All now show populated review and await explicit click; empty recovery review exposes Previous Changes. Human error/status presentation retains technical details. White/gray game accents no longer get artificially saturated burgundy text. Desktop Tools and Gaming Mode game/tools use four-across or2x2 tiles; desktop action glyphs and Gaming Mode primary glyphs have live Appearance Button Icons preference. Native X11/Wayland action/accent tests, Settings lifecycle, All review/empty recovery, package/New UI and51 Python tests (one SDL unavailable skip) pass. Native install flow captures use simulated data with game writes disabled in session visualization/rtxforge-install-flow. Source worktree clean; original dirty checkout preserved. Public continuous remains698c077; these refinements LOCAL/unpublished. Physical controller/Gamescope and visible NR/F10 remain unverified; Qt/Kirigami,SteamOS/CachyOS,beta website deferred."
+          }
+        },
+        {
+          "at": "2026-10-04T00:09:41.306Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User corrected tile text placement and requested text-only Done button.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Local commit762a8b9bbe57a4e7bb931722ab2a16dba992b190 installed at SHA2562763cce5b76782cbb6c476cf6302844d8abf8adb387a5b2b01cac8d13be560c4, previous087dd9b retained. Install All/Restore All now show populated review and await explicit click; empty recovery review exposes Previous Changes. Human error/status presentation retains technical details. White/gray game accents no longer get artificially saturated burgundy text. Desktop Tools and Gaming Mode game/tools use four-across or2x2 tiles; desktop action glyphs and Gaming Mode primary glyphs have live Appearance Button Icons preference. Native X11/Wayland action/accent tests, Settings lifecycle, All review/empty recovery, package/New UI and51 Python tests (one SDL unavailable skip) pass. Native install flow captures use simulated data with game writes disabled in session visualization/rtxforge-install-flow. Source worktree clean; original dirty checkout preserved. Public continuous remains698c077; these refinements LOCAL/unpublished. Physical controller/Gamescope and visible NR/F10 remain unverified; Qt/Kirigami,SteamOS/CachyOS,beta website deferred."
+          },
+          "after": {
+            "next_action": "Local source709625e45ba56259aa1e704cbe0cdc8d9512c2aa installed SHA2561160e23c778e7a8abd69a0154aac11813e32bae59c177ea7efa4696a22524fcd. Button icon/label groups now vertically centered; wrapped tile text centered; Done has no redundant check icon. Native action bounds/icon-toggle/accent/controller-focus and InstallAll/RestoreAll/empty recovery tests pass on exact source. Prior762a8b9 contains explicit All review, human errors+technical details, neutral white accents and four-across/2x2 action tiles. Shared engine unchanged; game writes disabled throughout. Native screens and receipts retained in session visualization/rtxforge-install-flow. Clean isolated source worktree; original dirty checkout preserved. Current refinements LOCAL/unpublished; public remains698c077. Physical controller/Gamescope and visible NR/F10 unverified; deferred Qt/Kirigami,SteamOS/CachyOS,beta website preserved."
+          }
+        },
+        {
+          "at": "2026-10-04T00:37:28.796Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User-directed joined List and shared modal review refinements implemented, verified and installed locally.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Local source709625e45ba56259aa1e704cbe0cdc8d9512c2aa installed SHA2561160e23c778e7a8abd69a0154aac11813e32bae59c177ea7efa4696a22524fcd. Button icon/label groups now vertically centered; wrapped tile text centered; Done has no redundant check icon. Native action bounds/icon-toggle/accent/controller-focus and InstallAll/RestoreAll/empty recovery tests pass on exact source. Prior762a8b9 contains explicit All review, human errors+technical details, neutral white accents and four-across/2x2 action tiles. Shared engine unchanged; game writes disabled throughout. Native screens and receipts retained in session visualization/rtxforge-install-flow. Clean isolated source worktree; original dirty checkout preserved. Current refinements LOCAL/unpublished; public remains698c077. Physical controller/Gamescope and visible NR/F10 unverified; deferred Qt/Kirigami,SteamOS/CachyOS,beta website preserved."
+          },
+          "after": {
+            "next_action": "Local HEAD d3d6f2b (joined reviews commit 1688744) installed as 0.7.0 after exact packaged smoke PASS. Shared capsule review rows across feature, DLSS, tool, report, package and recovery previews; real ListArtwork ghost composite reused; no hero/poster in capsule slots; fixed Gaming Mode thumbnail geometry; three/five full rows before scrolling at complete fifth row. Native joined/sort/focus, Install All/Restore All, package/tool/report tests PASS, game writes disabled. Evidence: local visualizations/2026/10/03/01a10034-0e3d-7162-886f-0038c226a8c9/rtxforge-joined-reviews. Shared engine untouched; these refinements unpublished, public remains 698c077. Preserve remaining real NR/F10/controller/Gamescope verification and defer Qt/Kirigami, SteamOS/CachyOS and beta website per user."
+          }
+        },
+        {
+          "at": "2026-10-04T01:03:07.292Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User-directed header reviews, unsupported-game presentation and selection, button alignment, corners and library padding finished and locally installed.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Local HEAD d3d6f2b (joined reviews commit 1688744) installed as 0.7.0 after exact packaged smoke PASS. Shared capsule review rows across feature, DLSS, tool, report, package and recovery previews; real ListArtwork ghost composite reused; no hero/poster in capsule slots; fixed Gaming Mode thumbnail geometry; three/five full rows before scrolling at complete fifth row. Native joined/sort/focus, Install All/Restore All, package/tool/report tests PASS, game writes disabled. Evidence: local visualizations/2026/10/03/01a10034-0e3d-7162-886f-0038c226a8c9/rtxforge-joined-reviews. Shared engine untouched; these refinements unpublished, public remains 698c077. Preserve remaining real NR/F10/controller/Gamescope verification and defer Qt/Kirigami, SteamOS/CachyOS and beta website per user."
+          },
+          "after": {
+            "next_action": "Local HEAD cde15bf (242fcae implementation) installed 0.7.0, exact package smoke PASS. Real header Install/Restore/DLSS button clicks tested with actual background start/finished (only prepare is read-only fixture; execution captured without writes). Update DLSS header now routes through review; Install/Restore populate ordinary review directly before execution progress. Unsupported games detected from existing scan evidence, art/accent saturation 10% and art opacity45%; info tooltip or Game Details only for reasons; bulk/select-all excludes. Details info icon, equal-width row actions, left menu, round/square column header,16px library bottom inset. Native header/support and joined review tests PASS. Evidence local visualizations/2026/10/03/01a10034-0e3d-7162-886f-0038c226a8c9/rtxforge-header-support. Shared engine untouched, no game writes; local refinements unpublished/public698c077. Remaining real NR/F10/controller/Gamescope evidence unverified; Qt/Kirigami, SteamOS/CachyOS and beta website deferred per user."
+          }
+        },
+        {
+          "at": "2026-10-04T01:30:27.257Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User-directed unsupported notice, animated preparation counters, compact Progress/Done and corner/gradient review fixes verified and installed locally.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Local HEAD cde15bf (242fcae implementation) installed 0.7.0, exact package smoke PASS. Real header Install/Restore/DLSS button clicks tested with actual background start/finished (only prepare is read-only fixture; execution captured without writes). Update DLSS header now routes through review; Install/Restore populate ordinary review directly before execution progress. Unsupported games detected from existing scan evidence, art/accent saturation 10% and art opacity45%; info tooltip or Game Details only for reasons; bulk/select-all excludes. Details info icon, equal-width row actions, left menu, round/square column header,16px library bottom inset. Native header/support and joined review tests PASS. Evidence local visualizations/2026/10/03/01a10034-0e3d-7162-886f-0038c226a8c9/rtxforge-header-support. Shared engine untouched, no game writes; local refinements unpublished/public698c077. Remaining real NR/F10/controller/Gamescope evidence unverified; Qt/Kirigami, SteamOS/CachyOS and beta website deferred per user."
+          },
+          "after": {
+            "next_action": "Local HEAD972638a05070bbcc7a89bc29904ef7acd7fa1e09 installed 0.7.0 SHA2565dd7ebe3e39e9adea8d8c0f27cb36d0e4b091b9dd98233455b9715ff1dcd1d3a; exact package smoke PASS. Available/Installed/All default Available; Unsupported hero badge, yellow clickable caution popover and top Overview notice. Preparation uses real adapter checked/total events, package spinner and animated progress. Review dividers1.5px section background, row shadows removed, footer top28px, shared bottom fade28px clear at scroll end. Real execute transition after20game review opens fresh compact Progress; Done fresh content-sized; native Square/Rounded captures verified. Native support, actual header click fixture tests, joined review3/5/6 rows across tool/DLSS/report/GamingMode PASS. Shared engine untouched; no game writes. Evidence session visualizations/rtxforge-caution-progress. Local refinements unpublished; public remains698c077. Preserve remaining NR/F10/physicalcontroller/Gamescope verification; Qt/Kirigami,SteamOS/CachyOS,betawebsite deferred."
+          }
+        },
+        {
+          "at": "2026-10-04T01:40:34.163Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "Latest user compact checking artwork/chrome/fade refinements and native divider override implemented and locally installed.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Local HEAD972638a05070bbcc7a89bc29904ef7acd7fa1e09 installed 0.7.0 SHA2565dd7ebe3e39e9adea8d8c0f27cb36d0e4b091b9dd98233455b9715ff1dcd1d3a; exact package smoke PASS. Available/Installed/All default Available; Unsupported hero badge, yellow clickable caution popover and top Overview notice. Preparation uses real adapter checked/total events, package spinner and animated progress. Review dividers1.5px section background, row shadows removed, footer top28px, shared bottom fade28px clear at scroll end. Real execute transition after20game review opens fresh compact Progress; Done fresh content-sized; native Square/Rounded captures verified. Native support, actual header click fixture tests, joined review3/5/6 rows across tool/DLSS/report/GamingMode PASS. Shared engine untouched; no game writes. Evidence session visualizations/rtxforge-caution-progress. Local refinements unpublished; public remains698c077. Preserve remaining NR/F10/physicalcontroller/Gamescope verification; Qt/Kirigami,SteamOS/CachyOS,betawebsite deferred."
+          },
+          "after": {
+            "next_action": "Local installed HEAD4f1a20f1a358fabb8700b15ce6a918a89abc4821 (e45a77d implementation) version0.7.0 hashb4f7f14a28b05261239103c6dda0e83256c3eea13416cf4bcaadc1070c3f286e. Checking panel compact natural-sized, scroller content fits with no vertical scrolling; capsule accent stroke and matching progress accent update per game. Shared modal header/body use window background, Settings main/footer match; fades use surrounding chrome, opaque final10%, native undershoot/overshoot border/shadow disabled. User overrides prior1.5px: modal/main/GamingMode joined divider1px. Native support assertions (scroll upper<=page, caution/counters/compact ProgressDone), shared3/5/6game/modal/tool/DLSS/couch test and exact package smoke PASS. Evidence local session visualizations/rtxforge-unified-modal. No game writes/shared engine unchanged. Refinements LOCAL/unpublished; public698c077. Remaining physicalcontroller/Gamescope and NR/F10 visual QA unverified; Qt/Kirigami/SteamOS/CachyOS/betawebsite deferred."
+          }
+        },
+        {
+          "at": "2026-10-04T02:02:13.232Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User red notice/text alignment, persistent fade seam, compact menu choices and native Light/Dark contrast refinements completed locally.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Local installed HEAD4f1a20f1a358fabb8700b15ce6a918a89abc4821 (e45a77d implementation) version0.7.0 hashb4f7f14a28b05261239103c6dda0e83256c3eea13416cf4bcaadc1070c3f286e. Checking panel compact natural-sized, scroller content fits with no vertical scrolling; capsule accent stroke and matching progress accent update per game. Shared modal header/body use window background, Settings main/footer match; fades use surrounding chrome, opaque final10%, native undershoot/overshoot border/shadow disabled. User overrides prior1.5px: modal/main/GamingMode joined divider1px. Native support assertions (scroll upper<=page, caution/counters/compact ProgressDone), shared3/5/6game/modal/tool/DLSS/couch test and exact package smoke PASS. Evidence local session visualizations/rtxforge-unified-modal. No game writes/shared engine unchanged. Refinements LOCAL/unpublished; public698c077. Remaining physicalcontroller/Gamescope and NR/F10 visual QA unverified; Qt/Kirigami/SteamOS/CachyOS/betawebsite deferred."
+          },
+          "after": {
+            "next_action": "Installed local HEAD3e88c0ebfe3d26e55178cb102919374a6b19d8c3 version0.7.0 SHA2566cf3b9426522926f2fae078de0ef87217b754e3a9d962a5e7be7a6023fb48609. Red unsupported notice uses explicit aligned yellow caution+wrapping explanation, no Unsupported prefix; hero Unsupported badge retained. Fades shrink near end instead of reducing opacity, fully opaque end and zero at end; native adjustment assertions PASS. Settings/dropdown popup rows uniform compact max44px rendered test PASS. Light/Dark List headers darker than panel, Night unchanged; Light suggested-action label/image fixed dark green matching button and verified native foreground. Settings lifecycle/scale/controllerdisable and support suite PASS; exact packaged smoke PASS on retry (first transient unallocated gallery width assertion, no source adjustment). Evidence session visualizations/rtxforge-notice-contrast. Clean worktree, shared engine unchanged, no game writes. Refinements local/unpublished; public698c077. Retain remaining physicalcontroller/Gamescope/NR-F10 visual verification; defer Qt/Kirigami,SteamOS/CachyOS,betawebsite."
+          }
+        },
+        {
+          "at": "2026-10-04T02:28:12.912Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User authorized UI-only artwork controls, final fixes, 1.0 RC and renewed GitHub push; verified and published PR8.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "User authorizes UI-only custom artwork controls, final visual fixes, version 1.0 RC and resumed GitHub push. Verify bundled caution and strict poster roles, build/install 1.0.0-rc.1 and publish branch/PR."
+          },
+          "after": {
+            "next_action": "Pushed exact HEAD f6dab9486c5e26fbfbc7ccdad0213a4b2a11dae4, PR8 https://github.com/lrnolivia/rtxForge/pull/8. Local installed 1.0.0-rc.1 SHA256717eb3e520076dbedefec3e315ad13f0ae9ad1628827dc99809f7cd13c899d05 matches build. Bundled caution stays visible with optional glyphs off, smaller14px within28px circle with10px artwork inset; brighter red notice. Strict portrait validation rejects hero/capsule and landscape role data across desktop/GamingMode/progress. Game Appearance UI-only role previews/Choose Image/SteamGridDB/Reset, intentionally disabled, selection/search/persistence integration delegated by user. RC updater ordering unitchecks PASS. Native support/preparation/compactProgressDone/corners, Settings lifecycle/contrast/dropdown, joined3/5/6review, actualheaderreview/unsupportedbulk suites PASS; exact packaged smoke PASS after smoke-only GTK allocation timing repair. Evidence session visualizations/rtxforge-1.0-rc. No installedgamewrites/sharedengineunchanged. PR CI pending; push fulfilled, not merged/released. Preserve physicalcontroller/Gamescope/NR-F10 unverified and deferred Qt/Kirigami/SteamOS/CachyOS/betawebsite."
+          }
+        },
+        {
+          "at": "2026-10-04T02:46:44.885Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "Latest user artwork correction and Julian approved live branding implemented and verified.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Pushed exact HEAD f6dab9486c5e26fbfbc7ccdad0213a4b2a11dae4, PR8 https://github.com/lrnolivia/rtxForge/pull/8. Local installed 1.0.0-rc.1 SHA256717eb3e520076dbedefec3e315ad13f0ae9ad1628827dc99809f7cd13c899d05 matches build. Bundled caution stays visible with optional glyphs off, smaller14px within28px circle with10px artwork inset; brighter red notice. Strict portrait validation rejects hero/capsule and landscape role data across desktop/GamingMode/progress. Game Appearance UI-only role previews/Choose Image/SteamGridDB/Reset, intentionally disabled, selection/search/persistence integration delegated by user. RC updater ordering unitchecks PASS. Native support/preparation/compactProgressDone/corners, Settings lifecycle/contrast/dropdown, joined3/5/6review, actualheaderreview/unsupportedbulk suites PASS; exact packaged smoke PASS after smoke-only GTK allocation timing repair. Evidence session visualizations/rtxforge-1.0-rc. No installedgamewrites/sharedengineunchanged. PR CI pending; push fulfilled, not merged/released. Preserve physicalcontroller/Gamescope/NR-F10 unverified and deferred Qt/Kirigami/SteamOS/CachyOS/betawebsite."
+          },
+          "after": {
+            "next_action": "PR8 pushed at 832456531791d1f6151fd19581bd6647adad9279; exact local 1.0.0-rc.1 installed SHA256 c2f0a8ee902ba4fb397f57b6dcab09a58985a9a6a85c88f9e3e4174add5c74d0. Three borderless artwork cards, balanced aspect-preserving preview areas, selected-accent artwork-only strokes; controls intentionally unwired. Latest Julian Relay note acknowledged; approved light SVG copied byte-exact from 7b8c9f90; live effective-theme desktop and Game Mode branding verified Light/Dark/Night/default. Native Settings/support checks and exact AppImage smoke PASS; no game writes; shared engine unchanged. Evidence local visualization rtxforge-1.0-rc/8324565-receipt.json. PR8 updated, not merged/released; new CI pending. Physical controller/Gamescope and visible NR/F10 remain unverified; Qt/Kirigami/SteamOS/CachyOS/beta site deferred."
+          }
+        },
+        {
+          "at": "2026-10-04T16:46:49.851Z",
+          "by": "01a104f7-188f-7744-8608-129ceb7720ee",
+          "reason": "Lauren authorizes completed ready incremental releases across projects and will review live; no workers, Relay only.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserve all original requirements, shared safe package engine and runtime MFG evidence. Verify per-game presets and NR failure; native Dark/Light stock greys, custom Night. Native KDE/Hyprland/controller/Gamescope/metadata/extras/beta portal and consent-aware QA retained. Approved final Papirus launcher and unplated in-app SVGs are in handoff recovery/, not installed. PR6 draftabd243e7 remains held/unmerged; published preview695d292e. Separate paused Figma fidelity task not resumed. User-started receiver identity not yet known; no invented owner or automatic launch.\n2026-10-03 current user scope: finish all GTK app work and perform NR diagnosis. Defer Qt/Kirigami and SteamOS/CachyOS-specific work; table the beta website. Continue desktop/Game Mode/controller support, metadata/tools, safe package handling, Classic visual polish and app-side support as applicable. Installed game access remains read-only unless a scoped test write is explicitly authorized. Preserve known-good MFG. No new production merge/release approval is inferred.\nExplicit user authorization supersedes read-only test restriction: controlled reversible tests on any game with NR installed, plus Cyberpunk, Avowed, Forza, Witcher 3 and Avatar. Preserve backups and known-good MFG.\nUser refined controller UX: a game-like tool menu with large directional choices; traditional Classic controls only during keyboard/mouse use. Dedicated couch surface shares the safe engine. User reports F10 may not have worked in controlled Avatar run; investigate exact installed hotkey handler.\n2026-10-03 16:42 UTC resume batch: PR6 is now merged as 96c18d34b46c48a7f1d8c2f34e5238dfb6a3a7df and the continuous Linux preview is published; older held/unmerged wording above is historical. Lauren authorizes one Sol 6.1 medium local Linux Codex worker, preferably resuming her previous session. Implement Settings UI scaling (proposed 150% default at 4K, adjustable, avoid double OS scaling); game-mode dashboard poster/wide artwork, left/right library shelf and visible row count; persistent top/bottom navigation across all game-mode screens; compact integrated auto-hiding controller hints with bottom navigation, optional auto-hide in normal layout while keeping current always-visible default. Preserve approved current dashboard and shared safe engine. Verify native fullscreen, scaling, focus/navigation and 4K screenshots without claiming physical controller input unless actually tested. Julian retains icon/artwork and ctrl/Relay. Do not start Windows port or Steam Store publication. Optional installer Add to Steam artwork integration may follow when Julian supplies approved assets. Root makes no simultaneous RTX source edits; actual receiving session ID must be verified before ownership handoff. Existing wider acceptance remains accounted, not declared complete.",
+            "next_action": "Julian is implementing directly with no workers. Approved Steam artwork is publicly released. Steam artwork sync, Add-to-Steam, GTK/Game Mode refinements and the role-specific artwork picker pass native package, KDE and Wayland review at fa44deb7f00bddbf53f3336e10b3b73a65b7a8ed. API credentials, actual gaming-PC acceptance, complete KDE parity and remaining RC scope remain open; no application release is claimed."
+          },
+          "after": {
+            "acceptance": "Classic retained and default Library preserved. Both UIs share package parsing, editable safe plans, explicit trust and reversible deployment; never execute package instructions. Review screenshots of both surfaces before Classic visual polish ships. GNOME native first; Qt/Kirigami shared-engine port plan without distro forks. Preserve existing MFG success and report NR unverified.\nLatest overrides and complete execution scope: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RTXFORGE.md . Classic is chosen; redesign rejected. Preserve all original requirements, shared safe package engine and runtime MFG evidence. Verify per-game presets and NR failure; native Dark/Light stock greys, custom Night. Native KDE/Hyprland/controller/Gamescope/metadata/extras/beta portal and consent-aware QA retained. Approved final Papirus launcher and unplated in-app SVGs are in handoff recovery/, not installed. PR6 draftabd243e7 remains held/unmerged; published preview695d292e. Separate paused Figma fidelity task not resumed. User-started receiver identity not yet known; no invented owner or automatic launch.\n2026-10-03 current user scope: finish all GTK app work and perform NR diagnosis. Defer Qt/Kirigami and SteamOS/CachyOS-specific work; table the beta website. Continue desktop/Game Mode/controller support, metadata/tools, safe package handling, Classic visual polish and app-side support as applicable. Installed game access remains read-only unless a scoped test write is explicitly authorized. Preserve known-good MFG. No new production merge/release approval is inferred.\nExplicit user authorization supersedes read-only test restriction: controlled reversible tests on any game with NR installed, plus Cyberpunk, Avowed, Forza, Witcher 3 and Avatar. Preserve backups and known-good MFG.\nUser refined controller UX: a game-like tool menu with large directional choices; traditional Classic controls only during keyboard/mouse use. Dedicated couch surface shares the safe engine. User reports F10 may not have worked in controlled Avatar run; investigate exact installed hotkey handler.\n2026-10-03 16:42 UTC resume batch: PR6 is now merged as 96c18d34b46c48a7f1d8c2f34e5238dfb6a3a7df and the continuous Linux preview is published; older held/unmerged wording above is historical. Lauren authorizes one Sol 6.1 medium local Linux Codex worker, preferably resuming her previous session. Implement Settings UI scaling (proposed 150% default at 4K, adjustable, avoid double OS scaling); game-mode dashboard poster/wide artwork, left/right library shelf and visible row count; persistent top/bottom navigation across all game-mode screens; compact integrated auto-hiding controller hints with bottom navigation, optional auto-hide in normal layout while keeping current always-visible default. Preserve approved current dashboard and shared safe engine. Verify native fullscreen, scaling, focus/navigation and 4K screenshots without claiming physical controller input unless actually tested. Julian retains icon/artwork and ctrl/Relay. Do not start Windows port or Steam Store publication. Optional installer Add to Steam artwork integration may follow when Julian supplies approved assets. Root makes no simultaneous RTX source edits; actual receiving session ID must be verified before ownership handoff. Existing wider acceptance remains accounted, not declared complete.\n2026-10-04 16:28–16:31 UTC: completed verified portions may ship incrementally for Lauren's review. Shipping tested implemented scope does not claim final 1.0 RC, live API credentials, physical SteamOS/GPU or hardware acceptance. Preserve remaining full scope.",
+            "next_action": "Promote tested PR8 source after exact-head checks and preflight; inspect canonical release/update path and publish only validated packages. Keep live SteamGridDB credentials, hardware validation and final RC acceptance open."
+          }
+        },
+        {
+          "at": "2026-10-07T04:29:04.662Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User-authorized local Linux resume checkpoint; no publication or deployment.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Explicit current user authorizes this Linux session LOCAL resume in /home/loew/Repos/rtxForge-codex on codex/resume-main-20261007 at GitHub main56a31705e1a0038fd3f58fd992356411797362a5, overriding older stopped-session/branch destination for local-only development. Preserve historical task branch and all original acceptance. No push, merge, deploy, drivers/system settings or credential changes without approval. Preserve dirty checkout/backups. Reproduce Library-first/count/branding/shared operation flow/independent Restore Update/launch logging defects; inspect own Steam roles and existing customizations read-only. Focused native fixture checks and recoverable local checkpoints; no user Steam artwork writes."
+          },
+          "after": {
+            "next_action": "LOCAL checkpoint98b0c9c87da90daad92ce48ac558f380094cd0f1 in /home/loew/Repos/rtxForge-codex on explicit user branch codex/resume-main-20261007, based on independently verified current GitHub main56a31705. Library-first Game Mode, truthful shown/total/configured and eligible install counts, larger collapsing unplated branding, independent Restore/Update through shared reviewed operations, controller routing/hidden control handling and bounded private launch resolution/submission/failure diagnostics implemented. Native Xvfb ui_library_resume/ui_install_flow/ui_couch_review PASS;82 isolated unit passes+1 controller skip and4 host pytest passes. Source Steam artwork5roles decode PASS including heroSVGfallback; packaging and own-app/helper fixtures PASS, distinct from per-game picker. Original dirty checkout/backups/224 Steam grid files untouched. Evidence/patch/screenshots receipt in session visualizations/rtxforge-resume-20261007. START_HERE.md remains untracked. No push/merge/deploy/install/game/Steam/system/credential changes. Keep actual Steam shortcut import/customization review, live SteamGridDB credentials, physical controller/Gamescope/GPU/NR-F10 and wider RC acceptance OPEN. Next obtain explicit approval before any publication/deployment/Steam write; continue reversible local implementation if further requested. Historical remote task branch remains unchanged."
+          }
+        },
+        {
+          "at": "2026-10-07T04:42:40.573Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "Local continuation: own-app Steam artwork preservation and exact-checkpoint package acceptance verified without deployment.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "LOCAL checkpoint98b0c9c87da90daad92ce48ac558f380094cd0f1 in /home/loew/Repos/rtxForge-codex on explicit user branch codex/resume-main-20261007, based on independently verified current GitHub main56a31705. Library-first Game Mode, truthful shown/total/configured and eligible install counts, larger collapsing unplated branding, independent Restore/Update through shared reviewed operations, controller routing/hidden control handling and bounded private launch resolution/submission/failure diagnostics implemented. Native Xvfb ui_library_resume/ui_install_flow/ui_couch_review PASS;82 isolated unit passes+1 controller skip and4 host pytest passes. Source Steam artwork5roles decode PASS including heroSVGfallback; packaging and own-app/helper fixtures PASS, distinct from per-game picker. Original dirty checkout/backups/224 Steam grid files untouched. Evidence/patch/screenshots receipt in session visualizations/rtxforge-resume-20261007. START_HERE.md remains untracked. No push/merge/deploy/install/game/Steam/system/credential changes. Keep actual Steam shortcut import/customization review, live SteamGridDB credentials, physical controller/Gamescope/GPU/NR-F10 and wider RC acceptance OPEN. Next obtain explicit approval before any publication/deployment/Steam write; continue reversible local implementation if further requested. Historical remote task branch remains unchanged."
+          },
+          "after": {
+            "next_action": "LOCAL checkpoint e9c8c928aaff27bb72a30b5b46d1ebdb12209deb on user-approved codex/resume-main-20261007 extends98b0c9c Library-first/count/brand/bulk actions/launch diagnostics. Own-app Steam helper baseline overwrite reproduced on disposable fixture; GTK now read-only reviews4artwork slots/profile and requires explicit reviewed apply before replacement. Unreviewed callers preserve differing custom images; locked slot expected-state guard and missing shortcut-icon refusal. Existing shortcut bytes preserved; original artwork reset verified.22 helper/artwork tests PASS; native own-app review Desktop/Couch and support preparation/20game review/compact ProgressDone/live corners PASS. Local1.0.0-rc.1 AppImage built; packaged source exact checkpoint,5own-app roles decode expected sizes including heroSVGfallback, native packaged demo smoke PASS. Own app artwork remains separate from per-game SteamGridDB picker. Qt only preservation status text adjusted, no Qt UI expansion. Receipt/evidence/patch/screenshots under session visualizations/rtxforge-resume-20261007/steam-preservation-receipt.json. Original dirty checkout/backups and userSteam224files untouched; START_HERE untracked. No push/merge/install/deploy/game/Steam/system/credential changes. StillOPEN actualSteamimport/customizationreview, liveSteamGridDB, physicalcontroller/Gamescope/GPU/NR-F10/widerRC. Require explicit userapproval before publication/deployment or realSteamwrites. Historicalremote taskbranch unchanged."
+          }
+        },
+        {
+          "at": "2026-10-07T04:58:18.914Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User now explicitly authorizes local install, push and public publication. Preserve managed branch identity and local resume checkout.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "LOCAL checkpoint e9c8c928aaff27bb72a30b5b46d1ebdb12209deb on user-approved codex/resume-main-20261007 extends98b0c9c Library-first/count/brand/bulk actions/launch diagnostics. Own-app Steam helper baseline overwrite reproduced on disposable fixture; GTK now read-only reviews4artwork slots/profile and requires explicit reviewed apply before replacement. Unreviewed callers preserve differing custom images; locked slot expected-state guard and missing shortcut-icon refusal. Existing shortcut bytes preserved; original artwork reset verified.22 helper/artwork tests PASS; native own-app review Desktop/Couch and support preparation/20game review/compact ProgressDone/live corners PASS. Local1.0.0-rc.1 AppImage built; packaged source exact checkpoint,5own-app roles decode expected sizes including heroSVGfallback, native packaged demo smoke PASS. Own app artwork remains separate from per-game SteamGridDB picker. Qt only preservation status text adjusted, no Qt UI expansion. Receipt/evidence/patch/screenshots under session visualizations/rtxforge-resume-20261007/steam-preservation-receipt.json. Original dirty checkout/backups and userSteam224files untouched; START_HERE untracked. No push/merge/install/deploy/game/Steam/system/credential changes. StillOPEN actualSteamimport/customizationreview, liveSteamGridDB, physicalcontroller/Gamescope/GPU/NR-F10/widerRC. Require explicit userapproval before publication/deployment or realSteamwrites. Historicalremote taskbranch unchanged."
+          },
+          "after": {
+            "next_action": "User explicitly says install locally, push and publish on GitHub as public. Verified local AppImage installed with SHA98420c6422d7d7899b5fb01fcdeed474464c3236af65957589b8950668fdf5e2 and preserved rollback. Keep prepared local codex/resume-main-20261007 at b126547 and publish through existing admitted rtxforge/shared-package-ui-20261002 per registry. First reconcile old source branch with already merged main56a31705 using exact-tree checkpoint and guarded non-force ancestry sync, preserving all old commits; then upload tested tree65c9e5fa7eba00891d55b196c16565f8f43b5cca.128pytest+21subtests and213engine PASS, native4K/currentDashboard test PASS, own-app Steam review and sharedflow/payload smoke PASS. Open draftPR, verifyexacttree/greenchecks, guarded squash merge and verifypubliccontinuousRCmanifest/download. No Steam/game/credentials/drivers/system changes included; wider acceptance OPEN."
+          }
+        },
+        {
+          "at": "2026-10-07T05:05:56.697Z",
+          "by": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "reason": "User-authorized local installation and public incremental publication completed; wider acceptance remains open.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "User explicitly says install locally, push and publish on GitHub as public. Verified local AppImage installed with SHA98420c6422d7d7899b5fb01fcdeed474464c3236af65957589b8950668fdf5e2 and preserved rollback. Keep prepared local codex/resume-main-20261007 at b126547 and publish through existing admitted rtxforge/shared-package-ui-20261002 per registry. First reconcile old source branch with already merged main56a31705 using exact-tree checkpoint and guarded non-force ancestry sync, preserving all old commits; then upload tested tree65c9e5fa7eba00891d55b196c16565f8f43b5cca.128pytest+21subtests and213engine PASS, native4K/currentDashboard test PASS, own-app Steam review and sharedflow/payload smoke PASS. Open draftPR, verifyexacttree/greenchecks, guarded squash merge and verifypubliccontinuousRCmanifest/download. No Steam/game/credentials/drivers/system changes included; wider acceptance OPEN."
+          },
+          "after": {
+            "next_action": "PR14 merged through exact-head green native GTK/KDE/Wayland/admission checks at main938749ee89ce8460e9dab7d9feae7e1a8423b425, source tree65c9e5fa7eba00891d55b196c16565f8f43b5cca byte-exact to tested local b126547. Public continuous1.0.0-rc.1 build37574440497 succeeded. Public manifest commit/hash/size and checksum verified; exact public AppImage installed locally SHA2671f2c673a96dab2e146202c3b6e15af9c2371700698d04f1474ef95ea3fa9d size16603640 with original and intermediate installations backed up. Previous public56a31705 artifact/manifest/checksum retained by release rollback. Evidence public-install-receipt.json under session visualizations/rtxforge-resume-20261007. Original dirty checkout/backups preserved, START_HERE untracked. No live games/Steam customization/credentials/drivers/system writes. Incremental delivered scope: Library-first truthful counts/collapsing brand/shared reviewed bulk actions and bounded launch logging plus own-app Steam artwork review/preservation, all5roles packaged and decoded. Wider RC acceptance remains OPEN: physical controller/Gamescope/GPU/NR-F10, live SGDB and actual Steam customization/import acceptance. Resume only unfinished documented acceptance with applicable authorization."
+          }
+        }
+      ],
+      "handoffs": [
+        {
+          "at": "2026-10-03T08:10:36.808Z",
+          "from": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "to": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "next_action": "Lauren explicitly requests Julian direct takeover tonight, no more workers. Preserve completed worker checkpoints and current source; no worker restart. Root will finish authorized remaining fixes and verification with Relay, preserve review and access gates, and report exact ready/blocked status. Field current user-owned batch remains separate."
+        },
+        {
+          "at": "2026-10-03T16:46:57.084Z",
+          "from": "01a0f8ad-34ae-7715-8b56-96b9a4a3d020",
+          "to": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "next_action": "Lauren explicitly resumed this verified Linux Codex session on Sol6.1 medium. Latest acceptance includes Settings scaling, dashboard view options, persistent top/bottom navigation and integrated optional controller hints. Published main96c18d34 follows tested candidatef8362753; refresh exact source before edits. Root has no active RTX source edits and retains artwork. Receiver may resume held claim and run preflight, preserving original dirty checkout and all wider accepted scope."
+        },
+        {
+          "at": "2026-10-04T03:36:05.888Z",
+          "from": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "to": "01a104f7-188f-7744-8608-129ceb7720ee",
+          "next_action": "Lauren explicitly stopped the Linux session and requested Julian direct implementation instead. Preserve stopped session and local unpublished changes; continue from remote PR8 exact832456531791d1f6151fd19581bd6647adad9279 in separate cloud checkout. Implement latest Play/non-Steam launch, menu roles, fixed global accent, ambient backgrounds, typography, filters/controller glyph/shelf improvements and investigate apparent60fps cap. No new worker. Local hardware/install proof blocked while Linux offline; no merge/release claimed."
+        },
+        {
+          "at": "2026-10-06T02:35:03.435Z",
+          "from": "01a104f7-188f-7744-8608-129ceb7720ee",
+          "to": "01a10d01-eb49-71e1-9403-3a14f65bf0e1",
+          "next_action": "Lauren explicitly asks this root to deploy the tested artwork fixes now and implement card counts separately. Previous owner thread latest recorded turn verified interrupted. Preserve all unfinished acceptance and PR12 exact source; publish only verified artwork slice, no workers or user-machine Steam writes."
+        },
+        {
+          "at": "2026-10-07T04:19:15.841Z",
+          "from": "01a10d01-eb49-71e1-9403-3a14f65bf0e1",
+          "to": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "next_action": "Explicit current user authorizes this Linux session LOCAL resume in /home/loew/Repos/rtxForge-codex on codex/resume-main-20261007 at GitHub main56a31705e1a0038fd3f58fd992356411797362a5, overriding older stopped-session/branch destination for local-only development. Preserve historical task branch and all original acceptance. No push, merge, deploy, drivers/system settings or credential changes without approval. Preserve dirty checkout/backups. Reproduce Library-first/count/branding/shared operation flow/independent Restore Update/launch logging defects; inspect own Steam roles and existing customizations read-only. Focused native fixture checks and recoverable local checkpoints; no user Steam artwork writes."
+        },
+        {
+          "at": "2026-10-13T03:16:41.061Z",
+          "from": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "to": "01a13320-63b9-70b7-8805-e851e38df001",
+          "next_action": "Temporary serial README-only checkpoint, explicitly authorized by Lauren's 'apply them' for approved Library README version1 libfile_a344d99493b481918c23e44e289ea30b (SHA256 b82bf5c5f3d6622995ca934bcf22d1ed51d055b7e49fb43b73b008a30a7d24f2), delegated via parent 01a1146d-0267-735e-8332-fa38cf7fb007. Use isolated Mac checkout /Users/lrnolivia/Codex/2026-10-12/task-4/rtxForge-readme and existing rtxforge/shared-package-ui-20261002 branch. Change only README.md; preserve goal, acceptance, paths/resources, source and all unfinished package work. No push/merge/deploy/release or Game Mode source edits. After local legitimate-identity commit and README-only validation, return assignment ownership to 01a10034-0e3d-7162-886f-0038c226a8c9 with exact checkpoint receipt."
+        },
+        {
+          "at": "2026-10-13T03:19:23.106Z",
+          "from": "01a13320-63b9-70b7-8805-e851e38df001",
+          "to": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "next_action": "Returned after Lauren-authorized serial README-only local checkpoint 0214ec50162a6475f7706686270421476e5ed1d5, parent existing remote head e676713e42775ace2fff47abb49420786e2c6061, in /Users/lrnolivia/Codex/2026-10-12/task-4/rtxForge-readme on rtxforge/shared-package-ui-20261002. Approved Library README version1 applied byte-exact (SHA256 b82bf5c5f3d6622995ca934bcf22d1ed51d055b7e49fb43b73b008a30a7d24f2); only README.md changed, clean checkout, legitimate Lauren Olivia <lrnoliv@gmail.com> author/committer, no coauthor trailers. Local receipt and format-patch in ../readme-review/local-checkpoint-receipt.json and local-checkpoint.patch. No push/merge/deploy/release or Game Mode/package code changes; remote branch unchanged. Current main 0778d5e has 3 CI-only file changes beyond branch; not integrated under no-merge scope. Goal, acceptance, paths/resources and unfinished package work preserved. Existing next action: Original product test scope restored after CI-only fixture repair merged in PR16 at 0778d5e577e95a6d65bdd68ffcf860ea90cff635. Preserve this product branch and all unfinished objective. Future owner integrates current main deliberately; tests/ui_couch_review.py now waits for GTK frame readiness without weakening assertions. CI workflow files remain available for future claim."
+        },
+        {
+          "at": "2026-10-13T03:46:19.979Z",
+          "from": "01a10034-0e3d-7162-886f-0038c226a8c9",
+          "to": "01a132c7-fa0d-7410-ac69-4cbefd80902d",
+          "next_action": "Temporary serial Linux Game Mode/Steam-state implementation, explicitly authorized by Lauren and parent01a1146d-0267-735e-8332-fa38cf7fb007. This Mac task01a132c7 will preserve shared goal/acceptance/resources and all WIP, including unpublished README0214ec50162a6475f7706686270421476e5ed1d5 over remotee676713. Work in a separate isolated checkout; only gui/couch_shell.py, narrow gui/rtxforge_gtk.py/controller_input hooks and affected tests, plus safe Steam transaction separation/pending capability in scripts/engine_bridge.py/operation_session and app-owned intent modules with meaningful fixture tests. Do not edit providers/packaging/README/VERSION, NR routes, WinUI owner windows/ or unrelated work. Approved visual589/currentfunctional594 preserved in task-2 checkpoints. Native GTK demo/runtime verification on Mac may be blocked; fixtures are not Gamescope/controller acceptance. No merge/deploy/install/release or real Steam/game writes; commits if needed verifiedLauren identity only. After recoverable local checkpoint and evidence, return shared assignment to01a10034 with exact native source/remaining gates; Windowsba63a21 remains with its active owner."
+        }
+      ],
+      "retirement": {
+        "at": "2026-10-13T07:29:20.316Z",
+        "intent": {
+          "operation_id": "native-worker-pause-release-20261013-ee3884b",
+          "owner": "01a132c7-fa0d-7410-ac69-4cbefd80902d",
+          "disposition": "cancelled",
+          "reason": "Lauren explicitly pauses this worker and releases its temporary reservation (Sentinel_fd30388224c081918323685b63210709). Cancel reservation only; retain original unfinished acceptance and all source/history. No product completion, merge or release.",
+          "evidence": "Stopped source writer. Draft PR18 head ee3884bc49c10e7ff6c4266cabfc37003384f7e3, tree a0095c918599e36951e62ccfe3ffe0171f90505f, clean isolated task-2/native-implementation. Fedora run38361838844 native/KDE/Wayland SUCCESS; prior green c4057c9/run38361158453 and4f97d72/run38360525338 plus d6e9ad3 rollback retained. All new commits Lauren identity, no coauthors/forcepush. Bundle/patch review/native-paused-ee3884b.*, static review and native captures retained. Remaining compact List feature badge (<1400), very short Library viewport, Filter Apply contrast, physical pad/Gamescope, WinUI Game Mode/backend and seamless first-time Steam setup remain open. Preserve README0214ec5 and Windows a2d56e4 WIP with its existing Claude owner. Relay replies sent tr_42ce623ab418658ebcec3274c6a6802e / ctx_d47d9eba709f68b6f7655c0c2a3c87e4fb80dac64b77643bc59f41538239a8ad, receipt pending. No source retries, merge/deploy/install/live Steam/game/security changes. Another worker must claim/preflight and preserve PR18 engine_bridge launch-safety work before continuing.",
+          "superseded_by": null,
+          "branch": "rtxforge/shared-package-ui-20261002",
+          "head_sha": "ee3884bc49c10e7ff6c4266cabfc37003384f7e3"
+        }
+      }
+    },
+    {
+      "id": "rtxforge-gaming-mode-design-preview-20261013",
+      "owner": "codex-gaming-mode-design-20261013",
+      "branch": "rtxforge/gaming-mode-design-preview-20261013",
+      "paths": [
+        "docs/design/gaming-mode-preview/"
+      ],
+      "resources": [
+        "rtxforge-gaming-mode-magicpath-preview"
+      ],
+      "goal": "Build Lauren's reviewable controller-first rtxForge Gaming Mode utility preview, cohesive with desktop and native in Gamescope; never a launcher within a launcher.",
+      "acceptance": "Keep product source read-only. Preserve desktop identity/terminology/functions; adapt density, focus, D-pad/back, hints, dialogs, scrolling and loading/error/empty states. Interactive MagicPath prototype and native test plan; review before replacing shipped GTK. No merge/deploy/PC install/paid purchase/unrelated work.",
+      "next_action": "Inspect exact main GTK couch shell and visuals in isolated task checkout, then create preview and share with parent for review.",
+      "category": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "base_sha": "0778d5e577e95a6d65bdd68ffcf860ea90cff635",
+      "state": "cancelled",
+      "created_at": "2026-10-13T01:04:33.023Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Create a controller-first Gaming Mode design prototype in MagicPath for Lauren's review, grounded in current Linux couch_shell functions and identity. Read-only product source; no shipped GTK replacement.",
+          "acceptance": "Interactive reviewable prototype covers library, details/settings, controller focus/back navigation, dialogs, scrolling, loading/error/empty states. Preserve existing work; distinguish web prototype from verified GTK behavior; focused Linux Gamescope/controller acceptance plan. No merge, deployment, paid purchase, PC install or unrelated work.",
+          "at": "2026-10-13T01:03:46.382Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-gaming-mode-design-preview-20261013:acceptance:0",
+            "text": "Interactive reviewable prototype covers library, details/settings, controller focus/back navigation, dialogs, scrolling, loading/error/empty states. Preserve existing work; distinguish web prototype from verified GTK behavior; focused Linux Gamescope/controller acceptance plan. No merge, deployment, paid purchase, PC install or unrelated work.",
+            "at": "2026-10-13T01:03:46.382Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-13T07:31:45.291Z",
+      "lease_until": "2026-10-13T13:04:33.023Z",
+      "retirement": {
+        "at": "2026-10-13T07:31:45.291Z",
+        "intent": {
+          "operation_id": "gaming-preview-pause-release-20261013",
+          "owner": "codex-gaming-mode-design-20261013",
+          "disposition": "cancelled",
+          "reason": "Lauren explicitly stops this worker and releases its preview reservation (Sentinel_fd30388224c081918323685b63210709). Preserve the approved live design and frozen local artifacts; no deletion or unfinished acceptance completion.",
+          "evidence": "Preview writer stopped. MagicPath project460561620121325568/component460561802951012352, https://designs.magicpath.ai/v1/radiant-rock-8795, approved visual revision460589410484883456/currentfunctional460594005034536960 retained. frozen-preview-checkpoint and audited-preview-checkpoint source/assets/manifests in Mac task-2 preserved. Branch rtxforge/gaming-mode-design-preview-20261013 is absent; expected_head_sha null. Native draftPR18 clean ee3884bc49c10e7ff6c4266cabfc37003384f7e3 and completed Fedora run38361838844 retained; native reservation already released without marking work complete. Windows owner unchanged. Remaining visual/hardware/setup acceptance documented in pause handoff. No paid purchase, merge, deploy, install, live game/Steam/security changes.",
+          "superseded_by": null,
+          "branch": "rtxforge/gaming-mode-design-preview-20261013",
+          "head_sha": null
+        }
+      }
+    },
+    {
+      "id": "rtxforge-windows-winui-port-20261013",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/windows-winui-port",
+      "paths": [
+        "windows/",
+        ".github/workflows/windows-build.yml",
+        "LICENSE",
+        "CODE_SIGNING.md",
+        "README.md",
+        "scripts/steam_self_install.py",
+        "tests/test_steam_self_install.py"
+      ],
+      "resources": [
+        "rtxforge-windows-shell"
+      ],
+      "goal": "Native WinUI 3 (Windows App SDK 2.x, C#) rtxForge for Windows: the desktop shell mirroring the Linux libadwaita build, the real Windows engine bridge (shared Python engine via windows/engine-host with a bundled private Python), and Windows Game Mode built natively from Lauren's approved Game Mode design (MagicPath radiant-rock-8795, approved revision 460589410484883456, audited functional revision 460594005034536960) with draft PR #18 couch_shell as the behavior reference. MFG keeps the native Streamline DLSS-G Ada route. Lauren authorized the Windows port 2026-10-13 ('lets go!') and native Game Mode on Linux GTK and Windows WinUI 3 (WINDOWS-CLAUDE-GAME-MODE-HANDOFF, delivered in chat 2026-10-13).",
+      "acceptance": "windows/ builds on windows-2025 CI; desktop screens map to Linux with the documented control/token map; the app runs the shared engine unchanged via windows/engine-host with Windows adapters and a bundled Python (no user install); every write is review-then-execute. Windows Game Mode: full-screen native WinUI, controller (Windows.Gaming.Input) and keyboard navigation, Library/Presets/Settings, Details sections, operations flow, Night/Light/Dark, 720p/1080p/4K scaling, per the handoff's WinUI port contract. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002). No merge, release or live Steam changes without Lauren's approval.",
+      "next_action": "Lauren (chat 2026-10-13): Add rtxForge to Steam must center the logo automatically. Write Steam's grid/<appid>.json logoPosition (CenterCenter, sized from the bundled logo/hero aspect) in steam_self_install.install, reviewed and backed up like the artwork slots; test in tests/test_steam_self_install.py.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "0778d5e577e95a6d65bdd68ffcf860ea90cff635",
+      "state": "active",
+      "created_at": "2026-10-13T00:57:55.228Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Start the Windows port: a native WinUI 3 (Windows App SDK 2.x, C#) desktop shell that mirrors the Linux libadwaita desktop build almost 1:1 in layout, flow and copy, using WinUI 3 components and Fluent theme tokens. Game Mode (couch_shell) stays Linux-only. MFG keeps the current native Streamline DLSS-G Ada route. Lauren authorized this in chat 2026-10-13 ('lets go!').",
+          "acceptance": "windows/ contains a buildable WinUI 3 solution whose window structure (header, library list/grid, game detail with NR Strength 0.0-2.0, Sharpening 0.0-1.0, MFG Off/2x-6x controls, settings) maps 1:1 to the Linux desktop GTK screens, with a documented GTK-widget->WinUI-control and libadwaita-token->Fluent-token map. A windows-build workflow builds it on windows-latest. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002).",
+          "at": "2026-10-13T00:57:55.228Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-windows-winui-port-20261013:acceptance:0",
+            "text": "windows/ contains a buildable WinUI 3 solution whose window structure (header, library list/grid, game detail with NR Strength 0.0-2.0, Sharpening 0.0-1.0, MFG Off/2x-6x controls, settings) maps 1:1 to the Linux desktop GTK screens, with a documented GTK-widget->WinUI-control and libadwaita-token->Fluent-token map. A windows-build workflow builds it on windows-latest. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002).",
+            "at": "2026-10-13T00:57:55.228Z"
+          },
+          {
+            "id": "rtxforge-windows-winui-port-20261013:acceptance:1",
+            "text": "windows/ builds on windows-2025 CI; desktop screens map to Linux with the documented control/token map; the app runs the shared engine unchanged via windows/engine-host with Windows adapters and a bundled Python (no user install); every write is review-then-execute. Windows Game Mode: full-screen native WinUI, controller (Windows.Gaming.Input) and keyboard navigation, Library/Presets/Settings, Details sections, operations flow, Night/Light/Dark, 720p/1080p/4K scaling, per the handoff's WinUI port contract. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002). No merge, release or live Steam changes without Lauren's approval.",
+            "at": "2026-10-13T06:11:11.866Z",
+            "reason": "Lauren extended scope in chat 2026-10-13: Windows engine bridge with bundled Python, then Windows Game Mode from the approved shared Game Mode design (handoff file delivered in chat). Supersedes the earlier 'Game Mode stays Linux-only' note."
+          }
+        ]
+      },
+      "updated_at": "2026-10-13T19:20:38.920Z",
+      "lease_until": "2026-10-14T07:20:38.920Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-13T06:11:11.866Z",
+          "by": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+          "reason": "Lauren extended scope in chat 2026-10-13: Windows engine bridge with bundled Python, then Windows Game Mode from the approved shared Game Mode design (handoff file delivered in chat). Supersedes the earlier 'Game Mode stays Linux-only' note.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Start the Windows port: a native WinUI 3 (Windows App SDK 2.x, C#) desktop shell that mirrors the Linux libadwaita desktop build almost 1:1 in layout, flow and copy, using WinUI 3 components and Fluent theme tokens. Game Mode (couch_shell) stays Linux-only. MFG keeps the current native Streamline DLSS-G Ada route. Lauren authorized this in chat 2026-10-13 ('lets go!').",
+            "acceptance": "windows/ contains a buildable WinUI 3 solution whose window structure (header, library list/grid, game detail with NR Strength 0.0-2.0, Sharpening 0.0-1.0, MFG Off/2x-6x controls, settings) maps 1:1 to the Linux desktop GTK screens, with a documented GTK-widget->WinUI-control and libadwaita-token->Fluent-token map. A windows-build workflow builds it on windows-latest. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002).",
+            "next_action": "Local commits through addcd83 (unpushed; user pushes via GitHub Desktop). Windows app now runs the shared engine via windows/engine-host (Windows adapters only; engine/ and scripts/ untouched, they belong to rtxforge-shared-package-ui-20261002). Verified: real scan, hardware, Steam grid artwork, read-only install/uninstall review. Next: user-confirmed first real install on one game; bundle embeddable Python + engine files in the publish/CI artifact; then Game Mode port."
+          },
+          "after": {
+            "goal": "Native WinUI 3 (Windows App SDK 2.x, C#) rtxForge for Windows: the desktop shell mirroring the Linux libadwaita build, the real Windows engine bridge (shared Python engine via windows/engine-host with a bundled private Python), and Windows Game Mode built natively from Lauren's approved Game Mode design (MagicPath radiant-rock-8795, approved revision 460589410484883456, audited functional revision 460594005034536960) with draft PR #18 couch_shell as the behavior reference. MFG keeps the native Streamline DLSS-G Ada route. Lauren authorized the Windows port 2026-10-13 ('lets go!') and native Game Mode on Linux GTK and Windows WinUI 3 (WINDOWS-CLAUDE-GAME-MODE-HANDOFF, delivered in chat 2026-10-13).",
+            "acceptance": "windows/ builds on windows-2025 CI; desktop screens map to Linux with the documented control/token map; the app runs the shared engine unchanged via windows/engine-host with Windows adapters and a bundled Python (no user install); every write is review-then-execute. Windows Game Mode: full-screen native WinUI, controller (Windows.Gaming.Input) and keyboard navigation, Library/Presets/Settings, Details sections, operations flow, Night/Light/Dark, 720p/1080p/4K scaling, per the handoff's WinUI port contract. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002). No merge, release or live Steam changes without Lauren's approval.",
+            "next_action": "Local commits through a2d56e4 (unpushed; Lauren pushes via GitHub Desktop). Next: read draft PR #18 couch_shell/controller_input and the MagicPath prototype, then build Windows Game Mode under windows/."
+          }
+        }
+      ]
+    }
+  ]
+}

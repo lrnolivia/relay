@@ -1,0 +1,64 @@
+[data-file-manager]{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:10px;border:0;border-radius:14px;background:var(--color-surface,#252725);color:var(--color-text-primary,#f6f5ef);cursor:pointer;flex:none}
+.relay-file-manager{box-sizing:border-box;width:min(820px,calc(100vw - 32px));max-height:calc(100dvh - 40px);padding:0;border:0;border-radius:26px;background:var(--color-surface,#202321);color:var(--color-text-primary,#f6f5ef);box-shadow:0 30px 100px #0007;overflow:hidden}
+.relay-file-manager::backdrop{background:#0008;backdrop-filter:blur(8px)}
+.relay-file-manager button,.relay-file-action{font:inherit;color:inherit;background:var(--color-raised,#343a35);border:0;border-radius:12px;min-height:44px;padding:10px 16px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+.relay-file-manager button:disabled{opacity:.5;cursor:wait}.relay-file-manager :focus-visible{outline:3px solid var(--feature-relay,#f6906c);outline-offset:3px}
+.relay-files-header{display:flex;align-items:center;justify-content:space-between;padding:26px 28px 20px;gap:16px}.relay-files-header h2{font:400 32px/1.1 'Momo Trust Display',system-ui;margin:0}.relay-files-header p{margin:8px 0 0;opacity:.65;font-size:14px}.relay-files-header button{font-size:28px;width:44px;padding:0}
+.relay-files-toolbar{display:flex;align-items:center;gap:14px;padding:0 28px 20px}.relay-files-toolbar span{font-size:13px;opacity:.6;flex:1}.relay-files-toolbar [data-file-choose]{background:var(--feature-relay,#e89d77);color:#fff;font-weight:650}
+.relay-files-drop{min-height:220px;max-height:calc(100dvh - 310px);overflow:auto;padding:0 16px}.relay-files-drop ul{list-style:none;padding:0;margin:0}.relay-file-row{display:flex;align-items:center;gap:14px;padding:16px 12px;border-radius:16px}.relay-file-row:nth-child(odd){background:#8881}.relay-file-symbol{opacity:.7;flex:none}.relay-file-info{flex:1;min-width:0;display:grid;gap:6px}.relay-file-info strong{overflow-wrap:anywhere;font-size:15px;font-weight:600}.relay-file-info span{font-size:12px;opacity:.65}.relay-file-empty{padding:75px 20px;text-align:center;opacity:.6;font-size:15px}.relay-file-manager footer{padding:18px 28px 24px}.relay-file-manager footer p{font-size:13px;opacity:.75;margin:0;line-height:1.5}.relay-file-manager progress{width:100%;height:5px;margin:0 0 12px;accent-color:var(--feature-relay,#e89d77)}.relay-file-manager [hidden]{display:none!important}.relay-file-manager.dragging .relay-files-drop{outline:2px dashed var(--feature-relay,#e89d77);outline-offset:-6px}.relay-file-manager [data-file-pause]{margin-top:12px}
+@media(max-width:560px){.relay-file-manager{width:100%;max-width:100%;max-height:100dvh;height:100dvh;border-radius:0;margin:0}.relay-files-header{padding:24px 20px 18px}.relay-files-toolbar{padding:0 20px 18px;gap:10px}.relay-files-drop{max-height:calc(100dvh - 265px);min-height:calc(100dvh - 265px);padding:0 10px}.relay-file-row{flex-wrap:wrap;gap:10px}.relay-file-info{flex-basis:calc(100% - 40px)}.relay-file-actions{margin-left:30px}.relay-file-manager footer{padding:18px 20px max(20px,env(safe-area-inset-bottom))}}
+@media(prefers-reduced-motion:reduce){.relay-file-manager *{scroll-behavior:auto}}
+
+.relay-file-manager button,.relay-file-action{font-size:14px}.relay-files-toolbar span{white-space:nowrap;font-size:12px}
+
+.relay-file-manager{--work-control-accent:var(--feature-relay,#af461f);display:flex;flex-direction:column}
+.relay-file-manager:not([open]){display:none}
+.relay-files-header{background:var(--color-raised);padding:24px}
+.relay-files-header h2{display:flex;align-items:center;gap:14px;font-size:28px}
+.relay-files-mark{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:var(--color-surface);color:var(--feature-relay)}
+.relay-files-mark svg{width:28px;height:28px}.relay-file-manager button svg{width:18px;height:18px;flex:none}.relay-file-manager button{gap:8px}
+.relay-files-header p{opacity:1;color:var(--color-text-secondary);line-height:1.5;margin-left:62px}
+.relay-files-toolbar{padding:20px 24px 16px;flex-wrap:wrap}.relay-files-toolbar span{opacity:1;color:var(--color-text-secondary)}
+.relay-files-content{padding:0 24px;overflow:auto;min-height:0;flex:1;scrollbar-color:var(--color-raised) var(--color-surface)}
+.relay-files-drop{min-height:150px;max-height:none;overflow:visible;padding:0}
+.relay-files-drop .relay-file-row{background:var(--color-raised);margin-bottom:8px;padding:16px}
+.relay-file-symbol{opacity:1;color:var(--feature-relay);background:var(--color-surface);padding:10px;border-radius:12px;display:grid;place-items:center}
+.relay-file-info span,.relay-file-empty,.relay-file-manager footer p{opacity:1;color:var(--color-text-secondary)}
+.relay-file-row .relay-file-action{background:var(--color-surface)}
+.relay-file-empty{padding:40px 24px;line-height:1.6;background:var(--color-raised);border-radius:16px}
+.relay-file-manager footer{background:var(--color-raised);padding:16px 24px;margin-top:20px}
+.relay-file-controls .work-control-pair{display:block}.relay-file-controls .work-control-choices{flex-wrap:wrap}.relay-file-controls .work-choice{flex:1 1 80px!important}.relay-file-controls input{min-width:0;width:100%}
+@media(max-width:560px){.relay-files-content{padding:0 16px}.relay-files-drop{min-height:0}.relay-files-header{padding:20px 16px}.relay-files-toolbar{padding:16px}.relay-files-header h2{font-size:26px}.relay-file-manager footer{padding:16px 16px max(20px,env(safe-area-inset-bottom))}.relay-file-actions{margin-left:50px}}
+.relay-file-manager .relay-file-controls .work-control-panel .work-query-bar{grid-template-columns:minmax(0,1fr);align-items:start}
+.relay-file-manager .relay-file-controls{box-sizing:border-box;width:100%}
+.relay-file-controls .work-control-summary{width:100%;min-width:0}.relay-file-controls .work-control-menu>summary{box-sizing:border-box;width:100%}
+.relay-files-identity{display:flex;align-items:center;gap:14px;min-width:0}.relay-files-identity>div{min-width:0}.relay-files-identity .relay-files-mark{flex:none}.relay-files-header .relay-files-identity p{margin:6px 0 0}
+/* Relay adapts CTRL's shared controls to its Sienna product accent. */
+.relay-file-manager .work-view-controls{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;--work-control-accent:var(--feature-relay);--work-control-on-accent:#fff}
+.relay-file-controls .work-search-compact{display:block;min-width:0;margin:0}
+.relay-file-controls .work-search-compact input{box-sizing:border-box;width:100%;min-height:46px;padding:12px 14px;border:0;border-radius:12px;background:var(--color-panel-cap);color:var(--color-text-primary);font:inherit;font-size:15px;box-shadow:none}
+.relay-file-controls .work-search-compact input::placeholder{color:color-mix(in srgb,var(--color-text-primary) 20%,var(--color-text-secondary));opacity:1}
+.relay-file-controls .work-view-switch:empty{display:none}
+.relay-file-controls .work-control-menu>summary{display:flex;align-items:center;gap:8px;min-height:44px;padding:12px 14px;border-radius:12px;background:var(--color-surface);list-style:none;cursor:pointer;font-size:14px}
+.relay-file-controls .work-control-menu>summary::-webkit-details-marker{display:none}
+.relay-file-controls .work-control-menu>summary svg{width:18px;height:18px;flex:none}
+.relay-file-controls .work-control-menu>summary svg:last-child{margin-left:auto;transform:rotate(90deg)}
+.relay-file-controls .work-control-menu[open]>summary svg:last-child{transform:rotate(-90deg)}
+.relay-file-controls .work-control-summary .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.relay-file-manager .work-controls-footer{background:transparent;padding:0;margin-top:24px}
+.relay-file-manager .work-detail-results{font-size:12px;color:var(--color-text-secondary);margin:12px 0}
+
+.relay-file-row{flex-wrap:wrap}.relay-file-actions{display:flex;align-items:flex-start;gap:8px}
+/* Routine actions share a platter; deletion stays separate and uses semantic red. */
+.relay-file-routine{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--color-surface)}
+.relay-file-manager .relay-file-icon{box-sizing:border-box;width:44px;min-width:44px;height:44px;padding:10px;flex:none}
+.relay-file-manager .relay-file-icon svg{width:20px;height:20px}
+.relay-file-manager .relay-file-routine .relay-file-icon{background:var(--color-surface)}
+.relay-file-manager .relay-file-download{color:color-mix(in srgb,var(--feature-relay) 75%,var(--color-text-primary))}
+.relay-file-actions{align-items:center;gap:12px}
+.relay-file-manager .relay-file-actions>.relay-file-delete{background:var(--color-surface)}
+.relay-file-manager .relay-file-delete{color:color-mix(in srgb,var(--status-danger) 75%,var(--color-text-primary))}
+.relay-file-edit{box-sizing:border-box;width:100%;padding:16px;border-radius:14px;background:var(--color-surface);margin-top:4px}.relay-file-edit label{display:grid;gap:8px;font-size:13px}.relay-file-edit input{box-sizing:border-box;width:100%;min-width:0;min-height:44px;border:0;border-radius:10px;padding:10px 12px;background:var(--color-panel-cap);color:var(--color-text-primary);font:inherit}.relay-file-edit p{font-size:13px;line-height:1.5;color:var(--color-text-secondary);overflow-wrap:anywhere;margin:8px 0 14px}.relay-file-edit-actions{display:flex;justify-content:flex-end;gap:8px}.relay-file-manager .relay-file-save{background:var(--feature-relay);color:#fff}.relay-file-edit .relay-file-edit-error{color:var(--status-danger)}
+.relay-file-manager [data-file-undo]{margin-top:10px;background:var(--color-surface)}
+.relay-file-manager .relay-file-edit-actions .relay-file-delete{background:var(--status-danger);color:var(--color-canvas);font-weight:600}
+@media(max-width:560px){.relay-file-actions{width:calc(100% - 50px);justify-content:flex-end}.relay-file-edit{padding:12px}}

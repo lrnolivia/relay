@@ -1,0 +1,42 @@
+name: Relay production smoke
+run-name: 'relay-production / ${{ inputs.source_sha }}'
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Exact expected deployed source SHA
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - run: npm ci
+      - name: Build the exact deployed source surface
+        env:
+          WORKERS_CI_COMMIT_SHA: ${{ inputs.source_sha }}
+        run: npm run build
+      - name: Install deterministic production screenshot harness
+        run: npx playwright install --with-deps chromium
+      - name: Verify exact-source production surface
+        env:
+          CF_ACCESS_CLIENT_ID: ${{ vars.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF }}
+          EXPECTED_SOURCE_SHA: ${{ inputs.source_sha }}
+          SMOKE_RESULT_PATH: ${{ runner.temp }}/relay-production-smoke.json
+          BROWSER_CAPTURE: 'true'
+        run: node apps/mcp/production-smoke.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relay-production-smoke
+          path: ${{ runner.temp }}/relay-production-smoke.json

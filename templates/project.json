@@ -1,0 +1,45 @@
+{
+  "id": "<project-id>",
+  "name": "<name>",
+  "repository": "<owner/repository>",
+  "managed": false,
+  "default_branch": "main",
+  "implementation": {
+    "branch_prefixes": ["<project-id>/"],
+    "excluded_branches": ["main"],
+    "draft_pr_required": true,
+    "merge_method": "squash"
+  },
+  "runtime": {
+    "kind": "node",
+    "node_version": "22",
+    "package_manager": "npm",
+    "lockfile": "package-lock.json",
+    "install": "npm ci"
+  },
+  "validation": {
+    "build": "npm run build",
+    "test": "npm test",
+    "lint": "npm run lint",
+    "required": ["install", "build", "test"]
+  },
+  "qa": {
+    "runtime_required_for_web_visible_changes": false,
+    "preview_endpoints": []
+  },
+  "promotion": {
+    "automatic": false,
+    "repair_artificial_blockers": true,
+    "exact_sha_gate": true,
+    "max_transient_retries": 2,
+    "auto_update_branch": true,
+    "auto_create_pr": true,
+    "auto_merge": false
+  },
+  "safety": {
+    "force_push": false,
+    "bypass_required_checks": false,
+    "semantic_conflict_resolution": "block",
+    "dependency_intent_changes": "block"
+  }
+}

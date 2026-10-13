@@ -1,0 +1,9 @@
+# Relay implementation layout
+
+Relay is one product. `apps/mcp` provides the MCP app entry boundary; `apps/web` reserves the future web boundary without inventing a second dashboard. `packages/inspector` exports the existing gateway and verification implementation from root `src/` while preserving existing Wrangler entrypoints, relative imports, scripts and live behavior. `packages/runner` contains the imported coordination engine, scheduler, Worker API, operator dashboard, QA/Visuals logic, scripts, templates and implementation tests. `features/night-shift` exports the existing scheduler as a Relay feature, with no new queue or store.
+
+`npm ci` installs the npm workspace graph. `npm test` runs Inspector, Runner implementation and import/layout tests separately. `npm run check` checks workspace entrypoints; `npm run build` is that deterministic source check because these JavaScript packages require no compilation. Deployment is a separate later batch. The root Wrangler configuration remains unchanged.
+
+Runner workflows are imported as inactive source under `packages/runner/workflows/`; only root workflows execute. Authority-dependent contract tests remain in the original authority until the control-state migration. Mutable coordination, projects, workers, assignments, reports, state and execution documentation are deliberately excluded from this implementation import. Runner scripts and the local dashboard continue to require the original authority directory as their working directory until Batch 3.
+
+The source inventory in `packages/runner/import-manifest.json` binds every imported implementation blob to its original path and SHA. The existing Inspector history and files stay intact. Batch 3 owns live state migration; runtime cutover, retirement and the unified UI follow separately.

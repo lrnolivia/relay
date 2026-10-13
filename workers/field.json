@@ -1,0 +1,34 @@
+{
+  "id": "field",
+  "name": "field",
+  "description": "Headless read-only continuity runner for field. Checks hourly and invokes AI only when repository context materially changes.",
+  "enabled": true,
+  "cadence_minutes": 60,
+  "model": {
+    "id": "gpt-5.6-sol",
+    "reasoning_effort": "medium",
+    "web_search": true
+  },
+  "target": {
+    "repository": "lrnolivia/field",
+    "branch": "main",
+    "write_mode": "read_only"
+  },
+  "context": {
+    "files": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "README.md",
+      "docs/PRODUCT_LANGUAGE.md",
+      "docs/FIGMA_BEHAVIOR_PARITY.md",
+      "package.json"
+    ],
+    "include_open_issues": true
+  },
+  "goal": "Keep field development coherent without depending on a ChatGPT or Codex chat being open. On every material run, read the current Relay manifest/Bible first, resolve field from projects/field.json, then read lrnolivia/field@main AGENTS.md and fresh repository/runtime state. Never target historical revyme-loewfi, revyme-loew, revyme-l\u00f6ew, or old local Revyme repository paths. Revyme-prefixed identifiers inside field may remain when they are real compatibility contracts. Runner Bible section 11 is mandatory QA law; field-local QA documents are overlays only. Identify new risks or contradictions and recommend the safest concrete next action. Treat the target repository as read-only. Prefer deterministic facts over speculation. Do not repeat unchanged status. Do not create or impersonate first-class Workers, PJMs, Masters, or chats. Escalate only genuine human decisions, credentials, security boundaries, or unresolved product-direction conflicts.",
+  "timezone": "America/New_York",
+  "limits": {
+    "max_runs_per_day": 12,
+    "max_tokens_per_day": 250000
+  }
+}

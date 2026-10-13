@@ -1,0 +1,69 @@
+name: QA field Preview
+
+run-name: "field Preview QA / ${{ inputs.request_id }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      editor_url:
+        description: "Exact field Preview URL (prefer immutable deployment URL)"
+        required: true
+        type: string
+      canvas_url:
+        description: "Matching Canvas Preview URL"
+        required: true
+        type: string
+      head_sha:
+        description: "Full field PR head SHA for the deployment"
+        required: true
+        type: string
+      request_id:
+        description: "Correlation id"
+        required: true
+        type: string
+      project_id:
+        description: "Optional real field project ID; uses /qa/work/<id> instead of /builder/noauth"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  runner:
+    name: Protected runner via inspector
+    uses: ./.github/workflows/inspect.yml
+    with:
+      url: https://relay.loew.fi/api/workers
+      method: GET
+      request_id: "${{ inputs.request_id }}-runner"
+    secrets: inherit
+
+  preview:
+    name: Browser and Canvas preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      EDITOR_URL: ${{ inputs.editor_url }}
+      CANVAS_URL: ${{ inputs.canvas_url }}
+      HEAD_SHA: ${{ inputs.head_sha }}
+      REQUEST_ID: ${{ inputs.request_id }}
+      PROJECT_ID: ${{ inputs.project_id }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Check branch Preview
+        run: node scripts/qa-preview.mjs
+      - name: Save browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: "preview-qa-${{ inputs.request_id }}"
+          path: qa-evidence/
+          if-no-files-found: ignore

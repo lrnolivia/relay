@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#151412">
+  <title>relay</title>
+  __RELAY_THEME_BOOTSTRAP__
+  <link rel="icon" type="image/png" href="__RELAY_ICON__">
+  <link rel="apple-touch-icon" href="__RELAY_ICON__">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Momo+Trust+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/operator.css">
+  <link rel="stylesheet" href="/operator-1.8.css">
+  <link rel="stylesheet" href="/qa.css">
+</head>
+<body>
+  <div class="terra-accent" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <header class="operator-topbar">
+    <div class="operator-brand">
+      <img src="__RELAY_ICON__" alt="" width="52" height="52"><strong>relay</strong>
+      <span>project control</span>
+    </div>
+
+    <div class="nav-label">work</div>
+    <nav class="operator-nav" aria-label="Relay">
+      <button type="button" data-nav="today">today</button>
+      <button type="button" data-nav="projects">runner</button>
+      <button type="button" data-nav="review">inspector</button>
+      <button type="button" data-nav="night-shift">night shift</button>
+    </nav>
+    <div class="operator-utility">__RELAY_PRESENTATION_MENU__</div>
+  </header>
+
+  <main class="operator-shell">
+    <div class="workspace-context">
+      <div class="workspace-left">
+        <span>your workspace <span aria-hidden="true">/</span> <span id="workspace-page">today</span></span>
+      </div>
+      <div class="connection-tools"><div id="notification-center"></div><div id="operator-connection" class="operator-connection" data-tone="quiet" aria-live="polite">Connecting…</div></div>
+    </div>
+    <section class="operator-page" data-page="today">
+      <header class="page-heading feature-heading" data-feature="today">
+        <img class="feature-mark" data-feature-icon="today" alt="">
+        <div class="feature-heading-copy"><h1>today</h1><p>focus</p></div>
+      </header>
+
+      <section class="operator-section">
+        <h2>needs you</h2>
+        <div id="today-attention"></div>
+      </section>
+
+      <section class="operator-section">
+        <div class="section-heading">
+          <h2>work happening now</h2>
+          <span>across your projects</span>
+        </div>
+        <div id="today-work"></div>
+      </section>
+
+      <section class="operator-section">
+        <div class="section-heading">
+          <h2>automatic checks</h2>
+          <span>relay watches these for you</span>
+        </div>
+        <div id="today-automations"></div>
+      </section>
+    </section>
+
+    <section class="operator-page" data-page="projects" hidden>
+      <header class="page-heading feature-heading" data-feature="runner">
+        <img class="feature-mark" data-feature-icon="runner" alt="">
+        <div class="feature-heading-copy"><h1>runner</h1><p>coordinate</p></div>
+      </header>
+
+      <section id="project-detail" class="project-detail" aria-live="polite">
+        <div class="operator-loading">Choose a project above.</div>
+      </section>
+    </section>
+
+    <section class="operator-page" data-page="review" hidden>
+      <header class="page-heading feature-heading review-heading" data-feature="inspector">
+        <img class="feature-mark" data-feature-icon="inspector" alt="">
+        <div class="feature-heading-copy"><h1>inspector</h1><p>review</p></div>
+      </header>
+
+      <div class="project-context"><span class="project-context-label">project</span><nav id="project-tabs" class="project-tabs" role="tablist" aria-label="Project context"></nav></div>
+
+      <div class="inspector-status"><strong id="review-count"></strong></div>
+
+      <section class="signal-deck inspector-signal-deck" aria-label="inspector summary">
+        <div class="signal-track">
+          <article class="signal-card" data-tone="act" data-signal-id="needs-review">
+            <span class="signal-mark"></span>
+            <span class="signal-label">needs review</span>
+            <strong id="inspector-signal-needs">—</strong>
+            <p>screenshots waiting for your feedback</p>
+          </article>
+          <article class="signal-card" data-tone="good" data-signal-id="visible-captures">
+            <span class="signal-mark"></span>
+            <span class="signal-label">visible captures</span>
+            <strong id="inspector-signal-visible">—</strong>
+            <p>screenshots in this view</p>
+          </article>
+
+        </div>
+      </section>
+
+      <details class="operator-section inspector-card-studio">
+        <summary id="chat-card-heading">chat card previews</summary>
+        <div id="chat-card-tabs" class="chat-card-tabs" role="tablist" aria-label="Chat card preview"></div>
+        <div id="chat-card-preview" class="chat-card-stage" aria-live="polite"></div>
+            </details>
+
+      <section class="operator-section inspector-review-queue" aria-labelledby="review-queue-heading">
+        <div class="section-heading">
+          <div>
+            <h2 id="review-queue-heading">evidence review</h2>
+            <span>screens and captures waiting for your call</span>
+          </div>
+        </div>
+        <div id="review-list" class="review-list" aria-live="polite">
+
+        </div>
+      </section>
+    </section>
+    <section class="operator-page" data-page="night-shift" hidden>
+      <header class="page-heading feature-heading" data-feature="night-shift"><img class="feature-mark" data-feature-icon="night-shift" alt=""><div class="feature-heading-copy"><h1>night shift</h1><p>monitor</p></div></header>
+      <div id="night-shift-work" aria-live="polite"></div>
+    </section>
+  </main>
+
+
+  <script type="module" src="/relay-app.js"></script>
+</body>
+</html>
+

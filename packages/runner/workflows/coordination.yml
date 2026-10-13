@@ -1,0 +1,59 @@
+name: work coordination
+
+on:
+  schedule:
+    - cron: "23,53 * * * *"
+  workflow_dispatch:
+    inputs:
+      action:
+        description: Coordination action
+        type: choice
+        options: [audit, queue, claim, rescope, heartbeat, hold, handoff, complete, preflight]
+        default: audit
+      project:
+        description: Registered project id
+        type: string
+        default: field
+      request:
+        description: JSON request; required for claim, queue, rescope, heartbeat, hold, handoff, complete, preflight
+        type: string
+        default: '{}'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: work-coordination-${{ inputs.project || 'field' }}
+  cancel-in-progress: false
+
+jobs:
+  coordinate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Coordinate without model inference
+        env:
+          GH_TOKEN: ${{ secrets.RUNNER_GITHUB_TOKEN || github.token }}
+          COORD_ACTION: ${{ inputs.action || 'audit' }}
+          COORD_PROJECT: ${{ inputs.project || 'field' }}
+          COORD_REQUEST: ${{ inputs.request || '{}' }}
+        run: |
+          test -n "$GH_TOKEN" || { echo "Coordination credential unavailable; admission is closed."; exit 1; }
+          printf '%s' "$COORD_REQUEST" > "$RUNNER_TEMP/coordination-request.json"
+          node scripts/coordinate.mjs "$COORD_ACTION" "$COORD_PROJECT" "$RUNNER_TEMP/coordination-request.json" > "$RUNNER_TEMP/coordination-result.json"
+      - name: Retain coordination receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coordination-receipt
+          path: ${{ runner.temp }}/coordination-result.json
+      - name: Show findings
+        if: always()
+        run: |
+          if [ -s "$RUNNER_TEMP/coordination-result.json" ]; then
+            cat "$RUNNER_TEMP/coordination-result.json"
+            cat "$RUNNER_TEMP/coordination-result.json" >> "$GITHUB_STEP_SUMMARY"
+          fi
