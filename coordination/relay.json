@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-13T01:57:55.446Z",
+  "updated_at": "2026-10-13T02:00:22.930Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -15153,6 +15153,8 @@
         "scripts/project-attribution.mjs",
         "scripts/project-attribution.test.mjs",
         ".claude/settings.json",
+        "AGENTS.md",
+        "CLAUDE.md",
         "docs/relay/COMMIT_ATTRIBUTION_20261013.md"
       ],
       "resources": [
@@ -15160,7 +15162,7 @@
       ],
       "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched.",
       "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
-      "next_action": "Implement only non-overlapping helper, local commit tool, Claude project attribution settings and exact-metadata tests. Existing Relay handlers remain reserved by claude-open; report their integration as a blocker. Delegated human scope source thread01a1146d-0267-735e-8332-fa38cf7fb007.",
+      "next_action": "Add repo-level Codex/Claude pointers and Claude attribution config; implement verified-account local Git configuration and commit hook without changing existing hooks/global config; test real branch and squash Git metadata. Existing reserved Relay handlers remain held and need owner's integration; no push/merge/deploy.",
       "category": "maintenance",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -15184,8 +15186,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-13T01:57:55.446Z",
-      "lease_until": "2026-10-13T13:57:55.446Z"
+      "updated_at": "2026-10-13T02:00:22.930Z",
+      "lease_until": "2026-10-13T14:00:22.930Z"
     }
   ],
   "migrated_from": "loew-inspector"
