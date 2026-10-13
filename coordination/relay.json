@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-13T21:44:34.717Z",
+  "updated_at": "2026-10-13T21:49:34.673Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -15166,16 +15166,18 @@
         ".github/workflows/field-dependency-repair.yml",
         "src/source-attribution.test.js",
         "scripts/attribution-coordination.mjs",
-        "src/coordination-transport.test.js"
+        "src/coordination-transport.test.js",
+        "README.md"
       ],
       "resources": [
         "prospective-project-commit-attribution",
         "project-scoped-ai-cleanup",
-        "prospective-worker-attribution"
+        "prospective-worker-attribution",
+        "relay-project-documentation"
       ],
       "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched. Add Lauren-approved AI Cleanup: a bounded project-scoped scan/report and reviewable cleanup-patch capability.",
       "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
-      "next_action": "Parent01a1146d explicitly directed review/integration of completed attribution checkpoint a75d165 and cleanup under this existing assignment, with user publication authorization. Preserve held rebuild WIP80b887 and all182 retained paths; use existing verified Lauren Git/gh route, no credentials/global changes. Refresh current coordination, add only README cleanup to this claim, validate combined exact source, publish through supported admission/human final-metadata route; do not independently release competing candidates.",
+      "next_action": "Integrate owner checkpoint a75d165 and parent-reviewed README cleanup against fresh main; preserve live coordination and held rebuild182paths/WIP80b887. Parent user authorization permits ready publication through existing verified Lauren route and normal admission/quality/final-metadata gates. No credentials/global settings/umbrella changes.",
       "category": "maintenance",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -15205,8 +15207,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-13T21:44:34.717Z",
-      "lease_until": "2026-10-14T09:44:34.717Z",
+      "updated_at": "2026-10-13T21:49:34.673Z",
+      "lease_until": "2026-10-14T09:49:34.673Z",
       "amendment_count": 1,
       "amendments": [
         {
