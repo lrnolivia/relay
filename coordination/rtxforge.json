@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-13T18:42:05.826Z",
+  "updated_at": "2026-10-13T19:20:38.920Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1090,14 +1090,16 @@
         ".github/workflows/windows-build.yml",
         "LICENSE",
         "CODE_SIGNING.md",
-        "README.md"
+        "README.md",
+        "scripts/steam_self_install.py",
+        "tests/test_steam_self_install.py"
       ],
       "resources": [
         "rtxforge-windows-shell"
       ],
       "goal": "Native WinUI 3 (Windows App SDK 2.x, C#) rtxForge for Windows: the desktop shell mirroring the Linux libadwaita build, the real Windows engine bridge (shared Python engine via windows/engine-host with a bundled private Python), and Windows Game Mode built natively from Lauren's approved Game Mode design (MagicPath radiant-rock-8795, approved revision 460589410484883456, audited functional revision 460594005034536960) with draft PR #18 couch_shell as the behavior reference. MFG keeps the native Streamline DLSS-G Ada route. Lauren authorized the Windows port 2026-10-13 ('lets go!') and native Game Mode on Linux GTK and Windows WinUI 3 (WINDOWS-CLAUDE-GAME-MODE-HANDOFF, delivered in chat 2026-10-13).",
       "acceptance": "windows/ builds on windows-2025 CI; desktop screens map to Linux with the documented control/token map; the app runs the shared engine unchanged via windows/engine-host with Windows adapters and a bundled Python (no user install); every write is review-then-execute. Windows Game Mode: full-screen native WinUI, controller (Windows.Gaming.Input) and keyboard navigation, Library/Presets/Settings, Details sections, operations flow, Night/Light/Dark, 720p/1080p/4K scaling, per the handoff's WinUI port contract. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002). No merge, release or live Steam changes without Lauren's approval.",
-      "next_action": "windows-build CI GREEN on 49d7867 and bdeac36 (x64+ARM64 builds, both installers, bundled engine smoke, x64 install/uninstall round trip). Branch head 28583c1: MIT LICENSE (loew.fi), CODE_SIGNING.md (SignPath policy), README section, SignPath signing on manual draft_release runs only (SIGNPATH_* settings). Waiting on Lauren: SignPath Foundation application + project setup per windows/README.md. Then: first real install on one game; no merge/release without Lauren.",
+      "next_action": "Lauren (chat 2026-10-13): Add rtxForge to Steam must center the logo automatically. Write Steam's grid/<appid>.json logoPosition (CenterCenter, sized from the bundled logo/hero aspect) in steam_self_install.install, reviewed and backed up like the artwork slots; test in tests/test_steam_self_install.py.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1127,8 +1129,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-13T18:42:05.826Z",
-      "lease_until": "2026-10-14T06:42:05.826Z",
+      "updated_at": "2026-10-13T19:20:38.920Z",
+      "lease_until": "2026-10-14T07:20:38.920Z",
       "amendment_count": 1,
       "amendments": [
         {
