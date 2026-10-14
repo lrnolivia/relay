@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T22:37:36.541Z",
+  "updated_at": "2026-10-14T22:38:40.030Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1704,15 +1704,17 @@
         "windows/RtxForge.Windows/Views/LibraryPage.xaml",
         "windows/RtxForge.Windows/Views/LibraryPage.xaml.cs",
         "windows/RtxForge.Windows/Views/GamePage.xaml",
-        "windows/RtxForge.Windows/Views/GamePage.xaml.cs"
+        "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
+        "windows/RtxForge.Windows/Views/PackagesPage.cs"
       ],
       "resources": [
         "rtxforge-windows-library-cards",
-        "rtxforge-windows-game-details-hero"
+        "rtxforge-windows-game-details-hero",
+        "rtxforge-windows-extras-art"
       ],
       "goal": "Lauren 2026-10-14: 'i still feel like the poster cards could be bigger. mainly wider so the titles dont get truncated as much. but keep the aspect ratio so posters still fit snuggly. and round the bottom corners to match the top corners of the artwork.' Widen the Windows library poster cards (art stays 2:3 and fits exactly), and round the card's bottom corners to the same radius as the art's top corners.",
       "acceptance": "Poster cards are wider at the default size, so fewer titles are truncated. Poster art stays exactly 2:3 with no cropping or gaps. The card's bottom corners use the same radius as the art's top corners. The app builds and CI is green. Draft PR; merge only with Lauren's approval.",
-      "next_action": "Lauren added mid-task: 'Game Details, a lot of game titles are wrapping when they dont have to'. Also let the Game Details hero title span the width above the action buttons. Then build, preview, push and open a draft PR through Relay.",
+      "next_action": "Lauren added: 'extras should use the same artwork style as list view'. Give Extras rows the list view's 98x46 wide capsule art with the 8px art corner radius, then build, preview, push to PR #22, merge (Lauren: 'then you may merge and reinstall') and reinstall.",
       "category": "design",
       "primary_team": "night-shift",
       "supporting_teams": [],
@@ -1736,8 +1738,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-14T22:28:05.856Z",
-      "lease_until": "2026-10-15T10:28:05.856Z"
+      "updated_at": "2026-10-14T22:38:40.030Z",
+      "lease_until": "2026-10-15T10:38:40.030Z"
     }
   ]
 }
