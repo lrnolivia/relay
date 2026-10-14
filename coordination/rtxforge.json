@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T18:29:53.907Z",
+  "updated_at": "2026-10-14T18:30:10.872Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -463,6 +463,42 @@
         }
       },
       "updated_at": "2026-10-14T18:22:45.287Z"
+    },
+    {
+      "id": "rtxforge-linux-poster-os-badge-20261014",
+      "owner": "claude-code-linux-loew-20261013",
+      "goal": "Match the Windows UI tweak Lauren asked for on 2026-10-14 ('lets put the OS badges on the posters and make it translucent'; 'report that ui tweak back to linux worker'). Windows commit 7cc65af27ae051a08534ff26209e1ada504d8537 on rtxforge/windows-winui-port moved the cross-OS mark (rtx-os-linux/windows-symbolic) out of the INSTALLED status pill and onto the card art of Posters and Wide Capsule cards. It is a 22 px square badge in the top-left corner of the art, 8 px inset, opposite the selection check (top right). The fill is black at 35% opacity (#59000000), the edge is a 1 px white line at 22% opacity (#38FFFFFF), the corners use the control radius, and the mark is solid white at 12 px. It shows only when the game is installed with a known installed_on. The tooltip is 'Installed with rtxForge on Linux/Windows'. The INSTALLED pill goes back to its glyph and text only. List rows keep the small mark beside the status text. Reference: windows/RtxForge.Windows/Themes/Controls.xaml ForgePosterBadgeStyle and windows/RtxForge.Windows/Views/LibraryPage.xaml (PosterTemplate, CapsuleTemplate). On Linux the mark is in the pill today: gui/rtxforge_gtk.py around the root._os icon in the card status pill (search 'rtx-os-') and meta.set_os; Game Mode cards in gui/game_mode.py (search 'rtx-os-').",
+      "acceptance": "Linux desktop Posters and Wide Capsule cards show the OS mark as a translucent badge on the art's top-left corner, matching the Windows values above. The art shows through and the white mark stays readable on bright and pale art. The pill no longer carries the mark; list rows keep it beside the status. Game Mode cards follow the same rule if they show the mark on art. Light, dark and accent-selected cards are checked with screenshots. Existing GTK and Game Mode tests pass. Draft PR only; no merge without Lauren.",
+      "next_action": "Linux worker: read Windows commit 7cc65af on rtxforge/windows-winui-port (Controls.xaml ForgePosterBadgeStyle, LibraryPage.xaml card templates), then move the mark onto the card art in gui/rtxforge_gtk.py (and gui/game_mode.py if its cards show it) with the same size, corner, inset and translucency. Claim this assignment in Relay before branching.",
+      "paths": [
+        "gui/rtxforge_gtk.py",
+        "gui/game_mode.py"
+      ],
+      "resources": [
+        "rtxforge-linux-poster-os-badge"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-14T18:30:10.872Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Match the Windows UI tweak Lauren asked for on 2026-10-14 ('lets put the OS badges on the posters and make it translucent'; 'report that ui tweak back to linux worker'). Windows commit 7cc65af27ae051a08534ff26209e1ada504d8537 on rtxforge/windows-winui-port moved the cross-OS mark (rtx-os-linux/windows-symbolic) out of the INSTALLED status pill and onto the card art of Posters and Wide Capsule cards. It is a 22 px square badge in the top-left corner of the art, 8 px inset, opposite the selection check (top right). The fill is black at 35% opacity (#59000000), the edge is a 1 px white line at 22% opacity (#38FFFFFF), the corners use the control radius, and the mark is solid white at 12 px. It shows only when the game is installed with a known installed_on. The tooltip is 'Installed with rtxForge on Linux/Windows'. The INSTALLED pill goes back to its glyph and text only. List rows keep the small mark beside the status text. Reference: windows/RtxForge.Windows/Themes/Controls.xaml ForgePosterBadgeStyle and windows/RtxForge.Windows/Views/LibraryPage.xaml (PosterTemplate, CapsuleTemplate). On Linux the mark is in the pill today: gui/rtxforge_gtk.py around the root._os icon in the card status pill (search 'rtx-os-') and meta.set_os; Game Mode cards in gui/game_mode.py (search 'rtx-os-').",
+          "acceptance": "Linux desktop Posters and Wide Capsule cards show the OS mark as a translucent badge on the art's top-left corner, matching the Windows values above. The art shows through and the white mark stays readable on bright and pale art. The pill no longer carries the mark; list rows keep it beside the status. Game Mode cards follow the same rule if they show the mark on art. Light, dark and accent-selected cards are checked with screenshots. Existing GTK and Game Mode tests pass. Draft PR only; no merge without Lauren.",
+          "at": "2026-10-14T18:30:10.872Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-poster-os-badge-20261014:acceptance:0",
+            "text": "Linux desktop Posters and Wide Capsule cards show the OS mark as a translucent badge on the art's top-left corner, matching the Windows values above. The art shows through and the white mark stays readable on bright and pale art. The pill no longer carries the mark; list rows keep it beside the status. Game Mode cards follow the same rule if they show the mark on art. Light, dark and accent-selected cards are checked with screenshots. Existing GTK and Game Mode tests pass. Draft PR only; no merge without Lauren.",
+            "at": "2026-10-14T18:30:10.872Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
