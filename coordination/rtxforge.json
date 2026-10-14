@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T19:05:11.787Z",
+  "updated_at": "2026-10-14T21:56:33.753Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1521,7 +1521,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "0778d5e577e95a6d65bdd68ffcf860ea90cff635",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-13T00:57:55.228Z",
       "objective_history": {
         "baseline": {
@@ -1544,8 +1544,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-14T19:05:11.787Z",
-      "lease_until": "2026-10-15T07:05:11.787Z",
+      "updated_at": "2026-10-14T21:56:33.753Z",
+      "lease_until": "2026-10-15T09:56:33.753Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -1568,7 +1568,13 @@
             "next_action": "Local commits through a2d56e4 (unpushed; Lauren pushes via GitHub Desktop). Next: read draft PR #18 couch_shell/controller_input and the MagicPath prototype, then build Windows Game Mode under windows/."
           }
         }
-      ]
+      ],
+      "pr": 17,
+      "merged_head_sha": "6c9e296cf3ac8b9f6c2f4fe2d696ca7d63142ce4",
+      "merge_commit_sha": "c08be841b867681f77a3e3429d8604276d1635fa",
+      "evidence": "Lauren approved PR #17 on 2026-10-14 ('approved. and finish up the other stuff'). Merged with her verified git route: merge commit c08be841b867681f77a3e3429d8604276d1635fa into main, merged_by lrnolivia, head 6c9e296cf3ac8b9f6c2f4fe2d696ca7d63142ce4. CI at that head was all green: WinUI 3 x64/ARM64, native/KDE/Wayland review, coordination admission, commit attribution. 46 engine tests passed on the merged tree. Included: the WinUI 3 app, bundled engine, Game Mode, installer, cross-OS adaptation (PR #20), OS badges, and interrupted-run recovery. Installed and run on Lauren's PC against her real library. Add-to-Steam logo centering was already implemented and tested (steam_self_install.logo_position, tests/test_steam_self_install.py). Not verified: a real dual-boot game, ARM64 at runtime, code signing (needs the Azure Artifact Signing account). Queued Linux follow-ups rtxforge-linux-poster-os-badge-20261014 and rtxforge-linux-details-os-badge-20261014 are now unblocked.",
+      "work_accounted": true,
+      "completed_at": "2026-10-14T21:56:33.753Z"
     }
   ]
 }
