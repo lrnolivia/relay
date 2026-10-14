@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T16:28:02.056Z",
+  "updated_at": "2026-10-14T16:40:52.095Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -305,7 +305,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-13T06:39:44.856Z",
       "objective_history": {
         "baseline": {
@@ -336,7 +336,7 @@
           "next_action": "Handoff recorded by the Linux Claude session on Lauren's explicit instruction (2026-10-13; Windows session unreachable). gui/ blocker rtxforge-shared-package-ui-20261002 is cancelled. Successor claims on rtxforge/linux-library-port off origin/main with the queued goal plus rtxForge-linux-port-brief.md; draft PR only."
         }
       ],
-      "updated_at": "2026-10-14T05:37:30.132Z",
+      "updated_at": "2026-10-14T16:40:52.095Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -356,7 +356,8 @@
             "acceptance": "Linux desktop matches the Windows behaviour in libadwaita idiom (screenshots light/dark/night reviewed with Lauren); every write stays review-then-execute; custom accents always win; accent picks match Windows on shared fixtures; installs work with Steam open (prefix route, per-game blocking with next steps, exact restore) and in Game Mode; Game Mode matches the new Windows Game Mode on GTK; existing tests pass or fail only as on main; no windows/ changes; draft PR only, no merge without Lauren."
           }
         }
-      ]
+      ],
+      "completed_at": "2026-10-14T16:40:52.095Z"
     },
     {
       "id": "rtxforge-linux-steam-open-installs-20261014",
@@ -1413,7 +1414,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "9119ee51b7fc523d1d6f967d16541c3619b55539",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-14T03:47:52.039Z",
       "objective_history": {
         "baseline": {
@@ -1436,8 +1437,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-14T16:28:02.056Z",
-      "lease_until": "2026-10-15T04:28:02.056Z",
+      "updated_at": "2026-10-14T16:40:52.095Z",
+      "lease_until": "2026-10-15T04:40:52.095Z",
       "handoffs": [
         {
           "at": "2026-10-14T03:47:39.587Z",
@@ -1465,7 +1466,13 @@
             "acceptance": "Linux desktop matches the Windows behaviour in libadwaita idiom (screenshots light/dark/night reviewed with Lauren); every write stays review-then-execute; custom accents always win; accent picks match Windows on shared fixtures; installs work with Steam open (prefix route, per-game blocking with next steps, exact restore) and in Game Mode; Game Mode matches the new Windows Game Mode on GTK; existing tests pass or fail only as on main; no windows/ changes; draft PR only, no merge without Lauren."
           }
         }
-      ]
+      ],
+      "pr": 19,
+      "merged_head_sha": "63ea2f5a73ce19f5d9f31c30b1fca3775151f2be",
+      "merge_commit_sha": "8e8cf9fad5f746385cd0b770f70714c75b9b8640",
+      "evidence": "Lauren asked to push and merge (2026-10-14). PR lrnolivia/rtxForge#19 merged as 8e8cf9fad5f746385cd0b770f70714c75b9b8640 with all CI checks green (native-review, kde-review, wayland-review, commit attribution, runner admission). The first native-review run failed on a workflow step still calling the removed tests/ui_couch_review.py; fixed in 63ea2f5. Local results: 12/12 UI tests, 191 unit tests, 300 engine tests and the smoke test pass. An AppImage built from main 8e8cf9f is installed locally (BUILD_INFO commit verified), with the Oct 7 build kept as RTXForge.previous.AppImage. No windows/ changes. Lauren's live QA in Steam Game Mode on real games is still to do.",
+      "work_accounted": true,
+      "completed_at": "2026-10-14T16:40:52.095Z"
     }
   ]
 }
