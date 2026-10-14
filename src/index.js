@@ -161,6 +161,29 @@ function relayResult(id, result) {
   });
 }
 
+// GitHub's pull request object repeats both repositories and every URL template (~20 KB);
+// callers need the identity, branches, exact SHAs and state. relay_source_pull_request reads the rest.
+export function compactPullRequest(pr) {
+  const side = ref => ref ? { ref: ref.ref, sha: ref.sha, repository: ref.repo?.full_name ?? null } : null;
+  return {
+    number: pr?.number,
+    html_url: pr?.html_url,
+    url: pr?.url,
+    state: pr?.state,
+    draft: pr?.draft,
+    title: pr?.title,
+    user: pr?.user?.login ?? null,
+    head: side(pr?.head),
+    base: side(pr?.base),
+    commits: pr?.commits,
+    changed_files: pr?.changed_files,
+    additions: pr?.additions,
+    deletions: pr?.deletions,
+    mergeable_state: pr?.mergeable_state,
+    created_at: pr?.created_at
+  };
+}
+
 
 
 function json(value, status = 200, headers = {}) {
@@ -1170,7 +1193,7 @@ async function mcp(request, access, env) {
             }
           }
         );
-        return relayResult(id, { ok: true, pull_request: result });
+        return relayResult(id, { ok: true, pull_request: compactPullRequest(result) });
       }
 
       if (name === "relay_cloud_scripts") {
