@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T18:25:03.710Z",
+  "updated_at": "2026-10-14T18:29:53.907Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1429,9 +1429,7 @@
         "scripts/cross_os.py",
         "scripts/desktop_service.py",
         "scripts/engine_bridge.py",
-        "tests/test_cross_os_adapt.py",
-        "gui/game_mode.py",
-        "gui/rtxforge_gtk.py"
+        "tests/test_cross_os_adapt.py"
       ],
       "resources": [
         "rtxforge-windows-shell",
@@ -1439,7 +1437,7 @@
       ],
       "goal": "Native WinUI 3 (Windows App SDK 2.x, C#) rtxForge for Windows: the desktop shell mirroring the Linux libadwaita build, the real Windows engine bridge (shared Python engine via windows/engine-host with a bundled private Python), and Windows Game Mode built natively from Lauren's approved Game Mode design (MagicPath radiant-rock-8795, approved revision 460589410484883456, audited functional revision 460594005034536960) with draft PR #18 couch_shell as the behavior reference. MFG keeps the native Streamline DLSS-G Ada route. Lauren authorized the Windows port 2026-10-13 ('lets go!') and native Game Mode on Linux GTK and Windows WinUI 3 (WINDOWS-CLAUDE-GAME-MODE-HANDOFF, delivered in chat 2026-10-13).",
       "acceptance": "windows/ builds on windows-2025 CI; desktop screens map to Linux with the documented control/token map; the app runs the shared engine unchanged via windows/engine-host with Windows adapters and a bundled Python (no user install); every write is review-then-execute. Windows Game Mode: full-screen native WinUI, controller (Windows.Gaming.Input) and keyboard navigation, Library/Presets/Settings, Details sections, operations flow, Night/Light/Dark, 720p/1080p/4K scaling, per the handoff's WinUI port contract. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002). No merge, release or live Steam changes without Lauren's approval.",
-      "next_action": "Cross-OS installs merged into rtxforge/windows-winui-port with Lauren's approval: PR #20, merge 0372c08ce4f5744d4a39a30eafeee3443645518f, merged_by lrnolivia; queued rtxforge-windows-cross-os-installs-20261014 retired as superseded. Installed on Lauren's PC 2026-10-14 from that tree: windows/build/Build-Installer.ps1 win-x64 -> rtxForge-Setup-1.0.0-rc.1-x64.exe (sha256-verified), per-user upgrade over the existing install. The app launched on her real library with the engine host running. Next: Lauren's real dual-boot check (install on one OS, Set Up / Restore on the other). PR #17 (windows-winui-port -> main) remains a draft; no merge to main without Lauren. Still pending from 2026-10-13: Add rtxForge to Steam logo centering (steam_self_install logoPosition).",
+      "next_action": "OS mark moved onto the card art as a translucent badge (Lauren 2026-10-14): commit 7cc65af27ae051a08534ff26209e1ada504d8537 on rtxforge/windows-winui-port, reinstalled on her PC and verified on her library. gui/ files released for the Linux worker's matching GTK change (queued as rtxforge-linux-poster-os-badge-20261014). Merged cross-os branch deleted. Next: Lauren's dual-boot check; PR #17 to main stays draft until she approves. Still pending from 2026-10-13: Add rtxForge to Steam logo centering.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1469,8 +1467,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-14T18:25:03.710Z",
-      "lease_until": "2026-10-15T06:25:03.710Z",
+      "updated_at": "2026-10-14T18:29:53.907Z",
+      "lease_until": "2026-10-15T06:29:53.907Z",
       "amendment_count": 1,
       "amendments": [
         {
