@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T22:47:56.278Z",
+  "updated_at": "2026-10-14T22:49:47.372Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -615,6 +615,41 @@
         }
       ],
       "updated_at": "2026-10-14T22:40:01.350Z"
+    },
+    {
+      "id": "rtxforge-linux-titlebar-brand-reveal-20261014",
+      "owner": "claude-code-linux-loew-20261013",
+      "goal": "Match the Windows UI tweak Lauren asked for on 2026-10-14: 'compact mode is default now, and when the full version is active, we need to simplify the title bar version of the app name to not compete with the main logo/wordmark/hero area. in fact, it can not be present until you leave the main page, and animate into place?' She approved it after seeing it live ('looks great to me'). Windows PR lrnolivia/rtxForge#23 (branch rtxforge/windows-titlebar-brand-reveal-20261014, commit f046f9c) hides the HeaderBar brand (mark, wordmark, Preview pill) while the Library's full dashboard hero is on screen. When the hero collapses (compact mode, scrolled past the collapse threshold, presets mode) or another page opens, the brand slides in from 16 px to the left and fades up over 280 ms with an ease-out curve. Returning to the full hero hides it again over 140 ms. Compact mode, the default, is unchanged, and the brand keeps its layout slot while hidden so the compact selector never shifts. Reference: windows/RtxForge.Windows/MainWindow.Compact.cs ShowBrand and windows/RtxForge.Windows/Views/LibraryPage.xaml.cs UpdateDashboard/OnNavigatedFrom. Linux pointers: gui/rtxforge_gtk.py sticky_brand (around line 4423, CSS .sticky-dashboard-brand near line 1617) and collapse_header, which already decides when the sticky dashboard shows.",
+      "acceptance": "On the Linux desktop with compact mode off, the HeaderBar shows no brand while the full Library dashboard hero is visible. Collapsing the hero (scrolling or compact mode) or opening another page reveals the brand with a short slide-and-fade (a Gtk.Revealer slide-right/crossfade or CSS transition of about 280 ms); returning to the full hero hides it. Compact mode keeps the brand as today, and the HeaderBar layout does not jump. Checked with screenshots in light and dark. Existing GTK tests pass. Draft PR only; no merge without Lauren.",
+      "next_action": "Linux worker: read Windows PR lrnolivia/rtxForge#23 (MainWindow.Compact.cs ShowBrand, LibraryPage.xaml.cs UpdateDashboard), then apply the same reveal to sticky_brand in gui/rtxforge_gtk.py, driven from collapse_header and page changes. Claim this assignment in Relay before branching.",
+      "paths": [
+        "gui/rtxforge_gtk.py"
+      ],
+      "resources": [
+        "rtxforge-linux-titlebar-brand"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-14T22:49:47.372Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Match the Windows UI tweak Lauren asked for on 2026-10-14: 'compact mode is default now, and when the full version is active, we need to simplify the title bar version of the app name to not compete with the main logo/wordmark/hero area. in fact, it can not be present until you leave the main page, and animate into place?' She approved it after seeing it live ('looks great to me'). Windows PR lrnolivia/rtxForge#23 (branch rtxforge/windows-titlebar-brand-reveal-20261014, commit f046f9c) hides the HeaderBar brand (mark, wordmark, Preview pill) while the Library's full dashboard hero is on screen. When the hero collapses (compact mode, scrolled past the collapse threshold, presets mode) or another page opens, the brand slides in from 16 px to the left and fades up over 280 ms with an ease-out curve. Returning to the full hero hides it again over 140 ms. Compact mode, the default, is unchanged, and the brand keeps its layout slot while hidden so the compact selector never shifts. Reference: windows/RtxForge.Windows/MainWindow.Compact.cs ShowBrand and windows/RtxForge.Windows/Views/LibraryPage.xaml.cs UpdateDashboard/OnNavigatedFrom. Linux pointers: gui/rtxforge_gtk.py sticky_brand (around line 4423, CSS .sticky-dashboard-brand near line 1617) and collapse_header, which already decides when the sticky dashboard shows.",
+          "acceptance": "On the Linux desktop with compact mode off, the HeaderBar shows no brand while the full Library dashboard hero is visible. Collapsing the hero (scrolling or compact mode) or opening another page reveals the brand with a short slide-and-fade (a Gtk.Revealer slide-right/crossfade or CSS transition of about 280 ms); returning to the full hero hides it. Compact mode keeps the brand as today, and the HeaderBar layout does not jump. Checked with screenshots in light and dark. Existing GTK tests pass. Draft PR only; no merge without Lauren.",
+          "at": "2026-10-14T22:49:47.372Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-titlebar-brand-reveal-20261014:acceptance:0",
+            "text": "On the Linux desktop with compact mode off, the HeaderBar shows no brand while the full Library dashboard hero is visible. Collapsing the hero (scrolling or compact mode) or opening another page reveals the brand with a short slide-and-fade (a Gtk.Revealer slide-right/crossfade or CSS transition of about 280 ms); returning to the full hero hides it. Compact mode keeps the brand as today, and the HeaderBar layout does not jump. Checked with screenshots in light and dark. Existing GTK tests pass. Draft PR only; no merge without Lauren.",
+            "at": "2026-10-14T22:49:47.372Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
