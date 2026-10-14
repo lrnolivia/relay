@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T18:30:10.872Z",
+  "updated_at": "2026-10-14T18:54:11.902Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -496,6 +496,42 @@
             "id": "rtxforge-linux-poster-os-badge-20261014:acceptance:0",
             "text": "Linux desktop Posters and Wide Capsule cards show the OS mark as a translucent badge on the art's top-left corner, matching the Windows values above. The art shows through and the white mark stays readable on bright and pale art. The pill no longer carries the mark; list rows keep it beside the status. Game Mode cards follow the same rule if they show the mark on art. Light, dark and accent-selected cards are checked with screenshots. Existing GTK and Game Mode tests pass. Draft PR only; no merge without Lauren.",
             "at": "2026-10-14T18:30:10.872Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-linux-details-os-badge-20261014",
+      "owner": "claude-code-linux-loew-20261013",
+      "goal": "Match a second Windows UI tweak Lauren asked for on 2026-10-14 ('game details needs the OS badge in the metadata area'); do it together with rtxforge-linux-poster-os-badge-20261014. Windows commit 6322b668e6f31d67b7dcca601180c889e7f290b6 on rtxforge/windows-winui-port adds a pill to Game Details' metadata row (developer · release, then the STEAM / NON-STEAM pill, then this pill, then TESTED). It shows the rtx-os-linux/windows-symbolic mark at 10 px plus the OS name in the same small bold caps as STEAM ('LINUX' / 'WINDOWS'). It uses the same pill style as the other metadata pills, shows only when the game is installed with a known installed_on, and has the tooltip 'Installed with rtxForge on Linux/Windows'. Reference: windows/RtxForge.Windows/Views/GamePage.xaml (OsBadge beside SourceBadge) and GamePage.xaml.cs Refresh(). On Linux this is the game details window's metadata/badge row in gui/rtxforge_gtk.py (Window.details; search 'rtx-os-' and the source/tested badges), and the Game Mode details badges in gui/game_mode.py (which already show 'Installed on Linux/Windows').",
+      "acceptance": "The Linux desktop Game Details metadata row shows the OS pill (mark + LINUX/WINDOWS) between the source pill and the tested pill, styled like its neighbours, and only for installed games with a known installed_on. Game Mode details stay consistent. Screenshots in light and dark. Existing GTK and Game Mode tests pass. Draft PR only; no merge without Lauren.",
+      "next_action": "Linux worker: do this together with rtxforge-linux-poster-os-badge-20261014 (same files, one claim and PR is fine if Relay allows; otherwise claim them in sequence). Read Windows commit 6322b66 first.",
+      "paths": [
+        "gui/rtxforge_gtk.py",
+        "gui/game_mode.py"
+      ],
+      "resources": [
+        "rtxforge-linux-details-os-badge"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-14T18:54:11.902Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Match a second Windows UI tweak Lauren asked for on 2026-10-14 ('game details needs the OS badge in the metadata area'); do it together with rtxforge-linux-poster-os-badge-20261014. Windows commit 6322b668e6f31d67b7dcca601180c889e7f290b6 on rtxforge/windows-winui-port adds a pill to Game Details' metadata row (developer · release, then the STEAM / NON-STEAM pill, then this pill, then TESTED). It shows the rtx-os-linux/windows-symbolic mark at 10 px plus the OS name in the same small bold caps as STEAM ('LINUX' / 'WINDOWS'). It uses the same pill style as the other metadata pills, shows only when the game is installed with a known installed_on, and has the tooltip 'Installed with rtxForge on Linux/Windows'. Reference: windows/RtxForge.Windows/Views/GamePage.xaml (OsBadge beside SourceBadge) and GamePage.xaml.cs Refresh(). On Linux this is the game details window's metadata/badge row in gui/rtxforge_gtk.py (Window.details; search 'rtx-os-' and the source/tested badges), and the Game Mode details badges in gui/game_mode.py (which already show 'Installed on Linux/Windows').",
+          "acceptance": "The Linux desktop Game Details metadata row shows the OS pill (mark + LINUX/WINDOWS) between the source pill and the tested pill, styled like its neighbours, and only for installed games with a known installed_on. Game Mode details stay consistent. Screenshots in light and dark. Existing GTK and Game Mode tests pass. Draft PR only; no merge without Lauren.",
+          "at": "2026-10-14T18:54:11.902Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-details-os-badge-20261014:acceptance:0",
+            "text": "The Linux desktop Game Details metadata row shows the OS pill (mark + LINUX/WINDOWS) between the source pill and the tested pill, styled like its neighbours, and only for installed games with a known installed_on. Game Mode details stay consistent. Screenshots in light and dark. Existing GTK and Game Mode tests pass. Draft PR only; no merge without Lauren.",
+            "at": "2026-10-14T18:54:11.902Z"
           }
         ]
       }
