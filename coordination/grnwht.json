@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-14T03:07:49.934Z",
+  "updated_at": "2026-10-14T03:08:59.746Z",
   "legacy_branches": [
     "main"
   ],
@@ -2995,16 +2995,22 @@
         "src/photo-viewer.jsx",
         "src/content-history.jsx",
         "src/memory-details.css",
-        "src/photo-viewer.css",
+        "src/page-stage.css",
+        "src/react-app.jsx",
+        "src/visual-system.css",
         "tests/memory-details-menu-browser.mjs",
-        "tests/memory-details-menu.test.mjs"
+        "tests/content-history-browser.mjs",
+        "tests/webkit-memory-reload.mjs",
+        ".github/workflows/gw-quality.yml"
       ],
       "resources": [
-        "grnwht-memory-details-actions"
+        "grnwht-memory-details-actions",
+        "grnwht-narrow-production-release",
+        "grnwht-menu-quality"
       ],
       "goal": "Prepare Lauren's requested Memory details cleanup in an isolated local worktree: one three-dot menu beside the title for Edit details, Save/Unsave, Save photo, and separately styled Remove memory; keep reactions/comments visible.",
       "acceptance": "Release the approved Memory title menu through ordinary admission, exact-head CI and preserved rollback. Verify production PR36 vs candidate base before promotion; no unrelated functional changes, identity migration, security-setting changes or new persistent grants. Preserve existing permissions, download/recoverable removal, reactions/comments. Verify exact deployed build and live behavior. Retain earlier tested patch/screenshots.",
-      "next_action": "Resume approved release: Lauren reviewed screenshot and said “back on my mac i approve all this lets go” via parent. Verified main53a74f7 and existing productionPR36version9938e354 at100%. Main differs from production in README cleanup and3unrelated UI files page-stage.css/react-app.jsx/visual-system.css only; backend/lock/config identical. Preserve cleanup and prior source in main53/historical46eacea; construct production-only menu tree, update displaced browser selectors and wire menu CI. Localgh invalid, existing RelaySOURCE auth works; no reauth/security grants. Retain existing assignment, branch and owner. Stage sealed CI after all9green; PR36rollback; verify live exactbuild/menu.",
+      "next_action": "Implement approved narrow PR36-based release on existing branch without rewriting history: preserve README cleanup; restore only3unrelated functional UI files to PR36 before menu release. Their source is verified exact on retained historical46eacea and main53a74f7, neither altered. Update2existing displaced browser selectors and add dedicated menu checks to both required CI browser lanes. No backend/config/database changes. Source publish/check/merge/deploy approved by Lauren’s reviewed-preview go; retain PR36rollback and repositoryid1404935505.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -3034,8 +3040,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-14T03:07:49.934Z",
-      "lease_until": "2026-10-14T15:07:49.934Z",
+      "updated_at": "2026-10-14T03:08:59.746Z",
+      "lease_until": "2026-10-14T15:08:59.746Z",
       "amendment_count": 1,
       "amendments": [
         {
