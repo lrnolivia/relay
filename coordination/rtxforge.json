@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T03:47:39.587Z",
+  "updated_at": "2026-10-14T03:47:52.039Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -305,7 +305,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-13T06:39:44.856Z",
       "objective_history": {
         "baseline": {
@@ -1163,6 +1163,77 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-linux-backport-windows-ui-20261013",
+      "owner": "claude-code-linux-loew-20261013",
+      "branch": "rtxforge/linux-library-port",
+      "paths": [
+        "gui/rtxforge_gtk.py",
+        "gui/couch_shell.py",
+        "scripts/ui_colors.py",
+        "tests/test_ui_colors.py",
+        "tests/ui_actions_accents.py",
+        "tests/ui_app_completion.py",
+        "tests/ui_couch_review.py",
+        "tests/ui_couch_workspace.py",
+        "tests/ui_install_flow.py",
+        "tests/ui_joined_reviews.py",
+        "tests/ui_layout_scaling.py",
+        "tests/ui_library_resume.py",
+        "tests/ui_package_review.py",
+        "tests/ui_settings_refinements.py",
+        "tests/ui_steam_self_review.py",
+        "tests/ui_steamgrid_review.py",
+        "tests/ui_support_checks.py",
+        "tests/ui_library_selection.py",
+        "tests/ui_operation_flow.py"
+      ],
+      "resources": [
+        "rtxforge-linux-desktop-ui"
+      ],
+      "goal": "Back-port the Windows WinUI 3 desktop refinements to the Linux GTK build, fitted to libadwaita: Library behavior (click card opens Details window, checkmark selection, Install Selected (N), context menu, sidebar Library/Presets/Packages/Extras, Presets page and presets mode, compact header, single toolbar row, list view as one surface), perceptual OKLab accent selection and accent suggestions/eyedropper, and the five-stage operation flow (Presets, Checking, Review, Progress, Done) plus the same review shape for every other write. Sources: queued goal plus rtxForge-linux-port-brief.md (2026-10-13).",
+      "acceptance": "Linux GTK matches the Windows behaviour in libadwaita idiom in Posters, Wide Capsule and List views, verified with screenshots in light/dark/night reviewed with Lauren; Details keeps its own window; every write stays review-then-execute; custom accents always win; accent picks match Windows on shared fixtures; existing tests pass; no engine/provider/windows changes; draft PR only, no merge without Lauren.",
+      "next_action": "Implement in an isolated worktree off origin/main in slices: library selection + click-to-details, sidebar + pages, presets mode, operation flow, accent algorithm; then screenshots and draft PR.",
+      "category": "implementation",
+      "tags": [
+        "linux",
+        "backport",
+        "accent",
+        "library-ui"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "9119ee51b7fc523d1d6f967d16541c3619b55539",
+      "state": "active",
+      "created_at": "2026-10-14T03:47:52.039Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Back-port Windows desktop refinements to the Linux GTK/libadwaita build, fitted to GTK (not copied): (1) perceptual accent selection from windows/RtxForge.Windows/Services/ArtAccent.cs (OKLab clustering, area x chroma^2 score, real-pixel averages, UI-safe L/C clamp with sRGB gamut mapping, greyscale fallback) replacing the 24-bucket hue table in gui/rtxforge_gtk.py artwork_accent; custom game_accents always win. (2) Accent suggestions (Signature, Background, Alternate, Light, Deep) and the per-pixel eyedropper loupe in the Pick Accent Color dialog. (3) The navigation sidebar design. (4) The single library toolbar row: Library title, Available/Installed/All filter, search, view switcher, artwork-size slider, Select all (becomes Clear), Refresh, Add folder; hover selection checks instead of Select mode. (5) List view as one surface: alternating shades, rounded first/last rows, 1.5px gaps, rounded capsule art, equal-height primary and overflow actions. (6) One operation step layout for review checking and progress: accent-stroked poster, 'Verb N of M' caption, game name in accent, phase, accent bar.",
+          "acceptance": "Linux GTK matches the listed Windows behaviour in libadwaita idiom, verified with screenshots in light/dark/night; accent algorithm produces the same picks as Windows for the same artwork (shared test fixtures); no engine/provider changes; draft PR only, no merge without Lauren.",
+          "at": "2026-10-13T06:39:44.856Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-backport-windows-ui-20261013:acceptance:0",
+            "text": "Linux GTK matches the listed Windows behaviour in libadwaita idiom, verified with screenshots in light/dark/night; accent algorithm produces the same picks as Windows for the same artwork (shared test fixtures); no engine/provider changes; draft PR only, no merge without Lauren.",
+            "at": "2026-10-13T06:39:44.856Z"
+          }
+        ]
+      },
+      "handoffs": [
+        {
+          "at": "2026-10-14T03:47:39.587Z",
+          "from": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+          "to": "claude-code-linux-loew-20261013",
+          "next_action": "Handoff recorded by the Linux Claude session on Lauren's explicit instruction (2026-10-13; Windows session unreachable). gui/ blocker rtxforge-shared-package-ui-20261002 is cancelled. Successor claims on rtxforge/linux-library-port off origin/main with the queued goal plus rtxForge-linux-port-brief.md; draft PR only."
+        }
+      ],
+      "updated_at": "2026-10-14T03:47:52.039Z",
+      "lease_until": "2026-10-14T15:47:52.039Z"
     }
   ]
 }
