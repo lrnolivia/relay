@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-14T17:50:06.241Z",
+  "updated_at": "2026-10-14T17:52:37.065Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -15265,7 +15265,7 @@
       ],
       "goal": "Lauren 2026-10-14: 'you need to figure out how to get Relay to work well with you, it's built by me i am in full control. you are also able to edit it.' Fix friction a Claude Code worker on Lauren's Windows PC hit while publishing rtxForge work: (1) relay_runner_coordinate reports every unsupported and missing request field at once and names what the action accepts and requires (a claim took five round trips); (2) claim can adopt a branch that already exists when given its exact live head SHA (expected_head_sha) and a reason, recorded on the claim (Lauren chose 'adopt with evidence'); (3) relay_source_open_pull_request returns a compact pull request summary instead of GitHub's full object. Scope is narrowed around held relay-mcp-rebuild-continuation-20261003: src/runner-control.js schema text and the Bible 4.1 update for Claude Code wait for that claim.",
       "acceptance": "Unit tests cover aggregated validation, adoption (matching SHA admits and is recorded; missing or stale SHA still refuses; no adoption keeps the old refusal) and the compact PR result; coordination-engine.js is synced from coordination.mjs with RUNNER_ENGINE_SHA updated; repository CI passes; draft PR only, no merge or deploy without Lauren.",
-      "next_action": "Draft PR #227 (head c3ef5b8) open; first CI run is the first test run (no Node on the authoring PC). Fix any failures on this branch; then Lauren reviews. Follow-ups after held relay-mcp-rebuild-continuation-20261003 resolves: expected_head_sha schema description in src/runner-control.js, Bible 4.1 note for Claude Code.",
+      "next_action": "Draft PR #227 head c3ef5b8536802203c616cc0fcce62372d9e33ee8: quality passed (all five required suites: inspector [runs src/*.test.js incl. the new tests], runner, layout, contracts, web); Runner coordination admission passed. Waiting on Lauren's review; merge and prompt deploy only with her approval (engine pin changes). Follow-ups after held relay-mcp-rebuild-continuation-20261003 resolves: expected_head_sha schema description in src/runner-control.js, Bible 4.1 note for Claude Code.",
       "primary_team": "runner",
       "supporting_teams": [],
       "primary_staff": "nico",
@@ -15288,8 +15288,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-14T17:50:06.241Z",
-      "lease_until": "2026-10-15T05:50:06.241Z"
+      "updated_at": "2026-10-14T17:52:37.065Z",
+      "lease_until": "2026-10-15T05:52:37.065Z"
     }
   ],
   "migrated_from": "loew-inspector"
