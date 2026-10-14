@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T16:40:52.095Z",
+  "updated_at": "2026-10-14T17:37:31.404Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1209,80 +1209,6 @@
       }
     },
     {
-      "id": "rtxforge-windows-winui-port-20261013",
-      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
-      "branch": "rtxforge/windows-winui-port",
-      "paths": [
-        "windows/",
-        ".github/workflows/windows-build.yml",
-        "LICENSE",
-        "CODE_SIGNING.md",
-        "README.md",
-        "scripts/steam_self_install.py",
-        "tests/test_steam_self_install.py"
-      ],
-      "resources": [
-        "rtxforge-windows-shell"
-      ],
-      "goal": "Native WinUI 3 (Windows App SDK 2.x, C#) rtxForge for Windows: the desktop shell mirroring the Linux libadwaita build, the real Windows engine bridge (shared Python engine via windows/engine-host with a bundled private Python), and Windows Game Mode built natively from Lauren's approved Game Mode design (MagicPath radiant-rock-8795, approved revision 460589410484883456, audited functional revision 460594005034536960) with draft PR #18 couch_shell as the behavior reference. MFG keeps the native Streamline DLSS-G Ada route. Lauren authorized the Windows port 2026-10-13 ('lets go!') and native Game Mode on Linux GTK and Windows WinUI 3 (WINDOWS-CLAUDE-GAME-MODE-HANDOFF, delivered in chat 2026-10-13).",
-      "acceptance": "windows/ builds on windows-2025 CI; desktop screens map to Linux with the documented control/token map; the app runs the shared engine unchanged via windows/engine-host with Windows adapters and a bundled Python (no user install); every write is review-then-execute. Windows Game Mode: full-screen native WinUI, controller (Windows.Gaming.Input) and keyboard navigation, Library/Presets/Settings, Details sections, operations flow, Night/Light/Dark, 720p/1080p/4K scaling, per the handoff's WinUI port contract. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002). No merge, release or live Steam changes without Lauren's approval.",
-      "next_action": "Lauren (chat 2026-10-13): Add rtxForge to Steam must center the logo automatically. Write Steam's grid/<appid>.json logoPosition (CenterCenter, sized from the bundled logo/hero aspect) in steam_self_install.install, reviewed and backed up like the artwork slots; test in tests/test_steam_self_install.py.",
-      "category": "implementation",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "0778d5e577e95a6d65bdd68ffcf860ea90cff635",
-      "state": "active",
-      "created_at": "2026-10-13T00:57:55.228Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Start the Windows port: a native WinUI 3 (Windows App SDK 2.x, C#) desktop shell that mirrors the Linux libadwaita desktop build almost 1:1 in layout, flow and copy, using WinUI 3 components and Fluent theme tokens. Game Mode (couch_shell) stays Linux-only. MFG keeps the current native Streamline DLSS-G Ada route. Lauren authorized this in chat 2026-10-13 ('lets go!').",
-          "acceptance": "windows/ contains a buildable WinUI 3 solution whose window structure (header, library list/grid, game detail with NR Strength 0.0-2.0, Sharpening 0.0-1.0, MFG Off/2x-6x controls, settings) maps 1:1 to the Linux desktop GTK screens, with a documented GTK-widget->WinUI-control and libadwaita-token->Fluent-token map. A windows-build workflow builds it on windows-latest. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002).",
-          "at": "2026-10-13T00:57:55.228Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-windows-winui-port-20261013:acceptance:0",
-            "text": "windows/ contains a buildable WinUI 3 solution whose window structure (header, library list/grid, game detail with NR Strength 0.0-2.0, Sharpening 0.0-1.0, MFG Off/2x-6x controls, settings) maps 1:1 to the Linux desktop GTK screens, with a documented GTK-widget->WinUI-control and libadwaita-token->Fluent-token map. A windows-build workflow builds it on windows-latest. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002).",
-            "at": "2026-10-13T00:57:55.228Z"
-          },
-          {
-            "id": "rtxforge-windows-winui-port-20261013:acceptance:1",
-            "text": "windows/ builds on windows-2025 CI; desktop screens map to Linux with the documented control/token map; the app runs the shared engine unchanged via windows/engine-host with Windows adapters and a bundled Python (no user install); every write is review-then-execute. Windows Game Mode: full-screen native WinUI, controller (Windows.Gaming.Input) and keyboard navigation, Library/Presets/Settings, Details sections, operations flow, Night/Light/Dark, 720p/1080p/4K scaling, per the handoff's WinUI port contract. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002). No merge, release or live Steam changes without Lauren's approval.",
-            "at": "2026-10-13T06:11:11.866Z",
-            "reason": "Lauren extended scope in chat 2026-10-13: Windows engine bridge with bundled Python, then Windows Game Mode from the approved shared Game Mode design (handoff file delivered in chat). Supersedes the earlier 'Game Mode stays Linux-only' note."
-          }
-        ]
-      },
-      "updated_at": "2026-10-13T19:20:38.920Z",
-      "lease_until": "2026-10-14T07:20:38.920Z",
-      "amendment_count": 1,
-      "amendments": [
-        {
-          "at": "2026-10-13T06:11:11.866Z",
-          "by": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
-          "reason": "Lauren extended scope in chat 2026-10-13: Windows engine bridge with bundled Python, then Windows Game Mode from the approved shared Game Mode design (handoff file delivered in chat). Supersedes the earlier 'Game Mode stays Linux-only' note.",
-          "fields": [
-            "goal",
-            "acceptance",
-            "next_action"
-          ],
-          "before": {
-            "goal": "Start the Windows port: a native WinUI 3 (Windows App SDK 2.x, C#) desktop shell that mirrors the Linux libadwaita desktop build almost 1:1 in layout, flow and copy, using WinUI 3 components and Fluent theme tokens. Game Mode (couch_shell) stays Linux-only. MFG keeps the current native Streamline DLSS-G Ada route. Lauren authorized this in chat 2026-10-13 ('lets go!').",
-            "acceptance": "windows/ contains a buildable WinUI 3 solution whose window structure (header, library list/grid, game detail with NR Strength 0.0-2.0, Sharpening 0.0-1.0, MFG Off/2x-6x controls, settings) maps 1:1 to the Linux desktop GTK screens, with a documented GTK-widget->WinUI-control and libadwaita-token->Fluent-token map. A windows-build workflow builds it on windows-latest. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002).",
-            "next_action": "Local commits through addcd83 (unpushed; user pushes via GitHub Desktop). Windows app now runs the shared engine via windows/engine-host (Windows adapters only; engine/ and scripts/ untouched, they belong to rtxforge-shared-package-ui-20261002). Verified: real scan, hardware, Steam grid artwork, read-only install/uninstall review. Next: user-confirmed first real install on one game; bundle embeddable Python + engine files in the publish/CI artifact; then Game Mode port."
-          },
-          "after": {
-            "goal": "Native WinUI 3 (Windows App SDK 2.x, C#) rtxForge for Windows: the desktop shell mirroring the Linux libadwaita build, the real Windows engine bridge (shared Python engine via windows/engine-host with a bundled private Python), and Windows Game Mode built natively from Lauren's approved Game Mode design (MagicPath radiant-rock-8795, approved revision 460589410484883456, audited functional revision 460594005034536960) with draft PR #18 couch_shell as the behavior reference. MFG keeps the native Streamline DLSS-G Ada route. Lauren authorized the Windows port 2026-10-13 ('lets go!') and native Game Mode on Linux GTK and Windows WinUI 3 (WINDOWS-CLAUDE-GAME-MODE-HANDOFF, delivered in chat 2026-10-13).",
-            "acceptance": "windows/ builds on windows-2025 CI; desktop screens map to Linux with the documented control/token map; the app runs the shared engine unchanged via windows/engine-host with Windows adapters and a bundled Python (no user install); every write is review-then-execute. Windows Game Mode: full-screen native WinUI, controller (Windows.Gaming.Input) and keyboard navigation, Library/Presets/Settings, Details sections, operations flow, Night/Light/Dark, 720p/1080p/4K scaling, per the handoff's WinUI port contract. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002). No merge, release or live Steam changes without Lauren's approval.",
-            "next_action": "Local commits through a2d56e4 (unpushed; Lauren pushes via GitHub Desktop). Next: read draft PR #18 couch_shell/controller_input and the MagicPath prototype, then build Windows Game Mode under windows/."
-          }
-        }
-      ]
-    },
-    {
       "id": "rtxforge-linux-backport-windows-ui-20261013",
       "owner": "claude-code-linux-loew-20261013",
       "branch": "rtxforge/linux-library-port",
@@ -1473,6 +1399,87 @@
       "evidence": "Lauren asked to push and merge (2026-10-14). PR lrnolivia/rtxForge#19 merged as 8e8cf9fad5f746385cd0b770f70714c75b9b8640 with all CI checks green (native-review, kde-review, wayland-review, commit attribution, runner admission). The first native-review run failed on a workflow step still calling the removed tests/ui_couch_review.py; fixed in 63ea2f5. Local results: 12/12 UI tests, 191 unit tests, 300 engine tests and the smoke test pass. An AppImage built from main 8e8cf9f is installed locally (BUILD_INFO commit verified), with the Oct 7 build kept as RTXForge.previous.AppImage. No windows/ changes. Lauren's live QA in Steam Game Mode on real games is still to do.",
       "work_accounted": true,
       "completed_at": "2026-10-14T16:40:52.095Z"
+    },
+    {
+      "id": "rtxforge-windows-winui-port-20261013",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/windows-winui-port",
+      "paths": [
+        "windows/",
+        ".github/workflows/windows-build.yml",
+        "LICENSE",
+        "CODE_SIGNING.md",
+        "README.md",
+        "scripts/steam_self_install.py",
+        "tests/test_steam_self_install.py",
+        "scripts/cross_os.py",
+        "scripts/desktop_service.py",
+        "scripts/engine_bridge.py",
+        "tests/test_cross_os_adapt.py",
+        "gui/game_mode.py",
+        "gui/rtxforge_gtk.py"
+      ],
+      "resources": [
+        "rtxforge-windows-shell",
+        "rtxforge-windows-cross-os-ui"
+      ],
+      "goal": "Native WinUI 3 (Windows App SDK 2.x, C#) rtxForge for Windows: the desktop shell mirroring the Linux libadwaita build, the real Windows engine bridge (shared Python engine via windows/engine-host with a bundled private Python), and Windows Game Mode built natively from Lauren's approved Game Mode design (MagicPath radiant-rock-8795, approved revision 460589410484883456, audited functional revision 460594005034536960) with draft PR #18 couch_shell as the behavior reference. MFG keeps the native Streamline DLSS-G Ada route. Lauren authorized the Windows port 2026-10-13 ('lets go!') and native Game Mode on Linux GTK and Windows WinUI 3 (WINDOWS-CLAUDE-GAME-MODE-HANDOFF, delivered in chat 2026-10-13).",
+      "acceptance": "windows/ builds on windows-2025 CI; desktop screens map to Linux with the documented control/token map; the app runs the shared engine unchanged via windows/engine-host with Windows adapters and a bundled Python (no user install); every write is review-then-execute. Windows Game Mode: full-screen native WinUI, controller (Windows.Gaming.Input) and keyboard navigation, Library/Presets/Settings, Details sections, operations flow, Night/Light/Dark, 720p/1080p/4K scaling, per the handoff's WinUI port contract. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002). No merge, release or live Steam changes without Lauren's approval.",
+      "next_action": "Cross-OS installs (queued rtxforge-windows-cross-os-installs-20261014, done inside this claim because the owner may hold one implementation): Lauren 2026-10-14 asked for adapting, not blocking. Branch rtxforge/windows-cross-os (head 29cbf247505dcbd1c1bbdf5f34180473db1a00aa) merges rtxforge/linux-library-port and makes each OS adopt the other's shared install state. Open it as a draft PR into rtxforge/windows-winui-port; no merge without Lauren. Still pending from 2026-10-13: Add rtxForge to Steam logo centering (steam_self_install logoPosition).",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "0778d5e577e95a6d65bdd68ffcf860ea90cff635",
+      "state": "active",
+      "created_at": "2026-10-13T00:57:55.228Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Start the Windows port: a native WinUI 3 (Windows App SDK 2.x, C#) desktop shell that mirrors the Linux libadwaita desktop build almost 1:1 in layout, flow and copy, using WinUI 3 components and Fluent theme tokens. Game Mode (couch_shell) stays Linux-only. MFG keeps the current native Streamline DLSS-G Ada route. Lauren authorized this in chat 2026-10-13 ('lets go!').",
+          "acceptance": "windows/ contains a buildable WinUI 3 solution whose window structure (header, library list/grid, game detail with NR Strength 0.0-2.0, Sharpening 0.0-1.0, MFG Off/2x-6x controls, settings) maps 1:1 to the Linux desktop GTK screens, with a documented GTK-widget->WinUI-control and libadwaita-token->Fluent-token map. A windows-build workflow builds it on windows-latest. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002).",
+          "at": "2026-10-13T00:57:55.228Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-windows-winui-port-20261013:acceptance:0",
+            "text": "windows/ contains a buildable WinUI 3 solution whose window structure (header, library list/grid, game detail with NR Strength 0.0-2.0, Sharpening 0.0-1.0, MFG Off/2x-6x controls, settings) maps 1:1 to the Linux desktop GTK screens, with a documented GTK-widget->WinUI-control and libadwaita-token->Fluent-token map. A windows-build workflow builds it on windows-latest. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002).",
+            "at": "2026-10-13T00:57:55.228Z"
+          },
+          {
+            "id": "rtxforge-windows-winui-port-20261013:acceptance:1",
+            "text": "windows/ builds on windows-2025 CI; desktop screens map to Linux with the documented control/token map; the app runs the shared engine unchanged via windows/engine-host with Windows adapters and a bundled Python (no user install); every write is review-then-execute. Windows Game Mode: full-screen native WinUI, controller (Windows.Gaming.Input) and keyboard navigation, Library/Presets/Settings, Details sections, operations flow, Night/Light/Dark, 720p/1080p/4K scaling, per the handoff's WinUI port contract. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002). No merge, release or live Steam changes without Lauren's approval.",
+            "at": "2026-10-13T06:11:11.866Z",
+            "reason": "Lauren extended scope in chat 2026-10-13: Windows engine bridge with bundled Python, then Windows Game Mode from the approved shared Game Mode design (handoff file delivered in chat). Supersedes the earlier 'Game Mode stays Linux-only' note."
+          }
+        ]
+      },
+      "updated_at": "2026-10-14T17:37:31.404Z",
+      "lease_until": "2026-10-15T05:37:31.404Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-13T06:11:11.866Z",
+          "by": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+          "reason": "Lauren extended scope in chat 2026-10-13: Windows engine bridge with bundled Python, then Windows Game Mode from the approved shared Game Mode design (handoff file delivered in chat). Supersedes the earlier 'Game Mode stays Linux-only' note.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Start the Windows port: a native WinUI 3 (Windows App SDK 2.x, C#) desktop shell that mirrors the Linux libadwaita desktop build almost 1:1 in layout, flow and copy, using WinUI 3 components and Fluent theme tokens. Game Mode (couch_shell) stays Linux-only. MFG keeps the current native Streamline DLSS-G Ada route. Lauren authorized this in chat 2026-10-13 ('lets go!').",
+            "acceptance": "windows/ contains a buildable WinUI 3 solution whose window structure (header, library list/grid, game detail with NR Strength 0.0-2.0, Sharpening 0.0-1.0, MFG Off/2x-6x controls, settings) maps 1:1 to the Linux desktop GTK screens, with a documented GTK-widget->WinUI-control and libadwaita-token->Fluent-token map. A windows-build workflow builds it on windows-latest. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002).",
+            "next_action": "Local commits through addcd83 (unpushed; user pushes via GitHub Desktop). Windows app now runs the shared engine via windows/engine-host (Windows adapters only; engine/ and scripts/ untouched, they belong to rtxforge-shared-package-ui-20261002). Verified: real scan, hardware, Steam grid artwork, read-only install/uninstall review. Next: user-confirmed first real install on one game; bundle embeddable Python + engine files in the publish/CI artifact; then Game Mode port."
+          },
+          "after": {
+            "goal": "Native WinUI 3 (Windows App SDK 2.x, C#) rtxForge for Windows: the desktop shell mirroring the Linux libadwaita build, the real Windows engine bridge (shared Python engine via windows/engine-host with a bundled private Python), and Windows Game Mode built natively from Lauren's approved Game Mode design (MagicPath radiant-rock-8795, approved revision 460589410484883456, audited functional revision 460594005034536960) with draft PR #18 couch_shell as the behavior reference. MFG keeps the native Streamline DLSS-G Ada route. Lauren authorized the Windows port 2026-10-13 ('lets go!') and native Game Mode on Linux GTK and Windows WinUI 3 (WINDOWS-CLAUDE-GAME-MODE-HANDOFF, delivered in chat 2026-10-13).",
+            "acceptance": "windows/ builds on windows-2025 CI; desktop screens map to Linux with the documented control/token map; the app runs the shared engine unchanged via windows/engine-host with Windows adapters and a bundled Python (no user install); every write is review-then-execute. Windows Game Mode: full-screen native WinUI, controller (Windows.Gaming.Input) and keyboard navigation, Library/Presets/Settings, Details sections, operations flow, Night/Light/Dark, 720p/1080p/4K scaling, per the handoff's WinUI port contract. No changes to engine/, providers/, gui/ or scripts/ (owned by rtxforge-shared-package-ui-20261002). No merge, release or live Steam changes without Lauren's approval.",
+            "next_action": "Local commits through a2d56e4 (unpushed; Lauren pushes via GitHub Desktop). Next: read draft PR #18 couch_shell/controller_input and the MagicPath prototype, then build Windows Game Mode under windows/."
+          }
+        }
+      ]
     }
   ]
 }
