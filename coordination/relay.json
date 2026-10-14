@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-14T18:12:06.919Z",
+  "updated_at": "2026-10-14T18:19:12.430Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16107,7 +16107,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "cf8f3ea98a73c6fda65cfafd157f6e36c27f2643",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-14T18:12:06.919Z",
       "objective_history": {
         "baseline": {
@@ -16124,8 +16124,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-14T18:12:06.919Z",
-      "lease_until": "2026-10-15T06:12:06.919Z"
+      "updated_at": "2026-10-14T18:19:12.430Z",
+      "lease_until": "2026-10-15T06:19:12.430Z",
+      "pr": 228,
+      "merged_head_sha": "5c306c54ca8200be86b89773daddbdb3afaf434b",
+      "merge_commit_sha": "3fdb0608b3fbde836f6932ed350870afc2efc72c",
+      "evidence": "Lauren 2026-10-14 'do both' (approves edit, merge and deploy). Held relay-mcp-rebuild-continuation-20261003 was narrowed under that instruction to release only src/runner-control.js and LOEW_CHAT_BIBLE.md (record b0b4d8355d5bb16f99a381677ae720866a5286e8; WIP 80b887c had both files identical to main; the other 180 paths and HELD state are preserved). PR #228 head 5c306c54ca8200be86b89773daddbdb3afaf434b: the first CI run failed on an unescaped apostrophe in src/runner-control.js, fixed in 5c306c5; quality then passed all five required suites and coordination admission passed. Merged by Lauren's verified git route: merge commit 3fdb0608b3fbde836f6932ed350870afc2efc72c (Lauren Olivia <lrnoliv@gmail.com>), GitHub merged_by lrnolivia. The merge message subject carries a stray UTF-8 BOM from the message file; left as is because fixing it needs a force-push. Workers Build 0a3dfd5a-86d6-40f8-b305-3a514a50c2fa for 3fdb060 succeeded. Bible is now version 2026-10-14.1, with 4.1 covering Claude Code.",
+      "work_accounted": true,
+      "completed_at": "2026-10-14T18:19:12.430Z"
     }
   ],
   "migrated_from": "loew-inspector"
