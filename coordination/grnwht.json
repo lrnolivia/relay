@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-12T17:05:05.026Z",
+  "updated_at": "2026-10-14T02:13:46.976Z",
   "legacy_branches": [
     "main"
   ],
@@ -2985,6 +2985,51 @@
       "evidence": "PR36 merged as c5333491d668a24be892f38b6cfcf869b626be9d. All nine CI checks green on candidate 368f109a63505b9bea976f42217522899fa5d39f, run 38279031716. Production deployment 4a97ca29-6c28-48d8-a806-605d9ea7f3ee at 100% version 9938e354-d83a-49d4-b6b9-12230cf97e8f. Live module hash c5b7bbdb62e636f8b132921adc0be5220806f78f395beb6ad87d07d74ad1d10f matches sealed artifact. Health ok, app/assets HTTP200, fresh Chromium sign-up renders without errors or overflow. All 24 bindings and runtime settings unchanged. No migrations, family data changes, or email sends. Rollback 0fba08e3-d502-49f2-a301-659979367f55. Rounded email previews verified in Chromium and WebKit; classic Outlook CSS-radius limitation remains.",
       "work_accounted": true,
       "completed_at": "2026-10-12T17:05:05.026Z"
+    },
+    {
+      "id": "grnwht-memory-details-menu-20261014",
+      "owner": "01a1146d-0267-735e-8332-fa38cf7fb007",
+      "branch": "grnwht/memory-details-menu-20261014",
+      "paths": [
+        "src/memories.jsx",
+        "src/photo-viewer.jsx",
+        "src/content-history.jsx",
+        "src/memory-details.css",
+        "src/photo-viewer.css",
+        "tests/memory-details-menu-browser.mjs",
+        "tests/memory-details-menu.test.mjs"
+      ],
+      "resources": [
+        "grnwht-memory-details-actions"
+      ],
+      "goal": "Prepare Lauren's requested Memory details cleanup in an isolated local worktree: one three-dot menu beside the title for Edit details, Save/Unsave, Save photo, and separately styled Remove memory; keep reactions/comments visible.",
+      "acceptance": "Return tested local patch and screenshots only; no merge, deployment, identity/history/integration/permission changes. Preserve author/moderator/member permissions, photo download and recoverable Remove/Keep confirmation, loading/errors, other viewers. Test narrow layouts, repeated actions and keyboard/Escape/outside dismissal.",
+      "next_action": "Parent delegated bounded local-only preparation to Codex using the verified persistent parent owner identity. Create isolated worktree from current main 53a74f7; inspect Popover and download/removal patterns, implement, run build/test and local fictional browser evidence. Preserve gwfamily-ui, gwfamily-pr20 and historical branches.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "53a74f7c1b19ec266b271c1e52b631af6cc89ce6",
+      "state": "active",
+      "created_at": "2026-10-14T02:13:46.976Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Prepare Lauren's requested Memory details cleanup in an isolated local worktree: one three-dot menu beside the title for Edit details, Save/Unsave, Save photo, and separately styled Remove memory; keep reactions/comments visible.",
+          "acceptance": "Return tested local patch and screenshots only; no merge, deployment, identity/history/integration/permission changes. Preserve author/moderator/member permissions, photo download and recoverable Remove/Keep confirmation, loading/errors, other viewers. Test narrow layouts, repeated actions and keyboard/Escape/outside dismissal.",
+          "at": "2026-10-14T02:13:46.976Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "grnwht-memory-details-menu-20261014:acceptance:0",
+            "text": "Return tested local patch and screenshots only; no merge, deployment, identity/history/integration/permission changes. Preserve author/moderator/member permissions, photo download and recoverable Remove/Keep confirmation, loading/errors, other viewers. Test narrow layouts, repeated actions and keyboard/Escape/outside dismissal.",
+            "at": "2026-10-14T02:13:46.976Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-14T02:13:46.976Z",
+      "lease_until": "2026-10-14T14:13:46.976Z"
     }
   ]
 }
