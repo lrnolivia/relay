@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-13T22:57:22.943Z",
+  "updated_at": "2026-10-14T17:47:10.499Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -15246,6 +15246,50 @@
       "evidence": "PR226 merged87ca978 from exact3bae, Lauren author verified;935pass2skips and hosted admission/quality; canonical build17eac84f success, versionf1ccdccb100%, health200; independent restore proof and previousrelease retained. Whole completed checkpointa75 plus admitted README accounted; held claude-open rebuild/WIP80b887, all other refs/work and root cutover remain separately retained/held. Final canonical postmerge quality115582102813 / run38480647206 passed all required suites plus exact live-source and retained interactive build. New immutable aftermerge bundle2db28507752616d3474a7faac18350a336ee2835373e7046050da974264de97c restored allrefs/fsck/tree; no other claim/work or ref deleted.",
       "work_accounted": true,
       "completed_at": "2026-10-13T22:57:22.943Z"
+    },
+    {
+      "id": "relay-claude-code-ergonomics-20261014",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "relay/claude-code-ergonomics-20261014",
+      "paths": [
+        "src/runner-control-core.js",
+        "src/coordination.mjs",
+        "src/coordination-engine.js",
+        "src/index.js",
+        "src/runner-control.test.js",
+        "src/source-lifecycle.test.js"
+      ],
+      "resources": [
+        "relay-runner-claim-admission",
+        "relay-source-pr-results"
+      ],
+      "goal": "Lauren 2026-10-14: 'you need to figure out how to get Relay to work well with you, it's built by me i am in full control. you are also able to edit it.' Fix friction a Claude Code worker on Lauren's Windows PC hit while publishing rtxForge work: (1) relay_runner_coordinate reports every unsupported and missing request field at once and names what the action accepts and requires (a claim took five round trips); (2) claim can adopt a branch that already exists when given its exact live head SHA (expected_head_sha) and a reason, recorded on the claim (Lauren chose 'adopt with evidence'); (3) relay_source_open_pull_request returns a compact pull request summary instead of GitHub's full object. Scope is narrowed around held relay-mcp-rebuild-continuation-20261003: src/runner-control.js schema text and the Bible 4.1 update for Claude Code wait for that claim.",
+      "acceptance": "Unit tests cover aggregated validation, adoption (matching SHA admits and is recorded; missing or stale SHA still refuses; no adoption keeps the old refusal) and the compact PR result; coordination-engine.js is synced from coordination.mjs with RUNNER_ENGINE_SHA updated; repository CI passes; draft PR only, no merge or deploy without Lauren.",
+      "next_action": "Branch from main with local git (Lauren signed Git in on her PC 2026-10-14), implement, push, open a draft PR through Relay, read checks.",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "31c82ed303b584414215682937f76050ac39ee2f",
+      "state": "active",
+      "created_at": "2026-10-14T17:47:10.499Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren 2026-10-14: 'you need to figure out how to get Relay to work well with you, it's built by me i am in full control. you are also able to edit it.' Fix friction a Claude Code worker on Lauren's Windows PC hit while publishing rtxForge work: (1) relay_runner_coordinate reports every unsupported and missing request field at once and names what the action accepts and requires (a claim took five round trips); (2) claim can adopt a branch that already exists when given its exact live head SHA (expected_head_sha) and a reason, recorded on the claim (Lauren chose 'adopt with evidence'); (3) relay_source_open_pull_request returns a compact pull request summary instead of GitHub's full object. Scope is narrowed around held relay-mcp-rebuild-continuation-20261003: src/runner-control.js schema text and the Bible 4.1 update for Claude Code wait for that claim.",
+          "acceptance": "Unit tests cover aggregated validation, adoption (matching SHA admits and is recorded; missing or stale SHA still refuses; no adoption keeps the old refusal) and the compact PR result; coordination-engine.js is synced from coordination.mjs with RUNNER_ENGINE_SHA updated; repository CI passes; draft PR only, no merge or deploy without Lauren.",
+          "at": "2026-10-14T17:47:10.499Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-claude-code-ergonomics-20261014:acceptance:0",
+            "text": "Unit tests cover aggregated validation, adoption (matching SHA admits and is recorded; missing or stale SHA still refuses; no adoption keeps the old refusal) and the compact PR result; coordination-engine.js is synced from coordination.mjs with RUNNER_ENGINE_SHA updated; repository CI passes; draft PR only, no merge or deploy without Lauren.",
+            "at": "2026-10-14T17:47:10.499Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-14T17:47:10.499Z",
+      "lease_until": "2026-10-15T05:47:10.499Z"
     }
   ],
   "migrated_from": "loew-inspector"
