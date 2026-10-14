@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T17:37:31.404Z",
+  "updated_at": "2026-10-14T18:22:45.287Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -432,7 +432,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "superseded",
       "created_at": "2026-10-14T05:50:50.064Z",
       "objective_history": {
         "baseline": {
@@ -448,7 +448,21 @@
             "at": "2026-10-14T05:50:50.064Z"
           }
         ]
-      }
+      },
+      "retirement": {
+        "at": "2026-10-14T18:22:45.287Z",
+        "intent": {
+          "operation_id": "retire-rtxforge-cross-os-20261014",
+          "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+          "disposition": "superseded",
+          "reason": "Delivered inside the owner's active Windows port claim (one active implementation per owner), with the objective changed by Lauren 2026-10-14 from blocking to adapting ('i dont want blocks. i want adapting the install to the OS we're gonna run it').",
+          "evidence": "PR lrnolivia/rtxForge#20 (rtxforge/windows-cross-os -> rtxforge/windows-winui-port), head 29cbf247505dcbd1c1bbdf5f34180473db1a00aa, all checks green (WinUI 3 x64/ARM64, native/KDE/Wayland review, commit attribution). Merged with Lauren's approval ('lets push and merge it') via her verified git route: merge commit 0372c08ce4f5744d4a39a30eafeee3443645518f, GitHub merged_by lrnolivia. Decision recorded in relay_context ctx_94cadda8.",
+          "superseded_by": "rtxforge-windows-winui-port-20261013",
+          "branch": null,
+          "head_sha": null
+        }
+      },
+      "updated_at": "2026-10-14T18:22:45.287Z"
     }
   ],
   "claims": [
