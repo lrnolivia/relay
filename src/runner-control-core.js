@@ -5,7 +5,7 @@ import { projectCiPolicy, projectCiRoute } from './ci-routing.js';
 import { guardAutonomy } from './autonomy-control.js';
 import { attributedCommitBody, verifyAttributedCommit, reconcileAttributedContentsCommit } from './commit-attribution.js';
 
-export const RUNNER_ENGINE_SHA = '591d0155555a74db4769fda289e5212b07609e65';
+export const RUNNER_ENGINE_SHA = '36754c3cfa407a50513371cc8e201b0ce7f333d3';
 export const DEFAULT_RUNNER_CONTROL_REPOSITORY = 'lrnolivia/relay';
 
 export class ControlError extends Error {
@@ -187,7 +187,7 @@ async function mutate(api, control, controlRepository, context, args) {
 
   const allowed = {
     queue: ['id', 'owner', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams'],
-    claim: ['id', 'owner', 'branch', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams'],
+    claim: ['id', 'owner', 'branch', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams', 'expected_head_sha', 'reason'],
     amend: ['id', 'owner', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams', 'reason'],
     rescope: ['id', 'owner', 'paths', 'resources', 'next_action'],
     heartbeat: ['id', 'owner', 'next_action'],
@@ -197,9 +197,7 @@ async function mutate(api, control, controlRepository, context, args) {
     reconcile: ['id', 'owner', 'pr', 'expected_queue_owner', 'reason'],
     retire: ['id', 'owner', 'disposition', 'reason', 'evidence', 'operation_id', 'expected_head_sha', 'superseded_by']
   }[args.action];
-  for (const key of Object.keys(args.request)) {
-    if (!allowed.includes(key)) throw new ControlError('validation', `request.${key} is unsupported for ${args.action}`);
-  }
+  const unsupported = Object.keys(args.request).filter(key => !allowed.includes(key));
 
   const required = {
     queue: ['paths', 'goal', 'acceptance', 'next_action'],
@@ -213,8 +211,18 @@ async function mutate(api, control, controlRepository, context, args) {
     reconcile: ['pr'],
     retire: ['disposition', 'reason', 'evidence', 'operation_id']
   }[args.action];
-  for (const key of required) {
-    if (!(key in args.request)) throw new ControlError('validation', `request.${key} is required for ${args.action}`);
+  const missing = required.filter(key => !(key in args.request));
+  // Report every problem at once, with the action's whole contract, so a caller fixes it in one retry.
+  if (unsupported.length || missing.length) {
+    const problems = [
+      ...(unsupported.length ? [`${unsupported.map(key => `request.${key}`).join(', ')} ${unsupported.length === 1 ? 'is' : 'are'} unsupported for ${args.action}`] : []),
+      ...(missing.length ? [`${missing.map(key => `request.${key}`).join(', ')} ${missing.length === 1 ? 'is' : 'are'} required for ${args.action}`] : [])
+    ];
+    const contract = `${args.action} requires id, owner${required.length ? ', ' + required.join(', ') : ''}; it also accepts ${allowed.filter(key => !['id', 'owner', ...required].includes(key)).join(', ') || 'nothing else'}`;
+    throw new ControlError('validation', `${problems.join('; ')}. ${contract}.`);
+  }
+  if (args.action === 'claim' && ('expected_head_sha' in args.request) !== ('reason' in args.request)) {
+    throw new ControlError('validation', 'Adopting an existing branch needs both request.expected_head_sha (its exact live head) and request.reason.');
   }
 
   const request = { ...args.request, action: args.action };
@@ -225,9 +233,20 @@ async function mutate(api, control, controlRepository, context, args) {
     if (context.record.value.legacy_branches.includes(request.branch)) {
       throw new ControlError('ownership', 'Legacy branch remains reserved for recovery');
     }
-    if ((await pages(api, `${base}/branches`)).some(branch => branch.name === request.branch)) {
-      throw new ControlError('ownership', 'Admission must precede branch creation');
+    const existing = (await pages(api, `${base}/branches`)).find(branch => branch.name === request.branch);
+    if (existing && !('expected_head_sha' in request)) {
+      throw new ControlError('ownership', 'Admission must precede branch creation. To adopt this existing branch, pass request.expected_head_sha (its exact live head) and request.reason.');
     }
+    if ('expected_head_sha' in request) {
+      // Adoption with evidence: only the exact live head of an existing branch, never a new or moved one.
+      if (!/^[a-f0-9]{40}$/.test(request.expected_head_sha || '')) throw new ControlError('validation', 'request.expected_head_sha must be the branch\'s exact 40-character head SHA to adopt it');
+      if (!existing) throw new ControlError('ownership', 'There is no existing branch to adopt; omit expected_head_sha and reason so Relay admits a new branch');
+      const head = (await api(`${base}/git/ref/heads/${encodeURIComponent(request.branch)}`))?.object?.sha;
+      if (head !== request.expected_head_sha) throw new ControlError('conflict', 'Branch head moved since it was read; read it again before adopting', { branch_head_sha: head || null });
+      request.adopted_branch = { head_sha: head, reason: request.reason };
+    }
+    delete request.expected_head_sha;
+    delete request.reason;
     const head = await api(`${base}/git/ref/heads/${encodeURIComponent(context.registration.default_branch)}`);
     request.base_sha = head.object.sha;
   }

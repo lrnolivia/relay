@@ -195,6 +195,42 @@ test('existing and frozen legacy branches cannot be repurposed as new admission'
   const legacy = fixture();
   await assert.rejects(coordinate(legacy, 'claim', { ...defaultRequest, branch: 'old-task' }), /reserved/);
 });
+test('claim adopts an existing branch only with its exact live head and a reason, recorded on the claim', async () => {
+  const adopt = { ...defaultRequest, expected_head_sha: sha, reason: 'Pushed before admission by Lauren' };
+  const f = fixture({ branches: [{ name: defaultRequest.branch }], head: sha });
+  const result = await coordinate(f, 'claim', adopt);
+  assert.equal(result.claim.adopted_branch.head_sha, sha);
+  assert.equal(result.claim.adopted_branch.reason, 'Pushed before admission by Lauren');
+  assert.ok(result.claim.adopted_branch.at);
+  assert.equal('expected_head_sha' in result.claim, false);
+  assert.equal(f.writes.length, 1);
+  for (const [options, request, pattern] of [
+    [{ branches: [{ name: defaultRequest.branch }], head: newSha }, adopt, /head moved/],
+    [{ branches: [] }, adopt, /no existing branch to adopt/],
+    [{ branches: [{ name: defaultRequest.branch }] }, { ...defaultRequest, expected_head_sha: sha }, /both request.expected_head_sha/],
+    [{ branches: [{ name: defaultRequest.branch }] }, { ...defaultRequest, expected_head_sha: null, reason: 'x' }, /exact 40-character head/],
+    [{ branches: [{ name: defaultRequest.branch }] }, defaultRequest, /precede branch creation\. To adopt/]
+  ]) {
+    const refused = fixture(options);
+    await assert.rejects(coordinate(refused, 'claim', request), pattern);
+    assert.equal(refused.writes.length, 0);
+  }
+  const legacy = fixture({ branches: [{ name: 'old-task' }] });
+  await assert.rejects(coordinate(legacy, 'claim', { ...adopt, branch: 'old-task' }), /reserved/);
+});
+test('request validation reports every unsupported and missing field with the action contract', async () => {
+  const f = fixture();
+  const { goal, acceptance, ...partial } = defaultRequest;
+  let failure;
+  try { await coordinate(f, 'claim', { ...partial, operation_id: 'op', expected_queue_owner: 'worker' }); } catch (error) { failure = error; }
+  assert.equal(failure.code, 'validation');
+  assert.match(failure.message, /request\.operation_id, request\.expected_queue_owner are unsupported for claim/);
+  assert.match(failure.message, /request\.goal, request\.acceptance are required for claim/);
+  assert.match(failure.message, /claim requires id, owner, branch, paths, goal, acceptance, next_action; it also accepts resources/);
+  await assert.rejects(coordinate(f, 'heartbeat', { id: 'task', owner: 'worker', next_action: 'Renew', branch: 'relay/task' }), /request\.branch is unsupported for heartbeat/);
+  await assert.rejects(coordinate(f, 'rescope', { id: 'task', owner: 'worker', paths: ['src/'], next_action: 'x' }), /request\.resources is required for rescope/);
+  assert.equal(f.writes.length, 0);
+});
 test('completion uses provider merged identity and denies unmerged or wrong branch', async () => {
   const request = { id: 'task', owner: 'worker', pr: 9, evidence: 'https://github.com/lrnolivia/relay/pull/9', work_accounted: true };
   const pr = { merged: true, base: { ref: 'main', repo: { full_name: 'lrnolivia/relay' } }, head: { ref: defaultRequest.branch, sha, repo: { full_name: 'lrnolivia/relay' } }, merge_commit_sha: newSha };
