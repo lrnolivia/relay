@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-14T17:52:37.065Z",
+  "updated_at": "2026-10-14T18:09:53.956Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -15271,7 +15271,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "31c82ed303b584414215682937f76050ac39ee2f",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-14T17:47:10.499Z",
       "objective_history": {
         "baseline": {
@@ -15288,8 +15288,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-14T17:52:37.065Z",
-      "lease_until": "2026-10-15T05:52:37.065Z"
+      "updated_at": "2026-10-14T18:09:53.956Z",
+      "lease_until": "2026-10-15T06:09:53.956Z",
+      "pr": 227,
+      "merged_head_sha": "c3ef5b8536802203c616cc0fcce62372d9e33ee8",
+      "merge_commit_sha": "ceace78c804ea1c1ceb1bc65d9cf56a4283055c8",
+      "evidence": "PR #227 head c3ef5b8536802203c616cc0fcce62372d9e33ee8; CI quality passed (all five required suites, including the inspector suite that runs the new src tests) and Runner coordination admission passed. Lauren approved merge and deploy in chat 2026-10-14 ('we good you can merge and deploy'). The Relay App merge was refused by the attribution guard by design, so Lauren's verified git connection on her PC merged it: merge commit ceace78c804ea1c1ceb1bc65d9cf56a4283055c8, authored and committed by Lauren Olivia <lrnoliv@gmail.com>; GitHub reports merged_by lrnolivia. Workers Build c959239f-095e-4712-9a73-76cea21ed3e2 for ceace78 finished with outcome success. A live probe of relay_runner_coordinate (invalid heartbeat, no write) returned the new one-pass validation message and passed the engine drift guard. Remaining follow-ups (wait on held relay-mcp-rebuild-continuation-20261003): expected_head_sha schema description in src/runner-control.js; Bible 4.1 note for Claude Code.",
+      "work_accounted": true,
+      "completed_at": "2026-10-14T18:09:53.956Z"
     }
   ],
   "migrated_from": "loew-inspector"
