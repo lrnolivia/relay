@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T22:38:40.030Z",
+  "updated_at": "2026-10-14T22:40:01.350Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -541,7 +541,7 @@
       "owner": "claude-code-linux-loew-20261013",
       "goal": "Match the Windows UI tweaks Lauren asked for on 2026-10-14: 'i still feel like the poster cards could be bigger. mainly wider so the titles dont get truncated as much. but keep the aspect ratio so posters still fit snuggly.', then 'Game Details, a lot of game titles are wrapping when they dont have to' and 'spacing weirdness ith titles'. She tried rounded art bottoms and rejected them ('i dont like the rounded artwork bottoms lol sorry'), so the art's bottom edge stays square where it meets the footer. Windows PR lrnolivia/rtxForge#22 (branch rtxforge/windows-wider-poster-cards-20261014, head 8bd3069) does three things. (1) Library poster cards: the preferred width goes from 180 to 212 px at 100% art scale, with capsules unchanged at 300. The art stays exactly 2:3, and the cell height follows it (art + 68 px footer + ring). (2) The card's fill layer is rounded at 10 px (inside the 12 px card's 2 px ring), so no square corner pokes past the ring at the card's bottom. Only the art's top corners are rounded. (3) Game Details hero: the status badge and title get their own row spanning the full width, including over the action buttons, which sit below it beside the meta and summary row. Titles only wrap when they truly run out of room; before, 'Dragon Age(TM): The Veilguard' wrapped beside empty space. The text block is laid out on its own, not sharing rows with the taller poster, so no extra gap opens between the title and the meta line. Narrow windows still drop the actions under the summary. Linux pointers: gui/rtxforge_gtk.py card POSTER size (around self.poster.set_size_request(*self.POSTER) near line 3608) and the card CSS corner rules; the detail hero around DETAIL_POSTER_WIDTH and detail-title-{md,sm,xs} (near line 11627 and 11760, CSS near 2272); gui/game_mode.py if needed.",
       "acceptance": "Linux desktop poster cards are wider at the default art scale (about 212 px), so fewer titles truncate, and the art stays exactly 2:3 with no cropping or gaps. The art's bottom edge stays square; the card's own bottom corners are rounded, with nothing poking past the edge. In Game Details, the title spans the full hero width above the actions, wraps only when needed, and has no extra gap before the meta line. Narrow layout still works. Light, dark and accent-selected cards and a long-title detail page are checked with screenshots. Existing GTK and Game Mode tests pass. Draft PR only; no merge without Lauren.",
-      "next_action": "Linux worker: read Windows PR lrnolivia/rtxForge#22 (LibraryPage.xaml card templates, LibraryPage.xaml.cs ApplyGridMetrics, GamePage.xaml hero grid, GamePage.xaml.cs ApplyLayout), then apply the same card width, card-corner fix and detail-title layout in gui/rtxforge_gtk.py (and gui/game_mode.py if needed). Do not round the art's bottom corners. Claim this assignment in Relay before branching.",
+      "next_action": "Linux worker: read Windows PR lrnolivia/rtxForge#22 (LibraryPage.xaml card templates, LibraryPage.xaml.cs ApplyGridMetrics, GamePage.xaml hero grid, GamePage.xaml.cs ApplyLayout, PackagesPage.cs ExtrasPage.Art), then apply in gui/rtxforge_gtk.py (and gui/game_mode.py if needed): the card width, the card-corner fix, the detail-title layout, and Extras rows using the list view's wide capsule (98x46, art corner radius) with the review screen's 2px bezel in the game's accent color (.review-game.{art}). Do not round the art's bottom corners. Claim this assignment in Relay before branching.",
       "paths": [
         "gui/rtxforge_gtk.py",
         "gui/game_mode.py"
@@ -577,7 +577,7 @@
           }
         ]
       },
-      "amendment_count": 1,
+      "amendment_count": 2,
       "amendments": [
         {
           "at": "2026-10-14T22:37:36.541Z",
@@ -598,9 +598,23 @@
             "acceptance": "Linux desktop poster cards are wider at the default art scale (about 212 px), so fewer titles truncate, and the art stays exactly 2:3 with no cropping or gaps. The art's bottom edge stays square; the card's own bottom corners are rounded, with nothing poking past the edge. In Game Details, the title spans the full hero width above the actions, wraps only when needed, and has no extra gap before the meta line. Narrow layout still works. Light, dark and accent-selected cards and a long-title detail page are checked with screenshots. Existing GTK and Game Mode tests pass. Draft PR only; no merge without Lauren.",
             "next_action": "Linux worker: read Windows PR lrnolivia/rtxForge#22 (LibraryPage.xaml card templates, LibraryPage.xaml.cs ApplyGridMetrics, GamePage.xaml hero grid, GamePage.xaml.cs ApplyLayout), then apply the same card width, card-corner fix and detail-title layout in gui/rtxforge_gtk.py (and gui/game_mode.py if needed). Do not round the art's bottom corners. Claim this assignment in Relay before branching."
           }
+        },
+        {
+          "at": "2026-10-14T22:40:01.350Z",
+          "by": "claude-code-linux-loew-20261013",
+          "reason": "Lauren added on Windows: 'extras should use the same artwork style as list view', 'strokes from list view too on artwork', 'maybe use the review screen for the inspiration'. Windows commit 4ec1227 on PR #22.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Linux worker: read Windows PR lrnolivia/rtxForge#22 (LibraryPage.xaml card templates, LibraryPage.xaml.cs ApplyGridMetrics, GamePage.xaml hero grid, GamePage.xaml.cs ApplyLayout), then apply the same card width, card-corner fix and detail-title layout in gui/rtxforge_gtk.py (and gui/game_mode.py if needed). Do not round the art's bottom corners. Claim this assignment in Relay before branching."
+          },
+          "after": {
+            "next_action": "Linux worker: read Windows PR lrnolivia/rtxForge#22 (LibraryPage.xaml card templates, LibraryPage.xaml.cs ApplyGridMetrics, GamePage.xaml hero grid, GamePage.xaml.cs ApplyLayout, PackagesPage.cs ExtrasPage.Art), then apply in gui/rtxforge_gtk.py (and gui/game_mode.py if needed): the card width, the card-corner fix, the detail-title layout, and Extras rows using the list view's wide capsule (98x46, art corner radius) with the review screen's 2px bezel in the game's accent color (.review-game.{art}). Do not round the art's bottom corners. Claim this assignment in Relay before branching."
+          }
         }
       ],
-      "updated_at": "2026-10-14T22:37:36.541Z"
+      "updated_at": "2026-10-14T22:40:01.350Z"
     }
   ],
   "claims": [
