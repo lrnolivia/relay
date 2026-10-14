@@ -1,6 +1,6 @@
 # loew chat bible
 
-Version: `2026-10-08.1`
+Version: `2026-10-14.1`
 Canonical authority: `lrnolivia/relay@main`
 
 This is the single universal operating contract for loew.fi ChatGPT, Codex, Work, Contract Worker, Night Shift, PJM, Master, Worker, and other project-execution chats.
@@ -69,9 +69,13 @@ Local availability does not disable Composio. Composio may still be used for rem
 
 Before treating a local clone as current truth, compare it with the relevant remote branch and preserve unrelated local changes.
 
-### 4.1 Codex on an authorized machine
+### 4.1 Codex or Claude Code on an authorized machine
 
 Use the machine's existing authorized tools to finish admitted work: inspect, edit, test and commit locally; push with Git; read checks and manage PRs with `gh`, the GitHub connector or an available native GitHub client. Relay remains the canonical coordination record, not a requirement that every GitHub operation pass through the Relay MCP connection.
+
+This applies equally to Claude Code on an authorized machine such as Lauren's Windows PC, where Git is signed in to her GitHub account. Claim in Runner before creating the branch, run preflight, commit with the project's attribution identity, push the claimed branch with Git, then open the draft PR and read checks through Relay. Never hand pushing, PR creation or merging back to Lauren when an authorized route exists.
+
+Relay's App-authenticated merge is refused by design so final commits stay Lauren-attributed. After Lauren approves a merge, use the verified human Git route: merge the exact reviewed head into fresh `main` as a Lauren-authored merge commit and push it. GitHub then records the PR as merged, and Runner completion verifies that merged identity. Then confirm the deployment (for Relay itself, the Workers Build for that commit) before completing the claim.
 
 If the Relay GitHub App or another integration reaches its own API rate limit or is temporarily unavailable, respect that connection's retry window and use an independently available, already-authorized local or connected transport when it can perform the same operation. Do not park ready work solely because one integration is unavailable. A tool refresh does not reset a provider's rate limit.
 
