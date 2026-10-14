@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T03:47:52.039Z",
+  "updated_at": "2026-10-14T03:54:47.277Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1171,6 +1171,7 @@
       "paths": [
         "gui/rtxforge_gtk.py",
         "gui/couch_shell.py",
+        "gui/package_browser.py",
         "scripts/ui_colors.py",
         "tests/test_ui_colors.py",
         "tests/ui_actions_accents.py",
@@ -1194,7 +1195,7 @@
       ],
       "goal": "Back-port the Windows WinUI 3 desktop refinements to the Linux GTK build, fitted to libadwaita: Library behavior (click card opens Details window, checkmark selection, Install Selected (N), context menu, sidebar Library/Presets/Packages/Extras, Presets page and presets mode, compact header, single toolbar row, list view as one surface), perceptual OKLab accent selection and accent suggestions/eyedropper, and the five-stage operation flow (Presets, Checking, Review, Progress, Done) plus the same review shape for every other write. Sources: queued goal plus rtxForge-linux-port-brief.md (2026-10-13).",
       "acceptance": "Linux GTK matches the Windows behaviour in libadwaita idiom in Posters, Wide Capsule and List views, verified with screenshots in light/dark/night reviewed with Lauren; Details keeps its own window; every write stays review-then-execute; custom accents always win; accent picks match Windows on shared fixtures; existing tests pass; no engine/provider/windows changes; draft PR only, no merge without Lauren.",
-      "next_action": "Implement in an isolated worktree off origin/main in slices: library selection + click-to-details, sidebar + pages, presets mode, operation flow, accent algorithm; then screenshots and draft PR.",
+      "next_action": "Added gui/package_browser.py so Packages can be a full page in the main window (sidebar) while the dialog entry point keeps working. Library selection slice in progress; next sidebar, Presets page and presets mode, then the operation flow.",
       "category": "implementation",
       "tags": [
         "linux",
@@ -1224,6 +1225,8 @@
           }
         ]
       },
+      "updated_at": "2026-10-14T03:54:47.277Z",
+      "lease_until": "2026-10-14T15:54:47.277Z",
       "handoffs": [
         {
           "at": "2026-10-14T03:47:39.587Z",
@@ -1231,9 +1234,7 @@
           "to": "claude-code-linux-loew-20261013",
           "next_action": "Handoff recorded by the Linux Claude session on Lauren's explicit instruction (2026-10-13; Windows session unreachable). gui/ blocker rtxforge-shared-package-ui-20261002 is cancelled. Successor claims on rtxforge/linux-library-port off origin/main with the queued goal plus rtxForge-linux-port-brief.md; draft PR only."
         }
-      ],
-      "updated_at": "2026-10-14T03:47:52.039Z",
-      "lease_until": "2026-10-14T15:47:52.039Z"
+      ]
     }
   ]
 }
