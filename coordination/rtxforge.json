@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T05:35:10.249Z",
+  "updated_at": "2026-10-14T05:35:42.958Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1211,7 +1211,11 @@
         "gui/couch_shell.py",
         "gui/package_browser.py",
         "scripts/ui_colors.py",
+        "scripts/engine_bridge.py",
+        "scripts/proton_prefix.py",
         "tests/test_ui_colors.py",
+        "tests/test_proton_prefix.py",
+        "tests/test_steam_open_install.py",
         "tests/ui_actions_accents.py",
         "tests/ui_app_completion.py",
         "tests/ui_couch_review.py",
@@ -1229,11 +1233,12 @@
         "tests/ui_operation_flow.py"
       ],
       "resources": [
-        "rtxforge-linux-desktop-ui"
+        "rtxforge-linux-desktop-ui",
+        "rtxforge-steam-open-installs"
       ],
       "goal": "Back-port the Windows WinUI 3 desktop refinements to the Linux GTK build, fitted to libadwaita: Library behavior (click card opens Details window, checkmark selection, Install Selected (N), context menu, sidebar Library/Presets/Packages/Extras, Presets page and presets mode, compact header, single toolbar row, list view as one surface), perceptual OKLab accent selection and accent suggestions/eyedropper, and the five-stage operation flow (Presets, Checking, Review, Progress, Done) plus the same review shape for every other write. Sources: queued goal plus rtxForge-linux-port-brief.md (2026-10-13).",
       "acceptance": "Linux GTK matches the Windows behaviour in libadwaita idiom in Posters, Wide Capsule and List views, verified with screenshots in light/dark/night reviewed with Lauren; Details keeps its own window; every write stays review-then-execute; custom accents always win; accent picks match Windows on shared fixtures; existing tests pass; no engine/provider/windows changes; draft PR only, no merge without Lauren.",
-      "next_action": "Local branch rtxforge/linux-library-port at 4ae49be (not pushed): sidebar pages, Photos-style selection, presets page/mode, compact header default, one-dialog operation flow (Presets/Checking/Review/Progress/Done) and the same shape for every other reviewed write, centered page margins, OKLab accents matching ArtAccent.cs on shared fixtures, accent suggestions + loupe. UI tests: 10/13 pass (main: 8/13); remaining 3 fail identically on main (couch controls, couch→desktop, brand bytes). Next: Lauren reviews stage screenshots, then push + draft PR. Engine gap for the scripts/ owner (rtxforge-crossos-nr-dlss-unlocked-20261013 or the next engine claim): scripts/engine_bridge.py execute rolls back only on Cancel; a game failing part-way keeps half-written files and blocks reinstall (Windows works around it in windows/engine-host _GameSession/_undo_on_failure). Not patched from this GUI claim.",
+      "next_action": "Lauren 2026-10-14: installs must work with Steam open, above all in Game Mode (Steam always running). Adding scripts/proton_prefix.py + per-game Steam-open routing in scripts/engine_bridge.py (Proton prefix DllOverrides instead of localconfig.vdf LaunchOptions while Steam runs); folds in queued rtxforge-linux-steam-open-installs-20261014. Then port the new Windows Game Mode to gui/couch_shell.py.",
       "category": "implementation",
       "tags": [
         "linux",
@@ -1263,8 +1268,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-14T05:08:14.304Z",
-      "lease_until": "2026-10-14T17:08:14.304Z",
+      "updated_at": "2026-10-14T05:35:42.958Z",
+      "lease_until": "2026-10-14T17:35:42.958Z",
       "handoffs": [
         {
           "at": "2026-10-14T03:47:39.587Z",
