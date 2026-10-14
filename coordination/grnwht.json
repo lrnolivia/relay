@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "grnwht",
-  "updated_at": "2026-10-14T02:34:28.717Z",
+  "updated_at": "2026-10-14T03:05:55.705Z",
   "legacy_branches": [
     "main"
   ],
@@ -3003,8 +3003,8 @@
         "grnwht-memory-details-actions"
       ],
       "goal": "Prepare Lauren's requested Memory details cleanup in an isolated local worktree: one three-dot menu beside the title for Edit details, Save/Unsave, Save photo, and separately styled Remove memory; keep reactions/comments visible.",
-      "acceptance": "Return tested local patch and screenshots only; no merge, deployment, identity/history/integration/permission changes. Preserve author/moderator/member permissions, photo download and recoverable Remove/Keep confirmation, loading/errors, other viewers. Test narrow layouts, repeated actions and keyboard/Escape/outside dismissal.",
-      "next_action": "Tested patch handoff ready; retain this assignment/branch for parent review, no source push/PR/merge/deploy authorized. Local head8fdcd1cea8f98c0e3cee6db81a7b9539dee1b801 from main53a74f7, worktree /Users/lrnolivia/Codex/2026-10-13/task-4/gwfamily-memory-menu. Library libfile_fb5a273b2bb48191b9bd3ccd80c4c886 GW-memory-menu-tested-patch-and-screenshots.zip SHA2569a2a1ce7375901231c8a91589956efc9080680dde61cd04dae2a1d040f86a478 contains2commit patch, Git bundle,14screenshots,16criteria results per Chromium/WebKit and passing logs. Node22 buildbf725647e657c674b2f7, frontend1229/backend545 allPASS; browser0errors; source hashes match. Reference libfile_602a7e513fcc8191ba9cb4cdcaa76874 materialized/viewed. Fixture stopped; source writers quiescent. Remote branch remains53a74f7. Actual device/CI not run. No implementation blockers; checkpoint native send failed targetthreadnotfound but final parent auto notification applies. No identities/history/integrations/realpermissions/canonicalworktrees/historicalbranches/deployment modified.",
+      "acceptance": "Release the approved Memory title menu through ordinary admission, exact-head CI and preserved rollback. Verify production PR36 vs candidate base before promotion; no unrelated functional changes, identity migration, security-setting changes or new persistent grants. Preserve existing permissions, download/recoverable removal, reactions/comments. Verify exact deployed build and live behavior. Retain earlier tested patch/screenshots.",
+      "next_action": "Refresh exact PR36 production and main53a74f7 source comparison, resume this same admitted assignment, update only browser gates broken by action relocation, publish draft PR through existing authorized Source connection (local gh token invalid; no credential/security changes), run all required CI, then stage and deploy the sealed narrow artifact with PR36 rollback retained.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -3025,11 +3025,37 @@
             "id": "grnwht-memory-details-menu-20261014:acceptance:0",
             "text": "Return tested local patch and screenshots only; no merge, deployment, identity/history/integration/permission changes. Preserve author/moderator/member permissions, photo download and recoverable Remove/Keep confirmation, loading/errors, other viewers. Test narrow layouts, repeated actions and keyboard/Escape/outside dismissal.",
             "at": "2026-10-14T02:13:46.976Z"
+          },
+          {
+            "id": "grnwht-memory-details-menu-20261014:acceptance:1",
+            "text": "Release the approved Memory title menu through ordinary admission, exact-head CI and preserved rollback. Verify production PR36 vs candidate base before promotion; no unrelated functional changes, identity migration, security-setting changes or new persistent grants. Preserve existing permissions, download/recoverable removal, reactions/comments. Verify exact deployed build and live behavior. Retain earlier tested patch/screenshots.",
+            "at": "2026-10-14T03:05:55.705Z",
+            "reason": "Lauren approved the reviewed menu release through parent delegation: “back on my mac i approve all this lets go.” This authorizes bounded source publication, required CI, merge and deployment, while preserving GW repository identity and production-only scope."
           }
         ]
       },
-      "updated_at": "2026-10-14T02:34:28.717Z",
-      "lease_until": "2026-10-14T14:34:28.717Z"
+      "updated_at": "2026-10-14T03:05:55.705Z",
+      "lease_until": "2026-10-14T15:05:55.705Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-14T03:05:55.705Z",
+          "by": "01a1146d-0267-735e-8332-fa38cf7fb007",
+          "reason": "Lauren approved the reviewed menu release through parent delegation: “back on my mac i approve all this lets go.” This authorizes bounded source publication, required CI, merge and deployment, while preserving GW repository identity and production-only scope.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Return tested local patch and screenshots only; no merge, deployment, identity/history/integration/permission changes. Preserve author/moderator/member permissions, photo download and recoverable Remove/Keep confirmation, loading/errors, other viewers. Test narrow layouts, repeated actions and keyboard/Escape/outside dismissal.",
+            "next_action": "Tested patch handoff ready; retain this assignment/branch for parent review, no source push/PR/merge/deploy authorized. Local head8fdcd1cea8f98c0e3cee6db81a7b9539dee1b801 from main53a74f7, worktree /Users/lrnolivia/Codex/2026-10-13/task-4/gwfamily-memory-menu. Library libfile_fb5a273b2bb48191b9bd3ccd80c4c886 GW-memory-menu-tested-patch-and-screenshots.zip SHA2569a2a1ce7375901231c8a91589956efc9080680dde61cd04dae2a1d040f86a478 contains2commit patch, Git bundle,14screenshots,16criteria results per Chromium/WebKit and passing logs. Node22 buildbf725647e657c674b2f7, frontend1229/backend545 allPASS; browser0errors; source hashes match. Reference libfile_602a7e513fcc8191ba9cb4cdcaa76874 materialized/viewed. Fixture stopped; source writers quiescent. Remote branch remains53a74f7. Actual device/CI not run. No implementation blockers; checkpoint native send failed targetthreadnotfound but final parent auto notification applies. No identities/history/integrations/realpermissions/canonicalworktrees/historicalbranches/deployment modified."
+          },
+          "after": {
+            "acceptance": "Release the approved Memory title menu through ordinary admission, exact-head CI and preserved rollback. Verify production PR36 vs candidate base before promotion; no unrelated functional changes, identity migration, security-setting changes or new persistent grants. Preserve existing permissions, download/recoverable removal, reactions/comments. Verify exact deployed build and live behavior. Retain earlier tested patch/screenshots.",
+            "next_action": "Refresh exact PR36 production and main53a74f7 source comparison, resume this same admitted assignment, update only browser gates broken by action relocation, publish draft PR through existing authorized Source connection (local gh token invalid; no credential/security changes), run all required CI, then stage and deploy the sealed narrow artifact with PR36 rollback retained."
+          }
+        }
+      ]
     }
   ]
 }
