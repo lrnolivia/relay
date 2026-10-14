@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T05:08:14.304Z",
+  "updated_at": "2026-10-14T05:35:10.249Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -331,6 +331,44 @@
         }
       ],
       "updated_at": "2026-10-14T03:47:39.587Z"
+    },
+    {
+      "id": "rtxforge-linux-steam-open-installs-20261014",
+      "owner": "claude-code-linux-loew-20261013",
+      "goal": "Linux desktop installs, repairs and restores without closing Steam (Lauren 2026-10-14). When Steam is running, write rtxForge's Proton proxy override (the only launch setting the engine owns, WINEDLLOVERRIDES dxgi=n,b etc.) into the game's own Wine prefix registry (steamapps/compatdata/<appid>/pfx/user.reg, Software\\Wine\\DllOverrides) instead of Steam's localconfig.vdf, record exactly what changed, and undo it on Restore. Steam closed keeps today's LaunchOptions route. Games whose prefix does not exist yet, whose prefix is in use (game running), non-Steam shortcuts, and restores of LaunchOptions-route installs are reported per game in the review instead of a global 'Close Steam' refusal.",
+      "acceptance": "With Steam running: install/repair of a Steam game with an existing idle prefix succeeds and adds only the needed DllOverrides; restore removes exactly those values (user edits preserved); prefix in use / missing prefix / non-Steam / LaunchOptions-route restore are blocked per game with a next step; Steam closed behaviour unchanged; user.reg changes are part of the cancel/undo checkpoint; unit tests for user.reg parsing/editing/restore and the bridge route; Lauren live QA on a Proton game with Steam open. No engine/rtxengine.py or windows/ changes; draft PR only.",
+      "next_action": "Claim and implement on rtxforge/linux-library-port (stacked on the Linux UI branch, same owner) or a separate branch if Lauren prefers.",
+      "paths": [
+        "scripts/engine_bridge.py",
+        "scripts/proton_prefix.py",
+        "tests/test_proton_prefix.py",
+        "tests/test_steam_open_install.py"
+      ],
+      "resources": [
+        "rtxforge-steam-open-installs"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-14T05:35:10.249Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Linux desktop installs, repairs and restores without closing Steam (Lauren 2026-10-14). When Steam is running, write rtxForge's Proton proxy override (the only launch setting the engine owns, WINEDLLOVERRIDES dxgi=n,b etc.) into the game's own Wine prefix registry (steamapps/compatdata/<appid>/pfx/user.reg, Software\\Wine\\DllOverrides) instead of Steam's localconfig.vdf, record exactly what changed, and undo it on Restore. Steam closed keeps today's LaunchOptions route. Games whose prefix does not exist yet, whose prefix is in use (game running), non-Steam shortcuts, and restores of LaunchOptions-route installs are reported per game in the review instead of a global 'Close Steam' refusal.",
+          "acceptance": "With Steam running: install/repair of a Steam game with an existing idle prefix succeeds and adds only the needed DllOverrides; restore removes exactly those values (user edits preserved); prefix in use / missing prefix / non-Steam / LaunchOptions-route restore are blocked per game with a next step; Steam closed behaviour unchanged; user.reg changes are part of the cancel/undo checkpoint; unit tests for user.reg parsing/editing/restore and the bridge route; Lauren live QA on a Proton game with Steam open. No engine/rtxengine.py or windows/ changes; draft PR only.",
+          "at": "2026-10-14T05:35:10.249Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-steam-open-installs-20261014:acceptance:0",
+            "text": "With Steam running: install/repair of a Steam game with an existing idle prefix succeeds and adds only the needed DllOverrides; restore removes exactly those values (user edits preserved); prefix in use / missing prefix / non-Steam / LaunchOptions-route restore are blocked per game with a next step; Steam closed behaviour unchanged; user.reg changes are part of the cancel/undo checkpoint; unit tests for user.reg parsing/editing/restore and the bridge route; Lauren live QA on a Proton game with Steam open. No engine/rtxengine.py or windows/ changes; draft PR only.",
+            "at": "2026-10-14T05:35:10.249Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
