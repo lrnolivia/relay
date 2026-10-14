@@ -47,7 +47,7 @@ const requestProperties = {
   goal: text(2000),
   acceptance: text(4000),
   next_action: text(2000),
-  reason: text(1000),
+  reason: { ...text(1000), description: 'Why: required by amend and retire; with expected_head_sha, why a claim adopts an existing branch.' },
   task_class: taskClassSchema,
   ledger_refs: ledgerRefsSchema,
   category: categorySchema,
@@ -63,7 +63,7 @@ const requestProperties = {
   disposition: { type: 'string', enum: ['cancelled', 'superseded'] },
   superseded_by: identity,
   operation_id: identity,
-  expected_head_sha: { type: ['string', 'null'], pattern: '^[a-f0-9]{40}$', description: 'Retire only: exact branch head, or explicit null when the claimed branch is absent. Omit for queued work.' },
+  expected_head_sha: { type: ['string', 'null'], pattern: '^[a-f0-9]{40}$', description: 'Exact live branch head. Retire: the claimed branch head, or explicit null when that branch is absent; omit for queued work. Claim: adopts a branch that already exists (with reason); Relay reads the head back and refuses a moved or absent branch.' },
   pr: { type: 'integer', minimum: 1, maximum: 1000000 },
   work_accounted: { type: 'boolean' },
   evidence: text(4000)
@@ -137,7 +137,7 @@ const DEFINITIONS = [
   },
   {
     name: 'relay_runner_coordinate',
-    description: 'COMMAND / TRANSACTION — perform one CAS-protected Runner queue, claim, amend, rescope, heartbeat, hold, handoff, complete, retire, or reconcile mutation. Read relay_runner_assignments/project first to obtain the current expected_record_sha and ownership. Claim resolves base_sha server-side; callers must omit it. Completion requires a verified merged PR and synchronizes its queue row. Action-specific request fields are strict: heartbeat and hold require only id, owner and next_action; handoff requires only id, owner, successor and next_action. Do not pass branch or reason to these actions. rescope requires only id, owner, paths, resources and next_action; complete requires only id, owner, pr, work_accounted=true and evidence. reason is accepted only by amend, reconcile and retire. Do not pass next_action to complete. Handoff supports queued-only assignments without starting execution. Reconcile repairs only the claimed queue row of a completed claim with matching owner and original pr; it re-verifies the merged identity, preserves acceptance, and is idempotent. Retirement records cancelled/superseded work without delivery or deletion: require current owner, disposition, reason, evidence, operation_id and expected_head_sha for claims (null only for an absent branch); superseded also requires superseded_by. Stop writers and account for retained work before retiring. On conflict/uncertain outcome, refresh canonical state before retrying; never replay blindly or take over ownership implicitly.',
+    description: 'COMMAND / TRANSACTION — perform one CAS-protected Runner queue, claim, amend, rescope, heartbeat, hold, handoff, complete, retire, or reconcile mutation. Read relay_runner_assignments/project first to obtain the current expected_record_sha and ownership. Claim resolves base_sha server-side; callers must omit it. Claim normally admits a branch that does not exist yet; to adopt an existing branch, pass its exact live head as expected_head_sha plus a reason, which are recorded on the claim. Completion requires a verified merged PR and synchronizes its queue row. Action-specific request fields are strict: heartbeat and hold require only id, owner and next_action; handoff requires only id, owner, successor and next_action. Do not pass branch or reason to these actions. rescope requires only id, owner, paths, resources and next_action; complete requires only id, owner, pr, work_accounted=true and evidence. reason is accepted only by amend, reconcile, retire and an adopting claim. A validation error lists every unsupported and missing field with the action's full contract. Do not pass next_action to complete. Handoff supports queued-only assignments without starting execution. Reconcile repairs only the claimed queue row of a completed claim with matching owner and original pr; it re-verifies the merged identity, preserves acceptance, and is idempotent. Retirement records cancelled/superseded work without delivery or deletion: require current owner, disposition, reason, evidence, operation_id and expected_head_sha for claims (null only for an absent branch); superseded also requires superseded_by. Stop writers and account for retained work before retiring. On conflict/uncertain outcome, refresh canonical state before retrying; never replay blindly or take over ownership implicitly.',
     inputSchema: schema({
       project: projectSchema,
       action: { type: 'string', enum: MUTATIONS },
