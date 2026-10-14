@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T05:51:01.978Z",
+  "updated_at": "2026-10-14T09:37:48.284Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1398,7 +1398,7 @@
       ],
       "goal": "Sole owner of the Linux rtxForge software (Lauren 2026-10-14): gui/, engine/, packaging/, providers/, Linux scripts/ and tests/, launchers and Linux workflows. Current work: (1) the Windows WinUI 3 desktop refinements fitted to GTK/libadwaita (sidebar pages, Photos-style selection, presets mode, compact header, one-dialog operation flow for every reviewed write, OKLab accents, size slider); (2) installs/repairs/restores with Steam open, above all in Game Mode, via per-game Proton prefix DllOverrides instead of localconfig.vdf LaunchOptions while Steam runs; (3) port the new Windows Game Mode to gui/couch_shell.py in GTK. Windows-only code (windows/, scripts/steam_self_install.py, tests/test_steam_self_install.py) stays with rtxforge-windows-winui-port-20261013; other sessions coordinate Linux changes through this owner.",
       "acceptance": "Linux desktop matches the Windows behaviour in libadwaita idiom (screenshots light/dark/night reviewed with Lauren); every write stays review-then-execute; custom accents always win; accent picks match Windows on shared fixtures; installs work with Steam open (prefix route, per-game blocking with next steps, exact restore) and in Game Mode; Game Mode matches the new Windows Game Mode on GTK; existing tests pass or fail only as on main; no windows/ changes; draft PR only, no merge without Lauren.",
-      "next_action": "Sole Linux owner. Added scripts/cross_os.py: shared install record <game>/.rtxforge-install.json (schema 1: os, provider, mode, proxy, per-file sha256, proton_overrides) written after each install on either OS (OS-detected), removed on restore. Linux recognises intact Windows installs and adapts them (Install = add the Proton prefix setting only, Steam may stay open; Restore = remove that setting, originals restore on Windows); Windows (same shared scripts) blocks Install/Restore of Linux installs with a reason since they load natively. Tiny OS badges in the Library. Windows UI wiring queued as rtxforge-windows-cross-os-installs-20261014; brief at G:/rtxForge-cross-os-brief.md. Next: port the new Windows Game Mode to gui/couch_shell.py.",
+      "next_action": "Sole Linux owner. Game Mode ported from the Windows design to GTK (gui/game_mode.py, commit 76072d8): Library/Presets/Settings tabs, Game Details sections, modals, controller/keyboard hints, Night/Dark/Light tokens. GameModeFlow runs every reviewed write (install, restore, DLSS update, artwork, recovery) as Game Mode dialogs, so installs work inside Steam Game Mode with Steam open. Controller X = select. The old couch tests are retired; new tests/ui_game_mode.py. 12/13 UI tests pass (ui_settings_refinements also fails on main); 179 unit tests pass. Smoke checks fixed in 9add4a3. Installed locally. Next: Lauren's live QA on the Deck/Game Mode. No push, PR, merge or release without Lauren.",
       "category": "implementation",
       "tags": [
         "linux",
@@ -1434,8 +1434,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-14T05:50:34.561Z",
-      "lease_until": "2026-10-14T17:50:34.561Z",
+      "updated_at": "2026-10-14T09:37:48.284Z",
+      "lease_until": "2026-10-14T21:37:48.284Z",
       "handoffs": [
         {
           "at": "2026-10-14T03:47:39.587Z",
