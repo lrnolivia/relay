@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T21:56:33.753Z",
+  "updated_at": "2026-10-14T21:59:37.282Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1575,6 +1575,54 @@
       "evidence": "Lauren approved PR #17 on 2026-10-14 ('approved. and finish up the other stuff'). Merged with her verified git route: merge commit c08be841b867681f77a3e3429d8604276d1635fa into main, merged_by lrnolivia, head 6c9e296cf3ac8b9f6c2f4fe2d696ca7d63142ce4. CI at that head was all green: WinUI 3 x64/ARM64, native/KDE/Wayland review, coordination admission, commit attribution. 46 engine tests passed on the merged tree. Included: the WinUI 3 app, bundled engine, Game Mode, installer, cross-OS adaptation (PR #20), OS badges, and interrupted-run recovery. Installed and run on Lauren's PC against her real library. Add-to-Steam logo centering was already implemented and tested (steam_self_install.logo_position, tests/test_steam_self_install.py). Not verified: a real dual-boot game, ARM64 at runtime, code signing (needs the Azure Artifact Signing account). Queued Linux follow-ups rtxforge-linux-poster-os-badge-20261014 and rtxforge-linux-details-os-badge-20261014 are now unblocked.",
       "work_accounted": true,
       "completed_at": "2026-10-14T21:56:33.753Z"
+    },
+    {
+      "id": "rtxforge-windows-dlss-override-warning-20261014",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/windows-dlss-override-warning-20261014",
+      "paths": [
+        "windows/engine-host/sl_override.py",
+        "windows/tests/test_sl_override.py",
+        "windows/engine-host/win_features.py",
+        "windows/engine-host/rtxforge_win_host.py",
+        "windows/RtxForge.Windows/Controls/OperationDialog.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Features.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Operations.cs",
+        "windows/RtxForge.Windows/MainWindow.Features.cs",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.Features.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs"
+      ],
+      "resources": [
+        "rtxforge-dlss-override-warning"
+      ],
+      "goal": "Bring stranded Windows work to GitHub. Lauren 2026-10-14 ('finish up the other stuff'): the old local checkout C:/Users/lrnol/Repos/rtxForge-win has a history unrelated to GitHub's, and its commit 5c9c3fe ('Warn when NVIDIA App's DLSS Override replaces a game's Streamline', 2026-10-13) never reached GitHub. The feature: read-only sl_override detection (the game's OptiScaler.log, NVIDIA App's ProgramData NGX sl_*_override folders, the provider's Streamline version), a warning in Diagnose NR (desktop and Game Mode), and a non-blocking warning row in the install review. Cherry-pick it onto current main and keep it working with today's merged changes.",
+      "acceptance": "windows/engine-host/sl_override.py and windows/tests/test_sl_override.py land on main with the UI wiring. Its tests pass, the Windows app builds, and CI is green. Draft PR; merge only with Lauren's approval.",
+      "next_action": "Cherry-pick 5c9c3fe from the local rtxForge-win checkout onto origin/main, resolve conflicts with today's changes, run tests and build, push, open the draft PR through Relay.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "c08be841b867681f77a3e3429d8604276d1635fa",
+      "state": "active",
+      "created_at": "2026-10-14T21:59:37.282Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Bring stranded Windows work to GitHub. Lauren 2026-10-14 ('finish up the other stuff'): the old local checkout C:/Users/lrnol/Repos/rtxForge-win has a history unrelated to GitHub's, and its commit 5c9c3fe ('Warn when NVIDIA App's DLSS Override replaces a game's Streamline', 2026-10-13) never reached GitHub. The feature: read-only sl_override detection (the game's OptiScaler.log, NVIDIA App's ProgramData NGX sl_*_override folders, the provider's Streamline version), a warning in Diagnose NR (desktop and Game Mode), and a non-blocking warning row in the install review. Cherry-pick it onto current main and keep it working with today's merged changes.",
+          "acceptance": "windows/engine-host/sl_override.py and windows/tests/test_sl_override.py land on main with the UI wiring. Its tests pass, the Windows app builds, and CI is green. Draft PR; merge only with Lauren's approval.",
+          "at": "2026-10-14T21:59:37.282Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-windows-dlss-override-warning-20261014:acceptance:0",
+            "text": "windows/engine-host/sl_override.py and windows/tests/test_sl_override.py land on main with the UI wiring. Its tests pass, the Windows app builds, and CI is green. Draft PR; merge only with Lauren's approval.",
+            "at": "2026-10-14T21:59:37.282Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-14T21:59:37.282Z",
+      "lease_until": "2026-10-15T09:59:37.282Z"
     }
   ]
 }
