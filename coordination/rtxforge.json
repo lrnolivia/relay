@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T22:23:21.735Z",
+  "updated_at": "2026-10-14T22:27:29.982Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1629,6 +1629,46 @@
       "evidence": "Lauren approved: 'Merge PR #21 the same way, reinstall rtxForge on my PC, and keep SignPath as it is.' Stranded commit 5c9c3fe was cherry-picked from the old rtxForge-win checkout with no conflicts (head 9259d6025b3f802ab9c4fbd4be36b4277a79cf0d); its 13 sl_override tests pass and the app builds. CI was green: WinUI 3 x64/ARM64, coordination admission, commit attribution. Merged with her verified git route: merge commit b04614c76cea52bbd2ec9fc8c5d6f75d6560ec13 into main, merged_by lrnolivia. SignPath stays as it is, per Lauren (the local 'Ship unsigned' commit 5dc3b61 is intentionally not ported). The old checkout's tip is kept as local branch backup/rtxforge-win-local-20261014.",
       "work_accounted": true,
       "completed_at": "2026-10-14T22:23:21.735Z"
+    },
+    {
+      "id": "rtxforge-windows-wider-poster-cards-20261014",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/windows-wider-poster-cards-20261014",
+      "paths": [
+        "windows/RtxForge.Windows/Views/LibraryPage.xaml",
+        "windows/RtxForge.Windows/Views/LibraryPage.xaml.cs"
+      ],
+      "resources": [
+        "rtxforge-windows-library-cards"
+      ],
+      "goal": "Lauren 2026-10-14: 'i still feel like the poster cards could be bigger. mainly wider so the titles dont get truncated as much. but keep the aspect ratio so posters still fit snuggly. and round the bottom corners to match the top corners of the artwork.' Widen the Windows library poster cards (art stays 2:3 and fits exactly), and round the card's bottom corners to the same radius as the art's top corners.",
+      "acceptance": "Poster cards are wider at the default size, so fewer titles are truncated. Poster art stays exactly 2:3 with no cropping or gaps. The card's bottom corners use the same radius as the art's top corners. The app builds and CI is green. Draft PR; merge only with Lauren's approval.",
+      "next_action": "Raise the preferred poster width in ApplyGridMetrics and round the card fill's bottom corners in LibraryPage.xaml, then build, preview, push and open a draft PR through Relay.",
+      "category": "design",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "base_sha": "b04614c76cea52bbd2ec9fc8c5d6f75d6560ec13",
+      "state": "active",
+      "created_at": "2026-10-14T22:27:29.982Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren 2026-10-14: 'i still feel like the poster cards could be bigger. mainly wider so the titles dont get truncated as much. but keep the aspect ratio so posters still fit snuggly. and round the bottom corners to match the top corners of the artwork.' Widen the Windows library poster cards (art stays 2:3 and fits exactly), and round the card's bottom corners to the same radius as the art's top corners.",
+          "acceptance": "Poster cards are wider at the default size, so fewer titles are truncated. Poster art stays exactly 2:3 with no cropping or gaps. The card's bottom corners use the same radius as the art's top corners. The app builds and CI is green. Draft PR; merge only with Lauren's approval.",
+          "at": "2026-10-14T22:27:29.982Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-windows-wider-poster-cards-20261014:acceptance:0",
+            "text": "Poster cards are wider at the default size, so fewer titles are truncated. Poster art stays exactly 2:3 with no cropping or gaps. The card's bottom corners use the same radius as the art's top corners. The app builds and CI is green. Draft PR; merge only with Lauren's approval.",
+            "at": "2026-10-14T22:27:29.982Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-14T22:27:29.982Z",
+      "lease_until": "2026-10-15T10:27:29.982Z"
     }
   ]
 }
