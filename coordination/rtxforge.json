@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-15T00:15:02.014Z",
+  "updated_at": "2026-10-15T00:15:28.409Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1851,14 +1851,16 @@
         "windows/engine-host/",
         "windows/tests/",
         "windows/RtxForge.Windows/App.xaml.cs",
-        "windows/RtxForge.Windows/MainWindow.GameMode.cs"
+        "windows/RtxForge.Windows/MainWindow.GameMode.cs",
+        "windows/RtxForge.Windows/GameMode/GamepadInput.cs"
       ],
       "resources": [
-        "rtxforge-windows-steam-launch"
+        "rtxforge-windows-steam-launch",
+        "rtxforge-windows-gamepad-input"
       ],
       "goal": "Fix Windows launch through Steam and configure the app shortcut to open Game Mode.",
       "acceptance": "Steam launch opens the installed app in Game Mode; ordinary desktop launch continues to work; relevant tests and Windows build pass.",
-      "next_action": "Compare direct launch with Steam crash evidence, then correct the evidenced cause in an isolated current checkout.",
+      "next_action": "Fix evidenced InvalidCastException enumerating Windows.Gaming.Input controllers under Steam; configure Game Mode launch options and test.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1881,8 +1883,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-15T00:15:02.014Z",
-      "lease_until": "2026-10-15T12:15:02.014Z"
+      "updated_at": "2026-10-15T00:15:28.409Z",
+      "lease_until": "2026-10-15T12:15:28.409Z"
     }
   ]
 }
