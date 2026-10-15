@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-14T22:53:56.123Z",
+  "updated_at": "2026-10-15T00:15:02.014Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1842,6 +1842,47 @@
       "evidence": "Lauren approved: 'Merge PR #23 the same way once CI is green, and reinstall rtxForge on my PC.' She had seen it live: 'looks great to me'. Head f046f9c831147f65cd07d8cd3d61f43de387849c hides the titlebar brand while the full Library hero shows and slides it in (280 ms) when the hero collapses or another page opens. CI passed: WinUI 3 x64/ARM64, commit attribution, coordination admission. Merged as Lauren with git --no-ff: merge commit bbed9a66c5c5b4508dad2ffe951399a7d6cb377b on main, merged_by lrnolivia. Linux follow-up queued as rtxforge-linux-titlebar-brand-reveal-20261014.",
       "work_accounted": true,
       "completed_at": "2026-10-14T22:53:56.123Z"
+    },
+    {
+      "id": "rtxforge-windows-steam-launch-20261014",
+      "owner": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
+      "branch": "rtxforge/windows-steam-launch-20261014",
+      "paths": [
+        "windows/engine-host/",
+        "windows/tests/",
+        "windows/RtxForge.Windows/App.xaml.cs",
+        "windows/RtxForge.Windows/MainWindow.GameMode.cs"
+      ],
+      "resources": [
+        "rtxforge-windows-steam-launch"
+      ],
+      "goal": "Fix Windows launch through Steam and configure the app shortcut to open Game Mode.",
+      "acceptance": "Steam launch opens the installed app in Game Mode; ordinary desktop launch continues to work; relevant tests and Windows build pass.",
+      "next_action": "Compare direct launch with Steam crash evidence, then correct the evidenced cause in an isolated current checkout.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "bbed9a66c5c5b4508dad2ffe951399a7d6cb377b",
+      "state": "active",
+      "created_at": "2026-10-15T00:15:02.014Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Fix Windows launch through Steam and configure the app shortcut to open Game Mode.",
+          "acceptance": "Steam launch opens the installed app in Game Mode; ordinary desktop launch continues to work; relevant tests and Windows build pass.",
+          "at": "2026-10-15T00:15:02.014Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-windows-steam-launch-20261014:acceptance:0",
+            "text": "Steam launch opens the installed app in Game Mode; ordinary desktop launch continues to work; relevant tests and Windows build pass.",
+            "at": "2026-10-15T00:15:02.014Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-15T00:15:02.014Z",
+      "lease_until": "2026-10-15T12:15:02.014Z"
     }
   ]
 }
