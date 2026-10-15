@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "bazzite-custom",
-  "updated_at": "2026-10-15T02:06:34.834Z",
+  "updated_at": "2026-10-15T03:18:06.591Z",
   "legacy_branches": [
     "docs/move-to-runner",
     "fix/keyd-containerfile-heredocs",
@@ -14,8 +14,8 @@
       "id": "steam-adwaita-game-page-port",
       "owner": "lauren",
       "goal": "Port Lauren's finished Windows Steam game-page and Play-button design to Linux Adwaita Steam with GTK refinements, plus Decky CSS Loader and Big Picture/Game Mode. Execute on a Linux host only after Desktop design approval.",
-      "acceptance": "Wait for approved versioned export. Match seamless hero/acrylic/solid blend, animated sticky platter, common gutters, pill navigation, unified news/patch-note category/title header plus side-by-side media/summary and footer calendar/date left, visible reactions right; correct poster and paginated five-feature right panel; balanced sidebar and accent Play controls. Adapt to Adwaita/GTK and existing Game Mode identity. Verify Linux loader coexistence, controller input, scrolling, short/non-Steam pages, logo fitting/native centering and per-game accent picking/persistence. Omit voluntary AI/tool/vendor attribution and preserve licenses; use verified human owner Git identity.",
-      "next_action": "Wait for finished Windows Desktop approval and versioned export. Current source: C:\\Program Files (x86)\\Steam\\millennium\\themes\\fluenty (libraryFeed.css, config/playButtonAlignment.css, artworkAccent.js, libraryExtras.js) plus C:\\Users\\lrnol\\homebrew\\themes\\Artwork Play Buttons and Seamless Gameview. Desktop is still being refined; do not use transient screenshots as final truth. Inspect Linux Adwaita/loader versions and claim actual implementation paths before any port work. No Linux build or deployment on Windows.",
+      "acceptance": "Use the approved frozen Desktop-2026-10-14.2 export (SHA256 652415de58921be62852d34bf7683fa4e0851e6df0a0f4493986165f4fcc5019). Match the seamless hero/reflected-artwork/solid blend, animated sticky platter, common gutters, pill navigation, unified news/patch-note header with type-specific glyphs, side-by-side media/summary, date left and visible reactions right; correct poster and paginated five-feature panel; balanced sidebar; centered Play contents and readable hue-preserving accent foregrounds. Preserve saved accent sampling, clickable wide capsule preview, and exact-match metadata/news for newly added non-Steam games with info collapsed by default and a working info toggle. Keep Artwork Play Buttons and Seamless Gameview as separate CSS Loader themes alongside existing themes. Adapt to Adwaita/GTK and the existing Game Mode identity. Effects currently use CSS reflected artwork and backdrop-filter, not native Windows acrylic; verify Chromium support and solid-surface fallback on Linux. Verify Linux loader coexistence, controller focus/input, scrolling, short/non-Steam pages, logo fitting/native centering and color persistence. Omit voluntary AI/tool/vendor attribution, preserve licenses, and use verified human owner Git identity.",
+      "next_action": "Desktop is frozen in C:\\Users\\lrnol\\Documents\\Steam Theme\\Desktop-2026-10-14.2.zip, SHA256 652415de58921be62852d34bf7683fa4e0851e6df0a0f4493986165f4fcc5019; 130 source files plus snapshot.json, archive integrity and every file hash verified. This supersedes .1. Obtain this exact archive on the Linux host before port work; the local Windows path is not itself a transferable artifact. Source remains C:\\Program Files (x86)\\Steam\\millennium\\themes\\fluenty, plus C:\\Users\\lrnol\\homebrew\\themes\\Artwork Play Buttons and Seamless Gameview. Include libraryExtras.js, artworkAccent.js, nativeLogoCenter.js and nonSteamMetadata.js. Non-Steam fetches currently use Decky's fetchNoCors proxy, so verify or provide an equivalent authorized local fetch path. Big Picture visual/controller validation remains next on Windows; retain separate themes. Activity/News Hub/Calendar larger restyles are deferred; preserve News Hub's identity. Inspect Linux loader versions and claim actual implementation paths before execution. No Linux build or deployment on Windows.",
       "paths": [
         "docs/bazzite-custom/"
       ],
@@ -32,7 +32,7 @@
         "linux",
         "decky",
         "game-mode",
-        "waiting-for-desktop-design"
+        "desktop-export-ready"
       ],
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -52,9 +52,53 @@
             "id": "steam-adwaita-game-page-port:acceptance:0",
             "text": "Wait for approved versioned export. Match seamless hero/acrylic/solid blend, animated sticky platter, common gutters, pill navigation, unified news/patch-note category/title header plus side-by-side media/summary and footer calendar/date left, visible reactions right; correct poster and paginated five-feature right panel; balanced sidebar and accent Play controls. Adapt to Adwaita/GTK and existing Game Mode identity. Verify Linux loader coexistence, controller input, scrolling, short/non-Steam pages, logo fitting/native centering and per-game accent picking/persistence. Omit voluntary AI/tool/vendor attribution and preserve licenses; use verified human owner Git identity.",
             "at": "2026-10-15T02:06:34.834Z"
+          },
+          {
+            "id": "steam-adwaita-game-page-port:acceptance:1",
+            "text": "Use the approved frozen Desktop-2026-10-14.2 export (SHA256 652415de58921be62852d34bf7683fa4e0851e6df0a0f4493986165f4fcc5019). Match the seamless hero/reflected-artwork/solid blend, animated sticky platter, common gutters, pill navigation, unified news/patch-note header with type-specific glyphs, side-by-side media/summary, date left and visible reactions right; correct poster and paginated five-feature panel; balanced sidebar; centered Play contents and readable hue-preserving accent foregrounds. Preserve saved accent sampling, clickable wide capsule preview, and exact-match metadata/news for newly added non-Steam games with info collapsed by default and a working info toggle. Keep Artwork Play Buttons and Seamless Gameview as separate CSS Loader themes alongside existing themes. Adapt to Adwaita/GTK and the existing Game Mode identity. Effects currently use CSS reflected artwork and backdrop-filter, not native Windows acrylic; verify Chromium support and solid-surface fallback on Linux. Verify Linux loader coexistence, controller focus/input, scrolling, short/non-Steam pages, logo fitting/native centering and color persistence. Omit voluntary AI/tool/vendor attribution, preserve licenses, and use verified human owner Git identity.",
+            "at": "2026-10-15T03:18:06.591Z",
+            "reason": "Desktop game-page design approved; final picker spacing corrected and verified live. Preserve the frozen export for the later Linux port."
           }
         ]
-      }
+      },
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-15T03:18:06.591Z",
+          "by": "lauren",
+          "reason": "Desktop game-page design approved; final picker spacing corrected and verified live. Preserve the frozen export for the later Linux port.",
+          "fields": [
+            "acceptance",
+            "next_action",
+            "tags"
+          ],
+          "before": {
+            "acceptance": "Wait for approved versioned export. Match seamless hero/acrylic/solid blend, animated sticky platter, common gutters, pill navigation, unified news/patch-note category/title header plus side-by-side media/summary and footer calendar/date left, visible reactions right; correct poster and paginated five-feature right panel; balanced sidebar and accent Play controls. Adapt to Adwaita/GTK and existing Game Mode identity. Verify Linux loader coexistence, controller input, scrolling, short/non-Steam pages, logo fitting/native centering and per-game accent picking/persistence. Omit voluntary AI/tool/vendor attribution and preserve licenses; use verified human owner Git identity.",
+            "next_action": "Wait for finished Windows Desktop approval and versioned export. Current source: C:\\Program Files (x86)\\Steam\\millennium\\themes\\fluenty (libraryFeed.css, config/playButtonAlignment.css, artworkAccent.js, libraryExtras.js) plus C:\\Users\\lrnol\\homebrew\\themes\\Artwork Play Buttons and Seamless Gameview. Desktop is still being refined; do not use transient screenshots as final truth. Inspect Linux Adwaita/loader versions and claim actual implementation paths before any port work. No Linux build or deployment on Windows.",
+            "tags": [
+              "steam",
+              "adwaita",
+              "linux",
+              "decky",
+              "game-mode",
+              "waiting-for-desktop-design"
+            ]
+          },
+          "after": {
+            "acceptance": "Use the approved frozen Desktop-2026-10-14.2 export (SHA256 652415de58921be62852d34bf7683fa4e0851e6df0a0f4493986165f4fcc5019). Match the seamless hero/reflected-artwork/solid blend, animated sticky platter, common gutters, pill navigation, unified news/patch-note header with type-specific glyphs, side-by-side media/summary, date left and visible reactions right; correct poster and paginated five-feature panel; balanced sidebar; centered Play contents and readable hue-preserving accent foregrounds. Preserve saved accent sampling, clickable wide capsule preview, and exact-match metadata/news for newly added non-Steam games with info collapsed by default and a working info toggle. Keep Artwork Play Buttons and Seamless Gameview as separate CSS Loader themes alongside existing themes. Adapt to Adwaita/GTK and the existing Game Mode identity. Effects currently use CSS reflected artwork and backdrop-filter, not native Windows acrylic; verify Chromium support and solid-surface fallback on Linux. Verify Linux loader coexistence, controller focus/input, scrolling, short/non-Steam pages, logo fitting/native centering and color persistence. Omit voluntary AI/tool/vendor attribution, preserve licenses, and use verified human owner Git identity.",
+            "next_action": "Desktop is frozen in C:\\Users\\lrnol\\Documents\\Steam Theme\\Desktop-2026-10-14.2.zip, SHA256 652415de58921be62852d34bf7683fa4e0851e6df0a0f4493986165f4fcc5019; 130 source files plus snapshot.json, archive integrity and every file hash verified. This supersedes .1. Obtain this exact archive on the Linux host before port work; the local Windows path is not itself a transferable artifact. Source remains C:\\Program Files (x86)\\Steam\\millennium\\themes\\fluenty, plus C:\\Users\\lrnol\\homebrew\\themes\\Artwork Play Buttons and Seamless Gameview. Include libraryExtras.js, artworkAccent.js, nativeLogoCenter.js and nonSteamMetadata.js. Non-Steam fetches currently use Decky's fetchNoCors proxy, so verify or provide an equivalent authorized local fetch path. Big Picture visual/controller validation remains next on Windows; retain separate themes. Activity/News Hub/Calendar larger restyles are deferred; preserve News Hub's identity. Inspect Linux loader versions and claim actual implementation paths before execution. No Linux build or deployment on Windows.",
+            "tags": [
+              "steam",
+              "adwaita",
+              "linux",
+              "decky",
+              "game-mode",
+              "desktop-export-ready"
+            ]
+          }
+        }
+      ],
+      "updated_at": "2026-10-15T03:18:06.591Z"
     }
   ],
   "claims": [
