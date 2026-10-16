@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-16T06:00:47.515Z",
+  "updated_at": "2026-10-16T06:06:04.053Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -656,7 +656,7 @@
       "owner": "claude-code-linux-loew-20261013",
       "goal": "Lauren requested a Relay note to the Linux worker: check install/restore scope so Available or a few selected games never triggers the entire library. This is a queued note, not a worker launch or authorization to take over other active work.",
       "acceptance": "Verify GTK desktop and Game Mode: explicit selection wins; otherwise current filter/search limits targets; empty/stale selections never expand to all; only reviewed targets execute. Add regression tests against current Linux source and report exact tested identity. Preserve other active ownership.",
-      "next_action": "Read Windows fix branch rtxforge/windows-operation-scope-20261016 (PR forthcoming). Windows root causes: null targets fell back to all games; stale Library pages retained compact-toolbar subscriptions after navigation. Source main2818b99 shows similar Linux hazards: gui/game_mode.py~954 uses selected_games() if selecting else None, restore uses (targets or owner.games), and gui/rtxforge_gtk.py~9339 selected_or_library returns selected or list(self.games); launch_action~12978 uses self.games for entire=True. Check actual Linux current branch rather than assuming identical event lifetime. Reproduce Available+search, 2 selected install/1 selected installed restore, empty selection, stale IDs and repeated page navigation. Lauren's instruction in this chat: 'give linux worker a note on relay to check it.'",
+      "next_action": "Check current Linux GTK desktop/Game Mode for Lauren's report: Available or a few selected games still traverses whole library. Reference merged Windows PR25 https://github.com/lrnolivia/rtxForge/pull/25; source5274bb32bcc3d2a7d37137099e4ddbefcaa9211a, merge4ee65a99b43a9ec15f6d955ad19e666a5a03c8c2. Windows fixes explicit selected-or-filtered targets, empty/stale selections, and inactive Library-page toolbar subscriptions. Windows19scope checks/native desktop four scenarios/x64+ARM64CI passed; installed locally. At main2818b99 Linux gui/game_mode.py~954 uses selected_games() if selecting else None and restore(targets or owner.games); gui/rtxforge_gtk.py~9339 selected_or_library returns selected or list(self.games), launch_action~12978 uses whole self.games for entire=True. Reproduce Available+search, two selected install/one installed selected restore, empty/stale IDs and repeated navigation; verify only reviewed targets execute. Inspect current Linux branch; no claim of identical event lifetime. Lauren explicitly requested a Relay note only, no new worker launch. Preserve active ownership.",
       "paths": [
         "gui/rtxforge_gtk.py",
         "gui/game_mode.py"
@@ -685,7 +685,25 @@
             "at": "2026-10-16T05:59:53.293Z"
           }
         ]
-      }
+      },
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-16T06:06:04.053Z",
+          "by": "claude-code-linux-loew-20261013",
+          "reason": "Windows fix is now merged and locally installed; add immutable source and review links to Lauren's Linux-worker note.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Read Windows fix branch rtxforge/windows-operation-scope-20261016 (PR forthcoming). Windows root causes: null targets fell back to all games; stale Library pages retained compact-toolbar subscriptions after navigation. Source main2818b99 shows similar Linux hazards: gui/game_mode.py~954 uses selected_games() if selecting else None, restore uses (targets or owner.games), and gui/rtxforge_gtk.py~9339 selected_or_library returns selected or list(self.games); launch_action~12978 uses self.games for entire=True. Check actual Linux current branch rather than assuming identical event lifetime. Reproduce Available+search, 2 selected install/1 selected installed restore, empty selection, stale IDs and repeated page navigation. Lauren's instruction in this chat: 'give linux worker a note on relay to check it.'"
+          },
+          "after": {
+            "next_action": "Check current Linux GTK desktop/Game Mode for Lauren's report: Available or a few selected games still traverses whole library. Reference merged Windows PR25 https://github.com/lrnolivia/rtxForge/pull/25; source5274bb32bcc3d2a7d37137099e4ddbefcaa9211a, merge4ee65a99b43a9ec15f6d955ad19e666a5a03c8c2. Windows fixes explicit selected-or-filtered targets, empty/stale selections, and inactive Library-page toolbar subscriptions. Windows19scope checks/native desktop four scenarios/x64+ARM64CI passed; installed locally. At main2818b99 Linux gui/game_mode.py~954 uses selected_games() if selecting else None and restore(targets or owner.games); gui/rtxforge_gtk.py~9339 selected_or_library returns selected or list(self.games), launch_action~12978 uses whole self.games for entire=True. Reproduce Available+search, two selected install/one installed selected restore, empty/stale IDs and repeated navigation; verify only reviewed targets execute. Inspect current Linux branch; no claim of identical event lifetime. Lauren explicitly requested a Relay note only, no new worker launch. Preserve active ownership."
+          }
+        }
+      ],
+      "updated_at": "2026-10-16T06:06:04.053Z"
     }
   ],
   "claims": [
