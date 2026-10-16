@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-16T05:52:20.459Z",
+  "updated_at": "2026-10-16T05:59:53.293Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -647,6 +647,42 @@
             "id": "rtxforge-linux-titlebar-brand-reveal-20261014:acceptance:0",
             "text": "On the Linux desktop with compact mode off, the HeaderBar shows no brand while the full Library dashboard hero is visible. Collapsing the hero (scrolling or compact mode) or opening another page reveals the brand with a short slide-and-fade (a Gtk.Revealer slide-right/crossfade or CSS transition of about 280 ms); returning to the full hero hides it. Compact mode keeps the brand as today, and the HeaderBar layout does not jump. Checked with screenshots in light and dark. Existing GTK tests pass. Draft PR only; no merge without Lauren.",
             "at": "2026-10-14T22:49:47.372Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-linux-operation-scope-check-20261016",
+      "owner": "claude-code-linux-loew-20261013",
+      "goal": "Lauren requested a Relay note to the Linux worker: check install/restore scope so Available or a few selected games never triggers the entire library. This is a queued note, not a worker launch or authorization to take over other active work.",
+      "acceptance": "Verify GTK desktop and Game Mode: explicit selection wins; otherwise current filter/search limits targets; empty/stale selections never expand to all; only reviewed targets execute. Add regression tests against current Linux source and report exact tested identity. Preserve other active ownership.",
+      "next_action": "Read Windows fix branch rtxforge/windows-operation-scope-20261016 (PR forthcoming). Windows root causes: null targets fell back to all games; stale Library pages retained compact-toolbar subscriptions after navigation. Source main2818b99 shows similar Linux hazards: gui/game_mode.py~954 uses selected_games() if selecting else None, restore uses (targets or owner.games), and gui/rtxforge_gtk.py~9339 selected_or_library returns selected or list(self.games); launch_action~12978 uses self.games for entire=True. Check actual Linux current branch rather than assuming identical event lifetime. Reproduce Available+search, 2 selected install/1 selected installed restore, empty selection, stale IDs and repeated page navigation. Lauren's instruction in this chat: 'give linux worker a note on relay to check it.'",
+      "paths": [
+        "gui/rtxforge_gtk.py",
+        "gui/game_mode.py"
+      ],
+      "resources": [
+        "linux-library-operation-targets"
+      ],
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-16T05:59:53.293Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren requested a Relay note to the Linux worker: check install/restore scope so Available or a few selected games never triggers the entire library. This is a queued note, not a worker launch or authorization to take over other active work.",
+          "acceptance": "Verify GTK desktop and Game Mode: explicit selection wins; otherwise current filter/search limits targets; empty/stale selections never expand to all; only reviewed targets execute. Add regression tests against current Linux source and report exact tested identity. Preserve other active ownership.",
+          "at": "2026-10-16T05:59:53.293Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-operation-scope-check-20261016:acceptance:0",
+            "text": "Verify GTK desktop and Game Mode: explicit selection wins; otherwise current filter/search limits targets; empty/stale selections never expand to all; only reviewed targets execute. Add regression tests against current Linux source and report exact tested identity. Preserve other active ownership.",
+            "at": "2026-10-16T05:59:53.293Z"
           }
         ]
       }
