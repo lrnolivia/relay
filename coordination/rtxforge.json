@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-16T06:54:18.695Z",
+  "updated_at": "2026-10-16T06:55:53.426Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2000,14 +2000,16 @@
         "windows/tests/",
         "windows/RtxForge.Windows/Services/EngineForgeService.cs",
         "scripts/runtime_updates.py",
+        "scripts/engine_bridge.py",
         "tests/test_runtime_updates.py"
       ],
       "resources": [
-        "rtxforge-native-dlss-updates"
+        "rtxforge-native-dlss-updates",
+        "rtxforge-install-execution"
       ],
       "goal": "Diagnose and fix Windows Update DLSS completing while old native files remain. Preserve Game Mode polish request as pending independent work.",
       "acceptance": "Review identifies exact updatable native DLLs and skip reasons; execution updates the reviewed targets or reports a clear reason for no change; version/hash and backup restoration verified on temporary game fixtures.",
-      "next_action": "Lauren requested normal Install Features also update native DLSS. Trace normal prepare/execute, include exact updates in review, honor manage_dlss_files setting, verify install-scoped update with temporary fixtures, then rebuild/reinstall. Do not update real game files externally; Lauren wants proof through app.",
+      "next_action": "Wire reviewed native updates into normal Windows installs/repairs, using extra per-game recovery paths and a pre-install callback so install failure/cancel/crash restores both features and native DLLs. Honor manage_dlss_files. Test before reinstall; no real game updates outside app.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -2030,8 +2032,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-16T06:54:18.695Z",
-      "lease_until": "2026-10-16T18:54:18.695Z"
+      "updated_at": "2026-10-16T06:55:53.426Z",
+      "lease_until": "2026-10-16T18:55:53.426Z"
     }
   ]
 }
