@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-16T05:59:53.293Z",
+  "updated_at": "2026-10-16T06:00:47.515Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1940,7 +1940,7 @@
       ],
       "goal": "Fix Windows install/restore traversing the entire library despite Available filter or explicit game selection. Authorized by Lauren's 2026-10-16 report in this chat.",
       "acceptance": "Desktop and Game Mode install/restore reviews and execution contain only explicit selected games, otherwise eligible games in the active filtered/search view. Empty scopes never expand to the library. Meaningful fixture regression checks and Windows build pass.",
-      "next_action": "Create isolated checkout from live main; trace desktop/Game Mode target routing and test scoped operation behavior without real game writes.",
+      "next_action": "Lauren explicitly authorized local install, push and merge in this chat. Source5274bb32bcc3d2a7d37137099e4ddbefcaa9211a published as draftPR25. x64Debug build0warnings/errors;19 scope checks and4native WinUI preview scenarios passed, no game writes. Building packaged x64installer; await CI, review exact diff, merge through Lauren-attributed Git and install/verify locally. Linux check saved for Linux owner as queued rtxforge-linux-operation-scope-check-20261016 (user clarified: note only).",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1964,8 +1964,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-16T05:52:20.459Z",
-      "lease_until": "2026-10-16T17:52:20.459Z"
+      "updated_at": "2026-10-16T06:00:47.515Z",
+      "lease_until": "2026-10-16T18:00:47.515Z"
     }
   ]
 }
