@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-16T17:28:48.764Z",
+  "updated_at": "2026-10-16T17:35:01.911Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2095,7 +2095,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "feca9f4b128caed29ef515856c51a2288ff4c628",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-16T17:14:26.546Z",
       "objective_history": {
         "baseline": {
@@ -2112,8 +2112,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-16T17:28:48.764Z",
-      "lease_until": "2026-10-17T05:28:48.764Z"
+      "updated_at": "2026-10-16T17:35:01.911Z",
+      "lease_until": "2026-10-17T05:35:01.911Z",
+      "pr": 27,
+      "merged_head_sha": "06f235d5e1138390cb6fcdecc84b8716b066731b",
+      "merge_commit_sha": "d7257233927bcbe7601a9fbf6a54e19be40d2911",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/27 — Lauren authorized merge in chat 2026-10-16 ('merge'). Verified merged_by lrnolivia and main d7257233927bcbe7601a9fbf6a54e19be40d2911; its tree exactly equals reviewed/tested head 06f235d5e1138390cb6fcdecc84b8716b066731b. All applicable exact-head CI passed: WinUI x64/ARM64 builds/publish/installers, bundled host and x64 installer smoke, coordination admission and attribution; draft release and main-only hygiene intentionally skipped. Local 6 discovery fixtures and23scope/visibility checks passed; cover new/moved installs, collection children, parent dedup, pinned metadata separation, reload persistence, case-insensitive Showagain and same-name install isolation. x64 publish+installer passed, installed before merge with exit0; installer SHA256 57f51da8afa7f965ea37e58728372e49099acc2b91889476aaa7e2cbff9c740d; installed DLL SHA256 d09db5ed9ac68b082370da2a996d6e3433f183514c356779567e60febb0a62e7 equals tested output. Real read-only scan found one pinned PRAGMATA Build22357085 with metadata3357650, null engineappid and all3Steam art paths; no PinnedBuilds parent game. Native desktop rescan found51games; UIA/direct capture showed both PRAGMATA installations with art and correct independent pinned path, plus removal confirmation. User stopped remaining native UI check with Escape; GameMode/controller runtime interaction and live removal/restart were not verified, persistence is fixture-tested. No game files changed, no release published; installed app remains running. Visual captures are retained only in chat tool output: no Visuals ingestion capability/receipt was available in the exposed tools, and no durable screenshot acceptance is claimed. Pending GameMode-only polish remains queued separately as rtxforge-windows-gamemode-polish-20261016.",
+      "work_accounted": true,
+      "completed_at": "2026-10-16T17:35:01.911Z"
     }
   ]
 }
