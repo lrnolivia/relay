@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-16T07:00:52.256Z",
+  "updated_at": "2026-10-16T07:03:00.966Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2009,13 +2009,13 @@
       ],
       "goal": "Diagnose and fix Windows Update DLSS completing while old native files remain. Preserve Game Mode polish request as pending independent work.",
       "acceptance": "Review identifies exact updatable native DLLs and skip reasons; execution updates the reviewed targets or reports a clear reason for no change; version/hash and backup restoration verified on temporary game fixtures.",
-      "next_action": "PR26 head3ee326888bc2d636547cc09c122edafd3d989428 adds native DLSS updates to normal Windows Install/Repair when manage_dlss_files=true. Exact paths/versions are reviewed; before-game callback runs under existing feature lock/checkpoint and checkpoint includes native DLLs and new runtime recovery record. Real normal install smoke temporary fixture PASS: features+all3 DLSS→310.9.1.0. 9 adapter tests inclfailure/cancel/crash recovery PASS;12 existing runtime lifecycle tests PASS using Windows fixture storage adapter; C# service→host standalone update/readback/no-op/restore PASS; x64publish+installerPASS. InstallerSHA256 ffb32355c7829739c85fd2989af64efac5a1ad7b96e5d45f5daf3c485b8b7cf5 installed after confirming no active writer. Await Lauren's in-app proof. No further real-game mutation; all prior Mafia/Halo6DLLs were restored byte-exact to310.2.1.0 for her test. Initial Linux core suite blocked on Windows fcntl; shared default callbacks no-op. Pending GameMode-only Impeccable gloss/details request remains unedited.",
+      "next_action": "Lauren approved merge of PR26 in chat ('merge'). Wait for exact-head CI at3ee326888bc2d636547cc09c122edafd3d989428, preflight, merge via verified human Git route, verify PR/main, complete work accounting. Keep installed candidate and real game files unchanged.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "4ee65a99b43a9ec15f6d955ad19e666a5a03c8c2",
-      "state": "held",
+      "state": "active",
       "created_at": "2026-10-16T06:41:34.330Z",
       "objective_history": {
         "baseline": {
@@ -2032,8 +2032,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-16T07:00:52.256Z",
-      "lease_until": "2026-10-16T19:00:52.256Z"
+      "updated_at": "2026-10-16T07:03:00.966Z",
+      "lease_until": "2026-10-16T19:03:00.966Z"
     }
   ]
 }
