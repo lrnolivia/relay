@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-16T06:06:10.659Z",
+  "updated_at": "2026-10-16T06:41:34.330Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1990,6 +1990,48 @@
       "evidence": "https://github.com/lrnolivia/rtxForge/pull/25",
       "work_accounted": true,
       "completed_at": "2026-10-16T06:06:10.659Z"
+    },
+    {
+      "id": "rtxforge-windows-dlss-update-20261016",
+      "owner": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
+      "branch": "rtxforge/windows-dlss-update-20261016",
+      "paths": [
+        "windows/engine-host/",
+        "windows/tests/",
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+        "scripts/runtime_updates.py",
+        "tests/test_runtime_updates.py"
+      ],
+      "resources": [
+        "rtxforge-native-dlss-updates"
+      ],
+      "goal": "Diagnose and fix Windows Update DLSS completing while old native files remain. Preserve Game Mode polish request as pending independent work.",
+      "acceptance": "Review identifies exact updatable native DLLs and skip reasons; execution updates the reviewed targets or reports a clear reason for no change; version/hash and backup restoration verified on temporary game fixtures.",
+      "next_action": "Read installed inventory and live source, reproduce cause safely, implement smallest evidenced fix and test it. User reports completion with old files still present.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "4ee65a99b43a9ec15f6d955ad19e666a5a03c8c2",
+      "state": "active",
+      "created_at": "2026-10-16T06:41:34.330Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Diagnose and fix Windows Update DLSS completing while old native files remain. Preserve Game Mode polish request as pending independent work.",
+          "acceptance": "Review identifies exact updatable native DLLs and skip reasons; execution updates the reviewed targets or reports a clear reason for no change; version/hash and backup restoration verified on temporary game fixtures.",
+          "at": "2026-10-16T06:41:34.330Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-windows-dlss-update-20261016:acceptance:0",
+            "text": "Review identifies exact updatable native DLLs and skip reasons; execution updates the reviewed targets or reports a clear reason for no change; version/hash and backup restoration verified on temporary game fixtures.",
+            "at": "2026-10-16T06:41:34.330Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-16T06:41:34.330Z",
+      "lease_until": "2026-10-16T18:41:34.330Z"
     }
   ]
 }
