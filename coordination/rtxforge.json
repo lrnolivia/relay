@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-16T07:03:37.966Z",
+  "updated_at": "2026-10-16T07:05:33.058Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2050,7 +2050,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "4ee65a99b43a9ec15f6d955ad19e666a5a03c8c2",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-16T06:41:34.330Z",
       "objective_history": {
         "baseline": {
@@ -2067,8 +2067,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-16T07:03:00.966Z",
-      "lease_until": "2026-10-16T19:03:00.966Z"
+      "updated_at": "2026-10-16T07:05:33.058Z",
+      "lease_until": "2026-10-16T19:05:33.058Z",
+      "pr": 26,
+      "merged_head_sha": "3ee326888bc2d636547cc09c122edafd3d989428",
+      "merge_commit_sha": "feca9f4b128caed29ef515856c51a2288ff4c628",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/26 — Lauren approved 'merge' in chat2026-10-16. Verified merged_by lrnolivia; merge commit feca9f4b128caed29ef515856c51a2288ff4c628 with identical tree to tested head3ee326888bc2d636547cc09c122edafd3d989428. All exact-head CI passed: WinUI x64/ARM64, native/KDE/Wayland reviews, coordination admission and commit attribution. 9 Windows adapter tests incl install toggle/failure/cancel/crash recovery and12 native runtime lifecycle tests passed; actual C# service→host standalone update/readback/no-op/restore and actual normal install with feature payload+all3 native DLL updates passed on temporary games. Exact candidate installed, installerexit0 and DLL hash matched. User's explicit in-app test remains user-owned; no claim of game-runtime acceptance. Real Mafia/Halo sixDLL changes were restored byte-for-byte for that test; no later external game updates. Source requirement delivered: normal Install/Repair honors manage_dlss_files and reviews/applies native updates with recovery; dedicated UpdateDLSS remains. No release assets published. Pending GameMode-only Impeccable polish/details task preserved separately as queuedrtxforge-windows-gamemode-polish-20261016.",
+      "work_accounted": true,
+      "completed_at": "2026-10-16T07:05:33.058Z"
     }
   ]
 }
