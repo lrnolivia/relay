@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-16T06:41:34.330Z",
+  "updated_at": "2026-10-16T06:50:50.709Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2007,7 +2007,7 @@
       ],
       "goal": "Diagnose and fix Windows Update DLSS completing while old native files remain. Preserve Game Mode polish request as pending independent work.",
       "acceptance": "Review identifies exact updatable native DLLs and skip reasons; execution updates the reviewed targets or reports a clear reason for no change; version/hash and backup restoration verified on temporary game fixtures.",
-      "next_action": "Read installed inventory and live source, reproduce cause safely, implement smallest evidenced fix and test it. User reports completion with old files still present.",
+      "next_action": "Install tested candidate for Lauren to prove Update DLSS through the app. Shared review now records exact paths and versions and executes stored verified plans. Real service→host temporary-game integration PASS, x64 publish PASS, 6 new Python regressions and 13 sl_override tests PASS. Core Linux-only suite blocked on Windows fcntl (213 import errors; no affected shared engine code changed). Mafia/Halo six DLLs updated after approval then restored byte-exact to310.2.1.0 immediately after user clarified she wants to run updates in-app; all six old hashes verified. Do not externally update any further real game files. Preserve Game Mode gloss/details task pending.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -2030,8 +2030,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-16T06:41:34.330Z",
-      "lease_until": "2026-10-16T18:41:34.330Z"
+      "updated_at": "2026-10-16T06:50:50.709Z",
+      "lease_until": "2026-10-16T18:50:50.709Z"
     }
   ]
 }
