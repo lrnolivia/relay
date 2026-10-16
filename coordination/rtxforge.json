@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-16T06:52:20.952Z",
+  "updated_at": "2026-10-16T06:54:18.695Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2007,13 +2007,13 @@
       ],
       "goal": "Diagnose and fix Windows Update DLSS completing while old native files remain. Preserve Game Mode polish request as pending independent work.",
       "acceptance": "Review identifies exact updatable native DLLs and skip reasons; execution updates the reviewed targets or reports a clear reason for no change; version/hash and backup restoration verified on temporary game fixtures.",
-      "next_action": "Candidate e96fb923192c12588c2e3685e83ff2b3bb05b310 installed successfully (installer exit0, installed DLL hash matches publish); running GameMode PID88872. PR26 https://github.com/lrnolivia/rtxForge/pull/26 awaits Lauren's in-app proof per her explicit request. The real C# service→host smoke PASS update/readback/no-op/exact restore/unselected preservation. Six Python regressions +13 sl_override tests pass, x64 publish pass. Linux core suite direct Windows run is harness-blocked (fcntl unavailable;213 import errors), shared engine unchanged. Do not update games externally. Earlier authorized Mafia/Halo6 DLL update completed and was immediately rolled back on clarification; all6 original SHA256 and310.2.1.0 versions confirmed. Other game files untouched. User can use Game Details→Update DLSS, which now shows native paths and versions before execution, or library batch review for other selected games. Pending separate user request: Impeccable gloss and fun for GameMode only, keep layout/functions except simplify overwhelming GameDetails; no UI polish edits made yet.",
+      "next_action": "Lauren requested normal Install Features also update native DLSS. Trace normal prepare/execute, include exact updates in review, honor manage_dlss_files setting, verify install-scoped update with temporary fixtures, then rebuild/reinstall. Do not update real game files externally; Lauren wants proof through app.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "4ee65a99b43a9ec15f6d955ad19e666a5a03c8c2",
-      "state": "held",
+      "state": "active",
       "created_at": "2026-10-16T06:41:34.330Z",
       "objective_history": {
         "baseline": {
@@ -2030,8 +2030,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-16T06:52:20.952Z",
-      "lease_until": "2026-10-16T18:52:20.952Z"
+      "updated_at": "2026-10-16T06:54:18.695Z",
+      "lease_until": "2026-10-16T18:54:18.695Z"
     }
   ]
 }
