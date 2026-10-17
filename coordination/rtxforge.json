@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T06:11:46.134Z",
+  "updated_at": "2026-10-17T06:15:25.884Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2306,7 +2306,7 @@
       ],
       "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows.",
       "acceptance": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. Lauren explicitly authorized installation on inZOI, The Witcher 3 or CONTROL Resonant in this Windows chat on 2026-10-17. Start with CONTROL Resonant, preserving restorable backups and existing provider/version selections elsewhere. The earlier no-real-game-writes boundary is lifted for this authorized first-game test; runtime/default promotion still requires actual NR+MFG progression and pacing evidence.",
-      "next_action": "Complete exact-head Windows checks for7dde07f, install local candidate app, review and restore current managed provider only in CONTROL Resonant (G:/SteamLibrary/steamapps/common/CONTROL Resonant), then install compiled Skynizz NR+MFG with restorable backups and the existing local user NR model. Do not switch global defaults. Capture package/model hashes, actual NR+MFG logs/output/progression and pacing; source tests alone do not prove runtime. PR28 stays draft pending the real compatibility gate.",
+      "next_action": "Lauren explicitly said 'gimme a minute' after noting both CONTROL Resonant and the Witcher3 Remastered build use path tracing. Hold game changes and await her target/test direction. NO game files changed. Local candidate app from7dde07f is installed at C:/Users/lrnol/AppData/Local/Programs/rtxForge; installerSHA134749316de7750723254fa3e6330781361a14ab4a19d1c8cead3a0b67ed141e and bridgeSHAf22981df692aae07e278c1fbbc42861784ce0dcc2a9589c23372d35c89a1fe82 verified; old app snapshot retained windows/out/skynizz-candidate/previous-install. Native app is open on Witcher3 details; restore has NOT been clicked. Backups for ControlResonant and Witcher3 verified intact; both currently DLSS-Unlocked mfg-only. User corrected that Sims4 is the feeder route: do NOT reuse its model/setup. Independently downloaded exact existing pinned RTX40 NR runtime archive SHA46124cfaef532ad5f6da07494772ea8c1b3e719f934e254385697f38d1289e3f, modelSHA4b8d19bc3eff58a084f5eca7489c921501c203450169fb82ff4f649a4482ba05 at LocalAppData/rtxForge/state/runtimes/skynizz-ada/nvngx_dlssnr.dll. Global app provider/model settings unchanged. PR28 draft head1f0c93bf34ed4b5c152eaffb33cc18398ed74632; priorhead7dde07f compiledC++green but x64CI failed fixture TEMP8.3 alias checks. Fixed fixture canonical path only in1f0c93b;9localtests pass and newCIpending. Resume sameclaim/worktree, verifyCIthen perform user-authorized first-game test through installed app; exact NR+MFG output/progression/pacing still unverified, defaults unchanged. No duplicate job.",
       "category": "implementation",
       "primary_role": "implementation",
       "primary_team": "runner",
@@ -2314,7 +2314,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "d7257233927bcbe7601a9fbf6a54e19be40d2911",
-      "state": "active",
+      "state": "held",
       "created_at": "2026-10-17T05:12:57.125Z",
       "objective_history": {
         "baseline": {
@@ -2355,8 +2355,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-17T06:11:46.134Z",
-      "lease_until": "2026-10-17T18:11:46.134Z",
+      "updated_at": "2026-10-17T06:15:25.884Z",
+      "lease_until": "2026-10-17T18:15:25.884Z",
       "amendment_count": 4,
       "amendments": [
         {
