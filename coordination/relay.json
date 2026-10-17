@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-14T18:19:12.430Z",
+  "updated_at": "2026-10-17T23:35:17.496Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16132,6 +16132,48 @@
       "evidence": "Lauren 2026-10-14 'do both' (approves edit, merge and deploy). Held relay-mcp-rebuild-continuation-20261003 was narrowed under that instruction to release only src/runner-control.js and LOEW_CHAT_BIBLE.md (record b0b4d8355d5bb16f99a381677ae720866a5286e8; WIP 80b887c had both files identical to main; the other 180 paths and HELD state are preserved). PR #228 head 5c306c54ca8200be86b89773daddbdb3afaf434b: the first CI run failed on an unescaped apostrophe in src/runner-control.js, fixed in 5c306c5; quality then passed all five required suites and coordination admission passed. Merged by Lauren's verified git route: merge commit 3fdb0608b3fbde836f6932ed350870afc2efc72c (Lauren Olivia <lrnoliv@gmail.com>), GitHub merged_by lrnolivia. The merge message subject carries a stray UTF-8 BOM from the message file; left as is because fixing it needs a force-push. Workers Build 0a3dfd5a-86d6-40f8-b305-3a514a50c2fa for 3fdb060 succeeded. Bible is now version 2026-10-14.1, with 4.1 covering Claude Code.",
       "work_accounted": true,
       "completed_at": "2026-10-14T18:19:12.430Z"
+    },
+    {
+      "id": "loewtv-project-registration-20261017",
+      "owner": "01a13d75-8deb-75e1-b841-db37a5520116",
+      "branch": "relay/loewtv-project-registration-20261017",
+      "paths": [
+        "projects/loewtv.json",
+        "projects/arc.json",
+        "docs/loewtv/"
+      ],
+      "resources": [
+        "loewtv-project-registration"
+      ],
+      "goal": "Register Lauren's loewTV customization under its current name, retain Arc upstream provenance, and persist the exact latest local source/build/handoff records without claiming a user-owned GitHub repository or unobserved device acceptance.",
+      "acceptance": "Relay's live project registry exposes loewTV with honest local-source/tracking state and Arc compatibility; current product mirror, historical build/hash/test/rollback/limits records are committed, checks pass, registration is merged and read back through Relay. No TV or application behavior changes.",
+      "next_action": "Create the admitted branch from current main, implement the narrow registration and documentation, validate and open a draft PR, then merge and verify Relay readback under the user's do-it authorization.",
+      "task_class": "maintenance",
+      "category": "coordination",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "a3b00a984f7279b98f2ff15025a253744cec3712",
+      "state": "active",
+      "created_at": "2026-10-17T23:35:17.496Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Register Lauren's loewTV customization under its current name, retain Arc upstream provenance, and persist the exact latest local source/build/handoff records without claiming a user-owned GitHub repository or unobserved device acceptance.",
+          "acceptance": "Relay's live project registry exposes loewTV with honest local-source/tracking state and Arc compatibility; current product mirror, historical build/hash/test/rollback/limits records are committed, checks pass, registration is merged and read back through Relay. No TV or application behavior changes.",
+          "at": "2026-10-17T23:35:17.496Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "loewtv-project-registration-20261017:acceptance:0",
+            "text": "Relay's live project registry exposes loewTV with honest local-source/tracking state and Arc compatibility; current product mirror, historical build/hash/test/rollback/limits records are committed, checks pass, registration is merged and read back through Relay. No TV or application behavior changes.",
+            "at": "2026-10-17T23:35:17.496Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-17T23:35:17.496Z",
+      "lease_until": "2026-10-18T11:35:17.496Z"
     }
   ],
   "migrated_from": "loew-inspector"
