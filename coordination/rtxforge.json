@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T06:22:37.226Z",
+  "updated_at": "2026-10-17T06:28:26.018Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2320,7 +2320,7 @@
       ],
       "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows.",
       "acceptance": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. Lauren explicitly authorized installation on inZOI, The Witcher 3 or CONTROL Resonant in this Windows chat on 2026-10-17. Start with CONTROL Resonant, preserving restorable backups and existing provider/version selections elsewhere. The earlier no-real-game-writes boundary is lifted for this authorized first-game test; runtime/default promotion still requires actual NR+MFG progression and pacing evidence.",
-      "next_action": "Lauren resumed: 'control resonant and inzoi are my picks fuck it we ball'. Proceed with candidate installation through the installed rtxForge app on those TWO targets only. Witcher3 and PRAGMATA remain untouched. Use independently verified pinned RTX40 model SHA4b8d19bc3eff58a084f5eca7489c921501c203450169fb82ff4f649a4482ba05 at LocalAppData/rtxForge/state/runtimes/skynizz-ada/nvngx_dlssnr.dll, not Sims4 feeder files. App already installed (7dde07f product code;1f0c93b only fixture fix). Verify backup integrity/current game processes, restore old managed providers, select compiled Skynizz package+NR-MFG and model in UI, review exact files then install and verify readback. Check latestCI, diagnose Wayland lane failure independently. Runtime NR+MFG/pacing/default gate remains unverified until real game evidence; PR28 remains draft.",
+      "next_action": "CONTROL Resonant and inZOI installed successfully using packaged host.prepare+execute after UI restored old providers. Report LocalAppData/rtxForge/engine-state/desktop-20261017-022440.json:2 complete; all managed hashes match. Control proxywinmm.dll; inZOI BlueClient/Binaries/Win64 proxywinhttp.dll. Both bridgeSHAf22981df692aae07e278c1fbbc42861784ce0dcc2a9589c23372d35c89a1fe82; loaderSHA62954570bbff97f426496a45227e20a8ca53f6f0afcb86372b20a1ac6809bb1d; modelSHA4b8d19bc3eff58a084f5eca7489c921501c203450169fb82ff4f649a4482ba05. NR+MFG armed, preSRtrue/cachefalse/MFGauto. Ordinary install updated6nativeSR/RR/FG310.9.1->310.9.16 with backups. App restarted with explicit Skynizz/v1.2.1/nr-mfg/model selection; previoussettings backupwindows/out/skynizz-candidate/settings-before-two-game-test.json. PR28 draft head1f0c93b ALL CIgreen; Wayland Fedoraopenh264 mirror timeout clearedonejobrerun. No gameplay proof/defaultpromotion. Sims4 is currently running elsewhere; leave it untouched. Native helper busy through boundedretry/reset, no more native input. User additionally requests SDKwatermark removal; pending asynchronous exacttext/location/game question. No currentOptiScalerDLSSwatermark setting; FSRflagsunrelated; NGXindicatorregistryabsent. DLSSTweaks1d2fddbe3d1e8f403f795afc17e7db239a83f6a2 uses NGX key Disable.Watermark viaSetUI; modernNR support unverified. Tempcheckoutrtxforge-dlsstweaks-source. Identifyactualwatermark then use supported single-loader suppression, verifyNR+MFGgameplay andpacing. No watermarkfixclaimed. Witcher3/PRAGMATA/Sims4gamefilesuntouched.",
       "category": "implementation",
       "primary_role": "implementation",
       "primary_team": "runner",
@@ -2369,8 +2369,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-17T06:17:37.366Z",
-      "lease_until": "2026-10-17T18:17:37.366Z",
+      "updated_at": "2026-10-17T06:28:26.018Z",
+      "lease_until": "2026-10-17T18:28:26.018Z",
       "amendment_count": 4,
       "amendments": [
         {
