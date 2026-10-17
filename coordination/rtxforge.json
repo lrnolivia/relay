@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T22:39:50.660Z",
+  "updated_at": "2026-10-17T23:00:48.310Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2548,16 +2548,25 @@
         "DESIGN.md",
         "scripts/ada_mfg_provider.py",
         "tests/test_ada_mfg_provider.py",
-        "providers/lock.json"
+        "providers/lock.json",
+        "scripts/feeder_provider.py",
+        "scripts/extra_tools.py",
+        "scripts/runtime_diagnostics.py",
+        "windows/RtxForge.Windows/Services/",
+        "windows/RtxForge.Windows/Models/",
+        "windows/RtxForge.Windows/Views/",
+        "tests/test_feeder_provider.py",
+        "windows/tests/test_feeder_provider.py"
       ],
       "resources": [
         "rtxforge-shared-package-engine",
         "rtxforge-windows-companion-controls",
-        "rtxforge-game-display-preferences"
+        "rtxforge-game-display-preferences",
+        "rtxforge-feeder-nr-integration"
       ],
-      "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows. Build and install the Windows companion NR/MFG panel and backed-up 4K borderless install preferences.",
-      "acceptance": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. Lauren explicitly authorized installation on inZOI, The Witcher 3 or CONTROL Resonant in this Windows chat on 2026-10-17. Start with CONTROL Resonant, preserving restorable backups and existing provider/version selections elsewhere. The earlier no-real-game-writes boundary is lifted for this authorized first-game test; runtime/default promotion still requires actual NR+MFG progression and pacing evidence. Latest approval covers both CONTROL Resonant and inZOI. Remove the development SR watermark by using a verified production SR runtime in the combined package, recording its immutable source and retaining it during repair. Use the verified local RTX4070 model at G:/Forge Lab/nvngx_dlssnr.dll (SHA256e67dee209320cdafe0e93e45675d7aa34323a53acc57a72b2e40a181581c989a); do not install feeder components or touch Sims4 game files. Production SR and NR model are separate files; synthetic success in the other workflow is not native MFG proof. Latest 2026-10-17 user instruction extends watermark remediation to currently installed games too. Audit all installed runtime DLLs and apply verified clean production replacements with restorable backups, preserving each provider/mode, validated NR models and MFG. Respect active separate game ownership and defer any game still in use.\nConfirmed human brief: separate app window that can reliably sit above a borderless/windowed game; dark translucent surfaces with blur, visibly layered plates, rounded corners, soft shadows and excellent typography. Main view focuses only on MFG and NR. Surface the same controls the mods expose in a clearer layout; place other OptiScaler settings behind Advanced, not immediately visible. Entry from Game Details and a configurable global show/hide shortcut are proposed; selected game remains explicit. Keep OptiScaler's swapchain UI disabled when this panel replaces it. Distinguish requested/saved values from actual runtime-applied/verified state. Determine the real live-apply/IPC/reload boundary from source; do not claim INI edits automatically affect a running game. Windows first explicitly confirmed; preserve existing layouts and functions elsewhere. No default promotion or fake runtime telemetry.\nLauren explicitly authorizes autonomous overnight work, installation and testing of the new app and panel, and inZOI first then Starfield, The Witcher 3 and CONTROL Resonant. May close/restart those test games; preserve saves and other games. Add supported per-game 3840x2160 borderless settings as a reviewed installation option with backups/restore, bulk where supported. Do not force unsupported settings or claim fullscreen shortcut reliability. Preserve validated NR model/tuning.\nLatest user priority: focus on MFG next; implement the panel only after NR + MFG are actually working together. Park UI/display implementation until that gate passes. User authorizes testing the already modified new NR DLL; obtain exact ShortFuse/OpenNR310.9.16 candidate, keep old model rollback, verify runtime on this Ada PC.",
-      "next_action": "Simplify Windows installation review per Lauren's screenshot: plain reviewed changes, expandable exact diagnostics, actionable skips and correct Skynizz label. Preserve token execution and game files; verify build, review rendering, then install exact passing app candidate.",
+      "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows. Build and install the Windows companion NR/MFG panel and backed-up 4K borderless install preferences. Add separate Feeder NR adoption/new-runtime updates for existing TS4 and Mass Effect installs, and fix Windows Open Folder.",
+      "acceptance": "Deliver verified Windows Skynizz NR310.9.16 plus Ada MFG together, preserving exact provider/model/runtime provenance, production watermark-free SR/RR/FG, restorable backups and existing choices/Linux behavior. Default remains gated by exact runtime NR+MFG/pacing evidence; fixture/CI or a saved multiplier never proves actual FG. Native tests in inZOI, Avatar, Cyberpunk and other authorized games remain bound to their exact recipes. Preserve integrated working route and old/new model rollback; external MFG Unlock1.4.4 uses one patch owner with built-in unlock disabled, refuses known failed inZOI composition. No unverified Linux promotion. Windows active-game companion: minimal full-height floating rounded translucent black/white NR+MFG sidebar, blur/shadow/Inter, auto-detect supported active game, no game selector or cross-game edits, useful live NR/MFG controls and genuinely applied-versus-requested status; Advanced reveals other controls. Keep native OptiScaler overlay disabled where required, preserve other layouts/functions. Install/test newest app/panel and authorized games under durable user approval; preserve saves/tuning. Optional backed-up4Kborderless only for verified adapters. Plain operation review retains exact diagnostics behind disclosure and unchanged token/confirmation safety.007inactive prior-restore support recognition must preserve unknown/active-mod refusal and exact restore; install/test candidate so normal app contains fix. Fix Open Folder in Game Details desktop/Game Mode with correct target and useful errors.\nFeeder integration newly authorized: separate Windows-first explicit NR route for x64D3D11 games without nativeDLSS, ReShade+DLSS5-Feeder+MV shader+neural consumer+productionSR+validated local NR model. Exact versions/digests/licenses and redistribution checked; preserve HDR/depth/resolution, third-party mods/saves/launch method; refuse conflicting consumers/running games. Reuse reviewed ownership/cache/execute/restore; repair/adoption preserve current per-game tuning and original restore backups. Adopt existing TS4,MELE1/2/3,Andromeda as installed without reinstalling; expose each LE executable. Missing generated cfg/log/cache on unlaunchedLE1/LE3 does not mean uninstalled. Upgrade existing older NR DLL to verified Ada-compatible310.9.16 with backups. Installed/NR enabled must stay distinct from observed live feature18evaluation; no fake active/working evidence. Include ME2copy-depth-before-clear fix and Andromeda borderless HDR recipe, validated new-model presets only when necessary. Keep synthetic FeederNR distinct from genuine nativeDLSS upscaling or nativeMFG; FG remains unavailable/unverified until separately proven. Test integrity/conflicts/running-game refusal/adoption/repair/restore and actual TS4/ME2 progression before Feeder default promotion. Preserve existing original acceptance/amendment evidence; latest user grants this chat serial implementation of queued Feeder work and runtime updates.",
+      "next_action": "Promote green47dc4d9 to normal app for007/review fix, fix Open Folder, then implement Feeder managed adoption/newNR runtime upgrade for five existing targets and preserve exact original backups/tuning. Verify and install through current authorization.",
       "category": "implementation",
       "primary_role": "implementation",
       "primary_team": "runner",
@@ -2627,12 +2636,18 @@
             "text": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. Lauren explicitly authorized installation on inZOI, The Witcher 3 or CONTROL Resonant in this Windows chat on 2026-10-17. Start with CONTROL Resonant, preserving restorable backups and existing provider/version selections elsewhere. The earlier no-real-game-writes boundary is lifted for this authorized first-game test; runtime/default promotion still requires actual NR+MFG progression and pacing evidence. Latest approval covers both CONTROL Resonant and inZOI. Remove the development SR watermark by using a verified production SR runtime in the combined package, recording its immutable source and retaining it during repair. Use the verified local RTX4070 model at G:/Forge Lab/nvngx_dlssnr.dll (SHA256e67dee209320cdafe0e93e45675d7aa34323a53acc57a72b2e40a181581c989a); do not install feeder components or touch Sims4 game files. Production SR and NR model are separate files; synthetic success in the other workflow is not native MFG proof. Latest 2026-10-17 user instruction extends watermark remediation to currently installed games too. Audit all installed runtime DLLs and apply verified clean production replacements with restorable backups, preserving each provider/mode, validated NR models and MFG. Respect active separate game ownership and defer any game still in use.\nConfirmed human brief: separate app window that can reliably sit above a borderless/windowed game; dark translucent surfaces with blur, visibly layered plates, rounded corners, soft shadows and excellent typography. Main view focuses only on MFG and NR. Surface the same controls the mods expose in a clearer layout; place other OptiScaler settings behind Advanced, not immediately visible. Entry from Game Details and a configurable global show/hide shortcut are proposed; selected game remains explicit. Keep OptiScaler's swapchain UI disabled when this panel replaces it. Distinguish requested/saved values from actual runtime-applied/verified state. Determine the real live-apply/IPC/reload boundary from source; do not claim INI edits automatically affect a running game. Windows first explicitly confirmed; preserve existing layouts and functions elsewhere. No default promotion or fake runtime telemetry.\nLauren explicitly authorizes autonomous overnight work, installation and testing of the new app and panel, and inZOI first then Starfield, The Witcher 3 and CONTROL Resonant. May close/restart those test games; preserve saves and other games. Add supported per-game 3840x2160 borderless settings as a reviewed installation option with backups/restore, bulk where supported. Do not force unsupported settings or claim fullscreen shortcut reliability. Preserve validated NR model/tuning.\nLatest user priority: focus on MFG next; implement the panel only after NR + MFG are actually working together. Park UI/display implementation until that gate passes. User authorizes testing the already modified new NR DLL; obtain exact ShortFuse/OpenNR310.9.16 candidate, keep old model rollback, verify runtime on this Ada PC.",
             "at": "2026-10-17T08:12:35.427Z",
             "reason": "Lauren explicitly reordered delivery: combined NR+MFG must work before the companion panel."
+          },
+          {
+            "id": "rtxforge-skynizz-nr-provider-20261017:acceptance:11",
+            "text": "Deliver verified Windows Skynizz NR310.9.16 plus Ada MFG together, preserving exact provider/model/runtime provenance, production watermark-free SR/RR/FG, restorable backups and existing choices/Linux behavior. Default remains gated by exact runtime NR+MFG/pacing evidence; fixture/CI or a saved multiplier never proves actual FG. Native tests in inZOI, Avatar, Cyberpunk and other authorized games remain bound to their exact recipes. Preserve integrated working route and old/new model rollback; external MFG Unlock1.4.4 uses one patch owner with built-in unlock disabled, refuses known failed inZOI composition. No unverified Linux promotion. Windows active-game companion: minimal full-height floating rounded translucent black/white NR+MFG sidebar, blur/shadow/Inter, auto-detect supported active game, no game selector or cross-game edits, useful live NR/MFG controls and genuinely applied-versus-requested status; Advanced reveals other controls. Keep native OptiScaler overlay disabled where required, preserve other layouts/functions. Install/test newest app/panel and authorized games under durable user approval; preserve saves/tuning. Optional backed-up4Kborderless only for verified adapters. Plain operation review retains exact diagnostics behind disclosure and unchanged token/confirmation safety.007inactive prior-restore support recognition must preserve unknown/active-mod refusal and exact restore; install/test candidate so normal app contains fix. Fix Open Folder in Game Details desktop/Game Mode with correct target and useful errors.\nFeeder integration newly authorized: separate Windows-first explicit NR route for x64D3D11 games without nativeDLSS, ReShade+DLSS5-Feeder+MV shader+neural consumer+productionSR+validated local NR model. Exact versions/digests/licenses and redistribution checked; preserve HDR/depth/resolution, third-party mods/saves/launch method; refuse conflicting consumers/running games. Reuse reviewed ownership/cache/execute/restore; repair/adoption preserve current per-game tuning and original restore backups. Adopt existing TS4,MELE1/2/3,Andromeda as installed without reinstalling; expose each LE executable. Missing generated cfg/log/cache on unlaunchedLE1/LE3 does not mean uninstalled. Upgrade existing older NR DLL to verified Ada-compatible310.9.16 with backups. Installed/NR enabled must stay distinct from observed live feature18evaluation; no fake active/working evidence. Include ME2copy-depth-before-clear fix and Andromeda borderless HDR recipe, validated new-model presets only when necessary. Keep synthetic FeederNR distinct from genuine nativeDLSS upscaling or nativeMFG; FG remains unavailable/unverified until separately proven. Test integrity/conflicts/running-game refusal/adoption/repair/restore and actual TS4/ME2 progression before Feeder default promotion. Preserve existing original acceptance/amendment evidence; latest user grants this chat serial implementation of queued Feeder work and runtime updates.",
+            "at": "2026-10-17T23:00:48.310Z",
+            "reason": "Lauren directs this existing shared-engine owner to implement Feeder adoption/newNR now and fix Open Folder; no competing source worker or branch. Prior scope/authorization evidence retained in amendments."
           }
         ]
       },
-      "updated_at": "2026-10-17T22:39:50.660Z",
-      "lease_until": "2026-10-18T10:39:50.660Z",
-      "amendment_count": 10,
+      "updated_at": "2026-10-17T23:00:48.310Z",
+      "lease_until": "2026-10-18T11:00:48.310Z",
+      "amendment_count": 11,
       "amendments": [
         {
           "at": "2026-10-17T05:22:27.174Z",
@@ -2916,6 +2931,123 @@
           },
           "after": {
             "next_action": "Avatar integrated V5/newNR/preset2 confirmed: fresh native4presents,123.59displayed/31.1renderedFPS, user visual pass; game closed after test. Latest explicit companion brief: minimal floating rounded NR+MFG sidebar, full screen height minus generous padding, soft shadow, translucent black&white. No game selector; auto-bind to active supported game and prevent cross-game edits. Expand useful NR settings with genuine live protocol support; direct clear controls, other settings progressively revealed. Implement/test same owned branch/PR and preserve exact V5 recipe rollback. Source work can continue after native input stop; do not repeat Sky calls without explicit later resumption."
+          }
+        },
+        {
+          "at": "2026-10-17T23:00:48.310Z",
+          "by": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
+          "reason": "Lauren directs this existing shared-engine owner to implement Feeder adoption/newNR now and fix Open Folder; no competing source worker or branch. Prior scope/authorization evidence retained in amendments.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action",
+            "paths",
+            "resources"
+          ],
+          "before": {
+            "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows. Build and install the Windows companion NR/MFG panel and backed-up 4K borderless install preferences.",
+            "acceptance": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. Lauren explicitly authorized installation on inZOI, The Witcher 3 or CONTROL Resonant in this Windows chat on 2026-10-17. Start with CONTROL Resonant, preserving restorable backups and existing provider/version selections elsewhere. The earlier no-real-game-writes boundary is lifted for this authorized first-game test; runtime/default promotion still requires actual NR+MFG progression and pacing evidence. Latest approval covers both CONTROL Resonant and inZOI. Remove the development SR watermark by using a verified production SR runtime in the combined package, recording its immutable source and retaining it during repair. Use the verified local RTX4070 model at G:/Forge Lab/nvngx_dlssnr.dll (SHA256e67dee209320cdafe0e93e45675d7aa34323a53acc57a72b2e40a181581c989a); do not install feeder components or touch Sims4 game files. Production SR and NR model are separate files; synthetic success in the other workflow is not native MFG proof. Latest 2026-10-17 user instruction extends watermark remediation to currently installed games too. Audit all installed runtime DLLs and apply verified clean production replacements with restorable backups, preserving each provider/mode, validated NR models and MFG. Respect active separate game ownership and defer any game still in use.\nConfirmed human brief: separate app window that can reliably sit above a borderless/windowed game; dark translucent surfaces with blur, visibly layered plates, rounded corners, soft shadows and excellent typography. Main view focuses only on MFG and NR. Surface the same controls the mods expose in a clearer layout; place other OptiScaler settings behind Advanced, not immediately visible. Entry from Game Details and a configurable global show/hide shortcut are proposed; selected game remains explicit. Keep OptiScaler's swapchain UI disabled when this panel replaces it. Distinguish requested/saved values from actual runtime-applied/verified state. Determine the real live-apply/IPC/reload boundary from source; do not claim INI edits automatically affect a running game. Windows first explicitly confirmed; preserve existing layouts and functions elsewhere. No default promotion or fake runtime telemetry.\nLauren explicitly authorizes autonomous overnight work, installation and testing of the new app and panel, and inZOI first then Starfield, The Witcher 3 and CONTROL Resonant. May close/restart those test games; preserve saves and other games. Add supported per-game 3840x2160 borderless settings as a reviewed installation option with backups/restore, bulk where supported. Do not force unsupported settings or claim fullscreen shortcut reliability. Preserve validated NR model/tuning.\nLatest user priority: focus on MFG next; implement the panel only after NR + MFG are actually working together. Park UI/display implementation until that gate passes. User authorizes testing the already modified new NR DLL; obtain exact ShortFuse/OpenNR310.9.16 candidate, keep old model rollback, verify runtime on this Ada PC.",
+            "next_action": "Simplify Windows installation review per Lauren's screenshot: plain reviewed changes, expandable exact diagnostics, actionable skips and correct Skynizz label. Preserve token execution and game files; verify build, review rendering, then install exact passing app candidate.",
+            "paths": [
+              "scripts/package_catalog.py",
+              "scripts/engine_bridge.py",
+              "scripts/skynizz_provider.py",
+              "scripts/desktop_service.py",
+              "engine/rtxengine.py",
+              "tests/test_skynizz_provider.py",
+              "tests/test_package_catalog.py",
+              "tests/test_nr_composition.py",
+              "windows/engine-host/win_features.py",
+              "windows/tests/test_skynizz_provider.py",
+              "windows/RtxForge.Windows/MainWindow.xaml.cs",
+              "windows/RtxForge.Windows/MainWindow.Features.cs",
+              "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+              "windows/RtxForge.Windows/Views/PackagesPage.cs",
+              "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+              "README.md",
+              "windows/engine-host/rtxforge_win_host.py",
+              "windows/RtxForge.Windows/Models/Models.cs",
+              "scripts/library_media.py",
+              "providers/",
+              "windows/build/Build-SkynizzBridge.ps1",
+              ".github/workflows/skynizz-bridge.yml",
+              "tests/test_skynizz_bridge.py",
+              "windows/build/Bundle-Engine.ps1",
+              ".github/workflows/windows-build.yml",
+              ".gitattributes",
+              "windows/RtxForge.Windows/",
+              "windows/tests/",
+              "windows/engine-host/",
+              "scripts/game_display.py",
+              "tests/test_game_display.py",
+              "PRODUCT.md",
+              "DESIGN.md",
+              "scripts/ada_mfg_provider.py",
+              "tests/test_ada_mfg_provider.py",
+              "providers/lock.json"
+            ],
+            "resources": [
+              "rtxforge-shared-package-engine",
+              "rtxforge-windows-companion-controls",
+              "rtxforge-game-display-preferences"
+            ]
+          },
+          "after": {
+            "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows. Build and install the Windows companion NR/MFG panel and backed-up 4K borderless install preferences. Add separate Feeder NR adoption/new-runtime updates for existing TS4 and Mass Effect installs, and fix Windows Open Folder.",
+            "acceptance": "Deliver verified Windows Skynizz NR310.9.16 plus Ada MFG together, preserving exact provider/model/runtime provenance, production watermark-free SR/RR/FG, restorable backups and existing choices/Linux behavior. Default remains gated by exact runtime NR+MFG/pacing evidence; fixture/CI or a saved multiplier never proves actual FG. Native tests in inZOI, Avatar, Cyberpunk and other authorized games remain bound to their exact recipes. Preserve integrated working route and old/new model rollback; external MFG Unlock1.4.4 uses one patch owner with built-in unlock disabled, refuses known failed inZOI composition. No unverified Linux promotion. Windows active-game companion: minimal full-height floating rounded translucent black/white NR+MFG sidebar, blur/shadow/Inter, auto-detect supported active game, no game selector or cross-game edits, useful live NR/MFG controls and genuinely applied-versus-requested status; Advanced reveals other controls. Keep native OptiScaler overlay disabled where required, preserve other layouts/functions. Install/test newest app/panel and authorized games under durable user approval; preserve saves/tuning. Optional backed-up4Kborderless only for verified adapters. Plain operation review retains exact diagnostics behind disclosure and unchanged token/confirmation safety.007inactive prior-restore support recognition must preserve unknown/active-mod refusal and exact restore; install/test candidate so normal app contains fix. Fix Open Folder in Game Details desktop/Game Mode with correct target and useful errors.\nFeeder integration newly authorized: separate Windows-first explicit NR route for x64D3D11 games without nativeDLSS, ReShade+DLSS5-Feeder+MV shader+neural consumer+productionSR+validated local NR model. Exact versions/digests/licenses and redistribution checked; preserve HDR/depth/resolution, third-party mods/saves/launch method; refuse conflicting consumers/running games. Reuse reviewed ownership/cache/execute/restore; repair/adoption preserve current per-game tuning and original restore backups. Adopt existing TS4,MELE1/2/3,Andromeda as installed without reinstalling; expose each LE executable. Missing generated cfg/log/cache on unlaunchedLE1/LE3 does not mean uninstalled. Upgrade existing older NR DLL to verified Ada-compatible310.9.16 with backups. Installed/NR enabled must stay distinct from observed live feature18evaluation; no fake active/working evidence. Include ME2copy-depth-before-clear fix and Andromeda borderless HDR recipe, validated new-model presets only when necessary. Keep synthetic FeederNR distinct from genuine nativeDLSS upscaling or nativeMFG; FG remains unavailable/unverified until separately proven. Test integrity/conflicts/running-game refusal/adoption/repair/restore and actual TS4/ME2 progression before Feeder default promotion. Preserve existing original acceptance/amendment evidence; latest user grants this chat serial implementation of queued Feeder work and runtime updates.",
+            "next_action": "Promote green47dc4d9 to normal app for007/review fix, fix Open Folder, then implement Feeder managed adoption/newNR runtime upgrade for five existing targets and preserve exact original backups/tuning. Verify and install through current authorization.",
+            "paths": [
+              "scripts/package_catalog.py",
+              "scripts/engine_bridge.py",
+              "scripts/skynizz_provider.py",
+              "scripts/desktop_service.py",
+              "engine/rtxengine.py",
+              "tests/test_skynizz_provider.py",
+              "tests/test_package_catalog.py",
+              "tests/test_nr_composition.py",
+              "windows/engine-host/win_features.py",
+              "windows/tests/test_skynizz_provider.py",
+              "windows/RtxForge.Windows/MainWindow.xaml.cs",
+              "windows/RtxForge.Windows/MainWindow.Features.cs",
+              "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+              "windows/RtxForge.Windows/Views/PackagesPage.cs",
+              "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+              "README.md",
+              "windows/engine-host/rtxforge_win_host.py",
+              "windows/RtxForge.Windows/Models/Models.cs",
+              "scripts/library_media.py",
+              "providers/",
+              "windows/build/Build-SkynizzBridge.ps1",
+              ".github/workflows/skynizz-bridge.yml",
+              "tests/test_skynizz_bridge.py",
+              "windows/build/Bundle-Engine.ps1",
+              ".github/workflows/windows-build.yml",
+              ".gitattributes",
+              "windows/RtxForge.Windows/",
+              "windows/tests/",
+              "windows/engine-host/",
+              "scripts/game_display.py",
+              "tests/test_game_display.py",
+              "PRODUCT.md",
+              "DESIGN.md",
+              "scripts/ada_mfg_provider.py",
+              "tests/test_ada_mfg_provider.py",
+              "providers/lock.json",
+              "scripts/feeder_provider.py",
+              "scripts/extra_tools.py",
+              "scripts/runtime_diagnostics.py",
+              "windows/RtxForge.Windows/Services/",
+              "windows/RtxForge.Windows/Models/",
+              "windows/RtxForge.Windows/Views/",
+              "tests/test_feeder_provider.py",
+              "windows/tests/test_feeder_provider.py"
+            ],
+            "resources": [
+              "rtxforge-shared-package-engine",
+              "rtxforge-windows-companion-controls",
+              "rtxforge-game-display-preferences",
+              "rtxforge-feeder-nr-integration"
+            ]
           }
         }
       ],
