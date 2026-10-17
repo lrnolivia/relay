@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T07:22:26.480Z",
+  "updated_at": "2026-10-17T07:26:43.496Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -999,6 +999,56 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-feeder-nr-provider-20261017",
+      "owner": "01a14866-c5ba-78b2-9d45-6289c142daa4",
+      "goal": "Integrate the working ReShade + DLSS5-Feeder neural-rendering route into rtxForge for games without native DLSS, Windows first. User2026-10-17 after successful ME2 QA: 'any other games i can use feeder on? i wanna build this into rtxForge too.' Keep the existing native-DLSS NR/MFG routes separate and preserve active Skynizz work. This is a new product integration, not a takeover, new chat or worker launch. Use the verified human owner identity; omit voluntary AI/vendor/tool/model author credits while preserving required upstream notices.",
+      "acceptance": "An explicit Feeder NR choice installs a reviewed, hash-verified and fully restorable recipe using ReShade, Feeder, an MV shader provider, neural consumer, production SR and a validated user-supplied NR model where needed. Detect executable API/bitness and existing proxies/add-ons; preserve third-party mods, saves, launch method and HDR. Refuse conflicting parallel consumers. Reuse existing app review/execute/restore ownership and cache mechanisms; repair preserves per-game tuning; known manual installations can be adopted only with verified files/original baselines. Start with x64D3D11; otherAPI/32bit/wrapper routes remain labelled unvalidated until tested. Record exact versions/digests and upstream notices; verify redistribution before bundling third-party assets. Per-game HDR/depth/resolution recipes and current NR controls must work; diagnostics require feature18 evaluation, valid moving-scene depth/MVs and image confirmation, not only feeder counters. Include the ME2 clear-before-copy fix, Andromeda borderless recipe, compatible RTX4070 model selection and clean SR watermark fix. Feeder is a synthetic DLAA/NR route; do not advertise genuine native DLSS upscaling or native MFG. Keep FG unavailable/unverified for this route until separately proven. Test package integrity, conflicts, running-game refusal, adoption/repair/restore, and actual Sims4/ME2 runtime before default promotion. Preserve current successful game installations.",
+      "next_action": "QUEUED for shared-provider ownership: active rtxforge-skynizz-nr-provider-20261017 holds rtxforge-shared-package-engine and overlapping integration files; no takeover/branch/worktree/source edits. Existing ReShade Extras supports loader/add-on ownership but not complete shader/preset recipes. Implement after serial admission from current main. Bootstrap current Bible/project/role and exact source. Local checkout fetch hit a missing refs/codex checkpoint object; canonical Relay source reads worked, do not repair another worker's shared Git metadata blindly. Tested recipe evidence: installation assignment rtxforge-windows-sims-mass-effect-install-20261017; G:/Downloads/sims-mass-effect-nr-20261017/backups/provenance.json; ME2-runtime-20261017-031750/verified-runtime.json and ReShade-owner-current-depth-fixed.ini SHA d4560485aedd1e9985bd379b21adf7f0c2e492b9aff8b312718a26aad9e80f26. ME2 humanPASS 'wow it looks great',1pass70%,Tone/Structure2,neutralColour/Hue0,DepthCopyBeforeClears1,HDRscRGB; Sims2pass50%; Andromeda borderless restorescolors but owner tweaked look separately. Feeder1.19.0 is current stable; ReShade6.8,RenoDX8.5rc5,LumeniteFX; verified NRmodel G:/Forge Lab/nvngx_dlssnr.dll SHAe67dee209320cdafe0e93e45675d7aa34323a53acc57a72b2e40a181581c989a; productionSR310.9.16 SHAd00b5b0ab29c3ca101b70c3a5ecb3a01b7ef33766a3383a28a18623083e6123e. No FG success; autoFG remainsOFF. Useful next candidates in installed library: FarCry5,ACUnity,Spyro (untested). Upstream-reported Metro2033Redux/Subnautica/DOOM2016/Blacklist/BioShockRemastered/FableAnniversary. No new worker or cross-chat message authorized.",
+      "paths": [
+        "scripts/feeder_provider.py",
+        "scripts/extra_tools.py",
+        "scripts/runtime_diagnostics.py",
+        "scripts/engine_bridge.py",
+        "scripts/desktop_service.py",
+        "scripts/package_catalog.py",
+        "providers/",
+        "windows/engine-host/",
+        "windows/RtxForge.Windows/Services/",
+        "windows/RtxForge.Windows/Models/",
+        "windows/RtxForge.Windows/Views/",
+        "tests/test_feeder_provider.py",
+        "windows/tests/test_feeder_provider.py",
+        "README.md"
+      ],
+      "resources": [
+        "rtxforge-shared-package-engine",
+        "rtxforge-feeder-nr-integration"
+      ],
+      "category": "implementation",
+      "primary_role": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-17T07:26:43.496Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Integrate the working ReShade + DLSS5-Feeder neural-rendering route into rtxForge for games without native DLSS, Windows first. User2026-10-17 after successful ME2 QA: 'any other games i can use feeder on? i wanna build this into rtxForge too.' Keep the existing native-DLSS NR/MFG routes separate and preserve active Skynizz work. This is a new product integration, not a takeover, new chat or worker launch. Use the verified human owner identity; omit voluntary AI/vendor/tool/model author credits while preserving required upstream notices.",
+          "acceptance": "An explicit Feeder NR choice installs a reviewed, hash-verified and fully restorable recipe using ReShade, Feeder, an MV shader provider, neural consumer, production SR and a validated user-supplied NR model where needed. Detect executable API/bitness and existing proxies/add-ons; preserve third-party mods, saves, launch method and HDR. Refuse conflicting parallel consumers. Reuse existing app review/execute/restore ownership and cache mechanisms; repair preserves per-game tuning; known manual installations can be adopted only with verified files/original baselines. Start with x64D3D11; otherAPI/32bit/wrapper routes remain labelled unvalidated until tested. Record exact versions/digests and upstream notices; verify redistribution before bundling third-party assets. Per-game HDR/depth/resolution recipes and current NR controls must work; diagnostics require feature18 evaluation, valid moving-scene depth/MVs and image confirmation, not only feeder counters. Include the ME2 clear-before-copy fix, Andromeda borderless recipe, compatible RTX4070 model selection and clean SR watermark fix. Feeder is a synthetic DLAA/NR route; do not advertise genuine native DLSS upscaling or native MFG. Keep FG unavailable/unverified for this route until separately proven. Test package integrity, conflicts, running-game refusal, adoption/repair/restore, and actual Sims4/ME2 runtime before default promotion. Preserve current successful game installations.",
+          "at": "2026-10-17T07:26:43.496Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-feeder-nr-provider-20261017:acceptance:0",
+            "text": "An explicit Feeder NR choice installs a reviewed, hash-verified and fully restorable recipe using ReShade, Feeder, an MV shader provider, neural consumer, production SR and a validated user-supplied NR model where needed. Detect executable API/bitness and existing proxies/add-ons; preserve third-party mods, saves, launch method and HDR. Refuse conflicting parallel consumers. Reuse existing app review/execute/restore ownership and cache mechanisms; repair preserves per-game tuning; known manual installations can be adopted only with verified files/original baselines. Start with x64D3D11; otherAPI/32bit/wrapper routes remain labelled unvalidated until tested. Record exact versions/digests and upstream notices; verify redistribution before bundling third-party assets. Per-game HDR/depth/resolution recipes and current NR controls must work; diagnostics require feature18 evaluation, valid moving-scene depth/MVs and image confirmation, not only feeder counters. Include the ME2 clear-before-copy fix, Andromeda borderless recipe, compatible RTX4070 model selection and clean SR watermark fix. Feeder is a synthetic DLAA/NR route; do not advertise genuine native DLSS upscaling or native MFG. Keep FG unavailable/unverified for this route until separately proven. Test package integrity, conflicts, running-game refusal, adoption/repair/restore, and actual Sims4/ME2 runtime before default promotion. Preserve current successful game installations.",
+            "at": "2026-10-17T07:26:43.496Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
