@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-17T23:44:30.651Z",
+  "updated_at": "2026-10-17T23:46:31.682Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16155,7 +16155,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "a3b00a984f7279b98f2ff15025a253744cec3712",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-17T23:35:17.496Z",
       "objective_history": {
         "baseline": {
@@ -16172,8 +16172,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-17T23:44:30.651Z",
-      "lease_until": "2026-10-18T11:44:30.651Z"
+      "updated_at": "2026-10-17T23:46:31.682Z",
+      "lease_until": "2026-10-18T11:46:31.682Z",
+      "pr": 229,
+      "merged_head_sha": "d7e5f956624cc63d247f1a2b628f5535f616ec99",
+      "merge_commit_sha": "8a017002d055ae21c9e3d5315acd5f71fc4ea6dc",
+      "evidence": "User authorized updating the Relay record with 'do it'. PR229 https://github.com/lrnolivia/relay/pull/229 merged as8a017002d055ae21c9e3d5315acd5f71fc4ea6dc from tested headd7e5f956624cc63d247f1a2b628f5535f616ec99 using existing Lauren-attributed local Git merge route. 47 focused tests passed; required quality39079971543 and coordination39079971547 passed. All7 source files read back byte-identical. Relay live registry at2026-10-17T23:45:37.749Z lists loewtv/name loewTV/policy89b45fe3f0f468d7dd623a0078144d27deab7b2f and suppresses legacy arc alias; main registration and receipt readback match. Current product mirror, latest local APK/rollback hashes, historical tests/limits, local-source location and handoff are preserved in docs/loewtv. Tracking-only is intentional: no owned source repo is asserted, managed implementation stays disabled, artifacts remain local. No TV, app, upstream source, credentials or other-owner files changed. Code and acceptance fully accounted; no work remains in this bounded registration task.",
+      "work_accounted": true,
+      "completed_at": "2026-10-17T23:46:31.682Z"
     }
   ],
   "migrated_from": "loew-inspector"
