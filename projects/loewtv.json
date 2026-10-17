@@ -1,0 +1,44 @@
+{
+  "id": "loewtv",
+  "name": "loewTV",
+  "aliases": [
+    "arc",
+    "Arc TV Launcher"
+  ],
+  "repository": null,
+  "managed": false,
+  "default_branch": null,
+  "role": "Lauren's customized Android/Google TV launcher and replacement TV interface, developed from Arc.",
+  "source": {
+    "kind": "local-checkout",
+    "path": "/Users/lrnolivia/Codex/2026-10-14/task/arc-all-arc",
+    "source_control": "non-git",
+    "verified_at": "2026-10-17T23:38:14.231116+00:00",
+    "verified_recorded_source_hashes": 29,
+    "product_doc": "PRODUCT.md"
+  },
+  "upstream": {
+    "repository": "meddouribadis/arclauncher",
+    "relationship": "historical upstream reference only; not the source or release target for this custom app"
+  },
+  "documentation": {
+    "index": "docs/loewtv/README.md",
+    "handoff": "docs/loewtv/HANDOFF_20261017.md",
+    "latest_build": "docs/loewtv/receipts/caption-motion-20261015.json",
+    "product_mirror": "docs/loewtv/product/PRODUCT.md"
+  },
+  "latest_recorded_build": {
+    "package": "com.omeda.arc.inputs",
+    "version_name": "1.0.9",
+    "version_code": 4124,
+    "apk_sha256": "59813edc99c302e42b19f5037ebea80a156fe2e8d502ccc07feb229bdcee87e1",
+    "installed_readback_at": "2026-10-16T01:27:55.886895+00:00",
+    "installation_is_historical": true
+  },
+  "guidance": {
+    "universal_authority": "lrnolivia/relay@main/LOEW_CHAT_BIBLE.md",
+    "implementation_claims_disabled": true,
+    "historical_repository_targets_are_non_authoritative": true,
+    "note": "Tracking registration for the verified local customization. Do not route implementation, builds or releases to upstream. No user-owned GitHub source repository is asserted. Establish and verify an authorized source repository plus coordination policy before enabling managed implementation. This registration does not authorize TV interaction."
+  }
+}
