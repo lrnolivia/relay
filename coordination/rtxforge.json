@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T05:22:27.174Z",
+  "updated_at": "2026-10-17T05:23:31.592Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2140,17 +2140,17 @@
         "windows/RtxForge.Windows/MainWindow.xaml.cs",
         "windows/RtxForge.Windows/MainWindow.Features.cs",
         "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
-        "windows/RtxForge.Windows/Views/SettingsPage.xaml",
         "windows/RtxForge.Windows/Views/PackagesPage.cs",
         "windows/RtxForge.Windows/Services/EngineForgeService.cs",
-        "README.md"
+        "README.md",
+        "windows/engine-host/rtxforge_win_host.py"
       ],
       "resources": [
         "rtxforge-shared-package-engine"
       ],
       "goal": "Lauren authorized Skynizz/optiscaler-dlss5 as an optional rtxForge NR provider, then explicitly directed: 'hand the coding to Codex here. for Windows fist.' Delegate the coding and complete the Windows implementation first. Keep Linux/Proton as the subsequent pass and preserve the original Sims 4, Mass Effect Legendary Edition and Andromeda goals without claiming that this native-DLSS integration alone supports them.",
       "acceptance": "Coding deliverable: optional Skynizz NR-only provider in the active shared DesktopService/engine_bridge transaction path and Windows package/settings/mode UI; verified release identity and user-selectable versions; exact payload/model provenance; first-install, repair, reset, and restore respect Skynizz policy. Existing providers and MFG remain functional. Require a compatible external RTX40 NR model and documented D3D12/DLSS route; do not claim GPU/game compatibility from file staging. Preserve Linux behavior and keep its Skynizz provider unavailable in this Windows-first pass. Linux enablement and runtime validation follow after Windows. Focused active-path tests and one reviewable draft PR, with Windows build/runtime gaps stated from actual evidence. No real game-folder installation by this handoff. Delegate via an admitted Codex execution job and verify its real status; queued is not running.",
-      "next_action": "Submit the researched Windows implementation prompt through the admitted Codex execution mechanism after preflight. Root has made no product edits and has not created the reserved branch. Recipient creates an isolated branch from the admitted base. Preserve PR18 and separate cross-OS DLSS-Unlocked work. Windows paths include selector, settings, mode gates and scan eligibility; no GTK implementation in this pass.",
+      "next_action": "Prepare the Codex Windows-only job. Final source inspection adds rtxforge_win_host.py to carry provider-aware scan eligibility, and removes unnecessary SettingsPage.xaml. Create the reserved branch at the admitted base, rerun preflight, submit with required capabilities codex-cli/windows, and report the actual queued/running state. No product edits have been made.",
       "category": "implementation",
       "primary_role": "implementation",
       "primary_team": "runner",
@@ -2181,8 +2181,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-17T05:22:27.174Z",
-      "lease_until": "2026-10-17T17:22:27.174Z",
+      "updated_at": "2026-10-17T05:23:31.592Z",
+      "lease_until": "2026-10-17T17:23:31.592Z",
       "amendment_count": 1,
       "amendments": [
         {
