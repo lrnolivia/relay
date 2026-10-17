@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-16T17:35:01.911Z",
+  "updated_at": "2026-10-17T05:12:57.125Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2120,6 +2120,57 @@
       "evidence": "https://github.com/lrnolivia/rtxForge/pull/27 — Lauren authorized merge in chat 2026-10-16 ('merge'). Verified merged_by lrnolivia and main d7257233927bcbe7601a9fbf6a54e19be40d2911; its tree exactly equals reviewed/tested head 06f235d5e1138390cb6fcdecc84b8716b066731b. All applicable exact-head CI passed: WinUI x64/ARM64 builds/publish/installers, bundled host and x64 installer smoke, coordination admission and attribution; draft release and main-only hygiene intentionally skipped. Local 6 discovery fixtures and23scope/visibility checks passed; cover new/moved installs, collection children, parent dedup, pinned metadata separation, reload persistence, case-insensitive Showagain and same-name install isolation. x64 publish+installer passed, installed before merge with exit0; installer SHA256 57f51da8afa7f965ea37e58728372e49099acc2b91889476aaa7e2cbff9c740d; installed DLL SHA256 d09db5ed9ac68b082370da2a996d6e3433f183514c356779567e60febb0a62e7 equals tested output. Real read-only scan found one pinned PRAGMATA Build22357085 with metadata3357650, null engineappid and all3Steam art paths; no PinnedBuilds parent game. Native desktop rescan found51games; UIA/direct capture showed both PRAGMATA installations with art and correct independent pinned path, plus removal confirmation. User stopped remaining native UI check with Escape; GameMode/controller runtime interaction and live removal/restart were not verified, persistence is fixture-tested. No game files changed, no release published; installed app remains running. Visual captures are retained only in chat tool output: no Visuals ingestion capability/receipt was available in the exposed tools, and no durable screenshot acceptance is claimed. Pending GameMode-only polish remains queued separately as rtxforge-windows-gamemode-polish-20261016.",
       "work_accounted": true,
       "completed_at": "2026-10-16T17:35:01.911Z"
+    },
+    {
+      "id": "rtxforge-skynizz-nr-provider-20261017",
+      "owner": "chatgpt-962df3b2a470",
+      "branch": "rtxforge/skynizz-nr-provider-20261017",
+      "paths": [
+        "providers/lock.json",
+        "scripts/package_catalog.py",
+        "scripts/engine_bridge.py",
+        "scripts/skynizz_provider.py",
+        "scripts/desktop_service.py",
+        "engine/rtxengine.py",
+        "tests/test_skynizz_provider.py",
+        "tests/test_package_catalog.py",
+        "tests/test_nr_composition.py",
+        "windows/engine-host/win_features.py",
+        "windows/tests/test_skynizz_provider.py",
+        "README.md"
+      ],
+      "resources": [
+        "rtxforge-shared-package-engine"
+      ],
+      "goal": "Lauren authorized in this chat on 2026-10-17: 'i want that new optiscaler fork for rtxForge' and 'Widnows & linux if possible'. Add Skynizz/optiscaler-dlss5 as an optional NR provider through the existing shared managed package flow on Windows and Linux/Proton. Preserve existing providers and the separate queued cross-OS DLSS-Unlocked work.",
+      "acceptance": "Reviewable source and focused fixture tests for verified Skynizz release resolution/staging, exact tag+digest provenance, compatible external RTX40 NR model, section-aware configuration and collision-safe install/restore. Preserve current MFG route and unrelated files. Follow prior user direction for user-selectable versions: do not silently hard-pin all users or silently switch existing installs. Windows upstream support and Linux experimental/runtime-unverified status stay explicit. Skynizz x8 is optional cache cadence, not MFG. No promise of Sims4/ME NR compatibility until a game route is verified. Publish one draft PR; GPU/native runtime remains unverified without target evidence.",
+      "next_action": "Read exact main provider adapters and tests; stage isolated source from d7257233927bcbe7601a9fbf6a54e19be40d2911; add bounded Skynizz provider using rtxForge transactions rather than running upstream installers. Preserve cancelled shared-package branch/PR18 and all unrelated work. Source work only; do not install into real game folders.",
+      "category": "implementation",
+      "primary_role": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "d7257233927bcbe7601a9fbf6a54e19be40d2911",
+      "state": "active",
+      "created_at": "2026-10-17T05:12:57.125Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren authorized in this chat on 2026-10-17: 'i want that new optiscaler fork for rtxForge' and 'Widnows & linux if possible'. Add Skynizz/optiscaler-dlss5 as an optional NR provider through the existing shared managed package flow on Windows and Linux/Proton. Preserve existing providers and the separate queued cross-OS DLSS-Unlocked work.",
+          "acceptance": "Reviewable source and focused fixture tests for verified Skynizz release resolution/staging, exact tag+digest provenance, compatible external RTX40 NR model, section-aware configuration and collision-safe install/restore. Preserve current MFG route and unrelated files. Follow prior user direction for user-selectable versions: do not silently hard-pin all users or silently switch existing installs. Windows upstream support and Linux experimental/runtime-unverified status stay explicit. Skynizz x8 is optional cache cadence, not MFG. No promise of Sims4/ME NR compatibility until a game route is verified. Publish one draft PR; GPU/native runtime remains unverified without target evidence.",
+          "at": "2026-10-17T05:12:57.125Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-skynizz-nr-provider-20261017:acceptance:0",
+            "text": "Reviewable source and focused fixture tests for verified Skynizz release resolution/staging, exact tag+digest provenance, compatible external RTX40 NR model, section-aware configuration and collision-safe install/restore. Preserve current MFG route and unrelated files. Follow prior user direction for user-selectable versions: do not silently hard-pin all users or silently switch existing installs. Windows upstream support and Linux experimental/runtime-unverified status stay explicit. Skynizz x8 is optional cache cadence, not MFG. No promise of Sims4/ME NR compatibility until a game route is verified. Publish one draft PR; GPU/native runtime remains unverified without target evidence.",
+            "at": "2026-10-17T05:12:57.125Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-17T05:12:57.125Z",
+      "lease_until": "2026-10-17T17:12:57.125Z"
     }
   ]
 }
