@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T05:49:08.132Z",
+  "updated_at": "2026-10-17T05:52:14.736Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2195,14 +2195,16 @@
         "providers/",
         "windows/build/Build-SkynizzBridge.ps1",
         ".github/workflows/skynizz-bridge.yml",
-        "tests/test_skynizz_bridge.py"
+        "tests/test_skynizz_bridge.py",
+        "windows/build/Bundle-Engine.ps1",
+        ".github/workflows/windows-build.yml"
       ],
       "resources": [
         "rtxforge-shared-package-engine"
       ],
       "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows.",
       "acceptance": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. No real game-folder installs under the inherited boundary.",
-      "next_action": "Lauren requires NR+MFG together. Port exact working y4my Ada MFG memory patch and Streamline load/state hooks into the exact Skynizz v1.2.1 source as a reviewed, provenance-bound combined build. Add a reproducible Windows build/CI artifact and integrate its distinct verified package identity into managed install/repair/restore. No stock Skynizz NR-only delivery or default promotion is sufficient. Preserve no-real-game-writes boundary.",
+      "next_action": "Combined build source port prepared in temporary source checkout. Add provenance-bound patch and CI compilation; bundle the combined package/receipt into x64 app artifacts so the in-app NR+MFG flow can review exact bytes. Integrate bridge variant with pinned repair and original MFG runtime ownership. Preserve stock NR-only path as a separate variant, not the final requirement. No live game writes.",
       "category": "implementation",
       "primary_role": "implementation",
       "primary_team": "runner",
@@ -2245,8 +2247,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-17T05:49:08.132Z",
-      "lease_until": "2026-10-17T17:49:08.132Z",
+      "updated_at": "2026-10-17T05:52:14.736Z",
+      "lease_until": "2026-10-17T17:52:14.736Z",
       "amendment_count": 3,
       "amendments": [
         {
