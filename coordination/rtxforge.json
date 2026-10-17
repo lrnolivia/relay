@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T07:02:51.073Z",
+  "updated_at": "2026-10-17T07:07:00.744Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2362,7 +2362,7 @@
       ],
       "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows.",
       "acceptance": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. Lauren explicitly authorized installation on inZOI, The Witcher 3 or CONTROL Resonant in this Windows chat on 2026-10-17. Start with CONTROL Resonant, preserving restorable backups and existing provider/version selections elsewhere. The earlier no-real-game-writes boundary is lifted for this authorized first-game test; runtime/default promotion still requires actual NR+MFG progression and pacing evidence. Latest approval covers both CONTROL Resonant and inZOI. Remove the development SR watermark by using a verified production SR runtime in the combined package, recording its immutable source and retaining it during repair. Use the verified local RTX4070 model at G:/Forge Lab/nvngx_dlssnr.dll (SHA256e67dee209320cdafe0e93e45675d7aa34323a53acc57a72b2e40a181581c989a); do not install feeder components or touch Sims4 game files. Production SR and NR model are separate files; synthetic success in the other workflow is not native MFG proof. Latest 2026-10-17 user instruction extends watermark remediation to currently installed games too. Audit all installed runtime DLLs and apply verified clean production replacements with restorable backups, preserving each provider/mode, validated NR models and MFG. Respect active separate game ownership and defer any game still in use.",
-      "next_action": "Read-only SHA256/Git-blob inventory of 662 native/private runtime DLLs is running. Official NVIDIA/DLSS immutable rel/dev identities obtained for all SR/RR/FG; inspect private dependencies and MFG signature compatibility before replacements. Extend exact-hash production pinning and managed repair where needed. No current target game processes found. Do not replace NR model or another active workflow's files.",
+      "next_action": "Watermark audit found exact NVIDIA SDK dev SR/RR/FG (310.9.1) in 29 files across 13 games. All 29 replaced with official immutable NVIDIA/DLSS 9981c635 rel 310.9.16 through existing runtime transactions; all after-hashes and original backup hashes verified. Result TEMP/rtxforge-clean-installed-native-result.json; first recovery a02828206aea440ca87eb63da0e04a83, last4f7a6aa776bd432aa080a845270f6017. Full audit688 DLLs covers Steam common, pinned/nonSteam and C:Steam empty. Added production SR/RR/FG pins to combined bridge; 11 policy tests, compiled package and 11 Windows lifecycle scenarios+26catalog pass; real payload all3hashes verified. Both MFG capability patterns exactly once and32compatiblekernelcontainers in newFG. PR28 head6278d574740e41a6a67d6065cec3f40364e77a41 pushed. Installer SHA5c721f6a8d49cb3deaebb5c11ea5977c0a97fd25084e25b23b5528ae96dc174c installed; engine readback matches. Restored CONTROL/inZOI oldrecipe via desktop-20261017-030621.json (2complete), now preparing managed reinstall to newthree-runtime recipe. Preserve e67 NR model, original MFGloader andStreamline. No game visual/pacing proof yet; no defaultpromotion/merge.",
       "category": "implementation",
       "primary_role": "implementation",
       "primary_team": "runner",
@@ -2423,8 +2423,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-17T06:59:07.335Z",
-      "lease_until": "2026-10-17T18:59:07.335Z",
+      "updated_at": "2026-10-17T07:07:00.744Z",
+      "lease_until": "2026-10-17T19:07:00.744Z",
       "amendment_count": 6,
       "amendments": [
         {
