@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T05:12:57.125Z",
+  "updated_at": "2026-10-17T05:22:27.174Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2137,14 +2137,20 @@
         "tests/test_nr_composition.py",
         "windows/engine-host/win_features.py",
         "windows/tests/test_skynizz_provider.py",
+        "windows/RtxForge.Windows/MainWindow.xaml.cs",
+        "windows/RtxForge.Windows/MainWindow.Features.cs",
+        "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+        "windows/RtxForge.Windows/Views/SettingsPage.xaml",
+        "windows/RtxForge.Windows/Views/PackagesPage.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
         "README.md"
       ],
       "resources": [
         "rtxforge-shared-package-engine"
       ],
-      "goal": "Lauren authorized in this chat on 2026-10-17: 'i want that new optiscaler fork for rtxForge' and 'Widnows & linux if possible'. Add Skynizz/optiscaler-dlss5 as an optional NR provider through the existing shared managed package flow on Windows and Linux/Proton. Preserve existing providers and the separate queued cross-OS DLSS-Unlocked work.",
-      "acceptance": "Reviewable source and focused fixture tests for verified Skynizz release resolution/staging, exact tag+digest provenance, compatible external RTX40 NR model, section-aware configuration and collision-safe install/restore. Preserve current MFG route and unrelated files. Follow prior user direction for user-selectable versions: do not silently hard-pin all users or silently switch existing installs. Windows upstream support and Linux experimental/runtime-unverified status stay explicit. Skynizz x8 is optional cache cadence, not MFG. No promise of Sims4/ME NR compatibility until a game route is verified. Publish one draft PR; GPU/native runtime remains unverified without target evidence.",
-      "next_action": "Read exact main provider adapters and tests; stage isolated source from d7257233927bcbe7601a9fbf6a54e19be40d2911; add bounded Skynizz provider using rtxForge transactions rather than running upstream installers. Preserve cancelled shared-package branch/PR18 and all unrelated work. Source work only; do not install into real game folders.",
+      "goal": "Lauren authorized Skynizz/optiscaler-dlss5 as an optional rtxForge NR provider, then explicitly directed: 'hand the coding to Codex here. for Windows fist.' Delegate the coding and complete the Windows implementation first. Keep Linux/Proton as the subsequent pass and preserve the original Sims 4, Mass Effect Legendary Edition and Andromeda goals without claiming that this native-DLSS integration alone supports them.",
+      "acceptance": "Coding deliverable: optional Skynizz NR-only provider in the active shared DesktopService/engine_bridge transaction path and Windows package/settings/mode UI; verified release identity and user-selectable versions; exact payload/model provenance; first-install, repair, reset, and restore respect Skynizz policy. Existing providers and MFG remain functional. Require a compatible external RTX40 NR model and documented D3D12/DLSS route; do not claim GPU/game compatibility from file staging. Preserve Linux behavior and keep its Skynizz provider unavailable in this Windows-first pass. Linux enablement and runtime validation follow after Windows. Focused active-path tests and one reviewable draft PR, with Windows build/runtime gaps stated from actual evidence. No real game-folder installation by this handoff. Delegate via an admitted Codex execution job and verify its real status; queued is not running.",
+      "next_action": "Submit the researched Windows implementation prompt through the admitted Codex execution mechanism after preflight. Root has made no product edits and has not created the reserved branch. Recipient creates an isolated branch from the admitted base. Preserve PR18 and separate cross-OS DLSS-Unlocked work. Windows paths include selector, settings, mode gates and scan eligibility; no GTK implementation in this pass.",
       "category": "implementation",
       "primary_role": "implementation",
       "primary_team": "runner",
@@ -2166,11 +2172,75 @@
             "id": "rtxforge-skynizz-nr-provider-20261017:acceptance:0",
             "text": "Reviewable source and focused fixture tests for verified Skynizz release resolution/staging, exact tag+digest provenance, compatible external RTX40 NR model, section-aware configuration and collision-safe install/restore. Preserve current MFG route and unrelated files. Follow prior user direction for user-selectable versions: do not silently hard-pin all users or silently switch existing installs. Windows upstream support and Linux experimental/runtime-unverified status stay explicit. Skynizz x8 is optional cache cadence, not MFG. No promise of Sims4/ME NR compatibility until a game route is verified. Publish one draft PR; GPU/native runtime remains unverified without target evidence.",
             "at": "2026-10-17T05:12:57.125Z"
+          },
+          {
+            "id": "rtxforge-skynizz-nr-provider-20261017:acceptance:1",
+            "text": "Coding deliverable: optional Skynizz NR-only provider in the active shared DesktopService/engine_bridge transaction path and Windows package/settings/mode UI; verified release identity and user-selectable versions; exact payload/model provenance; first-install, repair, reset, and restore respect Skynizz policy. Existing providers and MFG remain functional. Require a compatible external RTX40 NR model and documented D3D12/DLSS route; do not claim GPU/game compatibility from file staging. Preserve Linux behavior and keep its Skynizz provider unavailable in this Windows-first pass. Linux enablement and runtime validation follow after Windows. Focused active-path tests and one reviewable draft PR, with Windows build/runtime gaps stated from actual evidence. No real game-folder installation by this handoff. Delegate via an admitted Codex execution job and verify its real status; queued is not running.",
+            "at": "2026-10-17T05:22:27.174Z",
+            "reason": "Latest explicit user steering transfers coding to Codex and prioritizes Windows; source inspection found the additional Windows selector/mode/scan paths required for a usable provider."
           }
         ]
       },
-      "updated_at": "2026-10-17T05:12:57.125Z",
-      "lease_until": "2026-10-17T17:12:57.125Z"
+      "updated_at": "2026-10-17T05:22:27.174Z",
+      "lease_until": "2026-10-17T17:22:27.174Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-17T05:22:27.174Z",
+          "by": "chatgpt-962df3b2a470",
+          "reason": "Latest explicit user steering transfers coding to Codex and prioritizes Windows; source inspection found the additional Windows selector/mode/scan paths required for a usable provider.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action",
+            "paths"
+          ],
+          "before": {
+            "goal": "Lauren authorized in this chat on 2026-10-17: 'i want that new optiscaler fork for rtxForge' and 'Widnows & linux if possible'. Add Skynizz/optiscaler-dlss5 as an optional NR provider through the existing shared managed package flow on Windows and Linux/Proton. Preserve existing providers and the separate queued cross-OS DLSS-Unlocked work.",
+            "acceptance": "Reviewable source and focused fixture tests for verified Skynizz release resolution/staging, exact tag+digest provenance, compatible external RTX40 NR model, section-aware configuration and collision-safe install/restore. Preserve current MFG route and unrelated files. Follow prior user direction for user-selectable versions: do not silently hard-pin all users or silently switch existing installs. Windows upstream support and Linux experimental/runtime-unverified status stay explicit. Skynizz x8 is optional cache cadence, not MFG. No promise of Sims4/ME NR compatibility until a game route is verified. Publish one draft PR; GPU/native runtime remains unverified without target evidence.",
+            "next_action": "Read exact main provider adapters and tests; stage isolated source from d7257233927bcbe7601a9fbf6a54e19be40d2911; add bounded Skynizz provider using rtxForge transactions rather than running upstream installers. Preserve cancelled shared-package branch/PR18 and all unrelated work. Source work only; do not install into real game folders.",
+            "paths": [
+              "providers/lock.json",
+              "scripts/package_catalog.py",
+              "scripts/engine_bridge.py",
+              "scripts/skynizz_provider.py",
+              "scripts/desktop_service.py",
+              "engine/rtxengine.py",
+              "tests/test_skynizz_provider.py",
+              "tests/test_package_catalog.py",
+              "tests/test_nr_composition.py",
+              "windows/engine-host/win_features.py",
+              "windows/tests/test_skynizz_provider.py",
+              "README.md"
+            ]
+          },
+          "after": {
+            "goal": "Lauren authorized Skynizz/optiscaler-dlss5 as an optional rtxForge NR provider, then explicitly directed: 'hand the coding to Codex here. for Windows fist.' Delegate the coding and complete the Windows implementation first. Keep Linux/Proton as the subsequent pass and preserve the original Sims 4, Mass Effect Legendary Edition and Andromeda goals without claiming that this native-DLSS integration alone supports them.",
+            "acceptance": "Coding deliverable: optional Skynizz NR-only provider in the active shared DesktopService/engine_bridge transaction path and Windows package/settings/mode UI; verified release identity and user-selectable versions; exact payload/model provenance; first-install, repair, reset, and restore respect Skynizz policy. Existing providers and MFG remain functional. Require a compatible external RTX40 NR model and documented D3D12/DLSS route; do not claim GPU/game compatibility from file staging. Preserve Linux behavior and keep its Skynizz provider unavailable in this Windows-first pass. Linux enablement and runtime validation follow after Windows. Focused active-path tests and one reviewable draft PR, with Windows build/runtime gaps stated from actual evidence. No real game-folder installation by this handoff. Delegate via an admitted Codex execution job and verify its real status; queued is not running.",
+            "next_action": "Submit the researched Windows implementation prompt through the admitted Codex execution mechanism after preflight. Root has made no product edits and has not created the reserved branch. Recipient creates an isolated branch from the admitted base. Preserve PR18 and separate cross-OS DLSS-Unlocked work. Windows paths include selector, settings, mode gates and scan eligibility; no GTK implementation in this pass.",
+            "paths": [
+              "providers/lock.json",
+              "scripts/package_catalog.py",
+              "scripts/engine_bridge.py",
+              "scripts/skynizz_provider.py",
+              "scripts/desktop_service.py",
+              "engine/rtxengine.py",
+              "tests/test_skynizz_provider.py",
+              "tests/test_package_catalog.py",
+              "tests/test_nr_composition.py",
+              "windows/engine-host/win_features.py",
+              "windows/tests/test_skynizz_provider.py",
+              "windows/RtxForge.Windows/MainWindow.xaml.cs",
+              "windows/RtxForge.Windows/MainWindow.Features.cs",
+              "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+              "windows/RtxForge.Windows/Views/SettingsPage.xaml",
+              "windows/RtxForge.Windows/Views/PackagesPage.cs",
+              "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+              "README.md"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
