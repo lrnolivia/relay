@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T06:17:37.366Z",
+  "updated_at": "2026-10-17T06:22:37.226Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -745,7 +745,7 @@
       "owner": "01a14866-c5ba-78b2-9d45-6289c142daa4",
       "goal": "Windows-first local installation and tuning for The Sims 4, Mass Effect Legendary Edition LE1/LE2/LE3, and Mass Effect Andromeda on Lauren's RTX4070. Lauren selected local Windows chat 01a14866-c5ba-78b2-9d45-6289c142daa4 on 2026-10-17 by providing this assignment id and clarifying it is the Relay assignment. Inherited authorization: full control to install these game mods. No repository edits, new source branch, executor launch, or duplicate task. Preserve acceptance and separate Skynizz NR+MFG coding assignment. Latest steering: 'can we also get some kind of MFG in these games? i'd love Nvidia native but. idk that that's a thing yet.' Investigate and configure a compatible per-title frame-generation option alongside NR, preferring NVIDIA where supported.",
       "acceptance": "The chosen worker locates the actual Windows Steam/EA game installs and existing mods, then installs/configures the appropriate supported NR route per title with Lauren's installation authorization. Preserve saves, existing mods, Steam/EA launching, HDR where supported and an exact reversible backup/file manifest. Verify each title launches, the NR feature actually initializes and visibly applies, and representative gameplay/UI remains usable; distinguish rendered FPS and frame times from generated FPS, with NR off/on comparisons on the RTX4070. Choose a practical performance preset rather than chasing the largest displayed FPS. Validate Sims4 live/build/buy modes and each MELE executable separately; Andromeda needs its own proven recipe. Record exact source versions, URLs, hashes, selected compatible RTX40 NR model, configuration, actual game paths and results. Missing local access/model/prerequisite is an explicit blocker, not an installed/verified claim. Do not force Skynizz's D3D12/native-DLSS path onto unsupported DX11/no-DLSS games or claim general rtxForge support from this local setup. Native NVIDIA FG/MFG is preferred when genuinely compatible; keep any other interpolation option separate and require actual performance evidence. Linux/Proton follows Windows and is not a first-pass completion gate. Added FG criterion: verify exact per-game support, prioritize NVIDIA Smooth Motion on RTX4070 (2x driver interpolation) and investigate actual multi-frame options including the already installed Lossless Scaling3.2.2. Native DLSS MFG is unverified in these titles. Back up per-game profile settings, avoid global changes, distinguish render FPS, generated/display FPS, frame times and input/UI behavior. Do not stack interpolation methods or enable an unverified combination by default.",
-      "next_action": "EA prerequisite installed and read back: current13.809 symlink version.dll matches source70553a2b..., existing configs unchanged, scheduled copy task present, installer process exited. Repaired installer missing-newline append in ProgramData/EA Desktop/machine.ini after backing up both versions; readback verified. Reopened Sims4 through Steam; local log confirms module/config loaded, pack recognition still pending game UI. Original NR/backups remain. Research: official NVIDIA Smooth Motion supports RTX40/DX11 with one added frame; installed LosslessScaling3.2.2 can multiply output; no native DLSS MFG proof for these games. First verify Sims save pack recognition and actual gameplay, then NR off/on timing, then per-game SmoothMotion/LSFG comparison. User consent after physical Escape applies to resumed work via subsequent approval/FG request. No source edits/branch/PR.",
+      "next_action": "Sims4 current process12832 has official ReShade6.8 dxgi, Feeder1.19, RenoDX8.5rc5, local RTX40 NR model and native compiler loaded. Pack recognition was verified in Load Game UI after EA prerequisite; no restart/required-pack warning. Correction to older checkpoint: compiler was NOT a removed zero-byte file; it was a broken Linux symlink to /home/loew/.local/share/reshade/reshade/d3dcompiler_47.dll.64. Moved original link to backups/Sims4/d3dcompiler_47.dll.original-linux-link and copied native System32 compiler SHA3d452b663d81e62eac0c9dc36052f8ebecd4cbb4f645bbf93d9af7470060e828; receipt compiler-compatibility.json verified. Lauren says Windows-first indefinitely. Current game menu/feed evidence shows 4K delivered frames but flat menu depth/MV and ~19 rendered FPS under concurrent GPU workloads; not gameplay benchmark. User now appears to be loading a save; do not interrupt session. Latest user request confirmed BOTH ReShade top splash and large welcome/tutorial suppressed, retaining Home. Official6.8 source has no splash config toggle; preparing small local addon via public overlay event, not applied yet, plus TutorialProgress4/Home36. NVIDIA app spinner persists; NVAPI read resolves correct per-game profiles, hidden SmoothMotion setting0xB0D384C0 Get/Set both-160 SETTING_NOT_FOUND. NO driver change saved. Baseline backups/nvidia-smooth-baseline.json; no identical third retry. LosslessScaling3.2.2 UI works, only Default profile; XML backed up but no changes yet. PresentMon two no-output exit1 captures, no CSV; use independent timing evidence. All four MassEffect stacks only prepared/backed, not installed. Preserve existing saves and mods, finish quiet startup then continue per-title NR/performance and compatible FG tests. No repository/source edits, branch or PR.",
       "paths": [
         "docs/INSTALLATION.md"
       ],
@@ -792,8 +792,8 @@
           "next_action": "Lauren selected this assignment in local Windows chat 01a14866-c5ba-78b2-9d45-6289c142daa4. Resume the existing local installation task here with inherited full installation authorization. No executor launch, source branch, repository edits, or duplicate assignment. Discover Steam/EA paths and existing injectors/models, verify current upstream prerequisites, record exact reversible backup manifest before game mutations. Separate NR+MFG coding task remains untouched."
         }
       ],
-      "updated_at": "2026-10-17T06:11:00.186Z",
-      "amendment_count": 5,
+      "updated_at": "2026-10-17T06:22:37.226Z",
+      "amendment_count": 6,
       "amendments": [
         {
           "at": "2026-10-17T05:53:31.279Z",
@@ -884,6 +884,20 @@
               "windows-game-installation-mass-effect-andromeda",
               "windows-frame-generation-profiles-sims-mass-effect"
             ]
+          }
+        },
+        {
+          "at": "2026-10-17T06:22:37.226Z",
+          "by": "01a14866-c5ba-78b2-9d45-6289c142daa4",
+          "reason": "Persist fresh runtime evidence and latest Windows/startup-UI preferences without claiming completion.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "EA prerequisite installed and read back: current13.809 symlink version.dll matches source70553a2b..., existing configs unchanged, scheduled copy task present, installer process exited. Repaired installer missing-newline append in ProgramData/EA Desktop/machine.ini after backing up both versions; readback verified. Reopened Sims4 through Steam; local log confirms module/config loaded, pack recognition still pending game UI. Original NR/backups remain. Research: official NVIDIA Smooth Motion supports RTX40/DX11 with one added frame; installed LosslessScaling3.2.2 can multiply output; no native DLSS MFG proof for these games. First verify Sims save pack recognition and actual gameplay, then NR off/on timing, then per-game SmoothMotion/LSFG comparison. User consent after physical Escape applies to resumed work via subsequent approval/FG request. No source edits/branch/PR."
+          },
+          "after": {
+            "next_action": "Sims4 current process12832 has official ReShade6.8 dxgi, Feeder1.19, RenoDX8.5rc5, local RTX40 NR model and native compiler loaded. Pack recognition was verified in Load Game UI after EA prerequisite; no restart/required-pack warning. Correction to older checkpoint: compiler was NOT a removed zero-byte file; it was a broken Linux symlink to /home/loew/.local/share/reshade/reshade/d3dcompiler_47.dll.64. Moved original link to backups/Sims4/d3dcompiler_47.dll.original-linux-link and copied native System32 compiler SHA3d452b663d81e62eac0c9dc36052f8ebecd4cbb4f645bbf93d9af7470060e828; receipt compiler-compatibility.json verified. Lauren says Windows-first indefinitely. Current game menu/feed evidence shows 4K delivered frames but flat menu depth/MV and ~19 rendered FPS under concurrent GPU workloads; not gameplay benchmark. User now appears to be loading a save; do not interrupt session. Latest user request confirmed BOTH ReShade top splash and large welcome/tutorial suppressed, retaining Home. Official6.8 source has no splash config toggle; preparing small local addon via public overlay event, not applied yet, plus TutorialProgress4/Home36. NVIDIA app spinner persists; NVAPI read resolves correct per-game profiles, hidden SmoothMotion setting0xB0D384C0 Get/Set both-160 SETTING_NOT_FOUND. NO driver change saved. Baseline backups/nvidia-smooth-baseline.json; no identical third retry. LosslessScaling3.2.2 UI works, only Default profile; XML backed up but no changes yet. PresentMon two no-output exit1 captures, no CSV; use independent timing evidence. All four MassEffect stacks only prepared/backed, not installed. Preserve existing saves and mods, finish quiet startup then continue per-title NR/performance and compatible FG tests. No repository/source edits, branch or PR."
           }
         }
       ]
