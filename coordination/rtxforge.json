@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T06:39:18.762Z",
+  "updated_at": "2026-10-17T06:40:13.608Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2334,7 +2334,7 @@
       ],
       "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows.",
       "acceptance": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. Lauren explicitly authorized installation on inZOI, The Witcher 3 or CONTROL Resonant in this Windows chat on 2026-10-17. Start with CONTROL Resonant, preserving restorable backups and existing provider/version selections elsewhere. The earlier no-real-game-writes boundary is lifted for this authorized first-game test; runtime/default promotion still requires actual NR+MFG progression and pacing evidence. Latest approval covers both CONTROL Resonant and inZOI. Remove the development SR watermark by using a verified production SR runtime in the combined package, recording its immutable source and retaining it during repair. Use the verified local RTX4070 model at G:/Forge Lab/nvngx_dlssnr.dll (SHA256e67dee209320cdafe0e93e45675d7aa34323a53acc57a72b2e40a181581c989a); do not install feeder components or touch Sims4 game files. Production SR and NR model are separate files; synthetic success in the other workflow is not native MFG proof.",
-      "next_action": "New production-SR recipe source pushed on same PR28 branch;10policy+1compiled+11Windows lifecycle scenarios pass. Source pin officialNVIDIA/DLSS9981c6350dc58c0ce21f024fd65e31e851c31689/lib/Windows_x86_64/rel/nvngx_dlss.dll SHA d00b5b0ab29c3ca101b70c3a5ecb3a01b7ef33766a3383a28a18623083e6123e verified by actualdownload. Replace only private SR payload and record recipe for pinned repair; combinedC++/MFG unchanged. Build/install updated candidate, Restore+reinstall both test games to explicitly select new recipe and verified local NR model. Keep their saved originals, no Sims4/Witcher3/PRAGMATA writes. ChecknewCI; runtimeNR+MFG/pacing and visualwatermarkclearance stillrequireactualgamecheck.",
+      "next_action": "Both CONTROL Resonant and inZOI now have the production-SR recipe. PR28 draft at fda039e00ad29bfee40d7744d44e6e0b758fd5fc; ALL exact-head CI including attribution passes. Installer windows/out/skynizz-production-candidate/rtxForge-Setup-1.0.0-rc.1-x64.exe SHA ecff08172da1aca4b16b629c8f8cf7d5617508da32746f993f7741d74084515a installed. Restored old recipe (desktop-20261017-023533.json), then installed new recipes via packaged host review+execute (desktop-20261017-023735.json): 2 complete. All managed hashes and backup integrity verified. Control target G:/SteamLibrary/steamapps/common/CONTROL Resonant uses winmm.dll; inZOI target BlueClient/Binaries/Win64 uses winhttp.dll. Private production SR 310.9.16 SHA d00b5b0ab29c3ca101b70c3a5ecb3a01b7ef33766a3383a28a18623083e6123e replaces development SR. NR model SHA e67dee209320cdafe0e93e45675d7aa34323a53acc57a72b2e40a181581c989a from G:/Forge Lab/nvngx_dlssnr.dll. App prefs select Skynizz/v1.2.1/nr-mfg and that local model; previous prefs retained. NR+MFG armed, pre-SR true/cache false/MFG auto. Native SR/RR/FG 310.9.16 retained with updater backups. Combined loader/MFG code unchanged; no speculative watermark hook/extra injector. Await actual game NR+MFG progression/pacing and visual watermark confirmation before default promotion or merge. Sims4 running in separate workflow; do not touch it or competing GPU tests. Native helper busy after bounded retry/reset; no further native input. Witcher3/PRAGMATA/Sims4 files untouched. GUI closed after app update. Final tests 10 policy +1 compiled-package +11 Windows lifecycle scenarios pass.",
       "category": "implementation",
       "primary_role": "implementation",
       "primary_team": "runner",
@@ -2389,8 +2389,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-17T06:32:51.385Z",
-      "lease_until": "2026-10-17T18:32:51.385Z",
+      "updated_at": "2026-10-17T06:40:13.608Z",
+      "lease_until": "2026-10-17T18:40:13.608Z",
       "amendment_count": 5,
       "amendments": [
         {
