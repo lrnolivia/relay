@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T07:30:45.577Z",
+  "updated_at": "2026-10-17T07:39:33.572Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1076,6 +1076,42 @@
         }
       ],
       "updated_at": "2026-10-17T07:28:27.184Z"
+    },
+    {
+      "id": "rtxforge-windows-nr-mfg-control-panel-20261017",
+      "owner": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
+      "goal": "Design a Windows-first rtxForge companion tuning panel led by Impeccable, replacing the need for OptiScaler's in-game UI while retaining its NR/MFG controls.",
+      "acceptance": "Confirmed human brief: separate app window that can reliably sit above a borderless/windowed game; dark translucent surfaces with blur, visibly layered plates, rounded corners, soft shadows and excellent typography. Main view focuses only on MFG and NR. Surface the same controls the mods expose in a clearer layout; place other OptiScaler settings behind Advanced, not immediately visible. Entry from Game Details and a configurable global show/hide shortcut are proposed; selected game remains explicit. Keep OptiScaler's swapchain UI disabled when this panel replaces it. Distinguish requested/saved values from actual runtime-applied/verified state. Determine the real live-apply/IPC/reload boundary from source; do not claim INI edits automatically affect a running game. Windows first explicitly confirmed; preserve existing layouts and functions elsewhere. No default promotion or fake runtime telemetry.",
+      "next_action": "Planning/design is authorized and in progress in this Windows chat. Impeccable4.3.1 context and shape/init/new-work read; human platform and visual brief answered. Record product context under canonical documentation ownership, inventory exact NR/MFG control ranges and apply semantics, then produce a reviewable Windows panel design. Source implementation begins after admitted scope separates from the active Skynizz package assignment. Current inZOI live test is user-owned; do not close/alter it.",
+      "paths": [
+        "windows/RtxForge.Windows/"
+      ],
+      "resources": [
+        "rtxforge-windows-companion-controls"
+      ],
+      "category": "design",
+      "primary_role": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-17T07:39:33.572Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Design a Windows-first rtxForge companion tuning panel led by Impeccable, replacing the need for OptiScaler's in-game UI while retaining its NR/MFG controls.",
+          "acceptance": "Confirmed human brief: separate app window that can reliably sit above a borderless/windowed game; dark translucent surfaces with blur, visibly layered plates, rounded corners, soft shadows and excellent typography. Main view focuses only on MFG and NR. Surface the same controls the mods expose in a clearer layout; place other OptiScaler settings behind Advanced, not immediately visible. Entry from Game Details and a configurable global show/hide shortcut are proposed; selected game remains explicit. Keep OptiScaler's swapchain UI disabled when this panel replaces it. Distinguish requested/saved values from actual runtime-applied/verified state. Determine the real live-apply/IPC/reload boundary from source; do not claim INI edits automatically affect a running game. Windows first explicitly confirmed; preserve existing layouts and functions elsewhere. No default promotion or fake runtime telemetry.",
+          "at": "2026-10-17T07:39:33.572Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-windows-nr-mfg-control-panel-20261017:acceptance:0",
+            "text": "Confirmed human brief: separate app window that can reliably sit above a borderless/windowed game; dark translucent surfaces with blur, visibly layered plates, rounded corners, soft shadows and excellent typography. Main view focuses only on MFG and NR. Surface the same controls the mods expose in a clearer layout; place other OptiScaler settings behind Advanced, not immediately visible. Entry from Game Details and a configurable global show/hide shortcut are proposed; selected game remains explicit. Keep OptiScaler's swapchain UI disabled when this panel replaces it. Distinguish requested/saved values from actual runtime-applied/verified state. Determine the real live-apply/IPC/reload boundary from source; do not claim INI edits automatically affect a running game. Windows first explicitly confirmed; preserve existing layouts and functions elsewhere. No default promotion or fake runtime telemetry.",
+            "at": "2026-10-17T07:39:33.572Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
