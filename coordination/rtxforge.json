@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T06:02:19.640Z",
+  "updated_at": "2026-10-17T06:08:26.895Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2253,7 +2253,7 @@
       ],
       "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows.",
       "acceptance": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. No real game-folder installs under the inherited boundary.",
-      "next_action": "PR28 draft at2fb049b contains exact source bridge patch (Skynizz6bfc4389+y4my7b7220bb; patchSHA b163d1e92cf552e0af6792685dcf782fba7643f0d10ef0b4a7cccfa63d69716b). C++ build job117324192446/run39007959607 is actively compiling; all old-head app/Linux checks pass. Local uncommitted combined-package integration now passes9policy checks+11active Windows lifecycle/regression scenarios including NR+MFG together, donor loader exclusion, pinned repair, native FG eligibility and rollback; no GPU proof. Main workflow/bundling wired for the compiled dependency. Finish review and push same branch; obtain actual C++ artifact, verify bundled app and prepare exact review candidate. Lauren requires NR+MFG; not delivered by NR-only. No real game writes/default change. Queued job was cancelled beforestart and assignment explicitlyhanded tothisWindowschat; no duplicate process.",
+      "next_action": "PR28 draft now at7dde07fae16eb710761d532dfaa17e9e9dd34af2. Exact combined C++ build run39007959607 passed; artifact12091329902 downloaded/verified (outerSHA9ea8a451b51800a2247218cf80396a68ce6d2e328828a2e54a971fb6f9541db7, innerSHAf22981df692aae07e278c1fbbc42861784ce0dcc2a9589c23372d35c89a1fe82, loaderSHA62954570bbff97f426496a45227e20a8ca53f6f0afcb86372b20a1ac6809bb1d). Actual compiled DLL plus real y4my companion passed disposable active Windows install/repair/restore and rollback;9policy+1compiled-package+11lifecycle scenarios,26catalog,9DLSSupdate,23C#scope checks pass. Self-contained local x64 installer rebuilt from7dde07f at windows/out/skynizz-candidate, SHA134749316de7750723254fa3e6330781361a14ab4a19d1c8cead3a0b67ed141e; bundled privatePython host and bridge readback pass. Exact-head CI39008707709 pending; verify then prepare game test approval. Actual RTX40 NR+MFG progression/pacing is unverified and default unpromoted; no real game writes or installed-app changes. No duplicate execution job.",
       "category": "implementation",
       "primary_role": "implementation",
       "primary_team": "runner",
@@ -2296,8 +2296,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-17T06:00:22.813Z",
-      "lease_until": "2026-10-17T18:00:22.813Z",
+      "updated_at": "2026-10-17T06:08:26.895Z",
+      "lease_until": "2026-10-17T18:08:26.895Z",
       "amendment_count": 3,
       "amendments": [
         {
