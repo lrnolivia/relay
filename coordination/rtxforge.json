@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T07:39:33.572Z",
+  "updated_at": "2026-10-17T07:44:07.713Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2531,7 +2531,7 @@
       ],
       "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows.",
       "acceptance": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. Lauren explicitly authorized installation on inZOI, The Witcher 3 or CONTROL Resonant in this Windows chat on 2026-10-17. Start with CONTROL Resonant, preserving restorable backups and existing provider/version selections elsewhere. The earlier no-real-game-writes boundary is lifted for this authorized first-game test; runtime/default promotion still requires actual NR+MFG progression and pacing evidence. Latest approval covers both CONTROL Resonant and inZOI. Remove the development SR watermark by using a verified production SR runtime in the combined package, recording its immutable source and retaining it during repair. Use the verified local RTX4070 model at G:/Forge Lab/nvngx_dlssnr.dll (SHA256e67dee209320cdafe0e93e45675d7aa34323a53acc57a72b2e40a181581c989a); do not install feeder components or touch Sims4 game files. Production SR and NR model are separate files; synthetic success in the other workflow is not native MFG proof. Latest 2026-10-17 user instruction extends watermark remediation to currently installed games too. Audit all installed runtime DLLs and apply verified clean production replacements with restorable backups, preserving each provider/mode, validated NR models and MFG. Respect active separate game ownership and defer any game still in use.",
-      "next_action": "Human inZOI QA FAIL: black screen on first load; observed process27200 CPU14s/unresponsive, logs stop beforeNR eval after firstPresent/OptiInput init. Preserved initial log/INI/game settings in TEMP/rtxforge-inzoi-startup-20261017-0330. MFG32kernels patch logged; nativeSL2.14.1 reportsmax1, native andprivateFG bothloaded. Controlled diagnostic1 only DlssNr.Enabled=false (transaction nr-off-transaction) producedsamehang; process34560 stopped and diagnosticrollback restoring originalINI underway/verified by script. Next isolateoverlay/inputstartup withNRenabled andallproductionDLLsretained, then returninZOItohealthyroute. CONTROL/unrelatedgamesuntouched. ExistingPR28 remainsdraft6278d57; no defaultpromotion/merge. Sourceworkingtreeclean. Need diagnoseactualstartupfailure, not inferMFG/NRsuccess fromstaticchecks.",
+      "next_action": "Human NR visual PASS in inZOI: Lauren reports 'wow this new NR solution is so stable visually'. Exact running candidate: installedapp6278d57, combinedloader62954570/ZIPf22981df, localNR e67, productionSR/RR/FG310.9.16, temporaryINIoverlayfalseSHAf4f12ec6f56bd36e84e57172501be669714d1b2609c3b5b22d0ce024f18a8ed5. NRenabled/preSR, intensity1, cacheoff; logrecordsNRdispatch1920x1080. This does NOT pass MFG. Human4xselectionlooksineffective; logrejects3generatedframes vsmax1. Read-only live-memory proof saved TEMP/rtxforge-inzoi-startup-20261017-0330/fg-live-patch-readback.json: nativeFGbothgatespatched, privateOptiScalerFGbothgatesunpatched. Root: one-module unlock latch missesNGXprivatecopy. Next implementper-modulepatching+privateFGpreloadbeforeNGXcapabilitycache, compileverifiedcandidate; noNRmodel/tuningchange. Source40d3c9c0159d84b0af26ebeb39327e378c0e1297 pushed: inZOIoverlayfalsepolicyinstall/repair/reset,11policy+12Windowslifecyclepass; notyetpackaged. Currentuserisactivelytesting; DO NOTclose/modifygame. Overlaydiagnostictransaction stilllive; rollbackandmanagedrepairwhenusercloses tosealpreset. CONTROLuntouched. PR28draft/defaultgateclosedforMFG. NewImpeccableWindowscompanionpanel recordedqueuedseparately; darktranslucentblurplates/rounded/shadows/font, mainNR/MFG,othercontrolsAdvanced.",
       "category": "implementation",
       "primary_role": "implementation",
       "primary_team": "runner",
@@ -2592,8 +2592,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-17T07:30:45.577Z",
-      "lease_until": "2026-10-17T19:30:45.577Z",
+      "updated_at": "2026-10-17T07:44:07.713Z",
+      "lease_until": "2026-10-17T19:44:07.713Z",
       "amendment_count": 6,
       "amendments": [
         {
