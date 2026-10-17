@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T23:00:48.310Z",
+  "updated_at": "2026-10-17T23:02:10.852Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1002,10 +1002,10 @@
     },
     {
       "id": "rtxforge-feeder-nr-provider-20261017",
-      "owner": "01a14866-c5ba-78b2-9d45-6289c142daa4",
+      "owner": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
       "goal": "Integrate the working ReShade + DLSS5-Feeder neural-rendering route into rtxForge for games without native DLSS, Windows first. User2026-10-17 after successful ME2 QA: 'any other games i can use feeder on? i wanna build this into rtxForge too.' Keep the existing native-DLSS NR/MFG routes separate and preserve active Skynizz work. This is a new product integration, not a takeover, new chat or worker launch. Use the verified human owner identity; omit voluntary AI/vendor/tool/model author credits while preserving required upstream notices.",
       "acceptance": "An explicit Feeder NR choice installs a reviewed, hash-verified and fully restorable recipe using ReShade, Feeder, an MV shader provider, neural consumer, production SR and a validated user-supplied NR model where needed. Detect executable API/bitness and existing proxies/add-ons; preserve third-party mods, saves, launch method and HDR. Refuse conflicting parallel consumers. Reuse existing app review/execute/restore ownership and cache mechanisms; repair preserves per-game tuning; known manual installations can be adopted only with verified files/original baselines. Start with x64D3D11; otherAPI/32bit/wrapper routes remain labelled unvalidated until tested. Record exact versions/digests and upstream notices; verify redistribution before bundling third-party assets. Per-game HDR/depth/resolution recipes and current NR controls must work; diagnostics require feature18 evaluation, valid moving-scene depth/MVs and image confirmation, not only feeder counters. Include the ME2 clear-before-copy fix, Andromeda borderless recipe, compatible RTX4070 model selection and clean SR watermark fix. Feeder is a synthetic DLAA/NR route; do not advertise genuine native DLSS upscaling or native MFG. Keep FG unavailable/unverified for this route until separately proven. Test package integrity, conflicts, running-game refusal, adoption/repair/restore, and actual Sims4/ME2 runtime before default promotion. Preserve current successful game installations. Explicit owner requirement2026-10-17: Sims4, MELE1/2/3 and Andromeda MUST be recognized as ALREADY INSTALLED. Adopt their verified current Feeder stack and original restore backups without reinstalling, overwriting tuning or touching saves; expose each MELE executable target behind the collection as needed. Installed must remain distinct from tested/working. LE1/LE3 have payloads installed but no first launch; generated dlss5-feed.cfg/log/cache absence must not classify them uninstalled. Adoption must create valid supported app metadata through the reviewed ownership path, not fake another provider's records.",
-      "next_action": "QUEUED: active Skynizz provider owns shared-package-engine/overlapping source; no takeover/source edits/branch. Current user explicitly requires existing Sims4,LE1,LE2,LE3,Andromeda to showInstalled. Fresh current-file hashes + original-backup refs: G:/Downloads/sims-mass-effect-nr-20261017/backups/feeder-adoption-inventory-20261017.json. ALL5 payload stacks present/backups present. LE1/LE3 alone lack dlss5-feed.cfg; verified Feeder v1.19.0 CfgWriteDefault creates it on first launch, so this generated file must be optional for installed detection. LE1/LE3 remain Untested; don't fabricate runtime pass. Application adoption metadata NOT written yet because provider integration not implemented. Preserve current user presets and independent compiler compatibility repair. After serial admission implement FeederNR managed recipe/adoption/diagnostics with meaningful detection/restore tests, retaining native NR/MFG routes. ReShade Extras on main already manages loaders/add-ons but excludes full shader/preset recipes. Bootstrap fresh main via Relay source if local Git fetch still fails on missing refs/codex checkpoint object; don't repair another shared checkout blindly. Working evidence from install assignment and ME2-runtime-20261017-031750/verified-runtime.json; approved currentME2INI SHAd4560485aedd1e9985bd379b21adf7f0c2e492b9aff8b312718a26aad9e80f26. Feeder1.19/ReShade6.8/RenoDX8.5rc5/Lumenite/NRmodel e67dee.../cleanSR d00b5b... all recorded. ME2humanPASS1pass70,Tone/Structure2,neutralcolors,copydepthbeforeclear1;Sims2pass50;Andromedaborderlessrestorescolors. FGnotverified/autostartOFF. No othergamesinstalled/no cross-chat message or workerlaunch.",
+      "next_action": "Lauren explicitly assigned Feeder adoption/newNR integration to current Windows shared-engine owner in chat. Prior queue reports no branch/source edits and writer is quiescent. Preserve acceptance/backups/runtime evidence. Execute serially inside active rtxforge-skynizz-nr-provider-20261017 branch/PR28 whose scope now includes this work; do not create another worker/branch. Account for this queue upon verified delivery.",
       "paths": [
         "scripts/feeder_provider.py",
         "scripts/extra_tools.py",
@@ -1075,7 +1075,15 @@
           }
         }
       ],
-      "updated_at": "2026-10-17T07:28:27.184Z"
+      "updated_at": "2026-10-17T23:02:10.852Z",
+      "handoffs": [
+        {
+          "at": "2026-10-17T23:02:10.852Z",
+          "from": "01a14866-c5ba-78b2-9d45-6289c142daa4",
+          "to": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
+          "next_action": "Lauren explicitly assigned Feeder adoption/newNR integration to current Windows shared-engine owner in chat. Prior queue reports no branch/source edits and writer is quiescent. Preserve acceptance/backups/runtime evidence. Execute serially inside active rtxforge-skynizz-nr-provider-20261017 branch/PR28 whose scope now includes this work; do not create another worker/branch. Account for this queue upon verified delivery."
+        }
+      ]
     },
     {
       "id": "rtxforge-windows-nr-mfg-control-panel-20261017",
