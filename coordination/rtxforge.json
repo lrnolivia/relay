@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T05:47:45.389Z",
+  "updated_at": "2026-10-17T05:48:44.010Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -742,10 +742,10 @@
     },
     {
       "id": "rtxforge-windows-sims-mass-effect-install-20261017",
-      "owner": "chatgpt-962df3b2a470",
+      "owner": "01a14866-c5ba-78b2-9d45-6289c142daa4",
       "goal": "Windows-first installation and tuning of working DLSS5/neural-rendering mod routes for Lauren's The Sims 4, Mass Effect Legendary Edition (LE1, LE2, LE3), and Mass Effect Andromeda on her RTX4070 PC. This is a local game setup assignment, separate from rtxForge's Skynizz provider coding. User authorization2026-10-17: 'start a new worker for sims 4 and the mass effect games. i'll give it full control to instsall them for me.' Latest routing instruction: 'oh just make the assignemnt on relay i'll handle the worker'. Create the assignment only; Lauren chooses and starts the worker. No worker launch or installation is authorized to proceed from this chat after that correction. The declared repository path is read-only installation reference; no repository edits are in scope. Actual installation paths must be discovered on the Windows PC and recorded before changes.",
       "acceptance": "The chosen worker locates the actual Windows Steam/EA game installs and existing mods, then installs/configures the appropriate supported NR route per title with Lauren's installation authorization. Preserve saves, existing mods, Steam/EA launching, HDR where supported and an exact reversible backup/file manifest. Verify each title launches, the NR feature actually initializes and visibly applies, and representative gameplay/UI remains usable; distinguish rendered FPS and frame times from generated FPS, with NR off/on comparisons on the RTX4070. Choose a practical performance preset rather than chasing the largest displayed FPS. Validate Sims4 live/build/buy modes and each MELE executable separately; Andromeda needs its own proven recipe. Record exact source versions, URLs, hashes, selected compatible RTX40 NR model, configuration, actual game paths and results. Missing local access/model/prerequisite is an explicit blocker, not an installed/verified claim. Do not force Skynizz's D3D12/native-DLSS path onto unsupported DX11/no-DLSS games or claim general rtxForge support from this local setup. Native NVIDIA FG/MFG is preferred when genuinely compatible; keep any other interpolation option separate and require actual performance evidence. Linux/Proton follows Windows and is not a first-pass completion gate.",
-      "next_action": "Lauren will choose/start the worker and provide its actual Windows access; use the supported handoff to that real identity. Do not launch an executor, create a source branch, or duplicate this task. Discover actual game paths (remembered G: library is only a hint), inventory existing mods and preserve backups before changes. Reuse research, checking live versions only when installing. Sims4: https://www.nexusmods.com/thesims4/mods/7237 — DX11 TS4_x64.exe; ReShade full addons + DLSS5-Feeder + Krish RenoDX-DLSS5 + Lumenite motion vectors; Essential/Performance one-pass is a starting recommendation to measure, including build/buy. MELE: https://www.nexusmods.com/masseffectlegendaryedition/mods/3410 — Feeder/RenoDX per LE1/2/3 game executable and compatible RTX40 model. Luma https://www.nexusmods.com/masseffectlegendaryedition/mods/3413 offers SR/Reflex/HDR, but combining it with NR is unverified on this PC. Andromeda: https://www.nexusmods.com/masseffectandromeda/mods/1351 — Luma native AA/DLAA, not an SR upgrade; establish a reliable NR combination before deployment. Primary feeder: https://github.com/jlrouzies-fr/DLSS5-Feeder . F5 OpticalF5Low and LosslessScaling NR addon are alternatives to investigate only if the direct route fails, not verified per-title recipes. The actual nvngx_dlssnr.dll model is separate from forwarder nvngx.dll_dlssnr.dll. Reuse current findings without blindly stacking injectors. Separate coding assignment rtxforge-skynizz-nr-provider-20261017 stays intact. No game files changed or installed by the assignment-creation chat.",
+      "next_action": "Lauren selected this assignment in local Windows chat 01a14866-c5ba-78b2-9d45-6289c142daa4. Resume the existing local installation task here with inherited full installation authorization. No executor launch, source branch, repository edits, or duplicate assignment. Discover Steam/EA paths and existing injectors/models, verify current upstream prerequisites, record exact reversible backup manifest before game mutations. Separate NR+MFG coding task remains untouched.",
       "paths": [
         "docs/INSTALLATION.md"
       ],
@@ -776,7 +776,16 @@
             "at": "2026-10-17T05:35:15.356Z"
           }
         ]
-      }
+      },
+      "handoffs": [
+        {
+          "at": "2026-10-17T05:48:44.010Z",
+          "from": "chatgpt-962df3b2a470",
+          "to": "01a14866-c5ba-78b2-9d45-6289c142daa4",
+          "next_action": "Lauren selected this assignment in local Windows chat 01a14866-c5ba-78b2-9d45-6289c142daa4. Resume the existing local installation task here with inherited full installation authorization. No executor launch, source branch, repository edits, or duplicate assignment. Discover Steam/EA paths and existing injectors/models, verify current upstream prerequisites, record exact reversible backup manifest before game mutations. Separate NR+MFG coding task remains untouched."
+        }
+      ],
+      "updated_at": "2026-10-17T05:48:44.010Z"
     }
   ],
   "claims": [
