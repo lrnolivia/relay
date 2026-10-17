@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-17T05:36:18.079Z",
+  "updated_at": "2026-10-17T05:47:45.389Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2188,9 +2188,9 @@
       "resources": [
         "rtxforge-shared-package-engine"
       ],
-      "goal": "Lauren authorized Skynizz/optiscaler-dlss5 as an optional rtxForge NR provider, then explicitly directed: 'hand the coding to Codex here. for Windows fist.' Delegate the coding and complete the Windows implementation first. Keep Linux/Proton as the subsequent pass and preserve the original Sims 4, Mass Effect Legendary Edition and Andromeda goals without claiming that this native-DLSS integration alone supports them. Latest direction: Skynizz is the intended default NR package once compatibility with the existing rtxForge MFG route is verified. Investigate the supported composition first.",
-      "acceptance": "Coding deliverable: optional Skynizz NR-only provider in the active shared DesktopService/engine_bridge transaction path and Windows package/settings/mode UI; verified release identity and user-selectable versions; exact payload/model provenance; first-install, repair, reset, and restore respect Skynizz policy. Existing providers and MFG remain functional. Require a compatible external RTX40 NR model and documented D3D12/DLSS route; do not claim GPU/game compatibility from file staging. Preserve Linux behavior and keep its Skynizz provider unavailable in this Windows-first pass. Linux enablement and runtime validation follow after Windows. Focused active-path tests and one reviewable draft PR, with Windows build/runtime gaps stated from actual evidence. No real game-folder installation by this handoff. Delegate via an admitted Codex execution job and verify its real status; queued is not running. Default promotion is conditional on exact-version NR+MFG composition and target-runtime verification that MFG remains functional with acceptable pacing. Preserve explicit provider/version selections. Do not change defaults or label the combination verified based on staging/tests alone; retain the optional NR-only path if the compatibility gate is unresolved.",
-      "next_action": "Local Windows owner resumes same branch from d725723. Inspect upstream MFG/cache and current native Streamline route, implement bounded optional provider on the active lifecycle, test fixtures/build, publish one draft PR; keep default promotion pending actual compatibility evidence. No real game installs.",
+      "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows.",
+      "acceptance": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. No real game-folder installs under the inherited boundary.",
+      "next_action": "Retain existing uncommitted provider/Windows wiring and passing disposable lifecycle tests. Compare exact y4my and DLSS-Unlocked Ada MFG unlock sources with Skynizz v1.2.1; identify smallest supported combined build/adapter and rescope source/build paths before implementation. No duplicate jobs/branches and no real-game writes.",
       "category": "implementation",
       "primary_role": "implementation",
       "primary_team": "runner",
@@ -2224,12 +2224,18 @@
             "text": "Coding deliverable: optional Skynizz NR-only provider in the active shared DesktopService/engine_bridge transaction path and Windows package/settings/mode UI; verified release identity and user-selectable versions; exact payload/model provenance; first-install, repair, reset, and restore respect Skynizz policy. Existing providers and MFG remain functional. Require a compatible external RTX40 NR model and documented D3D12/DLSS route; do not claim GPU/game compatibility from file staging. Preserve Linux behavior and keep its Skynizz provider unavailable in this Windows-first pass. Linux enablement and runtime validation follow after Windows. Focused active-path tests and one reviewable draft PR, with Windows build/runtime gaps stated from actual evidence. No real game-folder installation by this handoff. Delegate via an admitted Codex execution job and verify its real status; queued is not running. Default promotion is conditional on exact-version NR+MFG composition and target-runtime verification that MFG remains functional with acceptable pacing. Preserve explicit provider/version selections. Do not change defaults or label the combination verified based on staging/tests alone; retain the optional NR-only path if the compatibility gate is unresolved.",
             "at": "2026-10-17T05:36:18.079Z",
             "reason": "Latest Windows-chat direction: 'relay assignment for new NR version. it will be the default NR package as long as it plugs in well with our MFG.' Local execution takes over the existing assignment after cancellation of its never-started queued dispatch."
+          },
+          {
+            "id": "rtxforge-skynizz-nr-provider-20261017:acceptance:3",
+            "text": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. No real game-folder installs under the inherited boundary.",
+            "at": "2026-10-17T05:47:45.389Z",
+            "reason": "Lauren explicitly clarified: 'we may have to be the ones to solve the bridge with MFG because i NEED them both together.' NR+MFG is now required implementation scope, not an optional follow-up or NR-only delivery."
           }
         ]
       },
-      "updated_at": "2026-10-17T05:36:18.079Z",
-      "lease_until": "2026-10-17T17:36:18.079Z",
-      "amendment_count": 2,
+      "updated_at": "2026-10-17T05:47:45.389Z",
+      "lease_until": "2026-10-17T17:47:45.389Z",
+      "amendment_count": 3,
       "amendments": [
         {
           "at": "2026-10-17T05:22:27.174Z",
@@ -2304,6 +2310,26 @@
             "goal": "Lauren authorized Skynizz/optiscaler-dlss5 as an optional rtxForge NR provider, then explicitly directed: 'hand the coding to Codex here. for Windows fist.' Delegate the coding and complete the Windows implementation first. Keep Linux/Proton as the subsequent pass and preserve the original Sims 4, Mass Effect Legendary Edition and Andromeda goals without claiming that this native-DLSS integration alone supports them. Latest direction: Skynizz is the intended default NR package once compatibility with the existing rtxForge MFG route is verified. Investigate the supported composition first.",
             "acceptance": "Coding deliverable: optional Skynizz NR-only provider in the active shared DesktopService/engine_bridge transaction path and Windows package/settings/mode UI; verified release identity and user-selectable versions; exact payload/model provenance; first-install, repair, reset, and restore respect Skynizz policy. Existing providers and MFG remain functional. Require a compatible external RTX40 NR model and documented D3D12/DLSS route; do not claim GPU/game compatibility from file staging. Preserve Linux behavior and keep its Skynizz provider unavailable in this Windows-first pass. Linux enablement and runtime validation follow after Windows. Focused active-path tests and one reviewable draft PR, with Windows build/runtime gaps stated from actual evidence. No real game-folder installation by this handoff. Delegate via an admitted Codex execution job and verify its real status; queued is not running. Default promotion is conditional on exact-version NR+MFG composition and target-runtime verification that MFG remains functional with acceptable pacing. Preserve explicit provider/version selections. Do not change defaults or label the combination verified based on staging/tests alone; retain the optional NR-only path if the compatibility gate is unresolved.",
             "next_action": "Local Windows owner resumes same branch from d725723. Inspect upstream MFG/cache and current native Streamline route, implement bounded optional provider on the active lifecycle, test fixtures/build, publish one draft PR; keep default promotion pending actual compatibility evidence. No real game installs."
+          }
+        },
+        {
+          "at": "2026-10-17T05:47:45.389Z",
+          "by": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
+          "reason": "Lauren explicitly clarified: 'we may have to be the ones to solve the bridge with MFG because i NEED them both together.' NR+MFG is now required implementation scope, not an optional follow-up or NR-only delivery.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Lauren authorized Skynizz/optiscaler-dlss5 as an optional rtxForge NR provider, then explicitly directed: 'hand the coding to Codex here. for Windows fist.' Delegate the coding and complete the Windows implementation first. Keep Linux/Proton as the subsequent pass and preserve the original Sims 4, Mass Effect Legendary Edition and Andromeda goals without claiming that this native-DLSS integration alone supports them. Latest direction: Skynizz is the intended default NR package once compatibility with the existing rtxForge MFG route is verified. Investigate the supported composition first.",
+            "acceptance": "Coding deliverable: optional Skynizz NR-only provider in the active shared DesktopService/engine_bridge transaction path and Windows package/settings/mode UI; verified release identity and user-selectable versions; exact payload/model provenance; first-install, repair, reset, and restore respect Skynizz policy. Existing providers and MFG remain functional. Require a compatible external RTX40 NR model and documented D3D12/DLSS route; do not claim GPU/game compatibility from file staging. Preserve Linux behavior and keep its Skynizz provider unavailable in this Windows-first pass. Linux enablement and runtime validation follow after Windows. Focused active-path tests and one reviewable draft PR, with Windows build/runtime gaps stated from actual evidence. No real game-folder installation by this handoff. Delegate via an admitted Codex execution job and verify its real status; queued is not running. Default promotion is conditional on exact-version NR+MFG composition and target-runtime verification that MFG remains functional with acceptable pacing. Preserve explicit provider/version selections. Do not change defaults or label the combination verified based on staging/tests alone; retain the optional NR-only path if the compatibility gate is unresolved.",
+            "next_action": "Local Windows owner resumes same branch from d725723. Inspect upstream MFG/cache and current native Streamline route, implement bounded optional provider on the active lifecycle, test fixtures/build, publish one draft PR; keep default promotion pending actual compatibility evidence. No real game installs."
+          },
+          "after": {
+            "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows.",
+            "acceptance": "Required delivery: Windows NR+MFG together using Skynizz NR and the working rtxForge MFG route. Determine adapter versus combined-build requirements from exact source and verified payloads, implement the required bridge with restorable managed ownership, and prove sourcing/config/version/restore/rollback behavior in active DesktopService tests. Preserve verified upstream license/source provenance and current working MFG. Source build/package checks are distinct from RTX40/game runtime confirmation and pacing. No default promotion before the combined runtime gate passes. The NR-only preparation is retained useful work but does not fulfill Lauren's requirement. Do not stop with an optional NR-only PR as the final result; investigate and implement the bridge. No real game-folder installs under the inherited boundary.",
+            "next_action": "Retain existing uncommitted provider/Windows wiring and passing disposable lifecycle tests. Compare exact y4my and DLSS-Unlocked Ada MFG unlock sources with Skynizz v1.2.1; identify smallest supported combined build/adapter and rescope source/build paths before implementation. No duplicate jobs/branches and no real-game writes."
           }
         }
       ],
