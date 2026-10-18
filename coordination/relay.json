@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-18T10:58:38.740Z",
+  "updated_at": "2026-10-18T10:58:44.816Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16231,14 +16231,17 @@
       "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
       "branch": "relay/nudge-diagnostics-record-20261018",
       "paths": [
-        "docs/nudge/runtime-checkpoint.json"
+        "docs/nudge/runtime-checkpoint.json",
+        "docs/nudge/product/README.md",
+        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
       ],
       "resources": [
-        "nudge-runtime-record"
+        "nudge-runtime-record",
+        "nudge-product-doc-mirrors"
       ],
       "goal": "Preserve the verified nudge0.4.2 runtime checkpoint and its authoritative product-document mirrors.",
       "acceptance": "Record exact source/native/cloud identities, live+isolated diagnostics QA, recovery compatibility, peer notices and remaining work. Sync README and operating-skill mirrors byte-for-byte from nudge source7e3dd8053429ccac744ce87a0e36300b1bec93e0 under docs/nudge/product/. No Relay product code or runtime changes.",
-      "next_action": "Update the checkpoint for0.4.2, verify JSON/identities, open a draft PR and complete through current documentation gates.",
+      "next_action": "Save0.4.2 checkpoint and exact README/SKILL mirrors, verify JSON/hashes and publish the documentation PR.",
       "category": "coordination",
       "primary_team": "night-shift",
       "supporting_teams": [],
@@ -16268,8 +16271,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-18T10:58:38.740Z",
-      "lease_until": "2026-10-18T22:58:38.740Z",
+      "updated_at": "2026-10-18T10:58:44.816Z",
+      "lease_until": "2026-10-18T22:58:44.816Z",
       "amendment_count": 1,
       "amendments": [
         {
