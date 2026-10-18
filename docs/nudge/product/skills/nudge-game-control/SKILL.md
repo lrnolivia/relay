@@ -27,6 +27,14 @@ Never guess a handle. Selection verifies the process identity and foreground foc
 
 `observe_game` and captures after playback include an observation receipt alongside the PNG. Use its `image_to_client_scale` to convert image pixels to native client coordinates. Capture keeps the full client canvas: pixels outside physical monitors are black padding, flagged `clipped` and `incomplete`, with `missing_native_pixels` and `visible_client_regions`. Do not interpret padding as game content or click it. A clipped image is incomplete evidence. Occluding windows remain visible in captures; a screenshot is not an atomic render-frame measurement.
 
+## Close a requested game
+
+Close a real game only within a current human request to close that game. Acquire the exclusive session, then copy `hwnd`, `pid`, `process_created_at`, `process_path`, and `class_name` from a fresh `list_game_windows` row into `close_game.target`. Unknown identity fields must not be guessed. No selection or focus is needed. The tool releases nudge input, requests the ordinary window close, and waits up to `wait_ms` (0–10000, default 5000). A game may show an exit/save prompt; do not answer it unless the user's request covers that decision.
+
+Read the receipt: `close_requested` proves only dispatch; `window_closed` and `process_exited` are separate observations. `completed` requires process exit. Report timeout, identity change or cancellation honestly. The default never kills. Use `force: true` only when the human explicitly requests forced termination of that exact process, accepting unsaved-data loss. Force stays confined to its pinned process and is skipped if the original window has disappeared or changed, or if the lease/F12/cancellation stops the call. Never infer permission to kill a launcher, helper or process tree. A posted close cannot be recalled. Pinning prevents PID reuse from retargeting force; Windows does not provide an atomic identity-check-and-post operation for a window handle.
+
+Existing conversations may need the app's Refresh tools before `close_game` appears. A supported local MCP connection can use the same gated tool; never bypass sessions with raw termination commands.
+
 ## Keyboard, mouse and menu text
 
 For movement, use `hold_keys` or `play_input`, not text typing. Each playback frame specifies the complete held `keys` and `buttons` state. Hold W+Shift together with `keys: [w, shift]`. Adjacent frames retain common held keys; an empty list releases them. Inputs release at sequence end. Use short sequences (usually 100–500 ms) and observe their effect before increasing duration. Each sequence runs locally and can combine keyboard, button holds, and relative mouse movement.
