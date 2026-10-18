@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-18T14:10:12.894Z",
+  "updated_at": "2026-10-18T14:16:57.826Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16612,7 +16612,7 @@
       "primary_staff": "roman",
       "supporting_staff": [],
       "base_sha": "abf9b83386a434df4068690431afb5ec3baf6063",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-18T14:10:12.894Z",
       "objective_history": {
         "baseline": {
@@ -16629,8 +16629,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-18T14:10:12.894Z",
-      "lease_until": "2026-10-19T02:10:12.894Z"
+      "updated_at": "2026-10-18T14:16:57.826Z",
+      "lease_until": "2026-10-19T02:16:57.826Z",
+      "pr": 237,
+      "merged_head_sha": "87314417b69c55f3d705c83e51cba86f2b7d3d0a",
+      "merge_commit_sha": "a77b71260bfe2eee8534b30f738f2711cb55422b",
+      "evidence": "PR237 exact head87314417b69c55f3d705c83e51cba86f2b7d3d0a mergeda77b71260bfe2eee8534b30f738f2711cb55422b through verified human Git route; provider author/committer/account and exact remote checkpoint/README blobs checked. https://github.com/lrnolivia/relay/blob/a77b71260bfe2eee8534b30f738f2711cb55422b/docs/nudge/runtime-checkpoint.json records clean source0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f,152 passing Python tests including11 provider cases(9 native), actual31-tool stdio with recorder/provider modules absent, and retained final normal/cancelled owned synthetic receipt C:/Users/lrnol/Repos/nudge/.local/provider-fixture-artifacts/e03e239e-581f-4af4-b7c5-8949b30ecf86/provider-smoke-receipt.json SHA2565b486edde78876e17005b90d7f308a3a8b79e8d8f2d7cae2f2d42cc4231529d1. Native collector birth/path/Job pinning, wrong/foreign identities, locked config/dependencies, raw/log hashes, forced descendant incompleteness, timeout/log caps and original-handle cleanup retry passed. Initial false complete after forced descendant cleanup corrected; equal stop/transport deadlines corrected; pending-cleanup harness repaired without accepting an attempt as completion. Owned diagnostic leftover identity-checked and gracefully quit; no fixtures remain. Production0.4.6/source9629f47/DLL00E9C33F/Worker43de0174/deploymentb5263e42 reverified healthy and unchanged. No real collector profile/registry/MCP launcher, upload/rebuild/restart/tool refresh, game/input/capture/GPU action. Raw source clock and independent rendered-motion/scene/comparison verification remain explicitly pending.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T14:16:57.826Z"
     }
   ],
   "migrated_from": "loew-inspector"
