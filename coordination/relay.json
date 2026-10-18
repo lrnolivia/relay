@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-18T11:29:54.476Z",
+  "updated_at": "2026-10-18T11:56:30.086Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16346,6 +16346,47 @@
       "evidence": "https://github.com/lrnolivia/relay/blob/df3a663c5e01394fa7a388e081328ce50f84c731/docs/nudge/runtime-checkpoint.json — source06e4d5f/native0.4.3/Worker3b270386 verified; 72 Python and19 cloud tests, actual stdio and isolated cloud MCP owned close fixtures passed. Source and merge author/committer verified as Lauren Olivia; exact README/SKILL Git blobs match source hashes. Recovery0.4.2 retained. No real game action or inventory refresh. Camera/measurement capabilities remain explicit follow-up work.",
       "work_accounted": true,
       "completed_at": "2026-10-18T11:29:54.476Z"
+    },
+    {
+      "id": "nudge-camera-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-camera-record-20261018",
+      "paths": [
+        "docs/nudge/runtime-checkpoint.json",
+        "docs/nudge/product/README.md",
+        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
+      ],
+      "resources": [
+        "nudge-runtime-record",
+        "nudge-product-doc-mirrors"
+      ],
+      "goal": "Record nudge camera recipe delivery, calibration limits and timing provenance",
+      "acceptance": "Exact0.4.4 source/runtime, simulation-only QA, bounded receipt semantics, unchanged control gates and next recorder/measurement work are durable; source README/SKILL mirrors match",
+      "next_action": "Finish exact-source camera protocol QA and runtime promotion, then update checkpoint and mirrors in the existing isolated docs checkout",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "b0d2aca680170552b5a836ff6d1868f927ad139f",
+      "state": "active",
+      "created_at": "2026-10-18T11:56:30.086Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Record nudge camera recipe delivery, calibration limits and timing provenance",
+          "acceptance": "Exact0.4.4 source/runtime, simulation-only QA, bounded receipt semantics, unchanged control gates and next recorder/measurement work are durable; source README/SKILL mirrors match",
+          "at": "2026-10-18T11:56:30.086Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-camera-record-20261018:acceptance:0",
+            "text": "Exact0.4.4 source/runtime, simulation-only QA, bounded receipt semantics, unchanged control gates and next recorder/measurement work are durable; source README/SKILL mirrors match",
+            "at": "2026-10-18T11:56:30.086Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T11:56:30.086Z",
+      "lease_until": "2026-10-18T23:56:30.086Z"
     }
   ],
   "migrated_from": "loew-inspector"
