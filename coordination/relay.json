@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-18T14:43:03.325Z",
+  "updated_at": "2026-10-18T14:53:03.358Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16659,7 +16659,7 @@
       "primary_staff": "roman",
       "supporting_staff": [],
       "base_sha": "0c4d22eb6ee476017a16f5d0d7cc44b23c3071f7",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-18T14:43:03.325Z",
       "objective_history": {
         "baseline": {
@@ -16676,8 +16676,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-18T14:43:03.325Z",
-      "lease_until": "2026-10-19T02:43:03.325Z"
+      "updated_at": "2026-10-18T14:53:03.358Z",
+      "lease_until": "2026-10-19T02:53:03.358Z",
+      "pr": 238,
+      "merged_head_sha": "558ddc443b2cb2eae21e8523b59fe23a5acd3c0a",
+      "merge_commit_sha": "2dbfe166214d7ff4f3e99bf087b9883c403b69e3",
+      "evidence": "Merged PR238 at2dbfe166214d7ff4f3e99bf087b9883c403b69e3 from exact head558ddc443b2cb2eae21e8523b59fe23a5acd3c0a. Fresh provider PR/commit readback verifies merged_by311277794/lrnolivia and both human author/committer via canonical helper. Remote checkpoint blob30dce771734a922be16219e1eb50c160262b2fc4 and README bloba58abab822efa59f2aa401f8fa1aa5e80d386eb5/readmeSHA25609c97e351ef1be73849809e63068f605dbee81f0ab251996c62e315c826fb41c match. Source73be8de5b9a893570ca9c910fffde9c68a3b9296 is source-only, runtime remains0.4.6 from9629f47b24c930f824db761d1b7a5493bde47791 with unchanged31-tool catalog and no recorder/provider/evidence modules loaded.167 Python tests including15 evidence cases passed; existing owned native fixtures only. Final offlineCLI/Python smoke cc9fcbf1-2738-48cf-9a0f-017cc66f22f1 receiptSHAba995b882d06d4df58b50da8400bcb16253c5013046ede1987557132b06c4b7e verifies lab-only model pass, stationary rejection, retained native transport's insufficient samples/no frames, unbound human correction and bad-hash exit2. New smoke starts no recorder. No live recorder/real game/input/capture/GPU action. Raw-clock/target/rendered-motion/scene evidence remains unverified, game_motion_verified/comparison_ready always false. All work accounted; quiet authorized peer monitoring remains, real evidence/provider registration waits for current human test authorization and reviewed evidence.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T14:53:03.358Z"
     }
   ],
   "migrated_from": "loew-inspector"
