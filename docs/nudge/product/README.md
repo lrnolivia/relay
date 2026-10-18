@@ -125,6 +125,14 @@ The offline CLI reads up to8MiB and50000 CSV rows without changing files. Neithe
 
 `scripts/smoke_measurement.py --fixtures` checks the retained offline traces through real stdio MCP and the offline parser; `--cloud` uses only the isolated loopback Worker. The tests never launch a game or recorder and send no input. A stationary trace and an interrupted moving/crashed trace remain unsuitable for a completed motion comparison.
 
+### Local recorder transport foundation
+
+`nudge.recorder.ProcessRecorder` is a local component with no registered MCP launcher. It accepts an explicitly supplied executable/script identity, locks and checks those hashes, pins the selected process/window read-only, and runs a bounded JSON-lines producer in a private Windows Job Object. The target is never assigned to that job. Only recorder processes are stopped during cleanup, including descendants and abrupt parent exit. Unconfirmed exit retains the original handles for a later cleanup retry. Artifacts and bounded stdout/stderr logs retain file identity and hashes in a newly created run directory; existing directories, redirected files, hardlinks and oversized output reject or remain incomplete.
+
+Each prepare/start/phase/stop exchange records actual UTC/performance-counter bounds and the producer's native QPC sample/frequency, checked against surrounding same-PC QPC reads. This establishes the local protocol exchange interval, not a renderer frame boundary or alignment of an unrelated trace. Geometry observations use native coordinates with a restored thread DPI context. The source includes only an owned synthetic producer fixture; no external recorder is installed, registered or approved by this component. Exclusive-session integration and independent motion/measurement acceptance are still required before exposing recording through MCP.
+
+`scripts/smoke_recorder.py` creates only its own off-screen/no-activate target and synthetic producer; it sends no input, captures no pixels and queries no game/GPU data. `--retain` preserves its raw artifact/logs/receipt under `.local/recorder-fixture-artifacts/<run_id>/`; otherwise temporary outputs expire with the harness. Synthetic phase names do not indicate actual camera movement. `transport_complete` describes only that protocol run; `game_motion_verified` and `comparison_ready` remain false.
+
 ## Controller emulation
 
 `connect_controller` attaches a neutral `xbox360` or `ds4` virtual device. `play_controller` executes full timed states, while `set_controller_state` applies a state for a lease of up to five seconds. Sticks range from -1 to 1 (+X right, +Y up for either controller); triggers range from 0 to 1. Sequences end neutral while keeping the device attached. F12, focus loss, emergency stop and shutdown unplug it. `disconnect_controller` explicitly removes it.

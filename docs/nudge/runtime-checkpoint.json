@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "project": "nudge",
-  "observed_at": "2026-10-18T12:46:42.806871+00:00",
+  "observed_at": "2026-10-18T13:15:59.237642+00:00",
   "source": {
     "path": "C:\\Users\\lrnol\\Repos\\nudge",
     "branch": "codex/nudge-local-controls",
-    "head": "9629f47b24c930f824db761d1b7a5493bde47791",
+    "head": "9869595b53432f3e402d9702980a7b6ba3fe8b90",
     "remote": null,
     "observation_implementation": "acb275f2f73d707f6528edfe6e5feace93f6a7da",
     "exclusive_sessions": [
@@ -19,7 +19,9 @@
     "camera_implementation": "d60666f71780c72a302de7322df7a6416557cdfc",
     "camera_interruption_fix": "98e0d0615e0b27c354bd844e71bb47eb7f6586a2",
     "measurement_implementation": "adf6d320b48bffe3d0172ad1fde4b22dd02a1449",
-    "unbound_measurement_import": "9629f47b24c930f824db761d1b7a5493bde47791"
+    "unbound_measurement_import": "9629f47b24c930f824db761d1b7a5493bde47791",
+    "recorder_transport_implementation": "59ebc544f80845a5861e4ff4dd2f72ac0b20f397",
+    "recorder_isolation_verification": "9869595b53432f3e402d9702980a7b6ba3fe8b90"
   },
   "authorization": {
     "scope": "Continue nudge implementation, companion desktop-sign-in startup, authenticated hosted MCP with existing pairing/access, and coordination/retry notices to the two named chats.",
@@ -58,7 +60,9 @@
       "deployed_at": "2026-10-18T12:45:20.098251Z",
       "pairing_oauth_and_durable_object_preserved": true,
       "local_tool_count": 31
-    }
+    },
+    "source_head": "9629f47b24c930f824db761d1b7a5493bde47791",
+    "source_only_recorder_component_loaded": false
   },
   "capabilities": {
     "ownership": "Windows kernel mutex and shared owner mapping in the signed-in user desktop session. Filesystem coordination failed across process views and was replaced; diagnostic JSON mirrors are not authority.",
@@ -72,7 +76,8 @@
     "camera_provenance": "Requested/sent counts, acknowledged state transition bounds, per-phase timing/error, sampled guard checks/gaps, run/session/phase/target identity and neutral attempt receipts. Camera scheduling and delivery monotonic_ns fields use python.time.perf_counter, observed QueryPerformanceCounter resolution1e-7s; clock domain and bracketing correlation to python.time.monotonic window-observation timestamps are included. Do not compare clock domains directly or infer game polling/render time from API receipts. Actual stop conditions are read directly; mutable display text is not a cause signal. game_motion_verified and comparison_ready remain false with missing-measurement flags; no stationary/missing data is accepted as motion or performance success.",
     "measurement_adapters": "Read-only prepare_measurement_plan binds exact camera recipe/digest, UUID, target, context and phase IDs. analyze_measurement_artifact verifies supplied UTF-8 raw SHA256 without opening reference paths or executing commands. Supports PresentMon CSV with preserved headers and contiguous PID/swapchain/PresentMode segments, zero/unavailable distinct and no inferred generated/base FPS; explicit headerless GPU CSV in MiB/percent with total-adapter scope, no per-game budget or OOM claim; legacy phase JSON retains original interpretation including human stationary correction, crash/causality and restoration. Inline160000 characters and existing hosted256KiB total request; offline CLI8MiB/50000 CSV rows. Optional report binding must match exact plan or rejects; missing binding is flagged.",
     "recorder_contract": "Local replaceable RecorderAdapter protocol plus RecorderLifecycle provides actual prepare/start/phase/stop/cleanup UTC/performance-counter boundaries outside input scheduling. Failure/abnormal exit still attempts stop+cleanup and retains receipts. No live recorder launcher registered. Imported recorder/version/hash, lifecycle, public session ID, binding, clock header/unit/frequency/timezone/anchor and quality remain caller supplied. No session tokens allowed by schema. Recorder and camera gates are independent; only a matching same-backend camera receipt joins. Target continuity, clock alignment and rendered motion remain unverified; comparison_ready/game_motion_verified stay false.",
-    "measurement_unbound": "Historical artifacts need no invented CameraRecipe, target birth/path/dimensions or angle calibration. Omit both plan and plan_digest to analyze_measurement_artifact, or use CLI --unbound REPORT.json RAW_ARTIFACT. Return analysis_mode=unbound_historical and null run_id/recipe_digest/context_id/target/plan_digest, preserve reported PIDs as raw provenance, flag missing identity/calibration/run/clock binding, never join or align a cached camera receipt. A supplied claimed report binding cannot be adopted by unbound mode. Bound analysis requires both exact plan/digest and retains strict matching; recorder/input orchestration is unchanged."
+    "measurement_unbound": "Historical artifacts need no invented CameraRecipe, target birth/path/dimensions or angle calibration. Omit both plan and plan_digest to analyze_measurement_artifact, or use CLI --unbound REPORT.json RAW_ARTIFACT. Return analysis_mode=unbound_historical and null run_id/recipe_digest/context_id/target/plan_digest, preserve reported PIDs as raw provenance, flag missing identity/calibration/run/clock binding, never join or align a cached camera receipt. A supplied claimed report binding cannot be adopted by unbound mode. Bound analysis requires both exact plan/digest and retains strict matching; recorder/input orchestration is unchanged.",
+    "local_recorder_transport": "Source-only unregistered ProcessRecorder foundation; see source_only_recorder_contract. Production0.4.6 remains unchanged and no recorder launcher is in MCP."
   },
   "verification": {
     "python_tests": 109,
@@ -156,20 +161,20 @@
     "compatibility": "Pre-promotion healthy0.4.5 exact binary/config/source retained and cloud resources verified. Current0.4.6 passes health. Pairing/OAuth/bindings/tag and bounded diagnostic storage unchanged; no migration/rollback. Earlier0.4.4 recovery remains. No exact human-approved recovery version established."
   },
   "remaining": [
-    "Register a bounded live recorder adapter only once its process/artifact/clock/cleanup contract is verified using owned fixtures. Current release is offline interoperability, not live capture.",
-    "Independent target/clock/motion evidence and before/during/after acceptance remain pending. Keep optional product metrics replaceable; no private shared-memory dependency.",
-    "Real-game calibration/capture/motion compatibility needs a current human test request; no equivalent retry of the exhausted failing PresentMon capture or privilege bypass."
+    "Integrate local recorder resource cancellation/expiry/cleanup with exclusive sessions using owned synthetic fixtures; a reservation must outlive actual recorder/in-flight cleanup. No public launcher before this verification.",
+    "Register only vetted local recorder providers with honest raw artifact/version/clock/target/phase provenance. Existing failing PresentMon capture retries remain exhausted.",
+    "Independent motion/rendered-data/clock/scene validity and before/during/after acceptance remain pending. Real-game capture/input requires a current human test request."
   ],
-  "next_action": "Use owned synthetic recorder fixtures to establish executable/target/run identity, bounded artifact paths, actual QPC anchors and stop/cleanup receipts before any live adapter is registered. Do not launch a game/recorder on a real game or send gameplay without current human authorization.",
+  "next_action": "Prove exclusive-session recorder ownership and cleanup ordering with synthetic recorder/target fixtures, including cancellation, expiry, stale tokens and simultaneous caller contention. Keep production launcher unregistered and production0.4.6 unchanged until ready.",
   "documentation": {
-    "assignment": "nudge-measurement-record-20261018",
-    "branch": "relay/nudge-measurement-record-20261018",
-    "scope": "Checkpoint JSON and exact nudge README/operating-skill mirrors only; no Relay product code/runtime changes.",
+    "assignment": "nudge-recorder-contract-record-20261018",
+    "branch": "relay/nudge-recorder-contract-record-20261018",
+    "scope": "Checkpoint JSON and exact README source mirror; no Relay product/runtime changes.",
     "identity_verification": "Existing connected GitHub profile and exact canonical commit witness were supplied to the exported attribution helper request adapter; it validates the same account/witness as the gh route. No credential or account was created.",
     "product_mirrors": {
       "README.md": {
-        "sha256": "d448895e52b3424b222293fb86d0b5337bf5f1400c94e9e2b5a2aa5b9b5c62c0",
-        "source_commit": "9629f47b24c930f824db761d1b7a5493bde47791"
+        "sha256": "5cf33ab5882b1e1a8924e1fbd668b218399ad2abf289057eea3022b60e424f86",
+        "source_commit": "9869595b53432f3e402d9702980a7b6ba3fe8b90"
       },
       "skills/nudge-game-control/SKILL.md": {
         "sha256": "8962806fa9cd3ca0667d288ac8e753fe7fa7a44f2d20ba4440bf461f2d6f8eb8",
@@ -509,5 +514,323 @@
     "rollback": "If this release fails health and is still the current release, restore retained healthy Worker at100 percent; gracefully stop own companion, restore exact source archive and retained native/config, start sign-in task, verify recovery. Do not overwrite a newer deployment.",
     "human_approved_version": null,
     "result": "Promoted once; all recorded health criteria passed; no rollback."
+  },
+  "source_only_recorder_contract": {
+    "source_head": "9869595b53432f3e402d9702980a7b6ba3fe8b90",
+    "implementation": "59ebc544f80845a5861e4ff4dd2f72ac0b20f397",
+    "publication": "Local source only; no production recorder registry, MCP launcher, deployment, native rebuild or companion restart. Existing31-tool server does not import nudge.recorder. Deployed runtime remains source9629f47/0.4.6.",
+    "contract": [
+      "Explicit hash-pinned executable/script, read locks through exit and native PID/birth/path receipt. Fixed JSON-lines protocol with run/digest/sequence/producer identity checks; no shell or chat-supplied command route.",
+      "Private recorder Job Object; separately pinned read-only target never joins that job. Actual cancellation isolation across two recorder jobs, descendant drain and abrupt parent exit tested. Original handles retained while cleanup is unconfirmed; later cleanup retry closes handles only after exit/accounting/I/O confirmation.",
+      "New exclusive run directory, bounded protocol/log buffers and artifact acceptance. Regular file/path/file-ID/size/hash checks reject redirected/hardlinked/oversized artifacts. Raw capture/stdout/stderr retained by caller; limits are acceptance/protocol limits for vetted producers, not an OS storage quota.",
+      "Prepare/start/phase/stop source QPC/frequency lies within measured same-PC native QPC and performance-counter IPC bounds. Scope is the trusted synthetic producer exchange, not rendered frames, game motion or alignment of legacy/external data.",
+      "Native target identity/geometry sampled without selection/focus/input. Thread DPI context for physical dimensions is restored after observation; exit and geometry loss stop only the owned recorder. Recorders never terminate the target."
+    ],
+    "verification": {
+      "python_tests": 127,
+      "native_recorder_tests": 18,
+      "owned_synthetic_smoke": "PASS with existing RecorderLifecycle wrapper; actual prepare/start/six phase boundaries/stop/cleanup,9 QPC anchors, artifact and logs, closed process handle, foreground unchanged.",
+      "failure_cases": [
+        "Changed binary/script hash and stale target birth/geometry reject before launch",
+        "Wrong producer/PID and invalid QPC anchor reject",
+        "Start timeout, cancellation, duration expiry, stdout flood and stop refusal clean the owned recorder",
+        "Missing output/early exit0 are incomplete; oversized output and hardlinks reject",
+        "Target geometry change and target exit explicitly stop recorder; other fixture target survives",
+        "Unconfirmed job status retains original handles and can retry cleanup",
+        "Abrupt parent exit kills only its own recorder; original target survives",
+        "Cancellation of recorder A leaves recorder B alive"
+      ],
+      "catalog": "Actual server schema remains31 tools; nudge.recorder absent from loaded server modules. No new public launcher.",
+      "cloud_checks": "Existing0.4.6 release21-test cloud evidence retained. Cloud/bridge/server/control code unchanged in this source-only component; no cloud suite rerun or deployment needed.",
+      "harness_history": [
+        "Initial pywin32 CreateJobObject(None,None) rejected its name binding before any recorder launch. Supported empty-name creation plus direct two-job cancellation-isolation verification passed.",
+        "Initial100ms startup/request test budget exposed interpreter cold-start variation. Startup now has a separate bounded default2000ms/max5000ms allowance; later requests retain their own timeout.",
+        "Root process signaling could precede Job accounting drain and falsely report force on a normal exit. Bounded200ms drain now precedes a needed owned-descendant termination.",
+        "Abrupt-parent fixture exposed physical/logical dimensions across independent DPI contexts. A scoped native-coordinate thread context with restoration fixed the mismatch; original parent-death criterion passed."
+      ]
+    },
+    "retained_receipt_path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\recorder-fixture-artifacts\\3b7e5f82-e4fc-4992-bfd3-e81ab5d0f610\\receipt.json",
+    "receipt_sha256": "0f857e241664beb440b97e0512da77d0cd9e8177d5c191dec0ce8e9b668d7bd8",
+    "owned_synthetic_receipt": {
+      "recorder_transport": "PASS",
+      "producer": "owned synthetic fixture only",
+      "target": {
+        "hwnd": 1442476,
+        "pid": 37728,
+        "process_created_at": "2026-10-18T13:10:24.860000+00:00",
+        "process_path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "class_name": "NudgeOwnedCloseFixture",
+        "client_width": 400,
+        "client_height": 200
+      },
+      "recorder_process": {
+        "pid": 29840,
+        "process_created_at": "2026-10-18T13:10:25.005000+00:00",
+        "process_path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+      },
+      "program_files": [
+        {
+          "volume_serial": 1524059915,
+          "file_index": 9570149208540301,
+          "bytes": 107312,
+          "sha256": "abc1aa0b5a63f745804e88789b2dfe6857582ec19ed36b3b5f9dc6b340212344",
+          "path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+        },
+        {
+          "volume_serial": 1524059915,
+          "file_index": 15762598696874995,
+          "bytes": 2788,
+          "sha256": "1def3d69fdfa28d5c0dd59a00cfbdd00a7518136e53791516d25632bc774c50e",
+          "path": "C:\\Users\\lrnol\\Repos\\nudge\\scripts\\recorder_fixture.py"
+        }
+      ],
+      "anchors": [
+        {
+          "event": "prepare",
+          "source_domain": "windows.QueryPerformanceCounter",
+          "source_ticks": 94390704863,
+          "frequency_hz": 10000000,
+          "parent_qpc_before": 94389456770,
+          "parent_qpc_after": 94390710452,
+          "parent_perf_counter_before_ns": 9438945683900,
+          "parent_perf_counter_after_ns": 9439070998400,
+          "transport_interval_ns": 125368200,
+          "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+        },
+        {
+          "event": "start",
+          "source_domain": "windows.QueryPerformanceCounter",
+          "source_ticks": 94390715014,
+          "frequency_hz": 10000000,
+          "parent_qpc_before": 94390712418,
+          "parent_qpc_after": 94390723158,
+          "parent_perf_counter_before_ns": 9439071244300,
+          "parent_perf_counter_after_ns": 9439072214900,
+          "transport_interval_ns": 1074000,
+          "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+        },
+        {
+          "event": "phase_start",
+          "source_domain": "windows.QueryPerformanceCounter",
+          "source_ticks": 94390728434,
+          "frequency_hz": 10000000,
+          "parent_qpc_before": 94390725958,
+          "parent_qpc_after": 94390732704,
+          "parent_perf_counter_before_ns": 9439072599600,
+          "parent_perf_counter_after_ns": 9439073236600,
+          "transport_interval_ns": 674600,
+          "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+        },
+        {
+          "event": "phase_end",
+          "source_domain": "windows.QueryPerformanceCounter",
+          "source_ticks": 94390738067,
+          "frequency_hz": 10000000,
+          "parent_qpc_before": 94390734253,
+          "parent_qpc_after": 94390743637,
+          "parent_perf_counter_before_ns": 9439073428100,
+          "parent_perf_counter_after_ns": 9439074322800,
+          "transport_interval_ns": 938400,
+          "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+        },
+        {
+          "event": "phase_start",
+          "source_domain": "windows.QueryPerformanceCounter",
+          "source_ticks": 94390747214,
+          "frequency_hz": 10000000,
+          "parent_qpc_before": 94390745685,
+          "parent_qpc_after": 94390752755,
+          "parent_perf_counter_before_ns": 9439074571500,
+          "parent_perf_counter_after_ns": 9439075243900,
+          "transport_interval_ns": 707000,
+          "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+        },
+        {
+          "event": "phase_end",
+          "source_domain": "windows.QueryPerformanceCounter",
+          "source_ticks": 94390755556,
+          "frequency_hz": 10000000,
+          "parent_qpc_before": 94390754090,
+          "parent_qpc_after": 94390759591,
+          "parent_perf_counter_before_ns": 9439075411800,
+          "parent_perf_counter_after_ns": 9439075927900,
+          "transport_interval_ns": 550100,
+          "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+        },
+        {
+          "event": "phase_start",
+          "source_domain": "windows.QueryPerformanceCounter",
+          "source_ticks": 94390762473,
+          "frequency_hz": 10000000,
+          "parent_qpc_before": 94390760879,
+          "parent_qpc_after": 94390767608,
+          "parent_perf_counter_before_ns": 9439076090300,
+          "parent_perf_counter_after_ns": 9439076730900,
+          "transport_interval_ns": 672900,
+          "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+        },
+        {
+          "event": "phase_end",
+          "source_domain": "windows.QueryPerformanceCounter",
+          "source_ticks": 94390770352,
+          "frequency_hz": 10000000,
+          "parent_qpc_before": 94390768832,
+          "parent_qpc_after": 94390774330,
+          "parent_perf_counter_before_ns": 9439076885800,
+          "parent_perf_counter_after_ns": 9439077401400,
+          "transport_interval_ns": 549800,
+          "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+        },
+        {
+          "event": "stop",
+          "source_domain": "windows.QueryPerformanceCounter",
+          "source_ticks": 94390776473,
+          "frequency_hz": 10000000,
+          "parent_qpc_before": 94390775249,
+          "parent_qpc_after": 94390781304,
+          "parent_perf_counter_before_ns": 9439077527300,
+          "parent_perf_counter_after_ns": 9439078091800,
+          "transport_interval_ns": 605500,
+          "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+        }
+      ],
+      "artifact": {
+        "volume_serial": 1524059915,
+        "file_index": 19984723347287802,
+        "bytes": 1478,
+        "sha256": "f0eb900e78d34c4337046fbca0f1bfc6e8dc5d48bca9073fd515ae26f7c79e1c",
+        "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\recorder-fixture-artifacts\\3b7e5f82-e4fc-4992-bfd3-e81ab5d0f610\\capture.bin"
+      },
+      "logs": [
+        {
+          "volume_serial": 1524059915,
+          "file_index": 65865144550302371,
+          "bytes": 3280,
+          "sha256": "148178db09dd3a68c0cb81b81536628c1dff3eaedb4fbf8220a22300bbc53917",
+          "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\recorder-fixture-artifacts\\3b7e5f82-e4fc-4992-bfd3-e81ab5d0f610\\stdout.log"
+        },
+        {
+          "volume_serial": 1524059915,
+          "file_index": 18014398510312718,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\recorder-fixture-artifacts\\3b7e5f82-e4fc-4992-bfd3-e81ab5d0f610\\stderr.log"
+        }
+      ],
+      "target_checks": 13,
+      "target_observations": [
+        {
+          "identity_matches": true,
+          "foreground": false,
+          "at": "2026-10-18T13:10:25.002024+00:00",
+          "perf_counter_ns": 9438936944000
+        },
+        {
+          "identity_matches": true,
+          "foreground": false,
+          "at": "2026-10-18T13:10:25.142224+00:00",
+          "perf_counter_ns": 9439076839100
+        }
+      ],
+      "lifecycle_markers": [
+        {
+          "event": "prepare",
+          "at": "2026-10-18T13:10:24.990579+00:00",
+          "before_ns": 9438925617100,
+          "after_ns": 9439071064800,
+          "succeeded": true,
+          "phase_id": null
+        },
+        {
+          "event": "start",
+          "at": "2026-10-18T13:10:25.136967+00:00",
+          "before_ns": 9439071109000,
+          "after_ns": 9439072330300,
+          "succeeded": true,
+          "phase_id": null
+        },
+        {
+          "event": "phase_start",
+          "at": "2026-10-18T13:10:25.138967+00:00",
+          "before_ns": 9439073288000,
+          "after_ns": 9439073292800,
+          "succeeded": true,
+          "phase_id": "before"
+        },
+        {
+          "event": "phase_end",
+          "at": "2026-10-18T13:10:25.139967+00:00",
+          "before_ns": 9439074377600,
+          "after_ns": 9439074382500,
+          "succeeded": true,
+          "phase_id": "before"
+        },
+        {
+          "event": "phase_start",
+          "at": "2026-10-18T13:10:25.140967+00:00",
+          "before_ns": 9439075288400,
+          "after_ns": 9439075292600,
+          "succeeded": true,
+          "phase_id": "motion"
+        },
+        {
+          "event": "phase_end",
+          "at": "2026-10-18T13:10:25.140967+00:00",
+          "before_ns": 9439075972400,
+          "after_ns": 9439075976700,
+          "succeeded": true,
+          "phase_id": "motion"
+        },
+        {
+          "event": "phase_start",
+          "at": "2026-10-18T13:10:25.142224+00:00",
+          "before_ns": 9439076773000,
+          "after_ns": 9439076777200,
+          "succeeded": true,
+          "phase_id": "after"
+        },
+        {
+          "event": "phase_end",
+          "at": "2026-10-18T13:10:25.142830+00:00",
+          "before_ns": 9439077445000,
+          "after_ns": 9439077449100,
+          "succeeded": true,
+          "phase_id": "after"
+        },
+        {
+          "event": "stop",
+          "at": "2026-10-18T13:10:25.142830+00:00",
+          "before_ns": 9439077472700,
+          "after_ns": 9439086403900,
+          "succeeded": true,
+          "phase_id": null
+        },
+        {
+          "event": "cleanup",
+          "at": "2026-10-18T13:10:25.150835+00:00",
+          "before_ns": 9439086440400,
+          "after_ns": 9439108653800,
+          "succeeded": true,
+          "phase_id": null
+        }
+      ],
+      "process_handle_closed": true,
+      "foreground_unchanged": true,
+      "cleanup_confirmed": true,
+      "game_motion_verified": false,
+      "comparison_ready": false,
+      "real_game_or_input_or_capture": false,
+      "raw_artifacts_retained": true,
+      "receipt_path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\recorder-fixture-artifacts\\3b7e5f82-e4fc-4992-bfd3-e81ab5d0f610\\receipt.json"
+    },
+    "game_motion_verified": false,
+    "comparison_ready": false,
+    "remaining": "Integrate recorder resources with the same exclusive-session cancellation/expiry/in-flight cleanup gates using synthetic fixtures before exposing a launcher. Then vetted real providers and independent renderer/motion/clock/scene data validity. No real game/capture authorization."
+  },
+  "previous_documentation": {
+    "pr": 234,
+    "merge": "58b418427a25d8f971451d672dc2ae3702437006",
+    "source": "9629f47b24c930f824db761d1b7a5493bde47791",
+    "runtime": "0.4.6"
   }
 }
