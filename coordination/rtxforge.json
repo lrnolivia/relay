@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-18T06:23:46.335Z",
+  "updated_at": "2026-10-18T06:38:37.130Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1140,7 +1140,7 @@
       "owner": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
       "goal": "Fix requested NR pre-upscaler placement being presented as effective while native DLSS/Ray Reconstruction can run NR after upscaling. User authorized investigation/fix during Witcher stability testing and suspects other games; cross-game scope is not yet established.",
       "acceptance": "Preserve current provider assignment and serial ownership. Trace exact bridge8/current source against upstream 6bfc4389c25054ef6747df6e6b1b470e9541c4da. In NVNGX_DLSS_Dx12.cpp native handle passthrough (~1167) calls native evaluate then EvaluateAfterUpscale without EvaluateBeforeUpscale; internal pre-hook (~1205) is restricted to Feature_SuperSampling, so DLSSD/Ray Reconstruction is excluded. Correct supported native SR routing with balanced restoration and exactly one NR invocation per rendered frame. Keep unsupported RR input handling explicit until its input contract is validated; do not feed an unvalidated noisy/denoising input into NR. Report requested and effective placement separately, including fallback reason and actual model dimensions, rather than assuming PreSr=true is effective. Cover native SR passthrough, internal SR, RR fallback, FG bypass, NR off, pre-hook refusal/failure and restoration with meaningful tests. Build exact candidate and preserve artifact provenance. Treat runtime and cross-game motion acceptance as pending until measured; no global runtime replacement on source-only evidence. Preserve NR startup-off policy, existing MFG and restoration.",
-      "next_action": "Lauren explicitly authorized coordinating this fix with “rtxForge Windows” (“yes girl” in thread01a14d62-4f4f-7ed2-8dd9-2724854002cf). Findings and bounded fix scope were delivered to existing thread01a13ce6-a9d7-7790-a1a8-58b870d22789. Reconcile this queued correction with the existing active provider assignment before any edits; preserve its branch, WIP, attribution and draft/release boundaries. Inspect current bridge8 versus the older measured game runtime, correct supported native SR routing and requested/effective placement reporting, validate RR input compatibility instead of assuming pre-denoise NR is safe, and retain measured evidence and unresolved cache/crash classifications. Witcher is closed at the user's request; no relaunch is requested.",
+      "next_action": "In progress within rtxforge-skynizz-nr-provider-20261017, same branch/draftPR28, source6cf211d. Native/internal SR candidate routing + protocol6 observed placement implemented;50-case C++ harness plus completed-only observation cases,23 protocol tests and local WinUI build pass. Separate manual candidate39104687434 and normalCI39104688564 pending. Stablebridge8 default/library untouched. Preserve runtime/cross-game motion gate and RR contract validation; Witcher remains closed, no screen/input. Queue remains durable acceptance reference until merged accounting.",
       "paths": [
         "providers/skynizz-bridge/",
         "tests/test_skynizz_bridge.py",
@@ -1184,7 +1184,24 @@
           "next_action": "Lauren explicitly authorized coordinating this fix with “rtxForge Windows” (“yes girl” in thread01a14d62-4f4f-7ed2-8dd9-2724854002cf). Findings and bounded fix scope were delivered to existing thread01a13ce6-a9d7-7790-a1a8-58b870d22789. Reconcile this queued correction with the existing active provider assignment before any edits; preserve its branch, WIP, attribution and draft/release boundaries. Inspect current bridge8 versus the older measured game runtime, correct supported native SR routing and requested/effective placement reporting, validate RR input compatibility instead of assuming pre-denoise NR is safe, and retain measured evidence and unresolved cache/crash classifications. Witcher is closed at the user's request; no relaunch is requested."
         }
       ],
-      "updated_at": "2026-10-18T06:23:04.813Z"
+      "updated_at": "2026-10-18T06:38:37.130Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-18T06:38:37.130Z",
+          "by": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
+          "reason": "Serial scope incorporated into active provider assignment after verified user authorization and handoff.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Lauren explicitly authorized coordinating this fix with “rtxForge Windows” (“yes girl” in thread01a14d62-4f4f-7ed2-8dd9-2724854002cf). Findings and bounded fix scope were delivered to existing thread01a13ce6-a9d7-7790-a1a8-58b870d22789. Reconcile this queued correction with the existing active provider assignment before any edits; preserve its branch, WIP, attribution and draft/release boundaries. Inspect current bridge8 versus the older measured game runtime, correct supported native SR routing and requested/effective placement reporting, validate RR input compatibility instead of assuming pre-denoise NR is safe, and retain measured evidence and unresolved cache/crash classifications. Witcher is closed at the user's request; no relaunch is requested."
+          },
+          "after": {
+            "next_action": "In progress within rtxforge-skynizz-nr-provider-20261017, same branch/draftPR28, source6cf211d. Native/internal SR candidate routing + protocol6 observed placement implemented;50-case C++ harness plus completed-only observation cases,23 protocol tests and local WinUI build pass. Separate manual candidate39104687434 and normalCI39104688564 pending. Stablebridge8 default/library untouched. Preserve runtime/cross-game motion gate and RR contract validation; Witcher remains closed, no screen/input. Queue remains durable acceptance reference until merged accounting."
+          }
+        }
+      ]
     }
   ],
   "claims": [
