@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-18T11:02:27.112Z",
+  "updated_at": "2026-10-18T11:22:53.728Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16299,6 +16299,47 @@
       "evidence": "PR231 merged exact heade67851e83130a1808d06ba1a4889fa6109e30b6b as Lauren-authored/committed9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b. Canonical checkpoint https://github.com/lrnolivia/relay/blob/9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b/docs/nudge/runtime-checkpoint.json and byte-exact README/SKILL product mirrors read back and hashes verified. JSON/identities/attribution passed; exact-head Runner admission passed. Documentation-only source CI paths exclude docs. Release7e3dd80/Worker98942083/nativeDLL18F6FEB5 passed61Python/19cloud, full isolated diagnostics transport and live pause/resume; independent hosted consumer passed. Remaining gameplay-test limits and game-close/camera/measurement work retained. No Relay product code changes.",
       "work_accounted": true,
       "completed_at": "2026-10-18T11:02:27.112Z"
+    },
+    {
+      "id": "nudge-close-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-close-record-20261018",
+      "paths": [
+        "docs/nudge/runtime-checkpoint.json",
+        "docs/nudge/product/README.md",
+        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
+      ],
+      "resources": [
+        "nudge-runtime-record",
+        "nudge-product-doc-mirrors"
+      ],
+      "goal": "Record nudge identity-checked close release and synchronize product operating docs",
+      "acceptance": "Exact tested source/native/Worker identities, fixture-only QA, close limitations, retained recovery and remaining motion capabilities are recorded; README and SKILL mirrors match product source",
+      "next_action": "Verify nudge close candidate and runtime promotion, then update checkpoint and mirrors in the isolated docs checkout",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "5830edecbeccff30dd2167bc1debdb5eb13e303c",
+      "state": "active",
+      "created_at": "2026-10-18T11:22:53.728Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Record nudge identity-checked close release and synchronize product operating docs",
+          "acceptance": "Exact tested source/native/Worker identities, fixture-only QA, close limitations, retained recovery and remaining motion capabilities are recorded; README and SKILL mirrors match product source",
+          "at": "2026-10-18T11:22:53.728Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-close-record-20261018:acceptance:0",
+            "text": "Exact tested source/native/Worker identities, fixture-only QA, close limitations, retained recovery and remaining motion capabilities are recorded; README and SKILL mirrors match product source",
+            "at": "2026-10-18T11:22:53.728Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T11:22:53.728Z",
+      "lease_until": "2026-10-18T23:22:53.728Z"
     }
   ],
   "migrated_from": "loew-inspector"
