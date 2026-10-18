@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "project": "nudge",
-  "observed_at": "2026-10-18T14:13:33.906984+00:00",
+  "observed_at": "2026-10-18T14:45:58.928723+00:00",
   "source": {
     "path": "C:\\Users\\lrnol\\Repos\\nudge",
     "branch": "codex/nudge-local-controls",
-    "head": "0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f",
+    "head": "73be8de5b9a893570ca9c910fffde9c68a3b9296",
     "remote": null,
     "observation_implementation": "acb275f2f73d707f6528edfe6e5feace93f6a7da",
     "exclusive_sessions": [
@@ -24,7 +24,8 @@
     "recorder_isolation_verification": "9869595b53432f3e402d9702980a7b6ba3fe8b90",
     "recorder_session_integration": "8a8bed2",
     "recorder_target_exit_fix": "763f439e36b0c84d564e3962c0f254cdc2d0cb37",
-    "provider_boundary_implementation": "0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f"
+    "provider_boundary_implementation": "0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f",
+    "evidence_gate_implementation": "73be8de5b9a893570ca9c910fffde9c68a3b9296"
   },
   "authorization": {
     "scope": "Continue nudge implementation, companion desktop-sign-in startup, authenticated hosted MCP with existing pairing/access, and coordination/retry notices to the two named chats.",
@@ -66,9 +67,10 @@
     },
     "source_head": "9629f47b24c930f824db761d1b7a5493bde47791",
     "source_only_recorder_component_loaded": false,
-    "observed_at": "2026-10-18T14:13:33.906984+00:00",
+    "observed_at": "2026-10-18T14:45:58.928723+00:00",
     "source_only_recorder_session_component_loaded": false,
-    "source_only_provider_component_loaded": false
+    "source_only_provider_component_loaded": false,
+    "source_only_evidence_component_loaded": false
   },
   "capabilities": {
     "ownership": "Windows kernel mutex and shared owner mapping in the signed-in user desktop session. Filesystem coordination failed across process views and was replaced; diagnostic JSON mirrors are not authority.",
@@ -85,7 +87,8 @@
     "measurement_unbound": "Historical artifacts need no invented CameraRecipe, target birth/path/dimensions or angle calibration. Omit both plan and plan_digest to analyze_measurement_artifact, or use CLI --unbound REPORT.json RAW_ARTIFACT. Return analysis_mode=unbound_historical and null run_id/recipe_digest/context_id/target/plan_digest, preserve reported PIDs as raw provenance, flag missing identity/calibration/run/clock binding, never join or align a cached camera receipt. A supplied claimed report binding cannot be adopted by unbound mode. Bound analysis requires both exact plan/digest and retains strict matching; recorder/input orchestration is unchanged.",
     "local_recorder_transport": "Source-only unregistered ProcessRecorder foundation; see source_only_recorder_contract. Production0.4.6 remains unchanged and no recorder launcher is in MCP.",
     "local_recorder_session": "Source-only SessionRecorder shares the existing kernel atomic session reservation; see source_only_recorder_sessions. No MCP recorder tool/registry or deployed change.",
-    "local_provider_boundary": "Source-only fixed local ProviderDefinition/ProviderRecorder bridge for non-protocol collectors; see source_only_provider_boundary. No production profile/registry/MCP launcher or deployment."
+    "local_provider_boundary": "Source-only fixed local ProviderDefinition/ProviderRecorder bridge for non-protocol collectors; see source_only_provider_boundary. No production profile/registry/MCP launcher or deployment.",
+    "local_evidence_gate": "Source-only read-only evidence consistency/coverage/laboratory frame-translation gate; see source_only_evidence_gate. No production source-clock/rendered-game/scene verifier or MCP registration."
   },
   "verification": {
     "python_tests": 109,
@@ -132,7 +135,7 @@
     ],
     "fixture_base": "C:/Users/lrnol/AppData/Local/rtxForge/recovery/",
     "native_companion_probe": "Fresh read-only verification: installed0.4.6 nativePID35336, official notification icon, enabled interactive sign-in task, DLL00E9C33F9634FD51BA8A1B1B392220F925B5BC44B3912EF38BCBC00B829FFC3D. Hosted fresh ready/free/unarmed/no target/controller/held input and public health0.4.6; exact existing Worker deployment/version re-read. No native rebuild/restart or Worker upload for recorder work.",
-    "prior_behavior": "Production0.4.6 remains unchanged. Source now includes unregistered recorder transport/session/provider components; actual stdio still31 tools and loads none of those modules. Current source152 Python tests passed.",
+    "prior_behavior": "Production0.4.6 unchanged. Source-only recorder/provider/evidence components remain absent from actual31-tool stdio import/catalog;167 Python tests passed, offline CLI smoke starts no recorder/game/input.",
     "not_run": [
       "No real game launch/close/gameplay/calibration/motion or live recorder/GPU capture. No independent clock correlation or rendered-motion verifier.",
       "Installed hosted tool inventory not refreshed. No browser/Windows-update action. Production new tools verified through exact bundle/catalog and native source; actual end-to-end invocation used isolated HTTP MCP, not a fresh hosted inventory."
@@ -141,7 +144,7 @@
       "Motion consumer inspection found0.4.5 required a calibrated plan to inspect historical traces. Its initial parser replay used an explicitly fictional test scaffold and did not establish a real historical run binding. The public contract now supports genuinely unbound imports; final retained-file replay supplies no plan or invented identity/calibration. No comparison or motion acceptance is claimed.",
       "Documentation provider-attribution check initially used an incomplete locally prepared proof missing commit.message; the helper rejected it before any merge. Restored the actual provider message and verified exact Git/account metadata through the canonical helper; no bypass or false proof."
     ],
-    "evidence_scope": "The original109 Python/21 cloud checks in this section describe deployed0.4.6/9629f47. source_only_recorder_contract, source_only_recorder_sessions and source_only_provider_boundary record later local-only verification; latest suite152."
+    "evidence_scope": "Original109 Python/21 cloud checks describe deployed0.4.6/9629f47. Source-only contract/session/provider/evidence sections record later local work; latest167 Python tests."
   },
   "coordination": {
     "peers": [
@@ -170,20 +173,20 @@
     "compatibility": "Pre-promotion healthy0.4.5 exact binary/config/source retained and cloud resources verified. Current0.4.6 passes health. Pairing/OAuth/bindings/tag and bounded diagnostic storage unchanged; no migration/rollback. Earlier0.4.4 recovery remains. No exact human-approved recovery version established."
   },
   "remaining": [
-    "Independent read-only evidence/acceptance gate: verify hash-bound native run/target/phase receipts, explicitly separate host and raw source-clock evidence, compare before/during/after coverage, and reject stationary/missing/lost/crashed/focus/geometry/loading/scene-incomplete motion evidence. Validate offline/owned synthetic fixtures only; never label them rendered-game proof.",
-    "A real recorder provider still needs explicit local review, an evidenced raw source-clock/format contract and independent target/scene/motion verification before production registration. Existing PresentMon equivalent capture retries remain exhausted.",
-    "Screenshots/clips/frame/GPU adapters remain replaceable; optional external metrics remain external. No game/control/live recorder/GPU capture without a current human test request."
+    "Real provider review and independent raw-clock/rendered-frame/camera/scene/target/focus verification still require evidence from a separately authorized real test. Existing retained data has no such complete proof; keep acceptance false. Do not manufacture identities/calibration, repeat failed PresentMon captures, or promote an incomplete launcher.",
+    "The bounded offline foundation/gate work is complete. Monitor the two authorized peer chats for concrete new requests; do not invent another generic foundation task, rerun unchanged tests or repeatedly notify unchanged readiness.",
+    "No real game launch/close/gameplay/live recorder/GPU capture without a current human test request. Source work stays on existing branch; production remains verified0.4.6."
   ],
-  "next_action": "Independent read-only evidence/acceptance gate: verify hash-bound native run/target/phase receipts, explicitly separate host and raw source-clock evidence, compare before/during/after coverage, and reject stationary/missing/lost/crashed/focus/geometry/loading/scene-incomplete motion evidence. Validate offline/owned synthetic fixtures only; never label them rendered-game proof.",
+  "next_action": "Listen quietly for concrete authorized peer/human requests. Real-evidence/registration/promotion paths remain parked until current human test authorization and reviewed source-clock/frame/provider evidence exist; keep existing healthy runtime and no game/comparison acceptance claim.",
   "documentation": {
-    "assignment": "nudge-provider-boundary-record-20261018",
-    "branch": "relay/nudge-provider-boundary-record-20261018",
+    "assignment": "nudge-evidence-gate-record-20261018",
+    "branch": "relay/nudge-evidence-gate-record-20261018",
     "scope": "Checkpoint JSON and exact README source mirror; no Relay product/runtime changes.",
     "identity_verification": "Existing connected GitHub profile and exact canonical commit witness were supplied to the exported attribution helper request adapter; it validates the same account/witness as the gh route. No credential or account was created.",
     "product_mirrors": {
       "README.md": {
-        "sha256": "6af9624d7320596ef5890cbb9c98544e971a127a4c820a9f9e863ff179f9e98d",
-        "source_commit": "0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f"
+        "sha256": "09c97e351ef1be73849809e63068f605dbee81f0ab251996c62e315c826fb41c",
+        "source_commit": "73be8de5b9a893570ca9c910fffde9c68a3b9296"
       },
       "skills/nudge-game-control/SKILL.md": {
         "sha256": "8962806fa9cd3ca0667d288ac8e753fe7fa7a44f2d20ba4440bf461f2d6f8eb8",
@@ -837,9 +840,9 @@
     "remaining": "Session resource integration is now verified in source_only_recorder_sessions. Vetted real providers and independent motion/measurement validity remain pending; no production launcher."
   },
   "previous_documentation": {
-    "pr": 236,
-    "merge": "32792bbd262704476deeaa925db377015536837a",
-    "source": "763f439e36b0c84d564e3962c0f254cdc2d0cb37",
+    "pr": 237,
+    "merge": "a77b71260bfe2eee8534b30f738f2711cb55422b",
+    "source": "0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f",
     "runtime": "0.4.6 / 9629f47b24c930f824db761d1b7a5493bde47791"
   },
   "source_only_recorder_sessions": {
@@ -3103,6 +3106,845 @@
       "No production provider approval/registry or public launcher; local operator review claim is not independent approval.",
       "Vetted program/protocol/file limits are not an arbitrary-program sandbox or OS disk quota.",
       "Raw source-clock/rendered-motion/scene/loading/focus/target continuity and before/during/after acceptance remain unverified."
+    ],
+    "game_motion_verified": false,
+    "comparison_ready": false
+  },
+  "source_only_evidence_gate": {
+    "source_head": "73be8de5b9a893570ca9c910fffde9c68a3b9296",
+    "publication": "Local source only. Production0.4.6/source9629f47 remains unchanged; actual31-tool stdio loads no recorder/provider/evidence modules. No upload/rebuild/restart/tool refresh/registry/launcher.",
+    "contract": "EvidenceArtifact checks supplied bytes/SHA256, never opens metadata references. Exact bound RecorderPlan/digest or neither for unbound null-identity inspection. Native-shaped receipt checks validate schema, run/target/context/session/plan/config/program/collector hash bindings, nonconflicting duplicate file observations, lifecycle/sequence/order/cleanup/cancel/failure state. Imported receipt origin remains unauthenticated; consistency is not actual native attestation.",
+    "clock": "Check imported host-QPC source/frequency/request/reply bounds and intersect conservative QPC-to-perf_counter offsets with exact rational arithmetic. Frame/metric membership requires whole timestamp uncertainty intervals inside recorder protocol phase windows. Minimum samples and worst-case gap limits define sampled coverage; these are not camera or rendered-frame phases. Raw source-clock identity/alignment for a game remains independently unverified.",
+    "image_model": "Only declared owned_synthetic_gray8 trace supported. Validate pixel SHA/size, exact run/session/target/metric binding and strictly increasing times. Derive global integer translation from raw image content and require consistent nonzero during-motion shifts plus stationary before/after. Reject ambiguous/scene-change/stationary/loss/loading/focus/geometry/missing-state/sparse evidence. lab_gate_passed only means supplied declared laboratory model is mathematically consistent. It cannot authenticate input or validate a general game.",
+    "acceptance": "game_motion_verified=false and comparison_ready=false always. Caller verified/comparison/motion booleans ignored. Unverified origins/raw source clock/camera delivery/rendered motion/scene-loading continuity remain explicit. No production rendered-game/raw-clock verifier exists.",
+    "cli": "scripts/evaluate_evidence.py REQUEST.json RECEIPT.json METRICS [FRAMES.json]; strict expected hashes, optional exact plan/digest and sampling policy. Only explicit CLI paths read,8MiB per file; no execution, reference lookup or control. Existing analyze_measurement.py --unbound remains unchanged for historical files.",
+    "verification": {
+      "python_tests": 167,
+      "evidence_cases": 15,
+      "cases": [
+        "declared fictional positive model passes only lab math, regardless of forged game/comparison flags",
+        "hash/duplicate/nonfinite/private-field rejection",
+        "bound plan/digest pairs and unbound null identity",
+        "original human stationary/crash corrections preserved",
+        "run/target/context/session/config/program/collector/version binding mismatches reject",
+        "cancel/force/failure/live-worker/unconfirmed cleanup reject",
+        "clock anchor/domain/frequency/bracket/phase sequence checks",
+        "frame byte hash, target/geometry and raw-metric binding reject",
+        "raw stationary, scene/flat ambiguity and inconsistent motion reject",
+        "loss/loading/scene/focus/crash/target-exit/missing-state reject",
+        "missing/empty/sparse metrics/frames and wide-boundary clock uncertainty reject"
+      ],
+      "offline_cli": "PASS on exact clean committed source: actual CLI equals Python gate for4 cases; actual wrong-SHA CLI exits2 with no result. The positive case is an explicitly fictional mathematical fixture, not a native or game run.",
+      "retained_native_replay": "PASS: unchanged prior owned synthetic collector run(e03e239e source0c66724) has structurally consistent native receipt/host brackets but insufficient phase samples and no frames. Native transport complete does not become measurement/motion acceptance. No recorder launched for this replay.",
+      "actual_stdio": {
+        "tools": 31,
+        "recorder_provider_evidence_modules_loaded": false,
+        "production_launcher_registered": false,
+        "read_only_status": true
+      },
+      "cloud_tests": "Existing21 cloud checks remain0.4.6 release evidence; no cloud/bridge/catalog changes or new cloud run/promotion.",
+      "runtime": "Fresh nativePID35336/icon/startup/DLL00E9C33F and hosted ready/free/unarmed/no target/controller/held input; exact unchanged Worker43de0174/deploymentb5263e42 read back.",
+      "failure_history": [
+        "A file-observation corruption regression exposed duplicate runtime/dependency paths being collapsed to the last hash. Added rejection of conflicting hash/volume/file-ID observations. Original mismatch criterion and full167 tests passed; no failed candidate deployed."
+      ],
+      "real_game_input_capture_gpu": false,
+      "offline_evidence_smoke_starts_recorder": false,
+      "full_suite_native_fixtures": "The full suite retains existing owned synthetic native recorder/target tests. The new evidence CLI smoke starts only offline evaluator processes, with no recorder/game/input/capture/GPU action."
+    },
+    "retained_receipt_path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\smoke-receipt.json",
+    "receipt_sha256": "ba995b882d06d4df58b50da8400bcb16253c5013046ede1987557132b06c4b7e",
+    "offline_smoke_receipt": {
+      "schema_version": 1,
+      "offline_evidence_smoke": "PASS",
+      "source_head": "73be8de5b9a893570ca9c910fffde9c68a3b9296",
+      "source_worktree_clean": true,
+      "cases": [
+        {
+          "name": "declared-fictional-lab-model",
+          "evaluation": {
+            "schema_version": 1,
+            "evaluation_mode": "bound_consistency",
+            "run_id": "f3b72a64-6f1e-45b4-b3e8-cb382ef5855d",
+            "target": {
+              "hwnd": 701,
+              "pid": 1240,
+              "process_created_at": "2026-10-18T00:00:00+00:00",
+              "process_path": "C:\\Fixture\\game.exe",
+              "class_name": "OwnedModelOnly",
+              "client_width": 400,
+              "client_height": 200
+            },
+            "context_id": "fictional mathematical fixture only",
+            "recipe_digest": null,
+            "plan_digest": "d9258fa5988b8821c9431b827b2a68434aef41f3f8ff2f780449113cca5679eb",
+            "artifacts": {
+              "receipt": {
+                "sha256": "316c7842c66e57c6aeb77de6d4de2644f029a3930a2668abc700d27c60bf68c0",
+                "bytes": 8700
+              },
+              "metrics": {
+                "sha256": "ae5b8e201f11c1d91d35b26ae4777fa18e345fd03cc6aea82b4e2a4e476b187f",
+                "bytes": 5307
+              },
+              "frames": {
+                "sha256": "957377a32a0fa482fa31d8f5452f4371e4b9299500774929ee397c7e20e0f65f",
+                "bytes": 17484
+              }
+            },
+            "policy": {
+              "max_gap_ms": 50,
+              "minimum_samples": 3,
+              "max_shift": 3,
+              "maximum_translation_error": 8.0,
+              "minimum_translation_margin": 3.0
+            },
+            "native_receipt_consistent": true,
+            "host_clock_consistent": true,
+            "phases": [
+              {
+                "phase_id": "before",
+                "role": "before",
+                "protocol_interval_ns": [
+                  1200002000,
+                  1340000000
+                ],
+                "metrics": {
+                  "sample_count": 13,
+                  "maximum_gap_ns": 10020000,
+                  "complete": true
+                },
+                "frames": {
+                  "sample_count": 6,
+                  "maximum_gap_ns": 20020000,
+                  "complete": true
+                },
+                "translations": [
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  }
+                ]
+              },
+              {
+                "phase_id": "motion",
+                "role": "during",
+                "protocol_interval_ns": [
+                  1400002000,
+                  1540000000
+                ],
+                "metrics": {
+                  "sample_count": 13,
+                  "maximum_gap_ns": 10020000,
+                  "complete": true
+                },
+                "frames": {
+                  "sample_count": 6,
+                  "maximum_gap_ns": 20020000,
+                  "complete": true
+                },
+                "translations": [
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": 79.15172413793104,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": 78.1632183908046,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": 78.33793103448276,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": 79.02758620689656,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": 80.34022988505747,
+                    "consistent": true
+                  }
+                ]
+              },
+              {
+                "phase_id": "after",
+                "role": "after",
+                "protocol_interval_ns": [
+                  1600002000,
+                  1740000000
+                ],
+                "metrics": {
+                  "sample_count": 13,
+                  "maximum_gap_ns": 10020000,
+                  "complete": true
+                },
+                "frames": {
+                  "sample_count": 6,
+                  "maximum_gap_ns": 20020000,
+                  "complete": true
+                },
+                "translations": [
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  }
+                ]
+              }
+            ],
+            "raw_source_clock_independently_verified": false,
+            "raw_source_clock_aligned_for_game": false,
+            "lab_gate_passed": true,
+            "game_motion_verified": false,
+            "comparison_ready": false,
+            "unverified_evidence": [
+              "imported_receipt_origin",
+              "raw_source_clock",
+              "camera_delivery",
+              "rendered_motion",
+              "scene_loading_continuity"
+            ],
+            "limitations": [
+              "Byte hashes establish identity, not authenticity or truth of imported native receipts.",
+              "Phase windows are recorder protocol boundaries, not game camera or rendered-frame boundaries.",
+              "Global gray8 translation checks are a declared synthetic laboratory model, not a general game-motion detector.",
+              "No production source-clock, scene or rendered-game verifier is registered. Caller verified/comparison booleans are ignored."
+            ],
+            "host_clock_correlation": {
+              "domain": "QPC ticks to parent perf_counter ns",
+              "frequency_hz": 10000000,
+              "offset_lower_ns": "-10000",
+              "offset_upper_ns": "10000",
+              "scope": "imported host IPC bracket algebra only"
+            },
+            "metric_sample_count": 68,
+            "quality_flags": []
+          },
+          "files": [
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\declared-fictional-lab-model\\request.json",
+              "sha256": "ee9ef0eb9b5891e12089786b5ce87f60b6dec00e56305ea03ddd0c4eeed34230",
+              "bytes": 881
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\declared-fictional-lab-model\\receipt.json",
+              "sha256": "316c7842c66e57c6aeb77de6d4de2644f029a3930a2668abc700d27c60bf68c0",
+              "bytes": 8700
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\declared-fictional-lab-model\\metrics.raw",
+              "sha256": "ae5b8e201f11c1d91d35b26ae4777fa18e345fd03cc6aea82b4e2a4e476b187f",
+              "bytes": 5307
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\declared-fictional-lab-model\\frames.json",
+              "sha256": "957377a32a0fa482fa31d8f5452f4371e4b9299500774929ee397c7e20e0f65f",
+              "bytes": 17484
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\declared-fictional-lab-model\\evaluation.json",
+              "sha256": "446545842cd24b8a885fdf6f6c5d0108e4a52e6f4e5ca3b8e2a9f31c9695fa54",
+              "bytes": 5875
+            }
+          ]
+        },
+        {
+          "name": "stationary-model-rejected",
+          "evaluation": {
+            "schema_version": 1,
+            "evaluation_mode": "bound_consistency",
+            "run_id": "f3b72a64-6f1e-45b4-b3e8-cb382ef5855d",
+            "target": {
+              "hwnd": 701,
+              "pid": 1240,
+              "process_created_at": "2026-10-18T00:00:00+00:00",
+              "process_path": "C:\\Fixture\\game.exe",
+              "class_name": "OwnedModelOnly",
+              "client_width": 400,
+              "client_height": 200
+            },
+            "context_id": "fictional mathematical fixture only",
+            "recipe_digest": null,
+            "plan_digest": "d9258fa5988b8821c9431b827b2a68434aef41f3f8ff2f780449113cca5679eb",
+            "artifacts": {
+              "receipt": {
+                "sha256": "316c7842c66e57c6aeb77de6d4de2644f029a3930a2668abc700d27c60bf68c0",
+                "bytes": 8700
+              },
+              "metrics": {
+                "sha256": "ae5b8e201f11c1d91d35b26ae4777fa18e345fd03cc6aea82b4e2a4e476b187f",
+                "bytes": 5307
+              },
+              "frames": {
+                "sha256": "536183d8239dcec1c4a3e5671797fe75847719b9a1286656be734fe10b283cd5",
+                "bytes": 17484
+              }
+            },
+            "policy": {
+              "max_gap_ms": 50,
+              "minimum_samples": 3,
+              "max_shift": 3,
+              "maximum_translation_error": 8.0,
+              "minimum_translation_margin": 3.0
+            },
+            "native_receipt_consistent": true,
+            "host_clock_consistent": true,
+            "phases": [
+              {
+                "phase_id": "before",
+                "role": "before",
+                "protocol_interval_ns": [
+                  1200002000,
+                  1340000000
+                ],
+                "metrics": {
+                  "sample_count": 13,
+                  "maximum_gap_ns": 10020000,
+                  "complete": true
+                },
+                "frames": {
+                  "sample_count": 6,
+                  "maximum_gap_ns": 20020000,
+                  "complete": true
+                },
+                "translations": [
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  }
+                ]
+              },
+              {
+                "phase_id": "motion",
+                "role": "during",
+                "protocol_interval_ns": [
+                  1400002000,
+                  1540000000
+                ],
+                "metrics": {
+                  "sample_count": 13,
+                  "maximum_gap_ns": 10020000,
+                  "complete": true
+                },
+                "frames": {
+                  "sample_count": 6,
+                  "maximum_gap_ns": 20020000,
+                  "complete": true
+                },
+                "translations": [
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  }
+                ]
+              },
+              {
+                "phase_id": "after",
+                "role": "after",
+                "protocol_interval_ns": [
+                  1600002000,
+                  1740000000
+                ],
+                "metrics": {
+                  "sample_count": 13,
+                  "maximum_gap_ns": 10020000,
+                  "complete": true
+                },
+                "frames": {
+                  "sample_count": 6,
+                  "maximum_gap_ns": 20020000,
+                  "complete": true
+                },
+                "translations": [
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  },
+                  {
+                    "dx": 0,
+                    "dy": 0,
+                    "error": 0.0,
+                    "margin": null,
+                    "consistent": true
+                  }
+                ]
+              }
+            ],
+            "raw_source_clock_independently_verified": false,
+            "raw_source_clock_aligned_for_game": false,
+            "lab_gate_passed": false,
+            "game_motion_verified": false,
+            "comparison_ready": false,
+            "unverified_evidence": [
+              "imported_receipt_origin",
+              "raw_source_clock",
+              "camera_delivery",
+              "rendered_motion",
+              "scene_loading_continuity"
+            ],
+            "limitations": [
+              "Byte hashes establish identity, not authenticity or truth of imported native receipts.",
+              "Phase windows are recorder protocol boundaries, not game camera or rendered-frame boundaries.",
+              "Global gray8 translation checks are a declared synthetic laboratory model, not a general game-motion detector.",
+              "No production source-clock, scene or rendered-game verifier is registered. Caller verified/comparison booleans are ignored."
+            ],
+            "host_clock_correlation": {
+              "domain": "QPC ticks to parent perf_counter ns",
+              "frequency_hz": 10000000,
+              "offset_lower_ns": "-10000",
+              "offset_upper_ns": "10000",
+              "scope": "imported host IPC bracket algebra only"
+            },
+            "metric_sample_count": 68,
+            "quality_flags": [
+              "motion_sequence_inconsistent",
+              "stationary_during_motion"
+            ]
+          },
+          "files": [
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\stationary-model-rejected\\request.json",
+              "sha256": "728007c0d8908a2fa575298b253c87eb7d4bacf566a744fbc79d2d90283949d5",
+              "bytes": 881
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\stationary-model-rejected\\receipt.json",
+              "sha256": "316c7842c66e57c6aeb77de6d4de2644f029a3930a2668abc700d27c60bf68c0",
+              "bytes": 8700
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\stationary-model-rejected\\metrics.raw",
+              "sha256": "ae5b8e201f11c1d91d35b26ae4777fa18e345fd03cc6aea82b4e2a4e476b187f",
+              "bytes": 5307
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\stationary-model-rejected\\frames.json",
+              "sha256": "536183d8239dcec1c4a3e5671797fe75847719b9a1286656be734fe10b283cd5",
+              "bytes": 17484
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\stationary-model-rejected\\evaluation.json",
+              "sha256": "226c272a5d7936de73f3090431edabbc98bd62e33428e11d5bb6f2106e51a202",
+              "bytes": 5885
+            }
+          ]
+        },
+        {
+          "name": "retained-native-transport-insufficient",
+          "evaluation": {
+            "schema_version": 1,
+            "evaluation_mode": "bound_consistency",
+            "run_id": "e03e239e-581f-4af4-b7c5-8949b30ecf86",
+            "target": {
+              "hwnd": 2952494,
+              "pid": 34192,
+              "process_created_at": "2026-10-18T14:11:34.643000+00:00",
+              "process_path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+              "class_name": "NudgeOwnedCloseFixture",
+              "client_width": 400,
+              "client_height": 200
+            },
+            "context_id": "owned synthetic provider only",
+            "recipe_digest": null,
+            "plan_digest": "652cb322721adc8f5d834825f489df83638c2b36e7b34f9e2dbf3f9d3f8a1ae1",
+            "artifacts": {
+              "receipt": {
+                "sha256": "16d30a2f02b10d46e69ea5b9a15efe279df7ef94f054d25bdff5c8235e095940",
+                "bytes": 17537
+              },
+              "metrics": {
+                "sha256": "73bf283eddc049a9b141678505108ed95524a71087ba5813b247bea589f9453a",
+                "bytes": 2146
+              },
+              "frames": null
+            },
+            "policy": {
+              "max_gap_ms": 50,
+              "minimum_samples": 3,
+              "max_shift": 3,
+              "maximum_translation_error": 8.0,
+              "minimum_translation_margin": 3.0
+            },
+            "native_receipt_consistent": true,
+            "host_clock_consistent": true,
+            "phases": [
+              {
+                "phase_id": "before",
+                "role": "before",
+                "protocol_interval_ns": [
+                  13108860518800,
+                  13108861283500
+                ],
+                "metrics": {
+                  "sample_count": 0,
+                  "maximum_gap_ns": 764700,
+                  "complete": false
+                },
+                "frames": null,
+                "translations": []
+              },
+              {
+                "phase_id": "motion",
+                "role": "during",
+                "protocol_interval_ns": [
+                  13108865528500,
+                  13108866050100
+                ],
+                "metrics": {
+                  "sample_count": 0,
+                  "maximum_gap_ns": 521600,
+                  "complete": false
+                },
+                "frames": null,
+                "translations": []
+              },
+              {
+                "phase_id": "after",
+                "role": "after",
+                "protocol_interval_ns": [
+                  13108870411800,
+                  13108871164700
+                ],
+                "metrics": {
+                  "sample_count": 0,
+                  "maximum_gap_ns": 752900,
+                  "complete": false
+                },
+                "frames": null,
+                "translations": []
+              }
+            ],
+            "raw_source_clock_independently_verified": false,
+            "raw_source_clock_aligned_for_game": false,
+            "lab_gate_passed": false,
+            "game_motion_verified": false,
+            "comparison_ready": false,
+            "unverified_evidence": [
+              "imported_receipt_origin",
+              "raw_source_clock",
+              "camera_delivery",
+              "rendered_motion",
+              "scene_loading_continuity"
+            ],
+            "limitations": [
+              "Byte hashes establish identity, not authenticity or truth of imported native receipts.",
+              "Phase windows are recorder protocol boundaries, not game camera or rendered-frame boundaries.",
+              "Global gray8 translation checks are a declared synthetic laboratory model, not a general game-motion detector.",
+              "No production source-clock, scene or rendered-game verifier is registered. Caller verified/comparison booleans are ignored."
+            ],
+            "host_clock_correlation": {
+              "domain": "QPC ticks to parent perf_counter ns",
+              "frequency_hz": 10000000,
+              "offset_lower_ns": "-27300",
+              "offset_upper_ns": "2400",
+              "scope": "imported host IPC bracket algebra only"
+            },
+            "metric_sample_count": 25,
+            "quality_flags": [
+              "frame_evidence_missing",
+              "metric_phase_coverage_incomplete"
+            ]
+          },
+          "files": [
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\retained-native-transport-insufficient\\request.json",
+              "sha256": "05bc89a43efe6e8e3605e93b6d6c528a4763324ea3030d014b45e213fb00a8f9",
+              "bytes": 909
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\retained-native-transport-insufficient\\receipt.json",
+              "sha256": "16d30a2f02b10d46e69ea5b9a15efe279df7ef94f054d25bdff5c8235e095940",
+              "bytes": 17537
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\retained-native-transport-insufficient\\metrics.raw",
+              "sha256": "73bf283eddc049a9b141678505108ed95524a71087ba5813b247bea589f9453a",
+              "bytes": 2146
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\retained-native-transport-insufficient\\evaluation.json",
+              "sha256": "5adce04916fa827836f4e1dc3f526e09d667e5e145e5bb75c40700d6dfe0ee5f",
+              "bytes": 3397
+            }
+          ]
+        },
+        {
+          "name": "unbound-preserves-human-correction",
+          "evaluation": {
+            "schema_version": 1,
+            "evaluation_mode": "unbound_import",
+            "run_id": null,
+            "target": null,
+            "context_id": null,
+            "recipe_digest": null,
+            "plan_digest": null,
+            "artifacts": {
+              "receipt": {
+                "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "bytes": 2
+              },
+              "metrics": {
+                "sha256": "b95b7a5ab9267decbf6a8fe991dfb2c1e639baefee557e899efc9a4f0696651a",
+                "bytes": 134
+              },
+              "frames": null
+            },
+            "policy": {
+              "max_gap_ms": 50,
+              "minimum_samples": 3,
+              "max_shift": 3,
+              "maximum_translation_error": 8.0,
+              "minimum_translation_margin": 3.0
+            },
+            "native_receipt_consistent": false,
+            "host_clock_consistent": false,
+            "phases": [],
+            "raw_source_clock_independently_verified": false,
+            "raw_source_clock_aligned_for_game": false,
+            "lab_gate_passed": false,
+            "game_motion_verified": false,
+            "comparison_ready": false,
+            "unverified_evidence": [
+              "imported_receipt_origin",
+              "raw_source_clock",
+              "camera_delivery",
+              "rendered_motion",
+              "scene_loading_continuity"
+            ],
+            "limitations": [
+              "Byte hashes establish identity, not authenticity or truth of imported native receipts.",
+              "Phase windows are recorder protocol boundaries, not game camera or rendered-frame boundaries.",
+              "Global gray8 translation checks are a declared synthetic laboratory model, not a general game-motion detector.",
+              "No production source-clock, scene or rendered-game verifier is registered. Caller verified/comparison booleans are ignored."
+            ],
+            "historical_source": {
+              "source_status": "INCOMPLETE MOTION TEST - GAME CRASH",
+              "original_classification": {
+                "classification": "STATIONARY SCENE"
+              },
+              "source_camera_note": "human: did not move",
+              "flags": [
+                "legacy_schema",
+                "legacy_clock_unmapped",
+                "motion_unverified",
+                "source_reports_stationary",
+                "source_reports_crash",
+                "source_reports_incomplete"
+              ]
+            },
+            "quality_flags": [
+              "calibration_missing",
+              "legacy_clock_unmapped",
+              "legacy_schema",
+              "motion_unverified",
+              "run_context_missing",
+              "source_reports_crash",
+              "source_reports_incomplete",
+              "source_reports_stationary",
+              "target_identity_missing",
+              "unbound_import"
+            ]
+          },
+          "files": [
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\unbound-preserves-human-correction\\request.json",
+              "sha256": "7a29c2c7ea795591ee787d04c8a9de8d91b67dd18e88a914a0c31fc1ffe9e316",
+              "bytes": 365
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\unbound-preserves-human-correction\\receipt.json",
+              "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+              "bytes": 2
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\unbound-preserves-human-correction\\metrics.raw",
+              "sha256": "b95b7a5ab9267decbf6a8fe991dfb2c1e639baefee557e899efc9a4f0696651a",
+              "bytes": 134
+            },
+            {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\evidence-fixture-artifacts\\cc9fcbf1-2738-48cf-9a0f-017cc66f22f1\\unbound-preserves-human-correction\\evaluation.json",
+              "sha256": "b3d99fe8425a369c95ebb1b94848fde6d481f56216430d19248772b3cd4ed016",
+              "bytes": 2331
+            }
+          ]
+        }
+      ],
+      "retained_provider_source": {
+        "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\e03e239e-581f-4af4-b7c5-8949b30ecf86\\provider-smoke-receipt.json",
+        "sha256": "5b486edde78876e17005b90d7f308a3a8b79e8d8f2d7cae2f2d42cc4231529d1"
+      },
+      "cli_hash_rejection": true,
+      "real_game_input_capture_gpu_or_new_recorder": false,
+      "game_motion_verified": false,
+      "comparison_ready": false,
+      "raw_artifacts_retained": true
+    },
+    "limitations": [
+      "Native-shaped JSON hashes establish byte identity, not origin or truth.",
+      "The only positive frame model is synthetic; it is not a general camera-motion or scene classifier.",
+      "Declared metric/frame clocks can only be checked algebraically until an independently reviewed real source-clock verifier exists.",
+      "Actual game calibration/camera delivery/rendered frames/scene/loading/continuous target/focus evidence are missing. No comparison acceptance or live action is authorized."
     ],
     "game_motion_verified": false,
     "comparison_ready": false
