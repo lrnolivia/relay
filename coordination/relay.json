@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-18T10:57:01.344Z",
+  "updated_at": "2026-10-18T10:58:38.740Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16236,8 +16236,8 @@
       "resources": [
         "nudge-runtime-record"
       ],
-      "goal": "Update the canonical nudge runtime checkpoint for verified connection diagnostics0.4.2.",
-      "acceptance": "Record exact source/native/cloud identities, fresh live+isolated diagnostic QA, additive storage/recovery compatibility, peer notices and remaining authorized work. Change only the checkpoint JSON.",
+      "goal": "Preserve the verified nudge0.4.2 runtime checkpoint and its authoritative product-document mirrors.",
+      "acceptance": "Record exact source/native/cloud identities, live+isolated diagnostics QA, recovery compatibility, peer notices and remaining work. Sync README and operating-skill mirrors byte-for-byte from nudge source7e3dd8053429ccac744ce87a0e36300b1bec93e0 under docs/nudge/product/. No Relay product code or runtime changes.",
       "next_action": "Update the checkpoint for0.4.2, verify JSON/identities, open a draft PR and complete through current documentation gates.",
       "category": "coordination",
       "primary_team": "night-shift",
@@ -16259,11 +16259,37 @@
             "id": "nudge-diagnostics-record-20261018:acceptance:0",
             "text": "Record exact source/native/cloud identities, fresh live+isolated diagnostic QA, additive storage/recovery compatibility, peer notices and remaining authorized work. Change only the checkpoint JSON.",
             "at": "2026-10-18T10:57:01.344Z"
+          },
+          {
+            "id": "nudge-diagnostics-record-20261018:acceptance:1",
+            "text": "Record exact source/native/cloud identities, live+isolated diagnostics QA, recovery compatibility, peer notices and remaining work. Sync README and operating-skill mirrors byte-for-byte from nudge source7e3dd8053429ccac744ce87a0e36300b1bec93e0 under docs/nudge/product/. No Relay product code or runtime changes.",
+            "at": "2026-10-18T10:58:38.740Z",
+            "reason": "Bible18.2 requires synced mirrors for the product documentation updated by the release."
           }
         ]
       },
-      "updated_at": "2026-10-18T10:57:01.344Z",
-      "lease_until": "2026-10-18T22:57:01.344Z"
+      "updated_at": "2026-10-18T10:58:38.740Z",
+      "lease_until": "2026-10-18T22:58:38.740Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-18T10:58:38.740Z",
+          "by": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+          "reason": "Bible18.2 requires synced mirrors for the product documentation updated by the release.",
+          "fields": [
+            "goal",
+            "acceptance"
+          ],
+          "before": {
+            "goal": "Update the canonical nudge runtime checkpoint for verified connection diagnostics0.4.2.",
+            "acceptance": "Record exact source/native/cloud identities, fresh live+isolated diagnostic QA, additive storage/recovery compatibility, peer notices and remaining authorized work. Change only the checkpoint JSON."
+          },
+          "after": {
+            "goal": "Preserve the verified nudge0.4.2 runtime checkpoint and its authoritative product-document mirrors.",
+            "acceptance": "Record exact source/native/cloud identities, live+isolated diagnostics QA, recovery compatibility, peer notices and remaining work. Sync README and operating-skill mirrors byte-for-byte from nudge source7e3dd8053429ccac744ce87a0e36300b1bec93e0 under docs/nudge/product/. No Relay product code or runtime changes."
+          }
+        }
+      ]
     }
   ],
   "migrated_from": "loew-inspector"
