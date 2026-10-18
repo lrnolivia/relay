@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-18T06:12:28.475Z",
+  "updated_at": "2026-10-18T06:23:04.813Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1137,10 +1137,10 @@
     },
     {
       "id": "rtxforge-nr-placement-truth-20261018",
-      "owner": "01a14d62-4f4f-7ed2-8dd9-2724854002cf",
+      "owner": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
       "goal": "Fix requested NR pre-upscaler placement being presented as effective while native DLSS/Ray Reconstruction can run NR after upscaling. User authorized investigation/fix during Witcher stability testing and suspects other games; cross-game scope is not yet established.",
       "acceptance": "Preserve current provider assignment and serial ownership. Trace exact bridge8/current source against upstream 6bfc4389c25054ef6747df6e6b1b470e9541c4da. In NVNGX_DLSS_Dx12.cpp native handle passthrough (~1167) calls native evaluate then EvaluateAfterUpscale without EvaluateBeforeUpscale; internal pre-hook (~1205) is restricted to Feature_SuperSampling, so DLSSD/Ray Reconstruction is excluded. Correct supported native SR routing with balanced restoration and exactly one NR invocation per rendered frame. Keep unsupported RR input handling explicit until its input contract is validated; do not feed an unvalidated noisy/denoising input into NR. Report requested and effective placement separately, including fallback reason and actual model dimensions, rather than assuming PreSr=true is effective. Cover native SR passthrough, internal SR, RR fallback, FG bypass, NR off, pre-hook refusal/failure and restoration with meaningful tests. Build exact candidate and preserve artifact provenance. Treat runtime and cross-game motion acceptance as pending until measured; no global runtime replacement on source-only evidence. Preserve NR startup-off policy, existing MFG and restoration.",
-      "next_action": "Queue behind active rtxforge-skynizz-nr-provider-20261017; coordinate a serial slice with owner01a13ce6-a9d7-7790-a1a8-58b870d22789 before product edits. Evidence: fresh Witcher PID86036 with DLSSD1920x1080->3840x2160, saved/live PreSr=true, log EvaluateAfterUpscale, model2573x1447 at WorkingScale0.67; toggling PreSrReduced acknowledged but model unchanged. Effective WorkingScale0.5 produced1920x1080 and mean NR time5.66ms vs8.87ms, not a proven FPS/motion improvement (ETW lost events). Local recovery nr-headroom-20261018-055522Z and nr-scale-20261018-055738Z. Both restored controls and saved INI unchanged. Independent cache-motion test crashed with DEVICE_HUNG0x887A0006; VRAM budget warnings preceded cache and recur fresh with NR/cacheoff at~11.3GB/12GB, so cache rootcause unproven. Initial 053021Z run is stationary per user correction, not motion evidence. Witcher force-quit at user request and exit verified; no pending settings trigger. Source fix remains unapplied.",
+      "next_action": "Lauren explicitly authorized coordinating this fix with “rtxForge Windows” (“yes girl” in thread01a14d62-4f4f-7ed2-8dd9-2724854002cf). Findings and bounded fix scope were delivered to existing thread01a13ce6-a9d7-7790-a1a8-58b870d22789. Reconcile this queued correction with the existing active provider assignment before any edits; preserve its branch, WIP, attribution and draft/release boundaries. Inspect current bridge8 versus the older measured game runtime, correct supported native SR routing and requested/effective placement reporting, validate RR input compatibility instead of assuming pre-denoise NR is safe, and retain measured evidence and unresolved cache/crash classifications. Witcher is closed at the user's request; no relaunch is requested.",
       "paths": [
         "providers/skynizz-bridge/",
         "tests/test_skynizz_bridge.py",
@@ -1175,7 +1175,16 @@
             "at": "2026-10-18T06:01:10.087Z"
           }
         ]
-      }
+      },
+      "handoffs": [
+        {
+          "at": "2026-10-18T06:23:04.813Z",
+          "from": "01a14d62-4f4f-7ed2-8dd9-2724854002cf",
+          "to": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
+          "next_action": "Lauren explicitly authorized coordinating this fix with “rtxForge Windows” (“yes girl” in thread01a14d62-4f4f-7ed2-8dd9-2724854002cf). Findings and bounded fix scope were delivered to existing thread01a13ce6-a9d7-7790-a1a8-58b870d22789. Reconcile this queued correction with the existing active provider assignment before any edits; preserve its branch, WIP, attribution and draft/release boundaries. Inspect current bridge8 versus the older measured game runtime, correct supported native SR routing and requested/effective placement reporting, validate RR input compatibility instead of assuming pre-denoise NR is safe, and retain measured evidence and unresolved cache/crash classifications. Witcher is closed at the user's request; no relaunch is requested."
+        }
+      ],
+      "updated_at": "2026-10-18T06:23:04.813Z"
     }
   ],
   "claims": [
