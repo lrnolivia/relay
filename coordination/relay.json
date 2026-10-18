@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-18T16:03:25.416Z",
+  "updated_at": "2026-10-18T16:06:29.203Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16752,7 +16752,7 @@
       "primary_staff": "adrian",
       "supporting_staff": [],
       "base_sha": "2b5e4a28c889e386bf8e2456392515753503eb30",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-18T16:03:25.416Z",
       "objective_history": {
         "baseline": {
@@ -16769,8 +16769,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-18T16:03:25.416Z",
-      "lease_until": "2026-10-19T04:03:25.416Z"
+      "updated_at": "2026-10-18T16:06:29.203Z",
+      "lease_until": "2026-10-19T04:06:29.203Z",
+      "pr": 240,
+      "merged_head_sha": "938a48bec1b2ea55d27af0aab224a0e5b66b74b6",
+      "merge_commit_sha": "b98e3820d93bbc378c6aead7504b9aadff805b4c",
+      "evidence": "Verified PR240 mergedb98e3820d93bbc378c6aead7504b9aadff805b4c from938a48bec1b2ea55d27af0aab224a0e5b66b74b6; human author/committer/linkage/mergeactor311277794/lrnolivia checked via canonical helper and provider readback. Remote checkpoint blobb1de2d9885ee30f7a3ed3ed4d30ce8ce4e3f62dd confirms latest clean product source6c3876c0fdb228c46ebfe5c8b3eee13ba21d0423 vs unchanged runtime0.4.6 source9629f47. Final partial-next-state regression preserves transition-start before mutation, previous replacement start instead of neutral fallback, null replacement finish and unacknowledged failed phase.135 scoped Python tests(11 raw cases) and exact clean-source isolated memory-only official MCP pass; receipt f9521e52-dfee-4e6e-9b46-dc2680dc9623 SHAe30d9117203eb7222bd3ffa1a4f0ca66df292497e790f4910de9683402680c0d retained. Prior21 cloud checks unchanged; no catalog/bridge changes or new cloud run for this fix. No deployment/restart/game/input/focus/recorder/capture by this thread. PR239 remains completed historical initial implementation, not rewritten/reused. All work accounted; send corrected-source notice and quietly monitor concrete requests.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T16:06:29.203Z"
     }
   ],
   "migrated_from": "loew-inspector"
