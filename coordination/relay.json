@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-17T23:46:31.682Z",
+  "updated_at": "2026-10-18T10:21:57.614Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16180,6 +16180,45 @@
       "evidence": "User authorized updating the Relay record with 'do it'. PR229 https://github.com/lrnolivia/relay/pull/229 merged as8a017002d055ae21c9e3d5315acd5f71fc4ea6dc from tested headd7e5f956624cc63d247f1a2b628f5535f616ec99 using existing Lauren-attributed local Git merge route. 47 focused tests passed; required quality39079971543 and coordination39079971547 passed. All7 source files read back byte-identical. Relay live registry at2026-10-17T23:45:37.749Z lists loewtv/name loewTV/policy89b45fe3f0f468d7dd623a0078144d27deab7b2f and suppresses legacy arc alias; main registration and receipt readback match. Current product mirror, latest local APK/rollback hashes, historical tests/limits, local-source location and handoff are preserved in docs/loewtv. Tracking-only is intentional: no owned source repo is asserted, managed implementation stays disabled, artifacts remain local. No TV, app, upstream source, credentials or other-owner files changed. Code and acceptance fully accounted; no work remains in this bounded registration task.",
       "work_accounted": true,
       "completed_at": "2026-10-17T23:46:31.682Z"
+    },
+    {
+      "id": "nudge-runtime-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-runtime-record-20261018",
+      "paths": [
+        "docs/nudge/"
+      ],
+      "resources": [
+        "nudge-runtime-record"
+      ],
+      "goal": "Preserve the authorized nudge source/runtime checkpoint and remaining acceptance in its canonical documentation home.",
+      "acceptance": "A JSON checkpoint records exact local source, native binary and cloud deployment identities, verified QA, recovery targets, authorization limits, peer readiness notices and next bounded action. No Relay product/runtime changes.",
+      "next_action": "Save the verified nudge 0.4.1 checkpoint and open a draft documentation PR.",
+      "category": "coordination",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "714002bcdd85272aea14a38be6b67cc44f529005",
+      "state": "active",
+      "created_at": "2026-10-18T10:21:57.614Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Preserve the authorized nudge source/runtime checkpoint and remaining acceptance in its canonical documentation home.",
+          "acceptance": "A JSON checkpoint records exact local source, native binary and cloud deployment identities, verified QA, recovery targets, authorization limits, peer readiness notices and next bounded action. No Relay product/runtime changes.",
+          "at": "2026-10-18T10:21:57.614Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-runtime-record-20261018:acceptance:0",
+            "text": "A JSON checkpoint records exact local source, native binary and cloud deployment identities, verified QA, recovery targets, authorization limits, peer readiness notices and next bounded action. No Relay product/runtime changes.",
+            "at": "2026-10-18T10:21:57.614Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T10:21:57.614Z",
+      "lease_until": "2026-10-18T22:21:57.614Z"
     }
   ],
   "migrated_from": "loew-inspector"
