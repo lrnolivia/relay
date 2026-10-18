@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "project": "nudge",
-  "observed_at": "2026-10-18T13:44:40.261292+00:00",
+  "observed_at": "2026-10-18T14:13:33.906984+00:00",
   "source": {
     "path": "C:\\Users\\lrnol\\Repos\\nudge",
     "branch": "codex/nudge-local-controls",
-    "head": "763f439e36b0c84d564e3962c0f254cdc2d0cb37",
+    "head": "0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f",
     "remote": null,
     "observation_implementation": "acb275f2f73d707f6528edfe6e5feace93f6a7da",
     "exclusive_sessions": [
@@ -23,7 +23,8 @@
     "recorder_transport_implementation": "59ebc544f80845a5861e4ff4dd2f72ac0b20f397",
     "recorder_isolation_verification": "9869595b53432f3e402d9702980a7b6ba3fe8b90",
     "recorder_session_integration": "8a8bed2",
-    "recorder_target_exit_fix": "763f439e36b0c84d564e3962c0f254cdc2d0cb37"
+    "recorder_target_exit_fix": "763f439e36b0c84d564e3962c0f254cdc2d0cb37",
+    "provider_boundary_implementation": "0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f"
   },
   "authorization": {
     "scope": "Continue nudge implementation, companion desktop-sign-in startup, authenticated hosted MCP with existing pairing/access, and coordination/retry notices to the two named chats.",
@@ -65,8 +66,9 @@
     },
     "source_head": "9629f47b24c930f824db761d1b7a5493bde47791",
     "source_only_recorder_component_loaded": false,
-    "observed_at": "2026-10-18T13:44:40.261292+00:00",
-    "source_only_recorder_session_component_loaded": false
+    "observed_at": "2026-10-18T14:13:33.906984+00:00",
+    "source_only_recorder_session_component_loaded": false,
+    "source_only_provider_component_loaded": false
   },
   "capabilities": {
     "ownership": "Windows kernel mutex and shared owner mapping in the signed-in user desktop session. Filesystem coordination failed across process views and was replaced; diagnostic JSON mirrors are not authority.",
@@ -82,7 +84,8 @@
     "recorder_contract": "Local replaceable RecorderAdapter protocol plus RecorderLifecycle provides actual prepare/start/phase/stop/cleanup UTC/performance-counter boundaries outside input scheduling. Failure/abnormal exit still attempts stop+cleanup and retains receipts. No live recorder launcher registered. Imported recorder/version/hash, lifecycle, public session ID, binding, clock header/unit/frequency/timezone/anchor and quality remain caller supplied. No session tokens allowed by schema. Recorder and camera gates are independent; only a matching same-backend camera receipt joins. Target continuity, clock alignment and rendered motion remain unverified; comparison_ready/game_motion_verified stay false.",
     "measurement_unbound": "Historical artifacts need no invented CameraRecipe, target birth/path/dimensions or angle calibration. Omit both plan and plan_digest to analyze_measurement_artifact, or use CLI --unbound REPORT.json RAW_ARTIFACT. Return analysis_mode=unbound_historical and null run_id/recipe_digest/context_id/target/plan_digest, preserve reported PIDs as raw provenance, flag missing identity/calibration/run/clock binding, never join or align a cached camera receipt. A supplied claimed report binding cannot be adopted by unbound mode. Bound analysis requires both exact plan/digest and retains strict matching; recorder/input orchestration is unchanged.",
     "local_recorder_transport": "Source-only unregistered ProcessRecorder foundation; see source_only_recorder_contract. Production0.4.6 remains unchanged and no recorder launcher is in MCP.",
-    "local_recorder_session": "Source-only SessionRecorder shares the existing kernel atomic session reservation; see source_only_recorder_sessions. No MCP recorder tool/registry or deployed change."
+    "local_recorder_session": "Source-only SessionRecorder shares the existing kernel atomic session reservation; see source_only_recorder_sessions. No MCP recorder tool/registry or deployed change.",
+    "local_provider_boundary": "Source-only fixed local ProviderDefinition/ProviderRecorder bridge for non-protocol collectors; see source_only_provider_boundary. No production profile/registry/MCP launcher or deployment."
   },
   "verification": {
     "python_tests": 109,
@@ -129,7 +132,7 @@
     ],
     "fixture_base": "C:/Users/lrnol/AppData/Local/rtxForge/recovery/",
     "native_companion_probe": "Fresh read-only verification: installed0.4.6 nativePID35336, official notification icon, enabled interactive sign-in task, DLL00E9C33F9634FD51BA8A1B1B392220F925B5BC44B3912EF38BCBC00B829FFC3D. Hosted fresh ready/free/unarmed/no target/controller/held input and public health0.4.6; exact existing Worker deployment/version re-read. No native rebuild/restart or Worker upload for recorder work.",
-    "prior_behavior": "Deployed0.4.6 behavior remains unchanged. Current local source now extends Sessions for resource cleanup and backend-close retention, with141 passing Python tests; recorder module and integration remain absent from the actual31-tool stdio server import/catalog.",
+    "prior_behavior": "Production0.4.6 remains unchanged. Source now includes unregistered recorder transport/session/provider components; actual stdio still31 tools and loads none of those modules. Current source152 Python tests passed.",
     "not_run": [
       "No real game launch/close/gameplay/calibration/motion or live recorder/GPU capture. No independent clock correlation or rendered-motion verifier.",
       "Installed hosted tool inventory not refreshed. No browser/Windows-update action. Production new tools verified through exact bundle/catalog and native source; actual end-to-end invocation used isolated HTTP MCP, not a fresh hosted inventory."
@@ -138,7 +141,7 @@
       "Motion consumer inspection found0.4.5 required a calibrated plan to inspect historical traces. Its initial parser replay used an explicitly fictional test scaffold and did not establish a real historical run binding. The public contract now supports genuinely unbound imports; final retained-file replay supplies no plan or invented identity/calibration. No comparison or motion acceptance is claimed.",
       "Documentation provider-attribution check initially used an incomplete locally prepared proof missing commit.message; the helper rejected it before any merge. Restored the actual provider message and verified exact Git/account metadata through the canonical helper; no bypass or false proof."
     ],
-    "evidence_scope": "The original109 Python/21 cloud results in this section describe deployed0.4.6 source9629f47. New local source verification is in source_only_recorder_sessions."
+    "evidence_scope": "The original109 Python/21 cloud checks in this section describe deployed0.4.6/9629f47. source_only_recorder_contract, source_only_recorder_sessions and source_only_provider_boundary record later local-only verification; latest suite152."
   },
   "coordination": {
     "peers": [
@@ -167,20 +170,20 @@
     "compatibility": "Pre-promotion healthy0.4.5 exact binary/config/source retained and cloud resources verified. Current0.4.6 passes health. Pairing/OAuth/bindings/tag and bounded diagnostic storage unchanged; no migration/rollback. Earlier0.4.4 recovery remains. No exact human-approved recovery version established."
   },
   "remaining": [
-    "Build vetted replaceable recorder providers against explicit executable/version/hash and fixed local configuration. Validate provider wrapper/protocol/clock/raw output with owned synthetic fixtures or offline replay before any production registry/launcher; do not execute the failing real PresentMon capture again.",
-    "Independent rendered-motion/clock/target/scene/loading/focus/geometry/exit/crash/loss/missing-data validity and before/during/after acceptance remain pending. Never accept stationary or missing data as success.",
-    "Keep screenshots/clips/frame timing/GPU sources replaceable and optional external metrics external. No private shared-memory offsets. A current human test request is required for any real game/control/live capture."
+    "Independent read-only evidence/acceptance gate: verify hash-bound native run/target/phase receipts, explicitly separate host and raw source-clock evidence, compare before/during/after coverage, and reject stationary/missing/lost/crashed/focus/geometry/loading/scene-incomplete motion evidence. Validate offline/owned synthetic fixtures only; never label them rendered-game proof.",
+    "A real recorder provider still needs explicit local review, an evidenced raw source-clock/format contract and independent target/scene/motion verification before production registration. Existing PresentMon equivalent capture retries remain exhausted.",
+    "Screenshots/clips/frame/GPU adapters remain replaceable; optional external metrics remain external. No game/control/live recorder/GPU capture without a current human test request."
   ],
-  "next_action": "Build vetted replaceable recorder providers against explicit executable/version/hash and fixed local configuration. Validate provider wrapper/protocol/clock/raw output with owned synthetic fixtures or offline replay before any production registry/launcher; do not execute the failing real PresentMon capture again.",
+  "next_action": "Independent read-only evidence/acceptance gate: verify hash-bound native run/target/phase receipts, explicitly separate host and raw source-clock evidence, compare before/during/after coverage, and reject stationary/missing/lost/crashed/focus/geometry/loading/scene-incomplete motion evidence. Validate offline/owned synthetic fixtures only; never label them rendered-game proof.",
   "documentation": {
-    "assignment": "nudge-recorder-session-record-20261018",
-    "branch": "relay/nudge-recorder-session-record-20261018",
+    "assignment": "nudge-provider-boundary-record-20261018",
+    "branch": "relay/nudge-provider-boundary-record-20261018",
     "scope": "Checkpoint JSON and exact README source mirror; no Relay product/runtime changes.",
     "identity_verification": "Existing connected GitHub profile and exact canonical commit witness were supplied to the exported attribution helper request adapter; it validates the same account/witness as the gh route. No credential or account was created.",
     "product_mirrors": {
       "README.md": {
-        "sha256": "b2235d8851f55d7f5e6b313537c7d399bc331bab593179d4d76fcc88e882996f",
-        "source_commit": "763f439e36b0c84d564e3962c0f254cdc2d0cb37"
+        "sha256": "6af9624d7320596ef5890cbb9c98544e971a127a4c820a9f9e863ff179f9e98d",
+        "source_commit": "0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f"
       },
       "skills/nudge-game-control/SKILL.md": {
         "sha256": "8962806fa9cd3ca0667d288ac8e753fe7fa7a44f2d20ba4440bf461f2d6f8eb8",
@@ -834,9 +837,9 @@
     "remaining": "Session resource integration is now verified in source_only_recorder_sessions. Vetted real providers and independent motion/measurement validity remain pending; no production launcher."
   },
   "previous_documentation": {
-    "pr": 235,
-    "merge": "cf2344eca8c948f5a54fe80be15fad5a1094a217",
-    "source": "9869595b53432f3e402d9702980a7b6ba3fe8b90",
+    "pr": 236,
+    "merge": "32792bbd262704476deeaa925db377015536837a",
+    "source": "763f439e36b0c84d564e3962c0f254cdc2d0cb37",
     "runtime": "0.4.6 / 9629f47b24c930f824db761d1b7a5493bde47791"
   },
   "source_only_recorder_sessions": {
@@ -1923,6 +1926,1183 @@
       "Trusted vetted producers and protocol/artifact limits are not an OS disk quota or arbitrary-program sandbox.",
       "Graceful running-backend cleanup is verified. Abrupt backend/OS death may release the kernel mutex automatically; previous-release-unverified remains evidence, not confirmed input/job cleanup.",
       "QPC IPC exchange is not rendered-frame timing. Independent motion/scene/clock/target continuity and comparison acceptance remain absent."
+    ],
+    "game_motion_verified": false,
+    "comparison_ready": false,
+    "next": "Provider boundary now verified with synthetic collectors in source_only_provider_boundary; independent raw-clock/rendered-motion/scene validity remains pending."
+  },
+  "source_only_provider_boundary": {
+    "source_head": "0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f",
+    "publication": "Local source only. Production0.4.6/source9629f47 remains unchanged. No Worker upload/native rebuild/restart/tool refresh. No real provider profile or production registry/MCP launcher registered.",
+    "definition": "Trusted local definition binds explicit executable/script paths and SHA256, provider/version/review reference, static argument tokens and only target_pid/output/duration/session bindings. Required bindings unique; configuration and dependency identities bound to program. Config/host/runtime/collector files remain original-handle hash-locked. No shell or chat-supplied command route. Review reference is a local claim, independently_verified=false.",
+    "execution": "Pinned stdlib-only host speaks existing JSON-lines transport and launches a separate collector in inherited owned Job. Parent independently queries native collector PID, exact FILETIME birth, image path and Job membership, retains original query/synchronize handle, rejects selected target/wrapper/foreign same-image process or stale birth. Collector stdout/stderr capped64KiB each; raw output/host/provider logs checked by original file identity/hash/size.",
+    "cleanup": "Existing exclusive Sessions worker owns cancellation and all recorder I/O. Parent retains original native Job/process/collector handles through pending cleanup. Stop wait is bounded and transport deadline includes wait plus500ms for drain/reply; forced descendant cleanup always invalidates provider completeness even when collector root exits0. Last cleanup error exposes bounded category/native code, without exception messages. Missing raw output/nonzero/flood/timeout/partial stop remain incomplete.",
+    "clock_and_data": "Verified native QPC request/reply anchors belong to host IPC only. Raw collector output format/header/units/source-clock declaration preserved separately, source_clock_verified=false/source_clock_aligned=false. Provider root/process completion is not rendered-frame, camera motion or comparison evidence. game_motion_verified/comparison_ready=false.",
+    "verification": {
+      "python_tests": 152,
+      "provider_cases": 11,
+      "native_provider_cases": 9,
+      "full_suite": "PASS on final source content; prior141 tests plus11 provider contract/native cases. Source tree committed without core changes after final suite; final clean-head standalone passed.",
+      "cases": [
+        "fixed argument/config/hash/version/dependency binding and Unicode digest",
+        "native wrapper/collector identities distinct and original birth/path/Job membership verified",
+        "raw artifact/log identity/hash preservation with9 host anchors",
+        "changed collector/config hash rejects before host launch",
+        "missing output and exit7 incomplete",
+        "collector stop timeout,64KiB flood and surviving descendant cleanup incomplete",
+        "same atomic session cancellation and wrong-token rejection",
+        "wrong target PID, foreign same-image process and wrong collector birth cannot be adopted",
+        "uncertain collector cleanup retains same original collector/process/Job handles and can retry"
+      ],
+      "actual_stdio": {
+        "tools": 31,
+        "recorder_provider_modules_loaded": false,
+        "production_launcher_registered": false,
+        "read_only_status": true
+      },
+      "cloud_tests": "Existing21 cloud tests remain deployed0.4.6 release evidence; cloud/bridge/catalog unchanged, no new cloud run/promotion claimed.",
+      "native_runtime": "Fresh installed tray icon/startup task/PID35336/DLL00E9C33F and hosted ready/free/unarmed/no target/controller/held input confirmed; exact Worker43de0174/deploymentb5263e42 unchanged.",
+      "foreground_unchanged": true,
+      "real_game_input_capture_gpu": false,
+      "failure_history": [
+        "Initial provider test caught false complete after collector exit0 but surviving descendant required force. Provider gate now records provider_forced_cleanup and rejects completeness; original criterion passed.",
+        "Equal collector-stop and parent transport deadlines could race before a structured stop reply; provider constructor now requires500ms drain/reply allowance. Missing/timeout output remains incomplete.",
+        "A direct-adapter test assumed the first cleanup attempt always completes, despite existing retryable-cleanup contract. Bounded harness repair now asserts original process/Job handles retained on pending, then requires actual confirmed drain within at most3 attempts. Added deterministic collector-hook pending regression. No incomplete cleanup is reported as successful.",
+        "An ad-hoc diagnostic teardown error left an owned off-screen target with a broken stdout pipe; WM_CLOSE fixture print failed before DefWindowProc. Fresh PID5680/birth2026-10-18T14:02:01.4158020Z/path/class/foreground-independent geometry verified before posting WM_QUIT to its own thread. Native process exit confirmed; no game or unrelated process touched. All owned fixture processes gone."
+      ]
+    },
+    "retained_receipt_path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\e03e239e-581f-4af4-b7c5-8949b30ecf86\\provider-smoke-receipt.json",
+    "receipt_sha256": "5b486edde78876e17005b90d7f308a3a8b79e8d8f2d7cae2f2d42cc4231529d1",
+    "owned_synthetic_receipt": {
+      "schema_version": 1,
+      "provider_smoke": "PASS",
+      "source_head": "0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f",
+      "source_worktree_clean": true,
+      "normal": {
+        "schema_version": 1,
+        "run_id": "e03e239e-581f-4af4-b7c5-8949b30ecf86",
+        "plan_digest": "652cb322721adc8f5d834825f489df83638c2b36e7b34f9e2dbf3f9d3f8a1ae1",
+        "public_session_id": "b8bd278a-7f19-4160-bdcc-8e7f9ce1451e",
+        "state": "closed",
+        "at": "2026-10-18T14:11:35.587818+00:00",
+        "perf_counter_ns": 13109522834900,
+        "cleanup_attempts": 1,
+        "failures": [],
+        "cleanup_retries": [],
+        "lifecycle": {
+          "schema_version": 1,
+          "run_id": "e03e239e-581f-4af4-b7c5-8949b30ecf86",
+          "source_id": "nudge.provider.owned.synthetic-csv",
+          "target": {
+            "hwnd": 2952494,
+            "pid": 34192,
+            "process_created_at": "2026-10-18T14:11:34.643000+00:00",
+            "process_path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "class_name": "NudgeOwnedCloseFixture",
+            "client_width": 400,
+            "client_height": 200
+          },
+          "context_id": "owned synthetic provider only",
+          "recipe_digest": null,
+          "clock_domain": "python.time.perf_counter",
+          "clock_implementation": "QueryPerformanceCounter()",
+          "clock_resolution_seconds": 1e-07,
+          "state": "closed",
+          "markers": [
+            {
+              "event": "prepare",
+              "at": "2026-10-18T14:11:34.783990+00:00",
+              "before_ns": 13108719041700,
+              "after_ns": 13108846500500,
+              "succeeded": true,
+              "phase_id": null
+            },
+            {
+              "event": "start",
+              "at": "2026-10-18T14:11:34.912172+00:00",
+              "before_ns": 13108846526700,
+              "after_ns": 13108857782800,
+              "succeeded": true,
+              "phase_id": null
+            },
+            {
+              "event": "phase_start",
+              "at": "2026-10-18T14:11:34.925678+00:00",
+              "before_ns": 13108860624000,
+              "after_ns": 13108860629500,
+              "succeeded": true,
+              "phase_id": "before"
+            },
+            {
+              "event": "phase_end",
+              "at": "2026-10-18T14:11:34.928579+00:00",
+              "before_ns": 13108863251300,
+              "after_ns": 13108863255400,
+              "succeeded": true,
+              "phase_id": "before"
+            },
+            {
+              "event": "phase_start",
+              "at": "2026-10-18T14:11:34.930571+00:00",
+              "before_ns": 13108865601600,
+              "after_ns": 13108865605500,
+              "succeeded": true,
+              "phase_id": "motion"
+            },
+            {
+              "event": "phase_end",
+              "at": "2026-10-18T14:11:34.933570+00:00",
+              "before_ns": 13108867986600,
+              "after_ns": 13108867990400,
+              "succeeded": true,
+              "phase_id": "motion"
+            },
+            {
+              "event": "phase_start",
+              "at": "2026-10-18T14:11:34.935570+00:00",
+              "before_ns": 13108870495800,
+              "after_ns": 13108870499700,
+              "succeeded": true,
+              "phase_id": "after"
+            },
+            {
+              "event": "phase_end",
+              "at": "2026-10-18T14:11:34.937571+00:00",
+              "before_ns": 13108873096400,
+              "after_ns": 13108873100100,
+              "succeeded": true,
+              "phase_id": "after"
+            },
+            {
+              "event": "stop",
+              "at": "2026-10-18T14:11:34.939075+00:00",
+              "before_ns": 13108873515200,
+              "after_ns": 13109494086200,
+              "succeeded": true,
+              "phase_id": null
+            },
+            {
+              "event": "cleanup",
+              "at": "2026-10-18T14:11:35.559571+00:00",
+              "before_ns": 13109494129300,
+              "after_ns": 13109522743200,
+              "succeeded": true,
+              "phase_id": null
+            }
+          ],
+          "failures": [],
+          "stop_confirmed": true,
+          "cleanup_confirmed": true,
+          "game_motion_verified": false
+        },
+        "recorder": {
+          "schema_version": 1,
+          "state": "closed",
+          "plan": {
+            "schema_version": 1,
+            "run_id": "e03e239e-581f-4af4-b7c5-8949b30ecf86",
+            "target": {
+              "hwnd": 2952494,
+              "pid": 34192,
+              "process_created_at": "2026-10-18T14:11:34.643000+00:00",
+              "process_path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+              "class_name": "NudgeOwnedCloseFixture",
+              "client_width": 400,
+              "client_height": 200
+            },
+            "context_id": "owned synthetic provider only",
+            "phase_ids": [
+              "before",
+              "motion",
+              "after"
+            ],
+            "recipe_digest": null
+          },
+          "program": {
+            "adapter_id": "nudge.provider.owned.synthetic-csv",
+            "version": "fixture-1",
+            "executable": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "executable_sha256": "abc1aa0b5a63f745804e88789b2dfe6857582ec19ed36b3b5f9dc6b340212344",
+            "script": "C:\\Users\\lrnol\\Repos\\nudge\\src\\nudge\\recorder_provider_host.py",
+            "script_sha256": "576178878cd0bdaf2b726e79a0dc683ae10dfb75230e6ab62adbab5616adda31",
+            "synthetic": true,
+            "configuration": {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\config\\8f4f4e01-544b-45e4-8499-acd652d378e7\\provider.json",
+              "sha256": "104168eadebd3acb7154d8aa091b137d3fc2c501256b52fee8df0a0b3db574ca"
+            },
+            "dependencies": [
+              {
+                "path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+                "sha256": "abc1aa0b5a63f745804e88789b2dfe6857582ec19ed36b3b5f9dc6b340212344"
+              },
+              {
+                "path": "C:\\Users\\lrnol\\Repos\\nudge\\scripts\\collector_fixture.py",
+                "sha256": "5704911bbdfb6003e3ae13ad5f6496af824402c7b5f7c31a35aa199c83ba6629"
+              }
+            ]
+          },
+          "recorder_process": {
+            "pid": 35480,
+            "process_created_at": "2026-10-18T14:11:34.795000+00:00",
+            "process_path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+          },
+          "program_files": [
+            {
+              "volume_serial": 1524059915,
+              "file_index": 9570149208540301,
+              "bytes": 107312,
+              "sha256": "abc1aa0b5a63f745804e88789b2dfe6857582ec19ed36b3b5f9dc6b340212344",
+              "path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+            },
+            {
+              "volume_serial": 1524059915,
+              "file_index": 60517119992832925,
+              "bytes": 7818,
+              "sha256": "576178878cd0bdaf2b726e79a0dc683ae10dfb75230e6ab62adbab5616adda31",
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\src\\nudge\\recorder_provider_host.py"
+            },
+            {
+              "volume_serial": 1524059915,
+              "file_index": 16325548650295104,
+              "bytes": 1138,
+              "sha256": "104168eadebd3acb7154d8aa091b137d3fc2c501256b52fee8df0a0b3db574ca",
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\config\\8f4f4e01-544b-45e4-8499-acd652d378e7\\provider.json"
+            },
+            {
+              "volume_serial": 1524059915,
+              "file_index": 9570149208540301,
+              "bytes": 107312,
+              "sha256": "abc1aa0b5a63f745804e88789b2dfe6857582ec19ed36b3b5f9dc6b340212344",
+              "path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+            },
+            {
+              "volume_serial": 1524059915,
+              "file_index": 36310271996725727,
+              "bytes": 1619,
+              "sha256": "5704911bbdfb6003e3ae13ad5f6496af824402c7b5f7c31a35aa199c83ba6629",
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\scripts\\collector_fixture.py"
+            }
+          ],
+          "anchors": [
+            {
+              "event": "prepare",
+              "source_domain": "windows.QueryPerformanceCounter",
+              "source_ticks": 131088457342,
+              "frequency_hz": 10000000,
+              "parent_qpc_before": 131087361024,
+              "parent_qpc_after": 131088464117,
+              "parent_perf_counter_before_ns": 13108736110000,
+              "parent_perf_counter_after_ns": 13108846365000,
+              "transport_interval_ns": 110309300,
+              "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+            },
+            {
+              "event": "start",
+              "source_domain": "windows.QueryPerformanceCounter",
+              "source_ticks": 131088568460,
+              "frequency_hz": 10000000,
+              "parent_qpc_before": 131088466369,
+              "parent_qpc_after": 131088574709,
+              "parent_perf_counter_before_ns": 13108846639500,
+              "parent_perf_counter_after_ns": 13108857424000,
+              "transport_interval_ns": 10834000,
+              "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+            },
+            {
+              "event": "phase_start",
+              "source_domain": "windows.QueryPerformanceCounter",
+              "source_ticks": 131088596974,
+              "frequency_hz": 10000000,
+              "parent_qpc_before": 131088584400,
+              "parent_qpc_after": 131088605578,
+              "parent_perf_counter_before_ns": 13108858443500,
+              "parent_perf_counter_after_ns": 13108860518800,
+              "transport_interval_ns": 2117800,
+              "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+            },
+            {
+              "event": "phase_end",
+              "source_domain": "windows.QueryPerformanceCounter",
+              "source_ticks": 131088626167,
+              "frequency_hz": 10000000,
+              "parent_qpc_before": 131088612802,
+              "parent_qpc_after": 131088632018,
+              "parent_perf_counter_before_ns": 13108861283500,
+              "parent_perf_counter_after_ns": 13108863172800,
+              "transport_interval_ns": 1921600,
+              "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+            },
+            {
+              "event": "phase_start",
+              "source_domain": "windows.QueryPerformanceCounter",
+              "source_ticks": 131088649182,
+              "frequency_hz": 10000000,
+              "parent_qpc_before": 131088636876,
+              "parent_qpc_after": 131088655558,
+              "parent_perf_counter_before_ns": 13108863690000,
+              "parent_perf_counter_after_ns": 13108865528500,
+              "transport_interval_ns": 1868200,
+              "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+            },
+            {
+              "event": "phase_end",
+              "source_domain": "windows.QueryPerformanceCounter",
+              "source_ticks": 131088672913,
+              "frequency_hz": 10000000,
+              "parent_qpc_before": 131088660476,
+              "parent_qpc_after": 131088679412,
+              "parent_perf_counter_before_ns": 13108866050100,
+              "parent_perf_counter_after_ns": 13108867913900,
+              "transport_interval_ns": 1893600,
+              "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+            },
+            {
+              "event": "phase_start",
+              "source_domain": "windows.QueryPerformanceCounter",
+              "source_ticks": 131088698864,
+              "frequency_hz": 10000000,
+              "parent_qpc_before": 131088686400,
+              "parent_qpc_after": 131088704415,
+              "parent_perf_counter_before_ns": 13108868643200,
+              "parent_perf_counter_after_ns": 13108870411800,
+              "transport_interval_ns": 1801500,
+              "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+            },
+            {
+              "event": "phase_end",
+              "source_domain": "windows.QueryPerformanceCounter",
+              "source_ticks": 131088724972,
+              "frequency_hz": 10000000,
+              "parent_qpc_before": 131088711614,
+              "parent_qpc_after": 131088730471,
+              "parent_perf_counter_before_ns": 13108871164700,
+              "parent_perf_counter_after_ns": 13108873018700,
+              "transport_interval_ns": 1885700,
+              "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+            },
+            {
+              "event": "stop",
+              "source_domain": "windows.QueryPerformanceCounter",
+              "source_ticks": 131094859341,
+              "frequency_hz": 10000000,
+              "parent_qpc_before": 131088735792,
+              "parent_qpc_after": 131094867261,
+              "parent_perf_counter_before_ns": 13108873584100,
+              "parent_perf_counter_after_ns": 13109486635000,
+              "transport_interval_ns": 613146900,
+              "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+            }
+          ],
+          "events": [
+            {
+              "event": "prepare",
+              "sequence": 1,
+              "at": "2026-10-18T14:11:34.801468+00:00",
+              "before_ns": 13108736110000,
+              "after_ns": 13108846365000,
+              "phase_id": null
+            },
+            {
+              "event": "start",
+              "sequence": 2,
+              "at": "2026-10-18T14:11:34.912172+00:00",
+              "before_ns": 13108846639500,
+              "after_ns": 13108857424000,
+              "phase_id": null
+            },
+            {
+              "event": "phase_start",
+              "sequence": 3,
+              "at": "2026-10-18T14:11:34.923677+00:00",
+              "before_ns": 13108858443500,
+              "after_ns": 13108860518800,
+              "phase_id": "before"
+            },
+            {
+              "event": "phase_end",
+              "sequence": 4,
+              "at": "2026-10-18T14:11:34.925678+00:00",
+              "before_ns": 13108861283500,
+              "after_ns": 13108863172800,
+              "phase_id": "before"
+            },
+            {
+              "event": "phase_start",
+              "sequence": 5,
+              "at": "2026-10-18T14:11:34.929570+00:00",
+              "before_ns": 13108863690000,
+              "after_ns": 13108865528500,
+              "phase_id": "motion"
+            },
+            {
+              "event": "phase_end",
+              "sequence": 6,
+              "at": "2026-10-18T14:11:34.931571+00:00",
+              "before_ns": 13108866050100,
+              "after_ns": 13108867913900,
+              "phase_id": "motion"
+            },
+            {
+              "event": "phase_start",
+              "sequence": 7,
+              "at": "2026-10-18T14:11:34.933570+00:00",
+              "before_ns": 13108868643200,
+              "after_ns": 13108870411800,
+              "phase_id": "after"
+            },
+            {
+              "event": "phase_end",
+              "sequence": 8,
+              "at": "2026-10-18T14:11:34.936571+00:00",
+              "before_ns": 13108871164700,
+              "after_ns": 13108873018700,
+              "phase_id": "after"
+            },
+            {
+              "event": "stop",
+              "sequence": 9,
+              "at": "2026-10-18T14:11:34.939075+00:00",
+              "before_ns": 13108873584100,
+              "after_ns": 13109486635000,
+              "phase_id": null
+            }
+          ],
+          "raw_artifact": {
+            "volume_serial": 1524059915,
+            "file_index": 10133099162660740,
+            "bytes": 2146,
+            "sha256": "73bf283eddc049a9b141678505108ed95524a71087ba5813b247bea589f9453a",
+            "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\e03e239e-581f-4af4-b7c5-8949b30ecf86\\capture.bin"
+          },
+          "stdout": {
+            "bytes": 4594,
+            "sha256": "3510209f654f4a4d8d6c8e086d7c9bca62d0df74323e24e952869833c5bcbc56"
+          },
+          "logs": [
+            {
+              "volume_serial": 1524059915,
+              "file_index": 14918173766741862,
+              "bytes": 4594,
+              "sha256": "3510209f654f4a4d8d6c8e086d7c9bca62d0df74323e24e952869833c5bcbc56",
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\e03e239e-581f-4af4-b7c5-8949b30ecf86\\stdout.log"
+            },
+            {
+              "volume_serial": 1524059915,
+              "file_index": 21955048184508263,
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\e03e239e-581f-4af4-b7c5-8949b30ecf86\\stderr.log"
+            }
+          ],
+          "process_handle_closed": true,
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stop_requested": true,
+          "owned_recorder_force_used": false,
+          "target_checks": 33,
+          "target_observations": [
+            {
+              "identity_matches": true,
+              "foreground": false,
+              "at": "2026-10-18T14:11:34.791606+00:00",
+              "perf_counter_ns": 13108725906500
+            },
+            {
+              "identity_matches": true,
+              "foreground": false,
+              "at": "2026-10-18T14:11:35.549061+00:00",
+              "perf_counter_ns": 13109483417100
+            }
+          ],
+          "target_at_cleanup": {
+            "process_exited": false,
+            "window_state": "same",
+            "at": "2026-10-18T14:11:35.587818+00:00",
+            "perf_counter_ns": 13109522575600
+          },
+          "exit_code": 0,
+          "cleanup_confirmed": true,
+          "cleanup_attempts": 1,
+          "failures": [],
+          "last_cleanup_error": null,
+          "synthetic": true,
+          "clock_scope": "local IPC counter exchange only",
+          "transport_complete": true,
+          "game_motion_verified": false,
+          "comparison_ready": false,
+          "limitations": [
+            "No production recorder registered; tests use an owned synthetic producer.",
+            "No rendered-frame, motion, game acceptance or external legacy-clock alignment claim."
+          ],
+          "provider": {
+            "provider_id": "owned.synthetic-csv",
+            "version": "fixture-1",
+            "review_reference": "owned test fixture, not real provider approval",
+            "review_claim_independently_verified": false,
+            "definition_digest": "104168eadebd3acb7154d8aa091b137d3fc2c501256b52fee8df0a0b3db574ca",
+            "collector": {
+              "pid": 33048,
+              "process_created_at": "2026-10-18T14:11:34.913000+00:00",
+              "process_path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+              "birth_filetime": 134368062949136992,
+              "reported": {
+                "pid": 33048,
+                "birth_filetime": 134368062949136992
+              },
+              "inside_owned_job": true,
+              "definition_digest": "104168eadebd3acb7154d8aa091b137d3fc2c501256b52fee8df0a0b3db574ca",
+              "exit_code": 0
+            },
+            "collector_handle_closed": true,
+            "artifacts": [
+              {
+                "volume_serial": 1524059915,
+                "file_index": 47850746041090705,
+                "bytes": 2515,
+                "sha256": "2ccedc888d1435299d5fc24c863954f440536b2c37ab75511350d09e84d082a0",
+                "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\e03e239e-581f-4af4-b7c5-8949b30ecf86\\provider-receipt.json"
+              },
+              {
+                "volume_serial": 1524059915,
+                "file_index": 16607023627005813,
+                "bytes": 36,
+                "sha256": "ca047b096b95a40bc5aa7cbf0fefce4a6d650686ed3fedc34f0b856715375b09",
+                "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\e03e239e-581f-4af4-b7c5-8949b30ecf86\\collector.stdout.log"
+              },
+              {
+                "volume_serial": 1524059915,
+                "file_index": 14636698790031226,
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\e03e239e-581f-4af4-b7c5-8949b30ecf86\\collector.stderr.log"
+              }
+            ],
+            "reported_lifecycle": {
+              "schema_version": 1,
+              "definition_digest": "104168eadebd3acb7154d8aa091b137d3fc2c501256b52fee8df0a0b3db574ca",
+              "run_id": "e03e239e-581f-4af4-b7c5-8949b30ecf86",
+              "plan_digest": "652cb322721adc8f5d834825f489df83638c2b36e7b34f9e2dbf3f9d3f8a1ae1",
+              "collector": {
+                "pid": 33048,
+                "birth_filetime": 134368062949136992
+              },
+              "collector_exit_code": 0,
+              "markers": [
+                {
+                  "event": "prepare",
+                  "qpc_before": {
+                    "qpc_ticks": 131088446085,
+                    "frequency_hz": 10000000
+                  },
+                  "qpc_after": {
+                    "qpc_ticks": 131088446174,
+                    "frequency_hz": 10000000
+                  },
+                  "utc_unix_ns": 1792332694910172600
+                },
+                {
+                  "event": "start",
+                  "qpc_before": {
+                    "qpc_ticks": 131088468731,
+                    "frequency_hz": 10000000
+                  },
+                  "qpc_after": {
+                    "qpc_ticks": 131088555061,
+                    "frequency_hz": 10000000
+                  },
+                  "utc_unix_ns": 1792332694912172000
+                },
+                {
+                  "event": "phase_start",
+                  "phase_id": "before",
+                  "qpc_before": {
+                    "qpc_ticks": 131088586389,
+                    "frequency_hz": 10000000
+                  },
+                  "qpc_after": {
+                    "qpc_ticks": 131088586463,
+                    "frequency_hz": 10000000
+                  },
+                  "utc_unix_ns": 1792332694923677400
+                },
+                {
+                  "event": "phase_end",
+                  "phase_id": "before",
+                  "qpc_before": {
+                    "qpc_ticks": 131088614751,
+                    "frequency_hz": 10000000
+                  },
+                  "qpc_after": {
+                    "qpc_ticks": 131088614834,
+                    "frequency_hz": 10000000
+                  },
+                  "utc_unix_ns": 1792332694927181600
+                },
+                {
+                  "event": "phase_start",
+                  "phase_id": "motion",
+                  "qpc_before": {
+                    "qpc_ticks": 131088638341,
+                    "frequency_hz": 10000000
+                  },
+                  "qpc_after": {
+                    "qpc_ticks": 131088638391,
+                    "frequency_hz": 10000000
+                  },
+                  "utc_unix_ns": 1792332694929570500
+                },
+                {
+                  "event": "phase_end",
+                  "phase_id": "motion",
+                  "qpc_before": {
+                    "qpc_ticks": 131088661782,
+                    "frequency_hz": 10000000
+                  },
+                  "qpc_after": {
+                    "qpc_ticks": 131088661841,
+                    "frequency_hz": 10000000
+                  },
+                  "utc_unix_ns": 1792332694931571700
+                },
+                {
+                  "event": "phase_start",
+                  "phase_id": "after",
+                  "qpc_before": {
+                    "qpc_ticks": 131088688422,
+                    "frequency_hz": 10000000
+                  },
+                  "qpc_after": {
+                    "qpc_ticks": 131088688475,
+                    "frequency_hz": 10000000
+                  },
+                  "utc_unix_ns": 1792332694934572300
+                },
+                {
+                  "event": "phase_end",
+                  "phase_id": "after",
+                  "qpc_before": {
+                    "qpc_ticks": 131088713166,
+                    "frequency_hz": 10000000
+                  },
+                  "qpc_after": {
+                    "qpc_ticks": 131088713219,
+                    "frequency_hz": 10000000
+                  },
+                  "utc_unix_ns": 1792332694936571800
+                },
+                {
+                  "event": "stop",
+                  "qpc_before": {
+                    "qpc_ticks": 131088737115,
+                    "frequency_hz": 10000000
+                  },
+                  "qpc_after": {
+                    "qpc_ticks": 131094845003,
+                    "frequency_hz": 10000000
+                  },
+                  "utc_unix_ns": 1792332694939075200
+                }
+              ],
+              "failures": [],
+              "complete": true,
+              "arguments_digest": "5f1f85ae3634a32d781f619846c63bf52f6745221868a34ec3f2f0f081bf7060",
+              "provider_version": "fixture-1",
+              "output_format": "owned_synthetic_csv",
+              "declared_source_clock": {
+                "column": "qpc_ticks",
+                "domain": "declared.windows.QueryPerformanceCounter",
+                "frequency_column": "qpc_frequency_hz",
+                "unit": "ticks"
+              },
+              "source_clock_verified": false,
+              "game_motion_verified": false,
+              "comparison_ready": false
+            },
+            "collector_gate_complete": true,
+            "output_format": "owned_synthetic_csv",
+            "declared_source_clock": {
+              "domain": "declared.windows.QueryPerformanceCounter",
+              "column": "qpc_ticks",
+              "frequency_column": "qpc_frequency_hz",
+              "unit": "ticks"
+            },
+            "source_clock_verified": false,
+            "source_clock_aligned": false,
+            "clock_note": "Host QPC IPC anchors do not establish the raw collector clock or rendered-frame boundaries."
+          }
+        },
+        "game_motion_verified": false,
+        "comparison_ready": false,
+        "resource": {
+          "kind": "recorder",
+          "run_id": "e03e239e-581f-4af4-b7c5-8949b30ecf86",
+          "state": "closed",
+          "cleanup_confirmed": true,
+          "cleanup_attempts": 1,
+          "failures": [],
+          "worker_running": false,
+          "cancel_requested": false
+        }
+      },
+      "cancelled": {
+        "schema_version": 1,
+        "run_id": "aad5f641-b2c9-414e-89f6-f89b1ffd3afd",
+        "plan_digest": "5e5527ecae55f23f92bb71ef42ae1bf29582f938e9f34e7e9f0977b094011e09",
+        "public_session_id": "b8bd278a-7f19-4160-bdcc-8e7f9ce1451e",
+        "state": "closed",
+        "at": "2026-10-18T14:11:35.796086+00:00",
+        "perf_counter_ns": 13109730906600,
+        "cleanup_attempts": 1,
+        "failures": [
+          "session_stopped"
+        ],
+        "cleanup_retries": [],
+        "lifecycle": {
+          "schema_version": 1,
+          "run_id": "aad5f641-b2c9-414e-89f6-f89b1ffd3afd",
+          "source_id": "nudge.provider.owned.synthetic-csv",
+          "target": {
+            "hwnd": 2952494,
+            "pid": 34192,
+            "process_created_at": "2026-10-18T14:11:34.643000+00:00",
+            "process_path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "class_name": "NudgeOwnedCloseFixture",
+            "client_width": 400,
+            "client_height": 200
+          },
+          "context_id": "owned synthetic provider only",
+          "recipe_digest": null,
+          "clock_domain": "python.time.perf_counter",
+          "clock_implementation": "QueryPerformanceCounter()",
+          "clock_resolution_seconds": 1e-07,
+          "state": "closed",
+          "markers": [
+            {
+              "event": "prepare",
+              "at": "2026-10-18T14:11:35.593325+00:00",
+              "before_ns": 13109528085500,
+              "after_ns": 13109649327100,
+              "succeeded": true,
+              "phase_id": null
+            },
+            {
+              "event": "start",
+              "at": "2026-10-18T14:11:35.714798+00:00",
+              "before_ns": 13109649351700,
+              "after_ns": 13109660812900,
+              "succeeded": true,
+              "phase_id": null
+            },
+            {
+              "event": "stop",
+              "at": "2026-10-18T14:11:35.749274+00:00",
+              "before_ns": 13109683488000,
+              "after_ns": 13109716099100,
+              "succeeded": false,
+              "phase_id": null
+            },
+            {
+              "event": "cleanup",
+              "at": "2026-10-18T14:11:35.781854+00:00",
+              "before_ns": 13109716144200,
+              "after_ns": 13109730824500,
+              "succeeded": true,
+              "phase_id": null
+            }
+          ],
+          "failures": [
+            "stop_failed"
+          ],
+          "stop_confirmed": false,
+          "cleanup_confirmed": true,
+          "game_motion_verified": false
+        },
+        "recorder": {
+          "schema_version": 1,
+          "state": "closed",
+          "plan": {
+            "schema_version": 1,
+            "run_id": "aad5f641-b2c9-414e-89f6-f89b1ffd3afd",
+            "target": {
+              "hwnd": 2952494,
+              "pid": 34192,
+              "process_created_at": "2026-10-18T14:11:34.643000+00:00",
+              "process_path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+              "class_name": "NudgeOwnedCloseFixture",
+              "client_width": 400,
+              "client_height": 200
+            },
+            "context_id": "owned synthetic provider only",
+            "phase_ids": [
+              "before",
+              "motion",
+              "after"
+            ],
+            "recipe_digest": null
+          },
+          "program": {
+            "adapter_id": "nudge.provider.owned.synthetic-csv",
+            "version": "fixture-1",
+            "executable": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "executable_sha256": "abc1aa0b5a63f745804e88789b2dfe6857582ec19ed36b3b5f9dc6b340212344",
+            "script": "C:\\Users\\lrnol\\Repos\\nudge\\src\\nudge\\recorder_provider_host.py",
+            "script_sha256": "576178878cd0bdaf2b726e79a0dc683ae10dfb75230e6ab62adbab5616adda31",
+            "synthetic": true,
+            "configuration": {
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\config\\b50fcd9f-6a31-48b3-bfb3-0e4ed9f3e2e2\\provider.json",
+              "sha256": "52342e31977ed3c8207d3e6bb96999423e0c6a9f426a832db5deb84080e5e6b7"
+            },
+            "dependencies": [
+              {
+                "path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+                "sha256": "abc1aa0b5a63f745804e88789b2dfe6857582ec19ed36b3b5f9dc6b340212344"
+              },
+              {
+                "path": "C:\\Users\\lrnol\\Repos\\nudge\\scripts\\collector_fixture.py",
+                "sha256": "5704911bbdfb6003e3ae13ad5f6496af824402c7b5f7c31a35aa199c83ba6629"
+              }
+            ]
+          },
+          "recorder_process": {
+            "pid": 30284,
+            "process_created_at": "2026-10-18T14:11:35.598000+00:00",
+            "process_path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+          },
+          "program_files": [
+            {
+              "volume_serial": 1524059915,
+              "file_index": 9570149208540301,
+              "bytes": 107312,
+              "sha256": "abc1aa0b5a63f745804e88789b2dfe6857582ec19ed36b3b5f9dc6b340212344",
+              "path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+            },
+            {
+              "volume_serial": 1524059915,
+              "file_index": 60517119992832925,
+              "bytes": 7818,
+              "sha256": "576178878cd0bdaf2b726e79a0dc683ae10dfb75230e6ab62adbab5616adda31",
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\src\\nudge\\recorder_provider_host.py"
+            },
+            {
+              "volume_serial": 1524059915,
+              "file_index": 14073748836609900,
+              "bytes": 1139,
+              "sha256": "52342e31977ed3c8207d3e6bb96999423e0c6a9f426a832db5deb84080e5e6b7",
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\config\\b50fcd9f-6a31-48b3-bfb3-0e4ed9f3e2e2\\provider.json"
+            },
+            {
+              "volume_serial": 1524059915,
+              "file_index": 9570149208540301,
+              "bytes": 107312,
+              "sha256": "abc1aa0b5a63f745804e88789b2dfe6857582ec19ed36b3b5f9dc6b340212344",
+              "path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+            },
+            {
+              "volume_serial": 1524059915,
+              "file_index": 36310271996725727,
+              "bytes": 1619,
+              "sha256": "5704911bbdfb6003e3ae13ad5f6496af824402c7b5f7c31a35aa199c83ba6629",
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\scripts\\collector_fixture.py"
+            }
+          ],
+          "anchors": [
+            {
+              "event": "prepare",
+              "source_domain": "windows.QueryPerformanceCounter",
+              "source_ticks": 131096485814,
+              "frequency_hz": 10000000,
+              "parent_qpc_before": 131095385485,
+              "parent_qpc_after": 131096492461,
+              "parent_perf_counter_before_ns": 13109538552500,
+              "parent_perf_counter_after_ns": 13109649193400,
+              "transport_interval_ns": 110697600,
+              "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+            },
+            {
+              "event": "start",
+              "source_domain": "windows.QueryPerformanceCounter",
+              "source_ticks": 131096596946,
+              "frequency_hz": 10000000,
+              "parent_qpc_before": 131096494604,
+              "parent_qpc_after": 131096604630,
+              "parent_perf_counter_before_ns": 13109649462600,
+              "parent_perf_counter_after_ns": 13109660367000,
+              "transport_interval_ns": 11002600,
+              "verified_scope": "local producer sample lies within actual same-PC QPC request/reply bounds; not renderer timing"
+            }
+          ],
+          "events": [
+            {
+              "event": "prepare",
+              "sequence": 1,
+              "at": "2026-10-18T14:11:35.603568+00:00",
+              "before_ns": 13109538552500,
+              "after_ns": 13109649193400,
+              "phase_id": null
+            },
+            {
+              "event": "start",
+              "sequence": 2,
+              "at": "2026-10-18T14:11:35.714798+00:00",
+              "before_ns": 13109649462600,
+              "after_ns": 13109660367000,
+              "phase_id": null
+            }
+          ],
+          "raw_artifact": null,
+          "stdout": {
+            "bytes": 981,
+            "sha256": "d4244d7ff0e506cb7c479777352d9d5111fb34ae8028ba261f8995102f4265ac"
+          },
+          "logs": [
+            {
+              "volume_serial": 1524059915,
+              "file_index": 60235645017157403,
+              "bytes": 981,
+              "sha256": "d4244d7ff0e506cb7c479777352d9d5111fb34ae8028ba261f8995102f4265ac",
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\aad5f641-b2c9-414e-89f6-f89b1ffd3afd\\stdout.log"
+            },
+            {
+              "volume_serial": 1524059915,
+              "file_index": 12103423999635311,
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\aad5f641-b2c9-414e-89f6-f89b1ffd3afd\\stderr.log"
+            }
+          ],
+          "process_handle_closed": true,
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stop_requested": true,
+          "owned_recorder_force_used": true,
+          "target_checks": 7,
+          "target_observations": [
+            {
+              "identity_matches": true,
+              "foreground": false,
+              "at": "2026-10-18T14:11:35.594324+00:00",
+              "perf_counter_ns": 13109528478300
+            },
+            {
+              "identity_matches": true,
+              "foreground": false,
+              "at": "2026-10-18T14:11:35.719305+00:00",
+              "perf_counter_ns": 13109653609200
+            }
+          ],
+          "target_at_cleanup": {
+            "process_exited": false,
+            "window_state": "same",
+            "at": "2026-10-18T14:11:35.796086+00:00",
+            "perf_counter_ns": 13109730618000
+          },
+          "exit_code": 1,
+          "cleanup_confirmed": true,
+          "cleanup_attempts": 1,
+          "failures": [
+            "cancelled",
+            "recorder_exited_without_reply",
+            "provider_forced_cleanup",
+            "provider_incomplete",
+            "recorder_artifact_unavailable"
+          ],
+          "last_cleanup_error": null,
+          "synthetic": true,
+          "clock_scope": "local IPC counter exchange only",
+          "transport_complete": false,
+          "game_motion_verified": false,
+          "comparison_ready": false,
+          "limitations": [
+            "No production recorder registered; tests use an owned synthetic producer.",
+            "No rendered-frame, motion, game acceptance or external legacy-clock alignment claim."
+          ],
+          "provider": {
+            "provider_id": "owned.synthetic-csv",
+            "version": "fixture-1",
+            "review_reference": "owned test fixture, not real provider approval",
+            "review_claim_independently_verified": false,
+            "definition_digest": "52342e31977ed3c8207d3e6bb96999423e0c6a9f426a832db5deb84080e5e6b7",
+            "collector": {
+              "pid": 36588,
+              "process_created_at": "2026-10-18T14:11:35.716000+00:00",
+              "process_path": "C:\\Users\\lrnol\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+              "birth_filetime": 134368062957166551,
+              "reported": {
+                "pid": 36588,
+                "birth_filetime": 134368062957166551
+              },
+              "inside_owned_job": true,
+              "definition_digest": "52342e31977ed3c8207d3e6bb96999423e0c6a9f426a832db5deb84080e5e6b7",
+              "exit_code": 1
+            },
+            "collector_handle_closed": true,
+            "artifacts": [
+              {
+                "volume_serial": 1524059915,
+                "file_index": 9570149209239442,
+                "bytes": 1119,
+                "sha256": "91aab9ea121f26e45887bad1de1ac10d2e08a060443bd712e2df39d348d6b6e1",
+                "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\aad5f641-b2c9-414e-89f6-f89b1ffd3afd\\provider-receipt.json"
+              },
+              {
+                "volume_serial": 1524059915,
+                "file_index": 11258999069503363,
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\aad5f641-b2c9-414e-89f6-f89b1ffd3afd\\collector.stdout.log"
+              },
+              {
+                "volume_serial": 1524059915,
+                "file_index": 12947848929767303,
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\provider-fixture-artifacts\\aad5f641-b2c9-414e-89f6-f89b1ffd3afd\\collector.stderr.log"
+              }
+            ],
+            "reported_lifecycle": {
+              "schema_version": 1,
+              "definition_digest": "52342e31977ed3c8207d3e6bb96999423e0c6a9f426a832db5deb84080e5e6b7",
+              "run_id": "aad5f641-b2c9-414e-89f6-f89b1ffd3afd",
+              "plan_digest": "5e5527ecae55f23f92bb71ef42ae1bf29582f938e9f34e7e9f0977b094011e09",
+              "collector": {
+                "pid": 36588,
+                "birth_filetime": 134368062957166551
+              },
+              "collector_exit_code": null,
+              "markers": [
+                {
+                  "event": "prepare",
+                  "qpc_before": {
+                    "qpc_ticks": 131096476139,
+                    "frequency_hz": 10000000
+                  },
+                  "qpc_after": {
+                    "qpc_ticks": 131096476215,
+                    "frequency_hz": 10000000
+                  },
+                  "utc_unix_ns": 1792332695712797300
+                },
+                {
+                  "event": "start",
+                  "qpc_before": {
+                    "qpc_ticks": 131096497058,
+                    "frequency_hz": 10000000
+                  },
+                  "qpc_after": {
+                    "qpc_ticks": 131096581400,
+                    "frequency_hz": 10000000
+                  },
+                  "utc_unix_ns": 1792332695714798400
+                }
+              ],
+              "failures": [],
+              "complete": false,
+              "arguments_digest": "8365c0e68b1e624495caf48b3d81a5791ca027b66cc596e48dea9573670c1c33",
+              "provider_version": "fixture-1",
+              "output_format": "owned_synthetic_csv",
+              "declared_source_clock": {
+                "column": "qpc_ticks",
+                "domain": "declared.windows.QueryPerformanceCounter",
+                "frequency_column": "qpc_frequency_hz",
+                "unit": "ticks"
+              },
+              "source_clock_verified": false,
+              "game_motion_verified": false,
+              "comparison_ready": false
+            },
+            "collector_gate_complete": false,
+            "output_format": "owned_synthetic_csv",
+            "declared_source_clock": {
+              "domain": "declared.windows.QueryPerformanceCounter",
+              "column": "qpc_ticks",
+              "frequency_column": "qpc_frequency_hz",
+              "unit": "ticks"
+            },
+            "source_clock_verified": false,
+            "source_clock_aligned": false,
+            "clock_note": "Host QPC IPC anchors do not establish the raw collector clock or rendered-frame boundaries."
+          }
+        },
+        "game_motion_verified": false,
+        "comparison_ready": false,
+        "resource": {
+          "kind": "recorder",
+          "run_id": "aad5f641-b2c9-414e-89f6-f89b1ffd3afd",
+          "state": "closed",
+          "cleanup_confirmed": true,
+          "cleanup_attempts": 1,
+          "failures": [
+            "session_stopped"
+          ],
+          "cancel_reason": "Control session released",
+          "cancel_requested_at": "2026-10-18T14:11:35.726306+00:00",
+          "cancel_requested_perf_counter_ns": 13109661256300,
+          "worker_running": false,
+          "cancel_requested": true
+        }
+      },
+      "release": {
+        "session_id": "b8bd278a-7f19-4160-bdcc-8e7f9ce1451e",
+        "owner": "owned synthetic provider smoke",
+        "run_id": "20f24f09-35a2-4011-bab1-ee9f20a49c5f",
+        "backend_pid": 32120,
+        "acquired_at": "2026-10-18T14:11:34.779991+00:00",
+        "expires_at": "2026-10-18T14:12:34.779991+00:00",
+        "releasing": false,
+        "release_reason": "Control session released",
+        "active": false,
+        "released_at": "2026-10-18T14:11:35.797589+00:00",
+        "neutral_verified": true,
+        "resources": [
+          {
+            "kind": "recorder",
+            "run_id": "e03e239e-581f-4af4-b7c5-8949b30ecf86",
+            "state": "closed",
+            "cleanup_confirmed": true,
+            "cleanup_attempts": 1,
+            "failures": [],
+            "cancel_reason": "Control session released",
+            "cancel_requested_at": "2026-10-18T14:11:35.726306+00:00",
+            "cancel_requested_perf_counter_ns": 13109661249300,
+            "worker_running": false,
+            "cancel_requested": true
+          },
+          {
+            "kind": "recorder",
+            "run_id": "aad5f641-b2c9-414e-89f6-f89b1ffd3afd",
+            "state": "closed",
+            "cleanup_confirmed": true,
+            "cleanup_attempts": 1,
+            "failures": [
+              "session_stopped"
+            ],
+            "cancel_reason": "Control session released",
+            "cancel_requested_at": "2026-10-18T14:11:35.726306+00:00",
+            "cancel_requested_perf_counter_ns": 13109661256300,
+            "worker_running": false,
+            "cancel_requested": true
+          }
+        ]
+      },
+      "foreground_unchanged": true,
+      "owned_synthetic_provider_only": true,
+      "real_game_input_capture_gpu": false,
+      "production_registry_or_launcher": false,
+      "source_clock_verified": false,
+      "source_clock_aligned": false,
+      "game_motion_verified": false,
+      "comparison_ready": false,
+      "raw_artifacts_retained": true
+    },
+    "limitations": [
+      "No vendor recorder, real game, capture, GPU sampler or private memory API was executed.",
+      "No production provider approval/registry or public launcher; local operator review claim is not independent approval.",
+      "Vetted program/protocol/file limits are not an arbitrary-program sandbox or OS disk quota.",
+      "Raw source-clock/rendered-motion/scene/loading/focus/target continuity and before/during/after acceptance remain unverified."
     ],
     "game_motion_verified": false,
     "comparison_ready": false
