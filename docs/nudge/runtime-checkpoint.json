@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "project": "nudge",
+  "observed_at": "2026-10-18T10:23:35Z",
+  "source": {
+    "path": "C:\\Users\\lrnol\\Repos\\nudge",
+    "branch": "codex/nudge-local-controls",
+    "head": "d702bc2143558ca551cc039c39647f9750263dd2",
+    "remote": null,
+    "observation_implementation": "acb275f2f73d707f6528edfe6e5feace93f6a7da",
+    "exclusive_sessions": [
+      "dae5043",
+      "85bb19d",
+      "d3469f7"
+    ],
+    "clean": true
+  },
+  "authorization": {
+    "scope": "Continue nudge implementation, companion desktop-sign-in startup, authenticated hosted MCP with existing pairing/access, and coordination/retry notices to the two named chats.",
+    "source_thread": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+    "no_current_game_test_authorization": true,
+    "witcher_closed_by_human_request": true,
+    "exclusions": [
+      "No new game launches or gameplay input without a current human test request.",
+      "No authentication/security changes, Windows-update actions, app restarts or new conversations to refresh inventories.",
+      "Respect another owner; coordinate foreground UI time."
+    ]
+  },
+  "runtime": {
+    "version": "0.4.1",
+    "native": {
+      "executable": "%LOCALAPPDATA%\\Programs\\loew.fi\\nudge\\Nudge.Companion.exe",
+      "task": "nudge companion",
+      "desktop_sign_in": true,
+      "background_winui3_tray": true,
+      "official_icon": true,
+      "pid_at_last_check": 63064,
+      "dll_sha256": "54155B02EB54BAB7C29DE3B521EE9C5BE0732E78D25BE1EA6522F3DC3B590AD2",
+      "status": "connected; unarmed; no selected target/controller/held input; session free"
+    },
+    "hosted": {
+      "url": "https://nudge.loew.fi/mcp",
+      "worker": "nudge",
+      "version_id": "b1dc7301-2d00-458d-98b7-077b5916dd40",
+      "deployment_id": "ca776e40-1e69-4b8d-9f99-77a1ae8b634f",
+      "deployed_at": "2026-10-18T10:21:01.045882Z",
+      "pairing_oauth_and_durable_object_preserved": true,
+      "local_tool_count": 25
+    }
+  },
+  "capabilities": {
+    "ownership": "Windows kernel mutex and shared owner mapping in the signed-in user desktop session. Filesystem coordination failed across process views and was replaced; diagnostic JSON mirrors are not authority.",
+    "session_rules": "Private tokens gate launch, selection/focus, selected capture, controller attachment, input and caller cleanup. Atomic acquire, 5–120-second lease, renew/release. Wrong/stale tokens cannot stop another owner. Expiry/cancellation retain the reservation until actual in-flight work and neutral cleanup finish. F12 and tray Stop remain local emergency controls.",
+    "window_observations": "Read-only list_game_windows includes PID, process birth/path, native client and screen bounds, foreground identities, UTC and monotonic timestamps; unavailable process data is explicit. New window_observations samples foreground for 0–10000 ms at requested 100–2000 ms intervals, plus inventories before/after. No session token, focus, selection, screenshots or input. Sequential sampling can miss transitions.",
+    "capture": "observe_game and capture_after return a PNG plus identity/geometry/timing receipt. Physical-monitor clipping preserves client canvas positions as black padding, with clipped/incomplete/missing_native_pixels/visible_client_regions and exact image_to_client_scale. Identity/geometry changes reject capture; minimized windows reject. Occlusion is included; captures are not atomic render-frame measurements.",
+    "cloud_queue": "Window inventory/sampling may overlap launch/control. A second control action remains excluded; normal calls leave a coordination slot within the companion's four-command limit."
+  },
+  "verification": {
+    "python_tests": 57,
+    "cloud_tests": 11,
+    "local_stdio_tools": 25,
+    "native_no_input_fixture": "PASS: actual window metadata and capture with eight-pixel overshoot; 1600 missing pixels; 320x200 client canvas; foreground unchanged; no input; neutral release.",
+    "mcp_receipt_image": "PASS: owning token, image block and metadata receipt with run provenance, no token in public status.",
+    "hosted_existing_tool": "PASS: list_game_windows returned enriched metadata; native input_status reported0.4.1 and neutral/free state.",
+    "native_companion_probe": "PASS: registered notification icon, interactive sign-in task, fresh connected status, expected DLL SHA256.",
+    "prior_ownership_evidence": "0.4.0 passed two-process local MCP and real native-tray-to-local atomic acquisition/expiry/neutral cleanup. Ownership implementation unchanged in0.4.1.",
+    "harness_history": [
+      "The first fixture was automatically centered by desktop software, so clipping was not exercised. A bounded harness repair places only its own no-activate window once after creation and asserts actual geometry before capture; native clipping then passed.",
+      "An immediate post-install tray probe ran before icon registration. The fresh follow-up probe passed."
+    ],
+    "not_run": [
+      "No particular game, controller gameplay, camera sequence or renderer compatibility was tested in this checkpoint.",
+      "No live launch/control action was used to test cloud queue concurrency; deterministic broker tests prove admission/exclusion behavior."
+    ]
+  },
+  "coordination": {
+    "peers": [
+      {
+        "thread": "01a14dbe-7e26-7780-84af-60fa42edb066",
+        "title": "Improve Big Picture Game Splashes"
+      },
+      {
+        "thread": "01a14d62-4f4f-7ed2-8dd9-2724854002cf",
+        "title": "Stabilize DLSS5 During Motion"
+      }
+    ],
+    "readiness_notices_sent": true,
+    "motion_peer_independent_local_probe": "PASS: official ClientSession exposed session tools and verified free/neutral state without input.",
+    "inventory": "Existing hosted conversations can retain old inventories. The previous refresh visibly showed24 tools; current local MCP25 is verified. Refresh for the new sampling tool was blocked by a Windows update popup. No update prompt action, app restart or new conversation was attempted.",
+    "desktop_overlay": "Windows update popup said restart at6:30AM local. Leave untouched; refresh existing Edge UI only when unobstructed and authorized foreground time is available."
+  },
+  "recovery": {
+    "last_healthy_cloud_version": "06a83cac-136d-41e2-8804-199060d0acf7",
+    "earlier_session_release": "0e9939ec-0b7c-4166-97f3-af9b833fb1f5",
+    "local_native_backup": ".local/rollback-0.4.0",
+    "local_source_backup": ".local/rollback-0.4.0-source.zip",
+    "last_user_approved_exact_version": null,
+    "compatibility": "No pairing/access/data migration. Retained version availability and live healthy connected status were refreshed before each upload. Rollback requires fresh deployment read, exact compatible known-good target and runtime verification; no rollback was needed."
+  },
+  "remaining": [
+    "Actionable cloud connection diagnostics: PC identity, version, last contact, genuine retry/error reason, busy/armed/owner state.",
+    "Graceful identity-checked game close with bounded wait and explicitly requested force semantics.",
+    "Calibrated repeatable camera sequences with requested/delivered timings, run/phase provenance and cancellation/neutral receipts.",
+    "Recorder/measurement adapters and prepare/start/stop markers; incomplete loading/crash/focus/trace/data acceptance flags."
+  ],
+  "next_action": "Implement bounded actionable cloud connection diagnostics without game input. Revalidate current source/runtime/peer status first.",
+  "documentation": {
+    "assignment": "nudge-runtime-record-20261018",
+    "branch": "relay/nudge-runtime-record-20261018",
+    "scope": "docs/nudge/ only; no Relay product/runtime changes",
+    "identity_verification": "Existing connected GitHub profile and exact canonical commit witness were supplied to the exported attribution helper request adapter; it validates the same account/witness as the gh route. No credential or account was created."
+  }
+}
