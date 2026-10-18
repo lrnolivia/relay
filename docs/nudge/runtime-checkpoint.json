@@ -194,5 +194,177 @@
         }
       }
     }
+  },
+  "next_adapter_inputs": {
+    "provenance": {
+      "kind": "peer_readonly_report_not_independently_reverified_here",
+      "thread": "01a14d62-4f4f-7ed2-8dd9-2724854002cf",
+      "title": "Stabilize DLSS5 During Motion",
+      "received_at": "2026-10-18T12:13:01.233493+00:00",
+      "stable_rtxforge_recorder_api_exists": false
+    },
+    "presentmon": {
+      "version": "2.6.0",
+      "path": "%TEMP%/rtxforge-PresentMon-2.6.0-x64.exe",
+      "sha256": "b2a706bc6ad475749e3b7e3409263aa1e6906d45bdcf993f6dbc0f660188f1af",
+      "signature": "verified earlier by peer; refresh before any future execution",
+      "reported_argv": [
+        "--process_id",
+        "PID",
+        "--session_name",
+        "UNIQUE",
+        "--timed",
+        "10",
+        "--terminate_after_timed",
+        "--no_console_stats",
+        "--track_frame_type",
+        "--output_file",
+        "PATH"
+      ],
+      "execution_authorized_now": false,
+      "bounded_retry_exhausted_on_prior_live_capture": true,
+      "lost_etw_events_reported": [
+        79888,
+        123321
+      ],
+      "limitations": [
+        "Exit0 did not establish acceptance; later runs produced lost-event errors and no CSV. No equivalent retries or privilege bypass.",
+        "Preserve exact raw headers, CLI/version/mode and units; schemas vary. Keep swapchains and PresentMode changes separate.",
+        "MsBetweenPresents is application submission cadence; MsBetweenDisplayChange is distinct display cadence. Preserve zero/unavailable/drop semantics.",
+        "Successful trace contained only FrameType=Application; generated/base frame classification unavailable, not proof all rows were real-rendered.",
+        "Legacy captures have no proven shared QPC anchor. Verify --qpc_time/--qpc_time_ms headers and frequency mapping before alignment."
+      ],
+      "raw_fixture": "C:/Users/lrnol/AppData/Local/rtxForge/recovery/cache-mfg-probe-20261018-053021Z/01-cache-off.csv",
+      "columns": [
+        "Application",
+        "ProcessID",
+        "SwapChainAddress",
+        "PresentRuntime",
+        "SyncInterval",
+        "PresentFlags",
+        "AllowsTearing",
+        "PresentMode",
+        "FrameType",
+        "TimeInMs",
+        "MsBetweenSimulationStart",
+        "MsBetweenPresents",
+        "MsBetweenDisplayChange",
+        "MsInPresentAPI",
+        "MsRenderPresentLatency",
+        "MsUntilDisplayed",
+        "CPUStartTimeInMs",
+        "MsBetweenAppStart",
+        "MsCPUBusy",
+        "MsCPUWait",
+        "MsGPULatency",
+        "MsGPUTime",
+        "MsGPUBusy",
+        "MsGPUWait",
+        "MsAnimationError",
+        "AnimationTime",
+        "MsFlipDelay",
+        "MsAllInputToPhotonLatency",
+        "MsClickToPhotonLatency"
+      ]
+    },
+    "phase_json": {
+      "base": "C:/Users/lrnol/AppData/Local/rtxForge/recovery/",
+      "schema": [
+        "status",
+        "game identity",
+        "pid",
+        "before/restore",
+        "phases[name/settings/initial_status/samples/metrics]",
+        "source_sha",
+        "after/restored",
+        "interpretation"
+      ],
+      "classifications": {
+        "cache-mfg-probe-20261018-053021Z": "STATIONARY SCENE per human correction; cannot validate camera motion",
+        "cache-mfg-probe-20261018-053738Z": "Incomplete moving/crashed run; DEVICE_HUNG0x887a0006, OptiScaler log/crash breadcrumbs retained",
+        "nr-scale-20261018-055738Z": "GPU samples [usedMiB,totalMiB,utilizationPercent], before/applied/after, restored and saved_ini_unchanged"
+      },
+      "samples": "companion_status plus foreground_pid; preserve all original classifications"
+    },
+    "gpu_csv": {
+      "reported_command": [
+        "nvidia-smi",
+        "--query-gpu=timestamp,memory.used,memory.total,utilization.gpu",
+        "--format=csv,noheader,nounits",
+        "--loop-ms=1000"
+      ],
+      "artifact": "memory.csv",
+      "memory_unit": "MiB",
+      "scope": "total adapter use; not per-game allocation/budget or OOM proof",
+      "clock": "wall-clock timestamp with no explicit zone",
+      "requirement": "Generic source/units/clock/budget metadata with replaceable vendor backends; no current sampling authorization"
+    },
+    "optional_rtxforge_metrics": {
+      "core_dependency": false,
+      "route": "installed engine/windows/engine-host/companion_controls.py; METHODS['companion_status']({'row':{'game':ABSOLUTE_ROOT,'exe':RELATIVE_EXE}})",
+      "fields": [
+        "state",
+        "detail",
+        "pid",
+        "version",
+        "sequence",
+        "values",
+        "nr_running",
+        "nr_ms",
+        "rendered_fps",
+        "fg_successes",
+        "native_fresh",
+        "native_status",
+        "native_presented",
+        "native_samples",
+        "native_tick",
+        "native_mode",
+        "native_generated"
+      ],
+      "protocol6_fields": [
+        "nr_placement",
+        "nr_placement_reason",
+        "nr_model_width",
+        "nr_model_height",
+        "nr_reduced",
+        "nr_requested_before",
+        "nr_placement_tick",
+        "nr_placement_verified",
+        "nr_placement_label",
+        "nr_placement_detail"
+      ],
+      "placement": {
+        "0": "waiting",
+        "1": "off",
+        "2": "beforeSR",
+        "3": "afterSR",
+        "4": "no model result"
+      },
+      "placement_reason": {
+        "0": "none",
+        "1": "RR unsupported",
+        "2": "pre unavailable",
+        "3": "upscale failed",
+        "4": "waiting"
+      },
+      "limits": [
+        "Placement verified only with fresh<2s nonstalled observation; older packages unverified.",
+        "Invalid/missing nr_ms becomes null; rendered_fps null when NR off, never delivered/display FPS.",
+        "Do not read private shared-memory offsets; use optional public adapter."
+      ]
+    },
+    "proposed_envelope_not_existing_api": [
+      "schema_version",
+      "adapter/version/hash",
+      "run/phase/session correlation",
+      "target PID/birth/path/HWND",
+      "condition/settings/build context",
+      "raw artifacts",
+      "UTC and monotonic anchors with clock domain/frequency",
+      "samples",
+      "data_quality",
+      "cleanup receipt"
+    ],
+    "acceptance": "Recorder validity and independently measured camera validity gate comparison separately. Missing/partial/lost-event/target-exit/focus/geometry/scene/loading/motion evidence must remain explicit. First test adapters via offline fixtures; no new live game/recorder input request."
   }
 }
