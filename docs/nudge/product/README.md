@@ -88,6 +88,14 @@ Each frame sets the complete held key/button state. Common keys stay down betwee
 
 **Press F12 to stop and release nudge inputs.** Focus loss, target closure, cancellation and normal server shutdown also release tracked inputs. Emergency stop and focus loss disarm the target; select it again to continue. Concurrent nudge processes share an exclusive input lock. The tool does not suppress physical user input.
 
+## Close a requested game
+
+`close_game` requires the owning `session_token` and a `target` copied from a fresh `list_game_windows` result: `hwnd`, `pid`, `process_created_at`, `process_path`, and `class_name`. It verifies the exact process birth/path and window identity, neutralizes nudge input, posts `WM_CLOSE` to that window without activating it, and waits 0–10000 ms (5000 by default). The process handle stays pinned until the call finishes. Unknown identity fields, critical/system processes, another desktop session, or a changed target are rejected.
+
+Inspect `close_requested`, `window_closed`, `process_exited`, `completed`, `timed_out`, `identity_changed`, `cancelled`, and the actual UTC/monotonic boundaries. A request accepted by Windows is not proof the game exited: it may ignore the request or display a save/exit prompt. Window closure with a surviving process is reported separately. No prompt is answered automatically.
+
+`force` defaults to false. Set it true only after the human explicitly requests forced termination of that exact process, accepting possible loss of unsaved data. After the graceful wait it can terminate only the original pinned process, while the original window still matches, then waits up to 2000 ms for exit. It never follows launchers, children or a process tree. A disappeared/replaced window, cancellation, expiry or F12 prevents later force. A close already posted cannot be recalled. Process pinning protects against PID reuse; window checks immediately before dispatch cannot make Windows' separate identity-check and message-post operations atomic against concurrent HWND replacement.
+
 ## Controller emulation
 
 `connect_controller` attaches a neutral `xbox360` or `ds4` virtual device. `play_controller` executes full timed states, while `set_controller_state` applies a state for a lease of up to five seconds. Sticks range from -1 to 1 (+X right, +Y up for either controller); triggers range from 0 to 1. Sequences end neutral while keeping the device attached. F12, focus loss, emergency stop and shutdown unplug it. `disconnect_controller` explicitly removes it.
