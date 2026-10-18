@@ -106,6 +106,25 @@ Inspect `close_requested`, `window_closed`, `process_exited`, `completed`, `time
 
 `force` defaults to false. Set it true only after the human explicitly requests forced termination of that exact process, accepting possible loss of unsaved data. After the graceful wait it can terminate only the original pinned process, while the original window still matches, then waits up to 2000 ms for exit. It never follows launchers, children or a process tree. A disappeared/replaced window, cancellation, expiry or F12 prevents later force. A close already posted cannot be recalled. Process pinning protects against PID reuse; window checks immediately before dispatch cannot make Windows' separate identity-check and message-post operations atomic against concurrent HWND replacement.
 
+## Recorder interoperability and offline measurements
+
+`prepare_measurement_plan` binds the exact prepared camera recipe/digest, run UUID, target, context and phase IDs to requested sources. It returns a digest and the recorder's prepare/start/phase/stop/cleanup marker contract. It starts no recorder or game. A local `RecorderAdapter` protocol and `RecorderLifecycle` wrapper provide replaceable setup/start/stop/cleanup boundaries outside the input scheduler, including failed starts, cancellation and cleanup receipts. No live recorder launcher is registered in this release.
+
+`analyze_measurement_artifact` reads supplied UTF-8 content and verifies its exact SHA256. Historical recordings can omit both `plan` and `plan_digest`: this explicitly unbound mode returns null run/target/context/calibration identities, preserves raw reported PIDs and missing-evidence flags, and never joins a camera receipt. Do not create fictional calibration or process-birth data to inspect an old trace. For bound analysis supply both the exact plan and digest. Its `artifact.report` declares `source_id`, `format`, `producer` (name/version/optional binary hash), `clock` (domain/unit/optional time column, frequency, timezone and evidenced anchor), `raw_reference`, and `raw_sha256`. Optional `binding` is the exact measurement plan; mismatched bindings reject, missing bindings stay flagged. Supply actual recorder exit/loss/completion, markers and quality flags when known; never invent them. The public session ID may be recorded; private session tokens are not part of this schema. Tool schemas describe the full contract.
+
+Supported offline adapters are `presentmon_csv`, headerless `gpu_csv` (timestamp, used MiB, total MiB, utilization percent), and `legacy_phase_json`. PresentMon keeps raw header identity and separate contiguous PID/swapchain/PresentMode segments. Zero intervals remain zero and NA remains unavailable; application submission cadence is distinct from display-change cadence. An Application frame label does not prove base/generated classification. GPU samples describe total-adapter usage, not per-game allocation, a process budget or OOM. Legacy JSON retains original human stationary/crash classifications and restoration outcomes. Raw artifacts and their hashes remain authoritative.
+
+Inline content is limited to160000 characters and the hosted request remains limited to256KiB including JSON. For larger saved artifacts, write the preparation result to `plan.json` and a `RecorderReport` to `report.json`, then run:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/analyze_measurement.py plan.json report.json capture.csv
+.\.venv\Scripts\python.exe scripts/analyze_measurement.py --unbound report.json historical-capture.csv
+```
+
+The offline CLI reads up to8MiB and50000 CSV rows without changing files. Neither path executes a command from a report, reads a report's reference path, starts capture, changes focus or sends input. Recorder execution, target continuity and supplied clock anchors remain unverified. The tool joins only a matching camera receipt retained by the same backend; camera delivery does not verify rendered motion. Recorder and camera gates remain separate, and `game_motion_verified` / `comparison_ready` stay false until an independent live evidence verifier exists. Lost events, missing output, partial capture, crash, focus/geometry changes, loading, changed scene and unknown cleanup must remain explicit.
+
+`scripts/smoke_measurement.py --fixtures` checks the retained offline traces through real stdio MCP and the offline parser; `--cloud` uses only the isolated loopback Worker. The tests never launch a game or recorder and send no input. A stationary trace and an interrupted moving/crashed trace remain unsuitable for a completed motion comparison.
+
 ## Controller emulation
 
 `connect_controller` attaches a neutral `xbox360` or `ds4` virtual device. `play_controller` executes full timed states, while `set_controller_state` applies a state for a lease of up to five seconds. Sticks range from -1 to 1 (+X right, +Y up for either controller); triggers range from 0 to 1. Sequences end neutral while keeping the device attached. F12, focus loss, emergency stop and shutdown unplug it. `disconnect_controller` explicitly removes it.
