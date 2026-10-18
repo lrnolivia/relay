@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-18T13:37:52.007Z",
+  "updated_at": "2026-10-18T13:47:39.833Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16565,7 +16565,7 @@
       "primary_staff": "roman",
       "supporting_staff": [],
       "base_sha": "673dda606192b837b5944a2db6fe6360aace39f1",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-18T13:37:52.007Z",
       "objective_history": {
         "baseline": {
@@ -16582,8 +16582,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-18T13:37:52.007Z",
-      "lease_until": "2026-10-19T01:37:52.007Z"
+      "updated_at": "2026-10-18T13:47:39.833Z",
+      "lease_until": "2026-10-19T01:47:39.833Z",
+      "pr": 236,
+      "merged_head_sha": "a7c80398bd0ee5d9a15e410028273d369c5ff4ae",
+      "merge_commit_sha": "32792bbd262704476deeaa925db377015536837a",
+      "evidence": "PR236 exact heada7c80398bd0ee5d9a15e410028273d369c5ff4ae merged32792bbd262704476deeaa925db377015536837a through verified human Git route; provider author/committer/account and exact remote checkpoint/README Git blobs verified. https://github.com/lrnolivia/relay/blob/32792bbd262704476deeaa925db377015536837a/docs/nudge/runtime-checkpoint.json records clean source763f439 (integration8a8bed2),141 Python checks including19 native recorder and13 native session-recorder tests, independent subprocess exclusion, cancelled waits, expiry/start/F12, cleanup retry, worker liveness, failed neutralization and publication. Retained standalone owned receipt C:/Users/lrnol/Repos/nudge/.local/recorder-session-fixture-artifacts/9f892201-8175-4cfa-a0c8-cca90a6b0117/session-receipt.json SHA25600cfdbfe871e8d42ebce03be9040869727adddda2417834f57621f84b903c865; raw/log hashes checked, foreground unchanged, native original handles retained until confirmed. Final full QA exposed window-close-before-process-signal classification; separate observations + deterministic regression fixed it before publication. Actual stdio31 tools loads no recorder modules; no public launcher. Production remains healthy0.4.6/source9629f47/DLL00E9C33F/Worker43de0174/deploymentb5263e42, reverified without upload/rebuild/restart or app refresh. No game/input/capture/GPU action. Vetted providers and independent rendered-motion/measurement acceptance remain explicit follow-up.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T13:47:39.833Z"
     }
   ],
   "migrated_from": "loew-inspector"
