@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-18T12:43:49.699Z",
+  "updated_at": "2026-10-18T12:49:09.208Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16416,7 +16416,7 @@
       "primary_staff": "luca",
       "supporting_staff": [],
       "base_sha": "00d1a3bb0d6338de0d7474f6a165a3a5c5c6fc71",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-18T12:35:43.558Z",
       "objective_history": {
         "baseline": {
@@ -16439,8 +16439,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-18T12:43:49.699Z",
-      "lease_until": "2026-10-19T00:43:49.699Z",
+      "updated_at": "2026-10-18T12:49:09.208Z",
+      "lease_until": "2026-10-19T00:49:09.208Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -16463,7 +16463,13 @@
             "next_action": "Verify unbound HTTP-to-native replay, promote0.4.6 with current healthy0.4.5 retained, then update exact PR234 checkpoint and complete."
           }
         }
-      ]
+      ],
+      "pr": 234,
+      "merged_head_sha": "546383f46efceeeb10298d5b932bbb8c9d3831d8",
+      "merge_commit_sha": "58b418427a25d8f971451d672dc2ae3702437006",
+      "evidence": "PR234 head546383f46efceeeb10298d5b932bbb8c9d3831d8 merged58b418427a25d8f971451d672dc2ae3702437006 through verified human Git route; author/committer/account metadata and exact remote README/SKILL blobs checked. Checkpoint https://github.com/lrnolivia/relay/blob/58b418427a25d8f971451d672dc2ae3702437006/docs/nudge/runtime-checkpoint.json records clean source9629f47, native/Worker0.4.6 health, retained0.4.5 recovery,109 Python/21 cloud and unbound offline stdio/HTTP-native/CLI replay. No game/input/live recorder execution. Motion independently ran CLI --unbound on original307291-byte stationary artifact, exact raw SHA2561aab0fa299fa75f1576e0830cea0a40e92ec3a14cd5bd81f75dd8e3bb182dc42 unchanged; null identities, source stationary classification/human correction, missing evidence and false motion/comparison accepted. Peer-reported evidence C:/Users/lrnol/AppData/Local/rtxForge/recovery/nudge-unbound-check-20261018-124739Z/{report.json,analysis.json,receipt.json,stderr.log}; report received in authorized thread01a14d62-4f4f-7ed2-8dd9-2724854002cf. All work accounted; live recorder and independent motion/clock verifiers remain explicitly pending.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T12:49:09.208Z"
     }
   ],
   "migrated_from": "loew-inspector"
