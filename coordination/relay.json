@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-18T10:58:44.816Z",
+  "updated_at": "2026-10-18T11:02:27.112Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16248,7 +16248,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "7e62eb671c48dde89391ce0a245e5b977ab08352",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-18T10:57:01.344Z",
       "objective_history": {
         "baseline": {
@@ -16271,8 +16271,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-18T10:58:44.816Z",
-      "lease_until": "2026-10-18T22:58:44.816Z",
+      "updated_at": "2026-10-18T11:02:27.112Z",
+      "lease_until": "2026-10-18T23:02:27.112Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -16292,7 +16292,13 @@
             "acceptance": "Record exact source/native/cloud identities, live+isolated diagnostics QA, recovery compatibility, peer notices and remaining work. Sync README and operating-skill mirrors byte-for-byte from nudge source7e3dd8053429ccac744ce87a0e36300b1bec93e0 under docs/nudge/product/. No Relay product code or runtime changes."
           }
         }
-      ]
+      ],
+      "pr": 231,
+      "merged_head_sha": "e67851e83130a1808d06ba1a4889fa6109e30b6b",
+      "merge_commit_sha": "9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b",
+      "evidence": "PR231 merged exact heade67851e83130a1808d06ba1a4889fa6109e30b6b as Lauren-authored/committed9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b. Canonical checkpoint https://github.com/lrnolivia/relay/blob/9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b/docs/nudge/runtime-checkpoint.json and byte-exact README/SKILL product mirrors read back and hashes verified. JSON/identities/attribution passed; exact-head Runner admission passed. Documentation-only source CI paths exclude docs. Release7e3dd80/Worker98942083/nativeDLL18F6FEB5 passed61Python/19cloud, full isolated diagnostics transport and live pause/resume; independent hosted consumer passed. Remaining gameplay-test limits and game-close/camera/measurement work retained. No Relay product code changes.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T11:02:27.112Z"
     }
   ],
   "migrated_from": "loew-inspector"
