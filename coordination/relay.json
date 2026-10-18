@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-18T15:52:35.542Z",
+  "updated_at": "2026-10-18T15:56:11.964Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16692,7 +16692,7 @@
       "paths": [
         "docs/nudge/runtime-checkpoint.json",
         "docs/nudge/product/README.md",
-        "docs/nudge/product/SKILL.md"
+        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
       ],
       "resources": [
         "nudge-runtime-record",
@@ -16700,7 +16700,7 @@
       ],
       "goal": "Record source-only raw play_input/play_controller receipt provenance, actual UTC/QPC phase/state/guard/neutral timings and hosted/local startup clarification while preserving active production game testing.",
       "acceptance": "Exact source/runtime separation and Git-byte mirrors;134 scoped Python tests including10 new raw receipt cases,21 cloud checks, real isolated memory-only MCP receipt/wrong-token/cancellation/cleanup checks; no production restart/deploy/retarget/input or claims of rendered motion.",
-      "next_action": "Finish source validation/commit, record exact fixture evidence and product mirrors, verify the admitted documentation PR and attribution, then notify Motion source-only readiness without disrupting its current test.",
+      "next_action": "Update the existing nested SKILL mirror path (not a new root SKILL file), validate exact staged Git bytes/source/runtime/fixture evidence, publish draft docs PR and complete after verified human-attributed merge.",
       "category": "maintenance",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16724,8 +16724,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-18T15:52:35.542Z",
-      "lease_until": "2026-10-19T03:52:35.542Z"
+      "updated_at": "2026-10-18T15:56:11.964Z",
+      "lease_until": "2026-10-19T03:56:11.964Z"
     }
   ],
   "migrated_from": "loew-inspector"
