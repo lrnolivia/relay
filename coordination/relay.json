@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-18T13:15:55.888Z",
+  "updated_at": "2026-10-18T13:20:03.899Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16492,7 +16492,7 @@
       "primary_staff": "roman",
       "supporting_staff": [],
       "base_sha": "e91db84c676c930c5b0abb10514ed10565b7b0ae",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-18T13:11:22.820Z",
       "objective_history": {
         "baseline": {
@@ -16515,8 +16515,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-18T13:15:55.888Z",
-      "lease_until": "2026-10-19T01:15:55.888Z",
+      "updated_at": "2026-10-18T13:20:03.899Z",
+      "lease_until": "2026-10-19T01:20:03.899Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -16536,7 +16536,13 @@
             "next_action": "Publish docs checkpoint for source9869595/base59ebc54 while production stays on9629f47/0.4.6; verify exact mirrors, human attribution and merged claim."
           }
         }
-      ]
+      ],
+      "pr": 235,
+      "merged_head_sha": "467d17e07eed7aba76648c3c83ecac66659e84a1",
+      "merge_commit_sha": "cf2344eca8c948f5a54fe80be15fad5a1094a217",
+      "evidence": "PR235 exact head467d17e07eed7aba76648c3c83ecac66659e84a1 mergedcf2344eca8c948f5a54fe80be15fad5a1094a217 through verified human Git route; provider author/committer/account and remote canonical blobs checked. https://github.com/lrnolivia/relay/blob/cf2344eca8c948f5a54fe80be15fad5a1094a217/docs/nudge/runtime-checkpoint.json records clean source9869595/base59ebc54,127 Python tests including18 native recorder checks and retained synthetic receipt/raw artifact/log hashes. Receipt C:/Users/lrnol/Repos/nudge/.local/recorder-fixture-artifacts/3b7e5f82-e4fc-4992-bfd3-e81ab5d0f610/receipt.json SHA2560f857e241664beb440b97e0512da77d0cd9e8177d5c191dec0ce8e9b668d7bd8. Actual same-PC QPC exchange bounds, separate target pin, independent Job cancellation, descendants/parent death, exit/geometry change and retryable cleanup verified on owned fixtures only; foreground unchanged. No production recorder registered or loaded by31-tool MCP. No Worker upload/native rebuild/companion restart/game/input/capture/GPU action. Deployed source9629f47/0.4.6 and original DLL/Worker remain healthy. Exclusive-session recorder resource integration and independent motion/measurement validity explicitly remain next. Staged validation initially compared a CRLF working file to LF Git bytes; corrected to exact staged/remote Git blobs before final commit, without changing content or weakening validation.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T13:20:03.899Z"
     }
   ],
   "migrated_from": "loew-inspector"
