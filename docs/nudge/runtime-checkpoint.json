@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "project": "nudge",
-  "observed_at": "2026-10-18T11:26:15.053536+00:00",
+  "observed_at": "2026-10-18T12:08:05.867008+00:00",
   "source": {
     "path": "C:\\Users\\lrnol\\Repos\\nudge",
     "branch": "codex/nudge-local-controls",
-    "head": "06e4d5f91b863998a236484b28bcca13d8ea02a1",
+    "head": "98e0d0615e0b27c354bd844e71bb47eb7f6586a2",
     "remote": null,
     "observation_implementation": "acb275f2f73d707f6528edfe6e5feace93f6a7da",
     "exclusive_sessions": [
@@ -15,7 +15,9 @@
     ],
     "clean": true,
     "connection_diagnostics_implementation": "7e3dd8053429ccac744ce87a0e36300b1bec93e0",
-    "close_implementation": "06e4d5f91b863998a236484b28bcca13d8ea02a1"
+    "close_implementation": "06e4d5f91b863998a236484b28bcca13d8ea02a1",
+    "camera_implementation": "d60666f71780c72a302de7322df7a6416557cdfc",
+    "camera_interruption_fix": "98e0d0615e0b27c354bd844e71bb47eb7f6586a2"
   },
   "authorization": {
     "scope": "Continue nudge implementation, companion desktop-sign-in startup, authenticated hosted MCP with existing pairing/access, and coordination/retry notices to the two named chats.",
@@ -29,25 +31,25 @@
     ]
   },
   "runtime": {
-    "version": "0.4.3",
+    "version": "0.4.4",
     "native": {
       "executable": "%LOCALAPPDATA%\\Programs\\loew.fi\\nudge\\Nudge.Companion.exe",
       "task": "nudge companion",
       "desktop_sign_in": true,
       "background_winui3_tray": true,
       "official_icon": true,
-      "pid_at_last_check": 24976,
-      "dll_sha256": "E989B4542645F3ECEBABE404F6EFEC6AD18F085627CF60D4582B46B183D3D9EC",
+      "pid_at_last_check": 34708,
+      "dll_sha256": "B54BB515F889E3F8E83A027DFD22D7E93A1599B7B082501C6BF50F0BABEA5E44",
       "status": "connected; fresh diagnostics; unarmed; no target/controller/held inputs; no owner"
     },
     "hosted": {
       "url": "https://nudge.loew.fi/mcp",
       "worker": "nudge",
-      "version_id": "3b270386-d0e7-4f0a-a0a8-56b30320028a",
-      "deployment_id": "1edbe270-ee82-4772-8f48-9b6c264646be",
-      "deployed_at": "2026-10-18T11:23:43.067914Z",
+      "version_id": "86bd9098-0ef7-44dc-a30e-b12837e43912",
+      "deployment_id": "fb8532d0-319a-4538-8443-5baf3665252f",
+      "deployed_at": "2026-10-18T12:05:59.583861Z",
       "pairing_oauth_and_durable_object_preserved": true,
-      "local_tool_count": 26
+      "local_tool_count": 29
     }
   },
   "capabilities": {
@@ -57,24 +59,26 @@
     "capture": "observe_game and capture_after return a PNG plus identity/geometry/timing receipt. Physical-monitor clipping preserves client canvas positions as black padding, with clipped/incomplete/missing_native_pixels/visible_client_regions and exact image_to_client_scale. Identity/geometry changes reject capture; minimized windows reject. Occlusion is included; captures are not atomic render-frame measurements.",
     "cloud_queue": "Window inventory/sampling may overlap launch/control. A second control action remains excluded; normal calls leave a coordination slot within the companion's four-command limit.",
     "connection_diagnostics": "Existing connection_status now reports PC/companion/backend identity/version/PIDs, server contact timestamps/age and diagnostic next steps. Its input snapshot is explicitly scoped to the paired backend while nested control_session describes the desktop-wide owner; snapshots never reserve control. Idle cloud reports every15s, observed changes sooner;45s is stale, native tray remains3s. Error/absent samples retain the older input timestamp and mark it not fresh. SQLite retains one bounded last connection record, written on ready/close/adoption; live hibernation attachments retain heartbeats. Old socket closes cannot replace a new connection. Private tokens, tool arguments and credentials are excluded. Last-reported pause/stop/reconnect and historical PC retry failures are separated from unknown current offline cause. Timeout/disconnect do not claim cleanup completion.",
-    "close_game": "Owning session plus explicit fresh HWND/PID/process birth/path/class. Query/synchronize process handle stays pinned; critical/unverifiable or different-session processes reject. Neutralize input before WM_CLOSE without activation; bounded 0-10000ms grace. Separate window/process/timeout/identity/cancel results with UTC/monotonic boundaries. Default never kills. Force only on explicit human request, through original pinned process while original window still matches, then up to 2000ms exit wait. No launcher/child/tree targeting. Window loss, identity change, cancellation, expiry or F12 prevents later force; posted close cannot be recalled. Pinning prevents PID reuse retargeting; Windows identity check and HWND message post are separate operations, not an atomic guarantee against concurrent HWND replacement."
+    "close_game": "Owning session plus explicit fresh HWND/PID/process birth/path/class. Query/synchronize process handle stays pinned; critical/unverifiable or different-session processes reject. Neutralize input before WM_CLOSE without activation; bounded 0-10000ms grace. Separate window/process/timeout/identity/cancel results with UTC/monotonic boundaries. Default never kills. Force only on explicit human request, through original pinned process while original window still matches, then up to 2000ms exit wait. No launcher/child/tree targeting. Window loss, identity change, cancellation, expiry or F12 prevents later force; posted close cannot be recalled. Pinning prevents PID reuse retargeting; Windows identity check and HWND message post are separate operations, not an atomic guarantee against concurrent HWND replacement.",
+    "camera_recipes": "prepare_camera_recipe is read-only and resolves one-axis angular phases from caller-supplied signed measurements/evidence and settings/build/binding context. Require distinct bidirectional evidence; reject stationary/nonfinite/inconsistent response and extrapolation beyond measured duration/speed/deflection ranges. Before/motion/after phases, neutral outside motion, max30s. play_camera_recipe requires owning lease and matching selected process/window/client dimensions, foreground and device type. Mouse or right-stick axes only; no movement keys/buttons/left stick/triggers. It does not reset starting camera pose or scene. Digest checks exact recipe. Retained duplicate run ID returns cached receipt without replay; history is8 in-memory runs per backend, lost on restart/eviction. camera_run_status reads partial receipts during replay without reserving control.",
+    "camera_provenance": "Requested/sent counts, acknowledged state transition bounds, per-phase timing/error, sampled guard checks/gaps, run/session/phase/target identity and neutral attempt receipts. Camera scheduling and delivery monotonic_ns fields use python.time.perf_counter, observed QueryPerformanceCounter resolution1e-7s; clock domain and bracketing correlation to python.time.monotonic window-observation timestamps are included. Do not compare clock domains directly or infer game polling/render time from API receipts. Actual stop conditions are read directly; mutable display text is not a cause signal. game_motion_verified and comparison_ready remain false with missing-measurement flags; no stationary/missing data is accepted as motion or performance success."
   },
   "verification": {
-    "python_tests": 72,
-    "cloud_tests": 19,
-    "local_stdio_tools": 26,
-    "native_close_fixture": "PASS: actual stdio MCP; graceful process exit, refused close/default timeout, explicit pinned force, closed-window/surviving-process protection, stale birth/path/class rejection, session cancellation preventing force; input neutral release; foreground unchanged; no gameplay input.",
-    "isolated_cloud_close_fixture": "PASS on final source: HTTP MCP through Worker/DO/SQLite/WebSocket/native MCP repeats those owned-fixture scenarios and rejects string force values; production auth unchanged. Isolated Worker stopped.",
-    "native_companion_probe": "PASS: registered notification icon, interactive enabled sign-in task, connected0.4.3, expected DLL SHA256; source and public health0.4.3 match hosted fresh ready/free diagnostic snapshot.",
-    "prior_ownership_evidence": "Existing kernel sessions unchanged; prior two-process/native-tray ownership and expiry evidence retained in previous checkpoint.",
+    "python_tests": 89,
+    "cloud_tests": 20,
+    "local_stdio_tools": 29,
+    "native_readonly_mcp": "PASS: actual Windows stdio initialization/catalog29, read-only inventory/sampling/status and session acquire/release guards; no selected target or gameplay input.",
+    "camera_simulation": "PASS: unit calibration/range/phase/finite checks; exact counts; right-stick-only states; partial focus/geometry/ownership failure; duplicate prevention; eviction/missing evidence; failed cleanup never neutral-success; abnormal worker exit never completed.",
+    "camera_protocol": "PASS on final source: actual stdio and isolated HTTP MCP\u2192Worker/DO/SQLite\u2192WebSocket\u2192MCP with explicitly memory-only CameraBackend/FakePad. Read-only prepare does not reserve; replay/partial snapshots/cancellation/neutral release/dedup/private-token exclusion passed. Isolated Worker and simulation processes stopped. This is not native injection or game-motion evidence.",
+    "native_companion_probe": "PASS after final-source native rebuild: notification icon, enabled interactive sign-in task, connected0.4.4, expected DLL hash. Public health0.4.4 and hosted fresh ready/free/unarmed/no target/controller/held input confirmed. DO namespace/bindings/migration tag unchanged.",
+    "prior_ownership_evidence": "Kernel reservation/session implementation unchanged. Prior native ownership/expiry/cleanup and close fixture evidence retained in previous checkpoint.",
     "harness_history": [
-      "Windows virtualenv launcher PID differs from fixture PID. Harness now uses the private startup pipe actual PID and pins its own cleanup handle; owned leftovers were cleaned through identity-checked MCP, including a fixture with a closed stdout pipe that refused normal close.",
-      "Native API returned thread/PID as a list; comparison was corrected. Native termination is asynchronous: separate window identity state avoids aborting before the pinned process signals. Regression test covers delayed signal after window disappearance.",
-      "A wrapper incorrectly checked stale LASTEXITCODE after a PowerShell-only probe; the probe itself produced the full passing native receipt. Later public health/hosted status confirmed the healthy installation."
+      "Initial cloud cancellation assertion failed before publication. A fresh diagnostic run passed, so it was not treated as a repair. Deterministic regression and an independent unit failure exposed mutable display-text classification: normally Armed text mentions F12 and could label ownership revocation as emergency_stop; stale closed-window text could hide real revocation. Classification now reads actual guard conditions and whitelisted historical exceptions; final89-test suite and original cloud criterion passed. The failed candidate was a memory-only simulation and was never deployed. Final regression fixtures verify neutral cleanup.",
+      "Observed clock-info evidence: time.monotonic uses GetTickCount64 with15.625ms nominal resolution; perf_counter uses QueryPerformanceCounter with100ns nominal resolution. New camera path uses performance counter; legacy playback timing defaults remain. No OS timer/security/focus changes."
     ],
     "not_run": [
-      "No real game launch, close, controller gameplay, camera or renderer test. No live PID/HWND reuse was induced; stale identity guards and pinned-handle semantics were exercised.",
-      "Installed ChatGPT action inventory was not refreshed because the prior Windows update popup remains outside automation authority. Actual local catalog and isolated cloud protocol expose26 tools."
+      "No real game launch, close, camera input, calibration, rendered-motion, GPU/frame-time or recorder test. Input protocol tests were explicitly simulated; caller angle measurements/context are not independently verified.",
+      "Hosted installed tool inventory not refreshed; old inventories may lack new tools. No UI/Windows-update action was attempted. Recorder/measurement adapters and measurement-backed comparison acceptance remain pending."
     ]
   },
   "coordination": {
@@ -93,78 +97,101 @@
     "inventory": "The richer existing connection_status needs no tool refresh. The new0.4.1 sampling tool still needs a refreshed inventory or local MCP25-tool ClientSession. Do not probe unchanged inventories or restart active apps.",
     "desktop_overlay": "Prior Edge refresh was blocked by a Windows update popup; it was left untouched. No desktop UI work occurred for0.4.2.",
     "motion_peer_independent_hosted_probe": "Peer-reported independent existing-inventory connection_status probe passed: connected/ready, companion/backend0.4.2, contact age2751ms, input_fresh=true, snapshot_only=true, unarmed/no target/controller/held input/owner. No session or game action.",
-    "readiness_notices": "Both named chats received0.4.3 capability/limits and gated-local route. Readiness is not permission for a new real game action."
+    "readiness_notices": "Both named chats received0.4.4 readiness, exact source/Worker, limits and gated local route; Motion was asked for existing recorder/trace contracts through read-only inspection. No game/input authorization added."
   },
   "recovery": {
-    "last_healthy_cloud_version": "98942083-e7ce-4394-aca7-14455d6a10ae",
+    "last_healthy_cloud_version": "3b270386-d0e7-4f0a-a0a8-56b30320028a",
     "earlier_session_release": "0e9939ec-0b7c-4166-97f3-af9b833fb1f5",
-    "local_native_backup": ".local/rollback-0.4.2",
-    "local_source_backup": ".local/rollback-0.4.2-source.zip",
+    "local_native_backup": ".local/rollback-0.4.3",
+    "local_source_backup": ".local/rollback-0.4.3-source.zip",
     "last_user_approved_exact_version": null,
-    "compatibility": "Pre-promotion0.4.2 cloud version availability and connected/neutral native state verified; native binary/config and exact source archive retained. Pairing, OAuth, bindings and migration tag preserved; no migration. Current0.4.3 healthy; no rollback needed. No exact human-approved recovery version established."
+    "compatibility": "Verified connected/neutral0.4.3 and cloud version availability before promotion. Exact native binary/config and source archive retained. Current0.4.4 healthy, pairing/OAuth/bindings/tag unchanged, no migration or rollback. No exact human-approved recovery version established."
   },
   "remaining": [
-    "Calibrated repeatable camera sequences with requested/delivered timings, run/phase provenance and cancellation/neutral receipts.",
-    "Recorder/measurement adapters and prepare/start/stop markers; incomplete loading/crash/focus/trace/data acceptance flags."
+    "Replaceable recorder/measurement adapters with prepare/start/stop markers for frame timing/GPU budgets/screenshots/clips; associate actual camera/measurement evidence with recipes and before/during/after phases.",
+    "Explicit loading/crash/focus/missing trace/data quality flags and comparison acceptance; never accept stationary or missing motion data as success. Real-game calibration/motion/compatibility still needs a current human test request."
   ],
-  "next_action": "Implement calibrated repeatable camera-only recipes with actual requested/delivered timing, monotonic run/phase/target/focus/cancel/neutral provenance, then replaceable recorder/measurement adapters and explicit incomplete-data flags. Use owned fixtures or simulations only; no real game launch/close/gameplay without a current human request.",
+  "next_action": "Read peer recorder/trace requirements, implement a bounded provider-neutral measurement/recorder adapter and marker contract with complete/missing/incomplete provenance. Test simulations/owned fixtures only. Do not launch/close a real game or inject gameplay without a current human request.",
   "documentation": {
-    "assignment": "nudge-close-record-20261018",
-    "branch": "relay/nudge-close-record-20261018",
+    "assignment": "nudge-camera-record-20261018",
+    "branch": "relay/nudge-camera-record-20261018",
     "scope": "Checkpoint JSON and exact nudge README/operating-skill mirrors only; no Relay product code/runtime changes.",
     "identity_verification": "Existing connected GitHub profile and exact canonical commit witness were supplied to the exported attribution helper request adapter; it validates the same account/witness as the gh route. No credential or account was created.",
     "product_mirrors": {
       "README.md": {
-        "sha256": "dca85f6b8438a2f5b0cf1ee6d18aafaa23988910eb6e9caa56110771beb2c63c",
-        "source_commit": "06e4d5f91b863998a236484b28bcca13d8ea02a1"
+        "sha256": "278589001ea5536b0152bdf7a92bfb965ba2eb2a94db81f0920e1aa264fca6d3",
+        "source_commit": "98e0d0615e0b27c354bd844e71bb47eb7f6586a2"
       },
       "skills/nudge-game-control/SKILL.md": {
-        "sha256": "5b193f546df3e61c08df7a3d324f0e25204c9a74ab8e87c9349b69d51c3512e0",
-        "source_commit": "06e4d5f91b863998a236484b28bcca13d8ea02a1"
+        "sha256": "db19649b4c6d82268a574d4752d2a15d0b6daa1e0afcb3d01548818ad4b10521",
+        "source_commit": "98e0d0615e0b27c354bd844e71bb47eb7f6586a2"
       }
     },
     "authority_resolution": "Read current loew-runner bootstrap/Bible/manifest as supplied. Its frozen project record points to lrnolivia/relay as canonical_repository. Live Relay policy/manifest and nudge AGENTS select Relay; a fresh non-overlapping Relay claim/preflight admits this docs-only update. No frozen Runner record or another checkout was changed."
   },
   "previous_checkpoint": {
-    "version": "0.4.2",
-    "source": "7e3dd8053429ccac744ce87a0e36300b1bec93e0",
-    "documentation_merge": "9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b",
+    "version": "0.4.3",
+    "source": "06e4d5f91b863998a236484b28bcca13d8ea02a1",
+    "documentation_merge": "df3a663c5e01394fa7a388e081328ce50f84c731",
     "verification": {
-      "python_tests": 61,
+      "python_tests": 72,
       "cloud_tests": 19,
-      "local_stdio_tools": 25,
-      "isolated_transport": "PASS: actual HTTP MCP -> local Worker/Durable Object/SQLite -> outbound WebSocket -> native MCP identity/status; retained offline record; no input/focus/window/game actions. Fixture was stopped afterward.",
-      "live_hosted": "PASS: paired PC LOMACHINE, companion/backend0.4.2, fresh input/owner snapshot and ready state through the existing hosted tool.",
-      "live_pause_resume": "PASS: owner-free native pause retained PC/version and last_reported_paused with input_fresh=false/current_offline_cause=unknown; resume returned connected/ready with a fresh backend PID. Resume includes normal backend teardown/reconnect latency. No input sent.",
-      "native_companion_probe": "PASS: notification icon registered; native interactive sign-in task enabled; fresh connected0.4.2 status; exact DLL hash.",
-      "persistence_and_privacy": "PASS: actual SQLite stale-close conditional update; hibernation attachment reconstruction; Unicode metadata bounded under2KiB; private-field/token canaries excluded; unavailable samples and stale clocks explicit.",
-      "prior_unchanged_features": "Prior session atomicity/tray-to-local expiry and clipping fixture evidence remains in previous_checkpoint. Input/control/session implementation is unchanged except adding backend_pid to status.",
+      "local_stdio_tools": 26,
+      "native_close_fixture": "PASS: actual stdio MCP; graceful process exit, refused close/default timeout, explicit pinned force, closed-window/surviving-process protection, stale birth/path/class rejection, session cancellation preventing force; input neutral release; foreground unchanged; no gameplay input.",
+      "isolated_cloud_close_fixture": "PASS on final source: HTTP MCP through Worker/DO/SQLite/WebSocket/native MCP repeats those owned-fixture scenarios and rejects string force values; production auth unchanged. Isolated Worker stopped.",
+      "native_companion_probe": "PASS: registered notification icon, interactive enabled sign-in task, connected0.4.3, expected DLL SHA256; source and public health0.4.3 match hosted fresh ready/free diagnostic snapshot.",
+      "prior_ownership_evidence": "Existing kernel sessions unchanged; prior two-process/native-tray ownership and expiry evidence retained in previous checkpoint.",
+      "harness_history": [
+        "Windows virtualenv launcher PID differs from fixture PID. Harness now uses the private startup pipe actual PID and pins its own cleanup handle; owned leftovers were cleaned through identity-checked MCP, including a fixture with a closed stdout pipe that refused normal close.",
+        "Native API returned thread/PID as a list; comparison was corrected. Native termination is asynchronous: separate window identity state avoids aborting before the pinned process signals. Regression test covers delayed signal after window disappearance.",
+        "A wrapper incorrectly checked stale LASTEXITCODE after a PowerShell-only probe; the probe itself produced the full passing native receipt. Later public health/hosted status confirmed the healthy installation."
+      ],
       "not_run": [
-        "No real game launch, focus change, selected capture, controller or gameplay test.",
-        "No actual pairing rejection/network outage was induced; retry classification is deterministic tested."
+        "No real game launch, close, controller gameplay, camera or renderer test. No live PID/HWND reuse was induced; stale identity guards and pinned-handle semantics were exercised.",
+        "Installed ChatGPT action inventory was not refreshed because the prior Windows update popup remains outside automation authority. Actual local catalog and isolated cloud protocol expose26 tools."
       ]
     },
     "previous_checkpoint": {
-      "version": "0.4.1",
-      "source": "d702bc2143558ca551cc039c39647f9750263dd2",
-      "documentation_merge": "9e40852724de7d7aa2c8f4aed900fafc650fa539",
+      "version": "0.4.2",
+      "source": "7e3dd8053429ccac744ce87a0e36300b1bec93e0",
+      "documentation_merge": "9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b",
       "verification": {
-        "python_tests": 57,
-        "cloud_tests": 11,
+        "python_tests": 61,
+        "cloud_tests": 19,
         "local_stdio_tools": 25,
-        "native_no_input_fixture": "PASS: actual window metadata and capture with eight-pixel overshoot; 1600 missing pixels; 320x200 client canvas; foreground unchanged; no input; neutral release.",
-        "mcp_receipt_image": "PASS: owning token, image block and metadata receipt with run provenance, no token in public status.",
-        "hosted_existing_tool": "PASS: list_game_windows returned enriched metadata; native input_status reported0.4.1 and neutral/free state.",
-        "native_companion_probe": "PASS: registered notification icon, interactive sign-in task, fresh connected status, expected DLL SHA256.",
-        "prior_ownership_evidence": "0.4.0 passed two-process local MCP and real native-tray-to-local atomic acquisition/expiry/neutral cleanup. Ownership implementation unchanged in0.4.1.",
-        "harness_history": [
-          "The first fixture was automatically centered by desktop software, so clipping was not exercised. A bounded harness repair places only its own no-activate window once after creation and asserts actual geometry before capture; native clipping then passed.",
-          "An immediate post-install tray probe ran before icon registration. The fresh follow-up probe passed."
-        ],
+        "isolated_transport": "PASS: actual HTTP MCP -> local Worker/Durable Object/SQLite -> outbound WebSocket -> native MCP identity/status; retained offline record; no input/focus/window/game actions. Fixture was stopped afterward.",
+        "live_hosted": "PASS: paired PC LOMACHINE, companion/backend0.4.2, fresh input/owner snapshot and ready state through the existing hosted tool.",
+        "live_pause_resume": "PASS: owner-free native pause retained PC/version and last_reported_paused with input_fresh=false/current_offline_cause=unknown; resume returned connected/ready with a fresh backend PID. Resume includes normal backend teardown/reconnect latency. No input sent.",
+        "native_companion_probe": "PASS: notification icon registered; native interactive sign-in task enabled; fresh connected0.4.2 status; exact DLL hash.",
+        "persistence_and_privacy": "PASS: actual SQLite stale-close conditional update; hibernation attachment reconstruction; Unicode metadata bounded under2KiB; private-field/token canaries excluded; unavailable samples and stale clocks explicit.",
+        "prior_unchanged_features": "Prior session atomicity/tray-to-local expiry and clipping fixture evidence remains in previous_checkpoint. Input/control/session implementation is unchanged except adding backend_pid to status.",
         "not_run": [
-          "No particular game, controller gameplay, camera sequence or renderer compatibility was tested in this checkpoint.",
-          "No live launch/control action was used to test cloud queue concurrency; deterministic broker tests prove admission/exclusion behavior."
+          "No real game launch, focus change, selected capture, controller or gameplay test.",
+          "No actual pairing rejection/network outage was induced; retry classification is deterministic tested."
         ]
+      },
+      "previous_checkpoint": {
+        "version": "0.4.1",
+        "source": "d702bc2143558ca551cc039c39647f9750263dd2",
+        "documentation_merge": "9e40852724de7d7aa2c8f4aed900fafc650fa539",
+        "verification": {
+          "python_tests": 57,
+          "cloud_tests": 11,
+          "local_stdio_tools": 25,
+          "native_no_input_fixture": "PASS: actual window metadata and capture with eight-pixel overshoot; 1600 missing pixels; 320x200 client canvas; foreground unchanged; no input; neutral release.",
+          "mcp_receipt_image": "PASS: owning token, image block and metadata receipt with run provenance, no token in public status.",
+          "hosted_existing_tool": "PASS: list_game_windows returned enriched metadata; native input_status reported0.4.1 and neutral/free state.",
+          "native_companion_probe": "PASS: registered notification icon, interactive sign-in task, fresh connected status, expected DLL SHA256.",
+          "prior_ownership_evidence": "0.4.0 passed two-process local MCP and real native-tray-to-local atomic acquisition/expiry/neutral cleanup. Ownership implementation unchanged in0.4.1.",
+          "harness_history": [
+            "The first fixture was automatically centered by desktop software, so clipping was not exercised. A bounded harness repair places only its own no-activate window once after creation and asserts actual geometry before capture; native clipping then passed.",
+            "An immediate post-install tray probe ran before icon registration. The fresh follow-up probe passed."
+          ],
+          "not_run": [
+            "No particular game, controller gameplay, camera sequence or renderer compatibility was tested in this checkpoint.",
+            "No live launch/control action was used to test cloud queue concurrency; deterministic broker tests prove admission/exclusion behavior."
+          ]
+        }
       }
     }
   }
