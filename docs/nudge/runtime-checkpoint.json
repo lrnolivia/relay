@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "project": "nudge",
-  "observed_at": "2026-10-18T14:45:58.928723+00:00",
+  "observed_at": "2026-10-18T15:55:41.500374+00:00",
   "source": {
     "path": "C:\\Users\\lrnol\\Repos\\nudge",
     "branch": "codex/nudge-local-controls",
-    "head": "73be8de5b9a893570ca9c910fffde9c68a3b9296",
+    "head": "ba5a41da427d295946c8bcf5964b3a61fb4f7631",
     "remote": null,
     "observation_implementation": "acb275f2f73d707f6528edfe6e5feace93f6a7da",
     "exclusive_sessions": [
@@ -25,18 +25,20 @@
     "recorder_session_integration": "8a8bed2",
     "recorder_target_exit_fix": "763f439e36b0c84d564e3962c0f254cdc2d0cb37",
     "provider_boundary_implementation": "0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f",
-    "evidence_gate_implementation": "73be8de5b9a893570ca9c910fffde9c68a3b9296"
+    "evidence_gate_implementation": "73be8de5b9a893570ca9c910fffde9c68a3b9296",
+    "raw_input_receipts_implementation": "ba5a41da427d295946c8bcf5964b3a61fb4f7631"
   },
   "authorization": {
     "scope": "Continue nudge implementation, companion desktop-sign-in startup, authenticated hosted MCP with existing pairing/access, and coordination/retry notices to the two named chats.",
     "source_thread": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-    "no_current_game_test_authorization": true,
     "witcher_closed_by_human_request": true,
     "exclusions": [
       "No new game launches or gameplay input without a current human test request.",
       "No authentication/security changes, Windows-update actions, app restarts or new conversations to refresh inventories.",
       "Respect another owner; coordinate foreground UI time."
-    ]
+    ],
+    "this_thread_has_no_current_game_action_request": true,
+    "peer_live_testing": "Motion peer reported current human try-it-all/use-nudge/virtual-controller authorization. Peer resumed and finished scoped Witcher tests independently. This thread made source-only changes and no game/input/recorder/capture/foreground actions."
   },
   "runtime": {
     "version": "0.4.6",
@@ -52,7 +54,7 @@
       "bridge_observation": {
         "instance_id": "7a9f2d33-d0ba-40b3-b77e-f2b41e5d148f",
         "bridge_pid": 11400,
-        "backend_pid": 20376,
+        "backend_pid": 26692,
         "note": "Transient identities; refresh live state."
       }
     },
@@ -67,15 +69,17 @@
     },
     "source_head": "9629f47b24c930f824db761d1b7a5493bde47791",
     "source_only_recorder_component_loaded": false,
-    "observed_at": "2026-10-18T14:45:58.928723+00:00",
+    "observed_at": "2026-10-18T15:55:41.500374+00:00",
     "source_only_recorder_session_component_loaded": false,
     "source_only_provider_component_loaded": false,
-    "source_only_evidence_component_loaded": false
+    "source_only_evidence_component_loaded": false,
+    "source_only_raw_receipt_component_loaded": false,
+    "last_observation_scope": "Hosted status fresh2026-10-18T15:53:52.288Z ready/free/unarmed; nativePID35336/DLL/task unchanged. Worker deployment identity last independently verified14:45Z; no deployment/restart performed by this work."
   },
   "capabilities": {
     "ownership": "Windows kernel mutex and shared owner mapping in the signed-in user desktop session. Filesystem coordination failed across process views and was replaced; diagnostic JSON mirrors are not authority.",
-    "session_rules": "Private tokens gate launch, selection/focus, selected capture, controller attachment, input and caller cleanup. Atomic acquire, 5\u00c3\u0192\u00c6\u2019\u00c3\u201a\u00c2\u00a2\u00c3\u0192\u00c2\u00a2\u00c3\u00a2\u00e2\u201a\u00ac\u00c5\u00a1\u00c3\u201a\u00c2\u00ac\u00c3\u0192\u00c2\u00a2\u00c3\u00a2\u00e2\u20ac\u0161\u00c2\u00ac\u00c3\u2026\u00e2\u20ac\u0153120-second lease, renew/release. Wrong/stale tokens cannot stop another owner. Expiry/cancellation retain the reservation until actual in-flight work and neutral cleanup finish. F12 and tray Stop remain local emergency controls.",
-    "window_observations": "Read-only list_game_windows includes PID, process birth/path, native client and screen bounds, foreground identities, UTC and monotonic timestamps; unavailable process data is explicit. New window_observations samples foreground for 0\u00c3\u0192\u00c6\u2019\u00c3\u201a\u00c2\u00a2\u00c3\u0192\u00c2\u00a2\u00c3\u00a2\u00e2\u201a\u00ac\u00c5\u00a1\u00c3\u201a\u00c2\u00ac\u00c3\u0192\u00c2\u00a2\u00c3\u00a2\u00e2\u20ac\u0161\u00c2\u00ac\u00c3\u2026\u00e2\u20ac\u015310000 ms at requested 100\u00c3\u0192\u00c6\u2019\u00c3\u201a\u00c2\u00a2\u00c3\u0192\u00c2\u00a2\u00c3\u00a2\u00e2\u201a\u00ac\u00c5\u00a1\u00c3\u201a\u00c2\u00ac\u00c3\u0192\u00c2\u00a2\u00c3\u00a2\u00e2\u20ac\u0161\u00c2\u00ac\u00c3\u2026\u00e2\u20ac\u01532000 ms intervals, plus inventories before/after. No session token, focus, selection, screenshots or input. Sequential sampling can miss transitions.",
+    "session_rules": "Private tokens gate launch, selection/focus, selected capture, controller attachment, input and caller cleanup. Atomic acquire, 5ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ120-second lease, renew/release. Wrong/stale tokens cannot stop another owner. Expiry/cancellation retain the reservation until actual in-flight work and neutral cleanup finish. F12 and tray Stop remain local emergency controls.",
+    "window_observations": "Read-only list_game_windows includes PID, process birth/path, native client and screen bounds, foreground identities, UTC and monotonic timestamps; unavailable process data is explicit. New window_observations samples foreground for 0ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ10000 ms at requested 100ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ2000 ms intervals, plus inventories before/after. No session token, focus, selection, screenshots or input. Sequential sampling can miss transitions.",
     "capture": "observe_game and capture_after return a PNG plus identity/geometry/timing receipt. Physical-monitor clipping preserves client canvas positions as black padding, with clipped/incomplete/missing_native_pixels/visible_client_regions and exact image_to_client_scale. Identity/geometry changes reject capture; minimized windows reject. Occlusion is included; captures are not atomic render-frame measurements.",
     "cloud_queue": "Window inventory/sampling may overlap launch/control. A second control action remains excluded; normal calls leave a coordination slot within the companion's four-command limit.",
     "connection_diagnostics": "Existing connection_status now reports PC/companion/backend identity/version/PIDs, server contact timestamps/age and diagnostic next steps. Its input snapshot is explicitly scoped to the paired backend while nested control_session describes the desktop-wide owner; snapshots never reserve control. Idle cloud reports every15s, observed changes sooner;45s is stale, native tray remains3s. Error/absent samples retain the older input timestamp and mark it not fresh. SQLite retains one bounded last connection record, written on ready/close/adoption; live hibernation attachments retain heartbeats. Old socket closes cannot replace a new connection. Private tokens, tool arguments and credentials are excluded. Last-reported pause/stop/reconnect and historical PC retry failures are separated from unknown current offline cause. Timeout/disconnect do not claim cleanup completion.",
@@ -144,7 +148,15 @@
       "Motion consumer inspection found0.4.5 required a calibrated plan to inspect historical traces. Its initial parser replay used an explicitly fictional test scaffold and did not establish a real historical run binding. The public contract now supports genuinely unbound imports; final retained-file replay supplies no plan or invented identity/calibration. No comparison or motion acceptance is claimed.",
       "Documentation provider-attribution check initially used an incomplete locally prepared proof missing commit.message; the helper rejected it before any merge. Restored the actual provider message and verified exact Git/account metadata through the canonical helper; no bypass or false proof."
     ],
-    "evidence_scope": "Original109 Python/21 cloud checks describe deployed0.4.6/9629f47. Source-only contract/session/provider/evidence sections record later local work; latest167 Python tests."
+    "evidence_scope": "Original109 Python/21 cloud checks describe deployed0.4.6/9629f47. Source-only contract/session/provider/evidence sections record later local work; latest167 Python tests.",
+    "latest_source_scoped": {
+      "source_head": "ba5a41da427d295946c8bcf5964b3a61fb4f7631",
+      "python_tests": 134,
+      "new_cases": 10,
+      "cloud_tests": 21,
+      "actual_memory_only_mcp": "PASS",
+      "production_changed": false
+    }
   },
   "coordination": {
     "peers": [
@@ -177,20 +189,20 @@
     "The bounded offline foundation/gate work is complete. Monitor the two authorized peer chats for concrete new requests; do not invent another generic foundation task, rerun unchanged tests or repeatedly notify unchanged readiness.",
     "No real game launch/close/gameplay/live recorder/GPU capture without a current human test request. Source work stays on existing branch; production remains verified0.4.6."
   ],
-  "next_action": "Listen quietly for concrete authorized peer/human requests. Real-evidence/registration/promotion paths remain parked until current human test authorization and reviewed source-clock/frame/provider evidence exist; keep existing healthy runtime and no game/comparison acceptance claim.",
+  "next_action": "Notify Motion of verified source-only raw receipt changes after canonical readback, then quiet concrete-request monitoring. Do not restart/replace runtime or interfere with peer tests. A coordinated release needs fresh exact healthy-runtime recovery artifacts and current ownership; no promotion requested.",
   "documentation": {
-    "assignment": "nudge-evidence-gate-record-20261018",
-    "branch": "relay/nudge-evidence-gate-record-20261018",
-    "scope": "Checkpoint JSON and exact README source mirror; no Relay product/runtime changes.",
+    "assignment": "nudge-raw-receipts-record-20261018",
+    "branch": "relay/nudge-raw-receipts-record-20261018",
+    "scope": "Checkpoint JSON and exact README/SKILL source mirrors; no Relay product/runtime changes.",
     "identity_verification": "Existing connected GitHub profile and exact canonical commit witness were supplied to the exported attribution helper request adapter; it validates the same account/witness as the gh route. No credential or account was created.",
     "product_mirrors": {
       "README.md": {
-        "sha256": "09c97e351ef1be73849809e63068f605dbee81f0ab251996c62e315c826fb41c",
-        "source_commit": "73be8de5b9a893570ca9c910fffde9c68a3b9296"
+        "sha256": "57cc6e23bd1c1f587c5984c9647cc166f6c133aba58da4dbc99f4aef1edd5273",
+        "source_commit": "ba5a41da427d295946c8bcf5964b3a61fb4f7631"
       },
       "skills/nudge-game-control/SKILL.md": {
-        "sha256": "8962806fa9cd3ca0667d288ac8e753fe7fa7a44f2d20ba4440bf461f2d6f8eb8",
-        "source_commit": "9629f47b24c930f824db761d1b7a5493bde47791"
+        "sha256": "dd2a86fb0f6c526a5f09bbd2cc842cebdbea4f3cba6e637dc6a7f5c351042893",
+        "source_commit": "ba5a41da427d295946c8bcf5964b3a61fb4f7631"
       }
     },
     "authority_resolution": "Read current loew-runner bootstrap/Bible/manifest as supplied. Its frozen project record points to lrnolivia/relay as canonical_repository. Live Relay policy/manifest and nudge AGENTS select Relay; a fresh non-overlapping Relay claim/preflight admits this docs-only update. No frozen Runner record or another checkout was changed."
@@ -205,7 +217,7 @@
       "local_stdio_tools": 29,
       "native_readonly_mcp": "PASS: actual Windows stdio initialization/catalog29, read-only inventory/sampling/status and session acquire/release guards; no selected target or gameplay input.",
       "camera_simulation": "PASS: unit calibration/range/phase/finite checks; exact counts; right-stick-only states; partial focus/geometry/ownership failure; duplicate prevention; eviction/missing evidence; failed cleanup never neutral-success; abnormal worker exit never completed.",
-      "camera_protocol": "PASS on final source: actual stdio and isolated HTTP MCP\u00c3\u00a2\u00e2\u20ac\u00a0\u00e2\u20ac\u2122Worker/DO/SQLite\u00c3\u00a2\u00e2\u20ac\u00a0\u00e2\u20ac\u2122WebSocket\u00c3\u00a2\u00e2\u20ac\u00a0\u00e2\u20ac\u2122MCP with explicitly memory-only CameraBackend/FakePad. Read-only prepare does not reserve; replay/partial snapshots/cancellation/neutral release/dedup/private-token exclusion passed. Isolated Worker and simulation processes stopped. This is not native injection or game-motion evidence.",
+      "camera_protocol": "PASS on final source: actual stdio and isolated HTTP MCPÃ¢â€ â€™Worker/DO/SQLiteÃ¢â€ â€™WebSocketÃ¢â€ â€™MCP with explicitly memory-only CameraBackend/FakePad. Read-only prepare does not reserve; replay/partial snapshots/cancellation/neutral release/dedup/private-token exclusion passed. Isolated Worker and simulation processes stopped. This is not native injection or game-motion evidence.",
       "native_companion_probe": "PASS after final-source native rebuild: notification icon, enabled interactive sign-in task, connected0.4.4, expected DLL hash. Public health0.4.4 and hosted fresh ready/free/unarmed/no target/controller/held input confirmed. DO namespace/bindings/migration tag unchanged.",
       "prior_ownership_evidence": "Kernel reservation/session implementation unchanged. Prior native ownership/expiry/cleanup and close fixture evidence retained in previous checkpoint.",
       "harness_history": [
@@ -840,10 +852,21 @@
     "remaining": "Session resource integration is now verified in source_only_recorder_sessions. Vetted real providers and independent motion/measurement validity remain pending; no production launcher."
   },
   "previous_documentation": {
-    "pr": 237,
-    "merge": "a77b71260bfe2eee8534b30f738f2711cb55422b",
-    "source": "0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f",
-    "runtime": "0.4.6 / 9629f47b24c930f824db761d1b7a5493bde47791"
+    "assignment": "nudge-evidence-gate-record-20261018",
+    "branch": "relay/nudge-evidence-gate-record-20261018",
+    "scope": "Checkpoint JSON and exact README source mirror; no Relay product/runtime changes.",
+    "identity_verification": "Existing connected GitHub profile and exact canonical commit witness were supplied to the exported attribution helper request adapter; it validates the same account/witness as the gh route. No credential or account was created.",
+    "product_mirrors": {
+      "README.md": {
+        "sha256": "57cc6e23bd1c1f587c5984c9647cc166f6c133aba58da4dbc99f4aef1edd5273",
+        "source_commit": "ba5a41da427d295946c8bcf5964b3a61fb4f7631"
+      },
+      "skills/nudge-game-control/SKILL.md": {
+        "sha256": "dd2a86fb0f6c526a5f09bbd2cc842cebdbea4f3cba6e637dc6a7f5c351042893",
+        "source_commit": "ba5a41da427d295946c8bcf5964b3a61fb4f7631"
+      }
+    },
+    "authority_resolution": "Read current loew-runner bootstrap/Bible/manifest as supplied. Its frozen project record points to lrnolivia/relay as canonical_repository. Live Relay policy/manifest and nudge AGENTS select Relay; a fresh non-overlapping Relay claim/preflight admits this docs-only update. No frozen Runner record or another checkout was changed."
   },
   "source_only_recorder_sessions": {
     "source_head": "763f439e36b0c84d564e3962c0f254cdc2d0cb37",
@@ -3948,5 +3971,94 @@
     ],
     "game_motion_verified": false,
     "comparison_ready": false
+  },
+  "source_only_raw_input_receipts": {
+    "source_head": "ba5a41da427d295946c8bcf5964b3a61fb4f7631",
+    "publication": "Source only; installed native/hosted0.4.6 from9629f47 remains unchanged. A fresh source stdio process can load this code; do not replace an existing live test backend.",
+    "request_provenance": {
+      "thread": "01a14d62-4f4f-7ed2-8dd9-2724854002cf",
+      "request": "Add target/session/run and actual UTC/QPC phase/state/guard/neutral provenance to existing raw input actions; allow fixed counts/deflections/time without fabricated angular calibration. Clarify hosted-only connection_status."
+    },
+    "contract": {
+      "tools": [
+        "play_input",
+        "play_controller"
+      ],
+      "input_parameters_unchanged": true,
+      "local_tool_count": 31,
+      "generated_cloud_catalog_tools": 31,
+      "new_public_tool": false,
+      "calibration_required": false,
+      "run_id": "Public label copied from owning session; generated unique action_id for each call, frame-N phase IDs; no scene role inferred.",
+      "provenance": "Whitelisted public session fields, native selected-window identity/birth/path/dimensions snapshots, backend PID/instance, exact requested command SHA256, requested states and acknowledged counts.",
+      "timing": "Actual UTC/native Windows QPC ticks/frequency inside performance-counter brackets; event perf timestamps, state transition/replacement intervals, per-phase requested/elapsed/timing error, playback guard first/last/count/maxgap/failure, neutral attempt boundaries.",
+      "scheduler": "Memory-only trace aggregation/native clock reads; no file/network/recorder I/O. Neutral marker now precedes play-lock release; clock sampler errors cannot skip neutral release.",
+      "recovery": "Existing tool errors remain errors. input_status.raw_input exposes latest full partial/failed receipt and last8 summaries, memory-only per backend. Every call is another action; no deduplication or blind replay after timeout/eviction/restart.",
+      "startup": "Hosted uses connection_status/session_status. Local has no connection_status and begins session_status/input_status."
+    },
+    "limits": [
+      "API acknowledgement is not game polling/angle/rendered motion/scene continuity or performance acceptance.",
+      "QPC/UTC reads and API operations are sequential bounded observations, not atomic render frames. External source clock/target binding still needs independent verification.",
+      "Guard summaries describe playback-thread samples, not every watchdog check. Window before/after snapshots cannot prove uninterrupted geometry/scene state.",
+      "No real recorder/provider launcher or calibration requirement was added. Source-only code is not a deployed0.4.6 capability."
+    ],
+    "verification": {
+      "python_scoped_tests": 134,
+      "new_raw_receipt_cases": 10,
+      "cloud_tests": 21,
+      "scope": "All non-recorder test modules; memory-only input/pad and isolated reservation namespaces. Existing native recorder suites were deliberately not repeated during peer live testing. No real game/input/focus/capture/GPU/recorder actions by this thread.",
+      "actual_protocol": "Real official ClientSession -> separate test stdio -> CameraBackend/FakePad in isolated kernel namespace. Fixed right_x0.3 uncalibrated controller, raw mouse counts, actual QPC/UTC, public IDs/no token, wrong-token no-action, renewal/live partial receipt, release interrupts worker, original tool error, cached ownership-loss/neutral and final verified release all pass.",
+      "receipt_path": "C:\\Users\\lrnol\\Repos\\nudge\\.local\\raw-input-fixture-artifacts\\eb479f5e-d1c8-4e4e-b9c8-59b13d9a3749\\receipt.json",
+      "receipt_sha256": "d5aa64175de572758da68eaa4b63409bab8d9010426a3bae625ba237f629d41b",
+      "receipt_source_clean": true,
+      "results": {
+        "controller": {
+          "action_id": "1efdbede-39a4-4924-a555-2bddb48cdd27",
+          "run_id": "eb479f5e-d1c8-4e4e-b9c8-59b13d9a3749",
+          "action": "play_controller",
+          "completed": true,
+          "neutral_verified": true,
+          "state": "completed",
+          "ownership_revocation_observed": false
+        },
+        "mouse": {
+          "action_id": "4646a994-1c6e-4c0f-bd07-e7e9a6ed0998",
+          "run_id": "eb479f5e-d1c8-4e4e-b9c8-59b13d9a3749",
+          "action": "play_input",
+          "completed": true,
+          "neutral_verified": true,
+          "state": "completed",
+          "ownership_revocation_observed": false
+        },
+        "live": {
+          "action_id": "ecc191c5-be8f-45bb-8bb5-06ee8a14ff0d",
+          "run_id": "eb479f5e-d1c8-4e4e-b9c8-59b13d9a3749",
+          "action": "play_input",
+          "completed": false,
+          "neutral_verified": false,
+          "state": "running",
+          "ownership_revocation_observed": null
+        },
+        "interrupted": {
+          "action_id": "ecc191c5-be8f-45bb-8bb5-06ee8a14ff0d",
+          "run_id": "eb479f5e-d1c8-4e4e-b9c8-59b13d9a3749",
+          "action": "play_input",
+          "completed": false,
+          "neutral_verified": true,
+          "state": "failed",
+          "ownership_revocation_observed": true
+        }
+      },
+      "infrastructure": "npm executable absent from PATH; ran equivalent node --test cloud/*.test.mjs directly, all21 passed. Catalog inputSchema comparison is exactly unchanged. No Worker upload, native build/restart, browser/tool refresh or production control acquisition."
+    },
+    "game_motion_verified": false,
+    "comparison_ready": false
+  },
+  "peer_reported_live_controller_test": {
+    "verified_by": "Motion peer; source evidence not independently replayed by this thread",
+    "evidence_root": "C:/Users/lrnol/AppData/Local/rtxForge/recovery/nudge-motion-20261018-1534Z",
+    "reported": "Official persistent local MCP acquire/renew/release and Xbox360 +/-right_x0.3 camera-only4s legs,1s neutral boundaries; screenshots show direction/return, cleanup verified. Five useful external official PresentMon traces; invalid/hard-stall phases not nudge-input failure. Nudge has no live recorder launcher.",
+    "close_receipt": "Peer nudge-close.json:WM_CLOSE dispatched, window_closed=true,process_exited=false,graceful_timed_out=true,force_performed=false after original window disappeared. Do not claim process exit or close another process. No runtime replacement/further tests requested.",
+    "future_request": "Possible future pinned-process cleanup API only with retained original handle/birth/path and explicit current human exact-process force authorization. Not implemented; do not broaden close_game automatically."
   }
 }
