@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-20T19:01:03.715Z",
+  "updated_at": "2026-10-20T19:01:08.841Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -15424,6 +15424,72 @@
       "lease_until": "2026-10-21T06:14:15.637Z"
     },
     {
+      "id": "relay-execution-continuity-20261020",
+      "owner": "relay-execution-continuity-worker-20261020",
+      "branch": "relay/execution-continuity-20261020",
+      "paths": [
+        "LOEW_CHAT_BIBLE.md",
+        "night-shift/CONTRACT.md",
+        "night-shift/BLOCKER_POLICY.md",
+        "scripts/relay-executor.mjs",
+        "scripts/relay-executor.test.mjs",
+        "scripts/relay-continuity.mjs",
+        "scripts/relay-continuity.test.mjs",
+        "scripts/relay-night-shift.mjs",
+        "scripts/relay-night-shift.test.mjs",
+        "scripts/release-assurance.mjs",
+        "scripts/release-assurance.test.mjs",
+        "scripts/autonomy-gate.mjs",
+        "src/autonomy-control.js",
+        "src/autonomy-control.test.js",
+        "src/project-cloud.js",
+        "src/project-cloud.test.js",
+        "src/relay-entry.js",
+        "test/autonomy-gate.test.mjs",
+        "test/source-test-contracts.json",
+        "docs/relay/EXECUTION_CONTINUITY_20261020.md",
+        "src/cloud.js",
+        "src/cloud.test.js",
+        "src/relay-host-probe.test.js"
+      ],
+      "resources": [
+        "relay-execution-continuity-audit-20261020"
+      ],
+      "goal": "Implement and deploy all four execution-continuity audit fixes and proven checkpoint reuse improvements.",
+      "acceptance": "Coordinator-owned complete authorized acceptance reconciliation; process success separate from objective; scoped candidate quarantine and bounded revision-checked recovery; project-local block isolation; repair failures without premature completion; checkpoint reuse and material invalidation; meaningful regressions and aggregate checks, exact-commit CI and authorized live release verification with rollback. Direct user authorization October20 delegated by thread01a1586d-75af-751f-96b1-2556defbe011; prior stop superseded only for this task. No unrelated resumes or Field work.",
+      "next_action": "Implement all four fixes in isolated task clone, run regressions and aggregate checks, open draft PR, complete authorized release and verify exact live revision/health/rollback.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "440a5b44182e7a9b80da3946a9a6cff4e0a99866",
+      "state": "completed",
+      "created_at": "2026-10-20T18:35:50.684Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Implement and deploy all four execution-continuity audit fixes and proven checkpoint reuse improvements.",
+          "acceptance": "Coordinator-owned complete authorized acceptance reconciliation; process success separate from objective; scoped candidate quarantine and bounded revision-checked recovery; project-local block isolation; repair failures without premature completion; checkpoint reuse and material invalidation; meaningful regressions and aggregate checks, exact-commit CI and authorized live release verification with rollback. Direct user authorization October20 delegated by thread01a1586d-75af-751f-96b1-2556defbe011; prior stop superseded only for this task. No unrelated resumes or Field work.",
+          "at": "2026-10-20T18:35:50.684Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-execution-continuity-20261020:acceptance:0",
+            "text": "Coordinator-owned complete authorized acceptance reconciliation; process success separate from objective; scoped candidate quarantine and bounded revision-checked recovery; project-local block isolation; repair failures without premature completion; checkpoint reuse and material invalidation; meaningful regressions and aggregate checks, exact-commit CI and authorized live release verification with rollback. Direct user authorization October20 delegated by thread01a1586d-75af-751f-96b1-2556defbe011; prior stop superseded only for this task. No unrelated resumes or Field work.",
+            "at": "2026-10-20T18:35:50.684Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-20T19:01:03.715Z",
+      "lease_until": "2026-10-21T07:01:03.715Z",
+      "pr": 244,
+      "merged_head_sha": "af91ead95a0850b1456bf0b2a7fe15228672fd1b",
+      "merge_commit_sha": "6138926ddfcd63e696b0ff20c12bcd51a6f61de1",
+      "evidence": "PR244 merged6138926ddfcd63e696b0ff20c12bcd51a6f61de1; exactPRCI39478284636 and mainCI39478866195 passed all5suites, workerd, tools/types/source contracts, exact production source/web build and retained preview. WorkersBuildda76c840 succeeded; version0e1ea547-93e8-4b12-a67c-b9600f62c627 deployment246daa91-2f6c-49cd-abfd-34e7464c16d8 at100%, health200. Assurance39479413632 retained/readback/restored archive91a431b540d5bbeeabb89c7dce8b4b88d476158ed57328b4cc0411e8480193c4; safety69 healthy, user-approvedPR186 unchanged. Prior healthy7735864/versiondd09991d retained for rollback. All4fixes plus checkpoint reuse/invalidation tests shipped. Legacy single-job adapters remain process-only until given an explicit finite continuity plan; no unrelated host/workspace/assignment was resumed.",
+      "work_accounted": true,
+      "completed_at": "2026-10-20T19:01:03.715Z"
+    },
+    {
       "id": "relay-mcp-rebuild-continuation-20261003",
       "owner": "01a1576d-4e3d-78f2-bdde-a1658b3598d0",
       "branch": "relay/mcp-rebuild-20261003",
@@ -15512,12 +15578,16 @@
         "projects/grnwht.json",
         "projects/relay.json",
         "recovery/wrangler.jsonc",
+        "scripts/autonomy-gate.mjs",
         "scripts/build-context-card-model.mjs",
         "scripts/ci-stage.mjs",
         "scripts/ci-test-orchestrator.mjs",
+        "scripts/relay-executor.test.mjs",
         "scripts/relay-source-checkpoint-macos.py",
         "scripts/relay-source-checkpoint.mjs",
         "scripts/relay-source-checkpoint.test.mjs",
+        "scripts/release-assurance.mjs",
+        "scripts/release-assurance.test.mjs",
         "scripts/release-toolchain.mjs",
         "scripts/restore-release-archive.py",
         "scripts/retain-web-preview.mjs",
@@ -15527,10 +15597,14 @@
         "scripts/verify-worker-runtime.mjs",
         "src/access-verification.js",
         "src/access-verification.test.js",
+        "src/autonomy-control.js",
+        "src/autonomy-control.test.js",
         "src/ci-routing.js",
         "src/ci-routing.test.js",
         "src/cloud-upload.js",
         "src/cloud-upload.test.js",
+        "src/cloud.js",
+        "src/cloud.test.js",
         "src/communication-presentation.js",
         "src/communication-presentation.test.js",
         "src/compiled-recovery-runtime.test.js",
@@ -15546,6 +15620,8 @@
         "src/human-presentation.js",
         "src/progress-api.js",
         "src/progress-api.test.js",
+        "src/project-cloud.js",
+        "src/project-cloud.test.js",
         "src/recovery-controller-runtime.test.js",
         "src/recovery-controller.js",
         "src/recovery-controller.test.js",
@@ -15559,18 +15635,22 @@
         "src/relay-context-card-model.js",
         "src/relay-context-card-style.js",
         "src/relay-context-card-style.test.js",
+        "src/relay-entry.js",
         "src/relay-entry.test.js",
         "src/relay-events.js",
         "src/relay-events.test.js",
         "src/relay-host-action-probe.test.js",
+        "src/relay-host-probe.test.js",
         "src/relay-ui.js",
         "src/relay-ui.test.js",
         "src/release-recovery.js",
         "src/release-recovery.test.js",
         "src/resume-checkpoints.js",
         "src/resume-checkpoints.test.js",
+        "test/autonomy-gate.test.mjs",
         "test/fixtures/recovery-archive.mjs",
         "test/release-toolchain-contract.test.mjs",
+        "test/source-test-contracts.json",
         "test/source-test-contracts.test.mjs",
         "test/tool-contract.test.mjs",
         "test/worker-runtime-contract.test.mjs",
@@ -15591,6 +15671,8 @@
         "src/relationship-context.js",
         "src/relationship-context.test.js",
         "packages/runner/src/context-service.test.mjs",
+        "scripts/relay-night-shift.mjs",
+        "scripts/relay-night-shift.test.mjs",
         "docs/relay/RELATIONSHIP_NIGHT_SHIFT_INTEGRATION_20261012.md",
         "scripts/ci-parallel-suites.mjs",
         "test/ci-parallel-suites.test.mjs",
@@ -15618,7 +15700,7 @@
       ],
       "goal": "Continue the existing unfinished full Relay MCP rebuild, restoring original1.9 promised capabilities and integrating approved Relay live-panel/site/card work. Archival assignment closure is not proof of functional delivery. Immediate additive priority: streamline CI across ALL projects, with measured reductions and preserved required verification.",
       "acceptance": "Preserve working tools and provenance. Restore the original 1.9 acceptance at commit 434541358d6bfd25e67af5d8e689ba49a5378b91 and all seven stages of the Research and Reflow Plan. Track source implementation, publication, host installation and runtime verification separately. Preserve original objectives and stable acceptance IDs through additive amendments and full-task resume. Separate scope completion from verification; reconcile stale ownership without restarting paused or cancelled work. Repurpose the hourly workflow as a model-free sync safeguard comparing registered tasks, PRs, checks and deployment evidence, with deduplicated continuation recommendations and honest unavailable-evidence states. Complete skill catalog, search, read, resolve, install/vendor, update and audit; pinned licensed portable bundles; integrity and dependency enforcement; all originally promised creative, platform and supporting packs. Prove durable jobs, a real coding executor, capability-based local/remote routing, worker communication and full capability parity. Fold the Relay website, live panel, approved telemetry, Refresh Tools fallback chain, Add MCP to AI actions and compact MCP cards into this same rebuild. Verify actual client rendering/actions. Integrate review-first cards, evidence and device-specific frames, saved answers/replies, project icons and useful workspace overview. Use flat surfaces with shadows/glows. Night Shift records actual autonomous away-time work, with an unused staff lead for oversight, preserved executor provenance, evidence-supported backfill and an idempotent Shift handoff. No new credentials or spending inferred. Documentation-only PRs, fixtures and transferred defects do not establish full delivery.\nFull execution handoff, source recovery and original contract evidence: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RELAY-MCP.md . All latest site/live-panel/telemetry/refresh/add-to-AI, review delivery, NightShift/Shift, canonical asset discovery, lifecycle and original skills/executor goals preserved. Original1.9 verbatim and41 stale queue pairs in sibling documents. Current engine cannot normalize completed queue pairs or handoff queued-only owner; do not bypass. Actual user-started Mac Codex identity pending; parent stops MCP implementation. ctrlfrontend remains separate heldPR7, recovery8WIPfiles preserved. New Relay site concept is not implementation; current plugin ID protected.\n2026-10-03 15:38 motion acceptance: preserve the approved Relay visual language; tighten in-motion card padding and text grouping; retain last good live data during refresh, skeletons only for initial unavailable content, clear loading indicators and animated updates without flicker. Each mosaic block supports touch long press into wiggle/reorder mode, drag, explicit Done and saved order; keep normal scrolling and taps, keyboard/reduced-motion accessibility. User says all these are part of the motion pass. Desktop normal ChatGPT card mount/read-only check now screenshot-proven; iOS user-reported working; browser regression remains open.\n2026-10-03 18:27 card acceptance: Lauren confirms the real iOS status card now loads data (screenshot libfile_4bab4a18f8ac81918f490d8135752922). Active panel must list active jobs, not staff. Present concise itemized job titles/status, readable visual hierarchy and glanceable information; expand full technical details on demand. Preserve established card identity and approved flat surfaces. Native iOS data hydration is evidenced; actions and browser parity remain separate checks.",
-      "next_action": "ReadyforhumanresumeofautomaticRelayhold67 only. Allauthorizedsourcework preserved: PR242shipped7735864healthy; PR243reviewed365b314/mergedD741,974tests2skips/exactPRCI/workerdPASS; productionunchangedbecausecanonicalbuildnotstarted. ExistingWorkersBuildtrigger/pinnedD741retryprepared; no config/credential/manualupload changes. DirectCloudflareAPIconfirmedmissingbuild+originalguard; missingwebhookcauseunknown. HumanquestioncitesBible6.3explicitresume. Bothplannedjobs cancelledqueued beforeprocessstart, noawayactivityclaimed; 183paths/fullresources/originalacceptance restored. Afterexplicitresume refreshauthority/healthy/deployment/trigger andretrycanonicalbuildonce; verifyactualD741+mainCI/assurance, thencreatefreshboundedjobs/plan forrealwindowwithnativehostbridge. Curatorbindingstillrequiresverifiedexplicitapproval; tokenhandoff/nativehuman/remoteparityunverified. Do notcompleteumbrella. Specific execution-continuity audit paths transferred to relay-execution-continuity-20261020 under direct user authorization; umbrella remains held.",
+      "next_action": "Remain held. Specific execution-continuity audit PR244 shipped6138926 with exact mainCI39478866195 and recovery assurance39479413632 PASS. Automatic candidate hold67 ended only for that authorized release; do not repeat the old D741 publication. Original umbrella acceptance, protected work and native-host/curator/token-handoff/parity gaps remain uncompleted and reserved. After an explicit user resume, refresh authority, current main6138926-or-later, production and remaining acceptance before preparing fresh bounded jobs. This scope restoration does not resume the umbrella.",
       "ledger_refs": [
         "relay-mcp-rebuild-20261001",
         "relay-mcp-host-proof-20261001",
@@ -15665,8 +15747,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T18:48:54.548Z",
-      "lease_until": "2026-10-21T06:48:54.548Z",
+      "updated_at": "2026-10-20T19:01:08.841Z",
+      "lease_until": "2026-10-21T07:01:08.841Z",
       "handoffs": [
         {
           "at": "2026-10-03T08:00:10.297Z",
@@ -16828,72 +16910,6 @@
           }
         }
       ]
-    },
-    {
-      "id": "relay-execution-continuity-20261020",
-      "owner": "relay-execution-continuity-worker-20261020",
-      "branch": "relay/execution-continuity-20261020",
-      "paths": [
-        "LOEW_CHAT_BIBLE.md",
-        "night-shift/CONTRACT.md",
-        "night-shift/BLOCKER_POLICY.md",
-        "scripts/relay-executor.mjs",
-        "scripts/relay-executor.test.mjs",
-        "scripts/relay-continuity.mjs",
-        "scripts/relay-continuity.test.mjs",
-        "scripts/relay-night-shift.mjs",
-        "scripts/relay-night-shift.test.mjs",
-        "scripts/release-assurance.mjs",
-        "scripts/release-assurance.test.mjs",
-        "scripts/autonomy-gate.mjs",
-        "src/autonomy-control.js",
-        "src/autonomy-control.test.js",
-        "src/project-cloud.js",
-        "src/project-cloud.test.js",
-        "src/relay-entry.js",
-        "test/autonomy-gate.test.mjs",
-        "test/source-test-contracts.json",
-        "docs/relay/EXECUTION_CONTINUITY_20261020.md",
-        "src/cloud.js",
-        "src/cloud.test.js",
-        "src/relay-host-probe.test.js"
-      ],
-      "resources": [
-        "relay-execution-continuity-audit-20261020"
-      ],
-      "goal": "Implement and deploy all four execution-continuity audit fixes and proven checkpoint reuse improvements.",
-      "acceptance": "Coordinator-owned complete authorized acceptance reconciliation; process success separate from objective; scoped candidate quarantine and bounded revision-checked recovery; project-local block isolation; repair failures without premature completion; checkpoint reuse and material invalidation; meaningful regressions and aggregate checks, exact-commit CI and authorized live release verification with rollback. Direct user authorization October20 delegated by thread01a1586d-75af-751f-96b1-2556defbe011; prior stop superseded only for this task. No unrelated resumes or Field work.",
-      "next_action": "Implement all four fixes in isolated task clone, run regressions and aggregate checks, open draft PR, complete authorized release and verify exact live revision/health/rollback.",
-      "primary_team": "night-shift",
-      "supporting_teams": [],
-      "primary_staff": "julian",
-      "supporting_staff": [],
-      "base_sha": "440a5b44182e7a9b80da3946a9a6cff4e0a99866",
-      "state": "completed",
-      "created_at": "2026-10-20T18:35:50.684Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Implement and deploy all four execution-continuity audit fixes and proven checkpoint reuse improvements.",
-          "acceptance": "Coordinator-owned complete authorized acceptance reconciliation; process success separate from objective; scoped candidate quarantine and bounded revision-checked recovery; project-local block isolation; repair failures without premature completion; checkpoint reuse and material invalidation; meaningful regressions and aggregate checks, exact-commit CI and authorized live release verification with rollback. Direct user authorization October20 delegated by thread01a1586d-75af-751f-96b1-2556defbe011; prior stop superseded only for this task. No unrelated resumes or Field work.",
-          "at": "2026-10-20T18:35:50.684Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "relay-execution-continuity-20261020:acceptance:0",
-            "text": "Coordinator-owned complete authorized acceptance reconciliation; process success separate from objective; scoped candidate quarantine and bounded revision-checked recovery; project-local block isolation; repair failures without premature completion; checkpoint reuse and material invalidation; meaningful regressions and aggregate checks, exact-commit CI and authorized live release verification with rollback. Direct user authorization October20 delegated by thread01a1586d-75af-751f-96b1-2556defbe011; prior stop superseded only for this task. No unrelated resumes or Field work.",
-            "at": "2026-10-20T18:35:50.684Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-20T19:01:03.715Z",
-      "lease_until": "2026-10-21T07:01:03.715Z",
-      "pr": 244,
-      "merged_head_sha": "af91ead95a0850b1456bf0b2a7fe15228672fd1b",
-      "merge_commit_sha": "6138926ddfcd63e696b0ff20c12bcd51a6f61de1",
-      "evidence": "PR244 merged6138926ddfcd63e696b0ff20c12bcd51a6f61de1; exactPRCI39478284636 and mainCI39478866195 passed all5suites, workerd, tools/types/source contracts, exact production source/web build and retained preview. WorkersBuildda76c840 succeeded; version0e1ea547-93e8-4b12-a67c-b9600f62c627 deployment246daa91-2f6c-49cd-abfd-34e7464c16d8 at100%, health200. Assurance39479413632 retained/readback/restored archive91a431b540d5bbeeabb89c7dce8b4b88d476158ed57328b4cc0411e8480193c4; safety69 healthy, user-approvedPR186 unchanged. Prior healthy7735864/versiondd09991d retained for rollback. All4fixes plus checkpoint reuse/invalidation tests shipped. Legacy single-job adapters remain process-only until given an explicit finite continuity plan; no unrelated host/workspace/assignment was resumed.",
-      "work_accounted": true,
-      "completed_at": "2026-10-20T19:01:03.715Z"
     }
   ],
   "migrated_from": "loew-inspector"
