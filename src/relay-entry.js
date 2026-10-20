@@ -1,6 +1,6 @@
 import {verifyAccessJwt} from './access-verification.js';
 import { contextTool, callContext } from '../packages/runner/src/context-service.mjs';
-import { jobsTool, callJobs } from '../packages/runner/src/job-control.mjs';
+import { nativeCompatibleJobsTool as jobsTool, callCompatibleJobs as callJobs } from './native-oversight-compat.js';
 import { nightShiftTool, callNightShift } from '../packages/runner/src/night-shift.mjs';
 import { skillsTool, callSkills } from './skills-service.js';
 import {LOEW_INTERFACE_SKILL_URI,loewInterfaceSkillCatalogEntry,loewInterfaceSkillResourceDescriptor,loewInterfaceSkillResource} from "./loew-interface-skill.js";
