@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-10-20T06:11:14.490Z",
+  "updated_at": "2026-10-20T17:39:04.355Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1527,7 +1527,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "2b5e10524a5fae1ed72e4cfc6dd4202f4d5a481a",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-04T01:52:42.852Z",
       "objective_history": {
         "baseline": {
@@ -1586,8 +1586,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T06:11:14.490Z",
-      "lease_until": "2026-10-20T18:11:14.490Z",
+      "updated_at": "2026-10-20T17:39:04.355Z",
+      "lease_until": "2026-10-21T05:39:04.355Z",
       "amendment_count": 11,
       "amendments": [
         {
@@ -1794,7 +1794,13 @@
           "to": "b0d6555f-c978-4d25-8fda-7399ef4ddc35",
           "next_action": "Lauren 2026-10-19 in Claude Code session b0d6555f-c978-4d25-8fda-7399ef4ddc35: 'Continue Field's next major release using the attached job file and Relay assignment field-document-media-search-20261004 ... take custody through the supported ownership handoff, and begin with a fresh reproduction of Canvas group resizing.' Read context cursor26 revisions27-31 against main ca47d6bafa7a8f7f3ffa298a88350ea5f6b1710c. Next: heartbeat, rescope exact paths, preflight, restore same absent branch from current main in separate checkout, reproduce native Group corner resize. Preserve original open acceptance and old worktrees. Draft PR only; no merge/deploy approval."
         }
-      ]
+      ],
+      "pr": 149,
+      "merged_head_sha": "7c3f4f0df7be84e4ad76e998c629aaa1a5b15865",
+      "merge_commit_sha": "709ab685539ff6a751099d7d6458ac1b5cc42473",
+      "evidence": "Relay context revisions 32-40 (field-document-media-search-20261004): scope ledger, batch progress, QA packet, pre-promotion, release receipt. PR149 squash 709ab685 merged by lrnolivia, deployed Worker version d6182d20 (/api/build verified), rollback d319554c. Unfinished acceptance carried forward to new assignment field-next-release-continuation-20261020: physical iOS keyboard/IME/rotation and authenticated R2 persistence QA, physical Safari BFCache/loaded-vs-deployed check, cross-document camera lag (staged camera pipeline), Dashboard project settings entry, pre-existing spec failures (ui-hotfix border, chrome-parity floating sections, strategy-handoff flex sibling reparent, replica fixmes), copied-page first-history undo retest, Figma parity pending audits, WebKit harness, Settings/panel audits. Shipped and verified pieces of the original combined acceptance (search, Current highlight, gold glyph, row fill, Pages cap, connected panels, phone editing) are on main with passing specs.",
+      "work_accounted": true,
+      "completed_at": "2026-10-20T17:39:04.355Z"
     }
   ]
 }
