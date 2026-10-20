@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-20T18:48:58.622Z",
+  "updated_at": "2026-10-20T19:01:03.715Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -16869,7 +16869,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "440a5b44182e7a9b80da3946a9a6cff4e0a99866",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-20T18:35:50.684Z",
       "objective_history": {
         "baseline": {
@@ -16886,8 +16886,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T18:48:58.622Z",
-      "lease_until": "2026-10-21T06:48:58.622Z"
+      "updated_at": "2026-10-20T19:01:03.715Z",
+      "lease_until": "2026-10-21T07:01:03.715Z",
+      "pr": 244,
+      "merged_head_sha": "af91ead95a0850b1456bf0b2a7fe15228672fd1b",
+      "merge_commit_sha": "6138926ddfcd63e696b0ff20c12bcd51a6f61de1",
+      "evidence": "PR244 merged6138926ddfcd63e696b0ff20c12bcd51a6f61de1; exactPRCI39478284636 and mainCI39478866195 passed all5suites, workerd, tools/types/source contracts, exact production source/web build and retained preview. WorkersBuildda76c840 succeeded; version0e1ea547-93e8-4b12-a67c-b9600f62c627 deployment246daa91-2f6c-49cd-abfd-34e7464c16d8 at100%, health200. Assurance39479413632 retained/readback/restored archive91a431b540d5bbeeabb89c7dce8b4b88d476158ed57328b4cc0411e8480193c4; safety69 healthy, user-approvedPR186 unchanged. Prior healthy7735864/versiondd09991d retained for rollback. All4fixes plus checkpoint reuse/invalidation tests shipped. Legacy single-job adapters remain process-only until given an explicit finite continuity plan; no unrelated host/workspace/assignment was resumed.",
+      "work_accounted": true,
+      "completed_at": "2026-10-20T19:01:03.715Z"
     }
   ],
   "migrated_from": "loew-inspector"
