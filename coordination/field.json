@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-10-20T03:55:02.155Z",
+  "updated_at": "2026-10-20T03:56:46.873Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1427,7 +1427,7 @@
     },
     {
       "id": "field-document-media-search-20261004",
-      "owner": "01a1576d-22ad-7351-9c7e-113ca571f3a4",
+      "owner": "b0d6555f-c978-4d25-8fda-7399ef4ddc35",
       "branch": "field/document-media-search-20261004",
       "paths": [
         "src/editor/",
@@ -1466,7 +1466,7 @@
       ],
       "goal": "Consolidate Field search, full-width responsive panels, palette/icons, reversible Appearance options and mobile UI finesse in one candidate and release.",
       "acceptance": "One combined PR143 candidate/release; preserve tested53b0347 checkpoint and approved PR142 colors/type/concentric bevels/outerstrength0.5/light shadows. Media SearchBar first preserving query/Gallery return/one Add. Single canonical Pages/Layers top search with grouped project pages/layers, context, correct crosspage selection/reveal, honest imported-master scope, keyboard/loading/error/empty/Escape/clear/back and no source writes. Match equivalent outer chrome both themes. All tool rows fill usable inner panel width, consistent edge/content padding, balanced container reflow; normal glyph proportions and readable controls/actions/focus at narrow/wide Docked/Float. Audit all panel families, report exceptions. Insert child palette follows measured parent without overlap or viewport overflow; inline fallback when necessary; theme-neutral native glyphs and neutral animated previews; recognizable flat service SVG marks. Current inner-highlight style is the final sole official default. Remove Buttons only/Everywhere selectors and experimental CSS/branches; safely migrate stored alternate preferences to Current. Remove obsolete nonworking Inspector light/dark toggle between Zoom and Play; retain canonical appearance control and actual theme support. Mobile first text tap opens canonical editor/OS keyboard, caret visible; compact keyboard-safe horizontally scrollable SAME real text controls, IME/selection/undo/Done. Current-tool selector Move default upward vertical same desktop tool modes/order/icons. Browse purpose preserved; actual Field logo menu and project actions separate topbar dropdowns below bar, shared approved mobile settings glyph desktop. Actual iOS keyboard requires realdevice evidence. Lauren DIRECTLY approved added Safari caching/canvas-fill investigations including backend/Cloudflare/sandbox/headers/Vite: verify loaded versus deployed version, headers/assets/BFCache and safe update when dirty; never clear documents/preferences/offline edits. Reproduce all frame/Desktop name-header jiggle with subpixel pan/zoom; preserve dynamic readable sizing/stable anchors, fix established shared timing/rounding only. Reproduce frame image fill actual pick/upload/render/decode/source/save/reload/undo in disposable fixture. Patterns source browses existing pattern collection first, applies active fill, upload/create secondary, anchor/back/preview/persistence/undo. Image Position mode drags image directly on canvas INSIDE fixed frame with camera-aware pointer/touch, fit/fill/scale model, Done/Escape/cancel, one undo/persistence, no frame drag. No native Mac input, no protected audit/current Lauren document writes, no additional workers. Seven broader historical canvas findings separate; matched-root selection/marquee passed, rotation overlay stale until reselection. Build/lint/regression/unit-baseline comparison/exacthead readonly Inspector/screenshots/livepreview; PR143draft and no merge/publication until entire combined scope validated/reviewable. Original Figma audit findings remain separately tracked.\n2026-10-04 16:28 UTC release instruction: completed and verified pieces may now ship incrementally. The earlier requirement to hold all publication until the entire combined scope is finished is superseded. Preserve remaining requirements as open work; do not claim their completion. Exact-head build, regression and relevant runtime checks still apply.\nOct 5 corrections: Media/Pages/Layers search filters existing panel content in place, like Presets/Library/CMS; no dropdown results. Preserve hierarchy/context, clear/restore and no unintended navigation. Gold's light-mode darker accent is muddy/brown and needs tuning. GOLD ONLY: open/expanded parent menu glyph (e.g. View) needs a darker medium gold-family value, not black and not necessarily as dark as submenu glyphs. Keep that value stable while open and on accent changes. Other accents and correctly working Zoom/Zoom Out child hover rows remain unchanged.",
-      "next_action": "CLAUDE HANDOFF READY at Lauren's 2026-10-19 request 'prepare the job for Claude to keep going'. Read Relay context cursor26, five CLAUDE FIELD RELEASE JOB records revisions27–31 on ca47d6bafa7a8f7f3ffa298a88350ea5f6b1710c. Export: /Users/lrnolivia/.codex/visualizations/2026/10/20/01a1576d-22ad-7351-9c7e-113ca571f3a4/CLAUDE_FIELD_RELEASE_JOB.txt. No product/source edits, branch creation, install, tests, builds, pushes, PRs or deployment today. Execution job=null; no Claude process launched. Reservation is held for supported handoff to ACTUAL Claude owner/session ID, then heartbeat, exact-scope rescope/preflight and same registered branch restoration from fresh main in a separate checkout. User authorized continuation; no repeated routine approval needed. First reproduce Canvas group resize and other seven historical candidates; current source already includes ratio/affine/snapping logic. Preserve original open cache/fill/device/Figma scope, old clean worktree and upstream history. Deliver verified draft first; no next-release merge/deploy authorization established. No extra workers/automation.",
+      "next_action": "Lauren 2026-10-19 in Claude Code session b0d6555f-c978-4d25-8fda-7399ef4ddc35: 'Continue Field's next major release using the attached job file and Relay assignment field-document-media-search-20261004 ... take custody through the supported ownership handoff, and begin with a fresh reproduction of Canvas group resizing.' Read context cursor26 revisions27-31 against main ca47d6bafa7a8f7f3ffa298a88350ea5f6b1710c. Next: heartbeat, rescope exact paths, preflight, restore same absent branch from current main in separate checkout, reproduce native Group corner resize. Preserve original open acceptance and old worktrees. Draft PR only; no merge/deploy approval.",
       "ledger_refs": [
         "field-concentric-highlights-outer-inset-20261004"
       ],
@@ -1535,8 +1535,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T03:55:02.155Z",
-      "lease_until": "2026-10-20T15:55:02.155Z",
+      "updated_at": "2026-10-20T03:56:46.873Z",
+      "lease_until": "2026-10-20T15:56:46.873Z",
       "amendment_count": 11,
       "amendments": [
         {
@@ -1736,6 +1736,12 @@
           "from": "01a114bf-37d7-7873-b1df-704c222717ed",
           "to": "01a1576d-22ad-7351-9c7e-113ca571f3a4",
           "next_action": "Lauren explicitly resumed Field on 2026-10-19: 'get started on the next major release for field use @relay'. Continue the existing assignment/branch with Canvas behavior as the next release stage after verified PR147 mobile styling. Prior owner FIELD Dev 10/7 is notLoaded with completed last turn and held assignment; its 6e8b0a6 worktree is clean and preserved. Live main and production both ca47d6bafa7a8f7f3ffa298a88350ea5f6b1710c; source matches PR147 apart from README and coordination workflow. Restore the same absent remote branch from current main after preflight; use a separate checkout and preserve old history. Reproduce fresh Canvas defects before bounded fixes; retain unfinished cache/device/fill/Figma acceptance. No extra workers or recurring updates."
+        },
+        {
+          "at": "2026-10-20T03:56:46.873Z",
+          "from": "01a1576d-22ad-7351-9c7e-113ca571f3a4",
+          "to": "b0d6555f-c978-4d25-8fda-7399ef4ddc35",
+          "next_action": "Lauren 2026-10-19 in Claude Code session b0d6555f-c978-4d25-8fda-7399ef4ddc35: 'Continue Field's next major release using the attached job file and Relay assignment field-document-media-search-20261004 ... take custody through the supported ownership handoff, and begin with a fresh reproduction of Canvas group resizing.' Read context cursor26 revisions27-31 against main ca47d6bafa7a8f7f3ffa298a88350ea5f6b1710c. Next: heartbeat, rescope exact paths, preflight, restore same absent branch from current main in separate checkout, reproduce native Group corner resize. Preserve original open acceptance and old worktrees. Draft PR only; no merge/deploy approval."
         }
       ]
     },
