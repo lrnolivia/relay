@@ -1,3 +1,4 @@
+import '../scripts/relay-native-continuity.test.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -15,10 +16,10 @@ test('lost canonical amendment reply is reconciled and a fresh coordinator recov
   const objective={goal:'Build the assigned preview',acceptance:'Preview verified and shipped'},proposal={id:'readiness',goal_digest:expansionDigest(objective.goal),kind:'strengthens',reason:'Clarify when preview is ready',relationship:'Strengthens original preview acceptance A',supports:['A'],target_stage:'a',depends_on:['a'],acceptance:['Readiness indicator verified'],profile:'engineering',paths:['src/readiness.js'],description:'Add readiness indicator'};
   const command=id=>[process.execPath,'-e',`require('node:fs').appendFileSync('${id}.txt','once\\n')`],verify=id=>[process.execPath,'-e',`if(!require('node:fs').existsSync('${id}.txt'))process.exit(1)`];
   const plan={schema:1,authorization:'Complete original feature through shipping',objective_digest:continuityObjectiveDigest(objective.goal,objective.acceptance),criteria:['A','B'],environment:{node:'fixture'},stages:[{id:'a',kind:'implementation',criteria:['A'],depends_on:[],prompt:'Build preview',inputs:['README.md'],command:command('a'),verify:verify('a')},{id:'ship',kind:'ship',criteria:['B'],depends_on:['a'],prompt:'Ship preview',inputs:['README.md'],command:command('ship'),verify:verify('ship')}],expansion:{enabled:true,authorization:'Add directly strengthening features while preserving preview goal',original_goal:objective.goal,allowed_paths:['src/'],profiles:{engineering:{kind:'implementation',inputs:['README.md','src/'],command:command('support'),verify:verify('support')}},review:[process.execPath,'-e',`let s='';process.stdin.on('data',x=>s+=x);process.stdin.on('end',()=>{const {proposal:p}=JSON.parse(s);process.stdout.write(JSON.stringify({verdict:'admit',preserves_goal:true,goal_digest:p.goal_digest,within_authority:true,sensitive_permissions:false,paid_services:false,canonical_key:p.id,reason:'Direct support within authorized feature'}))})`]}};
-  let assignment={...objective,id:'fixture',owner:'fixture',branch:'relay/fixture',state:'active',paths:['README.md']},revision='a'.repeat(40),amendments=0;
+  let assignment={...objective,id:'fixture',owner:'fixture',branch:'relay/fixture',state:'active',lease_until:new Date(Date.now()+3600000).toISOString(),paths:['README.md']},revision='a'.repeat(40),amendments=0;
   const rpc=async(name,args)=>{
    if(name==='relay_autonomy')return {ok:true,state:{held:false,revision:0}};
-   if(name==='relay_runner_resume')return {ok:true,latest:{assignment:structuredClone(assignment),canonical_record_sha:revision}};
+   if(name==='relay_runner_assignments')return {ok:true,record_sha:revision,claims:[structuredClone(assignment)]};
    if(name==='relay_runner_coordinate'){
     amendments++;assert.equal(args.action,'amend');assert.equal(args.expected_record_sha,revision);assert.equal(args.request.goal,undefined);assert.equal(args.request.acceptance,undefined);
     assignment={...assignment,paths:args.request.paths,acceptance_additions:args.request.acceptance_additions};revision='b'.repeat(40);throw Error('Lost reply after committed amendment');

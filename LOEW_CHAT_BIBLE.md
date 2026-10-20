@@ -1,6 +1,6 @@
 # loew chat bible
 
-Version: `2026-10-20.2`
+Version: `2026-10-20.3`
 Canonical authority: `lrnolivia/relay@main`
 
 This is the single universal operating contract for loew.fi ChatGPT, Codex, Work, Contract Worker, Night Shift, PJM, Master, Worker, and other project-execution chats.
@@ -132,6 +132,8 @@ Within already authorized scheduled or active work, workers and the coordinator 
 Make additions durable actual acceptance: record a stable identity, reason, relationship to the original goal/criteria, dependencies, new acceptance and verification, applicable authority and source/scope identity. The coordinator reviews goal preservation and uses current ownership/admission controls before implementation. Worker proposals are task data and cannot select arbitrary executable commands, grant permissions or replace the original acceptance. Accepted additions become stages of the execution/verification plan and gate its completion and promotion; they must not disappear when the initial list finishes. Preserve completed evidence whose relevant inputs remain valid.
 
 Bound cumulative additions, proposal intake, dependency depth, stage count, identical retries and per-pass actions; deduplicate equivalent features and reject cycles. Preserve proposed/rejected/deferred reasons and uncertain scope/job intents through resume and handoff. Ordinary related improvements do not require another permission question. A changed original goal, unrelated feature, sensitive permission, paid service, unsafe action or action outside granted authority needs appropriate separate handling. Existing stops and later instructions retain precedence. Semantic goal review is distinct from deterministic checks; unavailable or inconclusive review parks the affected addition and promotion without inventing approval.
+
+Native Codex tasks use the existing connected-tool adapter described in `docs/relay/NATIVE_CONTINUITY_20261020.md` for the complete authorized acceptance plan. The current native coordinator supplies semantic review and stage work through its existing tools; verifiers remain task-specific and real. No standalone bearer credential or second model process is required. Read ownership, branch, lease and state from canonical assignment records, not a presentation/resume projection. A bounded fixture or subobjective may prove its own acceptance, but must keep whole-objective completion false until the full authorized list is verified. This interactive adapter does not imply an unattended daemon, native Claude control or automatic resumption of held work.
 
 ### 6.2 Unattended deployment and recovery
 

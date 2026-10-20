@@ -46,7 +46,7 @@ test('native coordinator journals and resumes trusted publication commands witho
   for(const stage of p.stages){stage.inputs=['README.md'];stage.command=[process.execPath,'-e',`require('node:fs').appendFileSync('${stage.id}.txt','once\\n')`];stage.verify=[process.execPath,'-e',`if(!require('node:fs').existsSync('${stage.id}.txt'))process.exit(1)`];}
   const rpc=async(name,args)=>{
    if(name==='relay_autonomy')return {ok:true,state:{revision:0,held:false}};
-   if(name==='relay_runner_resume')return {ok:true,latest:{assignment:{...objective,id:'fixture',owner:'fixture',branch:'relay/fixture',state:'active'}}};throw Error('Command stages must not create coding jobs');
+   if(name==='relay_runner_assignments')return {ok:true,record_sha:'a'.repeat(40),claims:[{...objective,id:'fixture',owner:'fixture',branch:'relay/fixture',state:'active',lease_until:new Date(Date.now()+3600000).toISOString()}]};throw Error('Command stages must not create coding jobs');
   };
   const run=()=>runContinuityExecution({config:{project:'fixture',assignment:'fixture',owner:'fixture',branch:'relay/fixture',continuity:p},workspace,stateDir,rpc,runExecution:()=>{throw Error('Unexpected coding process');}});
   assert.equal((await run()).objective_completed,true);assert.equal((await run()).objective_completed,true);

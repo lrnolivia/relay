@@ -7,7 +7,7 @@ import {executionPrompt} from '../scripts/relay-executor.mjs';
 const root=new URL('../',import.meta.url),read=p=>fs.readFileSync(new URL(p,root),'utf8');
 test('one current Bible and manifest define the verified operational repository and product-doc exceptions',()=>{
  const manifest=JSON.parse(read('contracts/manifest.json')),bible=read('LOEW_CHAT_BIBLE.md');
- assert.equal(manifest.authority,'lrnolivia/relay@main');assert.equal(manifest.contract,'LOEW_CHAT_BIBLE.md');assert.equal(manifest.single_bible,true);assert.equal(manifest.version,'2026-10-20.2');assert.ok(bible.includes('Version: `'+manifest.version+'`'));assert.equal(manifest.documentation_ownership.operational_repository,'lrnolivia/relay');assert.equal(manifest.documentation_ownership.non_product_docs_path,'docs/<project-id>/');
+ assert.equal(manifest.authority,'lrnolivia/relay@main');assert.equal(manifest.contract,'LOEW_CHAT_BIBLE.md');assert.equal(manifest.single_bible,true);assert.equal(manifest.version,'2026-10-20.3');assert.ok(bible.includes('Version: `'+manifest.version+'`'));assert.equal(manifest.documentation_ownership.operational_repository,'lrnolivia/relay');assert.equal(manifest.documentation_ownership.non_product_docs_path,'docs/<project-id>/');
  for(const text of ['6.1.1 Goal-preserving expansion','directly related improvements','paid service','Codex and Claude','build-required runbooks','user-facing release notes/changelogs'])assert.ok(bible.includes(text),text);
  assert.match(read('LOEW_CHAT_BIBLE_CURRENT.md'),/RETIRED|retired/);assert.match(read('CLAUDE.md'),/AGENTS\.md/);assert.match(read('AGENTS.md'),/docs\/<project-id>\//);
 });
@@ -30,3 +30,5 @@ test('active assignment and provider guidance reference canonical additive autho
  for(const file of ['skills/planning/PLANNING_ROUTING.md','skills/planning/CAUGHT_UP_RECOVERY.md','skills/coordination/WORKER_COMMUNICATION.md','skills/supporting/engineering/SKILL.md','skills/supporting/documentation/SKILL.md','skills/supporting/regression-protection/SKILL.md']){const s=read(file);assert.match(s,/LOEW_CHAT_BIBLE\.md/);assert.match(s,/Codex and Claude/);assert.match(s,/goal|original/);assert.match(s,/docs\/<project-id>\//);}
  assert.match(read('docs/relay/DOCUMENTATION_ROUTING_20261020.md'),/read-only/);assert.match(read('docs/relay/EXECUTION_CONTINUITY_20261020.md'),/native Claude desktop/);
 });
+
+test('native bootstrap selects the real connected-tool adapter and preserves truthful fixture readiness',()=>{const doc=read('docs/relay/NATIVE_CONTINUITY_20261020.md');assert.match(read('AGENTS.md'),/native continuity adapter/);assert.match(doc,/relay_runner_assignments/);assert.match(doc,/subobjective_completed/);assert.match(doc,/No standalone token/);assert.match(doc,/not an unattended/);});

@@ -16,3 +16,5 @@ Canonical source, coordination authority, runtime and MCP binding are `lrnolivia
 For prospective project commit attribution (Codex, Claude and Relay), read `docs/relay/COMMIT_ATTRIBUTION_20261013.md` and use `scripts/project-attribution.mjs`. Preserve legitimate human coauthors.
 
 Codex and Claude use this same bootstrap and the canonical Bible sections 5, 6.1.1 and 18 for provider-neutral ownership, goal-preserving acceptance additions and documentation routing. Provider/session changes do not grant a new assignment, clear uncertain execution or resume a hold. See `docs/relay/EXECUTION_CONTINUITY_20261020.md` for actual adapter capabilities.
+
+For authorized multi-stage work in the existing native Codex task, use the [native continuity adapter](docs/relay/NATIVE_CONTINUITY_20261020.md). The current task services its bounded requests with its existing Relay tools, semantic review and native stage work; do not fall back to demanding a standalone token or another model process. Record the complete real acceptance plan and task-specific verifiers. A fixture/subtask result never completes the full assignment.
