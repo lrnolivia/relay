@@ -64,6 +64,9 @@ export async function prepareSnapshot({root,directory,receipt,env=process.env,ve
   await verify(receipt,{root,env});
   execFileSync('git',['clone','--quiet','--shared','--no-checkout','--',root,directory],{stdio:['ignore','pipe','pipe'],timeout:60000});
   execFileSync('git',['checkout','--quiet','--detach',receipt.identity.source_sha],{cwd:directory,stdio:['ignore','pipe','pipe'],timeout:60000});
+  // Compare dependency targets and their containing snapshot in the same path
+  // namespace, including macOS temporary roots and explicit directory aliases.
+  const isolatedRoot=await realpath(directory);
   // Relative workspace symlinks remain relative to this independent copy.
   const lock=JSON.parse(await readFile(join(root,'package-lock.json')));
   const packages=Object.keys(lock.packages).filter(p=>!p.split('/').includes('node_modules'));
@@ -71,7 +74,7 @@ export async function prepareSnapshot({root,directory,receipt,env=process.env,ve
   const modules=packages.map(p=>join(p,'node_modules'));
   for(const path of modules){let stat;try{stat=await lstat(join(root,path));}catch(cause){if(cause.code==='ENOENT')continue;throw cause;}if(!stat.isDirectory())throw Error('Installed dependency root must be a directory');await cp(join(root,path),join(directory,path),{recursive:true,verbatimSymlinks:true});}
   for(const path of [...BUILD_OUTPUTS,'qa-evidence/toolchain/build.json']){await mkdir(dirname(join(directory,path)),{recursive:true});await cp(join(root,path),join(directory,path));}
-  for(const path of modules){try{await lstat(join(directory,path));}catch(cause){if(cause.code==='ENOENT')continue;throw cause;}await assertLocalDependencies(directory,join(directory,path));}
+  for(const path of modules){try{await lstat(join(directory,path));}catch(cause){if(cause.code==='ENOENT')continue;throw cause;}await assertLocalDependencies(isolatedRoot,join(directory,path));}
   await verify(receipt,{root:directory,env});
   return directory;
 }

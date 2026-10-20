@@ -1,0 +1,114 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {pathToFileURL} from 'node:url';
+import {createMcpClient} from './relay-executor.mjs';
+import {dispatchExecution,validateHosts,probeConfiguredHost,launchConfiguredHost,openRoutingReceipt} from './relay-dispatch.mjs';
+
+const digest=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
+const terminal=new Set(['succeeded','failed','cancelled']);
+export function validateNightShiftPlan(plan){
+ if(plan?.schema!==1||plan.enabled!==true||plan.operation!=='code'||typeof plan.authorization!=='string'||!plan.authorization.trim()||plan.authorization.length>2000)throw Error('Explicit bounded coding authorization required');
+ const start=Date.parse(plan.away_window?.start),end=Date.parse(plan.away_window?.end);
+ if(!Number.isFinite(start)||!Number.isFinite(end)||end<=start||end-start>86400000)throw Error('Declare a finite away window of at most 24 hours');
+ if(!Array.isArray(plan.jobs)||!plan.jobs.length||plan.jobs.length>8)throw Error('Configure one to eight exact existing jobs');
+ const ids=new Set();
+ for(const job of plan.jobs){
+  for(const key of ['project','assignment','owner','branch','job_id'])if(typeof job[key]!=='string'||!job[key]||job[key].length>240)throw Error('Exact admitted job identity required');
+  if(!/^job_[a-f0-9]{64}$/.test(job.job_id)||ids.has(job.job_id))throw Error('Unique exact job required');ids.add(job.job_id);validateHosts(job.hosts);
+ }
+ return plan;
+}
+
+// A host id names exactly one configuration across the whole plan.
+export function uniqueHosts(plan){
+ const hosts=new Map();
+ for(const host of plan.jobs.flatMap(x=>x.hosts)){const prior=hosts.get(host.id);if(prior&&JSON.stringify(prior)!==JSON.stringify(host))throw Error('Host id has conflicting configurations');hosts.set(host.id,host);}
+ return [...hosts.values()];
+}
+
+// One bounded pass over already-created jobs, never an open-ended task generator.
+// The caller owns the exclusive durable journal. An uncertain launch is terminal
+// for this pass and can only be reconciled by inspecting the original job/host.
+export async function runNightShiftPass({plan,rpc,persist,journal=null,dispatch=dispatchExecution,probe=probeConfiguredHost,launch=launchConfiguredHost,shouldStop=async()=>false,clock=Date.now,pollMs=5000}){
+ validateNightShiftPlan(plan);
+ const planHash=digest(plan),state=journal||{schema:1,plan_sha256:planHash,state:'ready',jobs:[],objective_completed:false,away_verified:false,process_verified:false};
+ if(state.schema!==1||state.plan_sha256!==planHash||!Array.isArray(state.jobs))throw Error('Night Shift journal does not match this exact plan');
+ if(state.state!=='ready')return state; // No replay after a stop, crash or unknown launch.
+ const gate=async config=>{
+  if(await shouldStop())return 'operator-stop';
+  if(clock()<Date.parse(plan.away_window.start)||clock()>=Date.parse(plan.away_window.end))return 'outside-declared-window';
+  for(const scope of ['global',config.project]){const r=await rpc('relay_autonomy',{action:'status',scope});if(r.ok!==true||r.state?.held!==false)return 'held-or-safety-unavailable';}
+  const r=await rpc('relay_night_shift',{action:'read',project:config.project,assignment:config.assignment,limit:1});
+  const binding=plan.oversight?.[config.project];
+  if(r.ok!==true||r.oversight?.available!==true||!binding||!['assignment','owner','branch'].every(k=>r.oversight.binding?.[k]===binding[k]))return 'oversight-unavailable';
+  return null;
+ };
+ for(const config of plan.jobs){
+  if(state.jobs.some(x=>x.job_id===config.job_id))continue;
+  let blocked;try{blocked=await gate(config);}catch{blocked='control-unavailable';}
+  if(blocked){state.state='stopped';state.reason=blocked;await persist(state);return state;}
+  const result=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,job_id:config.job_id});
+  const job=result.job;
+  if(result.ok!==true||!job||job.id!==config.job_id||job.project!==config.project||job.assignment!==config.assignment||job.owner!==config.owner||job.branch!==config.branch||job.state!=='queued'||!job.required_capabilities?.includes('source-byte-checkpoints-v1')){
+   state.jobs.push({job_id:config.job_id,state:'not-admitted'});await persist(state);continue;
+  }
+  const receipt={job_id:job.id,project:config.project,assignment:config.assignment,state:'dispatching',started_at:new Date(clock()).toISOString()};
+  state.jobs.push(receipt);state.state='dispatching';await persist(state);
+  let monitoring=false,stopReason=null;
+  const monitor=async()=>{
+   if(monitoring||stopReason)return;monitoring=true;
+   try{
+    // Losing a safety read is itself a stop reason. Execution control may still
+    // be reachable, so try to cancel the exact job before flagging uncertainty.
+    try{stopReason=await gate(config);}catch{stopReason='control-unavailable';}
+    if(!stopReason)return;
+    receipt.stop_reason=stopReason;receipt.cancellation={state:'intent',operation_id:'ns-stop-'+digest({plan:planHash,job:job.id})};await persist(state);
+    const latest=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,job_id:job.id});
+    if(latest.ok!==true||latest.job?.id!==job.id)throw Error('Unavailable exact job');
+    if(terminal.has(latest.job.state)){receipt.cancellation.state='already-terminal';await persist(state);return;}
+    const cancel=revision=>rpc('relay_execution',{action:'cancel',project:config.project,assignment:config.assignment,job_id:job.id,expected_owner:config.owner,expected_branch:config.branch,expected_revision:revision,operation_id:receipt.cancellation.operation_id});
+    let cancelled;
+    // The real MCP client throws for rejected or uncertain tool responses.
+    // Reconcile those just like explicit failures before considering a retry.
+    try{cancelled=await cancel(latest.job.revision);}catch{cancelled=null;}
+    // One bounded re-read covers a queued→running revision race; never loop.
+    if(cancelled?.ok!==true){
+     const again=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,job_id:job.id});
+     if(again.ok===true&&again.job?.id===job.id&&terminal.has(again.job.state)){receipt.cancellation.state='already-terminal';await persist(state);return;}
+     if(again.ok===true&&again.job?.id===job.id&&again.job.revision!==latest.job.revision)cancelled=await cancel(again.job.revision);
+    }
+    receipt.cancellation.state=cancelled?.ok===true?'requested':'unknown';
+    if(cancelled?.ok!==true)receipt.reconcile_required=true;
+    await persist(state);
+   }catch{stopReason=stopReason||'control-unavailable';receipt.stop_reason=stopReason;receipt.reconcile_required=true;await persist(state);}
+   finally{monitoring=false;}
+  };
+  const timer=setInterval(()=>{void monitor().catch(()=>{});},pollMs);
+  try{
+   const routed=await dispatch({config,rpc,probe,launch:async host=>{const reason=await gate(config);if(reason)throw Error('Admission stopped');return launch(host);},persist:async route=>{receipt.routing=route;await persist(state);}});
+   receipt.state=routed.state;receipt.finished_at=new Date(clock()).toISOString();
+  }catch{receipt.state='reconciliation-required';}
+  finally{clearInterval(timer);while(monitoring)await new Promise(resolve=>setTimeout(resolve,5));}
+  if(stopReason||receipt.state==='reconciliation-required'){state.state=stopReason?'stopped':'reconciliation-required';state.reason=stopReason||'uncertain-dispatch';await persist(state);return state;}
+  state.state='ready';await persist(state);
+ }
+ state.state='pass-finished';await persist(state);return state;
+}
+
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
+ const [planFile,receiptFile,stopFile]=process.argv.slice(2);
+ if(!planFile||!receiptFile||!stopFile||!path.isAbsolute(stopFile))throw Error('Usage: relay-night-shift.mjs plan.json new-private-receipt.json /absolute/stop-file');
+ const plan=validateNightShiftPlan(JSON.parse(await fs.readFile(planFile,'utf8')));
+ // The same host may serve different jobs, but each receipt path is protected.
+ const handle=await openRoutingReceipt(receiptFile,uniqueHosts(plan));
+ const rpc=createMcpClient({token:process.env.RELAY_MCP_TOKEN});
+ try{
+  // A signal is a stop request, not an abort: the pass still cancels the exact job
+  // through Relay and persists its receipt. Only a repeated signal exits at once.
+  let signalled=false;
+  for(const name of ['SIGINT','SIGTERM'])process.on(name,()=>{if(signalled)process.exit(130);signalled=true;});
+  const result=await runNightShiftPass({plan,rpc,shouldStop:async()=>{if(signalled)return true;try{await fs.lstat(stopFile);return true;}catch(e){if(e.code==='ENOENT')return false;throw e;}},persist:async value=>{await handle.truncate(0);await handle.write(JSON.stringify(value,null,2)+'\n',0,'utf8');await handle.sync();}});
+  console.log(JSON.stringify({state:result.state,jobs:result.jobs.map(x=>({job_id:x.job_id,state:x.state})),away_verified:false,objective_completed:false}));
+ }finally{await handle.close();}
+}

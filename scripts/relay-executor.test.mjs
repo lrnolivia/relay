@@ -1,6 +1,7 @@
 import './relay-source-checkpoint.test.mjs';
 import test from 'node:test';
 import './relay-executor-inbox.test.mjs';
+import './relay-night-shift.test.mjs';
 import assert from 'node:assert/strict';
 import { codexArguments,executionPrompt,assertScope,createMcpClient } from './relay-executor.mjs';
 test('executor uses supported sandboxed CLI and exact-session recovery, with bounded source scope',()=>{

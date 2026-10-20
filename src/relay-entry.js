@@ -1,3 +1,4 @@
+import {verifyAccessJwt} from './access-verification.js';
 import { contextTool, callContext } from '../packages/runner/src/context-service.mjs';
 import { jobsTool, callJobs } from '../packages/runner/src/job-control.mjs';
 import { nightShiftTool, callNightShift } from '../packages/runner/src/night-shift.mjs';
@@ -349,7 +350,9 @@ export default {
             return body.result;
           } });
         } else if (name === contextTool.name) {
-          result = await callContext(message.params?.arguments || {}, env);
+          const args=message.params?.arguments||{};
+          const identity=args.action==='curate'?await verifyAccessJwt(request):null;
+          result = await callContext(args, env, undefined, {verifiedPrincipal:identity?.claims||null});
         } else if (name === jobsTool.name) {
           result = await callJobs(message.params?.arguments || {}, env);
         } else if (name === nightShiftTool.name) {
