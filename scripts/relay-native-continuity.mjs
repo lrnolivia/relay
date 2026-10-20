@@ -9,6 +9,7 @@ import {expansionDigest,validateContinuityAdditions} from '../packages/runner/sr
 const LIMIT=1024*1024;
 const terminal=new Set(['succeeded','failed','cancelled']);
 const bindings=['project','assignment','owner','branch'];
+const requiresStart=request=>request.kind==='execute'||request.kind==='rpc'&&request.data.name==='relay_runner_coordinate';
 const digest=expansionDigest;
 async function privateDirectory(directory){
  directory=path.resolve(directory);await fs.mkdir(directory,{recursive:true,mode:0o700});
@@ -118,12 +119,12 @@ export async function pendingNativeRequest(directory){
  return {request,state};
 }
 export async function beginNativeWork(directory,id){
- const p=await pendingNativeRequest(directory);if(p.request.id!==id||p.request.kind!=='execute'||p.state!=='pending')throw Error('Native work is already started/answered or request changed; reconcile, do not execute again');
- await writeOnce(path.join(directory,id+'.started.json'),{request_digest:id,operation_id:p.request.data.pending.operation_id,at:new Date().toISOString()},{exclusive:true});
+ const p=await pendingNativeRequest(directory);if(p.request.id!==id||!requiresStart(p.request)||p.state!=='pending')throw Error('Native work is already started/answered or request changed; reconcile, do not execute again');
+ await writeOnce(path.join(directory,id+'.started.json'),{request_digest:id,operation_id:p.request.data.pending?.operation_id||p.request.id,at:new Date().toISOString()},{exclusive:true});
 }
 export async function replyNativeRequest(directory,id,value){
  const p=await pendingNativeRequest(directory);if(p.request.id!==id)throw Error('Native reply target changed');validateReply(p.request,value);
- if(p.request.kind==='execute'&&p.state==='pending')throw Error('Persist native work start before reporting its result');
+ if(requiresStart(p.request)&&p.state==='pending')throw Error('Persist native work start before reporting its result');
  await writeOnce(path.join(directory,id+'.response.json'),{request_digest:id,value});
 }
 

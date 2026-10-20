@@ -63,3 +63,12 @@ test('actual canonical assignment shape rejects held/expired ownership, and nati
  claim={...claim,state:'held'};await assert.rejects(run('held'),/authority stops/);claim={...claim,state:'active',lease_until:'2000-01-01T00:00:00Z'};await assert.rejects(run('expired'),/authority stops/);assert.equal(starts,0);
  claim={...claim,lease_until:new Date(Date.now()+3600000).toISOString()};const state=await run('escape');assert.equal(starts,1);assert.equal(state.objective_completed,false);assert.equal(state.stages.a.state,'reconciliation-required');assert.ok(state.stages.a.pending);
 });
+
+test('native mutation persists one start and an uncertain/rejected reply cannot be replayed as another tool call',async t=>{
+ const f=await fixture(t),args={action:'amend',project:'relay',expected_record_sha:'a'.repeat(40),request:{id:'native',owner:config.owner,next_action:'Record actual fixture progress',reason:'Fixture'}};
+ const result=f.channel.rpc('relay_runner_coordinate',args),p=await pending(f.directory);assert.equal(p.request.kind,'rpc');
+ const uncertain={ok:false,reconcile_required:true,error:{class:'uncertain_write'}};
+ await assert.rejects(replyNativeRequest(f.directory,p.request.id,uncertain),/Persist/);await beginNativeWork(f.directory,p.request.id);await replyNativeRequest(f.directory,p.request.id,uncertain);assert.deepEqual(await result,uncertain);
+ assert.deepEqual(await f.channel.rpc('relay_runner_coordinate',args),uncertain);assert.equal((await fs.readdir(f.directory)).filter(x=>x.endsWith('.started.json')).length,1);assert.equal((await fs.readdir(f.directory)).filter(x=>x.endsWith('.request.json')).length,1);
+ await assert.rejects(f.channel.rpc('relay_runner_coordinate',{...args,request:{...args.request,goal:'Changed goal'}}),/exceeds/);
+});
