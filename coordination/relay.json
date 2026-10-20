@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-20T19:46:51.584Z",
+  "updated_at": "2026-10-20T19:50:55.467Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -7654,7 +7654,7 @@
       "supporting_staff": [],
       "state": "claimed",
       "created_at": "2026-10-03T03:17:42.108Z",
-      "amendment_count": 9,
+      "amendment_count": 10,
       "amendments": [
         {
           "at": "2026-10-03T03:18:47.742Z",
@@ -8765,9 +8765,66 @@
               "docs/relay/RELATIONSHIP_NIGHT_SHIFT_INTEGRATION_20261012.md"
             ]
           }
+        },
+        {
+          "at": "2026-10-20T19:50:55.467Z",
+          "by": "01a1576d-4e3d-78f2-bdde-a1658b3598d0",
+          "reason": "Admit evidenced native cached-schema dependency without changing original goal/acceptance; exact current canonical engine and scoped source.",
+          "fields": [
+            "acceptance_additions"
+          ],
+          "before": {
+            "acceptance_additions": null
+          },
+          "after": {
+            "acceptance_additions": [
+              {
+                "schema": 1,
+                "base_objective_digest": "4db0e62515e8c7880d2a06b24d3aa9a2067751be9f44d8bed0240c57923b5fe2",
+                "goal_digest": "0b665af6cedab91db20316f26c9eef9243d5242bc8da49e77b129125a50d4fac",
+                "profile_digest": "1db404fdc2e2fbd9ad0c7248e639ca9353771a75caf0a5b2e3e3ddf4db063f51",
+                "proposal": {
+                  "id": "native-oversight-cached-schema",
+                  "goal_digest": "0b665af6cedab91db20316f26c9eef9243d5242bc8da49e77b129125a50d4fac",
+                  "kind": "necessary",
+                  "reason": "Actual installed authorized connector rejects native_thread before dispatch; independent CLI grant is unavailable. Native oversight cannot truthfully start through this client without a schema-compatible ingress.",
+                  "relationship": "Preserves the full Relay rebuild goal and enables its already approved native oversight/real Night Shift verification through the existing authorized connection.",
+                  "supports": [
+                    "relay-mcp-rebuild-continuation-20261003:acceptance:0"
+                  ],
+                  "target_stage": "night-shift-runtime",
+                  "depends_on": [],
+                  "acceptance": [
+                    "Existing checkpoint fields carry an explicit native-only envelope with strict bounded keys.",
+                    "Every write retains current owner/private lease/revision/native capability/fresh host and safety validation; no PID or credential is invented.",
+                    "Lost responses reconcile only exact broker operation intent; wrong identity/token/stale observations fail closed.",
+                    "Exact build, required suites, CI and production call through the installed connector pass before the fresh Night Shift run."
+                  ],
+                  "profile": "native-oversight-compat",
+                  "paths": [
+                    "src/native-oversight-compat.js",
+                    "src/native-oversight-compat.test.js",
+                    "src/relay-entry.js",
+                    "docs/relay/EXECUTOR_ROUTING_20261011.md"
+                  ],
+                  "description": "Translate an explicit compatibility envelope into current validated broker observation/start calls without changing authentication or other owners source."
+                },
+                "review": {
+                  "verdict": "admit",
+                  "preserves_goal": true,
+                  "goal_digest": "0b665af6cedab91db20316f26c9eef9243d5242bc8da49e77b129125a50d4fac",
+                  "within_authority": true,
+                  "sensitive_permissions": false,
+                  "paid_services": false,
+                  "canonical_key": "native-oversight-cached-schema",
+                  "reason": "Coordinator review: directly required by observed cached-schema failure; narrow own ingress only, same broker checks and no new credential/access. Direct human instruction in oversight userMessage01a15acc-3229-7c62-b37a-006846ba28f6 authorizes repair and verified rerun."
+                }
+              }
+            ]
+          }
         }
       ],
-      "updated_at": "2026-10-20T04:03:28.979Z",
+      "updated_at": "2026-10-20T19:50:55.467Z",
       "handoffs": [
         {
           "at": "2026-10-03T05:36:15.305Z",
@@ -8910,7 +8967,51 @@
             "reason": "Preserve Lauren's new active-job card requirement and real-client hydration evidence."
           }
         ]
-      }
+      },
+      "acceptance_additions": [
+        {
+          "schema": 1,
+          "base_objective_digest": "4db0e62515e8c7880d2a06b24d3aa9a2067751be9f44d8bed0240c57923b5fe2",
+          "goal_digest": "0b665af6cedab91db20316f26c9eef9243d5242bc8da49e77b129125a50d4fac",
+          "profile_digest": "1db404fdc2e2fbd9ad0c7248e639ca9353771a75caf0a5b2e3e3ddf4db063f51",
+          "proposal": {
+            "id": "native-oversight-cached-schema",
+            "goal_digest": "0b665af6cedab91db20316f26c9eef9243d5242bc8da49e77b129125a50d4fac",
+            "kind": "necessary",
+            "reason": "Actual installed authorized connector rejects native_thread before dispatch; independent CLI grant is unavailable. Native oversight cannot truthfully start through this client without a schema-compatible ingress.",
+            "relationship": "Preserves the full Relay rebuild goal and enables its already approved native oversight/real Night Shift verification through the existing authorized connection.",
+            "supports": [
+              "relay-mcp-rebuild-continuation-20261003:acceptance:0"
+            ],
+            "target_stage": "night-shift-runtime",
+            "depends_on": [],
+            "acceptance": [
+              "Existing checkpoint fields carry an explicit native-only envelope with strict bounded keys.",
+              "Every write retains current owner/private lease/revision/native capability/fresh host and safety validation; no PID or credential is invented.",
+              "Lost responses reconcile only exact broker operation intent; wrong identity/token/stale observations fail closed.",
+              "Exact build, required suites, CI and production call through the installed connector pass before the fresh Night Shift run."
+            ],
+            "profile": "native-oversight-compat",
+            "paths": [
+              "src/native-oversight-compat.js",
+              "src/native-oversight-compat.test.js",
+              "src/relay-entry.js",
+              "docs/relay/EXECUTOR_ROUTING_20261011.md"
+            ],
+            "description": "Translate an explicit compatibility envelope into current validated broker observation/start calls without changing authentication or other owners source."
+          },
+          "review": {
+            "verdict": "admit",
+            "preserves_goal": true,
+            "goal_digest": "0b665af6cedab91db20316f26c9eef9243d5242bc8da49e77b129125a50d4fac",
+            "within_authority": true,
+            "sensitive_permissions": false,
+            "paid_services": false,
+            "canonical_key": "native-oversight-cached-schema",
+            "reason": "Coordinator review: directly required by observed cached-schema failure; narrow own ingress only, same broker checks and no new credential/access. Direct human instruction in oversight userMessage01a15acc-3229-7c62-b37a-006846ba28f6 authorizes repair and verified rerun."
+          }
+        }
+      ]
     },
     {
       "id": "rtxforge-app-evidence-20261003",
@@ -15661,8 +15762,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T19:46:51.584Z",
-      "lease_until": "2026-10-21T07:46:51.584Z",
+      "updated_at": "2026-10-20T19:50:55.467Z",
+      "lease_until": "2026-10-21T07:50:55.467Z",
       "handoffs": [
         {
           "at": "2026-10-03T08:00:10.297Z",
@@ -15773,7 +15874,7 @@
           "next_action": "Lauren directly resumed Relay completion in this chat ('i lied. you keep going') and provided Claude checkpoint6c6d33508a35ebfa03f0d3694bd683e36d53302b for pickup. Claude's READY FOR CODEX handoff confirms writer stopped. Preserve original objectives/acceptance, attribution carve-out and all other project owners. Next: activate existing claim, preflight checkpoint paths, isolate checkout, reconcile unrelated main ancestry without losing current product work, build and run five required suites, review curation ingress security. No curation binding, Night Shift activation, credentials or away-time proof inferred."
         }
       ],
-      "amendment_count": 5,
+      "amendment_count": 6,
       "amendments": [
         {
           "at": "2026-10-03T15:39:48.325Z",
@@ -16821,6 +16922,107 @@
               "scripts/relay-night-shift.test.mjs",
               "docs/relay/RELATIONSHIP_NIGHT_SHIFT_INTEGRATION_20261012.md"
             ]
+          }
+        },
+        {
+          "at": "2026-10-20T19:50:55.467Z",
+          "by": "01a1576d-4e3d-78f2-bdde-a1658b3598d0",
+          "reason": "Admit evidenced native cached-schema dependency without changing original goal/acceptance; exact current canonical engine and scoped source.",
+          "fields": [
+            "acceptance_additions"
+          ],
+          "before": {
+            "acceptance_additions": null
+          },
+          "after": {
+            "acceptance_additions": [
+              {
+                "schema": 1,
+                "base_objective_digest": "4db0e62515e8c7880d2a06b24d3aa9a2067751be9f44d8bed0240c57923b5fe2",
+                "goal_digest": "0b665af6cedab91db20316f26c9eef9243d5242bc8da49e77b129125a50d4fac",
+                "profile_digest": "1db404fdc2e2fbd9ad0c7248e639ca9353771a75caf0a5b2e3e3ddf4db063f51",
+                "proposal": {
+                  "id": "native-oversight-cached-schema",
+                  "goal_digest": "0b665af6cedab91db20316f26c9eef9243d5242bc8da49e77b129125a50d4fac",
+                  "kind": "necessary",
+                  "reason": "Actual installed authorized connector rejects native_thread before dispatch; independent CLI grant is unavailable. Native oversight cannot truthfully start through this client without a schema-compatible ingress.",
+                  "relationship": "Preserves the full Relay rebuild goal and enables its already approved native oversight/real Night Shift verification through the existing authorized connection.",
+                  "supports": [
+                    "relay-mcp-rebuild-continuation-20261003:acceptance:0"
+                  ],
+                  "target_stage": "night-shift-runtime",
+                  "depends_on": [],
+                  "acceptance": [
+                    "Existing checkpoint fields carry an explicit native-only envelope with strict bounded keys.",
+                    "Every write retains current owner/private lease/revision/native capability/fresh host and safety validation; no PID or credential is invented.",
+                    "Lost responses reconcile only exact broker operation intent; wrong identity/token/stale observations fail closed.",
+                    "Exact build, required suites, CI and production call through the installed connector pass before the fresh Night Shift run."
+                  ],
+                  "profile": "native-oversight-compat",
+                  "paths": [
+                    "src/native-oversight-compat.js",
+                    "src/native-oversight-compat.test.js",
+                    "src/relay-entry.js",
+                    "docs/relay/EXECUTOR_ROUTING_20261011.md"
+                  ],
+                  "description": "Translate an explicit compatibility envelope into current validated broker observation/start calls without changing authentication or other owners source."
+                },
+                "review": {
+                  "verdict": "admit",
+                  "preserves_goal": true,
+                  "goal_digest": "0b665af6cedab91db20316f26c9eef9243d5242bc8da49e77b129125a50d4fac",
+                  "within_authority": true,
+                  "sensitive_permissions": false,
+                  "paid_services": false,
+                  "canonical_key": "native-oversight-cached-schema",
+                  "reason": "Coordinator review: directly required by observed cached-schema failure; narrow own ingress only, same broker checks and no new credential/access. Direct human instruction in oversight userMessage01a15acc-3229-7c62-b37a-006846ba28f6 authorizes repair and verified rerun."
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "acceptance_additions": [
+        {
+          "schema": 1,
+          "base_objective_digest": "4db0e62515e8c7880d2a06b24d3aa9a2067751be9f44d8bed0240c57923b5fe2",
+          "goal_digest": "0b665af6cedab91db20316f26c9eef9243d5242bc8da49e77b129125a50d4fac",
+          "profile_digest": "1db404fdc2e2fbd9ad0c7248e639ca9353771a75caf0a5b2e3e3ddf4db063f51",
+          "proposal": {
+            "id": "native-oversight-cached-schema",
+            "goal_digest": "0b665af6cedab91db20316f26c9eef9243d5242bc8da49e77b129125a50d4fac",
+            "kind": "necessary",
+            "reason": "Actual installed authorized connector rejects native_thread before dispatch; independent CLI grant is unavailable. Native oversight cannot truthfully start through this client without a schema-compatible ingress.",
+            "relationship": "Preserves the full Relay rebuild goal and enables its already approved native oversight/real Night Shift verification through the existing authorized connection.",
+            "supports": [
+              "relay-mcp-rebuild-continuation-20261003:acceptance:0"
+            ],
+            "target_stage": "night-shift-runtime",
+            "depends_on": [],
+            "acceptance": [
+              "Existing checkpoint fields carry an explicit native-only envelope with strict bounded keys.",
+              "Every write retains current owner/private lease/revision/native capability/fresh host and safety validation; no PID or credential is invented.",
+              "Lost responses reconcile only exact broker operation intent; wrong identity/token/stale observations fail closed.",
+              "Exact build, required suites, CI and production call through the installed connector pass before the fresh Night Shift run."
+            ],
+            "profile": "native-oversight-compat",
+            "paths": [
+              "src/native-oversight-compat.js",
+              "src/native-oversight-compat.test.js",
+              "src/relay-entry.js",
+              "docs/relay/EXECUTOR_ROUTING_20261011.md"
+            ],
+            "description": "Translate an explicit compatibility envelope into current validated broker observation/start calls without changing authentication or other owners source."
+          },
+          "review": {
+            "verdict": "admit",
+            "preserves_goal": true,
+            "goal_digest": "0b665af6cedab91db20316f26c9eef9243d5242bc8da49e77b129125a50d4fac",
+            "within_authority": true,
+            "sensitive_permissions": false,
+            "paid_services": false,
+            "canonical_key": "native-oversight-cached-schema",
+            "reason": "Coordinator review: directly required by observed cached-schema failure; narrow own ingress only, same broker checks and no new credential/access. Direct human instruction in oversight userMessage01a15acc-3229-7c62-b37a-006846ba28f6 authorizes repair and verified rerun."
           }
         }
       ]
