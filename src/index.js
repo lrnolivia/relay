@@ -13,6 +13,7 @@ import { RELAY_CONTROL_CENTER_URI, relayControlCenterResource } from "./relay-ui
 import { RELAY_STATUS_CARD_URI, RELAY_STATUS_CARD_TOOL, relayStatusCardDescriptor, relayStatusCardResource, relayStatusCardTool, RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, relayContextCardDescriptor, relayContextCardResource, relayContextCardTool, validateRelayContextCardArguments, compactContextCardResult } from "./relay-chat-ui.js";
 import { RELAY_SKILL_EXTENSION, relaySkillCatalog, relaySkillByUri, relaySkillResourceDescriptors, relaySkillResource } from "./skills.js";
 import { sourceAuthStatus, githubApiRequest as sourceGithubApiRequest, commitSourceFiles, readSourceChecks, readSourceTree, syncIdenticalSourceBranch } from "./source.js";
+import { attributedCommitBody, verifyAttributedCommit, assertProjectRepository } from './commit-attribution.js';
 import { runnerControlTools, callRunnerControl, runnerControlError } from "./runner-control.js";
 import { cloudStatus, listCloudScripts, cloudWorkerSummary, cloudBuilds, deployCloudVersion } from "./cloud.js";
 import { HOST_PROBE_URI, HOST_PROBE_TOOL, hostProbeDescriptor, hostProbeResource, hostProbeTool, hostProbeResult } from "./relay-host-probe.js";
@@ -158,6 +159,29 @@ function relayResult(id, result) {
     content: [{ type: "text", text: JSON.stringify(result) }],
     structuredContent: result
   });
+}
+
+// GitHub's pull request object repeats both repositories and every URL template (~20 KB);
+// callers need the identity, branches, exact SHAs and state. relay_source_pull_request reads the rest.
+export function compactPullRequest(pr) {
+  const side = ref => ref ? { ref: ref.ref, sha: ref.sha, repository: ref.repo?.full_name ?? null } : null;
+  return {
+    number: pr?.number,
+    html_url: pr?.html_url,
+    url: pr?.url,
+    state: pr?.state,
+    draft: pr?.draft,
+    title: pr?.title,
+    user: pr?.user?.login ?? null,
+    head: side(pr?.head),
+    base: side(pr?.base),
+    commits: pr?.commits,
+    changed_files: pr?.changed_files,
+    additions: pr?.additions,
+    deletions: pr?.deletions,
+    mergeable_state: pr?.mergeable_state,
+    created_at: pr?.created_at
+  };
 }
 
 
@@ -1109,6 +1133,7 @@ async function mcp(request, access, env) {
       if (name === "relay_source_update_file") {
         const owner = configuredSourceOwner(env, args.owner);
         const repo = validateIdentifier(args.repo, "repository");
+        assertProjectRepository(`/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`);
         const path = encodeRepositoryPath(args.path);
         const branch = validateBranch(args.branch);
         const repository = await githubApiRequest(
@@ -1118,17 +1143,18 @@ async function mcp(request, access, env) {
         if (branch === repository?.default_branch) throw new Error("relay.SOURCE refuses direct default-branch file writes");
         if (typeof args.content !== "string" || args.content.length > 500000) throw new Error("Invalid file content");
         if (typeof args.message !== "string" || args.message.length < 1 || args.message.length > 500) throw new Error("Invalid commit message");
-        const body = {
+        const body = attributedCommitBody({
           message: args.message,
           content: encodeBase64Utf8(args.content),
           branch
-        };
+        });
         if (args.expected_sha) body.sha = validateIdentifier(args.expected_sha, "expected blob sha", /^[a-f0-9]{40}$/i);
         const result = await githubApiRequest(
           env,
           `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path}`,
           { method: "PUT", body }
         );
+        await verifyAttributedCommit((path, options) => githubApiRequest(env, path, options), `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`, result?.commit?.sha, body);
         return relayResult(id, { ok: true, result });
       }
 
@@ -1167,7 +1193,7 @@ async function mcp(request, access, env) {
             }
           }
         );
-        return relayResult(id, { ok: true, pull_request: result });
+        return relayResult(id, { ok: true, pull_request: compactPullRequest(result) });
       }
 
       if (name === "relay_cloud_scripts") {

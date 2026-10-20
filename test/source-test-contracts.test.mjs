@@ -4,7 +4,7 @@ import {mkdtemp,mkdir,writeFile,readFile,rm} from 'node:fs/promises';
 import {join} from 'node:path';
 import {tmpdir} from 'node:os';
 import {execFileSync} from 'node:child_process';
-import {references,planTests,validateManifest,diffPaths,verifySourceTestContracts} from '../scripts/source-test-contracts.mjs';
+import {references,planTests,validateManifest,sourceBase,diffPaths,verifySourceTestContracts} from '../scripts/source-test-contracts.mjs';
 import {REQUIRED_SUITES} from '../scripts/ci-test-orchestrator.mjs';
 import {BUILD_INPUTS} from '../scripts/release-toolchain.mjs';
 
@@ -73,6 +73,19 @@ test('exact diff includes rename source/destination and deletions; missing or sy
 test('preflight failures retain a nonpassing receipt rather than claiming an empty plan passed',async t=>{
   const root=await mkdtemp(join(tmpdir(),'relay-map-failure-'));t.after(()=>rm(root,{recursive:true,force:true}));
   await assert.rejects(verifySourceTestContracts({root,env:{}}));const receipt=JSON.parse(await readFile(join(root,'qa-evidence/source-test-contracts/result.json')));assert.equal(receipt.state,'blocked');assert.equal(receipt.exit_code,1);assert.equal(receipt.full_acceptance,false);
+});
+test('initial roots audit every tracked input; ordinary or shallow history cannot discard the base',async t=>{
+  const root=await mkdtemp(join(tmpdir(),'relay-root-map-'));t.after(()=>rm(root,{recursive:true,force:true}));
+  const git=args=>execFileSync('git',args,{cwd:root,encoding:'utf8',stdio:['ignore','pipe','pipe']}).trim();
+  const commit=()=>{git(['add','.']);git(['-c','user.name=Relay fixture','-c','user.email=fixture@example.invalid','commit','-m','source contract fixture']);return git(['rev-parse','HEAD']);};
+  git(['init']);await writeFile(join(root,'source.js'),'export const value=0;');await writeFile(join(root,'fixture.json'),'{}');const first=commit();
+  assert.equal(sourceBase({root,head:first}),null);assert.equal(sourceBase({root,head:first,explicitBase:'0'.repeat(40)}),null);
+  assert.deepEqual(diffPaths({root,base:null,head:first}).sort(),['fixture.json','source.js']);
+  await writeFile(join(root,'source.js'),'export const value=1;');const second=commit();
+  assert.equal(sourceBase({root,head:second}),first);assert.deepEqual(diffPaths({root,base:first,head:second}),['source.js']);
+  assert.throws(()=>diffPaths({root,base:null,head:second}),{code:'invalid_source_range'});
+  await writeFile(join(root,'.git','shallow'),second+'\n');
+  assert.equal(sourceBase({root,head:second}),first);assert.throws(()=>diffPaths({root,base:null,head:second}),{code:'invalid_source_range'});
 });
 test('real source range selects and executes a failing caller test with its original exit',async t=>{
   const root=await mkdtemp(join(tmpdir(),'relay-map-execution-'));t.after(()=>rm(root,{recursive:true,force:true}));

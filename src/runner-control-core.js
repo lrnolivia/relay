@@ -3,8 +3,9 @@ import { createHash } from 'node:crypto';
 import { transition, evaluate, occupying, normalizeScope } from './coordination-engine.js';
 import { projectCiPolicy, projectCiRoute } from './ci-routing.js';
 import { guardAutonomy } from './autonomy-control.js';
+import { attributedCommitBody, verifyAttributedCommit, reconcileAttributedContentsCommit } from './commit-attribution.js';
 
-export const RUNNER_ENGINE_SHA = '591d0155555a74db4769fda289e5212b07609e65';
+export const RUNNER_ENGINE_SHA = '36754c3cfa407a50513371cc8e201b0ce7f333d3';
 export const DEFAULT_RUNNER_CONTROL_REPOSITORY = 'lrnolivia/relay';
 
 export class ControlError extends Error {
@@ -138,7 +139,7 @@ async function inventory(api, context) {
   };
 }
 
-function preflight(context, request, data) {
+function preflight(context, request, data, phase = 'publication') {
   const claim = context.record.value.claims.find(
     item => item.id === request.id && item.owner === request.owner && occupying(item)
   );
@@ -150,8 +151,16 @@ function preflight(context, request, data) {
     throw new ControlError('scope', 'Changed paths exceed the claim');
   }
   const blockingFindings = data.findings.filter(finding => finding.type === 'budget' || finding.assignment === claim.id || finding.assignments?.includes(claim.id));
-  if (blockingFindings.length) {
-    throw new ControlError('conflict', 'Coordination preflight failed', { reason: 'coordination_admission', findings: blockingFindings });
+  // A missing remote branch is expected during explicitly local preparation.
+  // Every other owner, lease, scope, budget and drift finding still blocks it.
+  const blockers = phase === 'local'
+    ? blockingFindings.filter(finding => !(finding.type === 'missing_branch' && finding.assignment === claim.id))
+    : blockingFindings;
+  if (phase === 'publication' && !data.branches.some(branch => branch.name === claim.branch) && !blockers.some(finding => finding.type === 'missing_branch')) {
+    blockers.push({type:'missing_branch', assignment:claim.id, branch:claim.branch});
+  }
+  if (blockers.length) {
+    throw new ControlError('conflict', 'Coordination preflight failed', { reason: 'coordination_admission', findings: blockers });
   }
   return claim;
 }
@@ -178,7 +187,7 @@ async function mutate(api, control, controlRepository, context, args) {
 
   const allowed = {
     queue: ['id', 'owner', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams'],
-    claim: ['id', 'owner', 'branch', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams'],
+    claim: ['id', 'owner', 'branch', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams', 'expected_head_sha', 'reason'],
     amend: ['id', 'owner', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams', 'reason'],
     rescope: ['id', 'owner', 'paths', 'resources', 'next_action'],
     heartbeat: ['id', 'owner', 'next_action'],
@@ -188,9 +197,7 @@ async function mutate(api, control, controlRepository, context, args) {
     reconcile: ['id', 'owner', 'pr', 'expected_queue_owner', 'reason'],
     retire: ['id', 'owner', 'disposition', 'reason', 'evidence', 'operation_id', 'expected_head_sha', 'superseded_by']
   }[args.action];
-  for (const key of Object.keys(args.request)) {
-    if (!allowed.includes(key)) throw new ControlError('validation', `request.${key} is unsupported for ${args.action}`);
-  }
+  const unsupported = Object.keys(args.request).filter(key => !allowed.includes(key));
 
   const required = {
     queue: ['paths', 'goal', 'acceptance', 'next_action'],
@@ -204,8 +211,18 @@ async function mutate(api, control, controlRepository, context, args) {
     reconcile: ['pr'],
     retire: ['disposition', 'reason', 'evidence', 'operation_id']
   }[args.action];
-  for (const key of required) {
-    if (!(key in args.request)) throw new ControlError('validation', `request.${key} is required for ${args.action}`);
+  const missing = required.filter(key => !(key in args.request));
+  // Report every problem at once, with the action's whole contract, so a caller fixes it in one retry.
+  if (unsupported.length || missing.length) {
+    const problems = [
+      ...(unsupported.length ? [`${unsupported.map(key => `request.${key}`).join(', ')} ${unsupported.length === 1 ? 'is' : 'are'} unsupported for ${args.action}`] : []),
+      ...(missing.length ? [`${missing.map(key => `request.${key}`).join(', ')} ${missing.length === 1 ? 'is' : 'are'} required for ${args.action}`] : [])
+    ];
+    const contract = `${args.action} requires id, owner${required.length ? ', ' + required.join(', ') : ''}; it also accepts ${allowed.filter(key => !['id', 'owner', ...required].includes(key)).join(', ') || 'nothing else'}`;
+    throw new ControlError('validation', `${problems.join('; ')}. ${contract}.`);
+  }
+  if (args.action === 'claim' && ('expected_head_sha' in args.request) !== ('reason' in args.request)) {
+    throw new ControlError('validation', 'Adopting an existing branch needs both request.expected_head_sha (its exact live head) and request.reason.');
   }
 
   const request = { ...args.request, action: args.action };
@@ -216,9 +233,20 @@ async function mutate(api, control, controlRepository, context, args) {
     if (context.record.value.legacy_branches.includes(request.branch)) {
       throw new ControlError('ownership', 'Legacy branch remains reserved for recovery');
     }
-    if ((await pages(api, `${base}/branches`)).some(branch => branch.name === request.branch)) {
-      throw new ControlError('ownership', 'Admission must precede branch creation');
+    const existing = (await pages(api, `${base}/branches`)).find(branch => branch.name === request.branch);
+    if (existing && !('expected_head_sha' in request)) {
+      throw new ControlError('ownership', 'Admission must precede branch creation. To adopt this existing branch, pass request.expected_head_sha (its exact live head) and request.reason.');
     }
+    if ('expected_head_sha' in request) {
+      // Adoption with evidence: only the exact live head of an existing branch, never a new or moved one.
+      if (!/^[a-f0-9]{40}$/.test(request.expected_head_sha || '')) throw new ControlError('validation', 'request.expected_head_sha must be the branch\'s exact 40-character head SHA to adopt it');
+      if (!existing) throw new ControlError('ownership', 'There is no existing branch to adopt; omit expected_head_sha and reason so Relay admits a new branch');
+      const head = (await api(`${base}/git/ref/heads/${encodeURIComponent(request.branch)}`))?.object?.sha;
+      if (head !== request.expected_head_sha) throw new ControlError('conflict', 'Branch head moved since it was read; read it again before adopting', { branch_head_sha: head || null });
+      request.adopted_branch = { head_sha: head, reason: request.reason };
+    }
+    delete request.expected_head_sha;
+    delete request.reason;
     const head = await api(`${base}/git/ref/heads/${encodeURIComponent(context.registration.default_branch)}`);
     request.base_sha = head.object.sha;
   }
@@ -286,12 +314,12 @@ async function mutate(api, control, controlRepository, context, args) {
   try {
     saved = await api(`${control}/contents/coordination/${args.project}.json`, {
       method: 'PUT',
-      body: {
+      body: attributedCommitBody({
         branch: 'main',
         sha: context.record.sha,
         message: `coordination: ${args.action} ${args.project}`,
         content: Buffer.from(content).toString('base64')
-      }
+      })
     });
   } catch (error) {
     writeError = error;
@@ -317,6 +345,15 @@ async function mutate(api, control, controlRepository, context, args) {
     });
   }
 
+  const metadata = attributedCommitBody({message: `coordination: ${args.action} ${args.project}`, branch: 'main', sha: context.record.sha});
+  let attribution;
+  try {
+    attribution = saved?.commit?.sha
+      ? await verifyAttributedCommit(api, control, saved.commit.sha, metadata)
+      : await reconcileAttributedContentsCommit(api, control, `coordination/${args.project}.json`, metadata, verified.sha);
+  } catch {
+    throw new ControlError('uncertain_attribution', 'Record content matches but exact compliant commit metadata cannot be verified; reconcile before retrying', {record_sha: verified.sha});
+  }
   const activeClaim = verified.value.claims.find(item => item.id === request.id && occupying(item));
   const queuedItem = verified.value.queue.find(item => item.id === request.id);
   const assignment = args.action === 'queue'
@@ -333,14 +370,15 @@ async function mutate(api, control, controlRepository, context, args) {
       path: `coordination/${args.project}.json`,
       previous_record_sha: context.record.sha,
       record_sha: verified.sha,
-      commit_sha: saved?.commit?.sha || null,
+      commit_sha: attribution.sha,
+      attribution,
       reconciled_after_transport_error: Boolean(writeError),
       recovery: 'Read relay_runner_assignments before another mutation; do not replay a stale revision.'
     }
   });
 }
 
-export async function callRunnerControlCore(name, args, env = {}, apiOverride) {
+async function runnerControlQuery(name, args, env = {}, apiOverride, phase = 'publication') {
   const api = apiOverride || ((path, options) => githubApiRequest(env, path, options));
   const controlRepository = runnerControlRepository(env);
   const control = runnerControlBase(env);
@@ -397,7 +435,14 @@ export async function callRunnerControlCore(name, args, env = {}, apiOverride) {
 
   const data = await inventory(api, context);
   if (name === 'relay_runner_preflight') {
-    const claim = preflight(context, args, data);
+    const claim = preflight(context, args, data, phase);
+    if (phase === 'local') return result(context, {
+      phase:'local-preparation', local_work_admitted:claim.id, publication_admitted:false,
+      limitation:'Local preparation evidence only; no remote write, publication or host permission is granted',
+      owner:claim.owner, branch:claim.branch,
+      publication_blockers: data.branches.some(branch => branch.name === claim.branch) ? [] : [{type:'missing_branch',assignment:claim.id,branch:claim.branch}],
+      findings:data.findings
+    });
     return result(context, {
       admitted: claim.id,
       owner: claim.owner,
@@ -415,6 +460,21 @@ export async function callRunnerControlCore(name, args, env = {}, apiOverride) {
     });
   }
   return null;
+}
+
+// Public MCP/remote admission remains publication-only. Local mode is a
+// separate read-only native entrypoint, never a caller-controlled MCP flag.
+export async function callRunnerControlCore(name, args, env = {}, apiOverride) {
+  return runnerControlQuery(name, args, env, apiOverride);
+}
+export async function localWorkPreflight(args, env = {}, apiOverride) {
+  const identity = value => typeof value === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,99}$/.test(value);
+  if (!args || typeof args !== 'object' || Array.isArray(args) || Object.keys(args).some(key => !['project','id','owner','paths'].includes(key)) || !/^[a-z0-9-]+$/.test(args.project || '') || !identity(args.id) || !identity(args.owner) || !Array.isArray(args.paths) || !args.paths.length || args.paths.length > 200) throw new ControlError('validation','Local preparation requires exact project, assignment, owner and changed paths');
+  const readOnly = async (path, options = {}) => {
+    if (options.method && options.method !== 'GET') throw new ControlError('policy','Local preparation cannot write remote state');
+    return apiOverride ? apiOverride(path, options) : githubApiRequest(env, path, options);
+  };
+  return runnerControlQuery('relay_runner_preflight', args, env, readOnly, 'local');
 }
 
 // Share the same verified transport across read-only consumers.

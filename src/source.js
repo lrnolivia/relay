@@ -1,6 +1,7 @@
 import { createSign, createHash } from "node:crypto";
 import { createGitHubReadCache } from './github-read-cache.js';
 import { guardRepository } from './autonomy-control.js';
+import { attributedCommitBody, verifyAttributedCommit, assertProjectRepository } from './commit-attribution.js';
 
 const GITHUB_API = "https://api.github.com";
 const GITHUB_API_VERSION = "2022-11-28";
@@ -222,6 +223,7 @@ export async function commitSourceFiles(env, { owner, repo, branch, files, messa
   });
 
   const repoBase = "/repos/" + encodeURIComponent(owner) + "/" + encodeURIComponent(repo);
+  assertProjectRepository(repoBase);
   const repository = await githubApiRequest(env, repoBase);
   if (branch === repository?.default_branch) throw new Error("relay.SOURCE refuses direct default-branch commits; coordination control state must be mutated through relay.RUNNER");
 
@@ -274,10 +276,12 @@ export async function commitSourceFiles(env, { owner, repo, branch, files, messa
     method: "POST",
     body: { base_tree: parent?.tree?.sha, tree: blobs }
   });
+  const commitBody = attributedCommitBody({ message, tree: tree.sha, parents: [headSha] });
   const commit = await githubApiRequest(env, repoBase + "/git/commits", {
     method: "POST",
-    body: { message, tree: tree.sha, parents: [headSha] }
+    body: commitBody
   });
+  await verifyAttributedCommit((path, options) => githubApiRequest(env, path, options), repoBase, commit.sha, commitBody);
   await githubApiRequest(env, repoBase + "/git/refs/heads/" + encodedBranch, {
     method: "PATCH",
     body: { sha: commit.sha, force: false }
@@ -360,6 +364,7 @@ export async function readBoundedJobLog(response) {
 export async function syncIdenticalSourceBranch(env, {owner,repo,branch,expectedHeadSha,expectedBaseSha}, api=(path,options)=>githubApiRequest(env,path,options)) {
   if(!/^[a-f0-9]{40}$/.test(expectedHeadSha||"") || !/^[a-f0-9]{40}$/.test(expectedBaseSha||""))throw new Error("Exact source and base identities required");
   const root=`/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`;
+  assertProjectRepository(root);
   const metadata=await api(root);
   if(!metadata.default_branch || branch===metadata.default_branch)throw new Error("Default branch synchronization is prohibited");
   const branchPath=branch.split("/").map(encodeURIComponent).join("/");
@@ -369,8 +374,10 @@ export async function syncIdenticalSourceBranch(env, {owner,repo,branch,expected
   if(expectedHeadSha===expectedBaseSha)return {ok:true,unchanged:true,head_sha:expectedHeadSha};
   const a=await api(`${root}/git/commits/${expectedHeadSha}`),b=await api(`${root}/git/commits/${expectedBaseSha}`);
   if(!/^[a-f0-9]{40}$/.test(a.tree?.sha||"") || a.tree.sha!==b.tree?.sha)throw new Error("Trees differ; source changes require explicit resolution before synchronization");
-  const commit=await api(`${root}/git/commits`,{method:"POST",body:{message:"Synchronize identical reviewed source with default-branch ancestry",tree:a.tree.sha,parents:[expectedHeadSha,expectedBaseSha]}});
+  const body=attributedCommitBody({message:"Synchronize identical reviewed source with default-branch ancestry",tree:a.tree.sha,parents:[expectedHeadSha,expectedBaseSha]});
+  const commit=await api(`${root}/git/commits`,{method:"POST",body});
   if(!/^[a-f0-9]{40}$/.test(commit.sha||""))throw new Error("Invalid synchronization commit receipt");
+  await verifyAttributedCommit(api,root,commit.sha,body);
   const current=await api(`${root}/git/ref/heads/${branchPath}`);
   if(current.object?.sha!==expectedHeadSha)throw new Error("Branch changed before synchronization; no ref update performed");
   await api(`${root}/git/refs/heads/${branchPath}`,{method:"PATCH",body:{sha:commit.sha,force:false}});

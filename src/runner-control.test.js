@@ -1,9 +1,10 @@
 import test from 'node:test';
+import {PROJECT_AUTHOR} from './commit-attribution.js';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { callRunnerControl, runnerControlTools, runnerControlError, RUNNER_ENGINE_SHA, runnerControlRepository } from './runner-control.js';
-import {ControlError} from './runner-control-core.js';
+import {ControlError, localWorkPreflight} from './runner-control-core.js';
 import {withHumanPresentation} from './human-presentation.js';
 const sha = 'a'.repeat(40);
 const newSha = 'b'.repeat(40);
@@ -19,6 +20,9 @@ function fixture(options = {}) {
     calls.push(path);
     if (path.includes('src/coordination.mjs')) return file('', options.engineSha || RUNNER_ENGINE_SHA);
     if (path.includes('projects/relay.json')) return file(registration);
+    if (path.includes('/commits?')) return [{sha:'c'.repeat(40)}];
+    if (path.endsWith('/commits/'+'c'.repeat(40))) return {sha:'c'.repeat(40),author:PROJECT_AUTHOR,committer:PROJECT_AUTHOR,commit:{author:PROJECT_AUTHOR,committer:PROJECT_AUTHOR,message:writes.at(-1)?.body.message},parents:[{sha:'d'.repeat(40)}]};
+    if (path.includes('coordination/relay.json?ref='+'d'.repeat(40))) return file({},sha);
     if (path.includes('coordination/relay.json')) {
       if (request?.method === 'PUT') {
         writes.push(request);
@@ -190,6 +194,42 @@ test('existing and frozen legacy branches cannot be repurposed as new admission'
   await assert.rejects(coordinate(f, 'claim'), /precede branch/);
   const legacy = fixture();
   await assert.rejects(coordinate(legacy, 'claim', { ...defaultRequest, branch: 'old-task' }), /reserved/);
+});
+test('claim adopts an existing branch only with its exact live head and a reason, recorded on the claim', async () => {
+  const adopt = { ...defaultRequest, expected_head_sha: sha, reason: 'Pushed before admission by Lauren' };
+  const f = fixture({ branches: [{ name: defaultRequest.branch }], head: sha });
+  const result = await coordinate(f, 'claim', adopt);
+  assert.equal(result.claim.adopted_branch.head_sha, sha);
+  assert.equal(result.claim.adopted_branch.reason, 'Pushed before admission by Lauren');
+  assert.ok(result.claim.adopted_branch.at);
+  assert.equal('expected_head_sha' in result.claim, false);
+  assert.equal(f.writes.length, 1);
+  for (const [options, request, pattern] of [
+    [{ branches: [{ name: defaultRequest.branch }], head: newSha }, adopt, /head moved/],
+    [{ branches: [] }, adopt, /no existing branch to adopt/],
+    [{ branches: [{ name: defaultRequest.branch }] }, { ...defaultRequest, expected_head_sha: sha }, /both request.expected_head_sha/],
+    [{ branches: [{ name: defaultRequest.branch }] }, { ...defaultRequest, expected_head_sha: null, reason: 'x' }, /exact 40-character head/],
+    [{ branches: [{ name: defaultRequest.branch }] }, defaultRequest, /precede branch creation\. To adopt/]
+  ]) {
+    const refused = fixture(options);
+    await assert.rejects(coordinate(refused, 'claim', request), pattern);
+    assert.equal(refused.writes.length, 0);
+  }
+  const legacy = fixture({ branches: [{ name: 'old-task' }] });
+  await assert.rejects(coordinate(legacy, 'claim', { ...adopt, branch: 'old-task' }), /reserved/);
+});
+test('request validation reports every unsupported and missing field with the action contract', async () => {
+  const f = fixture();
+  const { goal, acceptance, ...partial } = defaultRequest;
+  let failure;
+  try { await coordinate(f, 'claim', { ...partial, operation_id: 'op', expected_queue_owner: 'worker' }); } catch (error) { failure = error; }
+  assert.equal(failure.code, 'validation');
+  assert.match(failure.message, /request\.operation_id, request\.expected_queue_owner are unsupported for claim/);
+  assert.match(failure.message, /request\.goal, request\.acceptance are required for claim/);
+  assert.match(failure.message, /claim requires id, owner, branch, paths, goal, acceptance, next_action; it also accepts resources/);
+  await assert.rejects(coordinate(f, 'heartbeat', { id: 'task', owner: 'worker', next_action: 'Renew', branch: 'relay/task' }), /request\.branch is unsupported for heartbeat/);
+  await assert.rejects(coordinate(f, 'rescope', { id: 'task', owner: 'worker', paths: ['src/'], next_action: 'x' }), /request\.resources is required for rescope/);
+  assert.equal(f.writes.length, 0);
 });
 test('completion uses provider merged identity and denies unmerged or wrong branch', async () => {
   const request = { id: 'task', owner: 'worker', pr: 9, evidence: 'https://github.com/lrnolivia/relay/pull/9', work_accounted: true };
@@ -454,7 +494,7 @@ test('queued handoff returns actual assignment without branches, PRs or an execu
 });
 
 test('large coordination reads resolve an immutable verified blob without changing ownership gates', async () => {
-  const f=fixture({claims:[claim()]});
+  const f=fixture({claims:[claim()],branches:[{name:defaultRequest.branch}]});
   const bytes=Buffer.from(JSON.stringify({...f.record,padding:'x'.repeat(1024*1024)}));
   const digest=createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
   const contents={type:'file',sha:digest,size:bytes.length,encoding:'none',content:''};
@@ -482,6 +522,39 @@ test('missing admitted branch retains its blocking finding without unrelated inv
  assert.ok(failure instanceof ControlError);assert.equal(failure.reason,'coordination_admission');assert.deepEqual(failure.findings,[{type:'missing_branch',assignment:'task',branch:'relay/task'}]);assert.equal(f.writes.length,0);
  const result=runnerControlError(failure);assert.equal(result.error.class,'conflict');assert.equal(result.error.reason,'coordination_admission');assert.deepEqual(result.error.findings,failure.findings);assert.equal(result.mutation,'not_attempted');assert.equal(result.error.retryable,false);
  const shown=withHumanPresentation(result,{operation:{kind:'query',name:'relay_runner_preflight'}}).human_v1;assert.equal(shown.message_id,'error.admission');assert.doesNotMatch(shown.summary,/changed before/);assert.match(shown.next_step,/blocking findings/);assert.match(JSON.stringify(shown.details),/missing_branch|relay\/task/);
+});
+
+test('local preparation admits an unpublished branch without admitting publication or mutating state',async()=>{
+ const f=fixture({claims:[claim({created_at:new Date(Date.now()-2*3600000).toISOString()})],branches:[]});
+ const args={project:'relay',id:'task',owner:'worker',paths:['src/index.js']};
+ const receipt=await localWorkPreflight(args,{},f.api);
+ assert.equal(receipt.local_work_admitted,'task');assert.equal(receipt.phase,'local-preparation');assert.equal(receipt.publication_admitted,false);assert.equal(receipt.admitted,undefined);
+ assert.deepEqual(receipt.publication_blockers,[{type:'missing_branch',assignment:'task',branch:'relay/task'}]);
+ await assert.rejects(callRunnerControl('relay_runner_preflight',args,{},f.api),error=>error.findings?.[0].type==='missing_branch');
+ assert.equal(f.writes.length,0);
+});
+test('publication requires a real branch even inside the inventory age grace period; MCP cannot request local mode',async()=>{
+ const f=fixture({claims:[claim()],branches:[]}),args={project:'relay',id:'task',owner:'worker',paths:['src/index.js']};
+ await assert.rejects(callRunnerControl('relay_runner_preflight',args,{},f.api),error=>error.findings?.[0].type==='missing_branch');
+ await assert.rejects(callRunnerControl('relay_runner_preflight',{...args,phase:'local'}, {},f.api),/unsupported/i);
+ assert.equal(f.writes.length,0);
+});
+test('local preparation preserves owner, lease, scope, policy and budget failures',async()=>{
+ const args={project:'relay',id:'task',owner:'worker',paths:['src/index.js']};
+ for(const [options,request,pattern] of [
+  [{claims:[claim()]},{...args,owner:'intruder'},/live active/],
+  [{claims:[claim({state:'held'})]},args,/live active/],
+  [{claims:[claim({lease_until:'2000-01-01'})]},args,/live active/],
+  [{claims:[claim()]},{...args,paths:['elsewhere/file']},/exceed/],
+  [{claims:[claim()],engineSha:newSha},args,/engine changed/],
+  [{claims:Array.from({length:5},(_,i)=>claim({id:i?'task'+i:'task',owner:i?'owner'+i:'worker',branch:i?'relay/task'+i:'relay/task',paths:i?['area'+i+'/']:['src/'],resources:[]}))},args,/preflight failed/]
+ ]){const f=fixture(options);await assert.rejects(localWorkPreflight(request,{},f.api),pattern);assert.equal(f.writes.length,0);}
+});
+test('local preparation rejects malformed or mutation-like requests before network access',async()=>{
+ let calls=0;const api=async()=>{calls++;throw Error('Unexpected network')};
+ const args={project:'relay',id:'task',owner:'worker',paths:['src/index.js']};
+ for(const request of [{...args,action:'claim'},{...args,paths:[]},{...args,owner:{}},{...args,project:'../other'}])await assert.rejects(localWorkPreflight(request,{},api),/exact project/);
+ assert.equal(calls,0);
 });
 
 test('branch budget admission stays blocked and is distinct from a stale CAS revision',async()=>{

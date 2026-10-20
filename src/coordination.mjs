@@ -280,6 +280,7 @@ export function transition(record, request, policy, now = new Date()) {
       ...(request.ledger_refs ? { ledger_refs: normalizeLedgerRefs(request.ledger_refs) } : {}),
       ...metadataFields({ ...queued, ...request }),
       ...normalizeAssignmentStaff({ ...queued, ...request }),
+      ...adoptedBranch(request.adopted_branch, now),
       base_sha: request.base_sha, state: 'active', created_at: now.toISOString() });
     if(queued){for(const field of ['objective_history','amendments','amendment_count','handoffs'])if(queued[field]!==undefined)claims.at(-1)[field]=structuredClone(queued[field]);}
     preserveObjective(claims.at(-1),now,queued?'queued-assignment':'assignment-created');
@@ -319,6 +320,15 @@ export function transition(record, request, policy, now = new Date()) {
   updated.lease_until = new Date(now.getTime() + policy.lease_hours * 3600000).toISOString();
   next.updated_at = now.toISOString();
   return next;
+}
+
+// A claim may adopt a branch that already existed, with its exact head and a reason as evidence.
+function adoptedBranch(adopted, now) {
+  if (adopted === undefined) return {};
+  if (!adopted || !/^[a-f0-9]{40}$/.test(adopted.head_sha || '') || typeof adopted.reason !== 'string' || !adopted.reason.trim() || adopted.reason.length > 1000) {
+    throw new Error('Adopting an existing branch requires its exact head SHA and a reason.');
+  }
+  return { adopted_branch: { head_sha: adopted.head_sha, reason: adopted.reason.trim(), at: now.toISOString() } };
 }
 
 export function evaluate(record, policy, branches, prs, now = new Date()) {
