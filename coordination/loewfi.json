@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "loewfi",
-  "updated_at": "2026-10-20T20:18:51.852Z",
+  "updated_at": "2026-10-20T20:38:04.330Z",
   "legacy_branches": [
     "main",
     "runner/universal-authority"
@@ -146,7 +146,7 @@
       "primary_staff": null,
       "supporting_staff": [],
       "base_sha": "1ae2f2fb01af862197ddd414992fd25255687d73",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-20T20:05:52.536Z",
       "objective_history": {
         "baseline": {
@@ -187,8 +187,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T20:18:51.852Z",
-      "lease_until": "2026-10-21T08:18:51.852Z",
+      "updated_at": "2026-10-20T20:38:04.330Z",
+      "lease_until": "2026-10-21T08:38:04.330Z",
       "amendment_count": 4,
       "amendments": [
         {
@@ -259,7 +259,13 @@
             "next_action": "Synchronize affected canonical Figma navigation/card components, update linked landing instances, validate website and Figma, then ship exact candidate."
           }
         }
-      ]
+      ],
+      "pr": 6,
+      "merged_head_sha": "5a57964ed2516e169cafde6e8be28a50c80f8c71",
+      "merge_commit_sha": "ca5296299c3727a8a42237c17e0c3a40428f3768",
+      "evidence": "https://github.com/lrnolivia/loewfi/pull/6; canonical Relay completion context ctx_06030acb2323f53325558ab50361032c50a8f0dd095bc54953633273f710802d (revision 3). Tested head 5a57964ed2516e169cafde6e8be28a50c80f8c71 merged as ca5296299c3727a8a42237c17e0c3a40428f3768 with identical tree. Production version d3a04c55-796e-460c-8150-0d297cc47f70 at 100%; deployment 2c09b1c2-24b5-49e1-aa18-e62daf81f7b1. Required checks and browser criteria pass; all user refinements and Figma synchronization accounted. Stored Runner Visuals evidence: vis_bd2209d3-4cca-4046-889d-68dbcb90d58d (desktop), vis_1af54f39-dbe6-4058-8692-8c13d65ae56f (mobile). Exact live assets and preserved redirects verified. Temporary preview build slot restored to prior paused migration configuration. Retained prior healthy rollback version; no user-approved target advanced; physical phone/email client not exercised.",
+      "work_accounted": true,
+      "completed_at": "2026-10-20T20:38:04.330Z"
     }
   ]
 }
