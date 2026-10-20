@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {validateNightShiftPlan,runNightShiftPass,uniqueHosts} from './relay-night-shift.mjs';
+import {createMcpClient} from './relay-executor.mjs';
 
 const host=id=>({id,transport:'local',node:'/runtime/node',script:'/relay/scripts/relay-dispatch.mjs',config:'/private/executor.json',workspace:'/checkout',state_directory:'/private/receipts'});
 const jobId=n=>'job_'+String(n).repeat(64);
@@ -85,6 +86,38 @@ function slowDispatch(f){
  f.release=null;
  f.dispatch=async({config,persist})=>{await persist({state:'dispatching'});const job=f.jobs.get(config.job_id);job.state='running';job.revision=2;await new Promise(r=>{f.release=r;});return {state:'accounted'};};
 }
+
+function useRealMcpClient(f){
+ const rpc=f.rpc;
+ f.rpc=createMcpClient({token:'fixture-only',fetchImpl:async(_url,options)=>{
+  const message=JSON.parse(options.body),result=await rpc(message.params.name,message.params.arguments);
+  return Response.json({jsonrpc:'2.0',id:message.id,result:{structuredContent:result,isError:result.ok===false}});
+ }});
+}
+
+test('real MCP rejection re-reads a cancellation race and retries only the changed revision',async()=>{
+ const f=fixture();slowDispatch(f);useRealMcpClient(f);
+ const cancels=[];f.cancel=args=>{cancels.push(args.expected_revision);if(cancels.length===1){f.jobs.get(jobId(1)).revision=3;return {ok:false,error:{class:'conflict'}};}return {ok:true};};
+ const pass=f.run({shouldStop:async()=>Boolean(f.stop)});
+ await settle(f,()=>f.release);f.stop=true;await settle(f,()=>cancels.length===2);f.release();
+ const result=await pass;assert.deepEqual(cancels,[2,3]);assert.equal(result.jobs[0].cancellation.state,'requested');
+});
+
+test('real MCP lost cancellation response is reconciled without repeating a successful cancel',async()=>{
+ const f=fixture();slowDispatch(f);useRealMcpClient(f);
+ let cancels=0;f.cancel=()=>{cancels++;Object.assign(f.jobs.get(jobId(1)),{state:'cancelled',revision:3});throw Error('private transport failure');};
+ const pass=f.run({shouldStop:async()=>Boolean(f.stop)});
+ await settle(f,()=>f.release);f.stop=true;await settle(f,()=>f.receipts.at(-1)?.jobs[0]?.cancellation?.state==='already-terminal');f.release();
+ const result=await pass;assert.equal(cancels,1);assert.equal(result.jobs[0].cancellation.state,'already-terminal');assert.doesNotMatch(JSON.stringify(result),/private transport failure/);
+});
+
+test('failing safety reads still cancel the exact job when execution control remains available',async()=>{
+ const f=fixture();slowDispatch(f);
+ const rpc=f.rpc;let failing=false,cancels=0;f.rpc=async(n,a)=>{if(failing&&n==='relay_autonomy')throw Error('private safety failure');return rpc(n,a);};
+ f.cancel=()=>{cancels++;return {ok:true};};useRealMcpClient(f);
+ const pass=f.run();await settle(f,()=>f.release);failing=true;await settle(f,()=>cancels===1);f.release();
+ const result=await pass;assert.equal(cancels,1);assert.equal(result.reason,'control-unavailable');assert.equal(result.jobs[0].cancellation.state,'requested');assert.doesNotMatch(JSON.stringify(result),/private safety failure/);
+});
 
 test('a stop during a running job cancels the exact job revision once and persists intent first',async()=>{
  const f=fixture();slowDispatch(f);

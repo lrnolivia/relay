@@ -59,13 +59,19 @@ export async function runNightShiftPass({plan,rpc,persist,journal=null,dispatch=
   const monitor=async()=>{
    if(monitoring||stopReason)return;monitoring=true;
    try{
-    stopReason=await gate(config);if(!stopReason)return;
+    // Losing a safety read is itself a stop reason. Execution control may still
+    // be reachable, so try to cancel the exact job before flagging uncertainty.
+    try{stopReason=await gate(config);}catch{stopReason='control-unavailable';}
+    if(!stopReason)return;
     receipt.stop_reason=stopReason;receipt.cancellation={state:'intent',operation_id:'ns-stop-'+digest({plan:planHash,job:job.id})};await persist(state);
     const latest=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,job_id:job.id});
     if(latest.ok!==true||latest.job?.id!==job.id)throw Error('Unavailable exact job');
     if(terminal.has(latest.job.state)){receipt.cancellation.state='already-terminal';await persist(state);return;}
     const cancel=revision=>rpc('relay_execution',{action:'cancel',project:config.project,assignment:config.assignment,job_id:job.id,expected_owner:config.owner,expected_branch:config.branch,expected_revision:revision,operation_id:receipt.cancellation.operation_id});
-    let cancelled=await cancel(latest.job.revision);
+    let cancelled;
+    // The real MCP client throws for rejected or uncertain tool responses.
+    // Reconcile those just like explicit failures before considering a retry.
+    try{cancelled=await cancel(latest.job.revision);}catch{cancelled=null;}
     // One bounded re-read covers a queued→running revision race; never loop.
     if(cancelled?.ok!==true){
      const again=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,job_id:job.id});
