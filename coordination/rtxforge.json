@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-20T19:53:24.099Z",
+  "updated_at": "2026-10-20T20:23:15.535Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2641,7 +2641,10 @@
         "scripts/companion_controls.py",
         "scripts/discovery.py",
         "tests/test_package_adoption.py",
-        "tests/test_offline_routes.py"
+        "tests/test_offline_routes.py",
+        "scripts/overlay_policy.py",
+        "tests/test_overlay_policy.py",
+        "windows/build/Build-ReShadeUi.ps1"
       ],
       "resources": [
         "rtxforge-shared-package-engine",
@@ -2650,8 +2653,8 @@
         "rtxforge-feeder-nr-integration"
       ],
       "goal": "Implement the new Skynizz NR package with rtxForge's working MFG on Windows first. Build the bridge ourselves when upstream does not provide a safe composition. The combined package is the intended default after exact-artifact MFG+NR validation. Preserve existing provider choices, restore and Linux behavior; Linux enablement follows. Build and install the Windows companion NR/MFG panel and backed-up 4K borderless install preferences. Add separate Feeder NR adoption/new-runtime updates for existing TS4 and Mass Effect installs, and fix Windows Open Folder.",
-      "acceptance": "Retain the assignment baseline and every prior acceptance amendment/version by reference, including provider provenance, transactional backups/restore, package Adoption/clean-install distinction, offline-only Gears profile and general anti-cheat refusal, NR startup off by default, preserved existing game tuning/MFG, Advanced controls, End/custom shortcut and separate OptiScaler binding. Keep draft PR28 and distinct healthy/user-approved receipts; no main/updater/public release/default promotion implied. Preserve the serial NR placement objective and evidence in rtxforge-nr-placement-truth-20261018: correct supported native/internal SR routing, balanced restoration and one NR stage per upscale, FG bypass, requested versus actual placement/model telemetry, explicit RR after-upscale fallback pending denoising-input validation, meaningful regression and exact build provenance. Runtime and cross-game motion correctness remain unproven until measured. Latest direct human instruction is 'go ahead and deploy it to everything that has nr installed'. This expressly supersedes the previous source-only local rollout hold for the exact 6cf211d candidate on compatible installed NR targets. Inventory all NR routes including Feeder; only apply a loader to its compatible host. Preserve per-target backups, existing tuning/startup settings/MFG/native DLSS, managed-record integrity and restoration boundaries; use fresh process/drift checks and verify writes. Skip running or incompatible targets and report them. No screen/input, game launch or Witcher relaunch is authorized by this rollout. Latest human request verified in source thread01a14d62: 'lets set it to65% by default and1.0 fo those0.7 values. across all NR enabled games now and future new installs'. This owner handles future new/clean-install defaults only: NR model65%, local structure1.0, skin structure1.0; preserve NRstartupoff and explicit enable-on-launch, repair/Adoption/existing preferences, MFG/cache/routes/runtime identities. Include only genuine supported Feeder equivalents. Verify provider/template/UI/engine and actual packaged new-install path with provenance. Source task completed installed-game tuning/PT testing; preserve its 65%/1.0 structure settings and Witcher PT-off result. No cachefix/runtimeDLL/default-package promotion implied. Latest direct human requests disabling OptiScaler welcome chrome on game startup. Apply supported splash suppression to future/repair installs and stopped, verified managed OptiScaler installs and detected legacy OptiScaler configurations (config-only, preserve unowned status) with backups, drift/running guards and consistent ownership metadata. Preserve normal manually opened OptiScaler menu, bindings, tuning, NR startup, MFG, proxies, runtime payloads and restore originals. This bounded request supersedes the previous no-game-config-write hold; no screen/input/game launches.",
-      "next_action": "Control splash-only update complete after fresh closed-process/integrity review. All26native installedtargets now suppress startup splash;25previous+Control. Backup/receipt optiscaler-splash-control-20261019-224945;19immutablefiles, NR/MFG/menu/proxy/originals preserved. App097bf32 unchanged, no screen/input/launch. DraftPR28; separateGPU/cache/native-menu/Feeder/Linuxacceptance remains.",
+      "acceptance": "Retain original goal and every previous acceptance amendment by reference: exact provider/runtime provenance, transactional backups and original restore boundaries, Adoption vs clean install, offline-only Gears, anti-cheat refusal, NR startup-off, existing65%/1.0 tuning/WitcherPT-off, native/Feeder separation, Advanced controls, End/custom/native shortcuts and no screen/input/game launches. Keep PR28 draft and866formalhealthy/user-approved recovery; no merge/public/updater/default/runtime promotion. All26native splash fixes complete. Add stable stage overlay-ui-intro-options-20261020 under direct owner request: shared manager/sidebar preferences independently enable/disable OptiScaler and ReShade menu access and each startup intro; default intros off, preserve NR/MFG/effects and custom bindings, expose honest per-host support/restart boundaries. Verify real supported controls; no no-op INI keys. Include reviewed/backed-up existing-game application and fresh/repair/restore persistence with drift/running guards, schema/functional tests and exact packaged app installation. Stock ReShade6.8 has no configurable splash switch; a compatible optional host may need a bounded source/build stage with pinned upstream/license/provenance and explicit reviewed installation, preserving existing user-supplied host as restore boundary. Do not silently replace current OptiScaler placement-candidate DLLs or change provider defaults to add UI options. Preserve remaining GPU/cache, original-menu gameplay, moving-scene Feeder and Linux gates. Supporting additions remain goal-bound, independently verified and held where runtime evidence is missing.",
+      "next_action": "Implement shared UI/intro switches and reviewed apply; build exact optional ReShade control host and verify existing NR payloads preserved.",
       "category": "implementation",
       "primary_role": "implementation",
       "primary_team": "runner",
@@ -2811,12 +2814,18 @@
             "text": "Retain the assignment baseline and every prior acceptance amendment/version by reference, including provider provenance, transactional backups/restore, package Adoption/clean-install distinction, offline-only Gears profile and general anti-cheat refusal, NR startup off by default, preserved existing game tuning/MFG, Advanced controls, End/custom shortcut and separate OptiScaler binding. Keep draft PR28 and distinct healthy/user-approved receipts; no main/updater/public release/default promotion implied. Preserve the serial NR placement objective and evidence in rtxforge-nr-placement-truth-20261018: correct supported native/internal SR routing, balanced restoration and one NR stage per upscale, FG bypass, requested versus actual placement/model telemetry, explicit RR after-upscale fallback pending denoising-input validation, meaningful regression and exact build provenance. Runtime and cross-game motion correctness remain unproven until measured. Latest direct human instruction is 'go ahead and deploy it to everything that has nr installed'. This expressly supersedes the previous source-only local rollout hold for the exact 6cf211d candidate on compatible installed NR targets. Inventory all NR routes including Feeder; only apply a loader to its compatible host. Preserve per-target backups, existing tuning/startup settings/MFG/native DLSS, managed-record integrity and restoration boundaries; use fresh process/drift checks and verify writes. Skip running or incompatible targets and report them. No screen/input, game launch or Witcher relaunch is authorized by this rollout. Latest human request verified in source thread01a14d62: 'lets set it to65% by default and1.0 fo those0.7 values. across all NR enabled games now and future new installs'. This owner handles future new/clean-install defaults only: NR model65%, local structure1.0, skin structure1.0; preserve NRstartupoff and explicit enable-on-launch, repair/Adoption/existing preferences, MFG/cache/routes/runtime identities. Include only genuine supported Feeder equivalents. Verify provider/template/UI/engine and actual packaged new-install path with provenance. Source task completed installed-game tuning/PT testing; preserve its 65%/1.0 structure settings and Witcher PT-off result. No cachefix/runtimeDLL/default-package promotion implied. Latest direct human requests disabling OptiScaler welcome chrome on game startup. Apply supported splash suppression to future/repair installs and stopped, verified managed OptiScaler installs and detected legacy OptiScaler configurations (config-only, preserve unowned status) with backups, drift/running guards and consistent ownership metadata. Preserve normal manually opened OptiScaler menu, bindings, tuning, NR startup, MFG, proxies, runtime payloads and restore originals. This bounded request supersedes the previous no-game-config-write hold; no screen/input/game launches.",
             "at": "2026-10-18T23:51:50.530Z",
             "reason": "Fresh inventory additionally finds a legacy OptiScaler config in Expedition33; direct request covers startup chrome across games. Suppress only known existing splash setting with backup, without Adoption or ownership changes."
+          },
+          {
+            "id": "rtxforge-skynizz-nr-provider-20261017:acceptance:27",
+            "text": "Retain original goal and every previous acceptance amendment by reference: exact provider/runtime provenance, transactional backups and original restore boundaries, Adoption vs clean install, offline-only Gears, anti-cheat refusal, NR startup-off, existing65%/1.0 tuning/WitcherPT-off, native/Feeder separation, Advanced controls, End/custom/native shortcuts and no screen/input/game launches. Keep PR28 draft and866formalhealthy/user-approved recovery; no merge/public/updater/default/runtime promotion. All26native splash fixes complete. Add stable stage overlay-ui-intro-options-20261020 under direct owner request: shared manager/sidebar preferences independently enable/disable OptiScaler and ReShade menu access and each startup intro; default intros off, preserve NR/MFG/effects and custom bindings, expose honest per-host support/restart boundaries. Verify real supported controls; no no-op INI keys. Include reviewed/backed-up existing-game application and fresh/repair/restore persistence with drift/running guards, schema/functional tests and exact packaged app installation. Stock ReShade6.8 has no configurable splash switch; a compatible optional host may need a bounded source/build stage with pinned upstream/license/provenance and explicit reviewed installation, preserving existing user-supplied host as restore boundary. Do not silently replace current OptiScaler placement-candidate DLLs or change provider defaults to add UI options. Preserve remaining GPU/cache, original-menu gameplay, moving-scene Feeder and Linux gates. Supporting additions remain goal-bound, independently verified and held where runtime evidence is missing.",
+            "at": "2026-10-20T20:13:15.956Z",
+            "reason": "Direct owner requests four independent native UI/intro settings; inspect actual host support and preserve working runtimes."
           }
         ]
       },
-      "updated_at": "2026-10-20T02:50:56.156Z",
-      "lease_until": "2026-10-20T14:50:56.156Z",
-      "amendment_count": 26,
+      "updated_at": "2026-10-20T20:16:20.421Z",
+      "lease_until": "2026-10-21T08:16:20.421Z",
+      "amendment_count": 29,
       "amendments": [
         {
           "at": "2026-10-17T05:22:27.174Z",
@@ -3572,6 +3581,280 @@
             "acceptance": "Retain the assignment baseline and every prior acceptance amendment/version by reference, including provider provenance, transactional backups/restore, package Adoption/clean-install distinction, offline-only Gears profile and general anti-cheat refusal, NR startup off by default, preserved existing game tuning/MFG, Advanced controls, End/custom shortcut and separate OptiScaler binding. Keep draft PR28 and distinct healthy/user-approved receipts; no main/updater/public release/default promotion implied. Preserve the serial NR placement objective and evidence in rtxforge-nr-placement-truth-20261018: correct supported native/internal SR routing, balanced restoration and one NR stage per upscale, FG bypass, requested versus actual placement/model telemetry, explicit RR after-upscale fallback pending denoising-input validation, meaningful regression and exact build provenance. Runtime and cross-game motion correctness remain unproven until measured. Latest direct human instruction is 'go ahead and deploy it to everything that has nr installed'. This expressly supersedes the previous source-only local rollout hold for the exact 6cf211d candidate on compatible installed NR targets. Inventory all NR routes including Feeder; only apply a loader to its compatible host. Preserve per-target backups, existing tuning/startup settings/MFG/native DLSS, managed-record integrity and restoration boundaries; use fresh process/drift checks and verify writes. Skip running or incompatible targets and report them. No screen/input, game launch or Witcher relaunch is authorized by this rollout. Latest human request verified in source thread01a14d62: 'lets set it to65% by default and1.0 fo those0.7 values. across all NR enabled games now and future new installs'. This owner handles future new/clean-install defaults only: NR model65%, local structure1.0, skin structure1.0; preserve NRstartupoff and explicit enable-on-launch, repair/Adoption/existing preferences, MFG/cache/routes/runtime identities. Include only genuine supported Feeder equivalents. Verify provider/template/UI/engine and actual packaged new-install path with provenance. Source task completed installed-game tuning/PT testing; preserve its 65%/1.0 structure settings and Witcher PT-off result. No cachefix/runtimeDLL/default-package promotion implied. Latest direct human requests disabling OptiScaler welcome chrome on game startup. Apply supported splash suppression to future/repair installs and stopped, verified managed OptiScaler installs and detected legacy OptiScaler configurations (config-only, preserve unowned status) with backups, drift/running guards and consistent ownership metadata. Preserve normal manually opened OptiScaler menu, bindings, tuning, NR startup, MFG, proxies, runtime payloads and restore originals. This bounded request supersedes the previous no-game-config-write hold; no screen/input/game launches.",
             "next_action": "Complete25closed-game config updates; recheck Control once closed, suppress existing legacy splash key without ownership change, then install exact097bf app and verify future installs."
           }
+        },
+        {
+          "at": "2026-10-20T20:13:15.956Z",
+          "by": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
+          "reason": "Direct owner requests four independent native UI/intro settings; inspect actual host support and preserve working runtimes.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Retain the assignment baseline and every prior acceptance amendment/version by reference, including provider provenance, transactional backups/restore, package Adoption/clean-install distinction, offline-only Gears profile and general anti-cheat refusal, NR startup off by default, preserved existing game tuning/MFG, Advanced controls, End/custom shortcut and separate OptiScaler binding. Keep draft PR28 and distinct healthy/user-approved receipts; no main/updater/public release/default promotion implied. Preserve the serial NR placement objective and evidence in rtxforge-nr-placement-truth-20261018: correct supported native/internal SR routing, balanced restoration and one NR stage per upscale, FG bypass, requested versus actual placement/model telemetry, explicit RR after-upscale fallback pending denoising-input validation, meaningful regression and exact build provenance. Runtime and cross-game motion correctness remain unproven until measured. Latest direct human instruction is 'go ahead and deploy it to everything that has nr installed'. This expressly supersedes the previous source-only local rollout hold for the exact 6cf211d candidate on compatible installed NR targets. Inventory all NR routes including Feeder; only apply a loader to its compatible host. Preserve per-target backups, existing tuning/startup settings/MFG/native DLSS, managed-record integrity and restoration boundaries; use fresh process/drift checks and verify writes. Skip running or incompatible targets and report them. No screen/input, game launch or Witcher relaunch is authorized by this rollout. Latest human request verified in source thread01a14d62: 'lets set it to65% by default and1.0 fo those0.7 values. across all NR enabled games now and future new installs'. This owner handles future new/clean-install defaults only: NR model65%, local structure1.0, skin structure1.0; preserve NRstartupoff and explicit enable-on-launch, repair/Adoption/existing preferences, MFG/cache/routes/runtime identities. Include only genuine supported Feeder equivalents. Verify provider/template/UI/engine and actual packaged new-install path with provenance. Source task completed installed-game tuning/PT testing; preserve its 65%/1.0 structure settings and Witcher PT-off result. No cachefix/runtimeDLL/default-package promotion implied. Latest direct human requests disabling OptiScaler welcome chrome on game startup. Apply supported splash suppression to future/repair installs and stopped, verified managed OptiScaler installs and detected legacy OptiScaler configurations (config-only, preserve unowned status) with backups, drift/running guards and consistent ownership metadata. Preserve normal manually opened OptiScaler menu, bindings, tuning, NR startup, MFG, proxies, runtime payloads and restore originals. This bounded request supersedes the previous no-game-config-write hold; no screen/input/game launches.",
+            "next_action": "Control splash-only update complete after fresh closed-process/integrity review. All26native installedtargets now suppress startup splash;25previous+Control. Backup/receipt optiscaler-splash-control-20261019-224945;19immutablefiles, NR/MFG/menu/proxy/originals preserved. App097bf32 unchanged, no screen/input/launch. DraftPR28; separateGPU/cache/native-menu/Feeder/Linuxacceptance remains."
+          },
+          "after": {
+            "acceptance": "Retain original goal and every previous acceptance amendment by reference: exact provider/runtime provenance, transactional backups and original restore boundaries, Adoption vs clean install, offline-only Gears, anti-cheat refusal, NR startup-off, existing65%/1.0 tuning/WitcherPT-off, native/Feeder separation, Advanced controls, End/custom/native shortcuts and no screen/input/game launches. Keep PR28 draft and866formalhealthy/user-approved recovery; no merge/public/updater/default/runtime promotion. All26native splash fixes complete. Add stable stage overlay-ui-intro-options-20261020 under direct owner request: shared manager/sidebar preferences independently enable/disable OptiScaler and ReShade menu access and each startup intro; default intros off, preserve NR/MFG/effects and custom bindings, expose honest per-host support/restart boundaries. Verify real supported controls; no no-op INI keys. Include reviewed/backed-up existing-game application and fresh/repair/restore persistence with drift/running guards, schema/functional tests and exact packaged app installation. Stock ReShade6.8 has no configurable splash switch; a compatible optional host may need a bounded source/build stage with pinned upstream/license/provenance and explicit reviewed installation, preserving existing user-supplied host as restore boundary. Do not silently replace current OptiScaler placement-candidate DLLs or change provider defaults to add UI options. Preserve remaining GPU/cache, original-menu gameplay, moving-scene Feeder and Linux gates. Supporting additions remain goal-bound, independently verified and held where runtime evidence is missing.",
+            "next_action": "Implement four shared preferences and truthful reviewed adapters; verify OptiScaler config/registry and optional source-built ReShade control host before installing app."
+          }
+        },
+        {
+          "at": "2026-10-20T20:15:28.612Z",
+          "by": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
+          "reason": "Add shared UI policy module and focused test to existing Windows UI/provider work; compatible ReShade source/build remains under claimed providers/windows build scope.",
+          "fields": [
+            "next_action",
+            "paths"
+          ],
+          "before": {
+            "next_action": "Implement four shared preferences and truthful reviewed adapters; verify OptiScaler config/registry and optional source-built ReShade control host before installing app.",
+            "paths": [
+              "scripts/package_catalog.py",
+              "scripts/engine_bridge.py",
+              "scripts/skynizz_provider.py",
+              "scripts/desktop_service.py",
+              "engine/rtxengine.py",
+              "tests/test_skynizz_provider.py",
+              "tests/test_package_catalog.py",
+              "tests/test_nr_composition.py",
+              "windows/engine-host/win_features.py",
+              "windows/tests/test_skynizz_provider.py",
+              "windows/RtxForge.Windows/MainWindow.xaml.cs",
+              "windows/RtxForge.Windows/MainWindow.Features.cs",
+              "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+              "windows/RtxForge.Windows/Views/PackagesPage.cs",
+              "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+              "README.md",
+              "windows/engine-host/rtxforge_win_host.py",
+              "windows/RtxForge.Windows/Models/Models.cs",
+              "scripts/library_media.py",
+              "providers/",
+              "windows/build/Build-SkynizzBridge.ps1",
+              ".github/workflows/skynizz-bridge.yml",
+              "tests/test_skynizz_bridge.py",
+              "windows/build/Bundle-Engine.ps1",
+              ".github/workflows/windows-build.yml",
+              ".gitattributes",
+              "windows/RtxForge.Windows/",
+              "windows/tests/",
+              "windows/engine-host/",
+              "scripts/game_display.py",
+              "tests/test_game_display.py",
+              "PRODUCT.md",
+              "DESIGN.md",
+              "scripts/ada_mfg_provider.py",
+              "tests/test_ada_mfg_provider.py",
+              "providers/lock.json",
+              "scripts/feeder_provider.py",
+              "scripts/extra_tools.py",
+              "scripts/runtime_diagnostics.py",
+              "windows/RtxForge.Windows/Services/",
+              "windows/RtxForge.Windows/Models/",
+              "windows/RtxForge.Windows/Views/",
+              "tests/test_feeder_provider.py",
+              "windows/tests/test_feeder_provider.py",
+              "scripts/runtime_updates.py",
+              "tests/test_runtime_updates.py",
+              "windows/installer/rtxForge.iss",
+              "scripts/package_adoption.py",
+              "scripts/offline_routes.py",
+              "scripts/companion_controls.py",
+              "scripts/discovery.py",
+              "tests/test_package_adoption.py",
+              "tests/test_offline_routes.py"
+            ]
+          },
+          "after": {
+            "next_action": "Implement UI policy, shared switches and reviewed managed-game config/optional ReShade host adapter; then exact build and preserve working NR DLLs.",
+            "paths": [
+              "scripts/package_catalog.py",
+              "scripts/engine_bridge.py",
+              "scripts/skynizz_provider.py",
+              "scripts/desktop_service.py",
+              "engine/rtxengine.py",
+              "tests/test_skynizz_provider.py",
+              "tests/test_package_catalog.py",
+              "tests/test_nr_composition.py",
+              "windows/engine-host/win_features.py",
+              "windows/tests/test_skynizz_provider.py",
+              "windows/RtxForge.Windows/MainWindow.xaml.cs",
+              "windows/RtxForge.Windows/MainWindow.Features.cs",
+              "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+              "windows/RtxForge.Windows/Views/PackagesPage.cs",
+              "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+              "README.md",
+              "windows/engine-host/rtxforge_win_host.py",
+              "windows/RtxForge.Windows/Models/Models.cs",
+              "scripts/library_media.py",
+              "providers/",
+              "windows/build/Build-SkynizzBridge.ps1",
+              ".github/workflows/skynizz-bridge.yml",
+              "tests/test_skynizz_bridge.py",
+              "windows/build/Bundle-Engine.ps1",
+              ".github/workflows/windows-build.yml",
+              ".gitattributes",
+              "windows/RtxForge.Windows/",
+              "windows/tests/",
+              "windows/engine-host/",
+              "scripts/game_display.py",
+              "tests/test_game_display.py",
+              "PRODUCT.md",
+              "DESIGN.md",
+              "scripts/ada_mfg_provider.py",
+              "tests/test_ada_mfg_provider.py",
+              "providers/lock.json",
+              "scripts/feeder_provider.py",
+              "scripts/extra_tools.py",
+              "scripts/runtime_diagnostics.py",
+              "windows/RtxForge.Windows/Services/",
+              "windows/RtxForge.Windows/Models/",
+              "windows/RtxForge.Windows/Views/",
+              "tests/test_feeder_provider.py",
+              "windows/tests/test_feeder_provider.py",
+              "scripts/runtime_updates.py",
+              "tests/test_runtime_updates.py",
+              "windows/installer/rtxForge.iss",
+              "scripts/package_adoption.py",
+              "scripts/offline_routes.py",
+              "scripts/companion_controls.py",
+              "scripts/discovery.py",
+              "tests/test_package_adoption.py",
+              "tests/test_offline_routes.py",
+              "scripts/overlay_policy.py",
+              "tests/test_overlay_policy.py"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-20T20:16:20.421Z",
+          "by": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
+          "reason": "Admit compatible ReShade UI build script required for real intro suppression; remaining files stay in existing claimed Windows/provider scopes.",
+          "fields": [
+            "next_action",
+            "paths"
+          ],
+          "before": {
+            "next_action": "Implement UI policy, shared switches and reviewed managed-game config/optional ReShade host adapter; then exact build and preserve working NR DLLs.",
+            "paths": [
+              "scripts/package_catalog.py",
+              "scripts/engine_bridge.py",
+              "scripts/skynizz_provider.py",
+              "scripts/desktop_service.py",
+              "engine/rtxengine.py",
+              "tests/test_skynizz_provider.py",
+              "tests/test_package_catalog.py",
+              "tests/test_nr_composition.py",
+              "windows/engine-host/win_features.py",
+              "windows/tests/test_skynizz_provider.py",
+              "windows/RtxForge.Windows/MainWindow.xaml.cs",
+              "windows/RtxForge.Windows/MainWindow.Features.cs",
+              "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+              "windows/RtxForge.Windows/Views/PackagesPage.cs",
+              "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+              "README.md",
+              "windows/engine-host/rtxforge_win_host.py",
+              "windows/RtxForge.Windows/Models/Models.cs",
+              "scripts/library_media.py",
+              "providers/",
+              "windows/build/Build-SkynizzBridge.ps1",
+              ".github/workflows/skynizz-bridge.yml",
+              "tests/test_skynizz_bridge.py",
+              "windows/build/Bundle-Engine.ps1",
+              ".github/workflows/windows-build.yml",
+              ".gitattributes",
+              "windows/RtxForge.Windows/",
+              "windows/tests/",
+              "windows/engine-host/",
+              "scripts/game_display.py",
+              "tests/test_game_display.py",
+              "PRODUCT.md",
+              "DESIGN.md",
+              "scripts/ada_mfg_provider.py",
+              "tests/test_ada_mfg_provider.py",
+              "providers/lock.json",
+              "scripts/feeder_provider.py",
+              "scripts/extra_tools.py",
+              "scripts/runtime_diagnostics.py",
+              "windows/RtxForge.Windows/Services/",
+              "windows/RtxForge.Windows/Models/",
+              "windows/RtxForge.Windows/Views/",
+              "tests/test_feeder_provider.py",
+              "windows/tests/test_feeder_provider.py",
+              "scripts/runtime_updates.py",
+              "tests/test_runtime_updates.py",
+              "windows/installer/rtxForge.iss",
+              "scripts/package_adoption.py",
+              "scripts/offline_routes.py",
+              "scripts/companion_controls.py",
+              "scripts/discovery.py",
+              "tests/test_package_adoption.py",
+              "tests/test_offline_routes.py",
+              "scripts/overlay_policy.py",
+              "tests/test_overlay_policy.py"
+            ]
+          },
+          "after": {
+            "next_action": "Implement shared UI/intro switches and reviewed apply; build exact optional ReShade control host and verify existing NR payloads preserved.",
+            "paths": [
+              "scripts/package_catalog.py",
+              "scripts/engine_bridge.py",
+              "scripts/skynizz_provider.py",
+              "scripts/desktop_service.py",
+              "engine/rtxengine.py",
+              "tests/test_skynizz_provider.py",
+              "tests/test_package_catalog.py",
+              "tests/test_nr_composition.py",
+              "windows/engine-host/win_features.py",
+              "windows/tests/test_skynizz_provider.py",
+              "windows/RtxForge.Windows/MainWindow.xaml.cs",
+              "windows/RtxForge.Windows/MainWindow.Features.cs",
+              "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+              "windows/RtxForge.Windows/Views/PackagesPage.cs",
+              "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+              "README.md",
+              "windows/engine-host/rtxforge_win_host.py",
+              "windows/RtxForge.Windows/Models/Models.cs",
+              "scripts/library_media.py",
+              "providers/",
+              "windows/build/Build-SkynizzBridge.ps1",
+              ".github/workflows/skynizz-bridge.yml",
+              "tests/test_skynizz_bridge.py",
+              "windows/build/Bundle-Engine.ps1",
+              ".github/workflows/windows-build.yml",
+              ".gitattributes",
+              "windows/RtxForge.Windows/",
+              "windows/tests/",
+              "windows/engine-host/",
+              "scripts/game_display.py",
+              "tests/test_game_display.py",
+              "PRODUCT.md",
+              "DESIGN.md",
+              "scripts/ada_mfg_provider.py",
+              "tests/test_ada_mfg_provider.py",
+              "providers/lock.json",
+              "scripts/feeder_provider.py",
+              "scripts/extra_tools.py",
+              "scripts/runtime_diagnostics.py",
+              "windows/RtxForge.Windows/Services/",
+              "windows/RtxForge.Windows/Models/",
+              "windows/RtxForge.Windows/Views/",
+              "tests/test_feeder_provider.py",
+              "windows/tests/test_feeder_provider.py",
+              "scripts/runtime_updates.py",
+              "tests/test_runtime_updates.py",
+              "windows/installer/rtxForge.iss",
+              "scripts/package_adoption.py",
+              "scripts/offline_routes.py",
+              "scripts/companion_controls.py",
+              "scripts/discovery.py",
+              "tests/test_package_adoption.py",
+              "tests/test_offline_routes.py",
+              "scripts/overlay_policy.py",
+              "tests/test_overlay_policy.py",
+              "windows/build/Build-ReShadeUi.ps1"
+            ]
+          }
         }
       ],
       "handoffs": [
@@ -3597,15 +3880,15 @@
         "rtxforge-landing-worker"
       ],
       "goal": "Publish the approved dynamic Linux/Windows rtxForge Beta landing page at rtxforge.loew.fi and consolidate GitHub to one plainly named public beta.",
-      "acceptance": "Direct user authorization in this chat: remove older public releases and keep one rtxForge Beta; create Worker/subdomain rtxforge.loew.fi and get landing site live; enlarge unchanged app icon in hero. Preserve Bakbak One, shared cool grey palette, no eyebrows, revised description, verified platform download routes and honest platform capability status. User owns Linux capability catch-up; do not change Linux app functionality or publish held PR28 runtime. Preserve current published Linux bytes/updater route, dependency artwork bytes, and recovery before deleting superseded release objects. Update Linux publisher title to prevent regression. Website source and config versioned; exact deployment identity and live platform-switch verification required.",
-      "next_action": "Check Wrangler account/domain inventory, create isolated admitted checkout, place approved icon in hero and deploy static Worker to custom domain; preserve release artifacts and reconcile dependencies before deleting old release records.",
+      "acceptance": "Direct user authorization in this chat: remove older public releases and keep one rtxForge Beta; create Worker/subdomain rtxforge.loew.fi and get landing site live; enlarge unchanged app icon in hero. Preserve Bakbak One, shared cool grey palette, no eyebrows, revised description, verified platform download routes and honest platform capability status. User owns Linux capability catch-up; do not change Linux app functionality or publish held PR28 runtime. Preserve current published Linux bytes/updater route, dependency artwork bytes, and recovery before deleting superseded release objects. Update Linux publisher title to prevent regression. Website source and config versioned; exact deployment identity and live platform-switch verification required.\nLatest direct user review supersedes the hero-icon direction: remove the separate hero logo, use the existing Steam hero artwork full bleed with a gradient fade, tune shared greys to its charcoal tones, keep a sun/moon glyph in the header and move GitHub to the footer. Preserve the header brand and all platform/install/support behavior. Gradient is explicitly requested. Existing Windows preview links stay as previews; no newer application runtime is released by this cleanup.\nLatest direct user correction: landing page must distinguish a normal Beta release from a moving Development release, both planned and not yet published. Do not create/promote those releases now. Primary Beta and separate Development availability are driven by published platform assets; no old CI artifact links or legacy continuous build presented as the new Beta. Selected configuration uses beta/development tags in public/releases.mjs, documented for publishers. Artwork starts behind the header; a soft black header gradient preserves legibility. Existing continuous updater compatibility remains untouched.",
+      "next_action": "Publish and verify release-driven coming-soon states, both appearances and viewport widths; finish exact-head source integration and record final deployment/release archival receipts.",
       "category": "implementation",
       "primary_team": "release",
       "supporting_teams": [],
       "primary_staff": null,
       "supporting_staff": [],
       "base_sha": "d7257233927bcbe7601a9fbf6a54e19be40d2911",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-20T19:53:24.099Z",
       "objective_history": {
         "baseline": {
@@ -3619,11 +3902,176 @@
             "id": "rtxforge-beta-site-release-20261020:acceptance:0",
             "text": "Direct user authorization in this chat: remove older public releases and keep one rtxForge Beta; create Worker/subdomain rtxforge.loew.fi and get landing site live; enlarge unchanged app icon in hero. Preserve Bakbak One, shared cool grey palette, no eyebrows, revised description, verified platform download routes and honest platform capability status. User owns Linux capability catch-up; do not change Linux app functionality or publish held PR28 runtime. Preserve current published Linux bytes/updater route, dependency artwork bytes, and recovery before deleting superseded release objects. Update Linux publisher title to prevent regression. Website source and config versioned; exact deployment identity and live platform-switch verification required.",
             "at": "2026-10-20T19:53:24.099Z"
+          },
+          {
+            "id": "rtxforge-beta-site-release-20261020:acceptance:1",
+            "text": "Direct user authorization in this chat: remove older public releases and keep one rtxForge Beta; create Worker/subdomain rtxforge.loew.fi and get landing site live; enlarge unchanged app icon in hero. Preserve Bakbak One, shared cool grey palette, no eyebrows, revised description, verified platform download routes and honest platform capability status. User owns Linux capability catch-up; do not change Linux app functionality or publish held PR28 runtime. Preserve current published Linux bytes/updater route, dependency artwork bytes, and recovery before deleting superseded release objects. Update Linux publisher title to prevent regression. Website source and config versioned; exact deployment identity and live platform-switch verification required.\nLatest direct user review supersedes the hero-icon direction: remove the separate hero logo, use the existing Steam hero artwork full bleed with a gradient fade, tune shared greys to its charcoal tones, keep a sun/moon glyph in the header and move GitHub to the footer. Preserve the header brand and all platform/install/support behavior. Gradient is explicitly requested. Existing Windows preview links stay as previews; no newer application runtime is released by this cleanup.",
+            "at": "2026-10-20T20:00:05.757Z",
+            "reason": "Direct user design revisions in the same chat after the first live deployment."
+          },
+          {
+            "id": "rtxforge-beta-site-release-20261020:acceptance:2",
+            "text": "Direct user authorization in this chat: remove older public releases and keep one rtxForge Beta; create Worker/subdomain rtxforge.loew.fi and get landing site live; enlarge unchanged app icon in hero. Preserve Bakbak One, shared cool grey palette, no eyebrows, revised description, verified platform download routes and honest platform capability status. User owns Linux capability catch-up; do not change Linux app functionality or publish held PR28 runtime. Preserve current published Linux bytes/updater route, dependency artwork bytes, and recovery before deleting superseded release objects. Update Linux publisher title to prevent regression. Website source and config versioned; exact deployment identity and live platform-switch verification required.\nLatest direct user review supersedes the hero-icon direction: remove the separate hero logo, use the existing Steam hero artwork full bleed with a gradient fade, tune shared greys to its charcoal tones, keep a sun/moon glyph in the header and move GitHub to the footer. Preserve the header brand and all platform/install/support behavior. Gradient is explicitly requested. Existing Windows preview links stay as previews; no newer application runtime is released by this cleanup.\nLatest direct user correction: landing page must distinguish a normal Beta release from a moving Development release, both planned and not yet published. Do not create/promote those releases now. Primary Beta and separate Development availability are driven by published platform assets; no old CI artifact links or legacy continuous build presented as the new Beta. Selected configuration uses beta/development tags in public/releases.mjs, documented for publishers. Artwork starts behind the header; a soft black header gradient preserves legibility. Existing continuous updater compatibility remains untouched.",
+            "at": "2026-10-20T20:04:47.682Z",
+            "reason": "Direct user clarified future application-release channels and full-bleed header placement."
           }
         ]
       },
-      "updated_at": "2026-10-20T19:53:24.099Z",
-      "lease_until": "2026-10-21T07:53:24.099Z"
+      "updated_at": "2026-10-20T20:11:35.158Z",
+      "lease_until": "2026-10-21T08:11:35.158Z",
+      "amendment_count": 2,
+      "amendments": [
+        {
+          "at": "2026-10-20T20:00:05.757Z",
+          "by": "01a15ad4-0fe2-7230-a024-20a4a4dba118",
+          "reason": "Direct user design revisions in the same chat after the first live deployment.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Direct user authorization in this chat: remove older public releases and keep one rtxForge Beta; create Worker/subdomain rtxforge.loew.fi and get landing site live; enlarge unchanged app icon in hero. Preserve Bakbak One, shared cool grey palette, no eyebrows, revised description, verified platform download routes and honest platform capability status. User owns Linux capability catch-up; do not change Linux app functionality or publish held PR28 runtime. Preserve current published Linux bytes/updater route, dependency artwork bytes, and recovery before deleting superseded release objects. Update Linux publisher title to prevent regression. Website source and config versioned; exact deployment identity and live platform-switch verification required.",
+            "next_action": "Check Wrangler account/domain inventory, create isolated admitted checkout, place approved icon in hero and deploy static Worker to custom domain; preserve release artifacts and reconcile dependencies before deleting old release records."
+          },
+          "after": {
+            "acceptance": "Direct user authorization in this chat: remove older public releases and keep one rtxForge Beta; create Worker/subdomain rtxforge.loew.fi and get landing site live; enlarge unchanged app icon in hero. Preserve Bakbak One, shared cool grey palette, no eyebrows, revised description, verified platform download routes and honest platform capability status. User owns Linux capability catch-up; do not change Linux app functionality or publish held PR28 runtime. Preserve current published Linux bytes/updater route, dependency artwork bytes, and recovery before deleting superseded release objects. Update Linux publisher title to prevent regression. Website source and config versioned; exact deployment identity and live platform-switch verification required.\nLatest direct user review supersedes the hero-icon direction: remove the separate hero logo, use the existing Steam hero artwork full bleed with a gradient fade, tune shared greys to its charcoal tones, keep a sun/moon glyph in the header and move GitHub to the footer. Preserve the header brand and all platform/install/support behavior. Gradient is explicitly requested. Existing Windows preview links stay as previews; no newer application runtime is released by this cleanup.",
+            "next_action": "Finish live verification of Steam artwork, charcoal fade, sun/moon glyph and footer GitHub; merge exact green website source, verify one public beta and close with deployment/recovery receipts."
+          }
+        },
+        {
+          "at": "2026-10-20T20:04:47.682Z",
+          "by": "01a15ad4-0fe2-7230-a024-20a4a4dba118",
+          "reason": "Direct user clarified future application-release channels and full-bleed header placement.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Direct user authorization in this chat: remove older public releases and keep one rtxForge Beta; create Worker/subdomain rtxforge.loew.fi and get landing site live; enlarge unchanged app icon in hero. Preserve Bakbak One, shared cool grey palette, no eyebrows, revised description, verified platform download routes and honest platform capability status. User owns Linux capability catch-up; do not change Linux app functionality or publish held PR28 runtime. Preserve current published Linux bytes/updater route, dependency artwork bytes, and recovery before deleting superseded release objects. Update Linux publisher title to prevent regression. Website source and config versioned; exact deployment identity and live platform-switch verification required.\nLatest direct user review supersedes the hero-icon direction: remove the separate hero logo, use the existing Steam hero artwork full bleed with a gradient fade, tune shared greys to its charcoal tones, keep a sun/moon glyph in the header and move GitHub to the footer. Preserve the header brand and all platform/install/support behavior. Gradient is explicitly requested. Existing Windows preview links stay as previews; no newer application runtime is released by this cleanup.",
+            "next_action": "Finish live verification of Steam artwork, charcoal fade, sun/moon glyph and footer GitHub; merge exact green website source, verify one public beta and close with deployment/recovery receipts."
+          },
+          "after": {
+            "acceptance": "Direct user authorization in this chat: remove older public releases and keep one rtxForge Beta; create Worker/subdomain rtxforge.loew.fi and get landing site live; enlarge unchanged app icon in hero. Preserve Bakbak One, shared cool grey palette, no eyebrows, revised description, verified platform download routes and honest platform capability status. User owns Linux capability catch-up; do not change Linux app functionality or publish held PR28 runtime. Preserve current published Linux bytes/updater route, dependency artwork bytes, and recovery before deleting superseded release objects. Update Linux publisher title to prevent regression. Website source and config versioned; exact deployment identity and live platform-switch verification required.\nLatest direct user review supersedes the hero-icon direction: remove the separate hero logo, use the existing Steam hero artwork full bleed with a gradient fade, tune shared greys to its charcoal tones, keep a sun/moon glyph in the header and move GitHub to the footer. Preserve the header brand and all platform/install/support behavior. Gradient is explicitly requested. Existing Windows preview links stay as previews; no newer application runtime is released by this cleanup.\nLatest direct user correction: landing page must distinguish a normal Beta release from a moving Development release, both planned and not yet published. Do not create/promote those releases now. Primary Beta and separate Development availability are driven by published platform assets; no old CI artifact links or legacy continuous build presented as the new Beta. Selected configuration uses beta/development tags in public/releases.mjs, documented for publishers. Artwork starts behind the header; a soft black header gradient preserves legibility. Existing continuous updater compatibility remains untouched.",
+            "next_action": "Publish and verify release-driven coming-soon states, both appearances and viewport widths; finish exact-head source integration and record final deployment/release archival receipts."
+          }
+        }
+      ],
+      "pr": 29,
+      "merged_head_sha": "d1fbfe83a31f1ce5ab6297f78093e7692e4e26ff",
+      "merge_commit_sha": "289c7a4015257522ae51600427eed8ecbf8b094e",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/29; merge 289c7a4015257522ae51600427eed8ecbf8b094e; source d1fbfe83a31f1ce5ab6297f78093e7692e4e26ff; Worker 59439fdf-1f24-4efd-8fb0-0986f23cea7a HTTPS200 and matching production source; Visuals vis_6d3defa8-420e-47cd-a7ee-c485bf5ff7d2; canonical context ctx_1d0118c186c95c728941e18ba8da6a48aad6665faffc79eb1c5f5713100bff71 revision98; 6 fixture tests and live responsive keyboard checks pass. All scope accounted; user now requests a separate app screenshot gallery.",
+      "work_accounted": true,
+      "completed_at": "2026-10-20T20:11:35.158Z"
+    },
+    {
+      "id": "rtxforge-beta-app-gallery-20261020",
+      "owner": "01a15ad4-0fe2-7230-a024-20a4a4dba118",
+      "branch": "rtxforge/beta-app-gallery-20261020",
+      "paths": [
+        "website/"
+      ],
+      "resources": [
+        "rtxforge-landing-worker"
+      ],
+      "goal": "Add a balanced OS-aware app screenshot gallery to the live rtxForge landing page and supply matched native screenshot instructions for Control Resonant.",
+      "acceptance": "Direct user request in this chat: implement the screenshot design now using authentic available captures; provide instructions to existing Linux/Windows chats to capture Library, Control Resonant details, Game Mode Library and Game Mode details with equal window dimensions and composition. Use Control Resonant as selected by Lauren. Preserve approved hero, palette, typography, download channels and support. Mark any demo/older captures accurately; no fabricated app screenshots, game support claims, app installs, native app source or game-file writes. Gallery handles all four view selections and OS changes; replaceable asset manifest and accessible responsive controls. Existing live publication authorization covers this related website design update; verify and publish exact site source with rollback retained. Fresh native screenshot collection remains with user and is not claimed complete.",
+      "next_action": "Inspect latest canonical-main native review artifacts, create isolated website branch, implement gallery with available authentic evidence and explicit pending states, verify responsive/keyboards/theme/OS behavior, publish and provide paste-ready capture protocol.",
+      "category": "design",
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "base_sha": "289c7a4015257522ae51600427eed8ecbf8b094e",
+      "state": "completed",
+      "created_at": "2026-10-20T20:11:53.319Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Add a balanced OS-aware app screenshot gallery to the live rtxForge landing page and supply matched native screenshot instructions for Control Resonant.",
+          "acceptance": "Direct user request in this chat: implement the screenshot design now using authentic available captures; provide instructions to existing Linux/Windows chats to capture Library, Control Resonant details, Game Mode Library and Game Mode details with equal window dimensions and composition. Use Control Resonant as selected by Lauren. Preserve approved hero, palette, typography, download channels and support. Mark any demo/older captures accurately; no fabricated app screenshots, game support claims, app installs, native app source or game-file writes. Gallery handles all four view selections and OS changes; replaceable asset manifest and accessible responsive controls. Existing live publication authorization covers this related website design update; verify and publish exact site source with rollback retained. Fresh native screenshot collection remains with user and is not claimed complete.",
+          "at": "2026-10-20T20:11:53.319Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta-app-gallery-20261020:acceptance:0",
+            "text": "Direct user request in this chat: implement the screenshot design now using authentic available captures; provide instructions to existing Linux/Windows chats to capture Library, Control Resonant details, Game Mode Library and Game Mode details with equal window dimensions and composition. Use Control Resonant as selected by Lauren. Preserve approved hero, palette, typography, download channels and support. Mark any demo/older captures accurately; no fabricated app screenshots, game support claims, app installs, native app source or game-file writes. Gallery handles all four view selections and OS changes; replaceable asset manifest and accessible responsive controls. Existing live publication authorization covers this related website design update; verify and publish exact site source with rollback retained. Fresh native screenshot collection remains with user and is not claimed complete.",
+            "at": "2026-10-20T20:11:53.319Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-20T20:18:52.276Z",
+      "lease_until": "2026-10-21T08:18:52.276Z",
+      "pr": 30,
+      "merged_head_sha": "9014802262c2b1a302f9d54cfe4e4c1ca1807c88",
+      "merge_commit_sha": "2ff8c7e5d5e0cbb34c3bcddcae1830af6e28bf80",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/30 merged2ff8c7e5d5e0cbb34c3bcddcae1830af6e28bf80 from exact source9014802262c2b1a302f9d54cfe4e4c1ca1807c88. Live rtxforge.loew.fi Workerbc2ec693-8bd8-4e9e-9dc2-8ac255d21b66; HTTPS200 and8assetSHA256 matches. Gallery Linux4authentic labeled demoimages, Windowspending, accessible view/OS switching and fullsize links validated. Six release fixture tests, syntax, dryrun, responsive light/dark/keyboard pass. Production Visuals vis_99a4130a-a8b2-48ec-b081-881fff794600. Canonical delivery context ctx_a83d0016f2cbdb42127e934245be652a382a4137e90e3c49b2d07f55915b5d7d revision100. README capture specification plus finalchat native ControlResonant capture prompt; user-run8newnative captures outstanding by design. No native/game writes; prior healthyWorker59439fdf retained.",
+      "work_accounted": true,
+      "completed_at": "2026-10-20T20:18:52.276Z"
+    },
+    {
+      "id": "rtxforge-beta-screenshot-carousel-20261020",
+      "owner": "01a15ad4-0fe2-7230-a024-20a4a4dba118",
+      "branch": "rtxforge/beta-screenshot-carousel-20261020",
+      "paths": [
+        "website/"
+      ],
+      "resources": [
+        "rtxforge-landing-worker"
+      ],
+      "goal": "Simplify the live landing-page app screenshots to a rotating carousel with pagination dots.",
+      "acceptance": "Direct user request replaces visible Library/Game Details labels with pagination dots and animation through all OS-specific screenshots. Remove mode and view selectors so all captures participate in a single sequence. Preserve native demo provenance and Windows pending state. Gentle six-second autoplay while visible, crossfade, manual dot and keyboard navigation, accessible slide labels, pause/play glyph, pause on hover/focus/hidden page, reduced-motion default without autoplay. Prevent stale images/timers across OS switches and failed loads. Latest direct user refinements: keep final native screenshot set to4–5 perOS; use Presets instead of install review and include the overlay. Planned5: Library, Control Resonant Game Details/Features, Presets, one Game Mode Details view, actual overlay. User asks Apple-esque features area: add restrained large-type product storytelling with short verified copy and authentic available app imagery, compatible with shared OSselector/themes. Describe overlay only to extent verified current source; do not imply unpublished or uncaptured work is released. Verify and publish through existing site deployment authority, with exact source and rollback retained. Do not modify native apps, collect new native captures or promote held app changes.",
+      "next_action": "Implement carousel and restrained feature area from verified app capabilities; configure final5capture slots and supply concise capture-brief updates. Validate and publish exact website source.",
+      "category": "design",
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "base_sha": "2ff8c7e5d5e0cbb34c3bcddcae1830af6e28bf80",
+      "state": "active",
+      "created_at": "2026-10-20T20:20:32.546Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Simplify the live landing-page app screenshots to a rotating carousel with pagination dots.",
+          "acceptance": "Direct user request replaces visible Library/Game Details labels with pagination dots and animation through all OS-specific screenshots. Remove mode and view selectors so all captures participate in a single sequence. Preserve native demo provenance and Windows pending state. Gentle six-second autoplay while visible, crossfade, manual dot and keyboard navigation, accessible slide labels, pause/play glyph, pause on hover/focus/hidden page, reduced-motion default without autoplay. Prevent stale images/timers across OS switches and failed loads. Verify and publish through existing site deployment authority, with exact source and rollback retained. Suggest extra screenshots from actual app panels; do not modify native apps, collect new native captures or promote held app changes.",
+          "at": "2026-10-20T20:20:32.546Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta-screenshot-carousel-20261020:acceptance:0",
+            "text": "Direct user request replaces visible Library/Game Details labels with pagination dots and animation through all OS-specific screenshots. Remove mode and view selectors so all captures participate in a single sequence. Preserve native demo provenance and Windows pending state. Gentle six-second autoplay while visible, crossfade, manual dot and keyboard navigation, accessible slide labels, pause/play glyph, pause on hover/focus/hidden page, reduced-motion default without autoplay. Prevent stale images/timers across OS switches and failed loads. Verify and publish through existing site deployment authority, with exact source and rollback retained. Suggest extra screenshots from actual app panels; do not modify native apps, collect new native captures or promote held app changes.",
+            "at": "2026-10-20T20:20:32.546Z"
+          },
+          {
+            "id": "rtxforge-beta-screenshot-carousel-20261020:acceptance:1",
+            "text": "Direct user request replaces visible Library/Game Details labels with pagination dots and animation through all OS-specific screenshots. Remove mode and view selectors so all captures participate in a single sequence. Preserve native demo provenance and Windows pending state. Gentle six-second autoplay while visible, crossfade, manual dot and keyboard navigation, accessible slide labels, pause/play glyph, pause on hover/focus/hidden page, reduced-motion default without autoplay. Prevent stale images/timers across OS switches and failed loads. Latest direct user refinements: keep final native screenshot set to4–5 perOS; use Presets instead of install review and include the overlay. Planned5: Library, Control Resonant Game Details/Features, Presets, one Game Mode Details view, actual overlay. User asks Apple-esque features area: add restrained large-type product storytelling with short verified copy and authentic available app imagery, compatible with shared OSselector/themes. Describe overlay only to extent verified current source; do not imply unpublished or uncaptured work is released. Verify and publish through existing site deployment authority, with exact source and rollback retained. Do not modify native apps, collect new native captures or promote held app changes.",
+            "at": "2026-10-20T20:23:15.535Z",
+            "reason": "Direct user additions in this chat: 4–5 shots perOS, Apple-esque features area, replace install review with Presets and include overlay."
+          }
+        ]
+      },
+      "updated_at": "2026-10-20T20:23:15.535Z",
+      "lease_until": "2026-10-21T08:23:15.535Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-20T20:23:15.535Z",
+          "by": "01a15ad4-0fe2-7230-a024-20a4a4dba118",
+          "reason": "Direct user additions in this chat: 4–5 shots perOS, Apple-esque features area, replace install review with Presets and include overlay.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Direct user request replaces visible Library/Game Details labels with pagination dots and animation through all OS-specific screenshots. Remove mode and view selectors so all captures participate in a single sequence. Preserve native demo provenance and Windows pending state. Gentle six-second autoplay while visible, crossfade, manual dot and keyboard navigation, accessible slide labels, pause/play glyph, pause on hover/focus/hidden page, reduced-motion default without autoplay. Prevent stale images/timers across OS switches and failed loads. Verify and publish through existing site deployment authority, with exact source and rollback retained. Suggest extra screenshots from actual app panels; do not modify native apps, collect new native captures or promote held app changes.",
+            "next_action": "Create isolated claimed branch, replace gallery navigation with a rotating dot carousel, validate autoplay/manual/reduced-motion/responsive/OS states, then merge and deploy exact site source."
+          },
+          "after": {
+            "acceptance": "Direct user request replaces visible Library/Game Details labels with pagination dots and animation through all OS-specific screenshots. Remove mode and view selectors so all captures participate in a single sequence. Preserve native demo provenance and Windows pending state. Gentle six-second autoplay while visible, crossfade, manual dot and keyboard navigation, accessible slide labels, pause/play glyph, pause on hover/focus/hidden page, reduced-motion default without autoplay. Prevent stale images/timers across OS switches and failed loads. Latest direct user refinements: keep final native screenshot set to4–5 perOS; use Presets instead of install review and include the overlay. Planned5: Library, Control Resonant Game Details/Features, Presets, one Game Mode Details view, actual overlay. User asks Apple-esque features area: add restrained large-type product storytelling with short verified copy and authentic available app imagery, compatible with shared OSselector/themes. Describe overlay only to extent verified current source; do not imply unpublished or uncaptured work is released. Verify and publish through existing site deployment authority, with exact source and rollback retained. Do not modify native apps, collect new native captures or promote held app changes.",
+            "next_action": "Implement carousel and restrained feature area from verified app capabilities; configure final5capture slots and supply concise capture-brief updates. Validate and publish exact website source."
+          }
+        }
+      ]
     }
   ]
 }

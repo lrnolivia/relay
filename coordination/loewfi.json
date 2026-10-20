@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "loewfi",
-  "updated_at": "2026-10-08T01:27:11.362Z",
+  "updated_at": "2026-10-20T20:18:51.852Z",
   "legacy_branches": [
     "main",
     "runner/universal-authority"
@@ -122,6 +122,144 @@
       "evidence": "https://github.com/lrnolivia/loewfi/pull/5; required exact-head admission and existing quality/build checks passed. Current main workflow readback equals reviewed candidate byte-for-byte (blob 0836c4ddf00e9f9662c1b456bbacacc6e2125e5a). Changed workflow bytes restored and hash-verified in isolated recovery directory. Daily hygiene, immediate admission and required assertions preserved. CI-only slice complete; other product work preserved.",
       "work_accounted": true,
       "completed_at": "2026-10-08T01:27:11.362Z"
+    },
+    {
+      "id": "loewfi-terra-prime-landing-20261020",
+      "owner": "01a15ae9-2405-7fc3-955e-204a5bebb44f",
+      "branch": "loewfi/terra-prime-landing-20261020",
+      "paths": [
+        "src/App.jsx",
+        "src/landing.css",
+        "index.html",
+        "images/terra-prime/"
+      ],
+      "resources": [
+        "loewfi-public-landing",
+        "loewfi-production-release"
+      ],
+      "goal": "Apply the new Figma Terra Prime landing design and make it live at loew.fi, preserving existing functionality.",
+      "acceptance": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'. User refinement on 2026-10-20: replace the second multicolor bar inside the construction card with a soft neutral bar that spans only the width of the Currently under construction line. Preserve the header's full-width color rail. This specific refinement supersedes that element of the Figma card. Further user refinement: remove excessive vertical form padding; align the input and Send button to the same 44px height and corner radius; increase mobile card padding to 32px, with a proportionate narrow-screen adaptation and two-line heading. Further user refinement: move Loew Fidelity / Field Notes — Vol. 01 and 2026 from the card to directly beneath loew.fi in the navigation, on desktop and mobile. Further user refinement: clean up navigation spacing (close brand/subline grouping, deliberate accent-rail gap, links/hamburger aligned with the brand row) and synchronize every requested change into Figma, especially the canonical navigation components and linked landing instances. Figma component edits are explicitly authorized by this chat.",
+      "next_action": "Synchronize affected canonical Figma navigation/card components, update linked landing instances, validate website and Figma, then ship exact candidate.",
+      "category": "design",
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "base_sha": "1ae2f2fb01af862197ddd414992fd25255687d73",
+      "state": "active",
+      "created_at": "2026-10-20T20:05:52.536Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Apply the new Figma Terra Prime landing design and make it live at loew.fi, preserving existing functionality.",
+          "acceptance": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'.",
+          "at": "2026-10-20T20:05:52.536Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "loewfi-terra-prime-landing-20261020:acceptance:0",
+            "text": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'.",
+            "at": "2026-10-20T20:05:52.536Z"
+          },
+          {
+            "id": "loewfi-terra-prime-landing-20261020:acceptance:1",
+            "text": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'. User refinement on 2026-10-20: replace the second multicolor bar inside the construction card with a soft neutral bar that spans only the width of the Currently under construction line. Preserve the header's full-width color rail. This specific refinement supersedes that element of the Figma card.",
+            "at": "2026-10-20T20:13:38.680Z",
+            "reason": "User explicitly requested the shorter neutral construction-card rule in this chat."
+          },
+          {
+            "id": "loewfi-terra-prime-landing-20261020:acceptance:2",
+            "text": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'. User refinement on 2026-10-20: replace the second multicolor bar inside the construction card with a soft neutral bar that spans only the width of the Currently under construction line. Preserve the header's full-width color rail. This specific refinement supersedes that element of the Figma card. Further user refinement: remove excessive vertical form padding; align the input and Send button to the same 44px height and corner radius; increase mobile card padding to 32px, with a proportionate narrow-screen adaptation and two-line heading.",
+            "at": "2026-10-20T20:14:55.897Z",
+            "reason": "User requested compact form spacing, equal field/button size, and more padding within the mobile card."
+          },
+          {
+            "id": "loewfi-terra-prime-landing-20261020:acceptance:3",
+            "text": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'. User refinement on 2026-10-20: replace the second multicolor bar inside the construction card with a soft neutral bar that spans only the width of the Currently under construction line. Preserve the header's full-width color rail. This specific refinement supersedes that element of the Figma card. Further user refinement: remove excessive vertical form padding; align the input and Send button to the same 44px height and corner radius; increase mobile card padding to 32px, with a proportionate narrow-screen adaptation and two-line heading. Further user refinement: move Loew Fidelity / Field Notes — Vol. 01 and 2026 from the card to directly beneath loew.fi in the navigation, on desktop and mobile.",
+            "at": "2026-10-20T20:17:01.089Z",
+            "reason": "User requested relocating the Field Notes metadata beneath the site name."
+          },
+          {
+            "id": "loewfi-terra-prime-landing-20261020:acceptance:4",
+            "text": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'. User refinement on 2026-10-20: replace the second multicolor bar inside the construction card with a soft neutral bar that spans only the width of the Currently under construction line. Preserve the header's full-width color rail. This specific refinement supersedes that element of the Figma card. Further user refinement: remove excessive vertical form padding; align the input and Send button to the same 44px height and corner radius; increase mobile card padding to 32px, with a proportionate narrow-screen adaptation and two-line heading. Further user refinement: move Loew Fidelity / Field Notes — Vol. 01 and 2026 from the card to directly beneath loew.fi in the navigation, on desktop and mobile. Further user refinement: clean up navigation spacing (close brand/subline grouping, deliberate accent-rail gap, links/hamburger aligned with the brand row) and synchronize every requested change into Figma, especially the canonical navigation components and linked landing instances. Figma component edits are explicitly authorized by this chat.",
+            "at": "2026-10-20T20:18:51.852Z",
+            "reason": "User requested corrected nav rhythm/alignment and full Figma synchronization."
+          }
+        ]
+      },
+      "updated_at": "2026-10-20T20:18:51.852Z",
+      "lease_until": "2026-10-21T08:18:51.852Z",
+      "amendment_count": 4,
+      "amendments": [
+        {
+          "at": "2026-10-20T20:13:38.680Z",
+          "by": "01a15ae9-2405-7fc3-955e-204a5bebb44f",
+          "reason": "User explicitly requested the shorter neutral construction-card rule in this chat.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'.",
+            "next_action": "Create isolated checkout from fresh main 1ae2f2f, implement requested Figma design, then validate and publish."
+          },
+          "after": {
+            "acceptance": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'. User refinement on 2026-10-20: replace the second multicolor bar inside the construction card with a soft neutral bar that spans only the width of the Currently under construction line. Preserve the header's full-width color rail. This specific refinement supersedes that element of the Figma card.",
+            "next_action": "Apply the requested card-rule refinement, verify desktop/mobile layout, publish exact candidate and recover a bounded Workers Builds preview lane."
+          }
+        },
+        {
+          "at": "2026-10-20T20:14:55.897Z",
+          "by": "01a15ae9-2405-7fc3-955e-204a5bebb44f",
+          "reason": "User requested compact form spacing, equal field/button size, and more padding within the mobile card.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'. User refinement on 2026-10-20: replace the second multicolor bar inside the construction card with a soft neutral bar that spans only the width of the Currently under construction line. Preserve the header's full-width color rail. This specific refinement supersedes that element of the Figma card.",
+            "next_action": "Apply the requested card-rule refinement, verify desktop/mobile layout, publish exact candidate and recover a bounded Workers Builds preview lane."
+          },
+          "after": {
+            "acceptance": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'. User refinement on 2026-10-20: replace the second multicolor bar inside the construction card with a soft neutral bar that spans only the width of the Currently under construction line. Preserve the header's full-width color rail. This specific refinement supersedes that element of the Figma card. Further user refinement: remove excessive vertical form padding; align the input and Send button to the same 44px height and corner radius; increase mobile card padding to 32px, with a proportionate narrow-screen adaptation and two-line heading.",
+            "next_action": "Verify final requested layout, commit candidate, then build an exact-SHA Workers preview and release."
+          }
+        },
+        {
+          "at": "2026-10-20T20:17:01.089Z",
+          "by": "01a15ae9-2405-7fc3-955e-204a5bebb44f",
+          "reason": "User requested relocating the Field Notes metadata beneath the site name.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'. User refinement on 2026-10-20: replace the second multicolor bar inside the construction card with a soft neutral bar that spans only the width of the Currently under construction line. Preserve the header's full-width color rail. This specific refinement supersedes that element of the Figma card. Further user refinement: remove excessive vertical form padding; align the input and Send button to the same 44px height and corner radius; increase mobile card padding to 32px, with a proportionate narrow-screen adaptation and two-line heading.",
+            "next_action": "Verify final requested layout, commit candidate, then build an exact-SHA Workers preview and release."
+          },
+          "after": {
+            "acceptance": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'. User refinement on 2026-10-20: replace the second multicolor bar inside the construction card with a soft neutral bar that spans only the width of the Currently under construction line. Preserve the header's full-width color rail. This specific refinement supersedes that element of the Figma card. Further user refinement: remove excessive vertical form padding; align the input and Send button to the same 44px height and corner radius; increase mobile card padding to 32px, with a proportionate narrow-screen adaptation and two-line heading. Further user refinement: move Loew Fidelity / Field Notes — Vol. 01 and 2026 from the card to directly beneath loew.fi in the navigation, on desktop and mobile.",
+            "next_action": "Verify final navigation and card refinements, publish updated head, review PR and build through the temporary manual-only Workers Builds trigger b31d824c-42fb-48f9-a1a7-7dfaa16beda4."
+          }
+        },
+        {
+          "at": "2026-10-20T20:18:51.852Z",
+          "by": "01a15ae9-2405-7fc3-955e-204a5bebb44f",
+          "reason": "User requested corrected nav rhythm/alignment and full Figma synchronization.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'. User refinement on 2026-10-20: replace the second multicolor bar inside the construction card with a soft neutral bar that spans only the width of the Currently under construction line. Preserve the header's full-width color rail. This specific refinement supersedes that element of the Figma card. Further user refinement: remove excessive vertical form padding; align the input and Send button to the same 44px height and corner radius; increase mobile card padding to 32px, with a proportionate narrow-screen adaptation and two-line heading. Further user refinement: move Loew Fidelity / Field Notes — Vol. 01 and 2026 from the card to directly beneath loew.fi in the navigation, on desktop and mobile.",
+            "next_action": "Verify final navigation and card refinements, publish updated head, review PR and build through the temporary manual-only Workers Builds trigger b31d824c-42fb-48f9-a1a7-7dfaa16beda4."
+          },
+          "after": {
+            "acceptance": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'. User refinement on 2026-10-20: replace the second multicolor bar inside the construction card with a soft neutral bar that spans only the width of the Currently under construction line. Preserve the header's full-width color rail. This specific refinement supersedes that element of the Figma card. Further user refinement: remove excessive vertical form padding; align the input and Send button to the same 44px height and corner radius; increase mobile card padding to 32px, with a proportionate narrow-screen adaptation and two-line heading. Further user refinement: move Loew Fidelity / Field Notes — Vol. 01 and 2026 from the card to directly beneath loew.fi in the navigation, on desktop and mobile. Further user refinement: clean up navigation spacing (close brand/subline grouping, deliberate accent-rail gap, links/hamburger aligned with the brand row) and synchronize every requested change into Figma, especially the canonical navigation components and linked landing instances. Figma component edits are explicitly authorized by this chat.",
+            "next_action": "Synchronize affected canonical Figma navigation/card components, update linked landing instances, validate website and Figma, then ship exact candidate."
+          }
+        }
+      ]
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-20T19:56:20.525Z",
+  "updated_at": "2026-10-20T20:14:33.928Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -17028,6 +17028,197 @@
             "paid_services": false,
             "canonical_key": "native-oversight-cached-schema",
             "reason": "Coordinator review: directly required by observed cached-schema failure; narrow own ingress only, same broker checks and no new credential/access. Direct human instruction in oversight userMessage01a15acc-3229-7c62-b37a-006846ba28f6 authorizes repair and verified rerun."
+          }
+        }
+      ]
+    },
+    {
+      "id": "relay-native-continuity-20261020",
+      "owner": "relay-execution-continuity-worker-20261020",
+      "branch": "relay/native-continuity-20261020",
+      "paths": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        "LOEW_CHAT_BIBLE.md",
+        "contracts/manifest.json",
+        "scripts/relay-continuity.mjs",
+        "scripts/relay-continuity.test.mjs",
+        "scripts/relay-native-continuity.mjs",
+        "scripts/relay-native-continuity.test.mjs",
+        "scripts/relay-native-proof.mjs",
+        "test/fixtures/native-continuity-live/",
+        "test/source-test-contracts.json",
+        "test/documentation-routing.test.mjs",
+        "docs/relay/EXECUTION_CONTINUITY_20261020.md",
+        "docs/relay/GOAL_PRESERVING_EXPANSION_20261020.md",
+        "docs/relay/NATIVE_CONTINUITY_20261020.md",
+        "test/coordination.test.mjs",
+        "test/fixtures/native-continuity-live/support.json"
+      ],
+      "resources": [
+        "relay-native-continuity-20261020"
+      ],
+      "goal": "Activate authorized acceptance continuation and goal-preserving expansion in the existing native Relay/Codex task workflow without creating credentials or launching another model process.",
+      "acceptance": "Implement a bounded native-tool bridge for the existing coordinator and canonical assignment/stop/scope/CAS controls. Native host supplies semantic review and stage work through its existing tools; real task-specific verifiers decide acceptance. Prove A then discovered supporting work then B with actual native Relay actions in an explicitly non-production fixture subtask, preserving checkpoints and avoiding duplicate uncertain work. Separate subtask acceptance from full original objective completion. Test stale controls, native reply/restart identity and malicious/scope escape cases. Update canonical native bootstrap/config guidance and readiness matrix; commit/push draftPR, exactCI, authorized release/live-source/health/recovery assurance with preserved rollback. No external Claude, new credentials/access, other workspaces, Field or unrelated held work.",
+      "next_action": "Complete original goal and admitted supporting feature native-fixture-validation: Exercise actual discovered supporting work, not just the original two stages",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "c99f5477e33427a4c16696cf5355b012720e6c30",
+      "state": "active",
+      "created_at": "2026-10-20T20:03:16.561Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Activate authorized acceptance continuation and goal-preserving expansion in the existing native Relay/Codex task workflow without creating credentials or launching another model process.",
+          "acceptance": "Implement a bounded native-tool bridge for the existing coordinator and canonical assignment/stop/scope/CAS controls. Native host supplies semantic review and stage work through its existing tools; real task-specific verifiers decide acceptance. Prove A then discovered supporting work then B with actual native Relay actions in an explicitly non-production fixture subtask, preserving checkpoints and avoiding duplicate uncertain work. Separate subtask acceptance from full original objective completion. Test stale controls, native reply/restart identity and malicious/scope escape cases. Update canonical native bootstrap/config guidance and readiness matrix; commit/push draftPR, exactCI, authorized release/live-source/health/recovery assurance with preserved rollback. No external Claude, new credentials/access, other workspaces, Field or unrelated held work.",
+          "at": "2026-10-20T20:03:16.561Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-native-continuity-20261020:acceptance:0",
+            "text": "Implement a bounded native-tool bridge for the existing coordinator and canonical assignment/stop/scope/CAS controls. Native host supplies semantic review and stage work through its existing tools; real task-specific verifiers decide acceptance. Prove A then discovered supporting work then B with actual native Relay actions in an explicitly non-production fixture subtask, preserving checkpoints and avoiding duplicate uncertain work. Separate subtask acceptance from full original objective completion. Test stale controls, native reply/restart identity and malicious/scope escape cases. Update canonical native bootstrap/config guidance and readiness matrix; commit/push draftPR, exactCI, authorized release/live-source/health/recovery assurance with preserved rollback. No external Claude, new credentials/access, other workspaces, Field or unrelated held work.",
+            "at": "2026-10-20T20:03:16.561Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-20T20:14:33.928Z",
+      "lease_until": "2026-10-21T08:14:33.928Z",
+      "acceptance_additions": [
+        {
+          "schema": 1,
+          "base_objective_digest": "82dcc9b89a4b7a86c57c3ce9b0d7b2682e23d96924150edada5ad6658f649a79",
+          "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
+          "proposal": {
+            "id": "native-fixture-validation",
+            "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
+            "kind": "strengthens",
+            "reason": "Exercise actual discovered supporting work, not just the original two stages",
+            "relationship": "Strengthens native-fixture-a by validating its actual seed and makes native-fixture-b consume the admitted validated value, preserving the assigned native bridge goal",
+            "supports": [
+              "native-fixture-a"
+            ],
+            "target_stage": "a",
+            "depends_on": [
+              "a"
+            ],
+            "acceptance": [
+              "Supporting output validates actual integer seed7 and records exactly twice its value; invalid seed or inconsistent output fails verification"
+            ],
+            "profile": "fixture-support",
+            "paths": [
+              "test/fixtures/native-continuity-live/support.json"
+            ],
+            "description": "Read actual a.json, validate its seed is integer7, then write support.json with the doubled value14. This is non-production fixture work only."
+          },
+          "review": {
+            "verdict": "admit",
+            "preserves_goal": true,
+            "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
+            "within_authority": true,
+            "sensitive_permissions": false,
+            "paid_services": false,
+            "canonical_key": "native-fixture-validation",
+            "reason": "Reviewed by the current native coordinator: validating A and making B consume the validated output directly exercises the assigned native continuation/expansion bridge. It stays inside the admitted non-production fixture path and existing authority; the real verifier checks seed and derived output rather than trusting this decision as test evidence."
+          },
+          "profile_digest": "3a09026b918b15dd80406851ed249a4cf27deda0bab9224b72ef70291a9e81e6"
+        }
+      ],
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-20T20:14:33.928Z",
+          "by": "relay-execution-continuity-worker-20261020",
+          "reason": "Goal-preserving strengthens feature native-fixture-validation: Exercise actual discovered supporting work, not just the original two stages",
+          "fields": [
+            "acceptance_additions",
+            "next_action",
+            "paths"
+          ],
+          "before": {
+            "acceptance_additions": null,
+            "next_action": "Implement and verify the native-tool bridge; run bounded live non-production subtask through existing native Relay transport, then complete the authorized exact-source release.",
+            "paths": [
+              "AGENTS.md",
+              "CLAUDE.md",
+              "LOEW_CHAT_BIBLE.md",
+              "contracts/manifest.json",
+              "scripts/relay-continuity.mjs",
+              "scripts/relay-continuity.test.mjs",
+              "scripts/relay-native-continuity.mjs",
+              "scripts/relay-native-continuity.test.mjs",
+              "scripts/relay-native-proof.mjs",
+              "test/fixtures/native-continuity-live/",
+              "test/source-test-contracts.json",
+              "test/documentation-routing.test.mjs",
+              "docs/relay/EXECUTION_CONTINUITY_20261020.md",
+              "docs/relay/GOAL_PRESERVING_EXPANSION_20261020.md",
+              "docs/relay/NATIVE_CONTINUITY_20261020.md",
+              "test/coordination.test.mjs"
+            ]
+          },
+          "after": {
+            "acceptance_additions": [
+              {
+                "schema": 1,
+                "base_objective_digest": "82dcc9b89a4b7a86c57c3ce9b0d7b2682e23d96924150edada5ad6658f649a79",
+                "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
+                "proposal": {
+                  "id": "native-fixture-validation",
+                  "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
+                  "kind": "strengthens",
+                  "reason": "Exercise actual discovered supporting work, not just the original two stages",
+                  "relationship": "Strengthens native-fixture-a by validating its actual seed and makes native-fixture-b consume the admitted validated value, preserving the assigned native bridge goal",
+                  "supports": [
+                    "native-fixture-a"
+                  ],
+                  "target_stage": "a",
+                  "depends_on": [
+                    "a"
+                  ],
+                  "acceptance": [
+                    "Supporting output validates actual integer seed7 and records exactly twice its value; invalid seed or inconsistent output fails verification"
+                  ],
+                  "profile": "fixture-support",
+                  "paths": [
+                    "test/fixtures/native-continuity-live/support.json"
+                  ],
+                  "description": "Read actual a.json, validate its seed is integer7, then write support.json with the doubled value14. This is non-production fixture work only."
+                },
+                "review": {
+                  "verdict": "admit",
+                  "preserves_goal": true,
+                  "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
+                  "within_authority": true,
+                  "sensitive_permissions": false,
+                  "paid_services": false,
+                  "canonical_key": "native-fixture-validation",
+                  "reason": "Reviewed by the current native coordinator: validating A and making B consume the validated output directly exercises the assigned native continuation/expansion bridge. It stays inside the admitted non-production fixture path and existing authority; the real verifier checks seed and derived output rather than trusting this decision as test evidence."
+                },
+                "profile_digest": "3a09026b918b15dd80406851ed249a4cf27deda0bab9224b72ef70291a9e81e6"
+              }
+            ],
+            "next_action": "Complete original goal and admitted supporting feature native-fixture-validation: Exercise actual discovered supporting work, not just the original two stages",
+            "paths": [
+              "AGENTS.md",
+              "CLAUDE.md",
+              "LOEW_CHAT_BIBLE.md",
+              "contracts/manifest.json",
+              "scripts/relay-continuity.mjs",
+              "scripts/relay-continuity.test.mjs",
+              "scripts/relay-native-continuity.mjs",
+              "scripts/relay-native-continuity.test.mjs",
+              "scripts/relay-native-proof.mjs",
+              "test/fixtures/native-continuity-live/",
+              "test/source-test-contracts.json",
+              "test/documentation-routing.test.mjs",
+              "docs/relay/EXECUTION_CONTINUITY_20261020.md",
+              "docs/relay/GOAL_PRESERVING_EXPANSION_20261020.md",
+              "docs/relay/NATIVE_CONTINUITY_20261020.md",
+              "test/coordination.test.mjs",
+              "test/fixtures/native-continuity-live/support.json"
+            ]
           }
         }
       ]

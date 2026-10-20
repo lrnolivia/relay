@@ -5,6 +5,183 @@ import os from 'node:os';
 import path from 'node:path';
 import { createExecutionInbox, createFeedbackAcknowledgements } from './relay-executor-inbox.mjs';
 import { createHash } from 'node:crypto';
+import { callContext } from '../packages/runner/src/context-service.mjs';
+
+const emptyFeedback = () => ({ ok: true, feedback: { available: true, events: [], conflicts: [] } });
+const readInbox = async inbox => JSON.parse(await fs.readFile(inbox.filename, 'utf8'));
+
+test('staff-only refreshes replace relationship context and missing context clears previous notes', async t => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'relay-inbox-staff-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const context = { ok: true, revision: 7, entries: [{ content: 'Unchanged project decision' }] };
+  const calls = [];
+  const rpc = async (name, args) => {
+    calls.push({ name, args });
+    if (name === 'relay_context') return structuredClone(context);
+    assert.equal(name, 'relay_runner_feedback_peek');
+    return emptyFeedback();
+  };
+  const inbox = createExecutionInbox({ directory, rpc, project: 'fixture', assignment: 'one' });
+  const relationships = [
+    { staff_id: 'ellis', display_name: 'Ellis', notes: [{ topic: 'communication', note: 'Use concise updates.' }] },
+    { staff_id: 'ellis', display_name: 'Ellis', notes: [{ topic: 'communication', note: 'Include exact evidence.' }] },
+    { staff_id: 'julian', display_name: 'Julian', notes: [] },
+    null,
+    { staff_id: 'ellis', display_name: 'Ellis', notes: [{ topic: 'workflow', note: 'Keep review evidence.' }] },
+    undefined
+  ];
+  let digest;
+  for (const relationship of relationships) {
+    if (relationship === undefined) delete context.staff_relationship;
+    else context.staff_relationship = relationship;
+    const result = await inbox.refresh();
+    assert.equal(result.available, true);
+    assert.notEqual(result.digest, digest, 'relationship-only changes must publish even at the same context revision');
+    const saved = await readInbox(inbox);
+    assert.deepEqual(saved.context.staff_relationship, relationship ?? null);
+    assert.equal(saved.context.revision, 7);
+    assert.deepEqual(saved.context.entries, context.entries);
+    assert.equal(saved.acknowledged, false);
+    assert.equal(saved.consumption_verified, false);
+    const copy = inbox.snapshot();
+    copy.context.staff_relationship = { staff_id: 'another', notes: [] };
+    copy.context.entries[0].content = 'Consumer edit';
+    assert.deepEqual(inbox.snapshot(), saved, 'consumer edits cannot change the retained snapshot');
+    digest = result.digest;
+  }
+  assert.ok(calls.every(({ args }) => args.project === 'fixture' && args.assignment === 'one'));
+  assert.ok(calls.filter(({ name }) => name === 'relay_context').every(({ args }) => args.action === 'read'));
+});
+
+test('missing or unavailable initial context publishes no invented staff data or provider errors', async t => {
+  for (const response of [undefined, null, { ok: false }, { ok: true, entries: null }, 'throw']) {
+    const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'relay-inbox-unavailable-'));
+    t.after(() => fs.rm(directory, { recursive: true, force: true }));
+    const calls = [];
+    const inbox = createExecutionInbox({ directory, project: 'fixture', assignment: 'one', rpc: async name => {
+      calls.push(name);
+      if (response === 'throw') throw Error('private provider diagnostic');
+      return response;
+    } });
+    assert.equal((await inbox.refresh()).available, false);
+    const saved = await readInbox(inbox);
+    assert.equal(saved.context, null);
+    assert.equal(saved.feedback, null);
+    assert.equal(saved.project, 'fixture');
+    assert.equal(saved.assignment, 'one');
+    assert.equal(saved.acknowledged, false);
+    assert.equal(saved.consumption_verified, false);
+    assert.deepEqual(inbox.snapshot(), saved);
+    assert.doesNotMatch(JSON.stringify(saved), /private provider diagnostic/);
+    assert.deepEqual(calls, ['relay_context']);
+  }
+});
+
+test('failed context or feedback refresh retains one whole stale page and recovers from the first cursors', async t => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'relay-inbox-stale-staff-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  let failure = null, now = '2026-10-20T20:00:00Z';
+  const calls = [];
+  const rpc = async (name, args) => {
+    calls.push({ name, args });
+    if (name === failure) throw Error('private provider diagnostic');
+    if (name === 'relay_context') return { ok: true, revision: 7, entries: [{ content: failure ? 'Unpublished partial refresh' : 'Last good decision' }], staff_relationship: { staff_id: failure ? 'julian' : 'ellis', notes: [] }, next_cursor: 20 };
+    assert.equal(name, 'relay_runner_feedback_peek');
+    return { ok: true, feedback: { available: true, events: [{ report_id: 'retained', original_text: 'Last good feedback' }], conflicts: [], next_cursor: 'feedback-next', truncated: true } };
+  };
+  const inbox = createExecutionInbox({ directory, rpc, project: 'fixture', assignment: 'one', clock: () => now });
+  await inbox.refresh();
+  const good = await readInbox(inbox);
+  for (const failedMethod of ['relay_context', 'relay_runner_feedback_peek']) {
+    failure = failedMethod;
+    now = '2026-10-20T20:01:00Z';
+    assert.equal((await inbox.refresh()).available, false);
+    const stale = await readInbox(inbox);
+    assert.equal(stale.available, false);
+    assert.equal(stale.checked_at, now);
+    assert.equal(stale.digest, good.digest);
+    assert.deepEqual(stale.context, good.context);
+    assert.deepEqual(stale.feedback, good.feedback);
+    assert.match(stale.reason, /may be stale/);
+    assert.equal(stale.acknowledged, false);
+    assert.equal(stale.consumption_verified, false);
+    assert.deepEqual(inbox.snapshot(), stale);
+    assert.doesNotMatch(JSON.stringify(stale), /private provider diagnostic|Unpublished partial refresh|julian/);
+    failure = null;
+    now = '2026-10-20T20:02:00Z';
+    const start = calls.length;
+    assert.equal((await inbox.refresh()).available, true);
+    assert.ok(calls.slice(start).every(({ args }) => !('cursor' in args)));
+    const recovered = await readInbox(inbox);
+    assert.equal(recovered.available, true);
+    assert.equal(recovered.digest, good.digest);
+    assert.equal(recovered.checked_at, now);
+    assert.equal('reason' in recovered, false);
+    assert.deepEqual(recovered.context.staff_relationship, good.context.staff_relationship);
+    assert.deepEqual(inbox.snapshot(), recovered);
+  }
+});
+
+test('unchanged successful refresh publishes the latest check time for file readers', async t => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'relay-inbox-freshness-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  let now = '2026-10-20T20:00:00Z';
+  const rpc = async name => name === 'relay_context' ? { ok: true, revision: 1, entries: [], staff_relationship: { staff_id: 'ellis', notes: [] } } : emptyFeedback();
+  const inbox = createExecutionInbox({ directory, rpc, project: 'fixture', assignment: 'one', clock: () => now });
+  const first = await inbox.refresh();
+  now = '2026-10-20T20:05:00Z';
+  const refreshed = await inbox.refresh();
+  assert.equal(refreshed.available, true);
+  assert.equal(refreshed.digest, first.digest, 'unchanged content keeps its digest');
+  assert.equal(inbox.snapshot().checked_at, now);
+  const saved = await readInbox(inbox);
+  assert.equal(saved.checked_at, now, 'the process reads the file, so its freshness must match the successful check');
+  assert.deepEqual(saved, inbox.snapshot());
+});
+
+test('assignment-bound context reads keep staff notes and directed messages isolated between inboxes', async t => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'relay-inbox-isolation-'));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  const claims = ['ellis-work', 'julian-work', 'unassigned-work'].map((id, index) => ({ id, owner: 'owner-' + index, branch: 'fixture/' + id, state: 'active', primary_staff: ['ellis', 'julian', null][index], lease_until: '2099-01-01T00:00:00Z' }));
+  const entries = ['ellis', 'julian'].flatMap(staff_id => [
+    { id: 'signal-' + staff_id, kind: 'relationship-signal' },
+    { id: 'note-' + staff_id, kind: 'relationship-note', source_entry_id: 'signal-' + staff_id, relationship: { staff_id, durable: true, topic: 'workflow', note: staff_id + ' curated note', source: 'explicit-feedback', evidence_refs: ['synthetic:user-feedback'] } },
+    { id: 'message-' + staff_id, kind: 'message', assignment: staff_id + '-work', recipient_assignment: staff_id + '-work', content: staff_id + ' directed message' }
+  ]);
+  const file = value => ({ type: 'file', sha: 'b'.repeat(40), encoding: 'base64', content: Buffer.from(JSON.stringify(value)).toString('base64') });
+  const api = async route => route.includes('projects/fixture.json') ? file({ id: 'fixture', managed: true, repository: 'lrnolivia/fixture', default_branch: 'main', coordination: { status: 'enabled', record: 'coordination/fixture.json', max_active_branches: 4, lease_hours: 12 }, implementation: { branch_prefixes: ['fixture/'], excluded_branches: ['main'] } }) : route.includes('coordination/fixture.json') ? file({ project: 'fixture', queue: [], legacy_branches: [], claims }) : { sha: 'a'.repeat(40) };
+  const env = { EVIDENCE: { get: async () => ({ json: async () => ({ schema: 1, revision: 7, entries: structuredClone(entries), operations: [] }) }), put: async () => { throw Error('Unexpected context mutation'); } } };
+  const calls = [];
+  const rpc = async (name, args) => {
+    calls.push({ name, args });
+    if (name === 'relay_context') return callContext(args, env, api);
+    assert.equal(name, 'relay_runner_feedback_peek');
+    return emptyFeedback();
+  };
+  const inboxes = [];
+  for (const claim of claims) {
+    const directory = path.join(root, claim.id);
+    await fs.mkdir(directory);
+    const inbox = createExecutionInbox({ directory, rpc, project: 'fixture', assignment: claim.id });
+    assert.equal((await inbox.refresh()).available, true);
+    inboxes.push(inbox);
+  }
+  for (let i = 0; i < inboxes.length; i++) {
+    const saved = await readInbox(inboxes[i]);
+    const staff = claims[i].primary_staff;
+    assert.equal(saved.assignment, claims[i].id);
+    assert.equal(saved.context.staff_relationship.staff_id, staff);
+    assert.deepEqual(saved.context.staff_relationship.notes.map(note => note.note), staff ? [staff + ' curated note'] : []);
+    assert.deepEqual(saved.context.entries.filter(entry => entry.kind === 'message').map(entry => entry.content), staff ? [staff + ' directed message'] : []);
+  }
+  // Reassigning one assignment's staff must replace its notes without touching another inbox.
+  const julianBefore = await fs.readFile(inboxes[1].filename, 'utf8');
+  claims[0].primary_staff = 'julian';
+  await inboxes[0].refresh();
+  assert.deepEqual((await readInbox(inboxes[0])).context.staff_relationship.notes.map(note => note.note), ['julian curated note']);
+  assert.equal(await fs.readFile(inboxes[1].filename, 'utf8'), julianBefore);
+  assert.ok(calls.every(({ name, args }) => ['relay_context', 'relay_runner_feedback_peek'].includes(name) && args.project === 'fixture' && claims.some(claim => claim.id === args.assignment)));
+});
 
 test('inbox size limit covers the actual serialized bytes and preserves the previous page',async()=>{
  const directory=await fs.mkdtemp(path.join(os.tmpdir(),'relay-inbox-wire-size-'));let large=false;
@@ -55,6 +232,21 @@ test('fresh revision, text, ownership, source or routing drift rejects a previou
  for(const mutate of [r=>{r.revision++;},r=>{r.original_text+='changed';},r=>{r.identity.owner='other';},r=>{r.identity.commit_sha='c'.repeat(40);},r=>{r.status.applicability.routing_matches=false;}]){
   const f=acknowledgementFixture();mutate(f.report);assert.equal(await f.handler.consume(f.event),false);assert.deepEqual(f.calls.map(x=>x.name),['relay_runner_feedback_status']);assert.equal(f.state.pending,null);
  }
+});
+
+test('feedback for another project, assignment or branch cannot acknowledge at either identity check', async () => {
+  for (const field of ['project', 'assignment', 'branch']) {
+    for (const stage of ['published', 'fresh']) {
+      const f = acknowledgementFixture();
+      const report = stage === 'published' ? f.page.feedback.events[0] : f.report;
+      report.identity[field] = 'another-' + field;
+      assert.equal(await f.handler.consume(f.event), false, stage + ' ' + field + ' mismatch');
+      assert.deepEqual(f.calls.map(call => call.name), stage === 'published' ? [] : ['relay_runner_feedback_status']);
+      assert.equal(f.state.pending, null);
+      assert.deepEqual(f.state.receipts, []);
+      assert.deepEqual(f.saved, []);
+    }
+  }
 });
 
 test('uncertain acknowledgement is reconciled read-only from its exact persisted receipt without replay',async()=>{
