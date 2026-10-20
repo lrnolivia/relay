@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-20T20:32:06.566Z",
+  "updated_at": "2026-10-20T20:34:54.950Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -15687,16 +15687,399 @@
       "completed_at": "2026-10-20T19:51:49.496Z"
     },
     {
+      "id": "relay-native-continuity-20261020",
+      "owner": "relay-execution-continuity-worker-20261020",
+      "branch": "relay/native-continuity-20261020",
+      "paths": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        "LOEW_CHAT_BIBLE.md",
+        "contracts/manifest.json",
+        "scripts/relay-continuity.mjs",
+        "scripts/relay-continuity.test.mjs",
+        "scripts/relay-native-continuity.mjs",
+        "scripts/relay-native-continuity.test.mjs",
+        "scripts/relay-native-proof.mjs",
+        "test/fixtures/native-continuity-live/",
+        "test/source-test-contracts.json",
+        "test/documentation-routing.test.mjs",
+        "docs/relay/EXECUTION_CONTINUITY_20261020.md",
+        "docs/relay/GOAL_PRESERVING_EXPANSION_20261020.md",
+        "docs/relay/NATIVE_CONTINUITY_20261020.md",
+        "test/coordination.test.mjs",
+        "test/fixtures/native-continuity-live/support.json"
+      ],
+      "resources": [
+        "relay-native-continuity-20261020"
+      ],
+      "goal": "Activate authorized acceptance continuation and goal-preserving expansion in the existing native Relay/Codex task workflow without creating credentials or launching another model process.",
+      "acceptance": "Implement a bounded native-tool bridge for the existing coordinator and canonical assignment/stop/scope/CAS controls. Native host supplies semantic review and stage work through its existing tools; real task-specific verifiers decide acceptance. Prove A then discovered supporting work then B with actual native Relay actions in an explicitly non-production fixture subtask, preserving checkpoints and avoiding duplicate uncertain work. Separate subtask acceptance from full original objective completion. Test stale controls, native reply/restart identity and malicious/scope escape cases. Update canonical native bootstrap/config guidance and readiness matrix; commit/push draftPR, exactCI, authorized release/live-source/health/recovery assurance with preserved rollback. No external Claude, new credentials/access, other workspaces, Field or unrelated held work.",
+      "next_action": "Actual native A/support/B fixture and zero-work resume passed; finish native activation aggregate/CI gates and authorized exact-source publication.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "c99f5477e33427a4c16696cf5355b012720e6c30",
+      "state": "active",
+      "created_at": "2026-10-20T20:03:16.561Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Activate authorized acceptance continuation and goal-preserving expansion in the existing native Relay/Codex task workflow without creating credentials or launching another model process.",
+          "acceptance": "Implement a bounded native-tool bridge for the existing coordinator and canonical assignment/stop/scope/CAS controls. Native host supplies semantic review and stage work through its existing tools; real task-specific verifiers decide acceptance. Prove A then discovered supporting work then B with actual native Relay actions in an explicitly non-production fixture subtask, preserving checkpoints and avoiding duplicate uncertain work. Separate subtask acceptance from full original objective completion. Test stale controls, native reply/restart identity and malicious/scope escape cases. Update canonical native bootstrap/config guidance and readiness matrix; commit/push draftPR, exactCI, authorized release/live-source/health/recovery assurance with preserved rollback. No external Claude, new credentials/access, other workspaces, Field or unrelated held work.",
+          "at": "2026-10-20T20:03:16.561Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-native-continuity-20261020:acceptance:0",
+            "text": "Implement a bounded native-tool bridge for the existing coordinator and canonical assignment/stop/scope/CAS controls. Native host supplies semantic review and stage work through its existing tools; real task-specific verifiers decide acceptance. Prove A then discovered supporting work then B with actual native Relay actions in an explicitly non-production fixture subtask, preserving checkpoints and avoiding duplicate uncertain work. Separate subtask acceptance from full original objective completion. Test stale controls, native reply/restart identity and malicious/scope escape cases. Update canonical native bootstrap/config guidance and readiness matrix; commit/push draftPR, exactCI, authorized release/live-source/health/recovery assurance with preserved rollback. No external Claude, new credentials/access, other workspaces, Field or unrelated held work.",
+            "at": "2026-10-20T20:03:16.561Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-20T20:32:06.566Z",
+      "lease_until": "2026-10-21T08:32:06.566Z",
+      "acceptance_additions": [
+        {
+          "schema": 1,
+          "base_objective_digest": "82dcc9b89a4b7a86c57c3ce9b0d7b2682e23d96924150edada5ad6658f649a79",
+          "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
+          "proposal": {
+            "id": "native-fixture-validation",
+            "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
+            "kind": "strengthens",
+            "reason": "Exercise actual discovered supporting work, not just the original two stages",
+            "relationship": "Strengthens native-fixture-a by validating its actual seed and makes native-fixture-b consume the admitted validated value, preserving the assigned native bridge goal",
+            "supports": [
+              "native-fixture-a"
+            ],
+            "target_stage": "a",
+            "depends_on": [
+              "a"
+            ],
+            "acceptance": [
+              "Supporting output validates actual integer seed7 and records exactly twice its value; invalid seed or inconsistent output fails verification"
+            ],
+            "profile": "fixture-support",
+            "paths": [
+              "test/fixtures/native-continuity-live/support.json"
+            ],
+            "description": "Read actual a.json, validate its seed is integer7, then write support.json with the doubled value14. This is non-production fixture work only."
+          },
+          "review": {
+            "verdict": "admit",
+            "preserves_goal": true,
+            "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
+            "within_authority": true,
+            "sensitive_permissions": false,
+            "paid_services": false,
+            "canonical_key": "native-fixture-validation",
+            "reason": "Reviewed by the current native coordinator: validating A and making B consume the validated output directly exercises the assigned native continuation/expansion bridge. It stays inside the admitted non-production fixture path and existing authority; the real verifier checks seed and derived output rather than trusting this decision as test evidence."
+          },
+          "profile_digest": "3a09026b918b15dd80406851ed249a4cf27deda0bab9224b72ef70291a9e81e6"
+        }
+      ],
+      "amendment_count": 2,
+      "amendments": [
+        {
+          "at": "2026-10-20T20:14:33.928Z",
+          "by": "relay-execution-continuity-worker-20261020",
+          "reason": "Goal-preserving strengthens feature native-fixture-validation: Exercise actual discovered supporting work, not just the original two stages",
+          "fields": [
+            "acceptance_additions",
+            "next_action",
+            "paths"
+          ],
+          "before": {
+            "acceptance_additions": null,
+            "next_action": "Implement and verify the native-tool bridge; run bounded live non-production subtask through existing native Relay transport, then complete the authorized exact-source release.",
+            "paths": [
+              "AGENTS.md",
+              "CLAUDE.md",
+              "LOEW_CHAT_BIBLE.md",
+              "contracts/manifest.json",
+              "scripts/relay-continuity.mjs",
+              "scripts/relay-continuity.test.mjs",
+              "scripts/relay-native-continuity.mjs",
+              "scripts/relay-native-continuity.test.mjs",
+              "scripts/relay-native-proof.mjs",
+              "test/fixtures/native-continuity-live/",
+              "test/source-test-contracts.json",
+              "test/documentation-routing.test.mjs",
+              "docs/relay/EXECUTION_CONTINUITY_20261020.md",
+              "docs/relay/GOAL_PRESERVING_EXPANSION_20261020.md",
+              "docs/relay/NATIVE_CONTINUITY_20261020.md",
+              "test/coordination.test.mjs"
+            ]
+          },
+          "after": {
+            "acceptance_additions": [
+              {
+                "schema": 1,
+                "base_objective_digest": "82dcc9b89a4b7a86c57c3ce9b0d7b2682e23d96924150edada5ad6658f649a79",
+                "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
+                "proposal": {
+                  "id": "native-fixture-validation",
+                  "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
+                  "kind": "strengthens",
+                  "reason": "Exercise actual discovered supporting work, not just the original two stages",
+                  "relationship": "Strengthens native-fixture-a by validating its actual seed and makes native-fixture-b consume the admitted validated value, preserving the assigned native bridge goal",
+                  "supports": [
+                    "native-fixture-a"
+                  ],
+                  "target_stage": "a",
+                  "depends_on": [
+                    "a"
+                  ],
+                  "acceptance": [
+                    "Supporting output validates actual integer seed7 and records exactly twice its value; invalid seed or inconsistent output fails verification"
+                  ],
+                  "profile": "fixture-support",
+                  "paths": [
+                    "test/fixtures/native-continuity-live/support.json"
+                  ],
+                  "description": "Read actual a.json, validate its seed is integer7, then write support.json with the doubled value14. This is non-production fixture work only."
+                },
+                "review": {
+                  "verdict": "admit",
+                  "preserves_goal": true,
+                  "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
+                  "within_authority": true,
+                  "sensitive_permissions": false,
+                  "paid_services": false,
+                  "canonical_key": "native-fixture-validation",
+                  "reason": "Reviewed by the current native coordinator: validating A and making B consume the validated output directly exercises the assigned native continuation/expansion bridge. It stays inside the admitted non-production fixture path and existing authority; the real verifier checks seed and derived output rather than trusting this decision as test evidence."
+                },
+                "profile_digest": "3a09026b918b15dd80406851ed249a4cf27deda0bab9224b72ef70291a9e81e6"
+              }
+            ],
+            "next_action": "Complete original goal and admitted supporting feature native-fixture-validation: Exercise actual discovered supporting work, not just the original two stages",
+            "paths": [
+              "AGENTS.md",
+              "CLAUDE.md",
+              "LOEW_CHAT_BIBLE.md",
+              "contracts/manifest.json",
+              "scripts/relay-continuity.mjs",
+              "scripts/relay-continuity.test.mjs",
+              "scripts/relay-native-continuity.mjs",
+              "scripts/relay-native-continuity.test.mjs",
+              "scripts/relay-native-proof.mjs",
+              "test/fixtures/native-continuity-live/",
+              "test/source-test-contracts.json",
+              "test/documentation-routing.test.mjs",
+              "docs/relay/EXECUTION_CONTINUITY_20261020.md",
+              "docs/relay/GOAL_PRESERVING_EXPANSION_20261020.md",
+              "docs/relay/NATIVE_CONTINUITY_20261020.md",
+              "test/coordination.test.mjs",
+              "test/fixtures/native-continuity-live/support.json"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-20T20:32:06.566Z",
+          "by": "relay-execution-continuity-worker-20261020",
+          "reason": "Record verified native fixture progress and prove the bounded once-only native tool mutation; preserve original goal and supporting acceptance.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Complete original goal and admitted supporting feature native-fixture-validation: Exercise actual discovered supporting work, not just the original two stages"
+          },
+          "after": {
+            "next_action": "Actual native A/support/B fixture and zero-work resume passed; finish native activation aggregate/CI gates and authorized exact-source publication."
+          }
+        }
+      ]
+    },
+    {
       "id": "relay-mcp-rebuild-continuation-20261003",
       "owner": "01a1576d-4e3d-78f2-bdde-a1658b3598d0",
       "branch": "relay/mcp-rebuild-20261003",
       "paths": [
+        ".github/workflows/autonomy-control.yml",
+        ".github/workflows/coordination.yml",
+        ".github/workflows/relay-production-smoke.yml",
+        ".github/workflows/release-assurance.yml",
+        ".github/workflows/runner-coordination.yml",
+        ".node-version",
+        "apps/mcp/index.js",
+        "apps/mcp/production-smoke.mjs",
+        "apps/web/api.js",
+        "apps/web/build.mjs",
+        "apps/web/index.html",
+        "apps/web/production-mcp-readback.mjs",
+        "apps/web/retained-bundle.mjs",
+        "apps/web/retained-fixture.js",
+        "apps/web/server.mjs",
+        "apps/web/src/App.tsx",
+        "apps/web/src/api.ts",
+        "apps/web/src/components/LiveTelemetry.tsx",
+        "apps/web/src/live.tsx",
+        "apps/web/src/pages/RelayPage.tsx",
+        "apps/web/src/styles.css",
+        "apps/web/src/types.ts",
+        "apps/web/test/browser.test.mjs",
+        "apps/web/test/execution-browser.test.mjs",
+        "apps/web/test/favicons.test.mjs",
+        "apps/web/test/file-manager.test.mjs",
+        "apps/web/test/mobile-inspector.test.mjs",
+        "apps/web/test/motion.test.mjs",
+        "apps/web/test/notifications-review.test.mjs",
+        "apps/web/test/presentation-copy.test.mjs",
+        "apps/web/test/presentation-layout.test.mjs",
+        "apps/web/test/production-mcp-readback.test.mjs",
+        "apps/web/test/project-context.test.mjs",
+        "apps/web/test/react.test.mjs",
+        "apps/web/test/relay-home.test.mjs",
+        "apps/web/test/retained-preview.test.mjs",
+        "apps/web/test/review-language.test.mjs",
+        "apps/web/test/website.test.mjs",
+        "apps/web/test/work-views.test.mjs",
+        "apps/web/verify-file-lifecycle.mjs",
+        "apps/web/verify-production.mjs",
+        "apps/web/vite.config.ts",
+        "contracts/human-output-surfaces.json",
+        "contracts/presentation/human-v1.schema.json",
+        "docs/WORK_COORDINATION.md",
+        "docs/relay/ALL_PROJECT_CI_20261008.md",
+        "docs/relay/CARD_DEVICE_QA_20261011.md",
+        "docs/relay/CI_MINUTES_MEASUREMENT_20261010.md",
+        "docs/relay/FAVICON_DECLARATION_20261007.md",
+        "docs/relay/FILES_RENAME_DELETE_20261007.md",
+        "docs/relay/FILES_SIENNA_REFINEMENT_20261007.md",
+        "docs/relay/GITHUB_QUOTA_REPAIR_20261007.md",
+        "docs/relay/HUMAN_LANGUAGE_FOUNDATION_20261007.md",
+        "docs/relay/HUMAN_LANGUAGE_WEBSITE_20261007.md",
+        "docs/relay/OBSOLETE_PANEL_RETIREMENT_20261007.md",
+        "docs/relay/SOURCE_CHECKPOINT_REPAIR_20261007.md",
+        "docs/relay/TEST_WORKFLOW_REPAIR_20261007.md",
+        "docs/relay/TOOLCHAIN_REPAIR_20261007.md",
+        "docs/relay/handoffs/2026-10-07/TO_JULIAN.md",
+        "docs/relay/handoffs/2026-10-07/acceptance.md",
+        "docs/relay/handoffs/2026-10-07/human-language-proposal.md",
+        "docs/relay/handoffs/2026-10-07/manifest.json",
+        "docs/relay/handoffs/2026-10-07/screenshot-evidence-proposal.md",
+        "package-lock.json",
+        "package.json",
+        "packages/runner/src/cloudflare-worker.mjs",
+        "packages/runner/src/context-service.mjs",
+        "packages/runner/src/job-control.mjs",
+        "packages/runner/src/jobs.mjs",
+        "packages/runner/src/jobs.test.mjs",
+        "packages/runner/src/source-checkpoints.mjs",
+        "packages/runner/src/source-checkpoints.test.mjs",
+        "packages/runner/test/api.test.mjs",
+        "packages/runner/test/cloudflare-worker.test.mjs",
+        "packages/shared-ui/file-manager.css",
+        "packages/shared-ui/file-manager.d.ts",
+        "packages/shared-ui/file-manager.js",
+        "packages/shared-ui/presentation-copy.js",
+        "packages/shared-ui/work-controls.css",
+        "packages/shared-ui/work-controls.js",
+        "packages/shared-ui/work-viewer.js",
+        "projects/grnwht.json",
+        "projects/relay.json",
+        "recovery/wrangler.jsonc",
+        "scripts/autonomy-gate.mjs",
+        "scripts/build-context-card-model.mjs",
+        "scripts/ci-stage.mjs",
+        "scripts/ci-test-orchestrator.mjs",
+        "scripts/relay-executor.test.mjs",
+        "scripts/relay-source-checkpoint-macos.py",
+        "scripts/relay-source-checkpoint.mjs",
+        "scripts/relay-source-checkpoint.test.mjs",
+        "scripts/release-assurance.mjs",
+        "scripts/release-assurance.test.mjs",
+        "scripts/release-toolchain.mjs",
+        "scripts/restore-release-archive.py",
+        "scripts/retain-web-preview.mjs",
+        "scripts/runner-sync.mjs",
+        "scripts/runner-sync.test.mjs",
+        "scripts/source-test-contracts.mjs",
+        "scripts/verify-worker-runtime.mjs",
+        "src/access-verification.js",
+        "src/access-verification.test.js",
+        "src/autonomy-control.js",
+        "src/autonomy-control.test.js",
+        "src/ci-routing.js",
+        "src/ci-routing.test.js",
+        "src/cloud-upload.js",
+        "src/cloud-upload.test.js",
+        "src/cloud.js",
+        "src/cloud.test.js",
+        "src/communication-presentation.js",
+        "src/communication-presentation.test.js",
+        "src/compiled-recovery-runtime.test.js",
+        "src/compiled-recovery.js",
+        "src/compiled-recovery.test.js",
+        "src/controller.js",
+        "src/controller.test.js",
+        "src/file-transfer-runtime.test.js",
+        "src/file-transfer.js",
+        "src/file-transfer.test.js",
+        "src/github-read-cache.js",
+        "src/github-read-cache.test.js",
+        "src/human-presentation.js",
+        "src/progress-api.js",
+        "src/progress-api.test.js",
+        "src/project-cloud.js",
+        "src/project-cloud.test.js",
+        "src/recovery-controller-runtime.test.js",
+        "src/recovery-controller.js",
+        "src/recovery-controller.test.js",
+        "src/recovery-upload.js",
+        "src/recovery-upload.test.js",
+        "src/relay-card-variants.test.js",
+        "src/relay-chat-ui.js",
+        "src/relay-chat-ui.test.js",
+        "src/relay-context-card-browser.js",
+        "src/relay-context-card-legacy-model.js",
+        "src/relay-context-card-model.js",
+        "src/relay-context-card-style.js",
+        "src/relay-context-card-style.test.js",
+        "src/relay-entry.js",
+        "src/relay-entry.test.js",
+        "src/relay-events.js",
+        "src/relay-events.test.js",
+        "src/relay-host-action-probe.test.js",
+        "src/relay-host-probe.test.js",
+        "src/relay-ui.js",
+        "src/relay-ui.test.js",
+        "src/release-recovery.js",
+        "src/release-recovery.test.js",
+        "src/resume-checkpoints.js",
+        "src/resume-checkpoints.test.js",
+        "test/autonomy-gate.test.mjs",
+        "test/fixtures/recovery-archive.mjs",
+        "test/release-toolchain-contract.test.mjs",
+        "test/source-test-contracts.test.mjs",
+        "test/tool-contract.test.mjs",
+        "test/worker-runtime-contract.test.mjs",
+        "wrangler.jsonc",
+        "packages/shared-ui/glyphs.js",
+        ".github/workflows/ci.yml",
+        "apps/web/production-scope.mjs",
+        "apps/web/test/production-scope.test.mjs",
+        "test/ci-stage-contract.test.mjs",
         "scripts/relay-executor-inbox.mjs",
         "scripts/relay-executor-inbox.test.mjs",
+        "scripts/relay-dispatch.mjs",
+        "scripts/relay-dispatch.test.mjs",
+        "docs/relay/EXECUTOR_ROUTING_20261011.md",
+        "packages/runner/src/night-shift.mjs",
+        "packages/runner/src/night-shift.test.mjs",
+        "docs/relay/RELAY_2_0_SCOPE_AUDIT_20261012.md",
+        "src/relationship-context.js",
+        "src/relationship-context.test.js",
+        "packages/runner/src/context-service.test.mjs",
+        "scripts/relay-night-shift.mjs",
+        "scripts/relay-night-shift.test.mjs",
+        "docs/relay/RELATIONSHIP_NIGHT_SHIFT_INTEGRATION_20261012.md",
+        "scripts/ci-parallel-suites.mjs",
+        "test/ci-parallel-suites.test.mjs",
+        "docs/relay/RESUME_VERIFICATION_20261020.md",
         "src/native-oversight-compat.js",
-        "src/native-oversight-compat.test.js",
-        "src/relay-entry.js",
-        "docs/relay/EXECUTOR_ROUTING_20261011.md"
+        "src/native-oversight-compat.test.js"
       ],
       "resources": [
         "grnwht-cloud-deployment-authority",
@@ -15720,7 +16103,7 @@
       ],
       "goal": "Continue the existing unfinished full Relay MCP rebuild, restoring original1.9 promised capabilities and integrating approved Relay live-panel/site/card work. Archival assignment closure is not proof of functional delivery. Immediate additive priority: streamline CI across ALL projects, with measured reductions and preserved required verification.",
       "acceptance": "Preserve working tools and provenance. Restore the original 1.9 acceptance at commit 434541358d6bfd25e67af5d8e689ba49a5378b91 and all seven stages of the Research and Reflow Plan. Track source implementation, publication, host installation and runtime verification separately. Preserve original objectives and stable acceptance IDs through additive amendments and full-task resume. Separate scope completion from verification; reconcile stale ownership without restarting paused or cancelled work. Repurpose the hourly workflow as a model-free sync safeguard comparing registered tasks, PRs, checks and deployment evidence, with deduplicated continuation recommendations and honest unavailable-evidence states. Complete skill catalog, search, read, resolve, install/vendor, update and audit; pinned licensed portable bundles; integrity and dependency enforcement; all originally promised creative, platform and supporting packs. Prove durable jobs, a real coding executor, capability-based local/remote routing, worker communication and full capability parity. Fold the Relay website, live panel, approved telemetry, Refresh Tools fallback chain, Add MCP to AI actions and compact MCP cards into this same rebuild. Verify actual client rendering/actions. Integrate review-first cards, evidence and device-specific frames, saved answers/replies, project icons and useful workspace overview. Use flat surfaces with shadows/glows. Night Shift records actual autonomous away-time work, with an unused staff lead for oversight, preserved executor provenance, evidence-supported backfill and an idempotent Shift handoff. No new credentials or spending inferred. Documentation-only PRs, fixtures and transferred defects do not establish full delivery.\nFull execution handoff, source recovery and original contract evidence: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RELAY-MCP.md . All latest site/live-panel/telemetry/refresh/add-to-AI, review delivery, NightShift/Shift, canonical asset discovery, lifecycle and original skills/executor goals preserved. Original1.9 verbatim and41 stale queue pairs in sibling documents. Current engine cannot normalize completed queue pairs or handoff queued-only owner; do not bypass. Actual user-started Mac Codex identity pending; parent stops MCP implementation. ctrlfrontend remains separate heldPR7, recovery8WIPfiles preserved. New Relay site concept is not implementation; current plugin ID protected.\n2026-10-03 15:38 motion acceptance: preserve the approved Relay visual language; tighten in-motion card padding and text grouping; retain last good live data during refresh, skeletons only for initial unavailable content, clear loading indicators and animated updates without flicker. Each mosaic block supports touch long press into wiggle/reorder mode, drag, explicit Done and saved order; keep normal scrolling and taps, keyboard/reduced-motion accessibility. User says all these are part of the motion pass. Desktop normal ChatGPT card mount/read-only check now screenshot-proven; iOS user-reported working; browser regression remains open.\n2026-10-03 18:27 card acceptance: Lauren confirms the real iOS status card now loads data (screenshot libfile_4bab4a18f8ac81918f490d8135752922). Active panel must list active jobs, not staff. Present concise itemized job titles/status, readable visual hierarchy and glanceable information; expand full technical details on demand. Preserve established card identity and approved flat surfaces. Native iOS data hydration is evidenced; actions and browser parity remain separate checks.",
-      "next_action": "Freeze exact six-file protected scope for actual fresh NightShift: inboxsource/test plus four acceptedcompatdependency paths. CompatPR246mergedbbb0fec2, mainpostflightpending. Fullrestorecandidate saved185-or-current union, preservingotherowners andoriginalacceptance. Do notchange source scope while a protected job is running; no parent sourcewriter until terminalreceipt/readback. Admitfreshjob/window onlyafter release+safety+nativehostreadiness verified.",
+      "next_action": "Fresh full30-minute Night Shift20:03–20:33Z completed and ledgerrev2/itemns_17b94a71 independently confirmed; codejob0e675 succeeded, native4fae succeeded. PR246 compatibility and PR247 inbox fix published/healthy; independent protected restore retained. Restore original scope except current native-continuity owner paths, preserve all original acceptance plus admitted supporting acceptance. Refresh scope audit and exact final context; native-client/remote/curation/token/user gates remain separate, no new window authorized.",
       "ledger_refs": [
         "relay-mcp-rebuild-20261001",
         "relay-mcp-host-proof-20261001",
@@ -15767,8 +16150,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T19:56:20.525Z",
-      "lease_until": "2026-10-21T07:56:20.525Z",
+      "updated_at": "2026-10-20T20:34:54.950Z",
+      "lease_until": "2026-10-21T08:34:54.950Z",
       "handoffs": [
         {
           "at": "2026-10-03T08:00:10.297Z",
@@ -17028,211 +17411,6 @@
             "paid_services": false,
             "canonical_key": "native-oversight-cached-schema",
             "reason": "Coordinator review: directly required by observed cached-schema failure; narrow own ingress only, same broker checks and no new credential/access. Direct human instruction in oversight userMessage01a15acc-3229-7c62-b37a-006846ba28f6 authorizes repair and verified rerun."
-          }
-        }
-      ]
-    },
-    {
-      "id": "relay-native-continuity-20261020",
-      "owner": "relay-execution-continuity-worker-20261020",
-      "branch": "relay/native-continuity-20261020",
-      "paths": [
-        "AGENTS.md",
-        "CLAUDE.md",
-        "LOEW_CHAT_BIBLE.md",
-        "contracts/manifest.json",
-        "scripts/relay-continuity.mjs",
-        "scripts/relay-continuity.test.mjs",
-        "scripts/relay-native-continuity.mjs",
-        "scripts/relay-native-continuity.test.mjs",
-        "scripts/relay-native-proof.mjs",
-        "test/fixtures/native-continuity-live/",
-        "test/source-test-contracts.json",
-        "test/documentation-routing.test.mjs",
-        "docs/relay/EXECUTION_CONTINUITY_20261020.md",
-        "docs/relay/GOAL_PRESERVING_EXPANSION_20261020.md",
-        "docs/relay/NATIVE_CONTINUITY_20261020.md",
-        "test/coordination.test.mjs",
-        "test/fixtures/native-continuity-live/support.json"
-      ],
-      "resources": [
-        "relay-native-continuity-20261020"
-      ],
-      "goal": "Activate authorized acceptance continuation and goal-preserving expansion in the existing native Relay/Codex task workflow without creating credentials or launching another model process.",
-      "acceptance": "Implement a bounded native-tool bridge for the existing coordinator and canonical assignment/stop/scope/CAS controls. Native host supplies semantic review and stage work through its existing tools; real task-specific verifiers decide acceptance. Prove A then discovered supporting work then B with actual native Relay actions in an explicitly non-production fixture subtask, preserving checkpoints and avoiding duplicate uncertain work. Separate subtask acceptance from full original objective completion. Test stale controls, native reply/restart identity and malicious/scope escape cases. Update canonical native bootstrap/config guidance and readiness matrix; commit/push draftPR, exactCI, authorized release/live-source/health/recovery assurance with preserved rollback. No external Claude, new credentials/access, other workspaces, Field or unrelated held work.",
-      "next_action": "Actual native A/support/B fixture and zero-work resume passed; finish native activation aggregate/CI gates and authorized exact-source publication.",
-      "primary_team": "night-shift",
-      "supporting_teams": [],
-      "primary_staff": "julian",
-      "supporting_staff": [],
-      "base_sha": "c99f5477e33427a4c16696cf5355b012720e6c30",
-      "state": "active",
-      "created_at": "2026-10-20T20:03:16.561Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Activate authorized acceptance continuation and goal-preserving expansion in the existing native Relay/Codex task workflow without creating credentials or launching another model process.",
-          "acceptance": "Implement a bounded native-tool bridge for the existing coordinator and canonical assignment/stop/scope/CAS controls. Native host supplies semantic review and stage work through its existing tools; real task-specific verifiers decide acceptance. Prove A then discovered supporting work then B with actual native Relay actions in an explicitly non-production fixture subtask, preserving checkpoints and avoiding duplicate uncertain work. Separate subtask acceptance from full original objective completion. Test stale controls, native reply/restart identity and malicious/scope escape cases. Update canonical native bootstrap/config guidance and readiness matrix; commit/push draftPR, exactCI, authorized release/live-source/health/recovery assurance with preserved rollback. No external Claude, new credentials/access, other workspaces, Field or unrelated held work.",
-          "at": "2026-10-20T20:03:16.561Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "relay-native-continuity-20261020:acceptance:0",
-            "text": "Implement a bounded native-tool bridge for the existing coordinator and canonical assignment/stop/scope/CAS controls. Native host supplies semantic review and stage work through its existing tools; real task-specific verifiers decide acceptance. Prove A then discovered supporting work then B with actual native Relay actions in an explicitly non-production fixture subtask, preserving checkpoints and avoiding duplicate uncertain work. Separate subtask acceptance from full original objective completion. Test stale controls, native reply/restart identity and malicious/scope escape cases. Update canonical native bootstrap/config guidance and readiness matrix; commit/push draftPR, exactCI, authorized release/live-source/health/recovery assurance with preserved rollback. No external Claude, new credentials/access, other workspaces, Field or unrelated held work.",
-            "at": "2026-10-20T20:03:16.561Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-20T20:32:06.566Z",
-      "lease_until": "2026-10-21T08:32:06.566Z",
-      "acceptance_additions": [
-        {
-          "schema": 1,
-          "base_objective_digest": "82dcc9b89a4b7a86c57c3ce9b0d7b2682e23d96924150edada5ad6658f649a79",
-          "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
-          "proposal": {
-            "id": "native-fixture-validation",
-            "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
-            "kind": "strengthens",
-            "reason": "Exercise actual discovered supporting work, not just the original two stages",
-            "relationship": "Strengthens native-fixture-a by validating its actual seed and makes native-fixture-b consume the admitted validated value, preserving the assigned native bridge goal",
-            "supports": [
-              "native-fixture-a"
-            ],
-            "target_stage": "a",
-            "depends_on": [
-              "a"
-            ],
-            "acceptance": [
-              "Supporting output validates actual integer seed7 and records exactly twice its value; invalid seed or inconsistent output fails verification"
-            ],
-            "profile": "fixture-support",
-            "paths": [
-              "test/fixtures/native-continuity-live/support.json"
-            ],
-            "description": "Read actual a.json, validate its seed is integer7, then write support.json with the doubled value14. This is non-production fixture work only."
-          },
-          "review": {
-            "verdict": "admit",
-            "preserves_goal": true,
-            "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
-            "within_authority": true,
-            "sensitive_permissions": false,
-            "paid_services": false,
-            "canonical_key": "native-fixture-validation",
-            "reason": "Reviewed by the current native coordinator: validating A and making B consume the validated output directly exercises the assigned native continuation/expansion bridge. It stays inside the admitted non-production fixture path and existing authority; the real verifier checks seed and derived output rather than trusting this decision as test evidence."
-          },
-          "profile_digest": "3a09026b918b15dd80406851ed249a4cf27deda0bab9224b72ef70291a9e81e6"
-        }
-      ],
-      "amendment_count": 2,
-      "amendments": [
-        {
-          "at": "2026-10-20T20:14:33.928Z",
-          "by": "relay-execution-continuity-worker-20261020",
-          "reason": "Goal-preserving strengthens feature native-fixture-validation: Exercise actual discovered supporting work, not just the original two stages",
-          "fields": [
-            "acceptance_additions",
-            "next_action",
-            "paths"
-          ],
-          "before": {
-            "acceptance_additions": null,
-            "next_action": "Implement and verify the native-tool bridge; run bounded live non-production subtask through existing native Relay transport, then complete the authorized exact-source release.",
-            "paths": [
-              "AGENTS.md",
-              "CLAUDE.md",
-              "LOEW_CHAT_BIBLE.md",
-              "contracts/manifest.json",
-              "scripts/relay-continuity.mjs",
-              "scripts/relay-continuity.test.mjs",
-              "scripts/relay-native-continuity.mjs",
-              "scripts/relay-native-continuity.test.mjs",
-              "scripts/relay-native-proof.mjs",
-              "test/fixtures/native-continuity-live/",
-              "test/source-test-contracts.json",
-              "test/documentation-routing.test.mjs",
-              "docs/relay/EXECUTION_CONTINUITY_20261020.md",
-              "docs/relay/GOAL_PRESERVING_EXPANSION_20261020.md",
-              "docs/relay/NATIVE_CONTINUITY_20261020.md",
-              "test/coordination.test.mjs"
-            ]
-          },
-          "after": {
-            "acceptance_additions": [
-              {
-                "schema": 1,
-                "base_objective_digest": "82dcc9b89a4b7a86c57c3ce9b0d7b2682e23d96924150edada5ad6658f649a79",
-                "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
-                "proposal": {
-                  "id": "native-fixture-validation",
-                  "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
-                  "kind": "strengthens",
-                  "reason": "Exercise actual discovered supporting work, not just the original two stages",
-                  "relationship": "Strengthens native-fixture-a by validating its actual seed and makes native-fixture-b consume the admitted validated value, preserving the assigned native bridge goal",
-                  "supports": [
-                    "native-fixture-a"
-                  ],
-                  "target_stage": "a",
-                  "depends_on": [
-                    "a"
-                  ],
-                  "acceptance": [
-                    "Supporting output validates actual integer seed7 and records exactly twice its value; invalid seed or inconsistent output fails verification"
-                  ],
-                  "profile": "fixture-support",
-                  "paths": [
-                    "test/fixtures/native-continuity-live/support.json"
-                  ],
-                  "description": "Read actual a.json, validate its seed is integer7, then write support.json with the doubled value14. This is non-production fixture work only."
-                },
-                "review": {
-                  "verdict": "admit",
-                  "preserves_goal": true,
-                  "goal_digest": "84d2986d659c176fbd508ac36fdc983d34dd8c140d2b5ed0034f6998663e09d3",
-                  "within_authority": true,
-                  "sensitive_permissions": false,
-                  "paid_services": false,
-                  "canonical_key": "native-fixture-validation",
-                  "reason": "Reviewed by the current native coordinator: validating A and making B consume the validated output directly exercises the assigned native continuation/expansion bridge. It stays inside the admitted non-production fixture path and existing authority; the real verifier checks seed and derived output rather than trusting this decision as test evidence."
-                },
-                "profile_digest": "3a09026b918b15dd80406851ed249a4cf27deda0bab9224b72ef70291a9e81e6"
-              }
-            ],
-            "next_action": "Complete original goal and admitted supporting feature native-fixture-validation: Exercise actual discovered supporting work, not just the original two stages",
-            "paths": [
-              "AGENTS.md",
-              "CLAUDE.md",
-              "LOEW_CHAT_BIBLE.md",
-              "contracts/manifest.json",
-              "scripts/relay-continuity.mjs",
-              "scripts/relay-continuity.test.mjs",
-              "scripts/relay-native-continuity.mjs",
-              "scripts/relay-native-continuity.test.mjs",
-              "scripts/relay-native-proof.mjs",
-              "test/fixtures/native-continuity-live/",
-              "test/source-test-contracts.json",
-              "test/documentation-routing.test.mjs",
-              "docs/relay/EXECUTION_CONTINUITY_20261020.md",
-              "docs/relay/GOAL_PRESERVING_EXPANSION_20261020.md",
-              "docs/relay/NATIVE_CONTINUITY_20261020.md",
-              "test/coordination.test.mjs",
-              "test/fixtures/native-continuity-live/support.json"
-            ]
-          }
-        },
-        {
-          "at": "2026-10-20T20:32:06.566Z",
-          "by": "relay-execution-continuity-worker-20261020",
-          "reason": "Record verified native fixture progress and prove the bounded once-only native tool mutation; preserve original goal and supporting acceptance.",
-          "fields": [
-            "next_action"
-          ],
-          "before": {
-            "next_action": "Complete original goal and admitted supporting feature native-fixture-validation: Exercise actual discovered supporting work, not just the original two stages"
-          },
-          "after": {
-            "next_action": "Actual native A/support/B fixture and zero-work resume passed; finish native activation aggregate/CI gates and authorized exact-source publication."
           }
         }
       ]
