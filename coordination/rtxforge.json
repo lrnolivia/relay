@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-20T22:03:07.459Z",
+  "updated_at": "2026-10-20T22:03:13.629Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -4684,14 +4684,18 @@
       "paths": [
         "website/public/index.html",
         "website/public/styles.css",
-        "website/public/features.js"
+        "website/public/features.js",
+        "README.md",
+        "CODE_SIGNING.md",
+        "windows/README.md"
       ],
       "resources": [
-        "rtxforge-landing-worker"
+        "rtxforge-landing-worker",
+        "rtxforge-public-docs"
       ],
       "goal": "Refine the published Install and Play feature groups into the requested nested cards with clear work-in-progress status.",
       "acceptance": "Direct user requests Dual Boot nested card within Install with a WIP progress/status badge replacing the text caveat. Use a truthful static in-progress glyph/badge, no invented percentage or animated fake progress. Play retains the package-to-play sequence and contains two nested cards: Game Mode and Overlay. Both OS views keep the same layout; Game Mode describes controller library/details/presets navigation. Overlay remains explicitly Windows development work, with Linux availability honest. Preserve existing fonts, cool-grey themes, no eyebrows, full-bleed hero, release/install-guide/carousel behavior and authentic capture provenance. User's explicit nested-card direction overrides generic design heuristics against nesting. Reuse only appropriate existing media, hide absent media with no fabricated screenshot. Scoped 3-file change, no native/source/app release changes. Verify desktop/mobile both OS/theme views, dynamic switching and no overflow. Carry through draft PR, checks, exact-source review/Lauren Git merge, Worker deployment and production verification under standing approved site publication, retaining current healthy version49159f26-d186-40ab-95d9-c0c518711198 after fresh check. Queued final screenshot assignment remains separate. Latest direct refinement: matching WIP badges appear on Game Mode and Overlay as well as Dual Boot. Keep all three as static truthful status indicators, without percentages. Direct user additions: README must explain downloading directly from GitHub Releases, including selecting Beta/Development when published, expanding Assets, choosing the OS package and distinguishing source archives from app downloads. Correct false SignPath service/certificate claims in README, CODE_SIGNING.md and the Windows README; signing setup is not completed. Preserve real MIT/font/upstream notices and existing privacy text; do not change native workflows or configure signing.",
-      "next_action": "Finish requested nested cards/three WIP badges plus concise GitHub download steps and signing documentation correction; verify and publish one coherent website/docs batch.",
+      "next_action": "Edit only scoped public website and documentation; preserve native code/workflow owner and pending capture assignment.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -4726,8 +4730,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T22:03:07.459Z",
-      "lease_until": "2026-10-21T10:03:07.459Z",
+      "updated_at": "2026-10-20T22:03:13.629Z",
+      "lease_until": "2026-10-21T10:03:13.629Z",
       "amendment_count": 2,
       "amendments": [
         {
