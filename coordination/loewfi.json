@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "loewfi",
-  "updated_at": "2026-10-08T01:27:11.362Z",
+  "updated_at": "2026-10-20T20:05:52.536Z",
   "legacy_branches": [
     "main",
     "runner/universal-authority"
@@ -122,6 +122,49 @@
       "evidence": "https://github.com/lrnolivia/loewfi/pull/5; required exact-head admission and existing quality/build checks passed. Current main workflow readback equals reviewed candidate byte-for-byte (blob 0836c4ddf00e9f9662c1b456bbacacc6e2125e5a). Changed workflow bytes restored and hash-verified in isolated recovery directory. Daily hygiene, immediate admission and required assertions preserved. CI-only slice complete; other product work preserved.",
       "work_accounted": true,
       "completed_at": "2026-10-08T01:27:11.362Z"
+    },
+    {
+      "id": "loewfi-terra-prime-landing-20261020",
+      "owner": "01a15ae9-2405-7fc3-955e-204a5bebb44f",
+      "branch": "loewfi/terra-prime-landing-20261020",
+      "paths": [
+        "src/App.jsx",
+        "src/landing.css",
+        "index.html",
+        "images/terra-prime/"
+      ],
+      "resources": [
+        "loewfi-public-landing",
+        "loewfi-production-release"
+      ],
+      "goal": "Apply the new Figma Terra Prime landing design and make it live at loew.fi, preserving existing functionality.",
+      "acceptance": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'.",
+      "next_action": "Create isolated checkout from fresh main 1ae2f2f, implement requested Figma design, then validate and publish.",
+      "category": "design",
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "base_sha": "1ae2f2fb01af862197ddd414992fd25255687d73",
+      "state": "active",
+      "created_at": "2026-10-20T20:05:52.536Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Apply the new Figma Terra Prime landing design and make it live at loew.fi, preserving existing functionality.",
+          "acceptance": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'.",
+          "at": "2026-10-20T20:05:52.536Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "loewfi-terra-prime-landing-20261020:acceptance:0",
+            "text": "Match Figma file fGd3MhwRXRXNPomvwLWyAz landing desktop 16:463 and mobile 16:473 with responsive layout; preserve mailto recipient me@loew.fi, existing subject and message body, required input, navigation menu behavior and external contact links. Keep the portfolio and legacy CMS inactive. Pass required install/typecheck/tests/build plus desktop/mobile browser QA, review exact PR head, ship through existing release mechanism with retained healthy rollback and verify live artifact and behavior. User authorization: current chat request 'make that the live loew.fi landing page' and 'same functionality just a tweaked design'.",
+            "at": "2026-10-20T20:05:52.536Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-20T20:05:52.536Z",
+      "lease_until": "2026-10-21T08:05:52.536Z"
     }
   ]
 }
