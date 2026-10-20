@@ -17,10 +17,18 @@ async function privateDirectory(directory){
  const st=await fs.stat(directory);if((st.mode&0o077)!==0||st.uid!==process.getuid?.())throw Error('Native channel requires a private owned directory');return directory;
 }
 async function readJSON(filename){
- let st=await fs.lstat(filename);
- // Atomic link publication may briefly have two names until temp cleanup.
- for(let i=0;st.nlink===2&&i<5;i++){await new Promise(r=>setTimeout(r,2));st=await fs.lstat(filename);}
- if(!st.isFile()||st.isSymbolicLink()||st.nlink!==1||st.size>LIMIT||(st.mode&0o077)!==0)throw Error('Invalid private native packet');
+ let st=await fs.lstat(filename),publishing=false;
+ // The temp file is fully written BEFORE its atomic link becomes visible.
+ // Accept that exact same-inode private publication link, not arbitrary hard
+ // links; there is no scheduler-dependent delay before the reader is safe.
+ if(st.nlink===2){
+  const prefix=path.basename(filename)+'.tmp-';
+  for(const name of (await fs.readdir(path.dirname(filename))).filter(x=>x.startsWith(prefix)&&/^[a-f0-9-]{36}$/.test(x.slice(prefix.length)))){
+   try{const temp=await fs.lstat(path.join(path.dirname(filename),name));if(temp.isFile()&&!temp.isSymbolicLink()&&temp.ino===st.ino&&temp.dev===st.dev&&(temp.mode&0o077)===0)publishing=true;}catch(e){if(e.code!=='ENOENT')throw e;}
+  }
+  if(!publishing)st=await fs.lstat(filename); // publisher may already unlink
+ }
+ if(!st.isFile()||st.isSymbolicLink()||st.nlink!==1&&!(st.nlink===2&&publishing)||st.size>LIMIT||(st.mode&0o077)!==0)throw Error('Invalid private native packet');
  return JSON.parse(await fs.readFile(filename,'utf8'));
 }
 async function writeOnce(filename,value,{exclusive=false}={}){

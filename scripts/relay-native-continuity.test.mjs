@@ -29,6 +29,10 @@ test('native channel refuses another plan, public directory, symlink and invente
  const link=path.join(f.root,'link');await fs.symlink(f.directory,link);await assert.rejects(openNativeChannel({config,directory:link,workspace:f.workspace}),/symlink/);
  await assert.rejects(openNativeChannel({config:{...config,provider:'claude'},directory:f.directory,workspace:f.workspace}),/not a Claude/);
  const publicDir=path.join(f.root,'public');await fs.mkdir(publicDir,{mode:0o755});await assert.rejects(openNativeChannel({config,directory:publicDir,workspace:f.workspace}),/private owned/);
+ const reading=f.channel.rpc('relay_autonomy',{action:'status',scope:'global'}),packet=await pending(f.directory),hardlink=path.join(f.root,'arbitrary-link');
+ await fs.link(path.join(f.directory,packet.request.id+'.request.json'),hardlink);await assert.rejects(pendingNativeRequest(f.directory),/Invalid private native packet/);await fs.unlink(hardlink);
+ await replyNativeRequest(f.directory,packet.request.id,{global:{ok:true},project:{ok:true},assignments:{ok:true}});await reading;
+
 });
 test('fixture profiles verify real outputs and reject corrupted supporting results',async t=>{
  const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-native-proof-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));const dir=path.join(root,proofDirectory);await fs.mkdir(dir,{recursive:true});await fs.writeFile(path.join(dir,'a.json'),'{"seed":7}');assert.deepEqual(await verifyNativeProof('a',root),{criterion:'native-fixture-a',seed:7});
