@@ -40,6 +40,7 @@ test('relationship proposals remain provisional until a verified bound lead cura
  record.claims[0].primary_staff='ellis';
  const curated=await callContext(curate,env,api,identity);assert.equal(curated.entry.relationship.durable,true);assert.equal(curated.entry.source_entry_id,proposed.entry.id);assert.equal(curated.entry.conclusion_verified,false);
  assert.equal((await callContext(curate,env,api,identity)).replayed,true);
+ await assert.rejects(callContext({...curate,expected_revision:2,operation_id:'curate-again'},env,api,identity),/already has a current curated note/);
  assert.equal((await read()).staff_relationship.notes[0].note,proposed.entry.content);
  assert.deepEqual((await callContext({action:'read',project:'fixture',assignment:'lead'},env,api)).staff_relationship.notes,[]);
  await callContext({...args,action:'retract',expected_revision:2,operation_id:'retract',entry_id:proposed.entry.id},env,api);

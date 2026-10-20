@@ -41,6 +41,7 @@ export async function callContext(args,env,apiOverride,{verifiedPrincipal=null}=
  if(args.action==='curate'){
   const source=record.entries.find(x=>x.id===args.entry_id);
   if(!source||source.kind!=='relationship-signal'||source.retracted_at||!source.relationship)throw Error('Curation requires a current attributed relationship proposal');
+  if(record.entries.some(x=>x.kind==='relationship-note'&&x.source_entry_id===source.id&&!x.retracted_at))throw Error('Proposal already has a current curated note; retract it before re-curating');
   const relationship=curateRelationshipNote(createInteractionSignal(source.relationship),{curator_staff_id:'julian',note:args.content});
   entry={id:'ctx_'+hash({project:args.project,operation:args.operation_id}),kind:'relationship-note',project:args.project,assignment:args.assignment,owner:claim.owner,branch:claim.branch,content:relationship.note,relationship,source_entry_id:source.id,repository:source.repository,commit_sha:source.commit_sha,source_exists:source.source_exists,conclusion_verified:false,created_at:new Date().toISOString(),acknowledgements:[]};
   record.entries.push(entry);

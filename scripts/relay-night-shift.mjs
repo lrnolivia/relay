@@ -20,6 +20,13 @@ export function validateNightShiftPlan(plan){
  return plan;
 }
 
+// A host id names exactly one configuration across the whole plan.
+export function uniqueHosts(plan){
+ const hosts=new Map();
+ for(const host of plan.jobs.flatMap(x=>x.hosts)){const prior=hosts.get(host.id);if(prior&&JSON.stringify(prior)!==JSON.stringify(host))throw Error('Host id has conflicting configurations');hosts.set(host.id,host);}
+ return [...hosts.values()];
+}
+
 // One bounded pass over already-created jobs, never an open-ended task generator.
 // The caller owns the exclusive durable journal. An uncertain launch is terminal
 // for this pass and can only be reconciled by inspecting the original job/host.
@@ -57,8 +64,17 @@ export async function runNightShiftPass({plan,rpc,persist,journal=null,dispatch=
     const latest=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,job_id:job.id});
     if(latest.ok!==true||latest.job?.id!==job.id)throw Error('Unavailable exact job');
     if(terminal.has(latest.job.state)){receipt.cancellation.state='already-terminal';await persist(state);return;}
-    const cancelled=await rpc('relay_execution',{action:'cancel',project:config.project,assignment:config.assignment,job_id:job.id,expected_owner:config.owner,expected_branch:config.branch,expected_revision:latest.job.revision,operation_id:receipt.cancellation.operation_id});
-    receipt.cancellation.state=cancelled.ok===true?'requested':'unknown';await persist(state);
+    const cancel=revision=>rpc('relay_execution',{action:'cancel',project:config.project,assignment:config.assignment,job_id:job.id,expected_owner:config.owner,expected_branch:config.branch,expected_revision:revision,operation_id:receipt.cancellation.operation_id});
+    let cancelled=await cancel(latest.job.revision);
+    // One bounded re-read covers a queued→running revision race; never loop.
+    if(cancelled?.ok!==true){
+     const again=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,job_id:job.id});
+     if(again.ok===true&&again.job?.id===job.id&&terminal.has(again.job.state)){receipt.cancellation.state='already-terminal';await persist(state);return;}
+     if(again.ok===true&&again.job?.id===job.id&&again.job.revision!==latest.job.revision)cancelled=await cancel(again.job.revision);
+    }
+    receipt.cancellation.state=cancelled?.ok===true?'requested':'unknown';
+    if(cancelled?.ok!==true)receipt.reconcile_required=true;
+    await persist(state);
    }catch{stopReason=stopReason||'control-unavailable';receipt.stop_reason=stopReason;receipt.reconcile_required=true;await persist(state);}
    finally{monitoring=false;}
   };
@@ -77,12 +93,16 @@ export async function runNightShiftPass({plan,rpc,persist,journal=null,dispatch=
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  const [planFile,receiptFile,stopFile]=process.argv.slice(2);
  if(!planFile||!receiptFile||!stopFile||!path.isAbsolute(stopFile))throw Error('Usage: relay-night-shift.mjs plan.json new-private-receipt.json /absolute/stop-file');
- const plan=validateNightShiftPlan(JSON.parse(await fs.readFile(planFile,'utf8'))),hosts=plan.jobs.flatMap(x=>x.hosts);
+ const plan=validateNightShiftPlan(JSON.parse(await fs.readFile(planFile,'utf8')));
  // The same host may serve different jobs, but each receipt path is protected.
- const handle=await openRoutingReceipt(receiptFile,[...new Map(hosts.map(h=>[h.id,h])).values()]);
+ const handle=await openRoutingReceipt(receiptFile,uniqueHosts(plan));
  const rpc=createMcpClient({token:process.env.RELAY_MCP_TOKEN});
  try{
-  const result=await runNightShiftPass({plan,rpc,shouldStop:async()=>{try{await fs.lstat(stopFile);return true;}catch(e){if(e.code==='ENOENT')return false;throw e;}},persist:async value=>{await handle.truncate(0);await handle.write(JSON.stringify(value,null,2)+'\n',0,'utf8');await handle.sync();}});
+  // A signal is a stop request, not an abort: the pass still cancels the exact job
+  // through Relay and persists its receipt. Only a repeated signal exits at once.
+  let signalled=false;
+  for(const name of ['SIGINT','SIGTERM'])process.on(name,()=>{if(signalled)process.exit(130);signalled=true;});
+  const result=await runNightShiftPass({plan,rpc,shouldStop:async()=>{if(signalled)return true;try{await fs.lstat(stopFile);return true;}catch(e){if(e.code==='ENOENT')return false;throw e;}},persist:async value=>{await handle.truncate(0);await handle.write(JSON.stringify(value,null,2)+'\n',0,'utf8');await handle.sync();}});
   console.log(JSON.stringify({state:result.state,jobs:result.jobs.map(x=>({job_id:x.job_id,state:x.state})),away_verified:false,objective_completed:false}));
  }finally{await handle.close();}
 }
