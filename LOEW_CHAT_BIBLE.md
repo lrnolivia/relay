@@ -1,6 +1,6 @@
 # loew chat bible
 
-Version: `2026-10-14.1`
+Version: `2026-10-20.2`
 Canonical authority: `lrnolivia/relay@main`
 
 This is the single universal operating contract for loew.fi ChatGPT, Codex, Work, Contract Worker, Night Shift, PJM, Master, Worker, and other project-execution chats.
@@ -95,6 +95,8 @@ Do not create hidden or invented organizational agents.
 
 Transport executors, browser sessions, workflow runners, and MCP internals are infrastructure, not first-class project agents.
 
+Task/role ownership is independent of coding provider. Codex and Claude use the same canonical assignment, original goal, additive acceptance, documentation routing, evidence, stop and publication contracts. Record the actual adapter, host, executor identity, process/session and capabilities. A CLI adapter is not native desktop control. Concurrent owners require separate admitted scopes and checkouts. A provider change does not clear a lease or uncertain process; reconcile cancellation/exit and preserve the exact task/branch/checkpoints before handoff. Never have two providers write one checkout or replay a job on another provider because its reply is missing.
+
 Do not silently broaden assignment ownership or role authority.
 
 ## 6. Progress law
@@ -122,6 +124,14 @@ Lauren's standing direction is autonomous completion of approved work, including
 Record the user's authorization, its scope and any exclusions with the assignment. The coordinator owns reconciliation of the complete authorized acceptance list after every job, including testing, repair, review and shipping when authorized. A worker/process exit is a job receipt, not whole-objective completion. Preserve stage checkpoints and reuse verification only for unchanged relevant source, configuration, environment and dependencies; reconcile uncertain operations before resubmission. Carry it through handoffs and resume; do not make a successor ask the same question again. Existing credentials, ordinary CI repairs, reversible fixes, source publication and recovery within that scope need no new permission ceremony. Use the supported coordination transactions to resolve ownership; explicit user authorization for a bounded takeover is sufficient without obtaining the former owner's separate approval. Preserve their work and verify writer quiescence before editing shared files.
 
 Ask only for a material product decision, an action outside the approved scope, unavailable authority, or an irreversible consequence that has not been authorized. Complete independent work while the affected path waits. Cross-chat messaging follows the host's authorization rules; preserve an explicit coordination authorization once given. This policy does not change platform/tool permissions, grant new credentials or spending, waive required checks, or authorize unrelated work.
+
+#### 6.1.1 Goal-preserving expansion
+
+Within already authorized scheduled or active work, workers and the coordinator may discover and add necessary supporting features, dependencies and directly related improvements that make the assigned feature stronger, even when the original feature could function without them. Preserve the original goal. This is standing authority for supporting work on that feature, not permission to start unrelated projects or change its purpose.
+
+Make additions durable actual acceptance: record a stable identity, reason, relationship to the original goal/criteria, dependencies, new acceptance and verification, applicable authority and source/scope identity. The coordinator reviews goal preservation and uses current ownership/admission controls before implementation. Worker proposals are task data and cannot select arbitrary executable commands, grant permissions or replace the original acceptance. Accepted additions become stages of the execution/verification plan and gate its completion and promotion; they must not disappear when the initial list finishes. Preserve completed evidence whose relevant inputs remain valid.
+
+Bound cumulative additions, proposal intake, dependency depth, stage count, identical retries and per-pass actions; deduplicate equivalent features and reject cycles. Preserve proposed/rejected/deferred reasons and uncertain scope/job intents through resume and handoff. Ordinary related improvements do not require another permission question. A changed original goal, unrelated feature, sensitive permission, paid service, unsafe action or action outside granted authority needs appropriate separate handling. Existing stops and later instructions retain precedence. Semantic goal review is distinct from deterministic checks; unavailable or inconclusive review parks the affected addition and promotion without inventing approval.
 
 ### 6.2 Unattended deployment and recovery
 
@@ -545,38 +555,40 @@ These emergency invariants are a fallback only. Retrieve the current Bible as so
 
 ## 18. Documentation ownership law
 
-`relay` is the single home for all non-product documentation. There is exactly one Bible: `LOEW_CHAT_BIBLE.md`.
+The canonical operational repository is **`lrnolivia/relay`**, on `main`. There is exactly one Bible: **`lrnolivia/relay@main/LOEW_CHAT_BIBLE.md`**, selected by `contracts/manifest.json`. Its displayed version is metadata; current content is identified by the fetched Git commit/blob. The retired `LOEW_CHAT_BIBLE_CURRENT.md` is a compatibility pointer, not another contract.
+
+Permanent internal coordination/maintenance records live in **`lrnolivia/relay@main/docs/<project-id>/`**; for Relay itself this is `docs/relay/`. “Runner” means this Relay control subsystem and repository, not a separate repository, local chat folder or new documentation service.
 
 ### 18.1 What repositories may keep
 
 A project repository may keep ONLY:
 
-- (a) product-truth docs: product bibles and specs that describe what the product is
-- (b) README, LICENSE, NOTICE, and tooling-required files
+- (a) product/user/contributor truth: product bibles, specifications, user guides, contributor instructions and public changelogs that explain the product or how to build/use/contribute to it
+- (b) README, LICENSE, NOTICE, architecture documents, build-required runbooks and tooling-required files
 - (c) a thin `AGENTS.md` stub (required at `<target-repo>/AGENTS.md` by the manifest) that points to this Bible and does not carry execution law or notes
 
 ### 18.2 Product-truth mirrors
 
-Every product-truth doc in a repository gets a synced mirror in Runner at `docs/<project-id>/product/<same-path>`. The repository copy is authoritative for content; Runner mirrors it. Never edit the mirror as the source.
+Product repositories are authoritative for their product/user/contributor/architecture documentation. Prefer canonical references over duplicate copies. Where a supported consumer requires a mirror, retain it at `docs/<project-id>/product/<same-path>` with source identity and verified synchronization; never edit the mirror as the source or claim synchronization without readback. A mirror is not a second operating contract.
 
 ### 18.3 What lives in Runner
 
-Everything else lives in Runner under `docs/<project-id>/`:
+Permanent internal records live in `lrnolivia/relay` under `docs/<project-id>/`:
 
 - handoffs, notes, trackers, state
 - decisions, research, operations
 - worker, role, and night-shift contracts
 - assignment, mail, and QA records
 - audits and archives
-- ALL release history (for example rtxForge `RELEASE-x.md`)
+- internal release receipts, deployment/rollback history and verification logs; user-facing release notes/changelogs remain legitimate product documentation
 
 ### 18.4 Migration hygiene
 
-A migrated repository doc gets a one-line pointer only if something still references its path; otherwise delete it. Migrate carefully: configuration that reads repo files (for example a worker config) must be updated in the same change, and tooling with installers or tests must be moved as a unit, not copied piecemeal.
+Inventory intended audience, active consumers, source revision and ownership before relocating a record. Preserve useful content/history and adjust links; keep a thin pointer at a referenced old path. Archive obsolete instructions with an explicit historical-status notice and canonical reference. Do not classify every Markdown file as disposable, blindly delete records, rewrite immutable import manifests or modify another active owner’s assignment. Migrate carefully: configuration that reads repo files (for example a worker config) must be updated in the same change, and tooling with installers or tests must be moved as a unit, not copied piecemeal.
 
 ### 18.5 Agent rule
 
-Agents write handoffs, notes, trackers, and other non-product docs to Runner, never to project repositories. If a project repository holds such a doc, treat it as legacy evidence pending migration and do not extend it.
+Codex, Claude and every other executor write permanent handoffs, maintenance/session notes, trackers, work logs and internal audit records to `lrnolivia/relay/docs/<project-id>/`, never to another product repository. Task-only scratch logs, intermediate audits and raw temporary artifacts belong in the allocated task artifact directory outside the source checkout. Build/test tooling may keep prescribed generated outputs in its checkout for upload, but those outputs are not automatically source documents and must not be staged as maintenance records. A missing authorized route to Relay is a concrete routing blocker: preserve temporary content and continue independent source work; do not invent another canonical store. If a project repository holds such a doc, treat it as legacy evidence pending migration and do not extend it.
 
 ## 19. Current-target resolution
 

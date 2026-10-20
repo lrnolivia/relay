@@ -4,14 +4,14 @@
 
 Night Shift is runner's reusable Contract Worker execution system.
 
-It applies to repositories explicitly managed by `loew-runner`.
+It applies to repositories explicitly managed by Relay.
 
-## 1. Separation from the Codex lane
+## 1. Organizational lanes and coding providers
 
-Codex lane:
+PJM/Master lane:
 
 ```text
-PJM → Master → Codex Worker
+PJM → Master → admitted coding worker
 ```
 
 Night Shift lane:
@@ -25,11 +25,11 @@ Night Shift Manager
 → main
 ```
 
-Do not silently mix the two lanes.
+Role/organizational lanes remain distinct; Codex and Claude are coding providers, not separate ownership systems. Both obey the same assignment/admission/evidence contracts. Do not invent native desktop integration from CLI capability.
 
 ## 2. Terminology
 
-**Contract Worker** — ordinary ChatGPT execution chat working under one bounded repository assignment.
+**Contract Worker** — an admitted execution client working under one bounded repository assignment; its actual chat/CLI provider and capabilities must be recorded.
 
 **Night Shift** — one or more Contract Workers operating asynchronously.
 
@@ -43,7 +43,7 @@ Transport executors are infrastructure, not organizational agents.
 
 Target repositories own implementation and product truth.
 
-`loew-runner` owns reusable Night Shift process and mutable coordination state.
+`lrnolivia/relay` owns reusable Night Shift process and mutable coordination state.
 
 A project may retain local project documentation, but it should not carry a forked copy of the universal Night Shift contract.
 
@@ -146,3 +146,5 @@ The Night Shift Manager must not end the night merely because one QA harness, br
 The bounded pass parks project-local holds, missing oversight and unavailable project/job state. Independent admitted jobs continue. Global/operator stops and unavailable global authority stop the pass. An uncertain launch reserves its job and dependent hosts/checkouts until readback; independent hosts may continue. Persist launch intent and never relaunch an existing uncertain receipt on restart.
 
 Execution continuity belongs to the coordinator's complete finite acceptance plan. Reconcile each job against stage verification, including authorized repair/review/shipping. Checkpoints are keyed by relevant inputs and dependency receipts; process success alone never advances acceptance.
+
+Goal-preserving additions follow the canonical Bible section6.1.1 and the actual expansion ledger/DAG described in `../docs/relay/GOAL_PRESERVING_EXPANSION_20261020.md`. Do not fork that policy in a local handoff. Permanent maintenance/handoff records go to `lrnolivia/relay/docs/<project-id>/`; preserve product/user/build/architecture documentation with its product.

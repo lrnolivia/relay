@@ -218,3 +218,32 @@ for (const [source_checkpoints,ackMessage] of [[false,false],[true,false],[true,
     assert.equal(events.find(event=>event.type==='synthetic.inbox-read').skillDirectory,journal.skills.directory);
   } finally {await fs.rm(root,{recursive:true,force:true});}
 });
+
+test('provider adapters use distinct safe CLI arguments and normalize concrete session/outcome events',async()=>{
+ const {executorArguments,executorEvent,executionProvider,continuityProposals}=await import('./relay-executor.mjs');
+ assert.equal(executionProvider({}),'codex');assert.throws(()=>executionProvider({provider:'native-claude'}),/supported/);
+ const args=executorArguments({provider:'claude',workspace:'/task',session_id:'exact-session'});assert.deepEqual(args,['--print','--verbose','--output-format','stream-json','--permission-mode','manual','--resume','exact-session']);assert.doesNotMatch(args.join(' '),/bypass|dangerously|allowedTools|add-dir/);
+ assert.equal(executorEvent('claude',{type:'system',subtype:'init',session_id:'claude-session'}).session_id,'claude-session');
+ assert.equal(executorEvent('claude',{type:'result',subtype:'success',is_error:false,session_id:'claude-session'}).completed,true);
+ assert.equal(executorEvent('claude',{type:'result',subtype:'error_during_execution',is_error:true}).completed,false);
+ assert.equal(executorEvent('codex',{type:'turn.completed'}).completed,true);assert.deepEqual(continuityProposals('ordinary worker text'),[]);
+});
+test('Claude CLI subprocess uses the existing broker lease, records real adapter identity and durable supporting proposals',async()=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-claude-fixture-')),workspace=path.join(root,'checkout'),stateDir=path.join(root,'receipts');await fs.mkdir(workspace);
+ const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim();
+ try{
+  git(['init','-b','relay/fixture']);git(['config','user.name','Fixture']);git(['config','user.email','fixture@example.invalid']);git(['remote','add','origin','https://github.com/lrnolivia/fixture.git']);await fs.writeFile(path.join(workspace,'README.md'),'fixture');git(['add','.']);git(['commit','-m','fixture']);
+  let stored=null,etag=0;const bucket={get:async()=>stored?{etag:String(etag),json:async()=>JSON.parse(stored)}:null,put:async(_key,value,{onlyIf})=>{if(stored&&onlyIf.etagMatches!==String(etag))return null;stored=value;return {etag:String(++etag)};}};
+  const target={state:'active',owner:'fixture',branch:'relay/fixture',repository:'lrnolivia/fixture',lease_until:'2099-01-01T00:00:00Z',head_sha:git(['rev-parse','HEAD']),goal:'Preview feature',acceptance:['Preview works'],paths:['README.md']};
+  const proposal={id:'readiness',goal_digest:'a'.repeat(64),kind:'strengthens',reason:'Clarify readiness',relationship:'Strengthens preview',supports:['A'],target_stage:'a',depends_on:['a'],acceptance:['Status updates'],profile:'engineering',paths:['README.md'],description:'Improve readiness status'};
+  await operateJob(bucket,{action:'submit',project:'fixture',assignment:'fixture',expected_owner:'fixture',expected_branch:target.branch,expected_head_sha:target.head_sha,prompt:'fixture',required_capabilities:['claude-cli'],operation_id:'fixture-submit'},target);
+  const rpc=async(name,args)=>name==='relay_runner_resume'?{ok:true}:name==='relay_context'?{ok:true,entries:[],revision:0}:name==='relay_runner_feedback_peek'?{ok:true,feedback:{available:true,events:[],conflicts:[],truncated:false}}:operateJob(bucket,args,target);
+  const result=await runExecution({config:{provider:'claude',project:'fixture',assignment:'fixture',owner:'fixture',branch:target.branch,executor_id:'claude-host',continuity_discovery:{goal_digest:proposal.goal_digest},skill_tags:['no-matching-skill']},workspace,stateDir,rpc,getVersion:()=> 'Claude Code synthetic protocol fixture',spawnProcess:(command,args,options)=>{
+   assert.equal(command,'claude');assert.ok(args.includes('manual'));
+   const text='RELAY_CONTINUITY_ADDITIONS\n'+JSON.stringify({schema:1,additions:[proposal]});return spawn(process.execPath,['-e',`process.stdin.resume();process.stdin.on('end',()=>{console.log(JSON.stringify({type:'system',subtype:'init',session_id:'claude-fixture'}));console.log(JSON.stringify({type:'assistant',message:{content:[{type:'text',text:${JSON.stringify(text)}}]}}));console.log(JSON.stringify({type:'result',subtype:'success',is_error:false,session_id:'claude-fixture'}));});`],options);
+  }});
+  assert.equal(result.state,'succeeded');assert.equal(result.objective_completed,false);assert.deepEqual(result.continuity_additions,[proposal]);
+  const receipt=JSON.parse(await fs.readFile(result.receipt,'utf8'));assert.equal(receipt.provider,'claude');assert.equal(receipt.job.process.adapter,'claude-cli');assert.equal(receipt.job.executor_id,'claude-host');assert.deepEqual(JSON.parse(stored).jobs[0].result.continuity_additions,[proposal]);
+  await assert.rejects(runExecution({config:{provider:'codex',project:'fixture',assignment:'fixture',owner:'fixture',branch:target.branch},workspace,stateDir,rpc,getVersion:()=>{throw Error('must not execute');}}),/provider changed/);
+ }finally{await fs.rm(root,{recursive:true,force:true});}
+});

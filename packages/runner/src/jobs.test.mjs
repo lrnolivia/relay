@@ -1,3 +1,4 @@
+import './continuity-expansion.test.mjs';
 import './source-checkpoints.test.mjs';
 import test from 'node:test';
 import './night-shift.test.mjs';
@@ -75,4 +76,14 @@ test('public schema carries native host observations without admitting arbitrary
  assert.doesNotThrow(()=>validateControlArguments(base,jobsTool.inputSchema));
  assert.doesNotThrow(()=>validateControlArguments({action:'checkpoint',project:'relay',assignment:'oversight',checkpoint:{summary:'Host observation',native_thread:nativeReceipt()}},jobsTool.inputSchema));
  assert.throws(()=>validateControlArguments({...base,process:{...base.process,verified:true}},jobsTool.inputSchema));
+});
+
+test('Claude and Codex cannot race, impersonate adapters or cross a handoff on one execution',async()=>{
+ const f=fixture();await f.call('submit',{prompt:'Claude admitted work',expected_head_sha:f.target.head_sha,required_capabilities:['claude-cli']});
+ await assert.rejects(f.call('lease',{capabilities:['codex-cli'],expected_head_sha:f.target.head_sha}),/capabilities/);
+ await f.call('lease',{capabilities:['claude-cli'],expected_head_sha:f.target.head_sha});
+ await assert.rejects(f.call('start',{process:{pid:42,host:'fixture',version:'fixture',adapter:'codex-cli'}}),/concrete process/);
+ const r=await f.call('start',{process:{pid:42,host:'fixture',version:'fixture',adapter:'claude-cli'}});assert.equal(r.job.process.adapter,'claude-cli');
+ f.target.owner='different-owner';await assert.rejects(f.call('checkpoint',{checkpoint:{summary:'Old owner cannot continue writing'}}),/ownership/);
+ const mixed=fixture();await assert.rejects(mixed.call('submit',{prompt:'ambiguous provider',expected_head_sha:mixed.target.head_sha,required_capabilities:['claude-cli','codex-cli']}),/One coding provider/);
 });

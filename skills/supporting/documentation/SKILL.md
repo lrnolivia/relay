@@ -24,3 +24,9 @@ Return the document path and concise change summary. Check links and referenced 
 ## Recovery
 
 If source evidence disagrees with prose, correct only the evidenced claim and preserve historical context. If ownership or acceptance changed, refresh canonical records before rewriting the next action. Unavailable evidence is a named gap, never a fabricated result. Do not extend an obsolete document when current authority selects another location.
+
+## Shared authority and supporting work
+
+Use the current canonical `lrnolivia/relay@main/LOEW_CHAT_BIBLE.md` sections5,6.1.1,18,20. Codex and Claude share task/acceptance/evidence rules and retain distinct real adapter capabilities. Necessary supporting features and directly related strengthening improvements may become bounded durable additions under the original goal; record reason, relationship, dependencies, acceptance and verification and obtain canonical scope admission before implementation. A provider change never clears ownership, stops or an uncertain execution.
+
+Permanent internal work/session/maintenance/handoff/audit records belong in `lrnolivia/relay/docs/<project-id>/`. Product/user/contributor docs, architecture and build-required runbooks stay with the product. Prefer canonical links to copies; keep temporary artifacts outside source except prescribed ephemeral tooling outputs. Missing Relay write authority parks only documentation publication; preserve the content and do not create a substitute canonical store.
