@@ -50,7 +50,10 @@ export async function runNightShiftPass({plan,rpc,persist,journal=null,dispatch=
   // broker lease and concrete process receipt for the exact separate job.
   const lead=await rpc('relay_execution',{action:'status',project:config.project,assignment:binding.assignment,job_id:binding.job_id});
   const j=lead.job,now=clock();
-  if(lead.ok!==true||!j||j.id!==binding.job_id||j.project!==config.project||j.assignment!==binding.assignment||j.owner!==binding.owner||j.branch!==binding.branch||j.state!=='running'||j.observed_state!=='running'||!j.executor_id||!Number.isInteger(j.process?.pid)||j.process.pid<=0||!j.process.host||!j.process.version||!Number.isFinite(Date.parse(j.started_at))||Date.parse(j.started_at)>now||!(Date.parse(j.lease_until)>now))return 'oversight-executor-unavailable';
+  const observation=j?.checkpoint?.native_thread,at=Date.parse(observation?.observed_at);
+  const native=j?.required_capabilities?.includes('native-thread-oversight-v1')&&j.process?.adapter==='codex-desktop-oversight'&&j.process.thread_id===binding.owner&&j.process.pid===undefined&&observation?.thread_id===binding.owner&&observation.host===j.process.host&&observation.state==='active'&&Number.isFinite(at)&&at<=now+5000&&now-at<=60000;
+  const coding=j?.process?.adapter==='codex-cli'&&Number.isInteger(j.process.pid)&&j.process.pid>0;
+  if(lead.ok!==true||!j||j.id!==binding.job_id||j.project!==config.project||j.assignment!==binding.assignment||j.owner!==binding.owner||j.branch!==binding.branch||j.state!=='running'||j.observed_state!=='running'||!j.executor_id||(!native&&!coding)||!j.process.host||!j.process.version||!Number.isFinite(Date.parse(j.started_at))||Date.parse(j.started_at)>now||!(Date.parse(j.lease_until)>now))return 'oversight-executor-unavailable';
   return null;
  };
  for(const config of plan.jobs){
