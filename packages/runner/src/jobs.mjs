@@ -7,7 +7,12 @@ const fail = message => { const error=Error(message);error.code='conflict';throw
 const iso = now => new Date(now).toISOString();
 const live = (until, now) => Number.isFinite(Date.parse(until)) && Date.parse(until)>now;
 const samePaths = (a,b) => Array.isArray(a)&&Array.isArray(b)&&JSON.stringify([...a].sort())===JSON.stringify([...b].sort());
-const checkpointFields = ['session_id','head_sha','summary','changed_paths','evidence'];
+const checkpointFields = ['session_id','head_sha','summary','changed_paths','evidence','native_thread'];
+const nativeOversight=job=>job.required_capabilities.includes('native-thread-oversight-v1');
+function nativeObservation(job,observation,now){
+  const at=Date.parse(observation?.observed_at);
+  if(!nativeOversight(job)||!observation||observation.thread_id!==job.owner||observation.state!=='active'||typeof observation.host!=='string'||!observation.host||!Number.isFinite(at)||at>now+5000||now-at>60000)fail('Native oversight requires a fresh active host observation of the exact owner thread');
+}
 function sourceProof(stored) {
   if(!stored)return {state:'local_only'};
   return {...stored.metadata,state:stored.restore?'restore_verified':'remote_verified',verified_at:stored.verified_at,verified_revision:stored.verified_revision,
@@ -63,6 +68,7 @@ async function applyCheckpoint(bucket,job,target,input,now,{recover=false}={}) {
   if(!input||typeof input!=='object'||Array.isArray(input))fail('Checkpoint evidence is required');
   if(Object.keys(input).some(name=>![...checkpointFields,'source_bundle','source_restore'].includes(name)))fail('Checkpoint contains unsupported fields; proof state is server-derived');
   if(typeof input.summary!=='string'||!input.summary||input.summary.length>2000)fail('Checkpoint summary is required');
+  if(input.native_thread)nativeObservation(job,input.native_thread,now);
   if(input.source_bundle&&input.source_restore)fail('Capture and restore acknowledgment are separate checkpoint operations');
   if(recover&&(input.source_bundle||input.source_restore))fail('Recover the lease before source storage or restoration');
   const checkpoint=Object.fromEntries(checkpointFields.filter(name=>input[name]!==undefined).map(name=>[name,input[name]]));
@@ -123,6 +129,7 @@ export async function operateJob(bucket,args,target,{now=Date.now(),uuid=randomU
   }
   if(args.action==='submit') {
     owned();
+    if(args.required_capabilities?.includes('native-thread-oversight-v1')&&args.required_capabilities.length!==1)fail('Native oversight capability cannot be combined with coding capabilities');
     if(document.jobs.some(j=>!terminal.has(j.state)))fail('An execution already occupies this assignment; inspect its receipt');
     if(args.expected_head_sha!==target.head_sha)fail('Assignment head changed before execution request');
     const snapshot={goal:target.goal,acceptance:target.acceptance,paths:target.paths,ledger_refs:target.ledger_refs||[]};
@@ -152,11 +159,16 @@ export async function operateJob(bucket,args,target,{now=Date.now(),uuid=randomU
         if(!args.executor_id||!args.lease_token||args.executor_id!==job.executor_id||args.lease_token!==job.lease_token)fail('Executor lease does not match');
         if(args.action!=='recover'&&!live(job.lease_until,now))fail('Execution lease expired; verify the old process stopped before recovery');
         if(args.action==='start') {
-          if(job.state!=='leased'||!args.process?.pid||!args.process?.host||!args.process?.version)fail('Start requires a leased job and concrete process receipt');
+          if(job.state!=='leased'||!args.process?.host||!args.process?.version)fail('Start requires a leased job and concrete process receipt');
+          if(nativeOversight(job)){
+            if(args.process.adapter!=='codex-desktop-oversight'||args.process.thread_id!==job.owner||args.process.pid!==undefined)fail('Native oversight requires its exact desktop owner thread, without an invented PID');
+            nativeObservation(job,job.checkpoint?.native_thread,now);
+            if(job.checkpoint.native_thread.host!==args.process.host)fail('Native oversight host differs from its observed host');
+          }else if(args.process.adapter!=='codex-cli'||!Number.isInteger(args.process.pid)||args.process.pid<1||args.process.thread_id!==undefined)fail('Coding execution requires a concrete process receipt from its coding adapter');
           if(job.required_capabilities.includes('source-byte-checkpoints-v1')&&checkpointView(job)?.source.state!=='restore_verified')fail('Required source checkpoint must be restored before starting work');
           job.state='running';job.process=args.process;job.started_at=iso(now);job.started_revision=job.revision+1;
         } else if(args.action==='checkpoint') {
-          if(!['running','cancel_requested'].includes(job.state)&&!(job.state==='leased'&&(args.checkpoint?.source_restore||args.checkpoint?.source_bundle)))fail('Checkpoint requires a running execution or leased source restoration');
+          if(!['running','cancel_requested'].includes(job.state)&&!(job.state==='leased'&&(args.checkpoint?.source_restore||args.checkpoint?.source_bundle||(nativeOversight(job)&&args.checkpoint?.native_thread))))fail('Checkpoint requires a running execution or leased source restoration');
           if(args.checkpoint?.source_bundle||args.checkpoint?.source_restore)sourceAccess();
           await applyCheckpoint(bucket,job,target,args.checkpoint,now);job.lease_until=iso(now+300000);
         } else if(args.action==='finish') {

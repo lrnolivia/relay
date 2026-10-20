@@ -21,7 +21,7 @@ function plan(count=1){
 function fixture(p=plan()){
  const f={plan:p,now:START+60000,calls:[],receipts:[],held:{global:false,relay:false},oversight:true,jobs:new Map(),cancel:()=>({ok:true}),dispatched:[]};
  for(const job of p.jobs)f.jobs.set(job.job_id,{id:job.job_id,project:job.project,assignment:job.assignment,owner:job.owner,branch:job.branch,state:'queued',revision:1,required_capabilities:['source-byte-checkpoints-v1']});
- f.lead={id:jobId(9),project:'relay',assignment:'lead',owner:'lead',branch:'relay/lead',state:'running',observed_state:'running',executor_id:'lead-host',process:{pid:123,host:'lead-host',version:'fixture'},started_at:new Date(START).toISOString(),lease_until:new Date(END+60000).toISOString()};
+ f.lead={id:jobId(9),project:'relay',assignment:'lead',owner:'lead',branch:'relay/lead',state:'running',observed_state:'running',executor_id:'lead-host',process:{pid:123,host:'lead-host',version:'fixture',adapter:'codex-cli'},started_at:new Date(START).toISOString(),lease_until:new Date(END+60000).toISOString()};
  f.rpc=async(name,args)=>{
   f.calls.push({name,args});
   if(name==='relay_autonomy')return {ok:true,state:{held:f.held[args.scope]}};
@@ -194,6 +194,14 @@ test('losing the oversight process during dispatch cancels the exact coding job'
  const f=fixture();slowDispatch(f);let cancels=0;f.cancel=()=>{cancels++;return {ok:true};};
  const pass=f.run();await settle(f,()=>f.release);f.lead.state='succeeded';await settle(f,()=>cancels===1);f.release();
  const result=await pass;assert.equal(result.reason,'oversight-executor-unavailable');assert.equal(result.jobs[0].cancellation.state,'requested');
+});
+
+test('a native oversight chat requires a fresh bound host observation instead of a fabricated process id',async()=>{
+ const configure=f=>Object.assign(f.lead,{required_capabilities:['native-thread-oversight-v1'],process:{thread_id:'lead',host:'local',version:'native-host-fixture',adapter:'codex-desktop-oversight'},checkpoint:{native_thread:{thread_id:'lead',host:'local',state:'active',observed_at:new Date(f.now).toISOString()}}});
+ const f=fixture();configure(f);assert.equal((await f.run()).state,'pass-finished');
+ for(const mutate of [f=>{f.lead.process.thread_id='other';},f=>{f.lead.process.pid=123;},f=>{f.lead.checkpoint.native_thread.state='idle';},f=>{f.lead.checkpoint.native_thread.observed_at=new Date(f.now-60001).toISOString();},f=>{f.lead.checkpoint.native_thread.observed_at=new Date(f.now+5001).toISOString();},f=>{f.lead.checkpoint.native_thread.host='other';}]){
+  const f=fixture();configure(f);mutate(f);assert.equal((await f.run()).reason,'oversight-executor-unavailable');assert.equal(f.dispatched.length,0);
+ }
 });
 
 // The actual ledger service, including CAS, identity, completed-window and
