@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-20T20:36:11.651Z",
+  "updated_at": "2026-10-20T20:47:49.270Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -15720,7 +15720,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "c99f5477e33427a4c16696cf5355b012720e6c30",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-20T20:03:16.561Z",
       "objective_history": {
         "baseline": {
@@ -15737,8 +15737,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T20:32:06.566Z",
-      "lease_until": "2026-10-21T08:32:06.566Z",
+      "updated_at": "2026-10-20T20:47:49.270Z",
+      "lease_until": "2026-10-21T08:47:49.270Z",
       "acceptance_additions": [
         {
           "schema": 1,
@@ -15889,7 +15889,13 @@
             "next_action": "Actual native A/support/B fixture and zero-work resume passed; finish native activation aggregate/CI gates and authorized exact-source publication."
           }
         }
-      ]
+      ],
+      "pr": 248,
+      "merged_head_sha": "309528f83356326ee5d3ba70dc0b5a205f906971",
+      "merge_commit_sha": "91a2caeb39ab51d80e5f641a17c2613c99539086",
+      "evidence": "Native activation complete. Merge91a2caeb39ab51d80e5f641a17c2613c99539086; exactcandidate309528f CI39493460868 PASS; exactmainCI39494147304 production/source and retained gates PASS; assurance39494695859 PASS. Providerbuild8b975096 success; liveversion27e13a32-d5c0-40b7-82e5-7be9b4cc79a6 at100%; health200; healthyrevision73 restore-verifiedarchivee2853ead305b7ca11a77b83bd3beb9cff56faf9dd2b2af4650c29d61c0bd3bf9. All5localaggregates1023passed/2existingskips; finalmapping33passed0unmapped; adapter8regressionspassed. ActualnativeRelay tools ran A→canonicallyadmittedsupport→B; recoverydidnotrerunA; tworesumesincludingfinal309528f startedzeroextrawork (3totalworkstarts); nativeprogressamendmentonce-onlystart/readbackPASS. Fixtureacceptancecompletedtrue/subobjectivetrue/wholeobjectivefalse preserved; fullimplementation/release nowaccounted. Rawfixtures/receiptsarchivedoutsidecheckout; no tempfixtures committed. CanonicalBible2026-10-20.3/blob848a9f46e9856fe0a8c554f76e0f42085102c033; nativeguide/readinessmatrixmain. No standalonecredential,newaccess,externalClaude/model,unattendedshift,Field/otherworkspace/unrelatedheldwork/customrulechanges. Priorhealthy900b327/versionadbafc7a archivepreserved; user-approvedbe41unchanged. Full receipts native-live-proof.json/native-release-receipt.json in allocated task artifacts.",
+      "work_accounted": true,
+      "completed_at": "2026-10-20T20:47:49.270Z"
     },
     {
       "id": "relay-mcp-rebuild-continuation-20261003",
