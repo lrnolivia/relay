@@ -7,6 +7,9 @@ export async function checkAutonomy(project,request=fetch,{env=process.env}={}) 
  const id=env.CF_ACCESS_CLIENT_ID,secret=env.CF_ACCESS_CLIENT_SECRET;
  if(Boolean(id)!==Boolean(secret)||[id,secret].some(value=>value!==undefined&&(typeof value!=='string'||value.length>5000||/[\r\n]/.test(value))))throw Error('Incomplete safety transport identity; publication stopped');
  const headers=id?{'CF-Access-Client-Id':id,'CF-Access-Client-Secret':secret}:{};
+ const source=env.WORKERS_CI_COMMIT_SHA||env.RELAY_SOURCE_SHA;
+ if(source!==undefined&&!/^[a-f0-9]{40}$/.test(source))throw Error('Invalid publication source identity');
+ if(source)headers['X-Relay-Candidate-Source']=source;
  const receipts=[];
  for(const scope of ['global',project]){
   let response;
@@ -24,6 +27,7 @@ export async function checkAutonomy(project,request=fetch,{env=process.env}={}) 
   }catch{throw Error('Invalid safety response for '+scope+'; publication stopped');}
   if(!state||typeof state!=='object')throw Error('Invalid safety state for '+scope+'; publication stopped');
   if(state.schema!==1||state.scope!==scope||state.enforced!==true||typeof state.held!=='boolean'||!Number.isSafeInteger(state.revision)||state.revision<0)throw Error('Invalid safety state for '+scope+'; publication stopped');
+  if(state.candidate_blocked===true||(state.candidate_identity_required===true&&(!source||typeof state.candidate_blocked!=='boolean')))throw Error('Candidate publication quarantined or exact source missing for '+scope);
   if(state.held)throw Error('Autonomous publication held for '+scope);
   receipts.push({scope,revision:state.revision});
  }

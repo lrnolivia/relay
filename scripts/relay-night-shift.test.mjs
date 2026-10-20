@@ -60,12 +60,12 @@ test('a healthy pass dispatches each exact queued job once and never claims away
 });
 
 test('held safety, missing oversight, outside window, operator stop and control failure all stop before launch',async()=>{
- const cases=[[f=>{f.held.global=true;},'held-or-safety-unavailable'],[f=>{f.held.relay=true;},'held-or-safety-unavailable'],[f=>{f.oversight=false;},'oversight-unavailable'],
+ const cases=[[f=>{f.held.global=true;},'global-held'],[f=>{f.held.relay=true;},'project-held'],[f=>{f.oversight=false;},'oversight-unavailable'],
   [f=>{f.now=START-1;},'outside-declared-window'],[f=>{f.now=END;},'outside-declared-window'],[f=>{f.stop=true;},'operator-stop'],
-  [f=>{const rpc=f.rpc;f.rpc=async(n,a)=>{if(n==='relay_autonomy')throw Error('synthetic-secret');return rpc(n,a);};},'control-unavailable']];
+  [f=>{const rpc=f.rpc;f.rpc=async(n,a)=>{if(n==='relay_autonomy')throw Error('synthetic-secret');return rpc(n,a);};},'global-control-unavailable']];
  for(const [arrange,reason] of cases){
   const f=fixture();arrange(f);const result=await f.run({shouldStop:async()=>Boolean(f.stop)});
-  assert.equal(result.state,'stopped');assert.equal(result.reason,reason);assert.equal(f.dispatched.length,0);assert.doesNotMatch(JSON.stringify(f.receipts),/synthetic-secret/);
+  assert.equal(result.state,['project-held','oversight-unavailable'].includes(reason)?'pass-finished':'stopped');assert.equal(result.reason||result.jobs[0]?.reason,reason);assert.equal(f.dispatched.length,0);assert.doesNotMatch(JSON.stringify(f.receipts),/synthetic-secret/);
  }
 });
 
@@ -82,9 +82,9 @@ test('admission re-checks immediately before launch so a hold raised during prob
  const result=await f.run();assert.equal(result.state,'reconciliation-required');assert.equal(f.dispatched.length,0);
 });
 
-test('an uncertain dispatch stops the pass instead of moving to the next job',async()=>{
+test('an uncertain dispatch parks a dependent host without duplicating execution',async()=>{
  const f=fixture(plan(2));f.dispatch=async()=>{throw Error('lost ssh response');};
- const result=await f.run();assert.equal(result.state,'reconciliation-required');assert.equal(result.jobs.length,1);assert.equal(result.jobs[0].state,'reconciliation-required');
+ const result=await f.run();assert.equal(result.state,'reconciliation-required');assert.equal(result.jobs.length,2);assert.equal(result.jobs[0].state,'reconciliation-required');assert.equal(result.jobs[1].reason,'dependent-on-uncertain-launch');
 });
 
 // Monitor helpers: hold the dispatch open until the monitor has acted.
@@ -123,7 +123,7 @@ test('failing safety reads still cancel the exact job when execution control rem
  const rpc=f.rpc;let failing=false,cancels=0;f.rpc=async(n,a)=>{if(failing&&n==='relay_autonomy')throw Error('private safety failure');return rpc(n,a);};
  f.cancel=()=>{cancels++;return {ok:true};};useRealMcpClient(f);
  const pass=f.run();await settle(f,()=>f.release);failing=true;await settle(f,()=>cancels===1);f.release();
- const result=await pass;assert.equal(cancels,1);assert.equal(result.reason,'control-unavailable');assert.equal(result.jobs[0].cancellation.state,'requested');assert.doesNotMatch(JSON.stringify(result),/private safety failure/);
+ const result=await pass;assert.equal(cancels,1);assert.equal(result.reason,'global-control-unavailable');assert.equal(result.jobs[0].cancellation.state,'requested');assert.doesNotMatch(JSON.stringify(result),/private safety failure/);
 });
 
 test('a stop during a running job cancels the exact job revision once and persists intent first',async()=>{
@@ -166,7 +166,7 @@ test('control reads failing mid-run stop the pass conservatively and flag reconc
  const rpc=f.rpc;let failing=false;f.rpc=async(n,a)=>{if(failing&&n==='relay_autonomy')throw Error('synthetic-secret');if(failing&&n==='relay_execution')throw Error('synthetic-secret');return rpc(n,a);};
  const pass=f.run();
  await settle(f,()=>f.release);failing=true;await settle(f,()=>f.receipts.at(-1)?.jobs[0]?.stop_reason);f.release();
- const result=await pass;assert.equal(result.state,'stopped');assert.equal(result.reason,'control-unavailable');assert.doesNotMatch(JSON.stringify(result),/synthetic-secret/);
+ const result=await pass;assert.equal(result.state,'stopped');assert.equal(result.reason,'global-control-unavailable');assert.doesNotMatch(JSON.stringify(result),/synthetic-secret/);
 });
 
 test('persistence failure before launch propagates without starting a process',async()=>{
@@ -183,7 +183,7 @@ test('a journal for another plan is refused; a stopped journal never resumes aut
 test('oversight must be a distinct exact running execution with an unexpired process lease',async()=>{
  for(const patch of [{state:'queued'},{observed_state:'recovery_required'},{owner:'other'},{assignment:'other'},{project:'other'},{id:jobId(8)},{executor_id:null},{process:null},{process:{pid:0,host:'x',version:'x'}},{started_at:'invalid'},{lease_until:new Date(START).toISOString()}]){
   const f=fixture();Object.assign(f.lead,patch);const result=await f.run();
-  assert.equal(result.reason,'oversight-executor-unavailable');assert.equal(f.dispatched.length,0);
+  assert.equal(result.jobs[0].reason,'oversight-executor-unavailable');assert.equal(f.dispatched.length,0);
  }
  for(const patch of [{job_id:jobId(1)},{owner:'worker'},{assignment:'worker'},{job_id:undefined}]){
   const p=plan();Object.assign(p.oversight.relay,patch);assert.throws(()=>validateNightShiftPlan(p),/distinct/);
@@ -193,14 +193,14 @@ test('oversight must be a distinct exact running execution with an unexpired pro
 test('losing the oversight process during dispatch cancels the exact coding job',async()=>{
  const f=fixture();slowDispatch(f);let cancels=0;f.cancel=()=>{cancels++;return {ok:true};};
  const pass=f.run();await settle(f,()=>f.release);f.lead.state='succeeded';await settle(f,()=>cancels===1);f.release();
- const result=await pass;assert.equal(result.reason,'oversight-executor-unavailable');assert.equal(result.jobs[0].cancellation.state,'requested');
+ const result=await pass;assert.equal(result.jobs[0].reason,'oversight-executor-unavailable');assert.equal(result.jobs[0].cancellation.state,'requested');
 });
 
 test('a native oversight chat requires a fresh bound host observation instead of a fabricated process id',async()=>{
  const configure=f=>Object.assign(f.lead,{required_capabilities:['native-thread-oversight-v1'],process:{thread_id:'lead',host:'local',version:'native-host-fixture',adapter:'codex-desktop-oversight'},checkpoint:{native_thread:{thread_id:'lead',host:'local',state:'active',observed_at:new Date(f.now).toISOString()}}});
  const f=fixture();configure(f);assert.equal((await f.run()).state,'pass-finished');
  for(const mutate of [f=>{f.lead.process.thread_id='other';},f=>{f.lead.process.pid=123;},f=>{f.lead.checkpoint.native_thread.state='idle';},f=>{f.lead.checkpoint.native_thread.observed_at=new Date(f.now-60001).toISOString();},f=>{f.lead.checkpoint.native_thread.observed_at=new Date(f.now+5001).toISOString();},f=>{f.lead.checkpoint.native_thread.host='other';}]){
-  const f=fixture();configure(f);mutate(f);assert.equal((await f.run()).reason,'oversight-executor-unavailable');assert.equal(f.dispatched.length,0);
+  const f=fixture();configure(f);mutate(f);assert.equal((await f.run()).jobs[0].reason,'oversight-executor-unavailable');assert.equal(f.dispatched.length,0);
  }
 });
 
@@ -301,4 +301,18 @@ test('account CLI updates only a private original journal and rejects unsafe fil
   await fs.rename(receipt,receipt+'.original');await fs.symlink(receipt+'.original',receipt);assert.throws(invoke);
   assert.equal(JSON.parse(await fs.readFile(receipt+'.original','utf8')).state,'pass-finished');
  }finally{await fs.rm(root,{recursive:true,force:true});}
+});
+test('project-local hold or unavailable oversight parks affected jobs and continues an independent project',async()=>{
+ for(const mode of ['hold','oversight']){
+  const p=plan(2);p.jobs[1]={...p.jobs[1],project:'other',hosts:[{...host('independent'),workspace:'/independent'}]};p.oversight.other={...p.oversight.relay};
+  const f=fixture(p),rpc=f.rpc;f.held.other=false;
+  f.rpc=async(name,args)=>{if(name==='relay_execution'&&args.job_id===jobId(9))return {ok:true,job:{...f.lead,project:args.project}};if(mode==='oversight'&&name==='relay_night_shift'&&args.project==='relay')return {ok:true,oversight:{available:false}};return rpc(name,args);};
+  if(mode==='hold')f.held.relay=true;
+  const s=await f.run();assert.equal(s.jobs[0].state,'parked');assert.deepEqual(f.dispatched,[jobId(2)]);assert.equal(s.state,'pass-finished');
+ }
+});
+test('uncertain launches never replay while independent hosts finish, including journal restart',async()=>{
+ const p=plan(2);p.jobs[1].hosts=[{...host('independent'),workspace:'/independent'}];const f=fixture(p),dispatch=f.dispatch;let attempted=0;
+ f.dispatch=async args=>{attempted++;if(args.config.job_id===jobId(1))throw Error('uncertain');return dispatch(args);};
+ const s=await f.run();assert.equal(s.state,'reconciliation-required');assert.deepEqual(f.dispatched,[jobId(2)]);assert.equal(attempted,2);await f.run({journal:s});assert.equal(attempted,2);
 });

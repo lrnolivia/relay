@@ -37,13 +37,17 @@ Default action:
 
 Bounded retries are required. Never loop indefinitely.
 
+## Promotion failures and repair
+
+Reproducible build or product-test failures block promotion. Within the approved objective they remain diagnosis/repair work: preserve the failing artifact, reproduce the defect, repair the source, and rerun the affected gates. A zero process exit does not complete acceptance while a required test fails. Escalate only when the repair actually needs new authority, unsafe action, product judgment or unresolved semantics.
+
+Resume at the failed stage and reuse completed evidence only while its relevant source/configuration/environment inputs remain unchanged. A material change invalidates affected evidence; exact-revision release gates still require the actual candidate revision.
+
 ## Real blockers
 
 Examples:
 
 - semantic merge conflict
-- repeatable product test failure
-- repeatable build failure caused by product code
 - security or credential requirement not already authorized
 - missing external service entitlement
 - ambiguity about intended product behavior

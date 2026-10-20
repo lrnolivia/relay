@@ -38,11 +38,18 @@ export async function runNightShiftPass({plan,rpc,persist,journal=null,dispatch=
  validateNightShiftPlan(plan);
  const planHash=digest(plan),state=journal||{schema:1,plan_sha256:planHash,state:'ready',jobs:[],objective_completed:false,away_verified:false,process_verified:false};
  if(state.schema!==1||state.plan_sha256!==planHash||!Array.isArray(state.jobs))throw Error('Night Shift journal does not match this exact plan');
- if(state.state!=='ready')return state; // No replay after a stop, crash or unknown launch.
+ if(state.state==='stopped')return state; // Operator/global stops need explicit reconciliation.
+ // Existing job receipts are never relaunched, including dispatching/unknown.
+ // A crash on one host does not reserve independent hosts/projects forever.
+ state.state='ready';
  const gate=async config=>{
   if(await shouldStop())return 'operator-stop';
   if(clock()<Date.parse(plan.away_window.start)||clock()>=Date.parse(plan.away_window.end))return 'outside-declared-window';
-  for(const scope of ['global',config.project]){const r=await rpc('relay_autonomy',{action:'status',scope});if(r.ok!==true||r.state?.held!==false)return 'held-or-safety-unavailable';}
+  for(const scope of ['global',config.project]){
+   let r;try{r=await rpc('relay_autonomy',{action:'status',scope});}catch{return scope==='global'?'global-control-unavailable':'project-control-unavailable';}
+   if(r.ok!==true||typeof r.state?.held!=='boolean')return scope==='global'?'global-control-unavailable':'project-control-unavailable';
+   if(r.state.held)return scope==='global'?'global-held':'project-held';
+  }
   const r=await rpc('relay_night_shift',{action:'read',project:config.project,assignment:config.assignment,limit:1});
   const binding=plan.oversight?.[config.project];
   if(r.ok!==true||r.oversight?.available!==true||!binding||!['assignment','owner','branch'].every(k=>r.oversight.binding?.[k]===binding[k]))return 'oversight-unavailable';
@@ -58,9 +65,14 @@ export async function runNightShiftPass({plan,rpc,persist,journal=null,dispatch=
  };
  for(const config of plan.jobs){
   if(state.jobs.some(x=>x.job_id===config.job_id))continue;
+  const uncertain=state.jobs.filter(x=>x.reconcile_required||['dispatching','reconciliation-required'].includes(x.state));
+  if(uncertain.some(x=>{const previous=plan.jobs.find(j=>j.job_id===x.job_id);return config.depends_on?.includes(x.job_id)||previous?.hosts.some(h=>config.hosts.some(other=>h.id===other.id||h.workspace===other.workspace));})){state.jobs.push({job_id:config.job_id,state:'parked',reason:'dependent-on-uncertain-launch'});await persist(state);continue;}
   let blocked;try{blocked=await gate(config);}catch{blocked='control-unavailable';}
-  if(blocked){state.state='stopped';state.reason=blocked;await persist(state);return state;}
-  const result=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,job_id:config.job_id});
+  if(blocked){
+   if(['operator-stop','outside-declared-window','global-held','global-control-unavailable'].includes(blocked)){state.state='stopped';state.reason=blocked;await persist(state);return state;}
+   state.jobs.push({job_id:config.job_id,project:config.project,assignment:config.assignment,state:'parked',reason:blocked});await persist(state);continue;
+  }
+  let result;try{result=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,job_id:config.job_id});}catch{state.jobs.push({job_id:config.job_id,state:'parked',reason:'job-status-unavailable'});await persist(state);continue;}
   const job=result.job;
   if(result.ok!==true||!job||job.id!==config.job_id||job.project!==config.project||job.assignment!==config.assignment||job.owner!==config.owner||job.branch!==config.branch||job.state!=='queued'||!job.required_capabilities?.includes('source-byte-checkpoints-v1')){
    state.jobs.push({job_id:config.job_id,state:'not-admitted'});await persist(state);continue;
@@ -102,10 +114,13 @@ export async function runNightShiftPass({plan,rpc,persist,journal=null,dispatch=
    receipt.state=routed.state;receipt.finished_at=new Date(clock()).toISOString();
   }catch{receipt.state='reconciliation-required';}
   finally{clearInterval(timer);while(monitoring)await new Promise(resolve=>setTimeout(resolve,5));}
-  if(stopReason||receipt.state==='reconciliation-required'){state.state=stopReason?'stopped':'reconciliation-required';state.reason=stopReason||'uncertain-dispatch';await persist(state);return state;}
+  if(stopReason||receipt.state==='reconciliation-required'){
+   if(['operator-stop','outside-declared-window','global-held','global-control-unavailable'].includes(stopReason)){state.state='stopped';state.reason=stopReason;await persist(state);return state;}
+   receipt.reconcile_required=true;receipt.reason=stopReason||'uncertain-dispatch';
+  }
   state.state='ready';await persist(state);
  }
- state.state='pass-finished';await persist(state);return state;
+ state.state=state.jobs.some(x=>x.reconcile_required||x.state==='dispatching'||x.state==='reconciliation-required')?'reconciliation-required':'pass-finished';await persist(state);return state;
 }
 
 // Explicit accounting never launches or retries an execution. The declared

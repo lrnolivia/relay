@@ -34,3 +34,10 @@ test('redirects, HTML login, oversized JSON, malformed JSON and project hold fai
  }
  await assert.rejects(checkAutonomy('relay',async url=>reply(new URL(url).searchParams.get('scope'),{held:url.includes('scope=relay')}),{env:{}}),/held for relay/);
 });
+test('canonical publish gate rejects quarantined source and requires identity when quarantines exist',async()=>{
+ const source='c'.repeat(40),env={WORKERS_CI_COMMIT_SHA:source};
+ const request=async (url,options)=>{const u=new URL(url);assert.equal(options.headers['X-Relay-Candidate-Source'],source);return reply(u.searchParams.get('scope'),{candidate_blocked:u.searchParams.get('scope')==='relay',candidate_identity_required:true});};
+ await assert.rejects(checkAutonomy('relay',request,{env}),/quarantined/);
+ await assert.rejects(checkAutonomy('relay',async url=>reply(new URL(url).searchParams.get('scope'),{candidate_identity_required:true}),{env:{}}),/source missing/);
+ assert.equal((await checkAutonomy('relay',async url=>reply(new URL(url).searchParams.get('scope'),{candidate_blocked:false,candidate_identity_required:true}),{env})).ok,true);
+});

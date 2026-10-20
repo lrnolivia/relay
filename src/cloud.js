@@ -138,6 +138,13 @@ export async function deployCloudVersion(env, scriptName, versionId, message) {
   const version = validateVersionId(versionId);
   assertWritable(env, script);
   await guardRepository(env, script);
+  if(env.RELAY_AUTONOMY_GUARD==='enforced'){
+    const state=(await autonomyRequest(env,{action:'status',scope:script.toLowerCase()})).state;
+    if(state.blocks?.some(x=>x.subject.kind==='candidate'&&x.state==='quarantined')){
+      const target=[state.last_healthy,state.last_user_approved].find(x=>x?.worker===script&&x.version_id===version);
+      if(!target||state.blocks.some(x=>x.subject.kind==='candidate'&&x.subject.id===target.source_sha&&x.state==='quarantined'))throw Error('Candidate source proof is required for raw version publication; use the canonical source-guarded release path');
+    }
+  }
   const id = String(env.CLOUDFLARE_ACCOUNT_ID);
   const body = {
     strategy: "percentage",

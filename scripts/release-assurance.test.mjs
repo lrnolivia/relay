@@ -196,7 +196,7 @@ test('failed-event recovery rejects stale run identities and never rolls back a 
  const f=failedFixture();f.changeSource('e'.repeat(40));assert.equal((await f.execute()).superseded,true);assert.equal(f.writes,0);assert.equal(f.state.revision,0);
  const invalid=failedFixture();invalid.run.path='.github/workflows/untrusted.yml';await assert.rejects(invalid.execute());assert.equal(invalid.calls.length,0);
  const unrelated=failedFixture();unrelated.production.conclusion='skipped';assert.equal((await unrelated.execute()).eligible,false);assert.equal(unrelated.calls.length,0);
- const delayed=failedFixture();delayed.keepHealthyLive();assert.equal((await delayed.execute()).pendingPublication,true);assert.equal(delayed.state.held,true);assert.equal(delayed.writes,0);
+ const delayed=failedFixture();delayed.keepHealthyLive();assert.equal((await delayed.execute()).pendingPublication,true);assert.equal(delayed.state.held,false);assert.equal(delayed.state.blocks[0].subject.id,delayed.run.head_sha);assert.equal(delayed.writes,0);
 });
 test('global/project stops and concurrent CAS loss prevent new recovery; missing target holds only',async()=>{
  const global=failedFixture();global.globalHold=true;assert.equal((await global.execute()).held,true);assert.equal(global.writes,0);
