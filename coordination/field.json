@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-10-20T17:39:28.475Z",
+  "updated_at": "2026-10-20T22:26:36.624Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1836,7 +1836,7 @@
       ],
       "goal": "Finish the remaining next-release work after PR149 shipped: open acceptance carried from field-document-media-search-20261004, pre-existing failing browser coverage, and Figma parity gaps.",
       "acceptance": "Carried from field-document-media-search-20261004 (see its context revisions 32-40). Repair or explain every pre-existing failing browser spec (harness rot vs product) without weakening assertions; fix demonstrated product defects (flex sibling reparent, replica exits, copied-page first undo) with regressions; Dashboard can open a project's settings; cross-document camera lag between editor chrome and canvas content resolved or proven infeasible with evidence; Figma parity pending audits (group bounds, frame from selection, group/ungroup, Layers hover) verified with tests. Device-only checks (physical iOS keyboard/IME/rotation, physical Safari BFCache, authenticated R2 persistence) remain human QA. Gates: npm ci, build:all, test:run, lint; exact-main comparisons; release with Lauren's standing approval from 2026-10-20 ('make it live', 'keep working until you finish it all').",
-      "next_action": "Create branch from main 709ab685 in /Users/lrnolivia/Repos/field-claude-release, then triage pre-existing failing e2e specs (main vs main), starting with harness rot.",
+      "next_action": "PR #150 (head 2a995173) open with GitHub auto-merge (squash) pending CI. After merge: verify squash author/committer identity, Cloudflare production deploy and smoke. Then continue acceptance: repair or explain the 85 e2e specs failing on main 709ab685 too (list in session scratch full-main.txt), copied-page first undo, replica exits, Figma parity audits.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1859,8 +1859,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T17:39:28.475Z",
-      "lease_until": "2026-10-21T05:39:28.475Z"
+      "updated_at": "2026-10-20T22:26:36.624Z",
+      "lease_until": "2026-10-21T10:26:36.624Z"
     }
   ]
 }
