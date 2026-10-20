@@ -137,6 +137,7 @@ export async function runFailedReleaseRecovery({event,env=process.env,request=fe
  const global=await transport.call({action:'status',scope:'global'}),current=await transport.call({action:'status',scope:'relay'});
  const operation='relay-release-recover-'+identity.run_id+'-'+identity.attempt,reason='Canonical main CI '+identity.run_id+' failed production verification for '+identity.source_sha;
  const prior=current.state.rollback?.operation_id===operation?current.state.rollback:null;
+ if(current.state.blocks?.some(x=>x.state==='quarantined'&&x.subject.kind==='candidate'&&x.subject.id===identity.source_sha)){log(JSON.stringify({ok:true,quarantined:true,duplicate:true,source_sha:identity.source_sha}));return {quarantined:true,pendingPublication:true,duplicate:true};}
  if(global.state.held||(current.state.held&&!prior)){
   log(JSON.stringify({ok:true,source_sha:identity.source_sha,recovered:false,reason:'Existing autonomous hold preserved'}));return {held:true};
  }
@@ -157,8 +158,8 @@ export async function runFailedReleaseRecovery({event,env=process.env,request=fe
    // If the old healthy build is still live, stop the failed candidate from
    // publishing late. A different newer source is left untouched.
    if(page?.ok&&source===current.state.last_healthy?.source_sha&&expectedVersion===current.state.last_healthy.version_id){
-    await transport.call({action:'hold',scope:'relay',expected_revision:revision,operation_id:operation+'-pending',reason});
-    log(JSON.stringify({ok:true,source_sha:identity.source_sha,recovered:false,held:true,reason:'Failed candidate has not replaced healthy production; late publication stopped'}));return {held:true,pendingPublication:true};
+    await transport.call({action:'quarantine',scope:'relay',subject:{kind:'candidate',id:identity.source_sha},expected_revision:revision,operation_id:operation+'-pending',reason});
+    log(JSON.stringify({ok:true,source_sha:identity.source_sha,recovered:false,quarantined:true,reason:'Failed candidate has not replaced healthy production; late publication stopped'}));return {quarantined:true,pendingPublication:true};
    }
    log(JSON.stringify({ok:true,source_sha:identity.source_sha,recovered:false,reason:'Production source changed; superseded CI event ignored'}));return {superseded:true};
   }

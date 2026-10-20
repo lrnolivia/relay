@@ -1,7 +1,7 @@
 // Safety atoms share the existing durable binding, separate from event replay.
 const SCOPE=/^(?:global|[a-z0-9-]{1,80})$/,SHA=/^[a-f0-9]{40}$/;
 const VERSION=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
-const actions=new Set(['status','hold','resume','healthy','approve','prepare_rollback','finish_rollback','prepare_restore_upload','finish_restore_upload']);
+const actions=new Set(['status','hold','resume','quarantine','wait','recover_wait','healthy','approve','prepare_rollback','finish_rollback','prepare_restore_upload','finish_restore_upload']);
 const fail=(message,status=409)=>{throw Object.assign(Error(message),{status,code:'safety_control'});};
 const text=(v,max=1000)=>typeof v==='string'&&v.trim()&&v.length<=max;
 const canonical=value=>Array.isArray(value)?value.map(canonical):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])):value;
@@ -14,7 +14,7 @@ export function autonomyState(scope){
 }
 export function validateAutonomyInput(input){
  if(!input||typeof input!=='object'||Array.isArray(input))fail('Invalid safety request',400);
- const allowed=new Set(['action','scope','expected_revision','operation_id','reason','authorization','target','approval','kind','expected_current_version','result']);
+ const allowed=new Set(['action','scope','expected_revision','operation_id','reason','authorization','target','approval','kind','expected_current_version','result','subject','expected_block_revision']);
  if(Object.keys(input).some(k=>!allowed.has(k))||!actions.has(input.action)||!SCOPE.test(input.scope||''))fail('Invalid safety action or scope',400);
  if(input.action==='status'){
   if(Object.keys(input).some(k=>!['action','scope'].includes(k)))fail('Status accepts only action and scope',400);
@@ -22,8 +22,13 @@ export function validateAutonomyInput(input){
  }
  if(!Number.isSafeInteger(input.expected_revision)||input.expected_revision<0||!/^[-\w]{8,120}$/.test(input.operation_id||''))fail('Safety mutation requires revision and operation identity',400);
  if(!text(input.reason))fail('Safety mutation requires a bounded reason',400);
- const fields={hold:[],resume:['authorization'],healthy:['target'],approve:['target','approval'],prepare_rollback:['kind','expected_current_version'],finish_rollback:['result'],prepare_restore_upload:['result'],finish_restore_upload:['result']}[input.action];
+ const fields={quarantine:['subject'],wait:['subject'],recover_wait:['subject','expected_block_revision'],hold:[],resume:['authorization'],healthy:['target'],approve:['target','approval'],prepare_rollback:['kind','expected_current_version'],finish_rollback:['result'],prepare_restore_upload:['result'],finish_restore_upload:['result']}[input.action];
  if(Object.keys(input).some(k=>!['action','scope','expected_revision','operation_id','reason',...fields].includes(k)))fail('Unexpected fields for safety action',400);
+ if(['quarantine','wait','recover_wait'].includes(input.action)){
+  const t=input.subject;
+  if(input.scope==='global'||!t||Object.keys(t).sort().join(',')!=='id,kind'||!['candidate','operation'].includes(t.kind)||(t.kind==='candidate'?!SHA.test(t.id||''):!/^[-\w]{8,120}$/.test(t.id||''))||(input.action==='quarantine'&&t.kind!=='candidate')||(input.action!=='quarantine'&&t.kind!=='operation'))fail('A scoped candidate or operation identity is required',400);
+  if(input.action==='recover_wait'&&(!Number.isSafeInteger(input.expected_block_revision)||input.expected_block_revision<1))fail('Recovery requires the exact wait revision',400);
+ }
  if(input.action==='resume'&&!text(input.authorization))fail('Resume requires explicit user authorization evidence',400);
  if(['healthy','approve'].includes(input.action)){
   const t=input.target;
@@ -48,7 +53,19 @@ export function transitionAutonomy(stored,input,now=new Date().toISOString()){
  if(state.revision!==input.expected_revision)fail('Safety revision changed; refresh before retrying');
  if(state.rollback?.state==='pending'&&['healthy','approve'].includes(input.action))fail('Release targets cannot change during an uncertain rollback');
  if(state.operations.length>=256)fail('Safety receipt capacity reached; preserve and account for history');
- if(input.action==='hold'){state.held=true;state.reason=input.reason;}
+ if(['quarantine','wait','recover_wait'].includes(input.action)){
+  state.blocks ||= [];
+  const previous=state.blocks.find(x=>x.subject.kind===input.subject.kind&&x.subject.id===input.subject.id);
+  if(input.action==='recover_wait'){
+   if(state.held||state.rollback?.state==='pending'||previous?.state!=='waiting'||previous.revision!==input.expected_block_revision||previous.attempts>=2)fail('Wait recovery is stale, stopped or exhausted; reconcile the affected operation');
+   previous.state='ready';previous.revision=state.revision+1;
+  }else{
+   if(previous?.state==='quarantined')fail('Candidate is already quarantined; preserve its receipt');
+   const block={subject:input.subject,state:input.action==='quarantine'?'quarantined':'waiting',attempts:(previous?.attempts||0)+1,reason:input.reason,revision:state.revision+1};
+   if(previous)Object.assign(previous,block);else {if(state.blocks.length>=128)fail('Scoped block capacity reached');state.blocks.push(block);}
+  }
+ }
+ if(input.action==='hold'){state.held=true;state.reason=input.reason;state.hold_kind='intentional-or-safety';}
  if(input.action==='resume'){if(state.rollback?.state==='pending')fail('An uncertain rollback must be reconciled before resuming');state.held=false;state.reason=null;}
  if(input.action==='healthy')state.last_healthy={...input.target,recorded_at:now};
  if(input.action==='approve'){
@@ -92,26 +109,33 @@ export async function autonomyRequest(env,input){
  if(!response.ok||result.ok!==true||!validState(result.state,input.scope))fail(result.error||'Safety response is invalid; writes remain stopped',response.status>=400?response.status:503);
  return result;
 }
-export async function guardAutonomy(env,scopes=[]){
+export async function guardAutonomy(env,scopes=[],subject=null){
  if(env.RELAY_AUTONOMY_GUARD!=='enforced')return {enforced:false};
  const states=await Promise.all([...new Set(['global',...scopes])].map(scope=>autonomyRequest(env,{action:'status',scope})));
  const stopped=states.find(r=>r.state.held);if(stopped)fail('Autonomous work is held for '+stopped.state.scope+': '+stopped.state.reason);
+ if(subject)for(const {state} of states)assertAutonomySubject(state,subject);
  return {enforced:true,revisions:states.map(({state})=>({scope:state.scope,revision:state.revision}))};
 }
 export async function guardRepository(env,repository){
  const scope=String(repository).split('/').at(-1).toLowerCase().replaceAll('_','-'),aliases={gwfamily:'grnwht','grnwht-family-app':'grnwht'};
  return guardAutonomy(env,[...new Set([scope,aliases[scope]].filter(Boolean))]);
 }
-export async function publicAutonomyStatus(env,scope='global'){
- const {state}=await autonomyRequest(env,{action:'status',scope});return {schema:1,scope:state.scope,revision:state.revision,held:state.held,enforced:env.RELAY_AUTONOMY_GUARD==='enforced'};
+export function assertAutonomySubject(state,subject){
+ const block=state.blocks?.find(x=>x.subject.kind===subject.kind&&x.subject.id===subject.id&&x.state!=='ready');
+ if(block)fail('Autonomous '+subject.kind+' is '+block.state+': '+block.reason);
+}
+export async function publicAutonomyStatus(env,scope='global',source=null){
+ if(source!==null&&!SHA.test(source))fail('Exact candidate source is required',400);
+ const {state}=await autonomyRequest(env,{action:'status',scope});return {schema:1,scope:state.scope,revision:state.revision,held:state.held,...(source?{candidate_blocked:Boolean(state.blocks?.some(x=>x.subject.kind==='candidate'&&x.subject.id===source&&x.state==='quarantined'))}:{}),...(state.blocks?.some(x=>x.subject.kind==='candidate'&&x.state==='quarantined')?{candidate_identity_required:true}:{}),enforced:env.RELAY_AUTONOMY_GUARD==='enforced'};
 }
 
 export const autonomyTool={
  name:'relay_autonomy',title:'Stop or resume autonomous work',
  description:'QUERY / COMMAND — read, hold or resume autonomous work; record verified healthy or explicitly user-approved exact releases; restore a recorded healthy or user-approved target. A direct user instruction is sufficient authority: refresh status and use its revision and a unique operation identity. Approval requires the actual user message and source. Rollback checks retained provider identity and registered compatibility, stays held after recovery, and never substitutes another target. Holds block new execution and Relay publication; executors stop at their next checkpoint. configure_build_guard is Relay-only setup through the existing authenticated CI service headers: requires resume authorization, temporarily holds publication, copies only existing identity into secret build variables, and verifies the canonical guarded command before resuming. Never send credentials as arguments. Uncertain setup stays held; retry the same operation after readback. Configuration proof is separate from actual build execution. Other external builds and unconnected processes require their own integration.',
  inputSchema:{type:'object',additionalProperties:false,properties:{
-  action:{type:'string',enum:['status','hold','resume','healthy','approve','rollback','configure_build_guard']},scope:{type:'string',pattern:'^(global|[a-z0-9-]{1,80})$'},
+  action:{type:'string',enum:['status','hold','resume','quarantine','wait','recover_wait','healthy','approve','rollback','configure_build_guard']},scope:{type:'string',pattern:'^(global|[a-z0-9-]{1,80})$'},
   expected_revision:{type:'integer',minimum:0},operation_id:{type:'string',pattern:'^[-\\w]{8,110}$'},
+  subject:{type:'object',additionalProperties:false,properties:{kind:{type:'string',enum:['candidate','operation']},id:{type:'string',maxLength:120}},required:['kind','id']},expected_block_revision:{type:'integer',minimum:1},
   reason:{type:'string',minLength:1,maxLength:1000},authorization:{type:'string',minLength:1,maxLength:1000},
   target:{type:'object',additionalProperties:false,properties:{worker:{type:'string'},version_id:{type:'string'},source_sha:{type:'string'},compatibility_id:{type:'string'},evidence:{type:'string',maxLength:1000},recovery:{type:'object',additionalProperties:false,properties:{archive_sha256:{type:'string',pattern:'^[a-f0-9]{64}$'},manifest_sha256:{type:'string',pattern:'^[a-f0-9]{64}$'},restore_sha256:{type:'string',pattern:'^[a-f0-9]{64}$'},artifact_id:{type:'integer',minimum:1},ci_run:{type:'integer',minimum:1}},required:['archive_sha256','manifest_sha256','restore_sha256','artifact_id','ci_run']}},required:['worker','version_id','source_sha','compatibility_id','evidence']},
   approval:{type:'object',additionalProperties:false,properties:{text:{type:'string',maxLength:1000},source:{type:'string',maxLength:1000}},required:['text','source']},

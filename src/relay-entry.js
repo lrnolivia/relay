@@ -321,8 +321,8 @@ export default {
     }
     if (url.pathname === '/autonomy-status' && request.method === 'GET') {
       try {
-        if ([...url.searchParams.keys()].some(key=>key!=='scope')) throw Object.assign(Error('Unsupported safety query'),{status:400});
-        return Response.json(await publicAutonomyStatus(env,url.searchParams.get('scope')||'global'),{headers:{'Cache-Control':'no-store'}});
+        if ([...url.searchParams.keys()].some(key=>!['scope','source_sha'].includes(key))) throw Object.assign(Error('Unsupported safety query'),{status:400});
+        return Response.json(await publicAutonomyStatus(env,url.searchParams.get('scope')||'global',url.searchParams.get('source_sha')||request.headers.get('X-Relay-Candidate-Source')),{headers:{'Cache-Control':'no-store'}});
       } catch(error) { return Response.json({error:error.message},{status:error.status||503,headers:{'Cache-Control':'no-store'}}); }
     }
     let message;

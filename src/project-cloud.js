@@ -266,8 +266,9 @@ export async function callAutonomyControl(env,input,deps={}){
   const rollback=input?.action==='rollback';
   const prepared=rollback?{...input,action:'prepare_rollback'}:input;
   validateAutonomyInput(prepared);
-  if(!['status','hold','resume','healthy','approve','rollback'].includes(input.action))throw Error('Unsupported operator safety action');
-  if(['status','hold','resume'].includes(input.action))return autonomyRequest(env,input);
+  if(!['status','hold','resume','quarantine','wait','recover_wait','healthy','approve','rollback'].includes(input.action))throw Error('Unsupported operator safety action');
+  if(input.action==='recover_wait')await guardAutonomy(env);
+  if(['status','hold','resume','quarantine','wait','recover_wait'].includes(input.action))return autonomyRequest(env,input);
   if(input.operation_id.length>110)throw Error('Release operation identity exceeds 110 characters');
   const status=await projectCloudStatus(env,input.scope,deps.github);
   if(rollback){

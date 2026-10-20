@@ -376,3 +376,35 @@ test('compiled restoration transitions bind one upload intent and reject mismatc
  state=transitionAutonomy(state,record).state;assert.equal(state.rollback.target.version_id,restored);assert.equal(state.rollback.original_target.version_id,version);assert.equal(state.last_user_approved.version_id,version);assert.equal(state.last_healthy.version_id,version);
  assert.throws(()=>transitionAutonomy(state,input('finish_rollback',3,{result:{state:'verified',version_id:version,evidence:'Wrong original provider UUID'}})),/pending exact target/);
 });
+
+test('candidate quarantine blocks only its publication and leaves independent work admitted',async()=>{
+ const {env,values}=binding();
+ const q=input('quarantine',0,{subject:{kind:'candidate',id:'c'.repeat(40)}});
+ await callAutonomyControl(env,q);
+ assert.equal(values.get('autonomy:relay').held,false);
+ await guardAutonomy(env,['relay']);
+ await assert.rejects(guardAutonomy(env,['relay'],q.subject),/quarantined/);
+ await guardAutonomy(env,['relay'],{kind:'candidate',id:'d'.repeat(40)});
+ assert.equal((await publicAutonomyStatus(env,'relay',q.subject.id)).candidate_blocked,true);
+ assert.equal((await publicAutonomyStatus(env,'relay','d'.repeat(40))).candidate_blocked,false);
+ const again=await callAutonomyControl(env,q);assert.equal(again.duplicate,true);assert.equal(again.state.revision,1);
+});
+test('automatic operation waits have a bounded revision-checked recovery and cannot override a later user/global stop',async()=>{
+ let s=transitionAutonomy(null,input('wait',0,{subject:{kind:'operation',id:'candidate-verify'}})).state;
+ const recover=input('recover_wait',1,{subject:{kind:'operation',id:'candidate-verify'},expected_block_revision:1});
+ assert.equal(transitionAutonomy(s,recover).state.held,false);
+ const stopped=transitionAutonomy(s,input('hold',1)).state;
+ assert.throws(()=>transitionAutonomy(stopped,recover),/revision changed/);
+ assert.throws(()=>transitionAutonomy(stopped,{...recover,expected_revision:2}),/stale, stopped/);
+ s=transitionAutonomy(s,recover).state;
+ s=transitionAutonomy(s,input('wait',2,{subject:recover.subject})).state;
+ assert.throws(()=>transitionAutonomy(s,input('recover_wait',3,{subject:recover.subject,expected_block_revision:3})),/exhausted/);
+ const {env}=binding({'autonomy:relay':transitionAutonomy(null,input('wait',0,{subject:recover.subject})).state,'autonomy:global':{...autonomyState('global'),held:true,reason:'User stop'}});
+ await assert.rejects(callAutonomyControl(env,recover),/held for global/);
+});
+test('raw version publication cannot bypass a candidate quarantine without source proof',async()=>{
+ const state=transitionAutonomy(null,input('quarantine',0,{subject:{kind:'candidate',id:'c'.repeat(40)}})).state;
+ const {env}=binding({'autonomy:relay':state});
+ await assert.rejects(deployCloudVersion({...env,CLOUDFLARE_ACCOUNT_ID:'fixture',CLOUDFLARE_API_TOKEN:'fixture',RELAY_CLOUDFLARE_WRITE_SCRIPTS:'relay'},'relay',version),/source proof/);
+ await guardAutonomy(env,['relay']);
+});

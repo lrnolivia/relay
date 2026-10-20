@@ -142,3 +142,7 @@ Night Shift inherits the Bible's recovery, failure-fingerprint, bounded-retry, s
 A blocked assignment is a scheduling event. Revalidate the blocker from fresh evidence, park only the affected path, and continue another safe ready assignment when one exists.
 
 The Night Shift Manager must not end the night merely because one QA harness, branch, workflow, or assignment path is stuck.
+
+The bounded pass parks project-local holds, missing oversight and unavailable project/job state. Independent admitted jobs continue. Global/operator stops and unavailable global authority stop the pass. An uncertain launch reserves its job and dependent hosts/checkouts until readback; independent hosts may continue. Persist launch intent and never relaunch an existing uncertain receipt on restart.
+
+Execution continuity belongs to the coordinator's complete finite acceptance plan. Reconcile each job against stage verification, including authorized repair/review/shipping. Checkpoints are keyed by relevant inputs and dependency receipts; process success alone never advances acceptance.
