@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-20T20:14:33.928Z",
+  "updated_at": "2026-10-20T20:32:06.566Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -17060,7 +17060,7 @@
       ],
       "goal": "Activate authorized acceptance continuation and goal-preserving expansion in the existing native Relay/Codex task workflow without creating credentials or launching another model process.",
       "acceptance": "Implement a bounded native-tool bridge for the existing coordinator and canonical assignment/stop/scope/CAS controls. Native host supplies semantic review and stage work through its existing tools; real task-specific verifiers decide acceptance. Prove A then discovered supporting work then B with actual native Relay actions in an explicitly non-production fixture subtask, preserving checkpoints and avoiding duplicate uncertain work. Separate subtask acceptance from full original objective completion. Test stale controls, native reply/restart identity and malicious/scope escape cases. Update canonical native bootstrap/config guidance and readiness matrix; commit/push draftPR, exactCI, authorized release/live-source/health/recovery assurance with preserved rollback. No external Claude, new credentials/access, other workspaces, Field or unrelated held work.",
-      "next_action": "Complete original goal and admitted supporting feature native-fixture-validation: Exercise actual discovered supporting work, not just the original two stages",
+      "next_action": "Actual native A/support/B fixture and zero-work resume passed; finish native activation aggregate/CI gates and authorized exact-source publication.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -17083,8 +17083,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T20:14:33.928Z",
-      "lease_until": "2026-10-21T08:14:33.928Z",
+      "updated_at": "2026-10-20T20:32:06.566Z",
+      "lease_until": "2026-10-21T08:32:06.566Z",
       "acceptance_additions": [
         {
           "schema": 1,
@@ -17125,7 +17125,7 @@
           "profile_digest": "3a09026b918b15dd80406851ed249a4cf27deda0bab9224b72ef70291a9e81e6"
         }
       ],
-      "amendment_count": 1,
+      "amendment_count": 2,
       "amendments": [
         {
           "at": "2026-10-20T20:14:33.928Z",
@@ -17219,6 +17219,20 @@
               "test/coordination.test.mjs",
               "test/fixtures/native-continuity-live/support.json"
             ]
+          }
+        },
+        {
+          "at": "2026-10-20T20:32:06.566Z",
+          "by": "relay-execution-continuity-worker-20261020",
+          "reason": "Record verified native fixture progress and prove the bounded once-only native tool mutation; preserve original goal and supporting acceptance.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Complete original goal and admitted supporting feature native-fixture-validation: Exercise actual discovered supporting work, not just the original two stages"
+          },
+          "after": {
+            "next_action": "Actual native A/support/B fixture and zero-work resume passed; finish native activation aggregate/CI gates and authorized exact-source publication."
           }
         }
       ]
