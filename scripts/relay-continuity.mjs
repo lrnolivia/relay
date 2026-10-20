@@ -7,6 +7,7 @@ const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex
 const terminal=new Set(['succeeded','failed','cancelled']);
 
 export function validateContinuityPlan(plan){
+ if(plan?.completion_scope!==undefined&&!['objective','subobjective'].includes(plan.completion_scope))throw Error('Declare objective or subobjective completion scope');
  if(plan?.schema!==1||typeof plan.authorization!=='string'||!plan.authorization.trim()||!Array.isArray(plan.criteria)||!plan.criteria.length||!Array.isArray(plan.stages)||!plan.stages.length||plan.stages.length>32)throw Error('Continuity requires explicit authorization and complete finite acceptance');
  if(!/^[a-f0-9]{64}$/.test(plan.objective_digest||'')||new Set(plan.criteria).size!==plan.criteria.length)throw Error('Bind the full objective and unique acceptance criteria');
  validateExpansionPolicy(plan);
@@ -87,7 +88,7 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
   if(!plan.expansion||state.plan_digest!==hash(original)||state.additions?.length)throw Error('Acceptance or plan changed; explicitly reconcile the saved checkpoint');
   state.policy_history=[...(state.policy_history||[]),{previous:state.plan_digest,current:hash(plan),reason:'Explicitly enable authorized goal-preserving expansion without changing original acceptance'}];state.plan_digest=hash(plan);await persist(state);
  }
- state.objective_completed=false;let actions=0;
+ state.objective_completed=false;state.acceptance_completed=false;state.subobjective_completed=false;let actions=0;
  const gate=async()=>{
   const control=await readControl(),policy=validateExpansionPolicy(plan);
   if(control.held||control.global_held||control.security_stop||control.assignment_active!==true||control.objective_digest!==(state.canonical_objective_digest||plan.objective_digest)||(policy&&control.original_goal_digest!==policy.goal_digest))throw Error('Current authority stops continuity; preserve checkpoints');
@@ -140,14 +141,15 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
   if(!invalid)break;
  }
  state.effective_plan=expandedContinuityPlan(plan,state.additions||[]);
- state.objective_completed=!unresolvedAdditions(state)&&state.effective_plan.stages.every(stage=>state.stages[stage.id]?.state==='passed');
+ state.acceptance_completed=!unresolvedAdditions(state)&&state.effective_plan.stages.every(stage=>state.stages[stage.id]?.state==='passed');
  const finalControl=await gate();
  const missing=(finalControl.acceptance_additions||[]).filter(x=>!state.additions?.some(row=>row.status==='admitted'&&row.digest===expansionDigest(x.proposal)));
- if(missing.length){state.objective_completed=false;state.pending_canonical_additions=missing.map(x=>x.proposal.id);}
+ if(missing.length){state.acceptance_completed=false;state.pending_canonical_additions=missing.map(x=>x.proposal.id);}
+ state.completion_scope=plan.completion_scope||'objective';state.objective_completed=state.completion_scope==='objective'&&state.acceptance_completed;state.subobjective_completed=state.completion_scope==='subobjective'&&state.acceptance_completed;
  await persist(state);return state;
 }
 
-export async function runContinuityExecution({config,workspace,stateDir,rpc,runExecution}){
+export async function runContinuityExecution({config,workspace,stateDir,rpc,runExecution,nativeHost}){
  workspace=await fs.realpath(workspace);
  const plan=validateContinuityPlan(config.continuity),directory=path.resolve(stateDir);
  if(directory===workspace||directory.startsWith(workspace+path.sep))throw Error('Continuity receipts must live outside the checkout');
@@ -158,17 +160,19 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
  const persist=async value=>{await fs.writeFile(filename+'.tmp',JSON.stringify(value)+'\n',{mode:0o600});await fs.rename(filename+'.tmp',filename);};
  let assignmentRecord=null;
  const assignment=async()=>{
-  const result=await rpc('relay_runner_resume',{project:config.project,assignment:config.assignment});
-  assignmentRecord=result.latest?.canonical_record_sha||null;const a=result.latest?.assignment;if(!a||a.id!==config.assignment||a.owner!==config.owner||a.branch!==config.branch)throw Error('Current assignment identity unavailable');return a;
+  const result=await rpc('relay_runner_assignments',{project:config.project,assignment:config.assignment});
+  assignmentRecord=result.record_sha||null;const a=result.ok===true?result.claims?.find(x=>x.id===config.assignment):null;if(!a||a.id!==config.assignment||a.owner!==config.owner||a.branch!==config.branch)throw Error('Current assignment identity unavailable');return a;
  };
  const readControl=async()=>{
   const global=await rpc('relay_autonomy',{action:'status',scope:'global'}),project=await rpc('relay_autonomy',{action:'status',scope:config.project}),a=await assignment();
   if(global.ok!==true||project.ok!==true||!Number.isSafeInteger(global.state?.revision)||!Number.isSafeInteger(project.state?.revision))throw Error('Authoritative control unavailable');
-  return {global_held:global.state.held,held:project.state.held,revision:project.state.revision,global_revision:global.state.revision,assignment_active:a.state==='active',objective_digest:hash({goal:a.goal,acceptance:a.acceptance}),original_goal_digest:hash(a.goal),provider:config.provider||'codex',canonical_record_sha:assignmentRecord,paths:a.paths||[],acceptance_additions:a.acceptance_additions||[],source_sha:git(['rev-parse','HEAD'])};
+  return {global_held:global.state.held,held:project.state.held,revision:project.state.revision,global_revision:global.state.revision,assignment_active:a.state==='active'&&Date.parse(a.lease_until)>Date.now(),objective_digest:hash({goal:a.goal,acceptance:a.acceptance}),original_goal_digest:hash(a.goal),provider:config.provider||'codex',canonical_record_sha:assignmentRecord,paths:a.paths||[],acceptance_additions:a.acceptance_additions||[],source_sha:git(['rev-parse','HEAD'])};
  };
- const jobStatus=async job_id=>(await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,...(job_id?{job_id}:{})})).job;
+ const jobStatus=async job_id=>{const result=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,...(job_id?{job_id}:{})});if(result.ok!==true)throw Error('Authoritative execution status unavailable');return result.job;};
+ const outsideScope=async paths=>{const files=[...new Set([...git(['diff','--name-only','-z','HEAD']).split('\0'),...git(['ls-files','--others','--exclude-standard','-z']).split('\0')])].filter(x=>x&&!x.startsWith('qa-evidence/')&&!insideExpansionScope(x,paths)).sort(),snapshot=[];for(const file of files){try{const st=await fs.lstat(path.join(workspace,file));if(!st.isFile()||st.isSymbolicLink()||st.size>16*1024*1024)throw Error('Unbounded outside-scope source');snapshot.push([file,hash(await fs.readFile(path.join(workspace,file)))]);}catch(e){if(e.code!=='ENOENT')throw e;snapshot.push([file,'deleted']);}}return hash(snapshot);};
  const reconcile=async pending=>{
   const saved=JSON.parse(await fs.readFile(filename,'utf8')),stage=expandedContinuityPlan(plan,saved.additions||[]).stages.find(s=>s.id===pending.stage);
+  if(nativeHost&&!stage.command)return nativeHost.reconcile(pending,stage);
   if(stage.command){const proof=await verify(stage);return proof.passed?{state:'succeeded',evidence:proof.evidence}:null;}
   const job=await jobStatus(pending.job_id||'job_'+hash({project:config.project,assignment:config.assignment,operation:pending.operation_id}));
   if(!job||job.request!==pending.prompt)return null;
@@ -185,12 +189,13 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
    reviewAddition:async(proposal,context)=>{
     const a=await assignment(),recorded=a.acceptance_additions?.find(x=>x.base_objective_digest===plan.objective_digest&&expansionDigest(x.proposal)===expansionDigest(proposal)&&x.goal_digest===hash(plan.expansion.original_goal)&&x.profile_digest===hash(plan.expansion.profiles[proposal.profile]));
     if(recorded)return recorded.review;
+    if(nativeHost)return nativeHost.review(proposal,context);
     const review=plan.expansion?.review;if(!review)return null;
     const result=spawnSync(review[0],review.slice(1),{cwd:workspace,env:process.env,input:JSON.stringify({schema:1,proposal,context}),encoding:'utf8',timeout:120000,maxBuffer:32768,stdio:['pipe','pipe','pipe']});
     if(result.status!==0)return null;try{return JSON.parse(result.stdout);}catch{return null;}
    },
    admitScope:async(proposal,row)=>{
-    const snapshot=await rpc('relay_runner_resume',{project:config.project,assignment:config.assignment}),a=snapshot.latest?.assignment,record=snapshot.latest?.canonical_record_sha;
+    const snapshot=await rpc('relay_runner_assignments',{project:config.project,assignment:config.assignment}),a=snapshot.ok===true?snapshot.claims?.find(x=>x.id===config.assignment):null,record=snapshot.record_sha;
     if(!a||a.id!==config.assignment||a.owner!==config.owner||a.branch!==config.branch||a.state!=='active')throw Error('Current scope ownership unavailable');
     const envelope=plan.expansion?.allowed_paths||a.paths;
     if(!Array.isArray(envelope)||proposal.paths.some(p=>!insideExpansionScope(p,envelope)))return {admitted:false,reason:'Supporting paths require authority outside the configured expansion envelope'};
@@ -222,6 +227,12 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
      const result=spawnSync(stage.command[0],stage.command.slice(1),{cwd:workspace,env:process.env,encoding:'utf8',timeout:120000,maxBuffer:1024*1024,stdio:['ignore','pipe','pipe']});
      if(result.error||result.signal)return {state:'unknown'};
      return {state:result.status===0?'succeeded':'failed',exit_code:result.status,evidence:'sha256:'+hash({command:stage.command,stdout:result.stdout,stderr:result.stderr,status:result.status})};
+    }
+    if(nativeHost){
+     pending.adapter='codex-native-tools';const saved=JSON.parse(await fs.readFile(filename,'utf8'));saved.stages[pending.stage].pending=pending;await persist(saved);
+     const broker=await jobStatus();if(broker&&!terminal.has(broker.state))throw Error('Unreconciled coding execution occupies this assignment');
+     const before=await outsideScope(c.paths),result=await nativeHost.execute(pending,stage,{original_goal:plan.expansion?.original_goal,original_criteria:plan.criteria,profiles:Object.keys(plan.expansion?.profiles||{}),paths:c.paths,source_sha:c.source_sha,canonical_record_sha:c.canonical_record_sha});
+     if(result.head_sha!==git(['rev-parse','HEAD'])||before!==await outsideScope(c.paths))throw Error('Native source report or admitted scope changed; preserve work for reconciliation');return result;
     }
     let job=await jobStatus();
     const expectedJob='job_'+hash({project:config.project,assignment:config.assignment,operation:pending.operation_id});
