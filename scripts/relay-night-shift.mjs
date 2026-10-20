@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import {constants} from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
@@ -16,6 +17,9 @@ export function validateNightShiftPlan(plan){
  for(const job of plan.jobs){
   for(const key of ['project','assignment','owner','branch','job_id'])if(typeof job[key]!=='string'||!job[key]||job[key].length>240)throw Error('Exact admitted job identity required');
   if(!/^job_[a-f0-9]{64}$/.test(job.job_id)||ids.has(job.job_id))throw Error('Unique exact job required');ids.add(job.job_id);validateHosts(job.hosts);
+  if(typeof job.summary!=='string'||!job.summary.trim()||job.summary.length>2000)throw Error('A bounded accounting summary is required for each job');
+  const lead=plan.oversight?.[job.project];
+  if(!lead||!['assignment','owner','branch'].every(k=>typeof lead[k]==='string'&&lead[k]&&lead[k].length<=(k==='branch'?240:100))||!/^job_[a-f0-9]{64}$/.test(lead.job_id||'')||lead.assignment===job.assignment||lead.owner===job.owner||plan.jobs.some(x=>x.job_id===lead.job_id))throw Error('Configure a distinct existing oversight execution');
  }
  return plan;
 }
@@ -42,6 +46,11 @@ export async function runNightShiftPass({plan,rpc,persist,journal=null,dispatch=
   const r=await rpc('relay_night_shift',{action:'read',project:config.project,assignment:config.assignment,limit:1});
   const binding=plan.oversight?.[config.project];
   if(r.ok!==true||r.oversight?.available!==true||!binding||!['assignment','owner','branch'].every(k=>r.oversight.binding?.[k]===binding[k]))return 'oversight-unavailable';
+  // An assignment lease alone is not an oversight executor. Require a live
+  // broker lease and concrete process receipt for the exact separate job.
+  const lead=await rpc('relay_execution',{action:'status',project:config.project,assignment:binding.assignment,job_id:binding.job_id});
+  const j=lead.job,now=clock();
+  if(lead.ok!==true||!j||j.id!==binding.job_id||j.project!==config.project||j.assignment!==binding.assignment||j.owner!==binding.owner||j.branch!==binding.branch||j.state!=='running'||j.observed_state!=='running'||!j.executor_id||!Number.isInteger(j.process?.pid)||j.process.pid<=0||!j.process.host||!j.process.version||!Number.isFinite(Date.parse(j.started_at))||Date.parse(j.started_at)>now||!(Date.parse(j.lease_until)>now))return 'oversight-executor-unavailable';
   return null;
  };
  for(const config of plan.jobs){
@@ -96,19 +105,89 @@ export async function runNightShiftPass({plan,rpc,persist,journal=null,dispatch=
  state.state='pass-finished';await persist(state);return state;
 }
 
+// Explicit accounting never launches or retries an execution. The declared
+// window must have ended, and the server independently verifies source receipts.
+// Persist the exact ledger intent first; an uncertain write is reconciled only
+// through readback, never replayed automatically with a new operation id.
+export async function accountNightShiftPass({plan,journal,rpc,persist,clock=Date.now}){
+ validateNightShiftPlan(plan);
+ if(journal?.schema!==1||journal.plan_sha256!==digest(plan)||!Array.isArray(journal.jobs)||!['pass-finished','stopped','reconciliation-required'].includes(journal.state))throw Error('Accounting requires a matching finished or stopped pass');
+ const state=journal;
+ if(clock()<Date.parse(plan.away_window.end)){state.accounting={state:'waiting-for-window'};await persist(state);return state;}
+ const read=async config=>{
+  const items=[];let cursor=0,revision;
+  for(let page=0;page<10;page++){
+   const r=await rpc('relay_night_shift',{action:'read',project:config.project,assignment:config.assignment,cursor,limit:20});
+   if(r.ok!==true||!Number.isInteger(r.revision)||!Array.isArray(r.items)||(revision!==undefined&&revision!==r.revision))throw Error('Ledger read changed or unavailable');
+   revision=r.revision;items.push(...r.items);
+   if(r.next_cursor===null)return {items,revision};
+   if(!Number.isInteger(r.next_cursor)||r.next_cursor<=cursor)throw Error('Invalid ledger pagination');cursor=r.next_cursor;
+  }
+  throw Error('Ledger read exceeds bounded capacity');
+ };
+ state.accounting={state:'accounting'};await persist(state);
+ for(const receipt of state.jobs){
+  if(receipt.state!=='accounted')continue;
+  const config=plan.jobs.find(x=>x.job_id===receipt.job_id);
+  if(!config)throw Error('Receipt is outside the exact plan');
+  const operation='ns-record-'+digest({plan:state.plan_sha256,job:config.job_id}),itemId='ns_'+digest({project:config.project,operation});
+  try{
+   const ledger=await read(config),item=ledger.items.find(x=>x.id===itemId);
+   const matches=x=>x?.source?.job_id===config.job_id&&x.source.assignment===config.assignment&&x.source.owner===config.owner&&x.source.branch===config.branch&&x.recorded_by?.assignment===config.assignment&&x.recorded_by.owner===config.owner&&x.recorded_by.branch===config.branch&&x.declared_away_window?.start===plan.away_window.start&&x.declared_away_window.end===plan.away_window.end&&x.summary===config.summary;
+   if(item){
+    if(!matches(item))throw Error('Recorded item identity differs');
+    receipt.ledger={state:'recorded',item_id:itemId};await persist(state);continue;
+   }
+   if(receipt.ledger)throw Error('Prior accounting intent requires reconciliation');
+   const status=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,job_id:config.job_id}),job=status.job;
+   const start=Date.parse(job?.started_at),end=Date.parse(job?.finished_at);
+   if(status.ok!==true||!job||job.id!==config.job_id||job.project!==config.project||job.assignment!==config.assignment||job.owner!==config.owner||job.branch!==config.branch||!terminal.has(job.state)||!job.process||!Number.isFinite(start)||!Number.isFinite(end)||start<Date.parse(plan.away_window.start)||end>Date.parse(plan.away_window.end)||end<start||!job.result?.head_sha||!job.result?.evidence)throw Error('Terminal execution evidence unavailable or outside the window');
+   const request={action:'record',project:config.project,assignment:config.assignment,source_assignment:config.assignment,job_id:config.job_id,expected_owner:config.owner,expected_branch:config.branch,expected_revision:ledger.revision,operation_id:operation,summary:config.summary,away_window:plan.away_window};
+   receipt.ledger={state:'intent',request};await persist(state);
+   // Even a successful response is confirmed through the canonical ledger.
+   try{await rpc('relay_night_shift',request);}catch{}
+   const saved=(await read(config)).items.find(x=>x.id===itemId);
+   if(!matches(saved))throw Error('Ledger write unconfirmed');
+   receipt.ledger={state:'recorded',item_id:itemId};await persist(state);
+  }catch{
+   state.accounting={state:'reconciliation-required',job_id:config.job_id};await persist(state);return state;
+  }
+ }
+ state.accounting={state:'finished'};await persist(state);return state;
+}
+
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
- const [planFile,receiptFile,stopFile]=process.argv.slice(2);
- if(!planFile||!receiptFile||!stopFile||!path.isAbsolute(stopFile))throw Error('Usage: relay-night-shift.mjs plan.json new-private-receipt.json /absolute/stop-file');
+ const args=process.argv.slice(2),account=args[0]==='account';
+ const [planFile,receiptFile,stopFile]=account?args.slice(1):args;
+ if(!planFile||!receiptFile||(!account&&(!stopFile||!path.isAbsolute(stopFile))))throw Error('Usage: relay-night-shift.mjs plan.json new-private-receipt.json /absolute/stop-file; or account plan.json existing-private-receipt.json');
  const plan=validateNightShiftPlan(JSON.parse(await fs.readFile(planFile,'utf8')));
+ const rpc=createMcpClient({token:process.env.RELAY_MCP_TOKEN});
+ if(account){
+  // A stale lock is a reconciliation boundary, never automatically removed.
+  const lock=await openRoutingReceipt(receiptFile+'.accounting-lock',uniqueHosts(plan));
+  let handle;
+  try{
+   const before=await fs.lstat(receiptFile);
+   if(!before.isFile()||before.nlink!==1||(before.mode&0o077)!==0)throw Error('Accounting requires a private regular receipt');
+   handle=await fs.open(receiptFile,constants.O_RDWR|constants.O_NOFOLLOW);
+   const opened=await handle.stat();
+   if(opened.ino!==before.ino||opened.dev!==before.dev||opened.nlink!==1)throw Error('Receipt changed before accounting');
+   const journal=JSON.parse(await handle.readFile('utf8'));
+   const result=await accountNightShiftPass({plan,journal,rpc,persist:async value=>{await handle.truncate(0);await handle.write(JSON.stringify(value,null,2)+'\n',0,'utf8');await handle.sync();}});
+   console.log(JSON.stringify({state:result.state,accounting:result.accounting,away_verified:false,objective_completed:false}));
+  }finally{await handle?.close();await lock.close();await fs.unlink(receiptFile+'.accounting-lock');}
+ }else{
  // The same host may serve different jobs, but each receipt path is protected.
  const handle=await openRoutingReceipt(receiptFile,uniqueHosts(plan));
- const rpc=createMcpClient({token:process.env.RELAY_MCP_TOKEN});
  try{
   // A signal is a stop request, not an abort: the pass still cancels the exact job
   // through Relay and persists its receipt. Only a repeated signal exits at once.
   let signalled=false;
   for(const name of ['SIGINT','SIGTERM'])process.on(name,()=>{if(signalled)process.exit(130);signalled=true;});
-  const result=await runNightShiftPass({plan,rpc,shouldStop:async()=>{if(signalled)return true;try{await fs.lstat(stopFile);return true;}catch(e){if(e.code==='ENOENT')return false;throw e;}},persist:async value=>{await handle.truncate(0);await handle.write(JSON.stringify(value,null,2)+'\n',0,'utf8');await handle.sync();}});
-  console.log(JSON.stringify({state:result.state,jobs:result.jobs.map(x=>({job_id:x.job_id,state:x.state})),away_verified:false,objective_completed:false}));
+  const persist=async value=>{await handle.truncate(0);await handle.write(JSON.stringify(value,null,2)+'\n',0,'utf8');await handle.sync();};
+  const journal=await runNightShiftPass({plan,rpc,shouldStop:async()=>{if(signalled)return true;try{await fs.lstat(stopFile);return true;}catch(e){if(e.code==='ENOENT')return false;throw e;}},persist});
+  const result=await accountNightShiftPass({plan,journal,rpc,persist});
+  console.log(JSON.stringify({state:result.state,accounting:result.accounting,jobs:result.jobs.map(x=>({job_id:x.job_id,state:x.state})),away_verified:false,objective_completed:false}));
  }finally{await handle.close();}
+ }
 }
