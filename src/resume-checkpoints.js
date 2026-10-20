@@ -79,6 +79,7 @@ function checkpointCore({ project, assignment, progress, changedPaths, changedPa
       id: assignment?.id || progress?.assignment || null,
       goal: assignment?.goal || null,
       acceptance: assignment?.acceptance || null,
+      ...(assignment?.acceptance_additions?.length?{acceptance_additions:assignment.acceptance_additions}:{}),
       paths: assignment?.paths || [],
       resources: assignment?.resources || [],
       objective_history: assignment?.objective_history || null,

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "2026-09-30.2",
+  "version": "2026-10-20.2",
   "authority": "lrnolivia/relay@main",
   "contract": "LOEW_CHAT_BIBLE.md",
   "single_bible": true,
@@ -13,14 +13,20 @@
     "runner_owns_all_non_product_docs": true,
     "repos_own_product_truth_only": true,
     "repo_may_keep": [
-      "product-truth docs",
+      "product/user/contributor documentation and public changelogs",
+      "architecture and build-required runbooks",
       "README, LICENSE, NOTICE and tooling-required files",
-      "thin AGENTS.md stub"
+      "thin AGENTS.md/CLAUDE.md bootstrap references"
     ],
     "non_product_docs_path": "docs/<project-id>/",
     "product_mirror_path": "docs/<project-id>/product/<same-path>",
     "repo_copy_authoritative_for_product_docs": true,
-    "agents_write_non_product_docs_to_runner": true
+    "agents_write_non_product_docs_to_runner": true,
+    "operational_repository": "lrnolivia/relay",
+    "operational_branch": "main",
+    "temporary_artifacts": "allocated task artifact directory outside source checkout; prescribed tooling outputs remain ephemeral",
+    "mirrors_only_when_required": true,
+    "canonical_references_preferred": true
   },
   "required_bootstrap": [
     "contracts/manifest.json",
@@ -75,5 +81,13 @@
     "new_task_branches_require_admission": true,
     "relay_uses_same_registry": true
   },
-  "migrated_from": "lrnolivia/loew-runner"
+  "migrated_from": "lrnolivia/loew-runner",
+  "continuity": {
+    "original_goal_stable": true,
+    "goal_preserving_supporting_features": true,
+    "directly_related_strengthening_improvements": true,
+    "durable_additions_require_reason_dependencies_acceptance_verification": true,
+    "bounded_deduplicated_cycle_free": true,
+    "provider_neutral_task_authority": true
+  }
 }

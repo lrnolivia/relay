@@ -3,7 +3,7 @@ import path from 'node:path';
 import {execFile,execFileSync,spawn} from 'node:child_process';
 import {promisify} from 'node:util';
 import {pathToFileURL} from 'node:url';
-import {createMcpClient,changedPaths,runExecution} from './relay-executor.mjs';
+import {createMcpClient,changedPaths,runExecution,executionProvider} from './relay-executor.mjs';
 import {assertSourceCheckpointRuntime,captureSourceBundle} from './relay-source-checkpoint.mjs';
 
 const execute=promisify(execFile);
@@ -32,7 +32,7 @@ export function hostCommand(host,action){
 }
 
 // This is a live, read-only admission probe, not a lease or process receipt.
-export async function probeExecutionHost({config,workspace,stateDir,rpc,getVersion=()=>execFileSync('codex',['--version'],{encoding:'utf8',stdio:['ignore','pipe','pipe'],timeout:5000}).trim()}){
+export async function probeExecutionHost({config,workspace,stateDir,rpc,getVersion=()=>execFileSync(executionProvider(config),['--version'],{encoding:'utf8',stdio:['ignore','pipe','pipe'],timeout:5000}).trim()}){
  workspace=await fs.realpath(workspace);stateDir=path.resolve(stateDir);
  if(stateDir===workspace||stateDir.startsWith(workspace+path.sep))throw Error('Receipts must remain outside source');
  try{await fs.lstat(path.join(stateDir,'executor.lock'));throw Error('Executor lock requires reconciliation');}catch(error){if(error.code!=='ENOENT')throw error;}
@@ -41,13 +41,13 @@ export async function probeExecutionHost({config,workspace,stateDir,rpc,getVersi
  const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8',stdio:['ignore','pipe','pipe'],timeout:5000}).trim();
  const remote=git(['remote','get-url','origin']).replace(/\.git$/,'');
  if(!['https://github.com/'+job.repository,'git@github.com:'+job.repository].includes(remote)||git(['branch','--show-current'])!==job.branch||git(['rev-parse','HEAD'])!==job.initial_head_sha||changedPaths(workspace).length)throw Error('Host checkout is not the clean admitted source');
- const capabilities=['codex-cli',process.platform==='darwin'?'macos':process.platform==='linux'?'linux':'windows'];
+ const capabilities=[executionProvider(config)+'-cli',process.platform==='darwin'?'macos':process.platform==='linux'?'linux':'windows'];
  if(config.source_checkpoints===true){
   await assertSourceCheckpointRuntime();
   await captureSourceBundle({workspace,repository:job.repository,branch:job.branch,head_sha:job.initial_head_sha,scope:job.objective.paths});
   capabilities.push('source-byte-checkpoints-v1');
  }
- const version=getVersion();if(!version||version.length>200)throw Error('Codex runtime unavailable');
+ const version=getVersion();if(!version||version.length>200)throw Error('Configured coding runtime unavailable');
  return {schema:1,...Object.fromEntries(bindings.map(k=>[k,config[k]])),executor_id:config.executor_id,head_sha:job.initial_head_sha,capabilities,ready:true,credential_execution_verified:false};
 }
 

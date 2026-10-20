@@ -43,6 +43,8 @@ Reproducible build or product-test failures block promotion. Within the approved
 
 Resume at the failed stage and reuse completed evidence only while its relevant source/configuration/environment inputs remain unchanged. A material change invalidates affected evidence; exact-revision release gates still require the actual candidate revision.
 
+Related necessary and strengthening features follow Bible section6.1.1: admit them as durable acceptance additions within the original goal. Their discovery alone is not a new-authority blocker. Scope conflicts, changed purpose, sensitive permissions and paid services retain their real boundaries.
+
 ## Real blockers
 
 Examples:

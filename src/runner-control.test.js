@@ -571,3 +571,23 @@ test('admission diagnostics are bounded and omit arbitrary provider payloads',()
  const out=runnerControlError(new ControlError('conflict','Coordination preflight failed',{reason:'coordination_admission',findings}));assert.equal(out.error.findings.length,8);assert.equal(out.error.findings_count,31);assert.equal(out.error.findings_truncated,true);assert.equal(out.error.findings[0].paths.length,8);assert.doesNotMatch(JSON.stringify(out),/forbidden-secret|Bearer/);
  const forged=runnerControlError(Object.assign(new Error('hidden'),{code:'conflict',reason:'coordination_admission',findings}));assert.equal(forged.error.reason,undefined);assert.equal(forged.error.findings,undefined);
 });
+
+const supportingReceipt = () => ({schema:1,base_objective_digest:createHash('sha256').update(JSON.stringify({goal:defaultRequest.goal,acceptance:defaultRequest.acceptance})).digest('hex'),goal_digest:createHash('sha256').update(JSON.stringify(defaultRequest.goal)).digest('hex'),profile_digest:'f'.repeat(64),proposal:{id:'support',goal_digest:createHash('sha256').update(JSON.stringify(defaultRequest.goal)).digest('hex'),kind:'strengthens',reason:'Improve assigned feature',relationship:'Supports original acceptance',supports:['A'],target_stage:'a',depends_on:['a'],acceptance:['Supporting behavior verified'],profile:'engineering',paths:['src/support.js'],description:'Support assigned feature'},review:{verdict:'admit',preserves_goal:true,goal_digest:createHash('sha256').update(JSON.stringify(defaultRequest.goal)).digest('hex'),within_authority:true,sensitive_permissions:false,paid_services:false,canonical_key:'support',reason:'Within original goal and authority'}});
+test('supporting acceptance survives atomic amendment, queued claim and provider handoff',async()=>{
+ const f=fixture(),{branch,...request}=defaultRequest;await coordinate(f,'queue',request);
+ const receipt=supportingReceipt();await coordinate(f,'amend',{id:'task',owner:'worker',acceptance_additions:[receipt],reason:'Admit supporting acceptance'},newSha);
+ const result=await coordinate(f,'claim',defaultRequest,newSha);assert.deepEqual(result.claim.acceptance_additions,[receipt]);
+ await coordinate(f,'handoff',{id:'task',owner:'worker',successor:'claude-machine',next_action:'Verify original and supporting acceptance'},newSha);
+ assert.deepEqual(f.record.claims[0].acceptance_additions,[receipt]);assert.equal(f.record.claims[0].goal,defaultRequest.goal);
+ assert.equal(f.record.claims[0].objective_history.baseline.acceptance,defaultRequest.acceptance);
+});
+test('supporting acceptance is append-only, bound to the goal/acceptance, owner, scope and control revision',async()=>{
+ const receipt=supportingReceipt(),f=fixture({claims:[claim()]});
+ await assert.rejects(coordinate(f,'amend',{id:'task',owner:'worker',acceptance_additions:[{...receipt,base_objective_digest:'0'.repeat(64)}],reason:'Stale criteria'}),/current original acceptance/);
+ await coordinate(f,'amend',{id:'task',owner:'worker',acceptance_additions:[receipt],reason:'Admit support'});
+ for(const patch of [{acceptance_additions:[]},{goal:'A different feature'},{paths:['other/']},{acceptance_additions:[{...receipt,proposal:{...receipt.proposal,reason:'Rewrite'}}]}])await assert.rejects(coordinate(f,'amend',{id:'task',owner:'worker',...patch,reason:'Attempt mutation'},newSha));
+ await assert.rejects(coordinate(f,'rescope',{id:'task',owner:'worker',paths:['other/'],resources:[],next_action:'Drop support'},newSha),/Accepted supporting paths/);
+ await assert.rejects(coordinate(f,'amend',{id:'task',owner:'another',acceptance_additions:[receipt],reason:'Take ownership'},newSha),/another owner/);
+ await assert.rejects(coordinate(f,'amend',{id:'task',owner:'worker',next_action:'Stale write',reason:'Stale'},sha),/changed|revision|stale/i);
+ assert.equal(f.writes.length,1);
+});

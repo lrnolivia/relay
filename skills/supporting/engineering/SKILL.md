@@ -24,3 +24,9 @@ Return changed paths, the resulting behavior, exact source identity, relevant co
 ## Recovery
 
 Classify failure as source defect, dependency/toolchain mismatch, environment failure or stale evidence. Compare installed versions and fresh source before retrying. Preserve logs and the dirty diff; never reset another checkout to make a test pass. Two identical failures without new evidence require a changed hypothesis or a precise blocker. Keep unrelated passing work usable while the blocked criterion is parked.
+
+## Shared authority and supporting work
+
+Use the current canonical `lrnolivia/relay@main/LOEW_CHAT_BIBLE.md` sections5,6.1.1,18,20. Codex and Claude share task/acceptance/evidence rules and retain distinct real adapter capabilities. Necessary supporting features and directly related strengthening improvements may become bounded durable additions under the original goal; record reason, relationship, dependencies, acceptance and verification and obtain canonical scope admission before implementation. A provider change never clears ownership, stops or an uncertain execution.
+
+Permanent internal work/session/maintenance/handoff/audit records belong in `lrnolivia/relay/docs/<project-id>/`. Product/user/contributor docs, architecture and build-required runbooks stay with the product. Prefer canonical links to copies; keep temporary artifacts outside source except prescribed ephemeral tooling outputs. Missing Relay write authority parks only documentation publication; preserve the content and do not create a substitute canonical store.

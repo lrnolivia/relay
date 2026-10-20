@@ -75,7 +75,7 @@ Record:
 - repaired artificial blockers
 - remaining follow-up
 
-Then close the assignment if its acceptance criteria are satisfied.
+Then close the assignment only when its original and all admitted additive acceptance criteria are satisfied. Follow Bible section6.1.1; undispatched/unverified supporting stages, uncertain scope writes or pending authority keep dependent promotion/completion open. Reuse valid exact-input evidence instead of rerunning successful gates without a material change.
 
 ## Failure
 
