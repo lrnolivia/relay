@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-20T04:03:45.290Z",
+  "updated_at": "2026-10-20T04:07:24.102Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -14529,6 +14529,861 @@
       "completed_at": "2026-10-08T23:57:19.222Z"
     },
     {
+      "id": "relay-project-attribution-20261013",
+      "owner": "01a136d2-f762-7345-9c23-1509a8c1501a",
+      "branch": "relay/project-attribution-20261013",
+      "paths": [
+        "src/commit-attribution.js",
+        "src/commit-attribution.test.js",
+        "scripts/project-attribution.mjs",
+        "scripts/project-attribution.test.mjs",
+        ".claude/settings.json",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "docs/relay/COMMIT_ATTRIBUTION_20261013.md",
+        "src/ai-cleanup.js",
+        "src/ai-cleanup.test.js",
+        "scripts/ai-cleanup.mjs",
+        "scripts/ai-cleanup.test.mjs",
+        "docs/relay/AI_CLEANUP_20261013.md",
+        "src/source.js",
+        "src/source-text-mutation.js",
+        "src/index.js",
+        "src/runner-control-core.js",
+        "src/source-lifecycle.js",
+        ".github/workflows/runner.yml",
+        "scripts/relay-executor.mjs",
+        "src/source.test.js",
+        "src/source-text-mutation.test.js",
+        "src/source-lifecycle.test.js",
+        "src/runner-control.test.js",
+        "scripts/coordinate.mjs",
+        ".github/workflows/field-dependency-doctor.yml",
+        ".github/workflows/field-dependency-repair.yml",
+        "src/source-attribution.test.js",
+        "scripts/attribution-coordination.mjs",
+        "src/coordination-transport.test.js",
+        "README.md"
+      ],
+      "resources": [
+        "prospective-project-commit-attribution",
+        "project-scoped-ai-cleanup",
+        "prospective-worker-attribution",
+        "relay-project-documentation"
+      ],
+      "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched. Add Lauren-approved AI Cleanup: a bounded project-scoped scan/report and reviewable cleanup-patch capability.",
+      "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
+      "next_action": "Proceed with parent-authorized combined attribution checkpoint and README cleanup in isolated candidate. Only transferred31paths/resources; held umbrella182paths/WIP80b887 unchanged. Refresh main/control bytes, run local preparation gate, restore/source validation and exact Node22 build+5suites; then create only existing assigned branch and use strict publication/PR admission and verified human final metadata. No new production credentials or protection bypass.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "c96e4a79b79a55d5f0097d0b85e749b249865c17",
+      "state": "completed",
+      "created_at": "2026-10-13T01:57:55.446Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched.",
+          "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
+          "at": "2026-10-13T01:57:55.446Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-project-attribution-20261013:acceptance:0",
+            "text": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
+            "at": "2026-10-13T01:57:55.446Z"
+          },
+          {
+            "id": "relay-project-attribution-20261013:acceptance:1",
+            "text": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
+            "at": "2026-10-13T02:41:39.642Z",
+            "reason": "Lauren explicitly approved the AI Cleanup scan-and-reviewable-patch plan via parent delegation."
+          }
+        ]
+      },
+      "updated_at": "2026-10-13T22:57:22.943Z",
+      "lease_until": "2026-10-14T10:57:22.943Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-13T02:41:39.642Z",
+          "by": "01a132f7-348f-772b-99fb-aabd339d0037",
+          "reason": "Lauren explicitly approved the AI Cleanup scan-and-reviewable-patch plan via parent delegation.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched.",
+            "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
+            "next_action": "Lauren approved AI Cleanup scan/report and reviewable patch capability alongside attribution. Implement only new unreserved modules/CLI/tests/docs in the existing isolated checkout. Preserve product AI, legal/human credits, code behavior and docs content. No registration edits, history rewrite, irreversible deletion, auth/access change, push/merge/deploy. Keep rebuild and rtxForge task held/untouched."
+          },
+          "after": {
+            "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched. Add Lauren-approved AI Cleanup: a bounded project-scoped scan/report and reviewable cleanup-patch capability.",
+            "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
+            "next_action": "Implement and test only unreserved AI Cleanup modules/CLI/tests/docs in this checkout. Produce local review artifacts; do not resume or take over held registration/source handlers."
+          }
+        }
+      ],
+      "handoffs": [
+        {
+          "at": "2026-10-13T21:44:34.717Z",
+          "from": "01a132f7-348f-772b-99fb-aabd339d0037",
+          "to": "01a136d2-f762-7345-9c23-1509a8c1501a",
+          "next_action": "Parent01a1146d explicitly directed review/integration of completed attribution checkpoint a75d165 and cleanup under this existing assignment, with user publication authorization. Preserve held rebuild WIP80b887 and all182 retained paths; use existing verified Lauren Git/gh route, no credentials/global changes. Refresh current coordination, add only README cleanup to this claim, validate combined exact source, publish through supported admission/human final-metadata route; do not independently release competing candidates."
+        }
+      ],
+      "pr": 226,
+      "merged_head_sha": "3bae28ce3bb210d0dff45a8b55bcad5fb6ace073",
+      "merge_commit_sha": "87ca978ff430fba73f6586e7fb35fcd1ff187127",
+      "evidence": "PR226 merged87ca978 from exact3bae, Lauren author verified;935pass2skips and hosted admission/quality; canonical build17eac84f success, versionf1ccdccb100%, health200; independent restore proof and previousrelease retained. Whole completed checkpointa75 plus admitted README accounted; held claude-open rebuild/WIP80b887, all other refs/work and root cutover remain separately retained/held. Final canonical postmerge quality115582102813 / run38480647206 passed all required suites plus exact live-source and retained interactive build. New immutable aftermerge bundle2db28507752616d3474a7faac18350a336ee2835373e7046050da974264de97c restored allrefs/fsck/tree; no other claim/work or ref deleted.",
+      "work_accounted": true,
+      "completed_at": "2026-10-13T22:57:22.943Z"
+    },
+    {
+      "id": "relay-claude-code-ergonomics-20261014",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "relay/claude-code-ergonomics-20261014",
+      "paths": [
+        "src/runner-control-core.js",
+        "src/coordination.mjs",
+        "src/coordination-engine.js",
+        "src/index.js",
+        "src/runner-control.test.js",
+        "src/source-lifecycle.test.js"
+      ],
+      "resources": [
+        "relay-runner-claim-admission",
+        "relay-source-pr-results"
+      ],
+      "goal": "Lauren 2026-10-14: 'you need to figure out how to get Relay to work well with you, it's built by me i am in full control. you are also able to edit it.' Fix friction a Claude Code worker on Lauren's Windows PC hit while publishing rtxForge work: (1) relay_runner_coordinate reports every unsupported and missing request field at once and names what the action accepts and requires (a claim took five round trips); (2) claim can adopt a branch that already exists when given its exact live head SHA (expected_head_sha) and a reason, recorded on the claim (Lauren chose 'adopt with evidence'); (3) relay_source_open_pull_request returns a compact pull request summary instead of GitHub's full object. Scope is narrowed around held relay-mcp-rebuild-continuation-20261003: src/runner-control.js schema text and the Bible 4.1 update for Claude Code wait for that claim.",
+      "acceptance": "Unit tests cover aggregated validation, adoption (matching SHA admits and is recorded; missing or stale SHA still refuses; no adoption keeps the old refusal) and the compact PR result; coordination-engine.js is synced from coordination.mjs with RUNNER_ENGINE_SHA updated; repository CI passes; draft PR only, no merge or deploy without Lauren.",
+      "next_action": "Draft PR #227 head c3ef5b8536802203c616cc0fcce62372d9e33ee8: quality passed (all five required suites: inspector [runs src/*.test.js incl. the new tests], runner, layout, contracts, web); Runner coordination admission passed. Waiting on Lauren's review; merge and prompt deploy only with her approval (engine pin changes). Follow-ups after held relay-mcp-rebuild-continuation-20261003 resolves: expected_head_sha schema description in src/runner-control.js, Bible 4.1 note for Claude Code.",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "31c82ed303b584414215682937f76050ac39ee2f",
+      "state": "completed",
+      "created_at": "2026-10-14T17:47:10.499Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren 2026-10-14: 'you need to figure out how to get Relay to work well with you, it's built by me i am in full control. you are also able to edit it.' Fix friction a Claude Code worker on Lauren's Windows PC hit while publishing rtxForge work: (1) relay_runner_coordinate reports every unsupported and missing request field at once and names what the action accepts and requires (a claim took five round trips); (2) claim can adopt a branch that already exists when given its exact live head SHA (expected_head_sha) and a reason, recorded on the claim (Lauren chose 'adopt with evidence'); (3) relay_source_open_pull_request returns a compact pull request summary instead of GitHub's full object. Scope is narrowed around held relay-mcp-rebuild-continuation-20261003: src/runner-control.js schema text and the Bible 4.1 update for Claude Code wait for that claim.",
+          "acceptance": "Unit tests cover aggregated validation, adoption (matching SHA admits and is recorded; missing or stale SHA still refuses; no adoption keeps the old refusal) and the compact PR result; coordination-engine.js is synced from coordination.mjs with RUNNER_ENGINE_SHA updated; repository CI passes; draft PR only, no merge or deploy without Lauren.",
+          "at": "2026-10-14T17:47:10.499Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-claude-code-ergonomics-20261014:acceptance:0",
+            "text": "Unit tests cover aggregated validation, adoption (matching SHA admits and is recorded; missing or stale SHA still refuses; no adoption keeps the old refusal) and the compact PR result; coordination-engine.js is synced from coordination.mjs with RUNNER_ENGINE_SHA updated; repository CI passes; draft PR only, no merge or deploy without Lauren.",
+            "at": "2026-10-14T17:47:10.499Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-14T18:09:53.956Z",
+      "lease_until": "2026-10-15T06:09:53.956Z",
+      "pr": 227,
+      "merged_head_sha": "c3ef5b8536802203c616cc0fcce62372d9e33ee8",
+      "merge_commit_sha": "ceace78c804ea1c1ceb1bc65d9cf56a4283055c8",
+      "evidence": "PR #227 head c3ef5b8536802203c616cc0fcce62372d9e33ee8; CI quality passed (all five required suites, including the inspector suite that runs the new src tests) and Runner coordination admission passed. Lauren approved merge and deploy in chat 2026-10-14 ('we good you can merge and deploy'). The Relay App merge was refused by the attribution guard by design, so Lauren's verified git connection on her PC merged it: merge commit ceace78c804ea1c1ceb1bc65d9cf56a4283055c8, authored and committed by Lauren Olivia <lrnoliv@gmail.com>; GitHub reports merged_by lrnolivia. Workers Build c959239f-095e-4712-9a73-76cea21ed3e2 for ceace78 finished with outcome success. A live probe of relay_runner_coordinate (invalid heartbeat, no write) returned the new one-pass validation message and passed the engine drift guard. Remaining follow-ups (wait on held relay-mcp-rebuild-continuation-20261003): expected_head_sha schema description in src/runner-control.js; Bible 4.1 note for Claude Code.",
+      "work_accounted": true,
+      "completed_at": "2026-10-14T18:09:53.956Z"
+    },
+    {
+      "id": "relay-claude-code-followups-20261014",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "relay/claude-code-followups-20261014",
+      "paths": [
+        "src/runner-control.js",
+        "LOEW_CHAT_BIBLE.md"
+      ],
+      "resources": [
+        "relay-runner-claim-admission"
+      ],
+      "goal": "Lauren 2026-10-14 ('do both'): finish the two follow-ups from merged PR #227. (1) In src/runner-control.js, describe expected_head_sha and reason for claim adoption, not as 'Retire only', and say in the relay_runner_coordinate description that claim accepts them. (2) Bible section 4.1 covers Claude Code on an authorized machine alongside Codex (local git push from Lauren's signed-in PC; Relay App merges are refused by the attribution guard, so merges use the verified human git route), with a version bump.",
+      "acceptance": "Schema and tool descriptions match the deployed behavior from PR #227; Bible 4.1 names Claude Code and the merge route; existing contract and tool tests pass in CI; merged as Lauren and deployed with her approval (given 2026-10-14 'do both').",
+      "next_action": "Edit src/runner-control.js descriptions and LOEW_CHAT_BIBLE.md 4.1, push with local git, open PR via Relay, read checks, merge as Lauren with git, confirm the Workers build, complete.",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "cf8f3ea98a73c6fda65cfafd157f6e36c27f2643",
+      "state": "completed",
+      "created_at": "2026-10-14T18:12:06.919Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren 2026-10-14 ('do both'): finish the two follow-ups from merged PR #227. (1) In src/runner-control.js, describe expected_head_sha and reason for claim adoption, not as 'Retire only', and say in the relay_runner_coordinate description that claim accepts them. (2) Bible section 4.1 covers Claude Code on an authorized machine alongside Codex (local git push from Lauren's signed-in PC; Relay App merges are refused by the attribution guard, so merges use the verified human git route), with a version bump.",
+          "acceptance": "Schema and tool descriptions match the deployed behavior from PR #227; Bible 4.1 names Claude Code and the merge route; existing contract and tool tests pass in CI; merged as Lauren and deployed with her approval (given 2026-10-14 'do both').",
+          "at": "2026-10-14T18:12:06.919Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-claude-code-followups-20261014:acceptance:0",
+            "text": "Schema and tool descriptions match the deployed behavior from PR #227; Bible 4.1 names Claude Code and the merge route; existing contract and tool tests pass in CI; merged as Lauren and deployed with her approval (given 2026-10-14 'do both').",
+            "at": "2026-10-14T18:12:06.919Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-14T18:19:12.430Z",
+      "lease_until": "2026-10-15T06:19:12.430Z",
+      "pr": 228,
+      "merged_head_sha": "5c306c54ca8200be86b89773daddbdb3afaf434b",
+      "merge_commit_sha": "3fdb0608b3fbde836f6932ed350870afc2efc72c",
+      "evidence": "Lauren 2026-10-14 'do both' (approves edit, merge and deploy). Held relay-mcp-rebuild-continuation-20261003 was narrowed under that instruction to release only src/runner-control.js and LOEW_CHAT_BIBLE.md (record b0b4d8355d5bb16f99a381677ae720866a5286e8; WIP 80b887c had both files identical to main; the other 180 paths and HELD state are preserved). PR #228 head 5c306c54ca8200be86b89773daddbdb3afaf434b: the first CI run failed on an unescaped apostrophe in src/runner-control.js, fixed in 5c306c5; quality then passed all five required suites and coordination admission passed. Merged by Lauren's verified git route: merge commit 3fdb0608b3fbde836f6932ed350870afc2efc72c (Lauren Olivia <lrnoliv@gmail.com>), GitHub merged_by lrnolivia. The merge message subject carries a stray UTF-8 BOM from the message file; left as is because fixing it needs a force-push. Workers Build 0a3dfd5a-86d6-40f8-b305-3a514a50c2fa for 3fdb060 succeeded. Bible is now version 2026-10-14.1, with 4.1 covering Claude Code.",
+      "work_accounted": true,
+      "completed_at": "2026-10-14T18:19:12.430Z"
+    },
+    {
+      "id": "loewtv-project-registration-20261017",
+      "owner": "01a13d75-8deb-75e1-b841-db37a5520116",
+      "branch": "relay/loewtv-project-registration-20261017",
+      "paths": [
+        "projects/loewtv.json",
+        "projects/arc.json",
+        "docs/loewtv/"
+      ],
+      "resources": [
+        "loewtv-project-registration"
+      ],
+      "goal": "Register Lauren's loewTV customization under its current name, retain Arc upstream provenance, and persist the exact latest local source/build/handoff records without claiming a user-owned GitHub repository or unobserved device acceptance.",
+      "acceptance": "Relay's live project registry exposes loewTV with honest local-source/tracking state and Arc compatibility; current product mirror, historical build/hash/test/rollback/limits records are committed, checks pass, registration is merged and read back through Relay. No TV or application behavior changes.",
+      "next_action": "User-authorized registration is in PR229 at d7e5f956624cc63d247f1a2b628f5535f616ec99; all7 published files read back exactly, 47 focused tests and hosted quality/admission passed. Merge the exact reviewed head through the existing Lauren-attributed local Git route, verify live Relay registry/readback, then complete this claim. This is metadata only; no TV or app/source publication.",
+      "task_class": "maintenance",
+      "category": "coordination",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "a3b00a984f7279b98f2ff15025a253744cec3712",
+      "state": "completed",
+      "created_at": "2026-10-17T23:35:17.496Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Register Lauren's loewTV customization under its current name, retain Arc upstream provenance, and persist the exact latest local source/build/handoff records without claiming a user-owned GitHub repository or unobserved device acceptance.",
+          "acceptance": "Relay's live project registry exposes loewTV with honest local-source/tracking state and Arc compatibility; current product mirror, historical build/hash/test/rollback/limits records are committed, checks pass, registration is merged and read back through Relay. No TV or application behavior changes.",
+          "at": "2026-10-17T23:35:17.496Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "loewtv-project-registration-20261017:acceptance:0",
+            "text": "Relay's live project registry exposes loewTV with honest local-source/tracking state and Arc compatibility; current product mirror, historical build/hash/test/rollback/limits records are committed, checks pass, registration is merged and read back through Relay. No TV or application behavior changes.",
+            "at": "2026-10-17T23:35:17.496Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-17T23:46:31.682Z",
+      "lease_until": "2026-10-18T11:46:31.682Z",
+      "pr": 229,
+      "merged_head_sha": "d7e5f956624cc63d247f1a2b628f5535f616ec99",
+      "merge_commit_sha": "8a017002d055ae21c9e3d5315acd5f71fc4ea6dc",
+      "evidence": "User authorized updating the Relay record with 'do it'. PR229 https://github.com/lrnolivia/relay/pull/229 merged as8a017002d055ae21c9e3d5315acd5f71fc4ea6dc from tested headd7e5f956624cc63d247f1a2b628f5535f616ec99 using existing Lauren-attributed local Git merge route. 47 focused tests passed; required quality39079971543 and coordination39079971547 passed. All7 source files read back byte-identical. Relay live registry at2026-10-17T23:45:37.749Z lists loewtv/name loewTV/policy89b45fe3f0f468d7dd623a0078144d27deab7b2f and suppresses legacy arc alias; main registration and receipt readback match. Current product mirror, latest local APK/rollback hashes, historical tests/limits, local-source location and handoff are preserved in docs/loewtv. Tracking-only is intentional: no owned source repo is asserted, managed implementation stays disabled, artifacts remain local. No TV, app, upstream source, credentials or other-owner files changed. Code and acceptance fully accounted; no work remains in this bounded registration task.",
+      "work_accounted": true,
+      "completed_at": "2026-10-17T23:46:31.682Z"
+    },
+    {
+      "id": "nudge-runtime-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-runtime-record-20261018",
+      "paths": [
+        "docs/nudge/"
+      ],
+      "resources": [
+        "nudge-runtime-record"
+      ],
+      "goal": "Preserve the authorized nudge source/runtime checkpoint and remaining acceptance in its canonical documentation home.",
+      "acceptance": "A JSON checkpoint records exact local source, native binary and cloud deployment identities, verified QA, recovery targets, authorization limits, peer readiness notices and next bounded action. No Relay product/runtime changes.",
+      "next_action": "Save the verified nudge 0.4.1 checkpoint and open a draft documentation PR.",
+      "category": "coordination",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "714002bcdd85272aea14a38be6b67cc44f529005",
+      "state": "completed",
+      "created_at": "2026-10-18T10:21:57.614Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Preserve the authorized nudge source/runtime checkpoint and remaining acceptance in its canonical documentation home.",
+          "acceptance": "A JSON checkpoint records exact local source, native binary and cloud deployment identities, verified QA, recovery targets, authorization limits, peer readiness notices and next bounded action. No Relay product/runtime changes.",
+          "at": "2026-10-18T10:21:57.614Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-runtime-record-20261018:acceptance:0",
+            "text": "A JSON checkpoint records exact local source, native binary and cloud deployment identities, verified QA, recovery targets, authorization limits, peer readiness notices and next bounded action. No Relay product/runtime changes.",
+            "at": "2026-10-18T10:21:57.614Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T10:27:56.584Z",
+      "lease_until": "2026-10-18T22:27:56.584Z",
+      "pr": 230,
+      "merged_head_sha": "03e8b770c8abea72f1a34486a95459f20d5ed304",
+      "merge_commit_sha": "9e40852724de7d7aa2c8f4aed900fafc650fa539",
+      "evidence": "https://github.com/lrnolivia/relay/blob/9e40852724de7d7aa2c8f4aed900fafc650fa539/docs/nudge/runtime-checkpoint.json ; PR230 merged exact head03e8b770c8abea72f1a34486a95459f20d5ed304 with Lauren-authored/committed merge9e40852724de7d7aa2c8f4aed900fafc650fa539. Provider metadata and canonical checkpoint readback verified. JSON parse/source-runtime identities passed; Runner coordination admission passed. Sole changed path docs/nudge/runtime-checkpoint.json; source CI paths deliberately exclude docs. Product release QA57Python/11cloud/native+MCP receipts is recorded. No Relay product code changed; nudge remaining capabilities and authorization limits are retained.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T10:27:56.584Z"
+    },
+    {
+      "id": "nudge-diagnostics-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-diagnostics-record-20261018",
+      "paths": [
+        "docs/nudge/runtime-checkpoint.json",
+        "docs/nudge/product/README.md",
+        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
+      ],
+      "resources": [
+        "nudge-runtime-record",
+        "nudge-product-doc-mirrors"
+      ],
+      "goal": "Preserve the verified nudge0.4.2 runtime checkpoint and its authoritative product-document mirrors.",
+      "acceptance": "Record exact source/native/cloud identities, live+isolated diagnostics QA, recovery compatibility, peer notices and remaining work. Sync README and operating-skill mirrors byte-for-byte from nudge source7e3dd8053429ccac744ce87a0e36300b1bec93e0 under docs/nudge/product/. No Relay product code or runtime changes.",
+      "next_action": "Save0.4.2 checkpoint and exact README/SKILL mirrors, verify JSON/hashes and publish the documentation PR.",
+      "category": "coordination",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "7e62eb671c48dde89391ce0a245e5b977ab08352",
+      "state": "completed",
+      "created_at": "2026-10-18T10:57:01.344Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Update the canonical nudge runtime checkpoint for verified connection diagnostics0.4.2.",
+          "acceptance": "Record exact source/native/cloud identities, fresh live+isolated diagnostic QA, additive storage/recovery compatibility, peer notices and remaining authorized work. Change only the checkpoint JSON.",
+          "at": "2026-10-18T10:57:01.344Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-diagnostics-record-20261018:acceptance:0",
+            "text": "Record exact source/native/cloud identities, fresh live+isolated diagnostic QA, additive storage/recovery compatibility, peer notices and remaining authorized work. Change only the checkpoint JSON.",
+            "at": "2026-10-18T10:57:01.344Z"
+          },
+          {
+            "id": "nudge-diagnostics-record-20261018:acceptance:1",
+            "text": "Record exact source/native/cloud identities, live+isolated diagnostics QA, recovery compatibility, peer notices and remaining work. Sync README and operating-skill mirrors byte-for-byte from nudge source7e3dd8053429ccac744ce87a0e36300b1bec93e0 under docs/nudge/product/. No Relay product code or runtime changes.",
+            "at": "2026-10-18T10:58:38.740Z",
+            "reason": "Bible18.2 requires synced mirrors for the product documentation updated by the release."
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T11:02:27.112Z",
+      "lease_until": "2026-10-18T23:02:27.112Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-18T10:58:38.740Z",
+          "by": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+          "reason": "Bible18.2 requires synced mirrors for the product documentation updated by the release.",
+          "fields": [
+            "goal",
+            "acceptance"
+          ],
+          "before": {
+            "goal": "Update the canonical nudge runtime checkpoint for verified connection diagnostics0.4.2.",
+            "acceptance": "Record exact source/native/cloud identities, fresh live+isolated diagnostic QA, additive storage/recovery compatibility, peer notices and remaining authorized work. Change only the checkpoint JSON."
+          },
+          "after": {
+            "goal": "Preserve the verified nudge0.4.2 runtime checkpoint and its authoritative product-document mirrors.",
+            "acceptance": "Record exact source/native/cloud identities, live+isolated diagnostics QA, recovery compatibility, peer notices and remaining work. Sync README and operating-skill mirrors byte-for-byte from nudge source7e3dd8053429ccac744ce87a0e36300b1bec93e0 under docs/nudge/product/. No Relay product code or runtime changes."
+          }
+        }
+      ],
+      "pr": 231,
+      "merged_head_sha": "e67851e83130a1808d06ba1a4889fa6109e30b6b",
+      "merge_commit_sha": "9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b",
+      "evidence": "PR231 merged exact heade67851e83130a1808d06ba1a4889fa6109e30b6b as Lauren-authored/committed9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b. Canonical checkpoint https://github.com/lrnolivia/relay/blob/9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b/docs/nudge/runtime-checkpoint.json and byte-exact README/SKILL product mirrors read back and hashes verified. JSON/identities/attribution passed; exact-head Runner admission passed. Documentation-only source CI paths exclude docs. Release7e3dd80/Worker98942083/nativeDLL18F6FEB5 passed61Python/19cloud, full isolated diagnostics transport and live pause/resume; independent hosted consumer passed. Remaining gameplay-test limits and game-close/camera/measurement work retained. No Relay product code changes.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T11:02:27.112Z"
+    },
+    {
+      "id": "nudge-close-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-close-record-20261018",
+      "paths": [
+        "docs/nudge/runtime-checkpoint.json",
+        "docs/nudge/product/README.md",
+        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
+      ],
+      "resources": [
+        "nudge-runtime-record",
+        "nudge-product-doc-mirrors"
+      ],
+      "goal": "Record nudge identity-checked close release and synchronize product operating docs",
+      "acceptance": "Exact tested source/native/Worker identities, fixture-only QA, close limitations, retained recovery and remaining motion capabilities are recorded; README and SKILL mirrors match product source",
+      "next_action": "Publish reviewed three-file checkpoint/mirror commit5ef055a288a8a38b126711e3cff621663b155745 after preflight; verify admission and exact head, then merge with verified human attribution.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "5830edecbeccff30dd2167bc1debdb5eb13e303c",
+      "state": "completed",
+      "created_at": "2026-10-18T11:22:53.728Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Record nudge identity-checked close release and synchronize product operating docs",
+          "acceptance": "Exact tested source/native/Worker identities, fixture-only QA, close limitations, retained recovery and remaining motion capabilities are recorded; README and SKILL mirrors match product source",
+          "at": "2026-10-18T11:22:53.728Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-close-record-20261018:acceptance:0",
+            "text": "Exact tested source/native/Worker identities, fixture-only QA, close limitations, retained recovery and remaining motion capabilities are recorded; README and SKILL mirrors match product source",
+            "at": "2026-10-18T11:22:53.728Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T11:29:54.476Z",
+      "lease_until": "2026-10-18T23:29:54.476Z",
+      "pr": 232,
+      "merged_head_sha": "5ef055a288a8a38b126711e3cff621663b155745",
+      "merge_commit_sha": "df3a663c5e01394fa7a388e081328ce50f84c731",
+      "evidence": "https://github.com/lrnolivia/relay/blob/df3a663c5e01394fa7a388e081328ce50f84c731/docs/nudge/runtime-checkpoint.json — source06e4d5f/native0.4.3/Worker3b270386 verified; 72 Python and19 cloud tests, actual stdio and isolated cloud MCP owned close fixtures passed. Source and merge author/committer verified as Lauren Olivia; exact README/SKILL Git blobs match source hashes. Recovery0.4.2 retained. No real game action or inventory refresh. Camera/measurement capabilities remain explicit follow-up work.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T11:29:54.476Z"
+    },
+    {
+      "id": "nudge-camera-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-camera-record-20261018",
+      "paths": [
+        "docs/nudge/runtime-checkpoint.json",
+        "docs/nudge/product/README.md",
+        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
+      ],
+      "resources": [
+        "nudge-runtime-record",
+        "nudge-product-doc-mirrors"
+      ],
+      "goal": "Record nudge camera recipe delivery, calibration limits and timing provenance",
+      "acceptance": "Exact0.4.4 source/runtime, simulation-only QA, bounded receipt semantics, unchanged control gates and next recorder/measurement work are durable; source README/SKILL mirrors match",
+      "next_action": "Publish updated docs head100c4266f317eeb478ae5e2481a86d05e3985ee6 including read-only recorder format findings; rerun exact-head admission and mirror/identity checks, merge and complete.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "b0d2aca680170552b5a836ff6d1868f927ad139f",
+      "state": "completed",
+      "created_at": "2026-10-18T11:56:30.086Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Record nudge camera recipe delivery, calibration limits and timing provenance",
+          "acceptance": "Exact0.4.4 source/runtime, simulation-only QA, bounded receipt semantics, unchanged control gates and next recorder/measurement work are durable; source README/SKILL mirrors match",
+          "at": "2026-10-18T11:56:30.086Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-camera-record-20261018:acceptance:0",
+            "text": "Exact0.4.4 source/runtime, simulation-only QA, bounded receipt semantics, unchanged control gates and next recorder/measurement work are durable; source README/SKILL mirrors match",
+            "at": "2026-10-18T11:56:30.086Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T12:17:38.961Z",
+      "lease_until": "2026-10-19T00:17:38.961Z",
+      "pr": 233,
+      "merged_head_sha": "100c4266f317eeb478ae5e2481a86d05e3985ee6",
+      "merge_commit_sha": "e287a8a3a12566473d96bb7eb00a5724b2fcaa68",
+      "evidence": "https://github.com/lrnolivia/relay/blob/e287a8a3a12566473d96bb7eb00a5724b2fcaa68/docs/nudge/runtime-checkpoint.json — source98e0d06/native0.4.4/Worker86bd9098 verified healthy;89 Python and20 cloud checks, actual stdio and isolated cloud camera protocol with memory-only backend passed. Cancellation classification defect held before publication, fixed with guard-state regression. Exact README/SKILL Git blobs and source/merge human attribution verified.0.4.3 recovery retained. Recorder formats/limits recorded with peer provenance; adapter implementation remains next. No real game/camera/recorder action or tool-inventory refresh.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T12:17:38.961Z"
+    },
+    {
+      "id": "nudge-measurement-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-measurement-record-20261018",
+      "paths": [
+        "docs/nudge/runtime-checkpoint.json",
+        "docs/nudge/product/README.md",
+        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
+      ],
+      "resources": [
+        "nudge-runtime-record",
+        "nudge-product-doc-mirrors"
+      ],
+      "goal": "Record nudge offline measurement adapters and the consumer-requested explicitly unbound historical import refinement through verified0.4.6 runtime. Preserve autonomous-work authorization and no real game/input/capture exclusion.",
+      "acceptance": "Exact0.4.6 source/runtime/rollback identities and109 Python/21cloud checks, genuinely unbound historical artifact replay, README/skill mirrors, and no live recorder/motion acceptance claims.",
+      "next_action": "Verify unbound HTTP-to-native replay, promote0.4.6 with current healthy0.4.5 retained, then update exact PR234 checkpoint and complete.",
+      "category": "release",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": "luca",
+      "supporting_staff": [],
+      "base_sha": "00d1a3bb0d6338de0d7474f6a165a3a5c5c6fc71",
+      "state": "completed",
+      "created_at": "2026-10-18T12:35:43.558Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Record nudge 0.4.5 offline measurement adapters, exact runtime verification and product mirrors. User authorized autonomous nudge work and peer notices while away; real game/input/capture execution remains excluded.",
+          "acceptance": "Exact source/runtime/rollback identities, verified QA and honest live-recorder/motion limitations recorded; README and packaged skill mirror source bytes.",
+          "at": "2026-10-18T12:35:43.558Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-measurement-record-20261018:acceptance:0",
+            "text": "Exact source/runtime/rollback identities, verified QA and honest live-recorder/motion limitations recorded; README and packaged skill mirror source bytes.",
+            "at": "2026-10-18T12:35:43.558Z"
+          },
+          {
+            "id": "nudge-measurement-record-20261018:acceptance:1",
+            "text": "Exact0.4.6 source/runtime/rollback identities and109 Python/21cloud checks, genuinely unbound historical artifact replay, README/skill mirrors, and no live recorder/motion acceptance claims.",
+            "at": "2026-10-18T12:43:49.699Z",
+            "reason": "Motion consumer found that historical traces lacked calibration/process-birth context; requiring a camera plan encouraged fictional metadata. Add read-only unbound imports with null identities and no joining; keep exact plans for bound work."
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T12:49:09.208Z",
+      "lease_until": "2026-10-19T00:49:09.208Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-18T12:43:49.699Z",
+          "by": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+          "reason": "Motion consumer found that historical traces lacked calibration/process-birth context; requiring a camera plan encouraged fictional metadata. Add read-only unbound imports with null identities and no joining; keep exact plans for bound work.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Record nudge 0.4.5 offline measurement adapters, exact runtime verification and product mirrors. User authorized autonomous nudge work and peer notices while away; real game/input/capture execution remains excluded.",
+            "acceptance": "Exact source/runtime/rollback identities, verified QA and honest live-recorder/motion limitations recorded; README and packaged skill mirror source bytes.",
+            "next_action": "Review exact PR234/head df17c8f and coordination checks, merge through verified human Git route, then verify mirrors and complete claim."
+          },
+          "after": {
+            "goal": "Record nudge offline measurement adapters and the consumer-requested explicitly unbound historical import refinement through verified0.4.6 runtime. Preserve autonomous-work authorization and no real game/input/capture exclusion.",
+            "acceptance": "Exact0.4.6 source/runtime/rollback identities and109 Python/21cloud checks, genuinely unbound historical artifact replay, README/skill mirrors, and no live recorder/motion acceptance claims.",
+            "next_action": "Verify unbound HTTP-to-native replay, promote0.4.6 with current healthy0.4.5 retained, then update exact PR234 checkpoint and complete."
+          }
+        }
+      ],
+      "pr": 234,
+      "merged_head_sha": "546383f46efceeeb10298d5b932bbb8c9d3831d8",
+      "merge_commit_sha": "58b418427a25d8f971451d672dc2ae3702437006",
+      "evidence": "PR234 head546383f46efceeeb10298d5b932bbb8c9d3831d8 merged58b418427a25d8f971451d672dc2ae3702437006 through verified human Git route; author/committer/account metadata and exact remote README/SKILL blobs checked. Checkpoint https://github.com/lrnolivia/relay/blob/58b418427a25d8f971451d672dc2ae3702437006/docs/nudge/runtime-checkpoint.json records clean source9629f47, native/Worker0.4.6 health, retained0.4.5 recovery,109 Python/21 cloud and unbound offline stdio/HTTP-native/CLI replay. No game/input/live recorder execution. Motion independently ran CLI --unbound on original307291-byte stationary artifact, exact raw SHA2561aab0fa299fa75f1576e0830cea0a40e92ec3a14cd5bd81f75dd8e3bb182dc42 unchanged; null identities, source stationary classification/human correction, missing evidence and false motion/comparison accepted. Peer-reported evidence C:/Users/lrnol/AppData/Local/rtxForge/recovery/nudge-unbound-check-20261018-124739Z/{report.json,analysis.json,receipt.json,stderr.log}; report received in authorized thread01a14d62-4f4f-7ed2-8dd9-2724854002cf. All work accounted; live recorder and independent motion/clock verifiers remain explicitly pending.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T12:49:09.208Z"
+    },
+    {
+      "id": "nudge-recorder-contract-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-recorder-contract-record-20261018",
+      "paths": [
+        "docs/nudge/runtime-checkpoint.json",
+        "docs/nudge/product/README.md"
+      ],
+      "resources": [
+        "nudge-runtime-record",
+        "nudge-product-doc-mirrors"
+      ],
+      "goal": "Record the source-only local recorder transport foundation, owned synthetic Windows process/QPC/artifact/cleanup verification, and unchanged healthy deployed0.4.6 runtime.",
+      "acceptance": "Exact clean source commit,127 passing Python checks including18 native recorder tests, retained owned fixture receipt/raw hashes, source README mirror, explicit no MCP registration/promotion/game input and remaining exclusive-session integration recorded.",
+      "next_action": "Publish docs checkpoint for source9869595/base59ebc54 while production stays on9629f47/0.4.6; verify exact mirrors, human attribution and merged claim.",
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "base_sha": "e91db84c676c930c5b0abb10514ed10565b7b0ae",
+      "state": "completed",
+      "created_at": "2026-10-18T13:11:22.820Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Record the source-only local recorder transport foundation, owned synthetic Windows process/QPC/artifact/cleanup verification, and unchanged healthy deployed0.4.6 runtime.",
+          "acceptance": "Exact clean source commit,126 passing Python checks, retained owned fixture receipt/raw hashes, source README mirror, explicit no MCP registration/promotion/game input and remaining exclusive-session integration recorded.",
+          "at": "2026-10-18T13:11:22.820Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-recorder-contract-record-20261018:acceptance:0",
+            "text": "Exact clean source commit,126 passing Python checks, retained owned fixture receipt/raw hashes, source README mirror, explicit no MCP registration/promotion/game input and remaining exclusive-session integration recorded.",
+            "at": "2026-10-18T13:11:22.820Z"
+          },
+          {
+            "id": "nudge-recorder-contract-record-20261018:acceptance:1",
+            "text": "Exact clean source commit,127 passing Python checks including18 native recorder tests, retained owned fixture receipt/raw hashes, source README mirror, explicit no MCP registration/promotion/game input and remaining exclusive-session integration recorded.",
+            "at": "2026-10-18T13:15:55.888Z",
+            "reason": "Added a passing two-recorder cancellation-isolation regression; final source suite now127 tests. No deployed behavior changed."
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T13:20:03.899Z",
+      "lease_until": "2026-10-19T01:20:03.899Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-18T13:15:55.888Z",
+          "by": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+          "reason": "Added a passing two-recorder cancellation-isolation regression; final source suite now127 tests. No deployed behavior changed.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Exact clean source commit,126 passing Python checks, retained owned fixture receipt/raw hashes, source README mirror, explicit no MCP registration/promotion/game input and remaining exclusive-session integration recorded.",
+            "next_action": "Commit the verified source-only foundation, create admitted docs branch, then record exact source/runtime separation and evidence."
+          },
+          "after": {
+            "acceptance": "Exact clean source commit,127 passing Python checks including18 native recorder tests, retained owned fixture receipt/raw hashes, source README mirror, explicit no MCP registration/promotion/game input and remaining exclusive-session integration recorded.",
+            "next_action": "Publish docs checkpoint for source9869595/base59ebc54 while production stays on9629f47/0.4.6; verify exact mirrors, human attribution and merged claim."
+          }
+        }
+      ],
+      "pr": 235,
+      "merged_head_sha": "467d17e07eed7aba76648c3c83ecac66659e84a1",
+      "merge_commit_sha": "cf2344eca8c948f5a54fe80be15fad5a1094a217",
+      "evidence": "PR235 exact head467d17e07eed7aba76648c3c83ecac66659e84a1 mergedcf2344eca8c948f5a54fe80be15fad5a1094a217 through verified human Git route; provider author/committer/account and remote canonical blobs checked. https://github.com/lrnolivia/relay/blob/cf2344eca8c948f5a54fe80be15fad5a1094a217/docs/nudge/runtime-checkpoint.json records clean source9869595/base59ebc54,127 Python tests including18 native recorder checks and retained synthetic receipt/raw artifact/log hashes. Receipt C:/Users/lrnol/Repos/nudge/.local/recorder-fixture-artifacts/3b7e5f82-e4fc-4992-bfd3-e81ab5d0f610/receipt.json SHA2560f857e241664beb440b97e0512da77d0cd9e8177d5c191dec0ce8e9b668d7bd8. Actual same-PC QPC exchange bounds, separate target pin, independent Job cancellation, descendants/parent death, exit/geometry change and retryable cleanup verified on owned fixtures only; foreground unchanged. No production recorder registered or loaded by31-tool MCP. No Worker upload/native rebuild/companion restart/game/input/capture/GPU action. Deployed source9629f47/0.4.6 and original DLL/Worker remain healthy. Exclusive-session recorder resource integration and independent motion/measurement validity explicitly remain next. Staged validation initially compared a CRLF working file to LF Git bytes; corrected to exact staged/remote Git blobs before final commit, without changing content or weakening validation.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T13:20:03.899Z"
+    },
+    {
+      "id": "nudge-recorder-session-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-recorder-session-record-20261018",
+      "paths": [
+        "docs/nudge/runtime-checkpoint.json",
+        "docs/nudge/product/README.md"
+      ],
+      "resources": [
+        "nudge-runtime-record",
+        "nudge-product-doc-mirrors"
+      ],
+      "goal": "Record source-only recorder integration with atomic exclusive sessions; preserve healthy deployed nudge0.4.6 and no real game/input/capture authorization.",
+      "acceptance": "Exact source and unchanged deployed identities, native owned-fixture/session cleanup gates, responsive cancellation/status/renewal, bounded recoverable receipts, source README mirror and remaining real-provider/motion verification limits recorded.",
+      "next_action": "Complete synthetic standalone receipt and source review, then publish the two-file checkpoint through exact-head admission and verified human Git merge.",
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "base_sha": "673dda606192b837b5944a2db6fe6360aace39f1",
+      "state": "completed",
+      "created_at": "2026-10-18T13:37:52.007Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Record source-only recorder integration with atomic exclusive sessions; preserve healthy deployed nudge0.4.6 and no real game/input/capture authorization.",
+          "acceptance": "Exact source and unchanged deployed identities, native owned-fixture/session cleanup gates, responsive cancellation/status/renewal, bounded recoverable receipts, source README mirror and remaining real-provider/motion verification limits recorded.",
+          "at": "2026-10-18T13:37:52.007Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-recorder-session-record-20261018:acceptance:0",
+            "text": "Exact source and unchanged deployed identities, native owned-fixture/session cleanup gates, responsive cancellation/status/renewal, bounded recoverable receipts, source README mirror and remaining real-provider/motion verification limits recorded.",
+            "at": "2026-10-18T13:37:52.007Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T13:47:39.833Z",
+      "lease_until": "2026-10-19T01:47:39.833Z",
+      "pr": 236,
+      "merged_head_sha": "a7c80398bd0ee5d9a15e410028273d369c5ff4ae",
+      "merge_commit_sha": "32792bbd262704476deeaa925db377015536837a",
+      "evidence": "PR236 exact heada7c80398bd0ee5d9a15e410028273d369c5ff4ae merged32792bbd262704476deeaa925db377015536837a through verified human Git route; provider author/committer/account and exact remote checkpoint/README Git blobs verified. https://github.com/lrnolivia/relay/blob/32792bbd262704476deeaa925db377015536837a/docs/nudge/runtime-checkpoint.json records clean source763f439 (integration8a8bed2),141 Python checks including19 native recorder and13 native session-recorder tests, independent subprocess exclusion, cancelled waits, expiry/start/F12, cleanup retry, worker liveness, failed neutralization and publication. Retained standalone owned receipt C:/Users/lrnol/Repos/nudge/.local/recorder-session-fixture-artifacts/9f892201-8175-4cfa-a0c8-cca90a6b0117/session-receipt.json SHA25600cfdbfe871e8d42ebce03be9040869727adddda2417834f57621f84b903c865; raw/log hashes checked, foreground unchanged, native original handles retained until confirmed. Final full QA exposed window-close-before-process-signal classification; separate observations + deterministic regression fixed it before publication. Actual stdio31 tools loads no recorder modules; no public launcher. Production remains healthy0.4.6/source9629f47/DLL00E9C33F/Worker43de0174/deploymentb5263e42, reverified without upload/rebuild/restart or app refresh. No game/input/capture/GPU action. Vetted providers and independent rendered-motion/measurement acceptance remain explicit follow-up.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T13:47:39.833Z"
+    },
+    {
+      "id": "nudge-provider-boundary-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-provider-boundary-record-20261018",
+      "paths": [
+        "docs/nudge/runtime-checkpoint.json",
+        "docs/nudge/product/README.md"
+      ],
+      "resources": [
+        "nudge-runtime-record",
+        "nudge-product-doc-mirrors"
+      ],
+      "goal": "Record source-only fixed local recorder-provider boundary, synthetic native collector verification and unchanged production0.4.6. Preserve no real game/input/live capture authority.",
+      "acceptance": "Exact source identities,152 Python checks including11 provider cases, retained synthetic raw/identity/lifecycle/cleanup receipts, honest source-clock limits and exact README mirror; no production registry/launcher or deployment.",
+      "next_action": "Commit source after final verification, retain final synthetic provider receipt and publish the two-file canonical checkpoint through exact-head admission and verified human Git route.",
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "base_sha": "abf9b83386a434df4068690431afb5ec3baf6063",
+      "state": "completed",
+      "created_at": "2026-10-18T14:10:12.894Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Record source-only fixed local recorder-provider boundary, synthetic native collector verification and unchanged production0.4.6. Preserve no real game/input/live capture authority.",
+          "acceptance": "Exact source identities,152 Python checks including11 provider cases, retained synthetic raw/identity/lifecycle/cleanup receipts, honest source-clock limits and exact README mirror; no production registry/launcher or deployment.",
+          "at": "2026-10-18T14:10:12.894Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-provider-boundary-record-20261018:acceptance:0",
+            "text": "Exact source identities,152 Python checks including11 provider cases, retained synthetic raw/identity/lifecycle/cleanup receipts, honest source-clock limits and exact README mirror; no production registry/launcher or deployment.",
+            "at": "2026-10-18T14:10:12.894Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T14:16:57.826Z",
+      "lease_until": "2026-10-19T02:16:57.826Z",
+      "pr": 237,
+      "merged_head_sha": "87314417b69c55f3d705c83e51cba86f2b7d3d0a",
+      "merge_commit_sha": "a77b71260bfe2eee8534b30f738f2711cb55422b",
+      "evidence": "PR237 exact head87314417b69c55f3d705c83e51cba86f2b7d3d0a mergeda77b71260bfe2eee8534b30f738f2711cb55422b through verified human Git route; provider author/committer/account and exact remote checkpoint/README blobs checked. https://github.com/lrnolivia/relay/blob/a77b71260bfe2eee8534b30f738f2711cb55422b/docs/nudge/runtime-checkpoint.json records clean source0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f,152 passing Python tests including11 provider cases(9 native), actual31-tool stdio with recorder/provider modules absent, and retained final normal/cancelled owned synthetic receipt C:/Users/lrnol/Repos/nudge/.local/provider-fixture-artifacts/e03e239e-581f-4af4-b7c5-8949b30ecf86/provider-smoke-receipt.json SHA2565b486edde78876e17005b90d7f308a3a8b79e8d8f2d7cae2f2d42cc4231529d1. Native collector birth/path/Job pinning, wrong/foreign identities, locked config/dependencies, raw/log hashes, forced descendant incompleteness, timeout/log caps and original-handle cleanup retry passed. Initial false complete after forced descendant cleanup corrected; equal stop/transport deadlines corrected; pending-cleanup harness repaired without accepting an attempt as completion. Owned diagnostic leftover identity-checked and gracefully quit; no fixtures remain. Production0.4.6/source9629f47/DLL00E9C33F/Worker43de0174/deploymentb5263e42 reverified healthy and unchanged. No real collector profile/registry/MCP launcher, upload/rebuild/restart/tool refresh, game/input/capture/GPU action. Raw source clock and independent rendered-motion/scene/comparison verification remain explicitly pending.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T14:16:57.826Z"
+    },
+    {
+      "id": "nudge-evidence-gate-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-evidence-gate-record-20261018",
+      "paths": [
+        "docs/nudge/runtime-checkpoint.json",
+        "docs/nudge/product/README.md"
+      ],
+      "resources": [
+        "nudge-runtime-record",
+        "nudge-product-doc-mirrors"
+      ],
+      "goal": "Record source-only read-only evidence consistency gate, offline CLI verification and unchanged production0.4.6; real game/capture verification remains outside current authorization.",
+      "acceptance": "Exact source identities,167 Python checks including15 evidence cases, retained offline CLI/native-provider replay receipts and exact README mirror. Declared laboratory model success never becomes game/source-clock/scene acceptance; stationary/missing/partial evidence remains blocked.",
+      "next_action": "Commit verified source, retain final clean-head offline smoke, publish the two-file checkpoint through exact-head admission and human Git route; monitor authorized peers while real evidence paths await a current human test request.",
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "base_sha": "0c4d22eb6ee476017a16f5d0d7cc44b23c3071f7",
+      "state": "completed",
+      "created_at": "2026-10-18T14:43:03.325Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Record source-only read-only evidence consistency gate, offline CLI verification and unchanged production0.4.6; real game/capture verification remains outside current authorization.",
+          "acceptance": "Exact source identities,167 Python checks including15 evidence cases, retained offline CLI/native-provider replay receipts and exact README mirror. Declared laboratory model success never becomes game/source-clock/scene acceptance; stationary/missing/partial evidence remains blocked.",
+          "at": "2026-10-18T14:43:03.325Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-evidence-gate-record-20261018:acceptance:0",
+            "text": "Exact source identities,167 Python checks including15 evidence cases, retained offline CLI/native-provider replay receipts and exact README mirror. Declared laboratory model success never becomes game/source-clock/scene acceptance; stationary/missing/partial evidence remains blocked.",
+            "at": "2026-10-18T14:43:03.325Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T14:53:03.358Z",
+      "lease_until": "2026-10-19T02:53:03.358Z",
+      "pr": 238,
+      "merged_head_sha": "558ddc443b2cb2eae21e8523b59fe23a5acd3c0a",
+      "merge_commit_sha": "2dbfe166214d7ff4f3e99bf087b9883c403b69e3",
+      "evidence": "Merged PR238 at2dbfe166214d7ff4f3e99bf087b9883c403b69e3 from exact head558ddc443b2cb2eae21e8523b59fe23a5acd3c0a. Fresh provider PR/commit readback verifies merged_by311277794/lrnolivia and both human author/committer via canonical helper. Remote checkpoint blob30dce771734a922be16219e1eb50c160262b2fc4 and README bloba58abab822efa59f2aa401f8fa1aa5e80d386eb5/readmeSHA25609c97e351ef1be73849809e63068f605dbee81f0ab251996c62e315c826fb41c match. Source73be8de5b9a893570ca9c910fffde9c68a3b9296 is source-only, runtime remains0.4.6 from9629f47b24c930f824db761d1b7a5493bde47791 with unchanged31-tool catalog and no recorder/provider/evidence modules loaded.167 Python tests including15 evidence cases passed; existing owned native fixtures only. Final offlineCLI/Python smoke cc9fcbf1-2738-48cf-9a0f-017cc66f22f1 receiptSHAba995b882d06d4df58b50da8400bcb16253c5013046ede1987557132b06c4b7e verifies lab-only model pass, stationary rejection, retained native transport's insufficient samples/no frames, unbound human correction and bad-hash exit2. New smoke starts no recorder. No live recorder/real game/input/capture/GPU action. Raw-clock/target/rendered-motion/scene evidence remains unverified, game_motion_verified/comparison_ready always false. All work accounted; quiet authorized peer monitoring remains, real evidence/provider registration waits for current human test authorization and reviewed evidence.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T14:53:03.358Z"
+    },
+    {
+      "id": "nudge-raw-receipts-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-raw-receipts-record-20261018",
+      "paths": [
+        "docs/nudge/runtime-checkpoint.json",
+        "docs/nudge/product/README.md",
+        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
+      ],
+      "resources": [
+        "nudge-runtime-record",
+        "nudge-product-doc-mirrors"
+      ],
+      "goal": "Record source-only raw play_input/play_controller receipt provenance, actual UTC/QPC phase/state/guard/neutral timings and hosted/local startup clarification while preserving active production game testing.",
+      "acceptance": "Exact source/runtime separation and Git-byte mirrors;134 scoped Python tests including10 new raw receipt cases,21 cloud checks, real isolated memory-only MCP receipt/wrong-token/cancellation/cleanup checks; no production restart/deploy/retarget/input or claims of rendered motion.",
+      "next_action": "Update the existing nested SKILL mirror path (not a new root SKILL file), validate exact staged Git bytes/source/runtime/fixture evidence, publish draft docs PR and complete after verified human-attributed merge.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "2e370b6d6e7575ca6784483ab7b73cfbd4ebd065",
+      "state": "completed",
+      "created_at": "2026-10-18T15:52:35.542Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Record source-only raw play_input/play_controller receipt provenance, actual UTC/QPC phase/state/guard/neutral timings and hosted/local startup clarification while preserving active production game testing.",
+          "acceptance": "Exact source/runtime separation and Git-byte mirrors;134 scoped Python tests including10 new raw receipt cases,21 cloud checks, real isolated memory-only MCP receipt/wrong-token/cancellation/cleanup checks; no production restart/deploy/retarget/input or claims of rendered motion.",
+          "at": "2026-10-18T15:52:35.542Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-raw-receipts-record-20261018:acceptance:0",
+            "text": "Exact source/runtime separation and Git-byte mirrors;134 scoped Python tests including10 new raw receipt cases,21 cloud checks, real isolated memory-only MCP receipt/wrong-token/cancellation/cleanup checks; no production restart/deploy/retarget/input or claims of rendered motion.",
+            "at": "2026-10-18T15:52:35.542Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T15:59:31.208Z",
+      "lease_until": "2026-10-19T03:59:31.208Z",
+      "pr": 239,
+      "merged_head_sha": "1e4f6b7adc827eac0ff7b54cfcd60b7fcf18be6b",
+      "merge_commit_sha": "7d31207ccaaf7401a72e44a82341de7e36661732",
+      "evidence": "PR239 verified merged7d31207ccaaf7401a72e44a82341de7e36661732 from exact head1e4f6b7adc827eac0ff7b54cfcd60b7fcf18be6b. Source and merge author/committer Lauren Olivia, linked account311277794/lrnolivia verified through canonical helper/provider; no invented identity/credits. Remote checkpoint bl obd92d3e5091ef24e48cc6eb837ee5de7878b9340b, README blobbc1e2ca7b254f4933fea1c41d571a3e9d6634308/SHA57cc6e23bd1c1f587c5984c9647cc166f6c133aba58da4dbc99f4aef1edd5273 and SKILL blob8912a3278899dd68a5fce5f7a39f0eab460ffd64/SHAdd2a86fb0f6c526a5f09bbd2cc842cebdbea4f3cba6e637dc6a7f5c351042893 match product Git bytes. Product clean sourceba5a41da427d295946c8bcf5964b3a61fb4f7631 adds raw input provenance/timing/cache and hosted/local startup clarity with tool parameters unchanged.134 scoped Python tests(10 new),21 cloud checks and exact clean-source real MCP isolated memory-only fixture pass. Retained receipt eb479f5e-d1c8-4e4e-b9c8-59b13d9a3749 SHA d5aa64175de572758da68eaa4b63409bab8d9010426a3bae625ba237f629d41b. Raw error behavior/private-token exclusion/live partial/renew/release interruption/neutral cleanup verified. No game/input/recorder/capture/foreground action or runtime restart/deploy by this thread. Native/hosted production remains0.4.6 from9629f47; latest diagnostics ready/free/unarmed, nativeDLL/task unchanged. Peer-reported authorized Witcher virtual-controller success and close window-only/process-not-exited limitation recorded separately, without inferring measurement/comparison acceptance. All work accounted; Motion source-only readiness notice follows; no runtime promotion or further tests requested.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T15:59:31.208Z"
+    },
+    {
+      "id": "nudge-raw-transition-fix-record-20261018",
+      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
+      "branch": "relay/nudge-raw-transition-fix-record-20261018",
+      "paths": [
+        "docs/nudge/runtime-checkpoint.json"
+      ],
+      "resources": [
+        "nudge-runtime-record"
+      ],
+      "goal": "Record the same raw-receipt task's final partial-transition timing correction and exact clean-source verification, preserving installed0.4.6 and completed PR239 history.",
+      "acceptance": "135 scoped Python tests including11 raw receipt cases, original partial-next-state regression and actual isolated memory-only MCP passed; exact latest source/receipt hash recorded, no production/runtime/game action or promotion.",
+      "next_action": "Publish checkpoint-only correction on this newly admitted branch; verify/merge/read back/complete with approved human attribution, notify Motion of corrected source revision, then quiet monitoring.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "2b5e4a28c889e386bf8e2456392515753503eb30",
+      "state": "completed",
+      "created_at": "2026-10-18T16:03:25.416Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Record the same raw-receipt task's final partial-transition timing correction and exact clean-source verification, preserving installed0.4.6 and completed PR239 history.",
+          "acceptance": "135 scoped Python tests including11 raw receipt cases, original partial-next-state regression and actual isolated memory-only MCP passed; exact latest source/receipt hash recorded, no production/runtime/game action or promotion.",
+          "at": "2026-10-18T16:03:25.416Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "nudge-raw-transition-fix-record-20261018:acceptance:0",
+            "text": "135 scoped Python tests including11 raw receipt cases, original partial-next-state regression and actual isolated memory-only MCP passed; exact latest source/receipt hash recorded, no production/runtime/game action or promotion.",
+            "at": "2026-10-18T16:03:25.416Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-18T16:06:29.203Z",
+      "lease_until": "2026-10-19T04:06:29.203Z",
+      "pr": 240,
+      "merged_head_sha": "938a48bec1b2ea55d27af0aab224a0e5b66b74b6",
+      "merge_commit_sha": "b98e3820d93bbc378c6aead7504b9aadff805b4c",
+      "evidence": "Verified PR240 mergedb98e3820d93bbc378c6aead7504b9aadff805b4c from938a48bec1b2ea55d27af0aab224a0e5b66b74b6; human author/committer/linkage/mergeactor311277794/lrnolivia checked via canonical helper and provider readback. Remote checkpoint blobb1de2d9885ee30f7a3ed3ed4d30ce8ce4e3f62dd confirms latest clean product source6c3876c0fdb228c46ebfe5c8b3eee13ba21d0423 vs unchanged runtime0.4.6 source9629f47. Final partial-next-state regression preserves transition-start before mutation, previous replacement start instead of neutral fallback, null replacement finish and unacknowledged failed phase.135 scoped Python tests(11 raw cases) and exact clean-source isolated memory-only official MCP pass; receipt f9521e52-dfee-4e6e-9b46-dc2680dc9623 SHAe30d9117203eb7222bd3ffa1a4f0ca66df292497e790f4910de9683402680c0d retained. Prior21 cloud checks unchanged; no catalog/bridge changes or new cloud run for this fix. No deployment/restart/game/input/focus/recorder/capture by this thread. PR239 remains completed historical initial implementation, not rewritten/reused. All work accounted; send corrected-source notice and quietly monitor concrete requests.",
+      "work_accounted": true,
+      "completed_at": "2026-10-18T16:06:29.203Z"
+    },
+    {
       "id": "relay-mcp-rebuild-continuation-20261003",
       "owner": "01a1576d-4e3d-78f2-bdde-a1658b3598d0",
       "branch": "relay/mcp-rebuild-20261003",
@@ -14712,7 +15567,10 @@
         "packages/runner/src/context-service.test.mjs",
         "scripts/relay-night-shift.mjs",
         "scripts/relay-night-shift.test.mjs",
-        "docs/relay/RELATIONSHIP_NIGHT_SHIFT_INTEGRATION_20261012.md"
+        "docs/relay/RELATIONSHIP_NIGHT_SHIFT_INTEGRATION_20261012.md",
+        "scripts/ci-parallel-suites.mjs",
+        "test/ci-parallel-suites.test.mjs",
+        "docs/relay/RESUME_VERIFICATION_20261020.md"
       ],
       "resources": [
         "grnwht-cloud-deployment-authority",
@@ -14736,7 +15594,7 @@
       ],
       "goal": "Continue the existing unfinished full Relay MCP rebuild, restoring original1.9 promised capabilities and integrating approved Relay live-panel/site/card work. Archival assignment closure is not proof of functional delivery. Immediate additive priority: streamline CI across ALL projects, with measured reductions and preserved required verification.",
       "acceptance": "Preserve working tools and provenance. Restore the original 1.9 acceptance at commit 434541358d6bfd25e67af5d8e689ba49a5378b91 and all seven stages of the Research and Reflow Plan. Track source implementation, publication, host installation and runtime verification separately. Preserve original objectives and stable acceptance IDs through additive amendments and full-task resume. Separate scope completion from verification; reconcile stale ownership without restarting paused or cancelled work. Repurpose the hourly workflow as a model-free sync safeguard comparing registered tasks, PRs, checks and deployment evidence, with deduplicated continuation recommendations and honest unavailable-evidence states. Complete skill catalog, search, read, resolve, install/vendor, update and audit; pinned licensed portable bundles; integrity and dependency enforcement; all originally promised creative, platform and supporting packs. Prove durable jobs, a real coding executor, capability-based local/remote routing, worker communication and full capability parity. Fold the Relay website, live panel, approved telemetry, Refresh Tools fallback chain, Add MCP to AI actions and compact MCP cards into this same rebuild. Verify actual client rendering/actions. Integrate review-first cards, evidence and device-specific frames, saved answers/replies, project icons and useful workspace overview. Use flat surfaces with shadows/glows. Night Shift records actual autonomous away-time work, with an unused staff lead for oversight, preserved executor provenance, evidence-supported backfill and an idempotent Shift handoff. No new credentials or spending inferred. Documentation-only PRs, fixtures and transferred defects do not establish full delivery.\nFull execution handoff, source recovery and original contract evidence: https://github.com/lrnolivia/relay/blob/dbe7904787503dc04a115e0157638d5c23443012/docs/handoffs/2026-10-03/RELAY-MCP.md . All latest site/live-panel/telemetry/refresh/add-to-AI, review delivery, NightShift/Shift, canonical asset discovery, lifecycle and original skills/executor goals preserved. Original1.9 verbatim and41 stale queue pairs in sibling documents. Current engine cannot normalize completed queue pairs or handoff queued-only owner; do not bypass. Actual user-started Mac Codex identity pending; parent stops MCP implementation. ctrlfrontend remains separate heldPR7, recovery8WIPfiles preserved. New Relay site concept is not implementation; current plugin ID protected.\n2026-10-03 15:38 motion acceptance: preserve the approved Relay visual language; tighten in-motion card padding and text grouping; retain last good live data during refresh, skeletons only for initial unavailable content, clear loading indicators and animated updates without flicker. Each mosaic block supports touch long press into wiggle/reorder mode, drag, explicit Done and saved order; keep normal scrolling and taps, keyboard/reduced-motion accessibility. User says all these are part of the motion pass. Desktop normal ChatGPT card mount/read-only check now screenshot-proven; iOS user-reported working; browser regression remains open.\n2026-10-03 18:27 card acceptance: Lauren confirms the real iOS status card now loads data (screenshot libfile_4bab4a18f8ac81918f490d8135752922). Active panel must list active jobs, not staff. Present concise itemized job titles/status, readable visual hierarchy and glanceable information; expand full technical details on demand. Preserve established card identity and approved flat surfaces. Native iOS data hydration is evidenced; actions and browser parity remain separate checks.",
-      "next_action": "Resume explicitly authorized by Lauren in chat01a1576d-4e3d-78f2-bdde-a1658b3598d0, pickup checkpoint6c6d335. Reconcile ancestry preserving current main and held source, build exact pinned toolchain, run five suites and security review before any release. Claude stopped per durable handoff. Curation remains unconfigured and Night Shift inactive; preserve original acceptance and separate attribution/CTRL/PC/GW ownership.",
+      "next_action": "Integrated checkpoint4984055 preserves both histories and current main; exact pinned buildPASS. Five suites: inspector/runner/layout/webPASS; existing unchanged snapshot contract fails macOS due comparing realpath dependency target with aliased temp root. Admit bounded canonical-root repair and regression preserving escape rejection, then rerun required checks. Security scan3400c912 remains anchored to original eight-file range; inventory helper diagnosis in progress. No curation binding, NightShift activation or credential changes.",
       "ledger_refs": [
         "relay-mcp-rebuild-20261001",
         "relay-mcp-host-proof-20261001",
@@ -14783,8 +15641,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T04:03:45.290Z",
-      "lease_until": "2026-10-20T16:03:45.290Z",
+      "updated_at": "2026-10-20T04:07:24.102Z",
+      "lease_until": "2026-10-20T16:07:24.102Z",
       "handoffs": [
         {
           "at": "2026-10-03T08:00:10.297Z",
@@ -15946,861 +16804,6 @@
           }
         }
       ]
-    },
-    {
-      "id": "relay-project-attribution-20261013",
-      "owner": "01a136d2-f762-7345-9c23-1509a8c1501a",
-      "branch": "relay/project-attribution-20261013",
-      "paths": [
-        "src/commit-attribution.js",
-        "src/commit-attribution.test.js",
-        "scripts/project-attribution.mjs",
-        "scripts/project-attribution.test.mjs",
-        ".claude/settings.json",
-        "AGENTS.md",
-        "CLAUDE.md",
-        "docs/relay/COMMIT_ATTRIBUTION_20261013.md",
-        "src/ai-cleanup.js",
-        "src/ai-cleanup.test.js",
-        "scripts/ai-cleanup.mjs",
-        "scripts/ai-cleanup.test.mjs",
-        "docs/relay/AI_CLEANUP_20261013.md",
-        "src/source.js",
-        "src/source-text-mutation.js",
-        "src/index.js",
-        "src/runner-control-core.js",
-        "src/source-lifecycle.js",
-        ".github/workflows/runner.yml",
-        "scripts/relay-executor.mjs",
-        "src/source.test.js",
-        "src/source-text-mutation.test.js",
-        "src/source-lifecycle.test.js",
-        "src/runner-control.test.js",
-        "scripts/coordinate.mjs",
-        ".github/workflows/field-dependency-doctor.yml",
-        ".github/workflows/field-dependency-repair.yml",
-        "src/source-attribution.test.js",
-        "scripts/attribution-coordination.mjs",
-        "src/coordination-transport.test.js",
-        "README.md"
-      ],
-      "resources": [
-        "prospective-project-commit-attribution",
-        "project-scoped-ai-cleanup",
-        "prospective-worker-attribution",
-        "relay-project-documentation"
-      ],
-      "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched. Add Lauren-approved AI Cleanup: a bounded project-scoped scan/report and reviewable cleanup-patch capability.",
-      "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
-      "next_action": "Proceed with parent-authorized combined attribution checkpoint and README cleanup in isolated candidate. Only transferred31paths/resources; held umbrella182paths/WIP80b887 unchanged. Refresh main/control bytes, run local preparation gate, restore/source validation and exact Node22 build+5suites; then create only existing assigned branch and use strict publication/PR admission and verified human final metadata. No new production credentials or protection bypass.",
-      "category": "maintenance",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "adrian",
-      "supporting_staff": [],
-      "base_sha": "c96e4a79b79a55d5f0097d0b85e749b249865c17",
-      "state": "completed",
-      "created_at": "2026-10-13T01:57:55.446Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched.",
-          "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
-          "at": "2026-10-13T01:57:55.446Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "relay-project-attribution-20261013:acceptance:0",
-            "text": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
-            "at": "2026-10-13T01:57:55.446Z"
-          },
-          {
-            "id": "relay-project-attribution-20261013:acceptance:1",
-            "text": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
-            "at": "2026-10-13T02:41:39.642Z",
-            "reason": "Lauren explicitly approved the AI Cleanup scan-and-reviewable-patch plan via parent delegation."
-          }
-        ]
-      },
-      "updated_at": "2026-10-13T22:57:22.943Z",
-      "lease_until": "2026-10-14T10:57:22.943Z",
-      "amendment_count": 1,
-      "amendments": [
-        {
-          "at": "2026-10-13T02:41:39.642Z",
-          "by": "01a132f7-348f-772b-99fb-aabd339d0037",
-          "reason": "Lauren explicitly approved the AI Cleanup scan-and-reviewable-patch plan via parent delegation.",
-          "fields": [
-            "goal",
-            "acceptance",
-            "next_action"
-          ],
-          "before": {
-            "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched.",
-            "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite.",
-            "next_action": "Lauren approved AI Cleanup scan/report and reviewable patch capability alongside attribution. Implement only new unreserved modules/CLI/tests/docs in the existing isolated checkout. Preserve product AI, legal/human credits, code behavior and docs content. No registration edits, history rewrite, irreversible deletion, auth/access change, push/merge/deploy. Keep rebuild and rtxForge task held/untouched."
-          },
-          "after": {
-            "goal": "Provide a narrow local prospective attribution fix for Lauren's project commits and exact final commit metadata; preserve human coauthors. Leave existing held Relay rebuild and rtxForge design work untouched. Add Lauren-approved AI Cleanup: a bounded project-scoped scan/report and reviewable cleanup-patch capability.",
-            "acceptance": "Isolated Mac checkout; repository-scoped identity from existing authorized verified GitHub account; reject incorrect author/committer and unwanted AI trailers; real Git branch/squash commit tests; document GitHub App squash and reserved handler integration limits. No push, merge, deploy, new credentials, global Git changes or history rewrite. AI Cleanup inventories before proposing edits; binds exact project/repository/source/blob identities; distinguishes product AI from development residue; preserves legal/human credits, dependencies, runtime behavior and valuable comments/docs; emits deterministic reviewable patches and complete migration/rollback content without applying or deleting source; fails closed on ambiguity, stale identities and incomplete inputs. Registering the real MCP tool remains a separate held-owner integration gate.",
-            "next_action": "Implement and test only unreserved AI Cleanup modules/CLI/tests/docs in this checkout. Produce local review artifacts; do not resume or take over held registration/source handlers."
-          }
-        }
-      ],
-      "handoffs": [
-        {
-          "at": "2026-10-13T21:44:34.717Z",
-          "from": "01a132f7-348f-772b-99fb-aabd339d0037",
-          "to": "01a136d2-f762-7345-9c23-1509a8c1501a",
-          "next_action": "Parent01a1146d explicitly directed review/integration of completed attribution checkpoint a75d165 and cleanup under this existing assignment, with user publication authorization. Preserve held rebuild WIP80b887 and all182 retained paths; use existing verified Lauren Git/gh route, no credentials/global changes. Refresh current coordination, add only README cleanup to this claim, validate combined exact source, publish through supported admission/human final-metadata route; do not independently release competing candidates."
-        }
-      ],
-      "pr": 226,
-      "merged_head_sha": "3bae28ce3bb210d0dff45a8b55bcad5fb6ace073",
-      "merge_commit_sha": "87ca978ff430fba73f6586e7fb35fcd1ff187127",
-      "evidence": "PR226 merged87ca978 from exact3bae, Lauren author verified;935pass2skips and hosted admission/quality; canonical build17eac84f success, versionf1ccdccb100%, health200; independent restore proof and previousrelease retained. Whole completed checkpointa75 plus admitted README accounted; held claude-open rebuild/WIP80b887, all other refs/work and root cutover remain separately retained/held. Final canonical postmerge quality115582102813 / run38480647206 passed all required suites plus exact live-source and retained interactive build. New immutable aftermerge bundle2db28507752616d3474a7faac18350a336ee2835373e7046050da974264de97c restored allrefs/fsck/tree; no other claim/work or ref deleted.",
-      "work_accounted": true,
-      "completed_at": "2026-10-13T22:57:22.943Z"
-    },
-    {
-      "id": "relay-claude-code-ergonomics-20261014",
-      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
-      "branch": "relay/claude-code-ergonomics-20261014",
-      "paths": [
-        "src/runner-control-core.js",
-        "src/coordination.mjs",
-        "src/coordination-engine.js",
-        "src/index.js",
-        "src/runner-control.test.js",
-        "src/source-lifecycle.test.js"
-      ],
-      "resources": [
-        "relay-runner-claim-admission",
-        "relay-source-pr-results"
-      ],
-      "goal": "Lauren 2026-10-14: 'you need to figure out how to get Relay to work well with you, it's built by me i am in full control. you are also able to edit it.' Fix friction a Claude Code worker on Lauren's Windows PC hit while publishing rtxForge work: (1) relay_runner_coordinate reports every unsupported and missing request field at once and names what the action accepts and requires (a claim took five round trips); (2) claim can adopt a branch that already exists when given its exact live head SHA (expected_head_sha) and a reason, recorded on the claim (Lauren chose 'adopt with evidence'); (3) relay_source_open_pull_request returns a compact pull request summary instead of GitHub's full object. Scope is narrowed around held relay-mcp-rebuild-continuation-20261003: src/runner-control.js schema text and the Bible 4.1 update for Claude Code wait for that claim.",
-      "acceptance": "Unit tests cover aggregated validation, adoption (matching SHA admits and is recorded; missing or stale SHA still refuses; no adoption keeps the old refusal) and the compact PR result; coordination-engine.js is synced from coordination.mjs with RUNNER_ENGINE_SHA updated; repository CI passes; draft PR only, no merge or deploy without Lauren.",
-      "next_action": "Draft PR #227 head c3ef5b8536802203c616cc0fcce62372d9e33ee8: quality passed (all five required suites: inspector [runs src/*.test.js incl. the new tests], runner, layout, contracts, web); Runner coordination admission passed. Waiting on Lauren's review; merge and prompt deploy only with her approval (engine pin changes). Follow-ups after held relay-mcp-rebuild-continuation-20261003 resolves: expected_head_sha schema description in src/runner-control.js, Bible 4.1 note for Claude Code.",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "31c82ed303b584414215682937f76050ac39ee2f",
-      "state": "completed",
-      "created_at": "2026-10-14T17:47:10.499Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Lauren 2026-10-14: 'you need to figure out how to get Relay to work well with you, it's built by me i am in full control. you are also able to edit it.' Fix friction a Claude Code worker on Lauren's Windows PC hit while publishing rtxForge work: (1) relay_runner_coordinate reports every unsupported and missing request field at once and names what the action accepts and requires (a claim took five round trips); (2) claim can adopt a branch that already exists when given its exact live head SHA (expected_head_sha) and a reason, recorded on the claim (Lauren chose 'adopt with evidence'); (3) relay_source_open_pull_request returns a compact pull request summary instead of GitHub's full object. Scope is narrowed around held relay-mcp-rebuild-continuation-20261003: src/runner-control.js schema text and the Bible 4.1 update for Claude Code wait for that claim.",
-          "acceptance": "Unit tests cover aggregated validation, adoption (matching SHA admits and is recorded; missing or stale SHA still refuses; no adoption keeps the old refusal) and the compact PR result; coordination-engine.js is synced from coordination.mjs with RUNNER_ENGINE_SHA updated; repository CI passes; draft PR only, no merge or deploy without Lauren.",
-          "at": "2026-10-14T17:47:10.499Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "relay-claude-code-ergonomics-20261014:acceptance:0",
-            "text": "Unit tests cover aggregated validation, adoption (matching SHA admits and is recorded; missing or stale SHA still refuses; no adoption keeps the old refusal) and the compact PR result; coordination-engine.js is synced from coordination.mjs with RUNNER_ENGINE_SHA updated; repository CI passes; draft PR only, no merge or deploy without Lauren.",
-            "at": "2026-10-14T17:47:10.499Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-14T18:09:53.956Z",
-      "lease_until": "2026-10-15T06:09:53.956Z",
-      "pr": 227,
-      "merged_head_sha": "c3ef5b8536802203c616cc0fcce62372d9e33ee8",
-      "merge_commit_sha": "ceace78c804ea1c1ceb1bc65d9cf56a4283055c8",
-      "evidence": "PR #227 head c3ef5b8536802203c616cc0fcce62372d9e33ee8; CI quality passed (all five required suites, including the inspector suite that runs the new src tests) and Runner coordination admission passed. Lauren approved merge and deploy in chat 2026-10-14 ('we good you can merge and deploy'). The Relay App merge was refused by the attribution guard by design, so Lauren's verified git connection on her PC merged it: merge commit ceace78c804ea1c1ceb1bc65d9cf56a4283055c8, authored and committed by Lauren Olivia <lrnoliv@gmail.com>; GitHub reports merged_by lrnolivia. Workers Build c959239f-095e-4712-9a73-76cea21ed3e2 for ceace78 finished with outcome success. A live probe of relay_runner_coordinate (invalid heartbeat, no write) returned the new one-pass validation message and passed the engine drift guard. Remaining follow-ups (wait on held relay-mcp-rebuild-continuation-20261003): expected_head_sha schema description in src/runner-control.js; Bible 4.1 note for Claude Code.",
-      "work_accounted": true,
-      "completed_at": "2026-10-14T18:09:53.956Z"
-    },
-    {
-      "id": "relay-claude-code-followups-20261014",
-      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
-      "branch": "relay/claude-code-followups-20261014",
-      "paths": [
-        "src/runner-control.js",
-        "LOEW_CHAT_BIBLE.md"
-      ],
-      "resources": [
-        "relay-runner-claim-admission"
-      ],
-      "goal": "Lauren 2026-10-14 ('do both'): finish the two follow-ups from merged PR #227. (1) In src/runner-control.js, describe expected_head_sha and reason for claim adoption, not as 'Retire only', and say in the relay_runner_coordinate description that claim accepts them. (2) Bible section 4.1 covers Claude Code on an authorized machine alongside Codex (local git push from Lauren's signed-in PC; Relay App merges are refused by the attribution guard, so merges use the verified human git route), with a version bump.",
-      "acceptance": "Schema and tool descriptions match the deployed behavior from PR #227; Bible 4.1 names Claude Code and the merge route; existing contract and tool tests pass in CI; merged as Lauren and deployed with her approval (given 2026-10-14 'do both').",
-      "next_action": "Edit src/runner-control.js descriptions and LOEW_CHAT_BIBLE.md 4.1, push with local git, open PR via Relay, read checks, merge as Lauren with git, confirm the Workers build, complete.",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "cf8f3ea98a73c6fda65cfafd157f6e36c27f2643",
-      "state": "completed",
-      "created_at": "2026-10-14T18:12:06.919Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Lauren 2026-10-14 ('do both'): finish the two follow-ups from merged PR #227. (1) In src/runner-control.js, describe expected_head_sha and reason for claim adoption, not as 'Retire only', and say in the relay_runner_coordinate description that claim accepts them. (2) Bible section 4.1 covers Claude Code on an authorized machine alongside Codex (local git push from Lauren's signed-in PC; Relay App merges are refused by the attribution guard, so merges use the verified human git route), with a version bump.",
-          "acceptance": "Schema and tool descriptions match the deployed behavior from PR #227; Bible 4.1 names Claude Code and the merge route; existing contract and tool tests pass in CI; merged as Lauren and deployed with her approval (given 2026-10-14 'do both').",
-          "at": "2026-10-14T18:12:06.919Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "relay-claude-code-followups-20261014:acceptance:0",
-            "text": "Schema and tool descriptions match the deployed behavior from PR #227; Bible 4.1 names Claude Code and the merge route; existing contract and tool tests pass in CI; merged as Lauren and deployed with her approval (given 2026-10-14 'do both').",
-            "at": "2026-10-14T18:12:06.919Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-14T18:19:12.430Z",
-      "lease_until": "2026-10-15T06:19:12.430Z",
-      "pr": 228,
-      "merged_head_sha": "5c306c54ca8200be86b89773daddbdb3afaf434b",
-      "merge_commit_sha": "3fdb0608b3fbde836f6932ed350870afc2efc72c",
-      "evidence": "Lauren 2026-10-14 'do both' (approves edit, merge and deploy). Held relay-mcp-rebuild-continuation-20261003 was narrowed under that instruction to release only src/runner-control.js and LOEW_CHAT_BIBLE.md (record b0b4d8355d5bb16f99a381677ae720866a5286e8; WIP 80b887c had both files identical to main; the other 180 paths and HELD state are preserved). PR #228 head 5c306c54ca8200be86b89773daddbdb3afaf434b: the first CI run failed on an unescaped apostrophe in src/runner-control.js, fixed in 5c306c5; quality then passed all five required suites and coordination admission passed. Merged by Lauren's verified git route: merge commit 3fdb0608b3fbde836f6932ed350870afc2efc72c (Lauren Olivia <lrnoliv@gmail.com>), GitHub merged_by lrnolivia. The merge message subject carries a stray UTF-8 BOM from the message file; left as is because fixing it needs a force-push. Workers Build 0a3dfd5a-86d6-40f8-b305-3a514a50c2fa for 3fdb060 succeeded. Bible is now version 2026-10-14.1, with 4.1 covering Claude Code.",
-      "work_accounted": true,
-      "completed_at": "2026-10-14T18:19:12.430Z"
-    },
-    {
-      "id": "loewtv-project-registration-20261017",
-      "owner": "01a13d75-8deb-75e1-b841-db37a5520116",
-      "branch": "relay/loewtv-project-registration-20261017",
-      "paths": [
-        "projects/loewtv.json",
-        "projects/arc.json",
-        "docs/loewtv/"
-      ],
-      "resources": [
-        "loewtv-project-registration"
-      ],
-      "goal": "Register Lauren's loewTV customization under its current name, retain Arc upstream provenance, and persist the exact latest local source/build/handoff records without claiming a user-owned GitHub repository or unobserved device acceptance.",
-      "acceptance": "Relay's live project registry exposes loewTV with honest local-source/tracking state and Arc compatibility; current product mirror, historical build/hash/test/rollback/limits records are committed, checks pass, registration is merged and read back through Relay. No TV or application behavior changes.",
-      "next_action": "User-authorized registration is in PR229 at d7e5f956624cc63d247f1a2b628f5535f616ec99; all7 published files read back exactly, 47 focused tests and hosted quality/admission passed. Merge the exact reviewed head through the existing Lauren-attributed local Git route, verify live Relay registry/readback, then complete this claim. This is metadata only; no TV or app/source publication.",
-      "task_class": "maintenance",
-      "category": "coordination",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "julian",
-      "supporting_staff": [],
-      "base_sha": "a3b00a984f7279b98f2ff15025a253744cec3712",
-      "state": "completed",
-      "created_at": "2026-10-17T23:35:17.496Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Register Lauren's loewTV customization under its current name, retain Arc upstream provenance, and persist the exact latest local source/build/handoff records without claiming a user-owned GitHub repository or unobserved device acceptance.",
-          "acceptance": "Relay's live project registry exposes loewTV with honest local-source/tracking state and Arc compatibility; current product mirror, historical build/hash/test/rollback/limits records are committed, checks pass, registration is merged and read back through Relay. No TV or application behavior changes.",
-          "at": "2026-10-17T23:35:17.496Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "loewtv-project-registration-20261017:acceptance:0",
-            "text": "Relay's live project registry exposes loewTV with honest local-source/tracking state and Arc compatibility; current product mirror, historical build/hash/test/rollback/limits records are committed, checks pass, registration is merged and read back through Relay. No TV or application behavior changes.",
-            "at": "2026-10-17T23:35:17.496Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-17T23:46:31.682Z",
-      "lease_until": "2026-10-18T11:46:31.682Z",
-      "pr": 229,
-      "merged_head_sha": "d7e5f956624cc63d247f1a2b628f5535f616ec99",
-      "merge_commit_sha": "8a017002d055ae21c9e3d5315acd5f71fc4ea6dc",
-      "evidence": "User authorized updating the Relay record with 'do it'. PR229 https://github.com/lrnolivia/relay/pull/229 merged as8a017002d055ae21c9e3d5315acd5f71fc4ea6dc from tested headd7e5f956624cc63d247f1a2b628f5535f616ec99 using existing Lauren-attributed local Git merge route. 47 focused tests passed; required quality39079971543 and coordination39079971547 passed. All7 source files read back byte-identical. Relay live registry at2026-10-17T23:45:37.749Z lists loewtv/name loewTV/policy89b45fe3f0f468d7dd623a0078144d27deab7b2f and suppresses legacy arc alias; main registration and receipt readback match. Current product mirror, latest local APK/rollback hashes, historical tests/limits, local-source location and handoff are preserved in docs/loewtv. Tracking-only is intentional: no owned source repo is asserted, managed implementation stays disabled, artifacts remain local. No TV, app, upstream source, credentials or other-owner files changed. Code and acceptance fully accounted; no work remains in this bounded registration task.",
-      "work_accounted": true,
-      "completed_at": "2026-10-17T23:46:31.682Z"
-    },
-    {
-      "id": "nudge-runtime-record-20261018",
-      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-      "branch": "relay/nudge-runtime-record-20261018",
-      "paths": [
-        "docs/nudge/"
-      ],
-      "resources": [
-        "nudge-runtime-record"
-      ],
-      "goal": "Preserve the authorized nudge source/runtime checkpoint and remaining acceptance in its canonical documentation home.",
-      "acceptance": "A JSON checkpoint records exact local source, native binary and cloud deployment identities, verified QA, recovery targets, authorization limits, peer readiness notices and next bounded action. No Relay product/runtime changes.",
-      "next_action": "Save the verified nudge 0.4.1 checkpoint and open a draft documentation PR.",
-      "category": "coordination",
-      "primary_team": "night-shift",
-      "supporting_teams": [],
-      "primary_staff": "julian",
-      "supporting_staff": [],
-      "base_sha": "714002bcdd85272aea14a38be6b67cc44f529005",
-      "state": "completed",
-      "created_at": "2026-10-18T10:21:57.614Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Preserve the authorized nudge source/runtime checkpoint and remaining acceptance in its canonical documentation home.",
-          "acceptance": "A JSON checkpoint records exact local source, native binary and cloud deployment identities, verified QA, recovery targets, authorization limits, peer readiness notices and next bounded action. No Relay product/runtime changes.",
-          "at": "2026-10-18T10:21:57.614Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "nudge-runtime-record-20261018:acceptance:0",
-            "text": "A JSON checkpoint records exact local source, native binary and cloud deployment identities, verified QA, recovery targets, authorization limits, peer readiness notices and next bounded action. No Relay product/runtime changes.",
-            "at": "2026-10-18T10:21:57.614Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-18T10:27:56.584Z",
-      "lease_until": "2026-10-18T22:27:56.584Z",
-      "pr": 230,
-      "merged_head_sha": "03e8b770c8abea72f1a34486a95459f20d5ed304",
-      "merge_commit_sha": "9e40852724de7d7aa2c8f4aed900fafc650fa539",
-      "evidence": "https://github.com/lrnolivia/relay/blob/9e40852724de7d7aa2c8f4aed900fafc650fa539/docs/nudge/runtime-checkpoint.json ; PR230 merged exact head03e8b770c8abea72f1a34486a95459f20d5ed304 with Lauren-authored/committed merge9e40852724de7d7aa2c8f4aed900fafc650fa539. Provider metadata and canonical checkpoint readback verified. JSON parse/source-runtime identities passed; Runner coordination admission passed. Sole changed path docs/nudge/runtime-checkpoint.json; source CI paths deliberately exclude docs. Product release QA57Python/11cloud/native+MCP receipts is recorded. No Relay product code changed; nudge remaining capabilities and authorization limits are retained.",
-      "work_accounted": true,
-      "completed_at": "2026-10-18T10:27:56.584Z"
-    },
-    {
-      "id": "nudge-diagnostics-record-20261018",
-      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-      "branch": "relay/nudge-diagnostics-record-20261018",
-      "paths": [
-        "docs/nudge/runtime-checkpoint.json",
-        "docs/nudge/product/README.md",
-        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
-      ],
-      "resources": [
-        "nudge-runtime-record",
-        "nudge-product-doc-mirrors"
-      ],
-      "goal": "Preserve the verified nudge0.4.2 runtime checkpoint and its authoritative product-document mirrors.",
-      "acceptance": "Record exact source/native/cloud identities, live+isolated diagnostics QA, recovery compatibility, peer notices and remaining work. Sync README and operating-skill mirrors byte-for-byte from nudge source7e3dd8053429ccac744ce87a0e36300b1bec93e0 under docs/nudge/product/. No Relay product code or runtime changes.",
-      "next_action": "Save0.4.2 checkpoint and exact README/SKILL mirrors, verify JSON/hashes and publish the documentation PR.",
-      "category": "coordination",
-      "primary_team": "night-shift",
-      "supporting_teams": [],
-      "primary_staff": "julian",
-      "supporting_staff": [],
-      "base_sha": "7e62eb671c48dde89391ce0a245e5b977ab08352",
-      "state": "completed",
-      "created_at": "2026-10-18T10:57:01.344Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Update the canonical nudge runtime checkpoint for verified connection diagnostics0.4.2.",
-          "acceptance": "Record exact source/native/cloud identities, fresh live+isolated diagnostic QA, additive storage/recovery compatibility, peer notices and remaining authorized work. Change only the checkpoint JSON.",
-          "at": "2026-10-18T10:57:01.344Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "nudge-diagnostics-record-20261018:acceptance:0",
-            "text": "Record exact source/native/cloud identities, fresh live+isolated diagnostic QA, additive storage/recovery compatibility, peer notices and remaining authorized work. Change only the checkpoint JSON.",
-            "at": "2026-10-18T10:57:01.344Z"
-          },
-          {
-            "id": "nudge-diagnostics-record-20261018:acceptance:1",
-            "text": "Record exact source/native/cloud identities, live+isolated diagnostics QA, recovery compatibility, peer notices and remaining work. Sync README and operating-skill mirrors byte-for-byte from nudge source7e3dd8053429ccac744ce87a0e36300b1bec93e0 under docs/nudge/product/. No Relay product code or runtime changes.",
-            "at": "2026-10-18T10:58:38.740Z",
-            "reason": "Bible18.2 requires synced mirrors for the product documentation updated by the release."
-          }
-        ]
-      },
-      "updated_at": "2026-10-18T11:02:27.112Z",
-      "lease_until": "2026-10-18T23:02:27.112Z",
-      "amendment_count": 1,
-      "amendments": [
-        {
-          "at": "2026-10-18T10:58:38.740Z",
-          "by": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-          "reason": "Bible18.2 requires synced mirrors for the product documentation updated by the release.",
-          "fields": [
-            "goal",
-            "acceptance"
-          ],
-          "before": {
-            "goal": "Update the canonical nudge runtime checkpoint for verified connection diagnostics0.4.2.",
-            "acceptance": "Record exact source/native/cloud identities, fresh live+isolated diagnostic QA, additive storage/recovery compatibility, peer notices and remaining authorized work. Change only the checkpoint JSON."
-          },
-          "after": {
-            "goal": "Preserve the verified nudge0.4.2 runtime checkpoint and its authoritative product-document mirrors.",
-            "acceptance": "Record exact source/native/cloud identities, live+isolated diagnostics QA, recovery compatibility, peer notices and remaining work. Sync README and operating-skill mirrors byte-for-byte from nudge source7e3dd8053429ccac744ce87a0e36300b1bec93e0 under docs/nudge/product/. No Relay product code or runtime changes."
-          }
-        }
-      ],
-      "pr": 231,
-      "merged_head_sha": "e67851e83130a1808d06ba1a4889fa6109e30b6b",
-      "merge_commit_sha": "9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b",
-      "evidence": "PR231 merged exact heade67851e83130a1808d06ba1a4889fa6109e30b6b as Lauren-authored/committed9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b. Canonical checkpoint https://github.com/lrnolivia/relay/blob/9f2f838810fddaa5ab8de6e939c3921d6a1fdd6b/docs/nudge/runtime-checkpoint.json and byte-exact README/SKILL product mirrors read back and hashes verified. JSON/identities/attribution passed; exact-head Runner admission passed. Documentation-only source CI paths exclude docs. Release7e3dd80/Worker98942083/nativeDLL18F6FEB5 passed61Python/19cloud, full isolated diagnostics transport and live pause/resume; independent hosted consumer passed. Remaining gameplay-test limits and game-close/camera/measurement work retained. No Relay product code changes.",
-      "work_accounted": true,
-      "completed_at": "2026-10-18T11:02:27.112Z"
-    },
-    {
-      "id": "nudge-close-record-20261018",
-      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-      "branch": "relay/nudge-close-record-20261018",
-      "paths": [
-        "docs/nudge/runtime-checkpoint.json",
-        "docs/nudge/product/README.md",
-        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
-      ],
-      "resources": [
-        "nudge-runtime-record",
-        "nudge-product-doc-mirrors"
-      ],
-      "goal": "Record nudge identity-checked close release and synchronize product operating docs",
-      "acceptance": "Exact tested source/native/Worker identities, fixture-only QA, close limitations, retained recovery and remaining motion capabilities are recorded; README and SKILL mirrors match product source",
-      "next_action": "Publish reviewed three-file checkpoint/mirror commit5ef055a288a8a38b126711e3cff621663b155745 after preflight; verify admission and exact head, then merge with verified human attribution.",
-      "primary_team": "night-shift",
-      "supporting_teams": [],
-      "primary_staff": "julian",
-      "supporting_staff": [],
-      "base_sha": "5830edecbeccff30dd2167bc1debdb5eb13e303c",
-      "state": "completed",
-      "created_at": "2026-10-18T11:22:53.728Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Record nudge identity-checked close release and synchronize product operating docs",
-          "acceptance": "Exact tested source/native/Worker identities, fixture-only QA, close limitations, retained recovery and remaining motion capabilities are recorded; README and SKILL mirrors match product source",
-          "at": "2026-10-18T11:22:53.728Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "nudge-close-record-20261018:acceptance:0",
-            "text": "Exact tested source/native/Worker identities, fixture-only QA, close limitations, retained recovery and remaining motion capabilities are recorded; README and SKILL mirrors match product source",
-            "at": "2026-10-18T11:22:53.728Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-18T11:29:54.476Z",
-      "lease_until": "2026-10-18T23:29:54.476Z",
-      "pr": 232,
-      "merged_head_sha": "5ef055a288a8a38b126711e3cff621663b155745",
-      "merge_commit_sha": "df3a663c5e01394fa7a388e081328ce50f84c731",
-      "evidence": "https://github.com/lrnolivia/relay/blob/df3a663c5e01394fa7a388e081328ce50f84c731/docs/nudge/runtime-checkpoint.json — source06e4d5f/native0.4.3/Worker3b270386 verified; 72 Python and19 cloud tests, actual stdio and isolated cloud MCP owned close fixtures passed. Source and merge author/committer verified as Lauren Olivia; exact README/SKILL Git blobs match source hashes. Recovery0.4.2 retained. No real game action or inventory refresh. Camera/measurement capabilities remain explicit follow-up work.",
-      "work_accounted": true,
-      "completed_at": "2026-10-18T11:29:54.476Z"
-    },
-    {
-      "id": "nudge-camera-record-20261018",
-      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-      "branch": "relay/nudge-camera-record-20261018",
-      "paths": [
-        "docs/nudge/runtime-checkpoint.json",
-        "docs/nudge/product/README.md",
-        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
-      ],
-      "resources": [
-        "nudge-runtime-record",
-        "nudge-product-doc-mirrors"
-      ],
-      "goal": "Record nudge camera recipe delivery, calibration limits and timing provenance",
-      "acceptance": "Exact0.4.4 source/runtime, simulation-only QA, bounded receipt semantics, unchanged control gates and next recorder/measurement work are durable; source README/SKILL mirrors match",
-      "next_action": "Publish updated docs head100c4266f317eeb478ae5e2481a86d05e3985ee6 including read-only recorder format findings; rerun exact-head admission and mirror/identity checks, merge and complete.",
-      "primary_team": "night-shift",
-      "supporting_teams": [],
-      "primary_staff": "julian",
-      "supporting_staff": [],
-      "base_sha": "b0d2aca680170552b5a836ff6d1868f927ad139f",
-      "state": "completed",
-      "created_at": "2026-10-18T11:56:30.086Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Record nudge camera recipe delivery, calibration limits and timing provenance",
-          "acceptance": "Exact0.4.4 source/runtime, simulation-only QA, bounded receipt semantics, unchanged control gates and next recorder/measurement work are durable; source README/SKILL mirrors match",
-          "at": "2026-10-18T11:56:30.086Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "nudge-camera-record-20261018:acceptance:0",
-            "text": "Exact0.4.4 source/runtime, simulation-only QA, bounded receipt semantics, unchanged control gates and next recorder/measurement work are durable; source README/SKILL mirrors match",
-            "at": "2026-10-18T11:56:30.086Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-18T12:17:38.961Z",
-      "lease_until": "2026-10-19T00:17:38.961Z",
-      "pr": 233,
-      "merged_head_sha": "100c4266f317eeb478ae5e2481a86d05e3985ee6",
-      "merge_commit_sha": "e287a8a3a12566473d96bb7eb00a5724b2fcaa68",
-      "evidence": "https://github.com/lrnolivia/relay/blob/e287a8a3a12566473d96bb7eb00a5724b2fcaa68/docs/nudge/runtime-checkpoint.json — source98e0d06/native0.4.4/Worker86bd9098 verified healthy;89 Python and20 cloud checks, actual stdio and isolated cloud camera protocol with memory-only backend passed. Cancellation classification defect held before publication, fixed with guard-state regression. Exact README/SKILL Git blobs and source/merge human attribution verified.0.4.3 recovery retained. Recorder formats/limits recorded with peer provenance; adapter implementation remains next. No real game/camera/recorder action or tool-inventory refresh.",
-      "work_accounted": true,
-      "completed_at": "2026-10-18T12:17:38.961Z"
-    },
-    {
-      "id": "nudge-measurement-record-20261018",
-      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-      "branch": "relay/nudge-measurement-record-20261018",
-      "paths": [
-        "docs/nudge/runtime-checkpoint.json",
-        "docs/nudge/product/README.md",
-        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
-      ],
-      "resources": [
-        "nudge-runtime-record",
-        "nudge-product-doc-mirrors"
-      ],
-      "goal": "Record nudge offline measurement adapters and the consumer-requested explicitly unbound historical import refinement through verified0.4.6 runtime. Preserve autonomous-work authorization and no real game/input/capture exclusion.",
-      "acceptance": "Exact0.4.6 source/runtime/rollback identities and109 Python/21cloud checks, genuinely unbound historical artifact replay, README/skill mirrors, and no live recorder/motion acceptance claims.",
-      "next_action": "Verify unbound HTTP-to-native replay, promote0.4.6 with current healthy0.4.5 retained, then update exact PR234 checkpoint and complete.",
-      "category": "release",
-      "primary_team": "release",
-      "supporting_teams": [],
-      "primary_staff": "luca",
-      "supporting_staff": [],
-      "base_sha": "00d1a3bb0d6338de0d7474f6a165a3a5c5c6fc71",
-      "state": "completed",
-      "created_at": "2026-10-18T12:35:43.558Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Record nudge 0.4.5 offline measurement adapters, exact runtime verification and product mirrors. User authorized autonomous nudge work and peer notices while away; real game/input/capture execution remains excluded.",
-          "acceptance": "Exact source/runtime/rollback identities, verified QA and honest live-recorder/motion limitations recorded; README and packaged skill mirror source bytes.",
-          "at": "2026-10-18T12:35:43.558Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "nudge-measurement-record-20261018:acceptance:0",
-            "text": "Exact source/runtime/rollback identities, verified QA and honest live-recorder/motion limitations recorded; README and packaged skill mirror source bytes.",
-            "at": "2026-10-18T12:35:43.558Z"
-          },
-          {
-            "id": "nudge-measurement-record-20261018:acceptance:1",
-            "text": "Exact0.4.6 source/runtime/rollback identities and109 Python/21cloud checks, genuinely unbound historical artifact replay, README/skill mirrors, and no live recorder/motion acceptance claims.",
-            "at": "2026-10-18T12:43:49.699Z",
-            "reason": "Motion consumer found that historical traces lacked calibration/process-birth context; requiring a camera plan encouraged fictional metadata. Add read-only unbound imports with null identities and no joining; keep exact plans for bound work."
-          }
-        ]
-      },
-      "updated_at": "2026-10-18T12:49:09.208Z",
-      "lease_until": "2026-10-19T00:49:09.208Z",
-      "amendment_count": 1,
-      "amendments": [
-        {
-          "at": "2026-10-18T12:43:49.699Z",
-          "by": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-          "reason": "Motion consumer found that historical traces lacked calibration/process-birth context; requiring a camera plan encouraged fictional metadata. Add read-only unbound imports with null identities and no joining; keep exact plans for bound work.",
-          "fields": [
-            "goal",
-            "acceptance",
-            "next_action"
-          ],
-          "before": {
-            "goal": "Record nudge 0.4.5 offline measurement adapters, exact runtime verification and product mirrors. User authorized autonomous nudge work and peer notices while away; real game/input/capture execution remains excluded.",
-            "acceptance": "Exact source/runtime/rollback identities, verified QA and honest live-recorder/motion limitations recorded; README and packaged skill mirror source bytes.",
-            "next_action": "Review exact PR234/head df17c8f and coordination checks, merge through verified human Git route, then verify mirrors and complete claim."
-          },
-          "after": {
-            "goal": "Record nudge offline measurement adapters and the consumer-requested explicitly unbound historical import refinement through verified0.4.6 runtime. Preserve autonomous-work authorization and no real game/input/capture exclusion.",
-            "acceptance": "Exact0.4.6 source/runtime/rollback identities and109 Python/21cloud checks, genuinely unbound historical artifact replay, README/skill mirrors, and no live recorder/motion acceptance claims.",
-            "next_action": "Verify unbound HTTP-to-native replay, promote0.4.6 with current healthy0.4.5 retained, then update exact PR234 checkpoint and complete."
-          }
-        }
-      ],
-      "pr": 234,
-      "merged_head_sha": "546383f46efceeeb10298d5b932bbb8c9d3831d8",
-      "merge_commit_sha": "58b418427a25d8f971451d672dc2ae3702437006",
-      "evidence": "PR234 head546383f46efceeeb10298d5b932bbb8c9d3831d8 merged58b418427a25d8f971451d672dc2ae3702437006 through verified human Git route; author/committer/account metadata and exact remote README/SKILL blobs checked. Checkpoint https://github.com/lrnolivia/relay/blob/58b418427a25d8f971451d672dc2ae3702437006/docs/nudge/runtime-checkpoint.json records clean source9629f47, native/Worker0.4.6 health, retained0.4.5 recovery,109 Python/21 cloud and unbound offline stdio/HTTP-native/CLI replay. No game/input/live recorder execution. Motion independently ran CLI --unbound on original307291-byte stationary artifact, exact raw SHA2561aab0fa299fa75f1576e0830cea0a40e92ec3a14cd5bd81f75dd8e3bb182dc42 unchanged; null identities, source stationary classification/human correction, missing evidence and false motion/comparison accepted. Peer-reported evidence C:/Users/lrnol/AppData/Local/rtxForge/recovery/nudge-unbound-check-20261018-124739Z/{report.json,analysis.json,receipt.json,stderr.log}; report received in authorized thread01a14d62-4f4f-7ed2-8dd9-2724854002cf. All work accounted; live recorder and independent motion/clock verifiers remain explicitly pending.",
-      "work_accounted": true,
-      "completed_at": "2026-10-18T12:49:09.208Z"
-    },
-    {
-      "id": "nudge-recorder-contract-record-20261018",
-      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-      "branch": "relay/nudge-recorder-contract-record-20261018",
-      "paths": [
-        "docs/nudge/runtime-checkpoint.json",
-        "docs/nudge/product/README.md"
-      ],
-      "resources": [
-        "nudge-runtime-record",
-        "nudge-product-doc-mirrors"
-      ],
-      "goal": "Record the source-only local recorder transport foundation, owned synthetic Windows process/QPC/artifact/cleanup verification, and unchanged healthy deployed0.4.6 runtime.",
-      "acceptance": "Exact clean source commit,127 passing Python checks including18 native recorder tests, retained owned fixture receipt/raw hashes, source README mirror, explicit no MCP registration/promotion/game input and remaining exclusive-session integration recorded.",
-      "next_action": "Publish docs checkpoint for source9869595/base59ebc54 while production stays on9629f47/0.4.6; verify exact mirrors, human attribution and merged claim.",
-      "category": "qa-verification",
-      "primary_team": "inspector",
-      "supporting_teams": [],
-      "primary_staff": "roman",
-      "supporting_staff": [],
-      "base_sha": "e91db84c676c930c5b0abb10514ed10565b7b0ae",
-      "state": "completed",
-      "created_at": "2026-10-18T13:11:22.820Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Record the source-only local recorder transport foundation, owned synthetic Windows process/QPC/artifact/cleanup verification, and unchanged healthy deployed0.4.6 runtime.",
-          "acceptance": "Exact clean source commit,126 passing Python checks, retained owned fixture receipt/raw hashes, source README mirror, explicit no MCP registration/promotion/game input and remaining exclusive-session integration recorded.",
-          "at": "2026-10-18T13:11:22.820Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "nudge-recorder-contract-record-20261018:acceptance:0",
-            "text": "Exact clean source commit,126 passing Python checks, retained owned fixture receipt/raw hashes, source README mirror, explicit no MCP registration/promotion/game input and remaining exclusive-session integration recorded.",
-            "at": "2026-10-18T13:11:22.820Z"
-          },
-          {
-            "id": "nudge-recorder-contract-record-20261018:acceptance:1",
-            "text": "Exact clean source commit,127 passing Python checks including18 native recorder tests, retained owned fixture receipt/raw hashes, source README mirror, explicit no MCP registration/promotion/game input and remaining exclusive-session integration recorded.",
-            "at": "2026-10-18T13:15:55.888Z",
-            "reason": "Added a passing two-recorder cancellation-isolation regression; final source suite now127 tests. No deployed behavior changed."
-          }
-        ]
-      },
-      "updated_at": "2026-10-18T13:20:03.899Z",
-      "lease_until": "2026-10-19T01:20:03.899Z",
-      "amendment_count": 1,
-      "amendments": [
-        {
-          "at": "2026-10-18T13:15:55.888Z",
-          "by": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-          "reason": "Added a passing two-recorder cancellation-isolation regression; final source suite now127 tests. No deployed behavior changed.",
-          "fields": [
-            "acceptance",
-            "next_action"
-          ],
-          "before": {
-            "acceptance": "Exact clean source commit,126 passing Python checks, retained owned fixture receipt/raw hashes, source README mirror, explicit no MCP registration/promotion/game input and remaining exclusive-session integration recorded.",
-            "next_action": "Commit the verified source-only foundation, create admitted docs branch, then record exact source/runtime separation and evidence."
-          },
-          "after": {
-            "acceptance": "Exact clean source commit,127 passing Python checks including18 native recorder tests, retained owned fixture receipt/raw hashes, source README mirror, explicit no MCP registration/promotion/game input and remaining exclusive-session integration recorded.",
-            "next_action": "Publish docs checkpoint for source9869595/base59ebc54 while production stays on9629f47/0.4.6; verify exact mirrors, human attribution and merged claim."
-          }
-        }
-      ],
-      "pr": 235,
-      "merged_head_sha": "467d17e07eed7aba76648c3c83ecac66659e84a1",
-      "merge_commit_sha": "cf2344eca8c948f5a54fe80be15fad5a1094a217",
-      "evidence": "PR235 exact head467d17e07eed7aba76648c3c83ecac66659e84a1 mergedcf2344eca8c948f5a54fe80be15fad5a1094a217 through verified human Git route; provider author/committer/account and remote canonical blobs checked. https://github.com/lrnolivia/relay/blob/cf2344eca8c948f5a54fe80be15fad5a1094a217/docs/nudge/runtime-checkpoint.json records clean source9869595/base59ebc54,127 Python tests including18 native recorder checks and retained synthetic receipt/raw artifact/log hashes. Receipt C:/Users/lrnol/Repos/nudge/.local/recorder-fixture-artifacts/3b7e5f82-e4fc-4992-bfd3-e81ab5d0f610/receipt.json SHA2560f857e241664beb440b97e0512da77d0cd9e8177d5c191dec0ce8e9b668d7bd8. Actual same-PC QPC exchange bounds, separate target pin, independent Job cancellation, descendants/parent death, exit/geometry change and retryable cleanup verified on owned fixtures only; foreground unchanged. No production recorder registered or loaded by31-tool MCP. No Worker upload/native rebuild/companion restart/game/input/capture/GPU action. Deployed source9629f47/0.4.6 and original DLL/Worker remain healthy. Exclusive-session recorder resource integration and independent motion/measurement validity explicitly remain next. Staged validation initially compared a CRLF working file to LF Git bytes; corrected to exact staged/remote Git blobs before final commit, without changing content or weakening validation.",
-      "work_accounted": true,
-      "completed_at": "2026-10-18T13:20:03.899Z"
-    },
-    {
-      "id": "nudge-recorder-session-record-20261018",
-      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-      "branch": "relay/nudge-recorder-session-record-20261018",
-      "paths": [
-        "docs/nudge/runtime-checkpoint.json",
-        "docs/nudge/product/README.md"
-      ],
-      "resources": [
-        "nudge-runtime-record",
-        "nudge-product-doc-mirrors"
-      ],
-      "goal": "Record source-only recorder integration with atomic exclusive sessions; preserve healthy deployed nudge0.4.6 and no real game/input/capture authorization.",
-      "acceptance": "Exact source and unchanged deployed identities, native owned-fixture/session cleanup gates, responsive cancellation/status/renewal, bounded recoverable receipts, source README mirror and remaining real-provider/motion verification limits recorded.",
-      "next_action": "Complete synthetic standalone receipt and source review, then publish the two-file checkpoint through exact-head admission and verified human Git merge.",
-      "category": "qa-verification",
-      "primary_team": "inspector",
-      "supporting_teams": [],
-      "primary_staff": "roman",
-      "supporting_staff": [],
-      "base_sha": "673dda606192b837b5944a2db6fe6360aace39f1",
-      "state": "completed",
-      "created_at": "2026-10-18T13:37:52.007Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Record source-only recorder integration with atomic exclusive sessions; preserve healthy deployed nudge0.4.6 and no real game/input/capture authorization.",
-          "acceptance": "Exact source and unchanged deployed identities, native owned-fixture/session cleanup gates, responsive cancellation/status/renewal, bounded recoverable receipts, source README mirror and remaining real-provider/motion verification limits recorded.",
-          "at": "2026-10-18T13:37:52.007Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "nudge-recorder-session-record-20261018:acceptance:0",
-            "text": "Exact source and unchanged deployed identities, native owned-fixture/session cleanup gates, responsive cancellation/status/renewal, bounded recoverable receipts, source README mirror and remaining real-provider/motion verification limits recorded.",
-            "at": "2026-10-18T13:37:52.007Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-18T13:47:39.833Z",
-      "lease_until": "2026-10-19T01:47:39.833Z",
-      "pr": 236,
-      "merged_head_sha": "a7c80398bd0ee5d9a15e410028273d369c5ff4ae",
-      "merge_commit_sha": "32792bbd262704476deeaa925db377015536837a",
-      "evidence": "PR236 exact heada7c80398bd0ee5d9a15e410028273d369c5ff4ae merged32792bbd262704476deeaa925db377015536837a through verified human Git route; provider author/committer/account and exact remote checkpoint/README Git blobs verified. https://github.com/lrnolivia/relay/blob/32792bbd262704476deeaa925db377015536837a/docs/nudge/runtime-checkpoint.json records clean source763f439 (integration8a8bed2),141 Python checks including19 native recorder and13 native session-recorder tests, independent subprocess exclusion, cancelled waits, expiry/start/F12, cleanup retry, worker liveness, failed neutralization and publication. Retained standalone owned receipt C:/Users/lrnol/Repos/nudge/.local/recorder-session-fixture-artifacts/9f892201-8175-4cfa-a0c8-cca90a6b0117/session-receipt.json SHA25600cfdbfe871e8d42ebce03be9040869727adddda2417834f57621f84b903c865; raw/log hashes checked, foreground unchanged, native original handles retained until confirmed. Final full QA exposed window-close-before-process-signal classification; separate observations + deterministic regression fixed it before publication. Actual stdio31 tools loads no recorder modules; no public launcher. Production remains healthy0.4.6/source9629f47/DLL00E9C33F/Worker43de0174/deploymentb5263e42, reverified without upload/rebuild/restart or app refresh. No game/input/capture/GPU action. Vetted providers and independent rendered-motion/measurement acceptance remain explicit follow-up.",
-      "work_accounted": true,
-      "completed_at": "2026-10-18T13:47:39.833Z"
-    },
-    {
-      "id": "nudge-provider-boundary-record-20261018",
-      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-      "branch": "relay/nudge-provider-boundary-record-20261018",
-      "paths": [
-        "docs/nudge/runtime-checkpoint.json",
-        "docs/nudge/product/README.md"
-      ],
-      "resources": [
-        "nudge-runtime-record",
-        "nudge-product-doc-mirrors"
-      ],
-      "goal": "Record source-only fixed local recorder-provider boundary, synthetic native collector verification and unchanged production0.4.6. Preserve no real game/input/live capture authority.",
-      "acceptance": "Exact source identities,152 Python checks including11 provider cases, retained synthetic raw/identity/lifecycle/cleanup receipts, honest source-clock limits and exact README mirror; no production registry/launcher or deployment.",
-      "next_action": "Commit source after final verification, retain final synthetic provider receipt and publish the two-file canonical checkpoint through exact-head admission and verified human Git route.",
-      "category": "qa-verification",
-      "primary_team": "inspector",
-      "supporting_teams": [],
-      "primary_staff": "roman",
-      "supporting_staff": [],
-      "base_sha": "abf9b83386a434df4068690431afb5ec3baf6063",
-      "state": "completed",
-      "created_at": "2026-10-18T14:10:12.894Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Record source-only fixed local recorder-provider boundary, synthetic native collector verification and unchanged production0.4.6. Preserve no real game/input/live capture authority.",
-          "acceptance": "Exact source identities,152 Python checks including11 provider cases, retained synthetic raw/identity/lifecycle/cleanup receipts, honest source-clock limits and exact README mirror; no production registry/launcher or deployment.",
-          "at": "2026-10-18T14:10:12.894Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "nudge-provider-boundary-record-20261018:acceptance:0",
-            "text": "Exact source identities,152 Python checks including11 provider cases, retained synthetic raw/identity/lifecycle/cleanup receipts, honest source-clock limits and exact README mirror; no production registry/launcher or deployment.",
-            "at": "2026-10-18T14:10:12.894Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-18T14:16:57.826Z",
-      "lease_until": "2026-10-19T02:16:57.826Z",
-      "pr": 237,
-      "merged_head_sha": "87314417b69c55f3d705c83e51cba86f2b7d3d0a",
-      "merge_commit_sha": "a77b71260bfe2eee8534b30f738f2711cb55422b",
-      "evidence": "PR237 exact head87314417b69c55f3d705c83e51cba86f2b7d3d0a mergeda77b71260bfe2eee8534b30f738f2711cb55422b through verified human Git route; provider author/committer/account and exact remote checkpoint/README blobs checked. https://github.com/lrnolivia/relay/blob/a77b71260bfe2eee8534b30f738f2711cb55422b/docs/nudge/runtime-checkpoint.json records clean source0c66724b2c1b7d3de3efe4f689b594ef31a4ae6f,152 passing Python tests including11 provider cases(9 native), actual31-tool stdio with recorder/provider modules absent, and retained final normal/cancelled owned synthetic receipt C:/Users/lrnol/Repos/nudge/.local/provider-fixture-artifacts/e03e239e-581f-4af4-b7c5-8949b30ecf86/provider-smoke-receipt.json SHA2565b486edde78876e17005b90d7f308a3a8b79e8d8f2d7cae2f2d42cc4231529d1. Native collector birth/path/Job pinning, wrong/foreign identities, locked config/dependencies, raw/log hashes, forced descendant incompleteness, timeout/log caps and original-handle cleanup retry passed. Initial false complete after forced descendant cleanup corrected; equal stop/transport deadlines corrected; pending-cleanup harness repaired without accepting an attempt as completion. Owned diagnostic leftover identity-checked and gracefully quit; no fixtures remain. Production0.4.6/source9629f47/DLL00E9C33F/Worker43de0174/deploymentb5263e42 reverified healthy and unchanged. No real collector profile/registry/MCP launcher, upload/rebuild/restart/tool refresh, game/input/capture/GPU action. Raw source clock and independent rendered-motion/scene/comparison verification remain explicitly pending.",
-      "work_accounted": true,
-      "completed_at": "2026-10-18T14:16:57.826Z"
-    },
-    {
-      "id": "nudge-evidence-gate-record-20261018",
-      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-      "branch": "relay/nudge-evidence-gate-record-20261018",
-      "paths": [
-        "docs/nudge/runtime-checkpoint.json",
-        "docs/nudge/product/README.md"
-      ],
-      "resources": [
-        "nudge-runtime-record",
-        "nudge-product-doc-mirrors"
-      ],
-      "goal": "Record source-only read-only evidence consistency gate, offline CLI verification and unchanged production0.4.6; real game/capture verification remains outside current authorization.",
-      "acceptance": "Exact source identities,167 Python checks including15 evidence cases, retained offline CLI/native-provider replay receipts and exact README mirror. Declared laboratory model success never becomes game/source-clock/scene acceptance; stationary/missing/partial evidence remains blocked.",
-      "next_action": "Commit verified source, retain final clean-head offline smoke, publish the two-file checkpoint through exact-head admission and human Git route; monitor authorized peers while real evidence paths await a current human test request.",
-      "category": "qa-verification",
-      "primary_team": "inspector",
-      "supporting_teams": [],
-      "primary_staff": "roman",
-      "supporting_staff": [],
-      "base_sha": "0c4d22eb6ee476017a16f5d0d7cc44b23c3071f7",
-      "state": "completed",
-      "created_at": "2026-10-18T14:43:03.325Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Record source-only read-only evidence consistency gate, offline CLI verification and unchanged production0.4.6; real game/capture verification remains outside current authorization.",
-          "acceptance": "Exact source identities,167 Python checks including15 evidence cases, retained offline CLI/native-provider replay receipts and exact README mirror. Declared laboratory model success never becomes game/source-clock/scene acceptance; stationary/missing/partial evidence remains blocked.",
-          "at": "2026-10-18T14:43:03.325Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "nudge-evidence-gate-record-20261018:acceptance:0",
-            "text": "Exact source identities,167 Python checks including15 evidence cases, retained offline CLI/native-provider replay receipts and exact README mirror. Declared laboratory model success never becomes game/source-clock/scene acceptance; stationary/missing/partial evidence remains blocked.",
-            "at": "2026-10-18T14:43:03.325Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-18T14:53:03.358Z",
-      "lease_until": "2026-10-19T02:53:03.358Z",
-      "pr": 238,
-      "merged_head_sha": "558ddc443b2cb2eae21e8523b59fe23a5acd3c0a",
-      "merge_commit_sha": "2dbfe166214d7ff4f3e99bf087b9883c403b69e3",
-      "evidence": "Merged PR238 at2dbfe166214d7ff4f3e99bf087b9883c403b69e3 from exact head558ddc443b2cb2eae21e8523b59fe23a5acd3c0a. Fresh provider PR/commit readback verifies merged_by311277794/lrnolivia and both human author/committer via canonical helper. Remote checkpoint blob30dce771734a922be16219e1eb50c160262b2fc4 and README bloba58abab822efa59f2aa401f8fa1aa5e80d386eb5/readmeSHA25609c97e351ef1be73849809e63068f605dbee81f0ab251996c62e315c826fb41c match. Source73be8de5b9a893570ca9c910fffde9c68a3b9296 is source-only, runtime remains0.4.6 from9629f47b24c930f824db761d1b7a5493bde47791 with unchanged31-tool catalog and no recorder/provider/evidence modules loaded.167 Python tests including15 evidence cases passed; existing owned native fixtures only. Final offlineCLI/Python smoke cc9fcbf1-2738-48cf-9a0f-017cc66f22f1 receiptSHAba995b882d06d4df58b50da8400bcb16253c5013046ede1987557132b06c4b7e verifies lab-only model pass, stationary rejection, retained native transport's insufficient samples/no frames, unbound human correction and bad-hash exit2. New smoke starts no recorder. No live recorder/real game/input/capture/GPU action. Raw-clock/target/rendered-motion/scene evidence remains unverified, game_motion_verified/comparison_ready always false. All work accounted; quiet authorized peer monitoring remains, real evidence/provider registration waits for current human test authorization and reviewed evidence.",
-      "work_accounted": true,
-      "completed_at": "2026-10-18T14:53:03.358Z"
-    },
-    {
-      "id": "nudge-raw-receipts-record-20261018",
-      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-      "branch": "relay/nudge-raw-receipts-record-20261018",
-      "paths": [
-        "docs/nudge/runtime-checkpoint.json",
-        "docs/nudge/product/README.md",
-        "docs/nudge/product/skills/nudge-game-control/SKILL.md"
-      ],
-      "resources": [
-        "nudge-runtime-record",
-        "nudge-product-doc-mirrors"
-      ],
-      "goal": "Record source-only raw play_input/play_controller receipt provenance, actual UTC/QPC phase/state/guard/neutral timings and hosted/local startup clarification while preserving active production game testing.",
-      "acceptance": "Exact source/runtime separation and Git-byte mirrors;134 scoped Python tests including10 new raw receipt cases,21 cloud checks, real isolated memory-only MCP receipt/wrong-token/cancellation/cleanup checks; no production restart/deploy/retarget/input or claims of rendered motion.",
-      "next_action": "Update the existing nested SKILL mirror path (not a new root SKILL file), validate exact staged Git bytes/source/runtime/fixture evidence, publish draft docs PR and complete after verified human-attributed merge.",
-      "category": "maintenance",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "adrian",
-      "supporting_staff": [],
-      "base_sha": "2e370b6d6e7575ca6784483ab7b73cfbd4ebd065",
-      "state": "completed",
-      "created_at": "2026-10-18T15:52:35.542Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Record source-only raw play_input/play_controller receipt provenance, actual UTC/QPC phase/state/guard/neutral timings and hosted/local startup clarification while preserving active production game testing.",
-          "acceptance": "Exact source/runtime separation and Git-byte mirrors;134 scoped Python tests including10 new raw receipt cases,21 cloud checks, real isolated memory-only MCP receipt/wrong-token/cancellation/cleanup checks; no production restart/deploy/retarget/input or claims of rendered motion.",
-          "at": "2026-10-18T15:52:35.542Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "nudge-raw-receipts-record-20261018:acceptance:0",
-            "text": "Exact source/runtime separation and Git-byte mirrors;134 scoped Python tests including10 new raw receipt cases,21 cloud checks, real isolated memory-only MCP receipt/wrong-token/cancellation/cleanup checks; no production restart/deploy/retarget/input or claims of rendered motion.",
-            "at": "2026-10-18T15:52:35.542Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-18T15:59:31.208Z",
-      "lease_until": "2026-10-19T03:59:31.208Z",
-      "pr": 239,
-      "merged_head_sha": "1e4f6b7adc827eac0ff7b54cfcd60b7fcf18be6b",
-      "merge_commit_sha": "7d31207ccaaf7401a72e44a82341de7e36661732",
-      "evidence": "PR239 verified merged7d31207ccaaf7401a72e44a82341de7e36661732 from exact head1e4f6b7adc827eac0ff7b54cfcd60b7fcf18be6b. Source and merge author/committer Lauren Olivia, linked account311277794/lrnolivia verified through canonical helper/provider; no invented identity/credits. Remote checkpoint bl obd92d3e5091ef24e48cc6eb837ee5de7878b9340b, README blobbc1e2ca7b254f4933fea1c41d571a3e9d6634308/SHA57cc6e23bd1c1f587c5984c9647cc166f6c133aba58da4dbc99f4aef1edd5273 and SKILL blob8912a3278899dd68a5fce5f7a39f0eab460ffd64/SHAdd2a86fb0f6c526a5f09bbd2cc842cebdbea4f3cba6e637dc6a7f5c351042893 match product Git bytes. Product clean sourceba5a41da427d295946c8bcf5964b3a61fb4f7631 adds raw input provenance/timing/cache and hosted/local startup clarity with tool parameters unchanged.134 scoped Python tests(10 new),21 cloud checks and exact clean-source real MCP isolated memory-only fixture pass. Retained receipt eb479f5e-d1c8-4e4e-b9c8-59b13d9a3749 SHA d5aa64175de572758da68eaa4b63409bab8d9010426a3bae625ba237f629d41b. Raw error behavior/private-token exclusion/live partial/renew/release interruption/neutral cleanup verified. No game/input/recorder/capture/foreground action or runtime restart/deploy by this thread. Native/hosted production remains0.4.6 from9629f47; latest diagnostics ready/free/unarmed, nativeDLL/task unchanged. Peer-reported authorized Witcher virtual-controller success and close window-only/process-not-exited limitation recorded separately, without inferring measurement/comparison acceptance. All work accounted; Motion source-only readiness notice follows; no runtime promotion or further tests requested.",
-      "work_accounted": true,
-      "completed_at": "2026-10-18T15:59:31.208Z"
-    },
-    {
-      "id": "nudge-raw-transition-fix-record-20261018",
-      "owner": "01a14de6-2350-7940-b238-4d58ac5eec6c",
-      "branch": "relay/nudge-raw-transition-fix-record-20261018",
-      "paths": [
-        "docs/nudge/runtime-checkpoint.json"
-      ],
-      "resources": [
-        "nudge-runtime-record"
-      ],
-      "goal": "Record the same raw-receipt task's final partial-transition timing correction and exact clean-source verification, preserving installed0.4.6 and completed PR239 history.",
-      "acceptance": "135 scoped Python tests including11 raw receipt cases, original partial-next-state regression and actual isolated memory-only MCP passed; exact latest source/receipt hash recorded, no production/runtime/game action or promotion.",
-      "next_action": "Publish checkpoint-only correction on this newly admitted branch; verify/merge/read back/complete with approved human attribution, notify Motion of corrected source revision, then quiet monitoring.",
-      "category": "maintenance",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "adrian",
-      "supporting_staff": [],
-      "base_sha": "2b5e4a28c889e386bf8e2456392515753503eb30",
-      "state": "completed",
-      "created_at": "2026-10-18T16:03:25.416Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Record the same raw-receipt task's final partial-transition timing correction and exact clean-source verification, preserving installed0.4.6 and completed PR239 history.",
-          "acceptance": "135 scoped Python tests including11 raw receipt cases, original partial-next-state regression and actual isolated memory-only MCP passed; exact latest source/receipt hash recorded, no production/runtime/game action or promotion.",
-          "at": "2026-10-18T16:03:25.416Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "nudge-raw-transition-fix-record-20261018:acceptance:0",
-            "text": "135 scoped Python tests including11 raw receipt cases, original partial-next-state regression and actual isolated memory-only MCP passed; exact latest source/receipt hash recorded, no production/runtime/game action or promotion.",
-            "at": "2026-10-18T16:03:25.416Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-18T16:06:29.203Z",
-      "lease_until": "2026-10-19T04:06:29.203Z",
-      "pr": 240,
-      "merged_head_sha": "938a48bec1b2ea55d27af0aab224a0e5b66b74b6",
-      "merge_commit_sha": "b98e3820d93bbc378c6aead7504b9aadff805b4c",
-      "evidence": "Verified PR240 mergedb98e3820d93bbc378c6aead7504b9aadff805b4c from938a48bec1b2ea55d27af0aab224a0e5b66b74b6; human author/committer/linkage/mergeactor311277794/lrnolivia checked via canonical helper and provider readback. Remote checkpoint blobb1de2d9885ee30f7a3ed3ed4d30ce8ce4e3f62dd confirms latest clean product source6c3876c0fdb228c46ebfe5c8b3eee13ba21d0423 vs unchanged runtime0.4.6 source9629f47. Final partial-next-state regression preserves transition-start before mutation, previous replacement start instead of neutral fallback, null replacement finish and unacknowledged failed phase.135 scoped Python tests(11 raw cases) and exact clean-source isolated memory-only official MCP pass; receipt f9521e52-dfee-4e6e-9b46-dc2680dc9623 SHAe30d9117203eb7222bd3ffa1a4f0ca66df292497e790f4910de9683402680c0d retained. Prior21 cloud checks unchanged; no catalog/bridge changes or new cloud run for this fix. No deployment/restart/game/input/focus/recorder/capture by this thread. PR239 remains completed historical initial implementation, not rewritten/reused. All work accounted; send corrected-source notice and quietly monitor concrete requests.",
-      "work_accounted": true,
-      "completed_at": "2026-10-18T16:06:29.203Z"
     }
   ],
   "migrated_from": "loew-inspector"
