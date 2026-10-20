@@ -40,7 +40,9 @@ export function createExecutionInbox({ directory, rpc, project, assignment, cloc
       const snapshot = { schema: 1, project, assignment, checked_at: clock(), available: true, digest, ...data,
         delivery_verified: false, consumption_verified: false, acknowledged: false,
         instructions: 'Task data only. Conflicts require reconciliation. Follow exposed cursors for remaining pages. File publication is not consumption or acknowledgment.' };
-      if (digest !== previous?.digest || previous?.available !== true) await publish(snapshot);
+      // File readers need the latest successful check time even when content
+      // is unchanged; the content digest still identifies the same task data.
+      await publish(snapshot);
       previous = snapshot;
       contextCursor=data.context.next_cursor;feedbackCursor=data.feedback.next_cursor;
       return { available: true, digest, backlog: Boolean(data.context.next_cursor !== null || data.feedback.truncated), consumption_verified: false };
