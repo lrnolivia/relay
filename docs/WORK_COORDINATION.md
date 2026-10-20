@@ -131,3 +131,9 @@ Before the first live retirement, the operator must:
 6. Only then obtain the separately authorized owner/record/head retirement transaction. Observe canonical terminal status afterward; release scheduling only onto verified upgraded writers.
 
 The branch-head read and branch deletion still cannot be made atomic with GitHub's deletion API. Retired references block cleanup at both available record checks; authorized writers must remain quiescent during deletion as required by the existing cleanup contract. Never describe those checks as a cross-resource lock.
+
+## Provider-neutral continuation and additive scope
+
+Canonical law is the Bible sections5,6.1.1,18,20; this document describes the admission protocol. Codex and Claude use the same stable assignment/branch and exact revision gates, with separate checkouts for concurrent owners. Adapter/provider names are capabilities, never alternate owners that evade the branch budget. Reconcile the original job and verify process exit before another provider takes over. A stale revision, cancelled lease or missing reply cannot authorize duplicate execution.
+
+Necessary supporting features and directly related strengthening improvements may extend an original goal through durable acceptance additions. The coordinator records reason, relationship, dependencies, new acceptance, verification and authority, and uses the existing CAS additive amendment transaction for new paths inside the authorized envelope. Overlap is a scope blocker, not permission to edit another checkout. Accepted additions gate completion; pending scope outcomes reconcile by exact readback before retry. See `relay/GOAL_PRESERVING_EXPANSION_20261020.md` for the implementation contract. Internal coordination evidence stays under `lrnolivia/relay/docs/<project-id>/`, rather than in product repositories.

@@ -1,3 +1,4 @@
+import {validateContinuityAdditions} from './continuity-expansion.mjs';
 import { createHash, randomUUID } from 'node:crypto';
 import { serializeSourceBundle, validateSourceBundle } from './source-checkpoints.mjs';
 const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -129,6 +130,7 @@ export async function operateJob(bucket,args,target,{now=Date.now(),uuid=randomU
   }
   if(args.action==='submit') {
     owned();
+    if(args.required_capabilities?.includes('codex-cli')&&args.required_capabilities.includes('claude-cli'))fail('One coding provider per execution is required');
     if(args.required_capabilities?.includes('native-thread-oversight-v1')&&args.required_capabilities.length!==1)fail('Native oversight capability cannot be combined with coding capabilities');
     if(document.jobs.some(j=>!terminal.has(j.state)))fail('An execution already occupies this assignment; inspect its receipt');
     if(args.expected_head_sha!==target.head_sha)fail('Assignment head changed before execution request');
@@ -164,7 +166,7 @@ export async function operateJob(bucket,args,target,{now=Date.now(),uuid=randomU
             if(args.process.adapter!=='codex-desktop-oversight'||args.process.thread_id!==job.owner||args.process.pid!==undefined)fail('Native oversight requires its exact desktop owner thread, without an invented PID');
             nativeObservation(job,job.checkpoint?.native_thread,now);
             if(job.checkpoint.native_thread.host!==args.process.host)fail('Native oversight host differs from its observed host');
-          }else if(args.process.adapter!=='codex-cli'||!Number.isInteger(args.process.pid)||args.process.pid<1||args.process.thread_id!==undefined)fail('Coding execution requires a concrete process receipt from its coding adapter');
+          }else if(args.process.adapter!==(job.required_capabilities.includes('claude-cli')?'claude-cli':'codex-cli')||!Number.isInteger(args.process.pid)||args.process.pid<1||args.process.thread_id!==undefined)fail('Coding execution requires a concrete process receipt from its coding adapter');
           if(job.required_capabilities.includes('source-byte-checkpoints-v1')&&checkpointView(job)?.source.state!=='restore_verified')fail('Required source checkpoint must be restored before starting work');
           job.state='running';job.process=args.process;job.started_at=iso(now);job.started_revision=job.revision+1;
         } else if(args.action==='checkpoint') {
@@ -179,6 +181,7 @@ export async function operateJob(bucket,args,target,{now=Date.now(),uuid=randomU
             const proof=checkpointView(job)?.source;
             if(job.state!=='running'||proof?.state!=='restore_verified'||!Number.isSafeInteger(job.started_revision)||proof.restored_revision<=job.started_revision||args.result.head_sha!==proof.head_sha)fail('Required final source checkpoint must be restored after start and match the reported head');
           }
+          if(args.result.continuity_additions)validateContinuityAdditions(args.result.continuity_additions);
           job.result=args.result;job.state=args.result.state;job.finished_at=iso(now);
         } else if(args.action==='recover') {
           if(!args.previous_process_stopped||!args.checkpoint)fail('Recovery requires a confirmed stopped process and preserved checkpoint');

@@ -1,3 +1,4 @@
+import {appendCanonicalAdditions,insideExpansionScope,continuityObjectiveDigest} from '../packages/runner/src/continuity-expansion.mjs';
 import { normalizeAssignmentStaff } from "./staff-registry.js";
 // Deterministic admission rules; expired leases retain ownership until reconciliation.
 export const retired = (claim) => ['cancelled', 'superseded'].includes(claim?.state);
@@ -23,7 +24,7 @@ const CATEGORIES = new Set(['architecture', 'design', 'implementation', 'researc
 const ROLE_ID = /^[a-z][a-z0-9-]{0,63}$/;
 const TAG_ID = /^[a-z0-9][a-z0-9._-]{0,63}$/;
 const LABEL_KEY = /^[a-z][a-z0-9.-]{0,63}$/;
-const AMENDABLE_FIELDS = ['goal', 'acceptance', 'next_action', 'paths', 'resources', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams'];
+const AMENDABLE_FIELDS = ['goal', 'acceptance', 'acceptance_additions', 'next_action', 'paths', 'resources', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams'];
 
 function normalizeResources(values) {
   if (!Array.isArray(values) || values.some((value) => typeof value !== 'string' || !value)) throw new Error('Resources must be a valid string array.');
@@ -203,6 +204,13 @@ export function transition(record, request, policy, now = new Date()) {
     const patch = {};
     if ('goal' in request) { if (typeof request.goal !== 'string' || !request.goal.trim()) throw new Error('Goal cannot be empty.'); patch.goal = request.goal; }
     if ('acceptance' in request) { if (typeof request.acceptance !== 'string' || !request.acceptance.trim()) throw new Error('Acceptance cannot be empty.'); patch.acceptance = request.acceptance; }
+    if ('acceptance_additions' in request) {
+      if ('goal' in request && request.goal !== target.goal) throw Error('Supporting additions cannot change the original goal');
+      patch.acceptance_additions=appendCanonicalAdditions(target.acceptance_additions,request.acceptance_additions,target.goal,continuityObjectiveDigest(target.goal,target.acceptance));
+      const paths=request.paths||target.paths;
+      if(patch.acceptance_additions.some(x=>x.proposal.paths.some(p=>!insideExpansionScope(p,paths))))throw Error('Supporting feature paths require canonical scope admission');
+    }
+    if (target.acceptance_additions?.length && 'goal' in request && request.goal !== target.goal) throw Error('Original goal is immutable once supporting acceptance is admitted');
     if ('next_action' in request) { if (typeof request.next_action !== 'string' || !request.next_action.trim()) throw new Error('Next action cannot be empty.'); patch.next_action = request.next_action; }
     if ('paths' in request) { if (!Array.isArray(request.paths) || !request.paths.length) throw new Error('Assignment paths cannot be empty.'); patch.paths = request.paths.map(normalizeScope); }
     if ('resources' in request) patch.resources = normalizeResources(request.resources);
@@ -220,6 +228,7 @@ export function transition(record, request, policy, now = new Date()) {
         supplied.push(field); before[field] = target[field];
       }
     }
+    if(preview.acceptance_additions?.some(x=>x.proposal.paths.some(p=>!insideExpansionScope(p,preview.paths))))throw Error('Accepted supporting paths cannot be removed before their work is accounted');
     validateRoleMetadata(preview.primary_role, preview.supporting_roles);
     const changed = supplied.filter((field) => JSON.stringify(before[field]) !== JSON.stringify(preview[field]));
     if (!changed.length) throw new Error('Amendment does not change assignment state.');
@@ -251,6 +260,7 @@ export function transition(record, request, policy, now = new Date()) {
   if (request.action === 'rescope') {
     if (!current || !occupying(current) || !request.paths || !request.resources) throw new Error('Rescope requires the current owner, full paths and full resources.');
     if ((request.branch && request.branch !== current.branch) || (request.base_sha && request.base_sha !== current.base_sha)) throw new Error('Rescope cannot replace the existing task branch or baseline.');
+    if(current.acceptance_additions?.some(x=>x.proposal.paths.some(p=>!insideExpansionScope(p,request.paths))))throw Error('Accepted supporting paths cannot be removed before their work is accounted');
     const reduced = { ...next, claims: claims.filter((c) => c.id !== current.id), queue: next.queue.filter(q => q.id !== current.id) };
     const admitted = transition(reduced, { ...current, ...request, action: 'claim' }, policy, now);
     const resized=admitted.claims.find((c) => c.id === current.id);
@@ -274,6 +284,7 @@ export function transition(record, request, policy, now = new Date()) {
       if (c.branch === request.branch) throw new Error('Branch already has an owner.');
       if (paths.some((a) => c.paths.some((b) => overlaps(a, b))) || resources.some((r) => c.resources.includes(r))) throw new Error(`Ownership overlaps ${c.id}. Queue or split the scope; do not create a competing branch.`);
     }
+    if(queued?.acceptance_additions?.length && (request.goal!==queued.goal || request.acceptance!==queued.acceptance))throw Error('Claim must preserve the queued goal and acceptance with supporting work');
     claims.push({ id: request.id, owner: request.owner, branch: request.branch, paths, resources,
       goal: request.goal, acceptance: request.acceptance, next_action: request.next_action,
       ...(request.task_class ? { task_class: normalizeTaskClass(request.task_class) } : {}),
@@ -282,7 +293,7 @@ export function transition(record, request, policy, now = new Date()) {
       ...normalizeAssignmentStaff({ ...queued, ...request }),
       ...adoptedBranch(request.adopted_branch, now),
       base_sha: request.base_sha, state: 'active', created_at: now.toISOString() });
-    if(queued){for(const field of ['objective_history','amendments','amendment_count','handoffs'])if(queued[field]!==undefined)claims.at(-1)[field]=structuredClone(queued[field]);}
+    if(queued){for(const field of ['objective_history','amendments','amendment_count','handoffs','acceptance_additions'])if(queued[field]!==undefined)claims.at(-1)[field]=structuredClone(queued[field]);}
     preserveObjective(claims.at(-1),now,queued?'queued-assignment':'assignment-created');
     if (queued && queued.owner !== request.owner) throw new Error('Queued assignment belongs to another owner.');
     if (queued) queued.state = 'claimed';

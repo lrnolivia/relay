@@ -12,7 +12,7 @@ const blockers = fs.readFileSync(new URL("../night-shift/BLOCKER_POLICY.md", imp
 
 test("universal manifest points to the single Bible", () => {
   assert.equal(manifest.contract, "LOEW_CHAT_BIBLE.md");
-  assert.equal(manifest.version, "2026-09-30.2");
+  assert.equal(manifest.version, /Version: `([^`]+)`/.exec(bible)[1]);
   assert.equal(manifest.single_bible, true);
   assert.ok(manifest.retired_contracts.includes("LOEW_CHAT_BIBLE_CURRENT.md"));
   assert.equal(manifest.watchdog.identical_failure_attempts, 2);

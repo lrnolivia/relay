@@ -5,7 +5,7 @@ import { projectCiPolicy, projectCiRoute } from './ci-routing.js';
 import { guardAutonomy } from './autonomy-control.js';
 import { attributedCommitBody, verifyAttributedCommit, reconcileAttributedContentsCommit } from './commit-attribution.js';
 
-export const RUNNER_ENGINE_SHA = '36754c3cfa407a50513371cc8e201b0ce7f333d3';
+export const RUNNER_ENGINE_SHA = '6425b0739308727cf09db8a100d9b82a3af3b638';
 export const DEFAULT_RUNNER_CONTROL_REPOSITORY = 'lrnolivia/relay';
 
 export class ControlError extends Error {
@@ -188,7 +188,7 @@ async function mutate(api, control, controlRepository, context, args) {
   const allowed = {
     queue: ['id', 'owner', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams'],
     claim: ['id', 'owner', 'branch', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams', 'expected_head_sha', 'reason'],
-    amend: ['id', 'owner', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams', 'reason'],
+    amend: ['id', 'owner', 'paths', 'resources', 'goal', 'acceptance', 'acceptance_additions', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams', 'reason'],
     rescope: ['id', 'owner', 'paths', 'resources', 'next_action'],
     heartbeat: ['id', 'owner', 'next_action'],
     hold: ['id', 'owner', 'next_action'],

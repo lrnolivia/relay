@@ -278,3 +278,10 @@ test('source proof changes invalidate resume identity without implying objective
  const b=deriveResumeCheckpoint({...input,sourceCheckpoints:{available:true,state:'restore_verified',snapshots:[{job_id:'job_fixture',source:{state:'restore_verified',host_execution_verified:false}}]}});
  assert.equal(sameCheckpoint(a,b),false);assert.equal(b.source.checkpoints.state,'restore_verified');assert.equal(b.state,a.state);assert.equal(b.source.checkpoints.snapshots[0].source.host_execution_verified,false);
 });
+
+test('supporting acceptance is visible in resume and invalidates an older checkpoint',()=>{
+ const input={project:'relay',assignment,progress:progress(),recordSha:'a'.repeat(40),policySha:'b'.repeat(40)};
+ const before=deriveResumeCheckpoint(input),receipt={proposal:{id:'support',acceptance:['New supporting behavior']},review:{reason:'Strengthens original goal'}};
+ const after=deriveResumeCheckpoint({...input,assignment:{...assignment,acceptance_additions:[receipt]}});
+ assert.deepEqual(after.assignment.acceptance_additions,[receipt]);assert.equal(sameCheckpoint(before,after),false);
+});
