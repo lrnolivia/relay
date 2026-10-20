@@ -45,8 +45,10 @@ test('a changed artifact after execution invalidates even passing tests',async t
  const f=await fixture(t),suites=[suite('one',"require('node:fs').writeFileSync('changed','yes')"),suite('two','')],groups=[{id:'first',suites:['one']},{id:'second',suites:['two']}];
  const report=await runParallelGroups({...f,identity,suites,groups,verify:async cwd=>{try{await readFile(join(cwd,'changed'));}catch{return;}throw Error('changed build');}});assert.equal(report.exit_code,1);assert.equal(report.results[0].status,'not_run');assert.equal(report.results[1].status,'passed');
 });
-test('snapshot uses exact Git HEAD and independent dependency/build bytes without reinstall or rebuild',async t=>{
- const f=await fixture(t),root=f.workspaces[0].cwd,directory=join(f.root,'snapshot');
+test('snapshot preserves exact Git and dependency bytes through aliased roots while rejecting escapes',async t=>{
+ const f=await fixture(t),root=f.workspaces[0].cwd,alias=join(f.root,'alias');
+ await symlink(f.root,alias,'dir');
+ const directory=join(alias,'snapshot');
  const put=async(p,v)=>{await mkdir(join(root,p,'..'),{recursive:true});await writeFile(join(root,p),v);};
  await put('package-lock.json',JSON.stringify({packages:{'':{},'apps/web':{},'node_modules/example':{}}}));await put('tracked','exact source');
  const git=args=>execFileSync('git',args,{cwd:root,encoding:'utf8',stdio:['ignore','pipe','pipe']}).trim();git(['init']);git(['add','.']);git(['-c','user.name=Fixture','-c','user.email=fixture@example.invalid','commit','-m','fixture']);
@@ -55,7 +57,7 @@ test('snapshot uses exact Git HEAD and independent dependency/build bytes withou
  assert.equal(await readFile(join(directory,'node_modules/@relay/web/node_modules/nested/index.js'),'utf8'),'nested');await writeFile(join(directory,'node_modules/example/index.js'),'changed');assert.equal(await readFile(join(root,'node_modules/example/index.js'),'utf8'),'dependency');
  for(const path of BUILD_OUTPUTS)assert.equal(await readFile(join(directory,path),'utf8'),'sealed '+path);
  await symlink(join(f.root,'first-tmp'),join(root,'node_modules/escape'));await mkdir(join(f.root,'first-tmp'));
- await assert.rejects(prepareSnapshot({root,directory:join(f.root,'unsafe'),receipt,verify:async()=>{}}),/escapes isolated snapshot/);
+ await assert.rejects(prepareSnapshot({root,directory:join(alias,'unsafe'),receipt,verify:async()=>{}}),/escapes isolated snapshot/);
 });
 test('evidence merge preserves all groups and refuses overwrites or symlinks',async t=>{
  const f=await fixture(t),[a,b]=f.workspaces.map(w=>w.cwd),dest=join(f.root,'evidence');await writeFile(join(a,'result.json'),'one');await copyEvidence(a,dest);await copyEvidence(a,dest);await writeFile(join(b,'result.json'),'two');await assert.rejects(copyEvidence(b,dest),/Conflicting/);assert.equal(await readFile(join(dest,'result.json'),'utf8'),'one');await symlink(join(a,'result.json'),join(b,'link'));await rm(join(b,'result.json'));await assert.rejects(copyEvidence(b,dest),/regular files/);
