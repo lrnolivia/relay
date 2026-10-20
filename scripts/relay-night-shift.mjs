@@ -16,7 +16,9 @@ export function validateNightShiftPlan(plan){
  const ids=new Set();
  for(const job of plan.jobs){
   for(const key of ['project','assignment','owner','branch','job_id'])if(typeof job[key]!=='string'||!job[key]||job[key].length>240)throw Error('Exact admitted job identity required');
-  if(!/^job_[a-f0-9]{64}$/.test(job.job_id)||ids.has(job.job_id))throw Error('Unique exact job required');ids.add(job.job_id);validateHosts(job.hosts);
+  if(!/^job_[a-f0-9]{64}$/.test(job.job_id)||ids.has(job.job_id))throw Error('Unique exact job required');
+  if(job.depends_on&&(!Array.isArray(job.depends_on)||job.depends_on.some(id=>!ids.has(id))))throw Error('Dependencies must name earlier admitted jobs');
+  ids.add(job.job_id);validateHosts(job.hosts);
   if(typeof job.summary!=='string'||!job.summary.trim()||job.summary.length>2000)throw Error('A bounded accounting summary is required for each job');
   const lead=plan.oversight?.[job.project];
   if(!lead||!['assignment','owner','branch'].every(k=>typeof lead[k]==='string'&&lead[k]&&lead[k].length<=(k==='branch'?240:100))||!/^job_[a-f0-9]{64}$/.test(lead.job_id||'')||lead.assignment===job.assignment||lead.owner===job.owner||plan.jobs.some(x=>x.job_id===lead.job_id))throw Error('Configure a distinct existing oversight execution');
@@ -65,6 +67,7 @@ export async function runNightShiftPass({plan,rpc,persist,journal=null,dispatch=
  };
  for(const config of plan.jobs){
   if(state.jobs.some(x=>x.job_id===config.job_id))continue;
+  if(config.depends_on?.some(id=>state.jobs.find(x=>x.job_id===id)?.state!=='accounted')){state.jobs.push({job_id:config.job_id,state:'parked',reason:'dependent-job-unfinished'});await persist(state);continue;}
   const uncertain=state.jobs.filter(x=>x.reconcile_required||['dispatching','reconciliation-required'].includes(x.state));
   if(uncertain.some(x=>{const previous=plan.jobs.find(j=>j.job_id===x.job_id);return config.depends_on?.includes(x.job_id)||previous?.hosts.some(h=>config.hosts.some(other=>h.id===other.id||h.workspace===other.workspace));})){state.jobs.push({job_id:config.job_id,state:'parked',reason:'dependent-on-uncertain-launch'});await persist(state);continue;}
   let blocked;try{blocked=await gate(config);}catch{blocked='control-unavailable';}

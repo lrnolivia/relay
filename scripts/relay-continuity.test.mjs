@@ -52,6 +52,8 @@ test('native coordinator journals and resumes trusted publication commands witho
   assert.equal((await run()).objective_completed,true);assert.equal((await run()).objective_completed,true);
   for(const id of ['a','b','c'])assert.equal(await fs.readFile(path.join(workspace,id+'.txt'),'utf8'),'once\n');
   const saved=JSON.parse(await fs.readFile(path.join(stateDir,'continuity.json'),'utf8'));assert.equal(saved.stages.c.pending,null);assert.ok(saved.stages.c.receipt.evidence);
+  const before=saved.stages.a.receipt.input_digest,priorTZ=process.env.TZ;
+  try{process.env.TZ=priorTZ==='UTC'?'Europe/London':'UTC';const changed=await run();assert.notEqual(changed.stages.a.receipt.input_digest,before,'Measured environment invalidates unchanged plan evidence');}finally{if(priorTZ===undefined)delete process.env.TZ;else process.env.TZ=priorTZ;}
  }finally{await fs.rm(root,{recursive:true,force:true});}
 });
 test('a reconciled queued submission starts its original job exactly once',async()=>{

@@ -316,3 +316,7 @@ test('uncertain launches never replay while independent hosts finish, including 
  f.dispatch=async args=>{attempted++;if(args.config.job_id===jobId(1))throw Error('uncertain');return dispatch(args);};
  const s=await f.run();assert.equal(s.state,'reconciliation-required');assert.deepEqual(f.dispatched,[jobId(2)]);assert.equal(attempted,2);await f.run({journal:s});assert.equal(attempted,2);
 });
+test('an explicitly dependent job parks after a local failure even on a separate host',async()=>{
+ const p=plan(2);p.jobs[1].depends_on=[jobId(1)];p.jobs[1].hosts=[{...host('independent'),workspace:'/independent'}];const f=fixture(p);f.jobs.get(jobId(1)).owner='different';const s=await f.run();assert.equal(s.jobs[1].reason,'dependent-job-unfinished');assert.deepEqual(f.dispatched,[]);
+ const invalid=plan();invalid.jobs[0].depends_on=[jobId(8)];assert.throws(()=>validateNightShiftPlan(invalid),/Dependencies/);
+});

@@ -118,7 +118,9 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
   return await reconcileContinuity({plan,journal,persist,readControl,
    inputs:async stage=>{
     const files=git(['ls-files','--cached','--others','--exclude-standard','-z','--',...stage.inputs]).split('\0').filter(Boolean).sort();
-    const bytes=[];for(const file of files){const full=path.resolve(workspace,file);if(!full.startsWith(path.resolve(workspace)+path.sep))throw Error('Input escapes workspace');let st;try{st=await fs.lstat(full);}catch(e){if(e.code==='ENOENT'){bytes.push([file,'deleted']);continue;}throw e;}if(!st.isFile()||st.isSymbolicLink()||st.size>16*1024*1024)throw Error('Input is not bounded source');bytes.push([file,hash(await fs.readFile(full))]);}return bytes;
+    const environment={node:process.version,platform:process.platform,arch:process.arch,variables:Object.fromEntries(['PATH','NODE_OPTIONS','TZ','LANG','PLAYWRIGHT_BROWSERS_PATH'].map(key=>[key,process.env[key]||null])),toolchain:[]};
+    for(const file of ['package.json','package-lock.json','.node-version','node_modules/.package-lock.json']){try{environment.toolchain.push([file,hash(await fs.readFile(path.join(workspace,file)))]);}catch(e){if(e.code!=='ENOENT')throw e;environment.toolchain.push([file,'absent']);}}
+    const bytes=[];for(const file of files){const full=path.resolve(workspace,file);if(!full.startsWith(path.resolve(workspace)+path.sep))throw Error('Input escapes workspace');let st;try{st=await fs.lstat(full);}catch(e){if(e.code==='ENOENT'){bytes.push([file,'deleted']);continue;}throw e;}if(!st.isFile()||st.isSymbolicLink()||st.size>16*1024*1024)throw Error('Input is not bounded source');bytes.push([file,hash(await fs.readFile(full))]);}return {bytes,environment};
    },
    verify,reconcile,
    execute:async (pending,stage)=>{
