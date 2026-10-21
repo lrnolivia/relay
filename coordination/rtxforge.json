@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-21T00:06:02.108Z",
+  "updated_at": "2026-10-21T00:06:56.400Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -5496,6 +5496,48 @@
           "next_action": "Lauren directed this Windows chat to the existing Relay NR assignment with intended-default promotion only if it works well with existing MFG. Queued job cancelled before start (attempt0); no product edits at branch base d725723. Resume same branch locally, amend acceptance for conditional default gate, investigate supported MFG composition before implementation. Preserve existing provider choices and no-real-game-writes boundary."
         }
       ]
+    },
+    {
+      "id": "rtxforge-native-panel-startup-20261020",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/native-panel-startup-20261020",
+      "paths": [
+        "providers/skynizz-bridge/",
+        "windows/build/Build-SkynizzBridge.ps1",
+        ".github/workflows/skynizz-bridge.yml",
+        "tests/test_skynizz_bridge.py"
+      ],
+      "resources": [
+        "rtxforge-native-panel-startup"
+      ],
+      "goal": "Native overlay startup, split from rtxforge-skynizz-nr-provider-20261017 by Lauren 2026-10-20 ('Have Codex rescope its claim to drop providers/skynizz-bridge/, windows/build/Build-SkynizzBridge.ps1, .github/workflows/skynizz-bridge.yml and tests/test_skynizz_bridge.py. Then you claim them on your own branch and worktree, with a draft PR into the skynizz branch.'). In Control Resonant, ForgePanel::Preference gets RegGetValueW error 2 for HKCU\\Software\\rtxForge\\Overlay even though the real hive holds InGamePanel=1/PanelKey=192, so the panel never starts. Diagnose it in-process, fix the startup read, and prove the actual panel opens in Control with the user's Backtick/tilde binding.",
+      "acceptance": "Branch from 8152e182d39870ec24082b929de02b925f87dc33. Draft PR into rtxforge/skynizz-nr-provider-20261017, never main. Trustworthy native diagnostics: no key guessing, no forced enablement, no change to OptiScaler/ReShade native keys, no per-frame registry/file/network work, no extra HWND/swapchain or injection. Preserve the user's Backtick binding and the Delete general default. Hash-bound CI artifact; Control-only restorable install through the engine with backups. Real in-game open/close/focus/controls plus a genuine game-rendered screenshot before the owner tests. No merge/public/default/all-game promotion; formal 866 recovery kept. Human Git identity Lauren Olivia <lrnoliv@gmail.com>; no tool credits; upstream licenses preserved.",
+      "next_action": "Create a separate worktree at 8152e18, preflight, then add in-process registry diagnostics and a RegOpenCurrentUser fallback to ForgePanel.h.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "1be085105a868096a44bc9f999daba32c86b4dff",
+      "state": "active",
+      "created_at": "2026-10-21T00:06:56.400Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Native overlay startup, split from rtxforge-skynizz-nr-provider-20261017 by Lauren 2026-10-20 ('Have Codex rescope its claim to drop providers/skynizz-bridge/, windows/build/Build-SkynizzBridge.ps1, .github/workflows/skynizz-bridge.yml and tests/test_skynizz_bridge.py. Then you claim them on your own branch and worktree, with a draft PR into the skynizz branch.'). In Control Resonant, ForgePanel::Preference gets RegGetValueW error 2 for HKCU\\Software\\rtxForge\\Overlay even though the real hive holds InGamePanel=1/PanelKey=192, so the panel never starts. Diagnose it in-process, fix the startup read, and prove the actual panel opens in Control with the user's Backtick/tilde binding.",
+          "acceptance": "Branch from 8152e182d39870ec24082b929de02b925f87dc33. Draft PR into rtxforge/skynizz-nr-provider-20261017, never main. Trustworthy native diagnostics: no key guessing, no forced enablement, no change to OptiScaler/ReShade native keys, no per-frame registry/file/network work, no extra HWND/swapchain or injection. Preserve the user's Backtick binding and the Delete general default. Hash-bound CI artifact; Control-only restorable install through the engine with backups. Real in-game open/close/focus/controls plus a genuine game-rendered screenshot before the owner tests. No merge/public/default/all-game promotion; formal 866 recovery kept. Human Git identity Lauren Olivia <lrnoliv@gmail.com>; no tool credits; upstream licenses preserved.",
+          "at": "2026-10-21T00:06:56.400Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-native-panel-startup-20261020:acceptance:0",
+            "text": "Branch from 8152e182d39870ec24082b929de02b925f87dc33. Draft PR into rtxforge/skynizz-nr-provider-20261017, never main. Trustworthy native diagnostics: no key guessing, no forced enablement, no change to OptiScaler/ReShade native keys, no per-frame registry/file/network work, no extra HWND/swapchain or injection. Preserve the user's Backtick binding and the Delete general default. Hash-bound CI artifact; Control-only restorable install through the engine with backups. Real in-game open/close/focus/controls plus a genuine game-rendered screenshot before the owner tests. No merge/public/default/all-game promotion; formal 866 recovery kept. Human Git identity Lauren Olivia <lrnoliv@gmail.com>; no tool credits; upstream licenses preserved.",
+            "at": "2026-10-21T00:06:56.400Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-21T00:06:56.400Z",
+      "lease_until": "2026-10-21T12:06:56.400Z"
     }
   ]
 }
