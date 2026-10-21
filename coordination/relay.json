@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-20T20:47:49.270Z",
+  "updated_at": "2026-10-21T01:50:12.094Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -17420,6 +17420,51 @@
           }
         }
       ]
+    },
+    {
+      "id": "relay-development-cleanup-20261020",
+      "owner": "01a15c1c-5ad0-7da3-b114-03e56230e964",
+      "branch": "relay/development-cleanup-20261020",
+      "paths": [
+        "skills/supporting/development-cleanup/SKILL.md",
+        "skills/supporting/engineering/SKILL.md",
+        "skills/supporting/release/SKILL.md",
+        "scripts/build-skills.mjs",
+        "src/skills-bundles.js",
+        "src/development-cleanup-skill.test.js"
+      ],
+      "resources": [
+        "relay-development-artifact-retention"
+      ],
+      "goal": "Add a discoverable Relay development cleanup skill and routine engineering/release completion guidance to prevent accumulated disposable builds while preserving active work and supported recovery.",
+      "acceptance": "Portable skill is searchable/resolvable for cleanup, storage and artifact work; engineering and release checkpoints load it; cleanup requires exact bounded paths, current writers/Git/ownership checks, retained last healthy and user-approved artifacts, durable evidence accounting and measured post-cleanup free space. It cannot uninstall applications, erase source/session history, game saves or live restore records under routine authority. Validate bundle integrity, resolver behavior and skill frontmatter; publish through reviewed branch/PR and normal deployment.",
+      "next_action": "User explicitly requested clearing development leftovers and adding a Relay skill for routine cleanup. Inspect current portable skill sources in isolated checkout, author bounded guidance and routing tags, regenerate bundles, verify targeted tests and PR checks.",
+      "task_class": "maintenance",
+      "category": "maintenance",
+      "primary_team": "skills",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "base_sha": "1f844cd853c2fb4944258e784260dd0c9346cb52",
+      "state": "active",
+      "created_at": "2026-10-21T01:50:12.094Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Add a discoverable Relay development cleanup skill and routine engineering/release completion guidance to prevent accumulated disposable builds while preserving active work and supported recovery.",
+          "acceptance": "Portable skill is searchable/resolvable for cleanup, storage and artifact work; engineering and release checkpoints load it; cleanup requires exact bounded paths, current writers/Git/ownership checks, retained last healthy and user-approved artifacts, durable evidence accounting and measured post-cleanup free space. It cannot uninstall applications, erase source/session history, game saves or live restore records under routine authority. Validate bundle integrity, resolver behavior and skill frontmatter; publish through reviewed branch/PR and normal deployment.",
+          "at": "2026-10-21T01:50:12.094Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-development-cleanup-20261020:acceptance:0",
+            "text": "Portable skill is searchable/resolvable for cleanup, storage and artifact work; engineering and release checkpoints load it; cleanup requires exact bounded paths, current writers/Git/ownership checks, retained last healthy and user-approved artifacts, durable evidence accounting and measured post-cleanup free space. It cannot uninstall applications, erase source/session history, game saves or live restore records under routine authority. Validate bundle integrity, resolver behavior and skill frontmatter; publish through reviewed branch/PR and normal deployment.",
+            "at": "2026-10-21T01:50:12.094Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-21T01:50:12.094Z",
+      "lease_until": "2026-10-21T13:50:12.094Z"
     }
   ],
   "migrated_from": "loew-inspector"
