@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-21T11:40:03.284Z",
+  "updated_at": "2026-10-21T20:39:53.886Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1677,6 +1677,64 @@
             "id": "rtxforge-hdr-sdr-native-media-capture-20261021:acceptance:0",
             "text": "User requested a future assignment for Claude. QUEUED ONLY: Lauren will initiate a later capture session; do not start automatically or schedule an automation. This covers capture and asset preparation, not native app fixes or website publication. Handoff to actual Claude Code owner through supported coordination when Lauren is ready; refresh existing media/capture reservations before claiming or writing.\nFirst qualify ONE SDR/HDR pair before the full shoot. Record display, executable/build, capture method, native resolution/scaling, Windows HDR and game HDR state, bit depth, profile/transfer function and tone mapping. Preserve a genuine HDR master with usable color/luminance metadata plus faithful sRGB web derivatives. An8bit untagged PNG is not an HDR master. Verify source metadata and HDR/SDR rendered comparisons; no arbitrary gamma/saturation or synthetic theme conversion.\nBatch one complete SDR pass then HDR pass to reduce toggles. Within each range capture both actual app Dark and Light themes. Keep geometry, DPI, selected games, scrolling, artwork, settings, provider and scene camera/exposure matched across all variants. One fixed Desktop client size with expanded sidebar. Fullscreen Game Mode with actual controller glyphs; no cursor, tooltips or desktop notifications.\nShot list per range: Desktop Library unselected and six-selected, Witcher3 Remastered Overview, standalone Presets, inZOI Review/Installing/Done retaining full app/game context. Game Mode Library unselected and its own six-selected set, Dragon Age The Veilguard DLSS Files, standalone Presets without expansion, Avatar Review/Installing/Done with app context and controller footer. These14 UI scenes in2 themes yield28 images per range. Also capture the same actual Control Resonant gameplay-overlay character shot in HDR and SDR; use real available overlay theme(s), no invented Light variant.\nFor SDR turn off Windows HDR and the game's separate HDR. For HDR use actual supported native capture, not the current8bit Nudge/clipboard pipeline if it loses HDR data. Verify overlay build/readability; arrange HUD away from panel and check Reset without hover when native fix is available. Record unresolved native defects; never fabricate controls or claim measured rendering/performance acceptance.\nUse isolated sample and simulated operations only; no live game installs/restores, provider/source changes, paid tools or new credentials. Retain original masters/receipts and hashes. Pixel-only Sample-badge cleanup is authorized for derivatives; verify all other pixels unchanged before minimal measured border trim. Preserve full install context and subtle corner geometry. Restore prior HDR, theme, window/controller state and exclusive capture lease afterward.\nDeliver labeled originals/derivatives, a contact sheet grouped by interface/theme/range/view/step, metadata/hash/crop/cleanup manifest and HDR/SDR visual comparison. Working files remain outside source checkout; durable handoff lives in relay docs/rtxforge. Coordinate with website owner for derivative intake; no merge/deploy here. Matching Linux captures remain separately accounted under the original media assignment.",
             "at": "2026-10-21T10:24:20.640Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-linux-runtime-parity-20261021",
+      "owner": "claude-code-linux-runtime-20261021",
+      "goal": "Linux RUNTIME half of rtxforge-linux-latest-feature-parity-20261020 (split by Lauren 2026-10-21: UI to claude-code-linux-loew-20261013, runtime to a spawned Claude worker). Bring Linux engine/runtime to Windows parity under Proton: native Skynizz NR + Ada MFG prerequisites (Wine/Proton/DXVK/VKD3D/NGX/Streamline/loader, DLL overrides), Feeder ReShade/RenoDX NR-only route, Adoption/clean-install/restore boundary, NR-on-launch default off with 65%/1.0/1.0 defaults, supported-subset review data, exact operation scope in engine, one-time Global review backend, overlay menu/intro INI policy, MFG Auto/Custom/Dynamic INI mapping, App Storage inventory/cleanup root adapter, Linux overlay channel/shortcut feasibility (Wayland portal/Gamescope).",
+      "acceptance": "Parts 1-8 (context revisions 102-109) plus addenda (162,177,179,181) of the parent handoff, runtime/engine scope only. No gui/ edits: expose engine/bridge APIs and record UI hook requests as Relay messages to the UI assignment. Exact-source fixtures for install/repair/restore/rollback/Adoption/subsets/Global/UI-option INI writes; refuse running/drift/anti-cheat/mixed payloads. No Linux NR/MFG runtime claim without real Proton evidence on Ada hardware; Windows evidence is not Linux proof. Draft PR only; human attribution Lauren Olivia <lrnoliv@gmail.com>, no tool coauthors; no release/default promotion.",
+      "next_action": "Spawned Claude worker: claim on branch rtxforge/linux-runtime-parity-20261021 in a separate worktree from origin/main, preflight, implement, draft PR.",
+      "paths": [
+        "engine/",
+        "providers/",
+        "packaging/",
+        "scripts/engine_bridge.py",
+        "scripts/proton_prefix.py",
+        "scripts/cross_os.py",
+        "scripts/overlay_policy.py",
+        "scripts/app_storage.py",
+        "scripts/compatibility.py",
+        "scripts/discovery.py",
+        "scripts/packages.py",
+        "scripts/pipeline.py",
+        "scripts/planning.py",
+        "scripts/setup.py",
+        "scripts/transactions.py",
+        "scripts/ownership.py",
+        "scripts/runtime_updates.py",
+        "scripts/runtime_diagnostics.py",
+        "scripts/storage.py",
+        "scripts/profiles.py",
+        "tests/linux_runtime/",
+        "tests/test_proton_prefix.py",
+        "tests/test_adoption_lifecycle.py",
+        "tests/test_linux_skynizz_adoption.py"
+      ],
+      "resources": [
+        "rtxforge-linux-runtime"
+      ],
+      "category": "implementation",
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-21T20:39:53.886Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Linux RUNTIME half of rtxforge-linux-latest-feature-parity-20261020 (split by Lauren 2026-10-21: UI to claude-code-linux-loew-20261013, runtime to a spawned Claude worker). Bring Linux engine/runtime to Windows parity under Proton: native Skynizz NR + Ada MFG prerequisites (Wine/Proton/DXVK/VKD3D/NGX/Streamline/loader, DLL overrides), Feeder ReShade/RenoDX NR-only route, Adoption/clean-install/restore boundary, NR-on-launch default off with 65%/1.0/1.0 defaults, supported-subset review data, exact operation scope in engine, one-time Global review backend, overlay menu/intro INI policy, MFG Auto/Custom/Dynamic INI mapping, App Storage inventory/cleanup root adapter, Linux overlay channel/shortcut feasibility (Wayland portal/Gamescope).",
+          "acceptance": "Parts 1-8 (context revisions 102-109) plus addenda (162,177,179,181) of the parent handoff, runtime/engine scope only. No gui/ edits: expose engine/bridge APIs and record UI hook requests as Relay messages to the UI assignment. Exact-source fixtures for install/repair/restore/rollback/Adoption/subsets/Global/UI-option INI writes; refuse running/drift/anti-cheat/mixed payloads. No Linux NR/MFG runtime claim without real Proton evidence on Ada hardware; Windows evidence is not Linux proof. Draft PR only; human attribution Lauren Olivia <lrnoliv@gmail.com>, no tool coauthors; no release/default promotion.",
+          "at": "2026-10-21T20:39:53.886Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-runtime-parity-20261021:acceptance:0",
+            "text": "Parts 1-8 (context revisions 102-109) plus addenda (162,177,179,181) of the parent handoff, runtime/engine scope only. No gui/ edits: expose engine/bridge APIs and record UI hook requests as Relay messages to the UI assignment. Exact-source fixtures for install/repair/restore/rollback/Adoption/subsets/Global/UI-option INI writes; refuse running/drift/anti-cheat/mixed payloads. No Linux NR/MFG runtime claim without real Proton evidence on Ada hardware; Windows evidence is not Linux proof. Draft PR only; human attribution Lauren Olivia <lrnoliv@gmail.com>, no tool coauthors; no release/default promotion.",
+            "at": "2026-10-21T20:39:53.886Z"
           }
         ]
       }
