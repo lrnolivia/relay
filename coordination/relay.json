@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-21T01:52:55.267Z",
+  "updated_at": "2026-10-21T01:56:42.973Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -17432,6 +17432,7 @@
         "scripts/build-skills.mjs",
         "src/skills-bundles.js",
         "src/skills-build.test.js",
+        "src/skills-service.test.js",
         "src/development-cleanup-skill.test.js"
       ],
       "resources": [
@@ -17439,7 +17440,7 @@
       ],
       "goal": "Add a discoverable Relay development cleanup skill and routine engineering/release completion guidance to prevent accumulated disposable builds while preserving active work and supported recovery.",
       "acceptance": "Portable skill is searchable/resolvable for cleanup, storage and artifact work; engineering and release checkpoints load it; cleanup requires exact bounded paths, current writers/Git/ownership checks, retained last healthy and user-approved artifacts, durable evidence accounting and measured post-cleanup free space. It cannot uninstall applications, erase source/session history, game saves or live restore records under routine authority. Validate bundle integrity, resolver behavior and skill frontmatter; publish through reviewed branch/PR and normal deployment.",
-      "next_action": "Implement cleanup as an engineering/release skill dependency, update the existing dependency contract test, and verify search/resolve/read with real compiled bundles. Branch is now published for normal admission preflight.",
+      "next_action": "New cleanup skill and dependency composition pass focused tests. Update existing service composition/count fixtures to account for the required cleanup pack, then run complete skill service validation and publish reviewed PR.",
       "task_class": "maintenance",
       "category": "maintenance",
       "primary_team": "skills",
@@ -17464,8 +17465,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-21T01:52:55.267Z",
-      "lease_until": "2026-10-21T13:52:55.267Z"
+      "updated_at": "2026-10-21T01:56:42.973Z",
+      "lease_until": "2026-10-21T13:56:42.973Z"
     }
   ],
   "migrated_from": "loew-inspector"
