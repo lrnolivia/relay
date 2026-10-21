@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-21T09:05:45.186Z",
+  "updated_at": "2026-10-21T09:09:48.079Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -4133,7 +4133,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "d7257233927bcbe7601a9fbf6a54e19be40d2911",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-17T05:12:57.125Z",
       "objective_history": {
         "baseline": {
@@ -4384,8 +4384,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-21T06:00:06.117Z",
-      "lease_until": "2026-10-21T18:00:06.117Z",
+      "updated_at": "2026-10-21T09:09:48.079Z",
+      "lease_until": "2026-10-21T21:09:48.079Z",
       "amendment_count": 47,
       "amendments": [
         {
@@ -5974,7 +5974,13 @@
           "to": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
           "next_action": "Lauren directs receiving owner to finish all remaining work; outgoing owner stops after this handoff. Read https://github.com/lrnolivia/relay/blob/main/docs/rtxforge/WINDOWS_COMPLETION_HANDOFF_20261021.md and its live/preserve vs pending/verify sections; do not redo shipped features. Native e4b8ebaad47508cfc4b0bb25180d0f2477be8d3d is built/pushed/installed as app-bundle update48b75dcf67672422f5ac3ba323ec1f7307575da9375ddc645e24a4daa7b84261 and verified in26games withzeroerrors; app UI remains727e4fb. Manager43820/helper51476 relaunched viaExplorer, realHKCU verified.10trackedUI WIP +untrackedSettingsCategory preserved incheckout and hashedrecoveryzip. Finishactualnativeback,herometadata/Ubisoft,Feederownedinputs/automaticroute,preparedUI verification/deployment,remainingacceptance/Universalreleasegates. Freshsessionmustuseactualowneridentity and preflight; originalgoal,branch,PR28/recoveries retained. No furtheroutgoingimplementation."
         }
-      ]
+      ],
+      "pr": 43,
+      "merged_head_sha": "ac901ad719d9b896aa0bf3616524e1a2da3e0b56",
+      "merge_commit_sha": "74ab0e4f26ae00f7f44fc1a2217894bb78e15c00",
+      "evidence": "PR43 head ac901ad merged to main as 74ab0e4 (local --no-ff merge by Lauren Olivia, pushed). All PR43 checks green on ac901ad (WinUI 3 x64/ARM64, native/kde/wayland review, in-game panel candidate, attribution, coordination admission). Main advanced only with website media (#45) before merge. Runtime: Halo Campaign Evolved with Universal MFG 1.6.1 via OptiScaler plugin on RTX 4070 - plugin loaded (route=plugin), DLSS-G created, NGX native max 1 raised to 3 generated, DLSS-G state samples show 4 frames presented, universalRouteFailure=none. Dynamic MFG reported unsupported on that route (dynamicMfgSupported=false); Control Resonant runtime check pending.",
+      "work_accounted": true,
+      "completed_at": "2026-10-21T09:09:48.079Z"
     },
     {
       "id": "rtxforge-private-sample-library-20261021",
