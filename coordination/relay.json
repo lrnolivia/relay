@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-21T01:56:42.973Z",
+  "updated_at": "2026-10-21T02:03:53.256Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -17433,14 +17433,15 @@
         "src/skills-bundles.js",
         "src/skills-build.test.js",
         "src/skills-service.test.js",
-        "src/development-cleanup-skill.test.js"
+        "src/development-cleanup-skill.test.js",
+        "packages/skills/install.test.mjs"
       ],
       "resources": [
         "relay-development-artifact-retention"
       ],
       "goal": "Add a discoverable Relay development cleanup skill and routine engineering/release completion guidance to prevent accumulated disposable builds while preserving active work and supported recovery.",
       "acceptance": "Portable skill is searchable/resolvable for cleanup, storage and artifact work; engineering and release checkpoints load it; cleanup requires exact bounded paths, current writers/Git/ownership checks, retained last healthy and user-approved artifacts, durable evidence accounting and measured post-cleanup free space. It cannot uninstall applications, erase source/session history, game saves or live restore records under routine authority. Validate bundle integrity, resolver behavior and skill frontmatter; publish through reviewed branch/PR and normal deployment.",
-      "next_action": "New cleanup skill and dependency composition pass focused tests. Update existing service composition/count fixtures to account for the required cleanup pack, then run complete skill service validation and publish reviewed PR.",
+      "next_action": "PR250 source-contract CI exposed the installer fixture selecting engineering without its new required cleanup dependency. Update that real installation fixture to include and verify the complete pack set, rerun local focused/installer tests, and preserve full CI gates.",
       "task_class": "maintenance",
       "category": "maintenance",
       "primary_team": "skills",
@@ -17465,8 +17466,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-21T01:56:42.973Z",
-      "lease_until": "2026-10-21T13:56:42.973Z"
+      "updated_at": "2026-10-21T02:03:53.256Z",
+      "lease_until": "2026-10-21T14:03:53.256Z"
     }
   ],
   "migrated_from": "loew-inspector"
