@@ -8,8 +8,10 @@ import { SKILL_BUNDLES } from '../../src/skills-bundles.js';
 test('portable installs are admitted, pinned, read back and never overwrite a tampered bundle',async()=>{
   const directory=await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(),'relay-skills-fixture-')));
   try {
-    const input={bundles:SKILL_BUNDLES,selection:[{id:'relay.supporting.engineering'}],directory,admit:async request=>{assert.ok(request.files.includes('skills.lock.json'));}};
+    const input={bundles:SKILL_BUNDLES,selection:[{id:'relay.supporting.development-cleanup'},{id:'relay.supporting.engineering'}],directory,admit:async request=>{assert.ok(request.files.includes('skills.lock.json'));assert.ok(request.files.includes('relay.supporting.development-cleanup/SKILL.md'));}};
     const first=await installSkills(input);assert.equal(first.installed,true);
+    const cleanup=SKILL_BUNDLES.find(bundle=>bundle.manifest.id==='relay.supporting.development-cleanup');
+    assert.equal(await fs.readFile(path.join(first.directory,cleanup.manifest.id,'SKILL.md'),'utf8'),cleanup.text);
     assert.equal((await installSkills(input)).replayed,true);
     const entry=path.join(first.directory,'relay.supporting.engineering/SKILL.md');
     assert.match(await fs.readFile(entry,'utf8'),/^---/);

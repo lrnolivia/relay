@@ -22,7 +22,12 @@ test('generated packs reproduce canonical bytes, provenance and bounded load cos
     assert.equal(manifest.license, 'LicenseRef-Relay-Private');
     assert.equal(manifest.update_policy, 'pinned');
     assert.equal(manifest.executable, false);
-    assert.deepEqual(manifest.dependencies, manifest.id === 'relay.supporting.regression-protection' ? ['relay.supporting.qa', 'relay.supporting.release'] : []);
+    const dependencies = {
+      'relay.supporting.engineering': ['relay.supporting.development-cleanup'],
+      'relay.supporting.release': ['relay.supporting.development-cleanup'],
+      'relay.supporting.regression-protection': ['relay.supporting.qa', 'relay.supporting.release']
+    };
+    assert.deepEqual(manifest.dependencies, dependencies[manifest.id] || []);
   }
 });
 test('unsupported resource layouts and symlinks cannot silently become installable packs', async () => {

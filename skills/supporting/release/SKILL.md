@@ -21,6 +21,10 @@ After merge, read the actual merge identity. Track provider build, deployed vers
 
 Report candidate/head, PR/merge, source/build/version/deployment identities, targeted runtime evidence, rollback baseline and unresolved criteria. State implementation, publication, host installation and runtime verification separately. Confirm any rollback target is real and allowed by the current project route; do not claim rollback was exercised when only planned.
 
+## Development storage
+
+Load `relay.supporting.development-cleanup` before staging another full release copy and after verified installation/publication. Retain the exact current candidate, last healthy and distinct last user-approved recovery artifacts with their usable restore routes. Clear superseded disposable publish/extraction/test copies only after current writer and evidence checks; account for retained bytes and measured space reclaimed before handoff.
+
 ## Recovery
 
 If a write outcome is uncertain, read back exact intent before retrying. If a build/runtime check fails, separate provider/harness failure from product failure and preserve logs. Use the policy's bounded correction or approved rollback; do not stack speculative deployments. Missing authorization, incompatible state or unavailable required checks blocks promotion while independent preparation can continue.

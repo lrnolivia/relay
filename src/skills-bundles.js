@@ -759,6 +759,42 @@ export const SKILL_BUNDLES = [
   },
   {
     "manifest": {
+      "id": "relay.supporting.development-cleanup",
+      "name": "Development storage cleanup",
+      "version": "1.0.0",
+      "origin": "relay",
+      "license": "LicenseRef-Relay-Private",
+      "provenance": {
+        "source": "https://github.com/lrnolivia/relay/skills/supporting/development-cleanup/SKILL.md",
+        "revision": "sha256:c696d13fce2001d1019bdfea19b672c05d96d5a3e69fbd953855d427c0529bdf"
+      },
+      "integrity": "sha256:c696d13fce2001d1019bdfea19b672c05d96d5a3e69fbd953855d427c0529bdf",
+      "entrypoint": "SKILL.md",
+      "context_budget": 1378,
+      "tags": [
+        "supporting",
+        "development",
+        "cleanup",
+        "storage",
+        "artifact",
+        "retention",
+        "disk-space",
+        "workspace"
+      ],
+      "dependencies": [],
+      "required_capabilities": [],
+      "optional_capabilities": [],
+      "platforms": [
+        "generic"
+      ],
+      "staff_affinities": [],
+      "update_policy": "pinned",
+      "executable": false
+    },
+    "text": "---\nname: relay-development-cleanup\ndescription: Reclaim development storage after builds, tests, releases and handoffs while preserving active work, source changes, evidence and usable recovery artifacts.\n---\n\n# Development storage cleanup\n\nUse at engineering and release completion, before accumulating another large build, and for requested workspace/storage cleanup. This is a host-executed workflow, not a background daemon. If the current adapter cannot inspect the machine, report that limit rather than claiming local cleanup.\n\n## Keep temporary work temporary\n\nUse the task's scratch directory or the repository's prescribed generated output paths for publish copies, extracted installers, test installations and screenshots. Do not stage every development iteration inside an application's persistent recovery directory. Keep one current candidate and only the additional copies required by an active test or retained recovery target. Reuse unchanged verified artifacts instead of making another full copy.\n\nBefore creating a large output, check actual volume free space and the expected output size. Prefer a suitable existing secondary volume when authorized and supported; do not silently relocate an installed application, active checkout or operational state.\n\n## Decide what is disposable\n\nRead current task ownership, Git/worktree status, processes and release/recovery records. Routine authority covers reproducible generated artifacts belonging to the completed task. Unrelated software uninstalls, personal files, cloud documents, conversation history and live application restore records require their own authorization.\n\nClassify by purpose, not folder name, age or size alone:\n\n- Repeated publish trees, old extracted installers and finished test installations are candidates once their writers have stopped and no active process, scheduled task, service or configured launch path uses them.\n- Source, dirty/untracked work, local-only commits and nested repositories are retained. An ignored directory is not automatically disposable. Remove an obsolete worktree through Git only after verifying clean state, current merged ancestry, no active owner/writer and no primary/common Git store inside the target. Never force a dirty worktree or delete branches to free disk space.\n- Retain the current installed/candidate artifact, the exact last healthy artifact and the distinct last user-approved artifact, including compatible configuration and a usable restore route. Absence of an identifiable approved target is uncertainty, not permission to invent one. A receipt, hash or source commit alone cannot replace required binary bytes.\n- Distinguish old developer deployment copies from operational baselines and transaction backups. In rtxForge, `state/runtime-transactions`, engine baselines/targets and interrupted-operation records can supply restoration of changed game files. Do not purge these merely because an operation completed. Keep saves, mods, installed runtimes and their required originals.\n- Preserve required QA evidence until its canonical durable receipt/archive is verified under the current Visual Evidence Policy. Publish compact receipts to `lrnolivia/relay/docs/<project-id>/`; do not preserve every temporary full build as a substitute for evidence accounting.\n\nFor a requested wider audit, measure actual allocated bytes where available. Cloud placeholders, hard links and Windows packaged-app redirection can expose misleading logical sizes or the same bytes through multiple paths. Do not add aliases together as independent storage.\n\n## Execute a bounded cleanup\n\nList exact absolute candidates, their purpose, measured size, retention decision and current writer/reference checks. Resolve each source and destination within its explicit allowed root before a recursive delete or move. Do not follow junctions or symbolic links into another tree. Preview native cleanup commands and inspect the expansion: a selector intended for a child can match an ignored parent. Prefer exact paths and supported Git/application lifecycle tools.\n\nImmediately before mutation, refresh writer/ownership state and retained recovery identities. Remove only verified disposable outputs in scope. A recovery archive on an authorized secondary volume is a reversible alternative when appropriate; verify destination bytes and retained path references before considering the move complete. An archive on the same volume does not reclaim that volume's space. Never clear an entire shared Temp, application-data or package tree as routine task cleanup.\n\nRespect host policy, permission denials and automatic approval review. Stop the rejected operation and report its exact boundary; do not disguise it as another script, tool or executor. A materially safer action must receive its own normal tool review. Reconcile partial or uncertain outcomes before retrying, and keep unrelated safe work moving.\n\n## Close the task\n\nAt successful build/test checkpoints, after verified installation/release and before completion or handoff, perform the applicable cleanup pass. Record removed or archived paths, retained targets and reasons, before/after free bytes and any blocked items. Verify intended source paths/Git state and the installed launch/restore references remain usable. Report actual measured space reclaimed; distinguish C: space reclaimed by archiving from data permanently deleted. If nothing is safely disposable, record that result without manufacturing a cleanup action.\n"
+  },
+  {
+    "manifest": {
       "id": "relay.supporting.documentation",
       "name": "Documentation and handoffs",
       "version": "1.1.0",
@@ -799,11 +835,11 @@ export const SKILL_BUNDLES = [
       "license": "LicenseRef-Relay-Private",
       "provenance": {
         "source": "https://github.com/lrnolivia/relay/skills/supporting/engineering/SKILL.md",
-        "revision": "sha256:b2f68ac8b44baa8d56f996c5a7a3571325fb9dff447f6289a0501a7020cfaaf9"
+        "revision": "sha256:2b3e3d1834a9f91fa60a70fe8be900a74c2de7f6bff69abc1bd7d4af9b7232f0"
       },
-      "integrity": "sha256:b2f68ac8b44baa8d56f996c5a7a3571325fb9dff447f6289a0501a7020cfaaf9",
+      "integrity": "sha256:2b3e3d1834a9f91fa60a70fe8be900a74c2de7f6bff69abc1bd7d4af9b7232f0",
       "entrypoint": "SKILL.md",
-      "context_budget": 850,
+      "context_budget": 965,
       "tags": [
         "supporting",
         "engineering",
@@ -812,7 +848,9 @@ export const SKILL_BUNDLES = [
         "debugging",
         "frontend"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "relay.supporting.development-cleanup"
+      ],
       "required_capabilities": [],
       "optional_capabilities": [],
       "platforms": [
@@ -822,7 +860,7 @@ export const SKILL_BUNDLES = [
       "update_policy": "pinned",
       "executable": false
     },
-    "text": "---\nname: relay-engineering\ndescription: Implement or debug scoped source changes using existing architecture, exact artifacts, and meaningful build and behavior checks.\n---\n\n# Engineering implementation\n\nUse for feature implementation, build failures, frontend correctness or bounded refactoring. For source publication add GitHub; for test strategy add QA. A design request also needs the appropriate creative/platform pack.\n\n## Establish inputs\n\nRead the task's acceptance, current owner/path scope, repository registration, exact branch/head, package scripts, entrypoints and relevant callers/tests. Inspect the dirty diff before writing; preserve unrelated user changes. Identify persisted formats, public contracts and installed dependency versions that constrain the patch.\n\n## Execute\n\nTrace a failing request or state transition from input through storage/network to the observable result. Record expected and observed behavior before deciding where to patch. Extend the existing architecture and make one coherent reversible change. When asynchronous work is involved, account for cancellation, stale responses, duplicate requests and persisted state after restart. Keep secrets and ownership checks at their existing boundaries.\n\nUse repository scripts and its lockfile for installation/build/type checks. Add a dependency only when the task requires a capability the existing stack cannot reasonably provide, and obtain any required scope approval. Add a behavioral regression check when a real defect or boundary warrants it; do not write assertions that merely mirror the implementation.\n\n## Deliver and verify\n\nReturn changed paths, the resulting behavior, exact source identity, relevant command results and remaining runtime uncertainty. Exercise the acceptance with realistic populated inputs and the affected error/recovery path. A successful build proves compilation, not the user's runtime outcome.\n\n## Recovery\n\nClassify failure as source defect, dependency/toolchain mismatch, environment failure or stale evidence. Compare installed versions and fresh source before retrying. Preserve logs and the dirty diff; never reset another checkout to make a test pass. Two identical failures without new evidence require a changed hypothesis or a precise blocker. Keep unrelated passing work usable while the blocked criterion is parked.\n\n## Shared authority and supporting work\n\nUse the current canonical `lrnolivia/relay@main/LOEW_CHAT_BIBLE.md` sections5,6.1.1,18,20. Codex and Claude share task/acceptance/evidence rules and retain distinct real adapter capabilities. Necessary supporting features and directly related strengthening improvements may become bounded durable additions under the original goal; record reason, relationship, dependencies, acceptance and verification and obtain canonical scope admission before implementation. A provider change never clears ownership, stops or an uncertain execution.\n\nPermanent internal work/session/maintenance/handoff/audit records belong in `lrnolivia/relay/docs/<project-id>/`. Product/user/contributor docs, architecture and build-required runbooks stay with the product. Prefer canonical links to copies; keep temporary artifacts outside source except prescribed ephemeral tooling outputs. Missing Relay write authority parks only documentation publication; preserve the content and do not create a substitute canonical store.\n"
+    "text": "---\nname: relay-engineering\ndescription: Implement or debug scoped source changes using existing architecture, exact artifacts, and meaningful build and behavior checks.\n---\n\n# Engineering implementation\n\nUse for feature implementation, build failures, frontend correctness or bounded refactoring. For source publication add GitHub; for test strategy add QA. A design request also needs the appropriate creative/platform pack.\n\n## Establish inputs\n\nRead the task's acceptance, current owner/path scope, repository registration, exact branch/head, package scripts, entrypoints and relevant callers/tests. Inspect the dirty diff before writing; preserve unrelated user changes. Identify persisted formats, public contracts and installed dependency versions that constrain the patch.\n\n## Execute\n\nTrace a failing request or state transition from input through storage/network to the observable result. Record expected and observed behavior before deciding where to patch. Extend the existing architecture and make one coherent reversible change. When asynchronous work is involved, account for cancellation, stale responses, duplicate requests and persisted state after restart. Keep secrets and ownership checks at their existing boundaries.\n\nUse repository scripts and its lockfile for installation/build/type checks. Add a dependency only when the task requires a capability the existing stack cannot reasonably provide, and obtain any required scope approval. Add a behavioral regression check when a real defect or boundary warrants it; do not write assertions that merely mirror the implementation.\n\n## Deliver and verify\n\nReturn changed paths, the resulting behavior, exact source identity, relevant command results and remaining runtime uncertainty. Exercise the acceptance with realistic populated inputs and the affected error/recovery path. A successful build proves compilation, not the user's runtime outcome.\n\n## Development storage\n\nLoad `relay.supporting.development-cleanup` before producing another large build and at successful build/test checkpoints, completion or handoff. Clean verified disposable outputs belonging to this task, preserve active writers and required source/evidence/recovery artifacts, and record measured storage reclaimed. Put ephemeral publish/test copies in task scratch or prescribed build outputs rather than application recovery data.\n\n## Recovery\n\nClassify failure as source defect, dependency/toolchain mismatch, environment failure or stale evidence. Compare installed versions and fresh source before retrying. Preserve logs and the dirty diff; never reset another checkout to make a test pass. Two identical failures without new evidence require a changed hypothesis or a precise blocker. Keep unrelated passing work usable while the blocked criterion is parked.\n\n## Shared authority and supporting work\n\nUse the current canonical `lrnolivia/relay@main/LOEW_CHAT_BIBLE.md` sections5,6.1.1,18,20. Codex and Claude share task/acceptance/evidence rules and retain distinct real adapter capabilities. Necessary supporting features and directly related strengthening improvements may become bounded durable additions under the original goal; record reason, relationship, dependencies, acceptance and verification and obtain canonical scope admission before implementation. A provider change never clears ownership, stops or an uncertain execution.\n\nPermanent internal work/session/maintenance/handoff/audit records belong in `lrnolivia/relay/docs/<project-id>/`. Product/user/contributor docs, architecture and build-required runbooks stay with the product. Prefer canonical links to copies; keep temporary artifacts outside source except prescribed ephemeral tooling outputs. Missing Relay write authority parks only documentation publication; preserve the content and do not create a substitute canonical store.\n"
   },
   {
     "manifest": {
@@ -940,11 +978,11 @@ export const SKILL_BUNDLES = [
       "license": "LicenseRef-Relay-Private",
       "provenance": {
         "source": "https://github.com/lrnolivia/relay/skills/supporting/release/SKILL.md",
-        "revision": "sha256:032e01e76e6f1412f6ce8aba4be58742edaa93b2bfda10928b71ca7e6438d417"
+        "revision": "sha256:cf51c9d652da466f1159305e444e6e63b204d4b485d8a31e44992615e5df3e69"
       },
-      "integrity": "sha256:032e01e76e6f1412f6ce8aba4be58742edaa93b2bfda10928b71ca7e6438d417",
+      "integrity": "sha256:cf51c9d652da466f1159305e444e6e63b204d4b485d8a31e44992615e5df3e69",
       "entrypoint": "SKILL.md",
-      "context_budget": 586,
+      "context_budget": 702,
       "tags": [
         "supporting",
         "release",
@@ -952,7 +990,9 @@ export const SKILL_BUNDLES = [
         "rollback",
         "publication"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "relay.supporting.development-cleanup"
+      ],
       "required_capabilities": [],
       "optional_capabilities": [],
       "platforms": [
@@ -962,7 +1002,7 @@ export const SKILL_BUNDLES = [
       "update_policy": "pinned",
       "executable": false
     },
-    "text": "---\nname: relay-release\ndescription: Prepare and verify authorized Git-native publication with exact-head gates, deployment readback and a concrete rollback record.\n---\n\n# Release engineering\n\nUse when preparing, publishing or verifying a release. GitHub covers source/PR operations; Cloudflare covers provider diagnostics. An instruction to prepare a release does not itself authorize merge or production promotion.\n\n## Inputs and readiness\n\nRead project registration, live owner/scope, current branch/head, acceptance, required checks and promotion policy. Gather the current production source/build/version/traffic identity as the rollback baseline. Identify persistence or contract compatibility risks and the exact runtime behavior affected by the change.\n\n## Supported actions\n\nPrepare a release packet with exact candidate artifact, passed/failed/unavailable checks, remaining host/device proof and rollback route. Publish only through the registered Git-native path with the required exact-head gate and current authorization. Recheck the head and ownership immediately before mutation; changed source invalidates affected evidence. Do not use a manual upload to bypass policy.\n\nAfter merge, read the actual merge identity. Track provider build, deployed version and traffic separately, then exercise the changed behavior at the published artifact. Preserve compatible historical records and receipts so rollback does not erase forward-recovery evidence. A release note or queued build is not runtime delivery.\n\n## Output and verification\n\nReport candidate/head, PR/merge, source/build/version/deployment identities, targeted runtime evidence, rollback baseline and unresolved criteria. State implementation, publication, host installation and runtime verification separately. Confirm any rollback target is real and allowed by the current project route; do not claim rollback was exercised when only planned.\n\n## Recovery\n\nIf a write outcome is uncertain, read back exact intent before retrying. If a build/runtime check fails, separate provider/harness failure from product failure and preserve logs. Use the policy's bounded correction or approved rollback; do not stack speculative deployments. Missing authorization, incompatible state or unavailable required checks blocks promotion while independent preparation can continue.\n"
+    "text": "---\nname: relay-release\ndescription: Prepare and verify authorized Git-native publication with exact-head gates, deployment readback and a concrete rollback record.\n---\n\n# Release engineering\n\nUse when preparing, publishing or verifying a release. GitHub covers source/PR operations; Cloudflare covers provider diagnostics. An instruction to prepare a release does not itself authorize merge or production promotion.\n\n## Inputs and readiness\n\nRead project registration, live owner/scope, current branch/head, acceptance, required checks and promotion policy. Gather the current production source/build/version/traffic identity as the rollback baseline. Identify persistence or contract compatibility risks and the exact runtime behavior affected by the change.\n\n## Supported actions\n\nPrepare a release packet with exact candidate artifact, passed/failed/unavailable checks, remaining host/device proof and rollback route. Publish only through the registered Git-native path with the required exact-head gate and current authorization. Recheck the head and ownership immediately before mutation; changed source invalidates affected evidence. Do not use a manual upload to bypass policy.\n\nAfter merge, read the actual merge identity. Track provider build, deployed version and traffic separately, then exercise the changed behavior at the published artifact. Preserve compatible historical records and receipts so rollback does not erase forward-recovery evidence. A release note or queued build is not runtime delivery.\n\n## Output and verification\n\nReport candidate/head, PR/merge, source/build/version/deployment identities, targeted runtime evidence, rollback baseline and unresolved criteria. State implementation, publication, host installation and runtime verification separately. Confirm any rollback target is real and allowed by the current project route; do not claim rollback was exercised when only planned.\n\n## Development storage\n\nLoad `relay.supporting.development-cleanup` before staging another full release copy and after verified installation/publication. Retain the exact current candidate, last healthy and distinct last user-approved recovery artifacts with their usable restore routes. Clear superseded disposable publish/extraction/test copies only after current writer and evidence checks; account for retained bytes and measured space reclaimed before handoff.\n\n## Recovery\n\nIf a write outcome is uncertain, read back exact intent before retrying. If a build/runtime check fails, separate provider/harness failure from product failure and preserve logs. Use the policy's bounded correction or approved rollback; do not stack speculative deployments. Missing authorization, incompatible state or unavailable required checks blocks promotion while independent preparation can continue.\n"
   },
   {
     "manifest": {

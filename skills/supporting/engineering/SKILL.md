@@ -21,6 +21,10 @@ Use repository scripts and its lockfile for installation/build/type checks. Add 
 
 Return changed paths, the resulting behavior, exact source identity, relevant command results and remaining runtime uncertainty. Exercise the acceptance with realistic populated inputs and the affected error/recovery path. A successful build proves compilation, not the user's runtime outcome.
 
+## Development storage
+
+Load `relay.supporting.development-cleanup` before producing another large build and at successful build/test checkpoints, completion or handoff. Clean verified disposable outputs belonging to this task, preserve active writers and required source/evidence/recovery artifacts, and record measured storage reclaimed. Put ephemeral publish/test copies in task scratch or prescribed build outputs rather than application recovery data.
+
 ## Recovery
 
 Classify failure as source defect, dependency/toolchain mismatch, environment failure or stale evidence. Compare installed versions and fresh source before retrying. Preserve logs and the dirty diff; never reset another checkout to make a test pass. Two identical failures without new evidence require a changed hypothesis or a precise blocker. Keep unrelated passing work usable while the blocked criterion is parked.
