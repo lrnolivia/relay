@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-21T09:24:29.494Z",
+  "updated_at": "2026-10-21T09:28:12.836Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6117,19 +6117,26 @@
       "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
       "branch": "rtxforge/beta-rc-completion-20261021",
       "paths": [
-        "scripts/universal_mfg_provider.py",
-        "scripts/desktop_service.py",
-        "scripts/skynizz_provider.py",
-        "windows/engine-host/companion_controls.py",
+        ".github/workflows/windows-build.yml",
+        "engine/rtxengine.py",
+        "providers/mfg-unlocker/README.md",
+        "providers/mfg-unlocker/source.json",
         "providers/skynizz-bridge/ForgePanel.h",
-        "providers/skynizz-bridge/panel-candidate.patch",
         "providers/skynizz-bridge/panel-candidate.json",
+        "providers/skynizz-bridge/panel-candidate.patch",
+        "scripts/desktop_service.py",
+        "scripts/library_media.py",
+        "scripts/skynizz_provider.py",
+        "scripts/universal_mfg_provider.py",
+        "tests/test_universal_mfg_provider.py",
         "windows/RtxForge.Windows/Controls/PresetControlsView.cs",
         "windows/RtxForge.Windows/Models/Models.cs",
         "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
+        "windows/engine-host/companion_controls.py",
+        "windows/tests/Settings/Program.cs",
         "windows/tests/test_companion_controls.py",
-        "windows/tests/test_skynizz_provider.py",
-        "tests/test_universal_mfg_provider.py"
+        "windows/tests/test_durable_restore.py",
+        "windows/tests/test_skynizz_provider.py"
       ],
       "resources": [
         "rtxforge-windows-app",
@@ -6137,7 +6144,7 @@
       ],
       "goal": "Finish the Windows 1.0 Beta RC items Lauren listed: Dynamic MFG gated on plugin-reported support with native save/replay (companion protocol 7), Universal MFG runtime verification record, settings migration to the Universal default, crash-durable restore, the sample UI handoff port (tighter presets, Gaming Mode layout and labels, light-mode pale badges), DLSS presets in the Presets tab and overlay, and the collapsing hero compact state.",
       "acceptance": "Windows tests and CI green; protocol 7 bridge builds; Dynamic offered only where the plugin or game reports support and saved Dynamic replays without blocking the rest of a preset; merged to main as Lauren; RC installer built and installed locally. Linux live smoke tests wait for Lauren.",
-      "next_action": "Commit the Dynamic MFG gate and protocol 7 save/replay, open a draft PR, then continue the RC list.",
+      "next_action": "Push the Dynamic MFG commit, open a draft PR, then port the sample UI handoff.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -6161,8 +6168,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-21T09:24:29.494Z",
-      "lease_until": "2026-10-21T21:24:29.494Z"
+      "updated_at": "2026-10-21T09:28:12.836Z",
+      "lease_until": "2026-10-21T21:28:12.836Z"
     }
   ]
 }
