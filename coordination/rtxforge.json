@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-21T10:38:21.422Z",
+  "updated_at": "2026-10-21T10:53:09.379Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6297,14 +6297,15 @@
       "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
       "branch": "rtxforge/route-test-timeout-20261021",
       "paths": [
-        "tests/test_skynizz_bridge.py"
+        "tests/test_skynizz_bridge.py",
+        ".github/workflows/windows-build.yml"
       ],
       "resources": [
         "rtxforge-windows-app"
       ],
       "goal": "Stop the NR route source test from failing main's Windows build when a hosted runner's cold g++ compile exceeds 90 seconds.",
       "acceptance": "Compile timeout raised with a reason; WinUI 3 x64 passes on the PR and on main after merge as Lauren.",
-      "next_action": "Raise the route test compile timeout and open a PR.",
+      "next_action": "Run the Windows build for test-only changes too, then merge once it passes.",
       "category": "maintenance",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -6328,8 +6329,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-21T10:38:21.422Z",
-      "lease_until": "2026-10-21T22:38:21.422Z"
+      "updated_at": "2026-10-21T10:53:09.379Z",
+      "lease_until": "2026-10-21T22:53:09.379Z"
     }
   ]
 }
