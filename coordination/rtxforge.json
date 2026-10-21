@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-21T21:19:57.038Z",
+  "updated_at": "2026-10-21T21:34:10.110Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1219,10 +1219,10 @@
     },
     {
       "id": "rtxforge-linux-latest-feature-parity-20261020",
-      "owner": "claude-code-linux-loew-20261013",
+      "owner": "01a1586d-75af-751f-96b1-2556defbe011",
       "goal": "Notes-only Linux production handoff: complete parity with newest Windows NR/MFG, Feeder, Adoption, overlay/settings and library refinements, then current website screenshots.",
       "acceptance": "Lauren explicitly requested a durable Linux handoff before reboot2026-10-20. NOTES ONLY; do not start a worker or take over Windows/shared files. Full detailed handoff is recorded in Relay project context, operation IDs linux-parity-handoff-20261020-part-1 through part-8 (revisions102–109), source PR28@2bf9a7b0aa71e1660ffdbcfd2e0928fe443daac5. All eight parts are required acceptance, not optional historical notes. Refresh newest source and subsequent context before work. Deduplicate earlier Linux badge/titlebar/card/operation-scope queue items and preserve Linux ownership. Cover Rescan/manual-folder/pinned artwork/removal/Open Folder; exact operation scope; detected packages and Adoption vs Adopt+clean install with pre-adoption restore boundary; user-friendly supported-feature second review; native NR+Ada MFG plus separate Feeder NR/model upgrades; NR startup OFF unless enabled-on-launch;65% model/local+skin1.0 defaults with repair preservation; independent lightweight helper and left-side translucent accent-matched sidebar; End/custom shortcut, Insert native, Unified/Advanced units, all supported NR/MFG/sharpening controls, applied/observed telemetry and file-ownership pills; desktop+Game Mode+gear Overlay settings, four independent OptiScaler/ReShade menu/welcome choices, default intros off and real working guide/RenoDX flags; reviewed guarded/backed-up existing-game application with shared state; one-time Global NR/MFG changes; efficient batch preparation and hidden-panel behavior; offline-only executable-bound exceptions with no generic anti-cheat or online claim; two-line Poster titles and75–150% desktop artwork scale. Latest owner report after2bf9a7b: panel opening immediately raises Windows taskbar. Windows owner is investigating focus activation; carry accepted fix into Linux behavior, do not port focus-stealing. Linux adapters must prove Wine/Proton/NGX/Streamline/native-vs-Feeder paths, Wayland global binding/compositor blur and actual Gamescope surface behavior; Windows registry/WinUI implementation is reference only. Linux currently refuses Skynizz direct install intentionally, and Windows evidence is not Linux runtime proof. Require native GTK/controller, restore/rollback, Steam-open overrides, running/drift/anti-cheat guards and real Ada NR+MFG/Feeder gameplay before promotion. Keep explicit holds and distinct last-healthy/user-approved recovery. Two release channels: rtxForge Beta tag beta curated; rtxForge Development tag development moving; retain legacy updater compatibility.4–5 authentic clean screenshots per OS: Library, Control Resonant Game Details/Features, Presets, Game Mode Details, overlay; newest exact production artifact, controller glyphs not keyboard in Game Mode, no cursor/tooltip, true rounded alpha corners with website CSS shadow, documented dimensions/scale/provenance. Current website brief wins if subsequently refined.",
-      "next_action": "Notes only until Linux owner resumes. Read all eight Relay parity context parts102–109 and later fixes; refresh PR28/latest source, coordinate shared scope, port native Linux adapters, validate production/recovery/runtime, capture clean controller-first screenshots.",
+      "next_action": "Continue existing PR50 with PR51 in isolated Linux integration checkout; preserve source branches and dirty trees. No real-game writes, launches, merge or release.",
       "paths": [
         "gui/",
         "scripts/",
@@ -1261,7 +1261,16 @@
             "at": "2026-10-20T20:47:46.576Z"
           }
         ]
-      }
+      },
+      "handoffs": [
+        {
+          "at": "2026-10-21T21:34:10.110Z",
+          "from": "claude-code-linux-loew-20261013",
+          "to": "01a1586d-75af-751f-96b1-2556defbe011",
+          "next_action": "Continue existing PR50 with PR51 in isolated Linux integration checkout; preserve source branches and dirty trees. No real-game writes, launches, merge or release."
+        }
+      ],
+      "updated_at": "2026-10-21T21:34:10.110Z"
     },
     {
       "id": "rtxforge-beta-native-screenshot-refresh-20261020",
@@ -6438,7 +6447,7 @@
     },
     {
       "id": "rtxforge-linux-latest-feature-parity-20261020",
-      "owner": "claude-code-linux-loew-20261013",
+      "owner": "01a1586d-75af-751f-96b1-2556defbe011",
       "branch": "rtxforge/linux-ui-parity-20261021",
       "paths": [
         "gui/",
@@ -6462,7 +6471,7 @@
       ],
       "goal": "Linux production parity with newest Windows NR/MFG, Feeder, Adoption, overlay/settings and library refinements, then current website screenshots. This claim carries the GTK/libadwaita UI half; the engine/Proton runtime half was split by Lauren on 2026-10-21 into rtxforge-linux-runtime-parity-20261021 (spawned Claude worker).",
       "acceptance": "Lauren explicitly requested a durable Linux handoff before reboot2026-10-20. Full detailed handoff is recorded in Relay project context, operation IDs linux-parity-handoff-20261020-part-1 through part-8 (revisions102–109), source PR28@2bf9a7b0aa71e1660ffdbcfd2e0928fe443daac5. All eight parts are required acceptance, not optional historical notes. Refresh newest source and subsequent context before work. Deduplicate earlier Linux badge/titlebar/card/operation-scope queue items and preserve Linux ownership. Cover Rescan/manual-folder/pinned artwork/removal/Open Folder; exact operation scope; detected packages and Adoption vs Adopt+clean install with pre-adoption restore boundary; user-friendly supported-feature second review; native NR+Ada MFG plus separate Feeder NR/model upgrades; NR startup OFF unless enabled-on-launch;65% model/local+skin1.0 defaults with repair preservation; independent lightweight helper and left-side translucent accent-matched sidebar; End/custom shortcut, Insert native, Unified/Advanced units, all supported NR/MFG/sharpening controls, applied/observed telemetry and file-ownership pills; desktop+Game Mode+gear Overlay settings, four independent OptiScaler/ReShade menu/welcome choices, default intros off and real working guide/RenoDX flags; reviewed guarded/backed-up existing-game application with shared state; one-time Global NR/MFG changes; efficient batch preparation and hidden-panel behavior; offline-only executable-bound exceptions with no generic anti-cheat or online claim; two-line Poster titles and75–150% desktop artwork scale. Carry accepted Windows focus fix into Linux behavior, do not port focus-stealing. Linux adapters must prove Wine/Proton/NGX/Streamline/native-vs-Feeder paths, Wayland global binding/compositor blur and actual Gamescope surface behavior; Windows registry/WinUI implementation is reference only. Linux currently refuses Skynizz direct install intentionally, and Windows evidence is not Linux runtime proof. Require native GTK/controller, restore/rollback, Steam-open overrides, running/drift/anti-cheat guards and real Ada NR+MFG/Feeder gameplay before promotion. Keep explicit holds and distinct last-healthy/user-approved recovery. Two release channels: rtxForge Beta tag beta curated; rtxForge Development tag development moving; retain legacy updater compatibility.4–5 authentic clean screenshots per OS: Library, Control Resonant Game Details/Features, Presets, Game Mode Details, overlay; newest exact production artifact, controller glyphs not keyboard in Game Mode, no cursor/tooltip, true rounded alpha corners with website CSS shadow, documented dimensions/scale/provenance. Current website brief wins if subsequently refined. Split 2026-10-21: engine/Proton runtime acceptance is delivered under rtxforge-linux-runtime-parity-20261021; this claim's UI consumes its APIs, and whole-parity completion requires both.",
-      "next_action": "Added scripts/library_media.py (UI preference defaults/validation only: 130% scale choice, compact header default). Continuing Settings taxonomy, Game Mode 130% auto scale, Presets+MFG tabs.",
+      "next_action": "Continue existing PR50 with PR51 in isolated Linux integration checkout; preserve source branches and dirty trees. No real-game writes, launches, merge or release.",
       "category": "implementation",
       "tags": [
         "notes-only",
@@ -6492,8 +6501,16 @@
           }
         ]
       },
-      "updated_at": "2026-10-21T20:50:33.340Z",
-      "lease_until": "2026-10-22T08:50:33.340Z"
+      "updated_at": "2026-10-21T21:34:10.110Z",
+      "lease_until": "2026-10-22T09:34:10.110Z",
+      "handoffs": [
+        {
+          "at": "2026-10-21T21:34:10.110Z",
+          "from": "claude-code-linux-loew-20261013",
+          "to": "01a1586d-75af-751f-96b1-2556defbe011",
+          "next_action": "Continue existing PR50 with PR51 in isolated Linux integration checkout; preserve source branches and dirty trees. No real-game writes, launches, merge or release."
+        }
+      ]
     },
     {
       "id": "rtxforge-linux-runtime-parity-20261021",
