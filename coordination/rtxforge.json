@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-21T10:38:08.701Z",
+  "updated_at": "2026-10-21T10:38:21.422Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6291,6 +6291,45 @@
       "evidence": "PR47 head fcc5365 merged to main as b3c6aeb (local --no-ff merge as Lauren Olivia, pushed). PR checks all green. On main, the Linux build (Bazzite x86_64 AppImage) passed, running test_cross_os_adapt and test_linux_skynizz_adoption plus the GTK desktop smoke launch for the first time. Windows ARM64 and the in-game panel candidate passed on main; WinUI x64 on main failed only in test_skynizz_bridge's g++ compile of nr-route-test.cpp timing out at 90 s, which passed on the identical PR tree; a timeout fix follows under its own claim. Not verified: nothing has run under Proton yet.",
       "work_accounted": true,
       "completed_at": "2026-10-21T10:38:08.701Z"
+    },
+    {
+      "id": "rtxforge-route-test-timeout-20261021",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/route-test-timeout-20261021",
+      "paths": [
+        "tests/test_skynizz_bridge.py"
+      ],
+      "resources": [
+        "rtxforge-windows-app"
+      ],
+      "goal": "Stop the NR route source test from failing main's Windows build when a hosted runner's cold g++ compile exceeds 90 seconds.",
+      "acceptance": "Compile timeout raised with a reason; WinUI 3 x64 passes on the PR and on main after merge as Lauren.",
+      "next_action": "Raise the route test compile timeout and open a PR.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "b3c6aebfbb71ec0a4767eee08ae8a085693a0639",
+      "state": "active",
+      "created_at": "2026-10-21T10:38:21.422Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Stop the NR route source test from failing main's Windows build when a hosted runner's cold g++ compile exceeds 90 seconds.",
+          "acceptance": "Compile timeout raised with a reason; WinUI 3 x64 passes on the PR and on main after merge as Lauren.",
+          "at": "2026-10-21T10:38:21.422Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-route-test-timeout-20261021:acceptance:0",
+            "text": "Compile timeout raised with a reason; WinUI 3 x64 passes on the PR and on main after merge as Lauren.",
+            "at": "2026-10-21T10:38:21.422Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-21T10:38:21.422Z",
+      "lease_until": "2026-10-21T22:38:21.422Z"
     }
   ]
 }
