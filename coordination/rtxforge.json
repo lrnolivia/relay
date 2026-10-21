@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-21T10:01:18.826Z",
+  "updated_at": "2026-10-21T10:05:45.849Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6197,18 +6197,19 @@
       "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
       "branch": "rtxforge/linux-catchup-20261021",
       "paths": [
+        ".github/workflows/linux-build.yml",
+        "docs/LINUX-CATCHUP.md",
+        "gui/rtxforge_gtk.py",
         "scripts/engine_bridge.py",
         "scripts/library_media.py",
-        "gui/rtxforge_gtk.py",
-        "tests/test_linux_skynizz_adoption.py",
-        "docs/LINUX-CATCHUP.md"
+        "tests/test_linux_skynizz_adoption.py"
       ],
       "resources": [
         "rtxforge-linux-app"
       ],
       "goal": "Start catching the Linux app up to Windows: let Linux adopt a Windows Skynizz + Universal MFG install under Proton behind an off-by-default experimental setting (Proton DLL override only, no game file writes), with the matching GTK switch, and record the remaining Linux parity and native Vulkan/Proton overlay plan.",
       "acceptance": "Python tests cover the opt-in: refused by default, adoption allowed when enabled, fresh Linux Skynizz installs still refused; GTK module compiles; CI green; merged to main as Lauren. Live Proton smoke tests wait for Lauren on Linux.",
-      "next_action": "Gate Linux Skynizz adoption behind skynizz_proton and add tests.",
+      "next_action": "Push, open the draft PR, wait for Linux CI, then merge.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -6232,8 +6233,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-21T10:01:18.826Z",
-      "lease_until": "2026-10-21T22:01:18.826Z"
+      "updated_at": "2026-10-21T10:05:45.849Z",
+      "lease_until": "2026-10-21T22:05:45.849Z"
     }
   ]
 }
