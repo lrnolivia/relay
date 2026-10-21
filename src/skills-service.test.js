@@ -5,15 +5,19 @@ import { SKILL_BUNDLES } from './skills-bundles.js';
 import { createSkillsRuntime } from './skills-runtime.js';
 import { createSkillRegistry } from './skills-registry.js';
 import { augmentToolList } from './relay-entry.js';
-const one = () => structuredClone(SKILL_BUNDLES.find(x => x.manifest.id === 'relay.supporting.release'));
+const one = () => {
+ const bundle=structuredClone(SKILL_BUNDLES.find(x => x.manifest.id === 'relay.supporting.release'));
+ bundle.manifest.dependencies=[];
+ return bundle;
+};
 test('real authored packs are exposed through one registered tool and byte-verified at read/vendor time', async () => {
  assert.ok(augmentToolList([]).some(x=>x.name===skillsTool.name));
- const catalog = await callSkills({action:'catalog'});assert.equal(catalog.manifests.length,31);
- for(const word of ['engineering','research','documentation','release','qa','accessibility','security','github','cloudflare']) assert.ok(catalog.manifests.some(x=>x.id==='relay.supporting.'+word));
+ const catalog = await callSkills({action:'catalog'});assert.equal(catalog.manifests.length,32);
+ for(const word of ['engineering','research','documentation','release','qa','accessibility','security','github','cloudflare','development-cleanup']) assert.ok(catalog.manifests.some(x=>x.id==='relay.supporting.'+word));
  for(const bundle of SKILL_BUNDLES) {
   const result = await callSkills({action:'audit',id:bundle.manifest.id,capabilities:['figma'],max_context:32768});assert.ok(result.audit.every(x=>x.integrity_verified));assert.ok(result.audit.some(x=>x.id===bundle.manifest.id));
  }
- const exported=await callSkills({action:'vendor',id:one().manifest.id});assert.equal(exported.installed,false);assert.equal(exported.bundles[0].files[0].text,one().text);
+ const exported=await callSkills({action:'vendor',id:one().manifest.id});assert.equal(exported.installed,false);assert.equal(exported.bundles.find(x=>x.manifest.id===one().manifest.id).files[0].text,one().text);
  const corrupt=one();corrupt.text=corrupt.text.replace('# Release engineering','# Releasf engineering');await assert.rejects(callSkills({action:'read',id:corrupt.manifest.id},[corrupt]),/integrity/);
  await assert.rejects(callSkills({action:'read',id:'relay.platforms.figma'}),/capability/);
 });
@@ -44,13 +48,13 @@ test('real task vocabulary resolves useful minimal cross-pack compositions and i
  const path = await import('node:path');
  const directory = await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(),'relay-skill-composition-')));
  const scenarios = [
-  { tags:['engineering','build','testing'], ids:['relay.supporting.engineering','relay.supporting.qa'] },
+  { tags:['engineering','build','testing'], ids:['relay.supporting.development-cleanup','relay.supporting.engineering','relay.supporting.qa'] },
   { tags:['design-system','tokens','responsive','keyboard','accessibility'], platform:'web', ids:['relay.creative.design-systems','relay.supporting.accessibility','relay.platforms.web'] },
   { tags:['profiling','fonts','network'], ids:['relay.performance.performance-budgets'] },
-  { tags:['pull-request','checks','release','rollback'], ids:['relay.supporting.github','relay.supporting.release'] },
-  { tags:['workers','r2','deployment'], ids:['relay.supporting.cloudflare','relay.supporting.release'] },
+  { tags:['pull-request','checks','release','rollback'], ids:['relay.supporting.development-cleanup','relay.supporting.github','relay.supporting.release'] },
+  { tags:['workers','r2','deployment'], ids:['relay.supporting.cloudflare','relay.supporting.development-cleanup','relay.supporting.release'] },
   { tags:['reference','screenshot'], ids:['relay.creative.visual-reference'] },
-  { tags:['regression-protection'], ids:['relay.supporting.qa','relay.supporting.release','relay.supporting.regression-protection'] }
+  { tags:['regression-protection'], ids:['relay.supporting.development-cleanup','relay.supporting.qa','relay.supporting.release','relay.supporting.regression-protection'] }
  ];
  try {
   for (const scenario of scenarios) {
@@ -92,9 +96,9 @@ test('real task vocabulary resolves useful minimal cross-pack compositions and i
 test('regression protection loads QA and release atomically and fails closed when its baseline guidance is incomplete', async () => {
  const id='relay.supporting.regression-protection';
  const read=await callSkills({action:'read',id});
- assert.deepEqual(read.bundles.map(x=>x.manifest.id),['relay.supporting.qa','relay.supporting.release',id]);
+ assert.deepEqual(read.bundles.map(x=>x.manifest.id),['relay.supporting.qa','relay.supporting.development-cleanup','relay.supporting.release',id]);
  const required=read.bundles.reduce((sum,x)=>sum+x.manifest.context_budget,0);
- const short=await callSkills({action:'resolve',intent_tags:['regression-protection'],max_context:required-1,max_skills:3});
+ const short=await callSkills({action:'resolve',intent_tags:['regression-protection'],max_context:required-1,max_skills:4});
  assert.equal(short.selected.length,0);
  assert.ok(short.rejected.some(x=>x.id===id&&x.reason==='context-budget'));
  const runtime=createSkillsRuntime({manifests:SKILL_BUNDLES.map(x=>x.manifest),loader:async m=>SKILL_BUNDLES.find(x=>x.manifest.id===m.id)});

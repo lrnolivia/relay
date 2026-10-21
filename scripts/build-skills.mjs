@@ -32,6 +32,7 @@ const intentTags = {
   'supporting.accessibility': ['keyboard', 'contrast', 'assistive-technology'],
   'supporting.cloudflare': ['workers', 'r2', 'cdn', 'bindings'],
   'supporting.documentation': ['handoff', 'writing', 'specification'],
+  'supporting.development-cleanup': ['cleanup', 'storage', 'artifact', 'retention', 'disk-space', 'workspace'],
   'supporting.engineering': ['implementation', 'build', 'debugging', 'frontend'],
   'supporting.github': ['source', 'branch', 'pull-request', 'checks', 'repository'],
   'supporting.qa': ['testing', 'regression', 'verification'],
@@ -40,7 +41,7 @@ const intentTags = {
   'supporting.research': ['sources', 'compatibility'],
   'supporting.security': ['trust-boundary', 'validation']
 };
-const newPacks = new Set(['creative.design-systems', 'creative.visual-reference', 'supporting.regression-protection']);
+const newPacks = new Set(['creative.design-systems', 'creative.visual-reference', 'supporting.regression-protection', 'supporting.development-cleanup']);
 
 export async function buildSkills({ root = defaultRoot, write = true } = {}) {
   const files = [];
@@ -72,7 +73,7 @@ export async function buildSkills({ root = defaultRoot, write = true } = {}) {
     const manifest = { id, name: title || name.replaceAll('.',' '), version: name === 'planning.planning-routing' ? '1.2.0' : newPacks.has(name) ? '1.0.0' : '1.1.0', origin: 'relay', license: 'LicenseRef-Relay-Private',
       provenance: { source: 'https://github.com/lrnolivia/relay/' + file, revision: 'sha256:' + hash(text) },
       integrity: 'sha256:' + hash(text), entrypoint: 'SKILL.md', context_budget: Math.max(256, Math.ceil(Buffer.byteLength(text)/4)),
-      tags: [...new Set([...name.split(/[.-]/), ...(intentTags[name] || [])])], dependencies: name === 'supporting.regression-protection' ? ['relay.supporting.qa', 'relay.supporting.release'] : [], required_capabilities: name.includes('figma') ? ['figma'] : [],
+      tags: [...new Set([...name.split(/[.-]/), ...(intentTags[name] || [])])], dependencies: ['supporting.engineering', 'supporting.release'].includes(name) ? ['relay.supporting.development-cleanup'] : name === 'supporting.regression-protection' ? ['relay.supporting.qa', 'relay.supporting.release'] : [], required_capabilities: name.includes('figma') ? ['figma'] : [],
       optional_capabilities: [], platforms: platform ? [platform] : ['generic'], staff_affinities: [], update_policy: 'pinned', executable: false };
     bundles.push({ manifest, text });
   }
