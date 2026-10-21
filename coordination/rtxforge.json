@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-21T20:44:49.073Z",
+  "updated_at": "2026-10-21T20:47:18.682Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6519,6 +6519,15 @@
         "scripts/runtime_diagnostics.py",
         "scripts/storage.py",
         "scripts/profiles.py",
+        "scripts/skynizz_provider.py",
+        "scripts/universal_mfg_provider.py",
+        "scripts/proton_stack.py",
+        "scripts/proton_mfg.py",
+        "scripts/proton_overlay.py",
+        "scripts/linux_runtime.py",
+        "docs/LINUX-CATCHUP.md",
+        "docs/linux/",
+        ".github/workflows/linux-build.yml",
         "tests/linux_runtime/",
         "tests/test_proton_prefix.py",
         "tests/test_adoption_lifecycle.py",
@@ -6529,7 +6538,7 @@
       ],
       "goal": "Linux RUNTIME half of rtxforge-linux-latest-feature-parity-20261020 (split by Lauren 2026-10-21: UI to claude-code-linux-loew-20261013, runtime to a spawned Claude worker). Bring Linux engine/runtime to Windows parity under Proton: native Skynizz NR + Ada MFG prerequisites (Wine/Proton/DXVK/VKD3D/NGX/Streamline/loader, DLL overrides), Feeder ReShade/RenoDX NR-only route, Adoption/clean-install/restore boundary, NR-on-launch default off with 65%/1.0/1.0 defaults, supported-subset review data, exact operation scope in engine, one-time Global review backend, overlay menu/intro INI policy, MFG Auto/Custom/Dynamic INI mapping, App Storage inventory/cleanup root adapter, Linux overlay channel/shortcut feasibility (Wayland portal/Gamescope).",
       "acceptance": "Parts 1-8 (context revisions 102-109) plus addenda (162,177,179,181) of the parent handoff, runtime/engine scope only. No gui/ edits: expose engine/bridge APIs and record UI hook requests as Relay messages to the UI assignment. Exact-source fixtures for install/repair/restore/rollback/Adoption/subsets/Global/UI-option INI writes; refuse running/drift/anti-cheat/mixed payloads. No Linux NR/MFG runtime claim without real Proton evidence on Ada hardware; Windows evidence is not Linux proof. Draft PR only; human attribution Lauren Olivia <lrnoliv@gmail.com>, no tool coauthors; no release/default promotion.",
-      "next_action": "MFG Unlocker 1.6.1 Proton adapter + Overlay host-side prefs/channel first, then engine prepare-path scope guard, NR defaults, adoption, preset schema, overlay INI policy, Proton prereq detection; fixture tests; draft PR.",
+      "next_action": "Rescoped to add new Proton runtime modules (proton_stack/proton_mfg/proton_overlay/linux_runtime), the Skynizz/Universal MFG provider gates, Linux docs and the Linux CI workflow. Implementing MFG Unlocker Proton adapter and Overlay host side first.",
       "category": "implementation",
       "primary_team": "source",
       "supporting_teams": [],
@@ -6553,8 +6562,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-21T20:44:49.073Z",
-      "lease_until": "2026-10-22T08:44:49.073Z"
+      "updated_at": "2026-10-21T20:47:18.682Z",
+      "lease_until": "2026-10-22T08:47:18.682Z"
     }
   ]
 }
