@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-21T02:50:57.525Z",
+  "updated_at": "2026-10-21T03:03:38.705Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -3511,7 +3511,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "1be085105a868096a44bc9f999daba32c86b4dff",
-      "state": "active",
+      "state": "superseded",
       "created_at": "2026-10-21T00:06:56.400Z",
       "objective_history": {
         "baseline": {
@@ -3528,8 +3528,21 @@
           }
         ]
       },
-      "updated_at": "2026-10-21T00:06:56.400Z",
-      "lease_until": "2026-10-21T12:06:56.400Z"
+      "updated_at": "2026-10-21T03:03:38.705Z",
+      "lease_until": "2026-10-21T12:06:56.400Z",
+      "retirement": {
+        "at": "2026-10-21T03:03:38.705Z",
+        "intent": {
+          "operation_id": "native38-absorb-ui-20261020",
+          "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+          "disposition": "superseded",
+          "reason": "Lauren explicitly requested adoption and merge of delivered PR38. Integrate its preserved branch and remaining two UI tweaks under the existing Windows assignment; avoid a second active implementation under the same current executor.",
+          "evidence": "Final native handoff at context revision 189; PR38 head 24e16dc2ee1383277c46c731962e55be325eed64 remains open. Native checkout is clean at that exact head and is read-only. Preserve all 11 commits, PR38, final HDR/fonts work, original acceptance and recovery. Current Windows assignment continues remaining integration and Dynamic preset follow-up. No native files edited before rescope.",
+          "superseded_by": "rtxforge-skynizz-nr-provider-20261017",
+          "branch": "rtxforge/native-panel-startup-20261020",
+          "head_sha": "24e16dc2ee1383277c46c731962e55be325eed64"
+        }
+      }
     },
     {
       "id": "rtxforge-beta-native-screenshot-refresh-20261020",
