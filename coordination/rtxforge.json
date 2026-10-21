@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-21T09:41:47.181Z",
+  "updated_at": "2026-10-21T09:59:37.249Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6166,7 +6166,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "74ab0e4f26ae00f7f44fc1a2217894bb78e15c00",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-21T09:24:29.494Z",
       "objective_history": {
         "baseline": {
@@ -6183,8 +6183,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-21T09:41:47.181Z",
-      "lease_until": "2026-10-21T21:41:47.181Z"
+      "updated_at": "2026-10-21T09:59:37.249Z",
+      "lease_until": "2026-10-21T21:59:37.249Z",
+      "pr": 46,
+      "merged_head_sha": "fa80b6be1168e0caf58956b63c0c10347a24e23f",
+      "merge_commit_sha": "84e86768ca5352cc6184c554103937892f4185ce",
+      "evidence": "PR46 head fa80b6b merged to main as 84e8676 (local --no-ff merge as Lauren Olivia, pushed; main unchanged since base 74ab0e4). All checks green on fa80b6b: In-game panel candidate (protocol 7 bridge with Dynamic and DLSS/RR presets), WinUI 3 x64 and ARM64, native/kde/wayland review, attribution, coordination admission. Local: all 21 Windows CI test commands pass, C# settings tests pass, panel-candidate bridge rebuilt from the pinned Skynizz source and bundled receipt verified. Preview captures checked the install dialog, Gaming Mode > Layout and labels and the collapsing hero. Not verified: protocol 7 Dynamic/preset save and replay in a running game; light-mode badges were not rendered (preview cannot switch theme without touching real settings).",
+      "work_accounted": true,
+      "completed_at": "2026-10-21T09:59:37.249Z"
     }
   ]
 }
