@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-21T02:11:34.122Z",
+  "updated_at": "2026-10-21T22:44:58.934Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -17474,6 +17474,45 @@
       "evidence": "https://github.com/lrnolivia/relay/pull/250 — human-attributed merge2547daebc6bae8bf15a3a873091fca91f18ee8b9 from reviewed/tested heada40d005b2d548225e0de41c91b6a32db52d4ad7a.15 focused local tests and skill frontmatter pass. Exact feature quality/admission and merged quality/Workers Builds checks pass. Cloudflare build9f0f4795-f864-497f-aec4-4894e1a55fae succeeded for exactmerge; live relay_skills engineering/release reads include cleanup pack sha256:c696d13fce2001d1019bdfea19b672c05d96d5a3e69fbd953855d427c0529bdf. Host cleanup/consolidation accounted in canonical context revisions173-174: allTopazapps uninstalled,3mergedobsoleteworktreesremoved, verifieddisposableGparent102256657099B/95.233933GiB/24878files ready for user's manual deletion, all moves complete and protecteddata/evidence outside. No new daemon/schedule or permanent purge claimed. Remaining originals/current releases and G:\\rtxforge-build\\helper intentionally protected; Julian informed.",
       "work_accounted": true,
       "completed_at": "2026-10-21T02:11:34.122Z"
+    },
+    {
+      "id": "rtxforge-claude-handoff-20261021",
+      "owner": "01a1586d-75af-751f-96b1-2556defbe011",
+      "branch": "relay/rtxforge-claude-handoff-20261021",
+      "paths": [
+        "docs/rtxforge/LINUX_PARITY_TAKEOVER_20261021.md"
+      ],
+      "resources": [
+        "rtxforge-claude-handoff-doc-20261021"
+      ],
+      "goal": "Publish Lauren's requested complete Claude continuation handoff for rtxForge Linux in canonical Relay documentation.",
+      "acceptance": "One durable handoff document preserves latest local checkpoint, installed-launch failure, recovery locations, tests and remaining work. No product source edits, merge or release.",
+      "next_action": "Commit full handoff and open documentation-only draft PR; provide verified link to Lauren.",
+      "category": "coordination",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "f3013a7ab6354cb0a3b7700eadf6e64377d21a1a",
+      "state": "active",
+      "created_at": "2026-10-21T22:44:58.934Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish Lauren's requested complete Claude continuation handoff for rtxForge Linux in canonical Relay documentation.",
+          "acceptance": "One durable handoff document preserves latest local checkpoint, installed-launch failure, recovery locations, tests and remaining work. No product source edits, merge or release.",
+          "at": "2026-10-21T22:44:58.934Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-claude-handoff-20261021:acceptance:0",
+            "text": "One durable handoff document preserves latest local checkpoint, installed-launch failure, recovery locations, tests and remaining work. No product source edits, merge or release.",
+            "at": "2026-10-21T22:44:58.934Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-21T22:44:58.934Z",
+      "lease_until": "2026-10-22T10:44:58.934Z"
     }
   ],
   "migrated_from": "loew-inspector"
