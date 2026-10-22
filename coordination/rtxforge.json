@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T22:46:33.903Z",
+  "updated_at": "2026-10-22T22:49:01.261Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9152,7 +9152,7 @@
       ],
       "goal": "Lead bg3fgvk integration into rtxForge: begin with source/release review, deliver a pinned Experimental BG3 Vulkan DLSS-G route, then extract a profiled Vulkan DLSS-SR-to-DLSS-G adapter for separately tested games. Lauren authorized getting this started on 2026-10-22; read source and report before touching any game.",
       "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary.",
-      "next_action": "Source review complete and upstream v1.2.0 archive hash verified. Upstream's unmodified five host test groups compiled with MSVC x64 and passed all51 checks /0 failures against Vulkan-Headers ee3b5caaa7e372715873c7b9c390ee1c3ca5db25. Create only providers/bg3fgvk/source.json and README.md as an inspect-only pinned integration candidate on the admitted branch; no deployment adapter, global lock/catalog changes or game writes. Preserve original whole-goal acceptance and future shared-path admission requirement. Publish draft PR after validating every ZIP member hash against the candidate; record exact review and QA in next_action.",
+      "next_action": "Kickoff source/release review complete: bg3fgvk v1.2.0 at66082e6f691fba1c48e319b688a25fa5ae196e56; archive SHA256 f5ffa33f51990cfd929e356085ced4a7b4746c3249094f1433e1639819d15e89, 5,055,411 bytes; all13 member sizes/hashes and seven source/redist DLL hashes verified. Unmodified five upstream host test groups compiled with MSVC x64 against Vulkan-Headers ee3b5caaa7e372715873c7b9c390ee1c3ca5db25:51 checks PASS/0 failures. Candidate diff contains only providers/bg3fgvk/source.json and README.md; deployable/runtime_verified/default_promoted false, existing catalog/guards unchanged. Source review: synthetic camera constants, assumed Vulkan layouts, hard-coded NGX appId, no extracted HUD; generic portability requires per-engine profiles. BG3 Skynizz D3D12 refusal stays valid for that provider. Next verify exact diff/attribution, publish draft on rtxforge/vulkan-dlssg-20261022, read CI and persist receipt. Integration and actual loader remain pending; shared catalog/runtime paths require fresh admission or scoped handoff. No game install/launch/settings/driver/app changes.",
       "category": "implementation",
       "tags": [
         "experimental",
@@ -9183,8 +9183,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-22T22:46:33.903Z",
-      "lease_until": "2026-10-23T10:46:33.903Z"
+      "updated_at": "2026-10-22T22:49:01.261Z",
+      "lease_until": "2026-10-23T10:49:01.261Z"
     }
   ]
 }
