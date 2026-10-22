@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T06:58:28.612Z",
+  "updated_at": "2026-10-22T07:04:14.632Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7375,7 +7375,12 @@
         "windows/installer/rtxForge.iss",
         "windows/tests/Settings/Program.cs",
         "windows/RtxForge.Windows/Views/PackagesPage.cs",
-        "windows/RtxForge.Windows/Views/ExtrasPage.cs"
+        "windows/RtxForge.Windows/Views/ExtrasPage.cs",
+        "windows/RtxForge.Windows/MainWindow.Library.cs",
+        "windows/RtxForge.Windows/MainWindow.Adoption.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Operations.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Pages.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Features.cs"
       ],
       "resources": [
         "rtxforge-windows-app",
@@ -7384,7 +7389,7 @@
       ],
       "goal": "Lauren (2026-10-21): wire the Feeder NR provider and its Windows install route (Mass Effect LE 1/2/3, The Sims 4) and give Feeder games the rtxForge overlay. Fix EA-wrapped DX11 eligibility (delay imports) and stale install records after Steam verification. Ship a ReShade addon (ForgePanel) opening the rtxForge panel on the panel hotkey: live NR on/off through RenoDX's toggle key, plus Model strength, passes, resolution and preset written to [RenoDX.DLSS5] in the game's ReShade.ini, labeled as applying on next launch; it also hides ReShade's startup banner (replacing quiet-startup). Presets panel apply for Feeder games writes the same [RenoDX.DLSS5] keys in the same ReShade.ini (shared with Linux on the dual-boot library), so overlay and presets agree.",
       "acceptance": "Feeder install/apply review and execute succeed for ME1/ME2/ME3; Presets apply writes [RenoDX.DLSS5] in each game's ReShade.ini and refuses while the game runs; addon builds reproducibly from pinned ReShade 6.8.0 (18deaa52) and ImGui (3912b3d9) headers locally and in CI; Feeder route installs, records and restores the addon and retires the manual quiet-startup addon; in game the panel opens on the hotkey, toggles NR live (RenoDX log shows the toggle) and saves tuning that RenoDX loads next launch; Windows tests and CI green; draft PR via Relay.",
-      "next_action": "Packages: DLSS / non-DLSS sections, custom coming soon. Extras (own ExtrasPage.cs): library-wide tool cards instead of a per-game list. Build, check natively, push to PR #52.",
+      "next_action": "Lauren 2026-10-22 (overnight): 1.0 Beta RC with working install, restore and adoption paths; Restore no longer opens Adoption, rescan no longer pops it; Game Mode parity (Presets footer, DLSS card, Packages groups, custom coming soon). Windows first. Build, test, push PR #52.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -7408,8 +7413,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-22T06:58:28.612Z",
-      "lease_until": "2026-10-22T18:58:28.612Z"
+      "updated_at": "2026-10-22T07:04:14.632Z",
+      "lease_until": "2026-10-22T19:04:14.632Z"
     }
   ]
 }
