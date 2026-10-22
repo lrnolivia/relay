@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T16:59:46.131Z",
+  "updated_at": "2026-10-22T17:00:11.101Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8333,7 +8333,17 @@
         "providers/lock.json",
         "scripts/ada_mfg_provider.py",
         "tests/test_ada_mfg_provider.py",
-        "windows/tests/test_skynizz_provider.py"
+        "windows/tests/test_skynizz_provider.py",
+        "providers/feeder.json",
+        "docs/INSTALLATION.md",
+        "providers/skynizz-bridge/source.json",
+        "providers/skynizz-bridge/ada-mfg.patch",
+        "providers/skynizz-bridge/nr-placement.patch",
+        "providers/skynizz-bridge/panel-candidate.patch",
+        "providers/skynizz-bridge/placement-candidate.json",
+        "windows/build/Build-SkynizzBridge.ps1",
+        ".github/workflows/skynizz-bridge.yml",
+        "tests/test_skynizz_bridge.py"
       ],
       "resources": [
         "rtxforge-windows-app",
@@ -8342,7 +8352,7 @@
       ],
       "goal": "Lauren (2026-10-21): wire the Feeder NR provider and its Windows install route (Mass Effect LE 1/2/3, The Sims 4) and give Feeder games the rtxForge overlay. Fix EA-wrapped DX11 eligibility (delay imports) and stale install records after Steam verification. Ship a ReShade addon (ForgePanel) opening the rtxForge panel on the panel hotkey: live NR on/off through RenoDX's toggle key, plus Model strength, passes, resolution and preset written to [RenoDX.DLSS5] in the game's ReShade.ini, labeled as applying on next launch; it also hides ReShade's startup banner (replacing quiet-startup). Presets panel apply for Feeder games writes the same [RenoDX.DLSS5] keys in the same ReShade.ini (shared with Linux on the dual-boot library), so overlay and presets agree.",
       "acceptance": "Feeder install/apply review and execute succeed for ME1/ME2/ME3; Presets apply writes [RenoDX.DLSS5] in each game's ReShade.ini and refuses while the game runs; addon builds reproducibly from pinned ReShade 6.8.0 (18deaa52) and ImGui (3912b3d9) headers locally and in CI; Feeder route installs, records and restores the addon and retires the manual quiet-startup addon; in game the panel opens on the hotkey, toggles NR live (RenoDX log shows the toggle) and saves tuning that RenoDX loads next launch; Windows tests and CI green; draft PR via Relay.",
-      "next_action": "Pin MFG Unlock 1.4.5 (mfg-unlock lock entry, KNOWN keeps 1.4.4 for existing installs, inZOI guard covers 1.4.5 until tested), test on the Forge Lab Halo copy, push PR #52.",
+      "next_action": "Lauren (2026-10-22): update pins with upstream releases, each tested on a Forge Lab copy. DLSS-Unlocked NR-v0.9.71 done (Halo lab); RenoDX DLSS5 8.5.0-rc10 done (Mixtape lab DX11, NR ENGAGED; rc5 still accepted for installed games). Next: rebase the Skynizz bridge onto Skynizz v1.3.0 and test the bridge combos on the Halo lab copy; push PR #52.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -8366,8 +8376,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-22T07:56:34.978Z",
-      "lease_until": "2026-10-22T19:56:34.978Z"
+      "updated_at": "2026-10-22T17:00:11.101Z",
+      "lease_until": "2026-10-23T05:00:11.101Z"
     }
   ]
 }
