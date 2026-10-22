@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T06:50:40.632Z",
+  "updated_at": "2026-10-22T06:56:57.119Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7373,7 +7373,8 @@
         "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
         "windows/RtxForge.Windows/Models/Models.cs",
         "windows/installer/rtxForge.iss",
-        "windows/tests/Settings/Program.cs"
+        "windows/tests/Settings/Program.cs",
+        "windows/RtxForge.Windows/Views/PackagesPage.cs"
       ],
       "resources": [
         "rtxforge-windows-app",
@@ -7382,7 +7383,7 @@
       ],
       "goal": "Lauren (2026-10-21): wire the Feeder NR provider and its Windows install route (Mass Effect LE 1/2/3, The Sims 4) and give Feeder games the rtxForge overlay. Fix EA-wrapped DX11 eligibility (delay imports) and stale install records after Steam verification. Ship a ReShade addon (ForgePanel) opening the rtxForge panel on the panel hotkey: live NR on/off through RenoDX's toggle key, plus Model strength, passes, resolution and preset written to [RenoDX.DLSS5] in the game's ReShade.ini, labeled as applying on next launch; it also hides ReShade's startup banner (replacing quiet-startup). Presets panel apply for Feeder games writes the same [RenoDX.DLSS5] keys in the same ReShade.ini (shared with Linux on the dual-boot library), so overlay and presets agree.",
       "acceptance": "Feeder install/apply review and execute succeed for ME1/ME2/ME3; Presets apply writes [RenoDX.DLSS5] in each game's ReShade.ini and refuses while the game runs; addon builds reproducibly from pinned ReShade 6.8.0 (18deaa52) and ImGui (3912b3d9) headers locally and in CI; Feeder route installs, records and restores the addon and retires the manual quiet-startup addon; in game the panel opens on the hotkey, toggles NR live (RenoDX log shows the toggle) and saves tuning that RenoDX loads next launch; Windows tests and CI green; draft PR via Relay.",
-      "next_action": "Lauren 2026-10-22: 'the companion window shouldn't exist anymore ... that's dead.' Remove the WinUI 3 CompanionWindow and every path that opens it (helper show/hotkey/tray, --controls, Open overlay, Live NR + MFG controls); the helper keeps serving the in-game panel channel. Migrate overlay_renderer 'rtxforge' to 'game'. ForgePanel strengths read 0.00-2.00. Build, test, push to PR #52.",
+      "next_action": "Lauren 2026-10-22: Packages shows one package for DLSS games and one for games without DLSS (Feeder NR, used automatically; more planned); custom packages greyed out as Coming soon. Settings' picker lists only DLSS packages. Build, check natively, push to PR #52.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -7406,8 +7407,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-22T06:50:40.632Z",
-      "lease_until": "2026-10-22T18:50:40.632Z"
+      "updated_at": "2026-10-22T06:56:57.119Z",
+      "lease_until": "2026-10-22T18:56:57.119Z"
     }
   ]
 }
