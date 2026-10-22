@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T07:22:18.367Z",
+  "updated_at": "2026-10-22T07:39:53.706Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7421,7 +7421,9 @@
         "windows/RtxForge.Windows/GameMode/GameModeView.Features.cs",
         "scripts/package_catalog.py",
         "windows/RtxForge.Windows/Services/ForgeService.cs",
-        "tests/test_skynizz_provider.py"
+        "tests/test_skynizz_provider.py",
+        "windows/RtxForge.Windows/Services/EngineForgeService.Features.cs",
+        "tests/test_package_catalog.py"
       ],
       "resources": [
         "rtxforge-windows-app",
@@ -7430,7 +7432,7 @@
       ],
       "goal": "Lauren (2026-10-21): wire the Feeder NR provider and its Windows install route (Mass Effect LE 1/2/3, The Sims 4) and give Feeder games the rtxForge overlay. Fix EA-wrapped DX11 eligibility (delay imports) and stale install records after Steam verification. Ship a ReShade addon (ForgePanel) opening the rtxForge panel on the panel hotkey: live NR on/off through RenoDX's toggle key, plus Model strength, passes, resolution and preset written to [RenoDX.DLSS5] in the game's ReShade.ini, labeled as applying on next launch; it also hides ReShade's startup banner (replacing quiet-startup). Presets panel apply for Feeder games writes the same [RenoDX.DLSS5] keys in the same ReShade.ini (shared with Linux on the dual-boot library), so overlay and presets agree.",
       "acceptance": "Feeder install/apply review and execute succeed for ME1/ME2/ME3; Presets apply writes [RenoDX.DLSS5] in each game's ReShade.ini and refuses while the game runs; addon builds reproducibly from pinned ReShade 6.8.0 (18deaa52) and ImGui (3912b3d9) headers locally and in CI; Feeder route installs, records and restores the addon and retires the manual quiet-startup addon; in game the panel opens on the hotkey, toggles NR live (RenoDX log shows the toggle) and saves tuning that RenoDX loads next launch; Windows tests and CI green; draft PR via Relay.",
-      "next_action": "Flagship defaults: Skynizz + Universal recommended on Windows and the default DLSS package; Linux unchanged. Test, push PR #52, then report pinned upstream updates (Skynizz v1.3.0, DLSS-Unlocked NR-v0.9.71, RenoDX DLSS5 rc10).",
+      "next_action": "Packages: NR | MFG columns, Unified row, Custom/Community row, OS verified marks from the catalog. Combos verified on the Forge Lab Halo copy (integrated 4x, MFG Unlock 4x, Universal loads). Build, test, install, push PR #52.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -7454,8 +7456,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-22T07:11:00.079Z",
-      "lease_until": "2026-10-22T19:11:00.079Z"
+      "updated_at": "2026-10-22T07:39:53.706Z",
+      "lease_until": "2026-10-22T19:39:53.706Z"
     }
   ]
 }
