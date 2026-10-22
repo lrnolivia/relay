@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T23:37:46.338Z",
+  "updated_at": "2026-10-22T23:44:21.843Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -3068,6 +3068,46 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-gamemode-motion-20261022",
+      "owner": "01a1659a-f730-7830-b8a7-575b8daece8c",
+      "goal": "Implement Lauren's complete native Game Mode motion pass across Windows and Linux, preserving functionality, layouts, game accents, and current workers' source.",
+      "acceptance": "Central retargetable motion; immediate focus/press/scroll and rapid input; coherent page/detail/back/modal continuity; reduced-motion/system preferences; no ambient loops or animated blur; native platform parity; meaningful regression coverage; actual-resolution/refresh performance evidence and real-interaction recording where available. No game/injection/launch configuration/save/backup writes. Keep operational evidence in Relay. Existing explicit user instruction in this same chat authorizes a standalone app/working-files copy for parallel UI polish, asks release of original claims, and integration by the Windows owner; retain that narrower artifact-only exception, do not create or publish an unadmitted branch or modify active workers' checkouts. Product source integration awaits serial admission/owner folding.",
+      "next_action": "Continue only the already user-authorized standalone preview copy; refresh exact immutable Windows/Linux source, implement and verify reviewable native motion patches. Four managed branch slots and Windows/Linux UI remain owned; no new implementation branch, claim takeover or shared-checkout writes. Preserve original preview artifact.",
+      "paths": [
+        "windows/RtxForge.Windows/GameMode/",
+        "windows/RtxForge.Windows/Controls/Controls.xaml",
+        "gui/game_mode.py",
+        "tests/test_game_mode_motion.py",
+        "windows/tests/GameModeMotion/"
+      ],
+      "resources": [
+        "rtxforge-gamemode-motion-preview"
+      ],
+      "category": "design",
+      "primary_role": "worker",
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-22T23:44:21.843Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Implement Lauren's complete native Game Mode motion pass across Windows and Linux, preserving functionality, layouts, game accents, and current workers' source.",
+          "acceptance": "Central retargetable motion; immediate focus/press/scroll and rapid input; coherent page/detail/back/modal continuity; reduced-motion/system preferences; no ambient loops or animated blur; native platform parity; meaningful regression coverage; actual-resolution/refresh performance evidence and real-interaction recording where available. No game/injection/launch configuration/save/backup writes. Keep operational evidence in Relay. Existing explicit user instruction in this same chat authorizes a standalone app/working-files copy for parallel UI polish, asks release of original claims, and integration by the Windows owner; retain that narrower artifact-only exception, do not create or publish an unadmitted branch or modify active workers' checkouts. Product source integration awaits serial admission/owner folding.",
+          "at": "2026-10-22T23:44:21.843Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-gamemode-motion-20261022:acceptance:0",
+            "text": "Central retargetable motion; immediate focus/press/scroll and rapid input; coherent page/detail/back/modal continuity; reduced-motion/system preferences; no ambient loops or animated blur; native platform parity; meaningful regression coverage; actual-resolution/refresh performance evidence and real-interaction recording where available. No game/injection/launch configuration/save/backup writes. Keep operational evidence in Relay. Existing explicit user instruction in this same chat authorizes a standalone app/working-files copy for parallel UI polish, asks release of original claims, and integration by the Windows owner; retain that narrower artifact-only exception, do not create or publish an unadmitted branch or modify active workers' checkouts. Product source integration awaits serial admission/owner folding.",
+            "at": "2026-10-22T23:44:21.843Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
