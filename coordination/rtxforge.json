@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T22:09:33.723Z",
+  "updated_at": "2026-10-22T22:11:03.893Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -726,7 +726,9 @@
       "acceptance": "Game Mode has more personality and finish within incumbent identity; all existing functions retained and layouts preserved outside Game Details. Game Details is easier to scan without losing controls. Desktop unchanged. Bounded visual verification and Windows build pass.",
       "next_action": "Lauren directly resumes queued Impeccable Game Mode polish in this chat 2026-10-22. Preserve ALL layouts/functions and Game Details/dialog per-game accents; Dark/Light/Night colors may change. Claim narrow presentation-only files in isolated checkout before editing.",
       "paths": [
-        "windows/RtxForge.Windows/GameMode/"
+        "windows/RtxForge.Windows/GameMode/GmTheme.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Library.cs",
+        "windows/RtxForge.Windows/Themes/GameMode.xaml"
       ],
       "resources": [
         "rtxforge-windows-gamemode-polish"
@@ -761,7 +763,34 @@
           "next_action": "Lauren directly resumes queued Impeccable Game Mode polish in this chat 2026-10-22. Preserve ALL layouts/functions and Game Details/dialog per-game accents; Dark/Light/Night colors may change. Claim narrow presentation-only files in isolated checkout before editing."
         }
       ],
-      "updated_at": "2026-10-22T21:55:55.027Z"
+      "updated_at": "2026-10-22T22:11:03.893Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-22T22:11:03.893Z",
+          "by": "01a1659a-f730-7830-b8a7-575b8daece8c",
+          "reason": "Lauren (2026-10-22) released GmUi.cs and GameModeView.cs to rtxforge-feeder-overlay-20261021 (PR #52): Game Mode Packages/Extras pages, square menu rows and per-game accents on single-game install screens. Rebase PR #54 onto PR #52 before further edits to those two files.",
+          "fields": [
+            "paths"
+          ],
+          "before": {
+            "paths": [
+              "windows/RtxForge.Windows/GameMode/GmTheme.cs",
+              "windows/RtxForge.Windows/GameMode/GmUi.cs",
+              "windows/RtxForge.Windows/GameMode/GameModeView.cs",
+              "windows/RtxForge.Windows/GameMode/GameModeView.Library.cs",
+              "windows/RtxForge.Windows/Themes/GameMode.xaml"
+            ]
+          },
+          "after": {
+            "paths": [
+              "windows/RtxForge.Windows/GameMode/GmTheme.cs",
+              "windows/RtxForge.Windows/GameMode/GameModeView.Library.cs",
+              "windows/RtxForge.Windows/Themes/GameMode.xaml"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "rtxforge-windows-sims-mass-effect-install-20261017",
@@ -8296,8 +8325,6 @@
       "branch": "rtxforge/windows-gamemode-polish",
       "paths": [
         "windows/RtxForge.Windows/GameMode/GmTheme.cs",
-        "windows/RtxForge.Windows/GameMode/GmUi.cs",
-        "windows/RtxForge.Windows/GameMode/GameModeView.cs",
         "windows/RtxForge.Windows/GameMode/GameModeView.Library.cs",
         "windows/RtxForge.Windows/Themes/GameMode.xaml"
       ],
@@ -8338,8 +8365,35 @@
           "next_action": "Lauren directly resumes queued Impeccable Game Mode polish in this chat 2026-10-22. Preserve ALL layouts/functions and Game Details/dialog per-game accents; Dark/Light/Night colors may change. Claim narrow presentation-only files in isolated checkout before editing."
         }
       ],
-      "updated_at": "2026-10-22T22:09:33.723Z",
-      "lease_until": "2026-10-23T10:09:33.723Z"
+      "updated_at": "2026-10-22T22:11:03.893Z",
+      "lease_until": "2026-10-23T10:11:03.893Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-22T22:11:03.893Z",
+          "by": "01a1659a-f730-7830-b8a7-575b8daece8c",
+          "reason": "Lauren (2026-10-22) released GmUi.cs and GameModeView.cs to rtxforge-feeder-overlay-20261021 (PR #52): Game Mode Packages/Extras pages, square menu rows and per-game accents on single-game install screens. Rebase PR #54 onto PR #52 before further edits to those two files.",
+          "fields": [
+            "paths"
+          ],
+          "before": {
+            "paths": [
+              "windows/RtxForge.Windows/GameMode/GmTheme.cs",
+              "windows/RtxForge.Windows/GameMode/GmUi.cs",
+              "windows/RtxForge.Windows/GameMode/GameModeView.cs",
+              "windows/RtxForge.Windows/GameMode/GameModeView.Library.cs",
+              "windows/RtxForge.Windows/Themes/GameMode.xaml"
+            ]
+          },
+          "after": {
+            "paths": [
+              "windows/RtxForge.Windows/GameMode/GmTheme.cs",
+              "windows/RtxForge.Windows/GameMode/GameModeView.Library.cs",
+              "windows/RtxForge.Windows/Themes/GameMode.xaml"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "rtxforge-feeder-overlay-20261021",
