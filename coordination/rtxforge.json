@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T22:58:57.299Z",
+  "updated_at": "2026-10-22T22:59:02.414Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9169,14 +9169,18 @@
       "owner": "01a165c7-6170-7223-ad38-eb1eeafb7972",
       "branch": "rtxforge/vulkan-dlssg-20261022",
       "paths": [
-        "providers/bg3fgvk/"
+        "providers/bg3fgvk/",
+        "scripts/vulkan_dlssg_provider.py",
+        "tests/test_vulkan_dlssg_provider.py"
       ],
       "resources": [
-        "rtxforge-bg3fgvk-candidate"
+        "rtxforge-bg3fgvk-candidate",
+        "bg3-vulkan-loader-ownership",
+        "bg3-vulkan-provider-installation"
       ],
       "goal": "Lead bg3fgvk integration into rtxForge: begin with source/release review, deliver a pinned Experimental BG3 Vulkan DLSS-G route, then extract a profiled Vulkan DLSS-SR-to-DLSS-G adapter for separately tested games. Lauren authorized getting this started on 2026-10-22; read source and report before touching any game.",
       "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary. Current user authorization2026-10-22: build or source the BG3 Vulkan provider, resolve loader ownership, implement transactional install/restore/repair and fixtures, and test on Lauren's BG3 install. Source review prerequisite is complete. Preserve backups and report exact game/runtime evidence; user says install is not precious.",
-      "next_action": "Draft PR55 https://github.com/lrnolivia/rtxForge/pull/55 at53186d33124bda7cd849927388b9182c1fa266c4 adds only providers/bg3fgvk/source.json and README.md. Verified human author/committer/account. Pin: bg3fgvk v1.2.0 source66082e6f691fba1c48e319b688a25fa5ae196e56; asset603771339, archive SHA256 f5ffa33f51990cfd929e356085ced4a7b4746c3249094f1433e1639819d15e89. Archive size,13 member sizes/hashes, seven source/redist hashes PASS. Unmodified upstream host tests:51 checks/five groups PASS with MSVC x64 and Vulkan-Headers ee3b5caaa7e372715873c7b9c390ee1c3ca5db25. JSON/whitespace/admission/attribution PASS. CI admission+attribution passed; panel build pending22:50UTC. Candidate flags deployable/runtime_verified/default_promoted false; whole integration NOT COMPLETE. Review in provider README: synthetic camera constants, Vulkan layouts, fixed NGX appId, no HUD extraction; generalization requires profiles. Existing D3D12 Skynizz BG3 guard stays valid. Next pin/review Native Mod Loader, then admit isolated fixture-only transactional install/repair/restore adapter. Shared catalog/runtime paths require scoped handoff/admission from active owners. No game launch or game/Steam/driver/installed-app changes. Preserve same task/branch. Isolated source and test receipts: C:\\Users\\lrnol\\AppData\\Local\\Temp\\rtxforge-vulkan-review-20261022\\ (rtxForge/,bg3fgvk/,host-tests/,archive-inventory.json). Test exe SHA256 9e7680b68b2e8fe100e7506de09865dc913b5c8e90cba8daa9abd42168cdde09. Original checkout and unrelated debug.log preserved.",
+      "next_action": "Continue PR55 on same branch. Review/build MIT loader without redistributing Bink; implement independent provider/CLI install/repair/restore and failure fixtures. User explicitly authorizes actual BG3 testing at G:\\SteamLibrary\\steamapps\\common\\Baldurs Gate 3. RTX4070,HAGS2; baseline Bink hash7c3ac825eb7fe769c3831540e108282dd90f6275b0f61dec8beeea0a6615b0c1. No game process currently running. Do not edit reserved shared catalog/host files.",
       "category": "implementation",
       "tags": [
         "experimental",
@@ -9213,8 +9217,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-22T22:58:57.299Z",
-      "lease_until": "2026-10-23T10:58:57.299Z",
+      "updated_at": "2026-10-22T22:59:02.414Z",
+      "lease_until": "2026-10-23T10:59:02.414Z",
       "amendment_count": 1,
       "amendments": [
         {
