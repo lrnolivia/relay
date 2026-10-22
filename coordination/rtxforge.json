@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T23:16:15.299Z",
+  "updated_at": "2026-10-22T23:19:03.049Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2962,7 +2962,7 @@
       "supporting_teams": [],
       "primary_staff": null,
       "supporting_staff": [],
-      "state": "queued",
+      "state": "superseded",
       "created_at": "2026-10-22T07:22:18.367Z",
       "objective_history": {
         "baseline": {
@@ -2978,7 +2978,21 @@
             "at": "2026-10-22T07:22:18.367Z"
           }
         ]
-      }
+      },
+      "retirement": {
+        "at": "2026-10-22T23:19:03.049Z",
+        "intent": {
+          "operation_id": "retire-skynizz-v130-rebase-20261022",
+          "owner": "claude-code-cloud-rtxforge-56",
+          "disposition": "superseded",
+          "reason": "The Windows session rebased the bridge onto Skynizz v1.3.0 itself (548d6b5), tested it in game, and shipped it in PR #52 (merged 58712a2). Draft PR #53 was closed unmerged.",
+          "evidence": "PR #52 merged as 58712a2 with commit 548d6b5 'Rebase the Skynizz bridge onto Skynizz v1.3.0'; PR #53 closed.",
+          "superseded_by": "rtxforge-feeder-overlay-20261021",
+          "branch": null,
+          "head_sha": null
+        }
+      },
+      "updated_at": "2026-10-22T23:19:03.049Z"
     },
     {
       "id": "rtxforge-vulkan-dlssg-20261022",
