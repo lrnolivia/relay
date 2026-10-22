@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T07:11:00.079Z",
+  "updated_at": "2026-10-22T07:22:18.367Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2156,6 +2156,44 @@
             "id": "rtxforge-windows-presets-adopt-linux-20261021:acceptance:0",
             "text": "Lauren, 2026-10-21: \"i like Reset/Select Games/Apply To All, i think i want Windows to adopt that. as well as the DLSS Presets panel move.\" Footer replaces Discard link + Save defaults + Apply to games… flyout with right-aligned Reset (discard unsaved, disabled when clean), Select games (enter existing Library presets mode), Apply to all (accent; reviewed apply to every configured game AND save as library defaults on confirm; with no configured games saves defaults only, no writes). Busy disables all. DLSS presets card (DLSS preset + Ray Reconstruction preset, same copy) moves from the full-width bottom card to the top of the left column under MFG; single-column order MFG → DLSS presets → Neural rendering → Image tuning → Sharpening → Performance; embedded/legacy keep relative order. Engine, shared control schema and review paths unchanged. Validate: WinUI x64 0 warnings/errors, preset harness tests, native check of Reset/Select games/Apply to all and empty-library save, Dark+Light screenshots. Draft PR only; no merge/release without Lauren. Linux reference: gui/rtxforge_gtk.py build_presets_page / feature_presets.py at Linux integration commit 9eca185+. Full spec saved locally at /home/loew/Documents/Codex/2026-10-21/task/windows-presets-adopt-linux-20261021.md.",
             "at": "2026-10-22T00:26:07.620Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-skynizz-v130-rebase-20261022",
+      "owner": "claude-code-cloud-rtxforge-56",
+      "goal": "Rebase the Skynizz bridge patch stack (ada-mfg.patch, nr-placement.patch, panel-candidate.patch) from Skynizz v1.2.1 onto v1.3.0, bump the pinned commit in source.json and workflows, and let Windows CI build it. Cloud-side source work only; in-game Forge Lab verification stays with the Windows session that owns rtxforge-feeder-overlay-20261021 (Lauren 2026-10-22: 'see if you can do some of its work for it').",
+      "acceptance": "All three patches apply to Skynizz v1.3.0 with conflicts resolved; digests in source.json/placement-candidate.json/panel-candidate.json updated; workflows pin fc702f8ca22f97b01bd6a02f3386bffb3484fc35; Windows CI panel-candidate and WinUI builds pass; draft PR stacked on rtxforge/feeder-overlay-20261021; runtime_verified stays false.",
+      "next_action": "Resolve Config.cpp and NVNGX_DLSS_Dx12.cpp conflicts on v1.3.0, regenerate patches, push branch, open stacked draft PR.",
+      "paths": [
+        "providers/skynizz-bridge/",
+        "providers/lock.json",
+        ".github/workflows/windows-build.yml",
+        ".github/workflows/skynizz-bridge.yml"
+      ],
+      "resources": [
+        "rtxforge-skynizz-bridge-source"
+      ],
+      "category": "implementation",
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-22T07:22:18.367Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Rebase the Skynizz bridge patch stack (ada-mfg.patch, nr-placement.patch, panel-candidate.patch) from Skynizz v1.2.1 onto v1.3.0, bump the pinned commit in source.json and workflows, and let Windows CI build it. Cloud-side source work only; in-game Forge Lab verification stays with the Windows session that owns rtxforge-feeder-overlay-20261021 (Lauren 2026-10-22: 'see if you can do some of its work for it').",
+          "acceptance": "All three patches apply to Skynizz v1.3.0 with conflicts resolved; digests in source.json/placement-candidate.json/panel-candidate.json updated; workflows pin fc702f8ca22f97b01bd6a02f3386bffb3484fc35; Windows CI panel-candidate and WinUI builds pass; draft PR stacked on rtxforge/feeder-overlay-20261021; runtime_verified stays false.",
+          "at": "2026-10-22T07:22:18.367Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-skynizz-v130-rebase-20261022:acceptance:0",
+            "text": "All three patches apply to Skynizz v1.3.0 with conflicts resolved; digests in source.json/placement-candidate.json/panel-candidate.json updated; workflows pin fc702f8ca22f97b01bd6a02f3386bffb3484fc35; Windows CI panel-candidate and WinUI builds pass; draft PR stacked on rtxforge/feeder-overlay-20261021; runtime_verified stays false.",
+            "at": "2026-10-22T07:22:18.367Z"
           }
         ]
       }
