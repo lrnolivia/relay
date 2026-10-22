@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T23:14:28.596Z",
+  "updated_at": "2026-10-22T23:16:15.299Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9070,7 +9070,7 @@
       ],
       "goal": "Lead bg3fgvk integration into rtxForge: begin with source/release review, deliver a pinned Experimental BG3 Vulkan DLSS-G route, then extract a profiled Vulkan DLSS-SR-to-DLSS-G adapter for separately tested games. Lauren authorized getting this started on 2026-10-22; read source and report before touching any game.",
       "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary. Current user authorization2026-10-22: build or source the BG3 Vulkan provider, resolve loader ownership, implement transactional install/restore/repair and fixtures, and test on Lauren's BG3 install. Source review prerequisite is complete. Preserve backups and report exact game/runtime evidence; user says install is not precious.",
-      "next_action": "User reported possible BG3 crash; read-only diagnosis confirms process exited. Tested corrected source611d39e77533f3e9bc0dcc498b56166abb93112f, loader SHA2566e5e7457ed87da58b3a2e691294c650f41c0009001e327cca07e84eb5511a5f2. Initial6b563e1/4e6870 loader had proven small-stack THREAD_ATTACH overflow(c00000fd,bink+1837); fixed with static path buffers and 64KiB thread native fixture PASS. Corrected real run: slInit0, Vulkan device/swapchain created, Reflex0,status0,framesMax1; five300-present samples x1.00; no NGX SR evaluations/input tags/gateON. Exited around62s; no new WER fault record beyond old stack overflows, cause UNVERIFIED. UI control remains stopped after physical Escape. Preserved full logs/INI/events at C:\\Users\\lrnol\\AppData\\Local\\Temp\\rtxforge-vulkan-review-20261022\\runtime-exit-611d39e. Restored via adapter and verified every pre-test original bin file hash/size; game-generated gold/network logs and db/settings.dat retained. Provider state RESTORED at LOCALAPPDATA/rtxForge/bg3-vulkan; no game process running. No frame-generation/runtime pass. Existing30adapter tests29PASS+1POSIXskip and native early-load/forwarding/DX11/missingplugin/smallstack fixtures PASS. Next review baseline game startup and capture a fresh exit/crash cause before any further mod launch; honor UI stop, keep exact-head quarantine/runtime_verified=false and PR55 draft. Full adapter scope retained; shared catalog/host untouched.",
+      "next_action": "BG3 source611d39e77533f3e9bc0dcc498b56166abb93112f remains draftPR55; real game provider state RESTORED. Every original bin file hash/size verified; game-generated gold/network logs and db/settings.dat retained. Corrected loader initialized SL/Vulkan/Reflex, then game exited~62s with no fresh WER cause; samplesx1/noSRinputs/noFGgate. UI control stopped after Escape. Evidence: Temp/rtxforge-vulkan-review-20261022/runtime-exit-611d39e. Earlier stack overflow fixed by staticbuffers+small-stack fixture. Adapter29PASS+1skip/nativefixturesPASS; runtime_verified=false. NEW user reference Nexus RDR2 mod10997 inspected: mor3a/rdr2-vulkan-frame-generation v0.82, exact sourcebc853d0b4a9e7ba23ee1fe00c2c107092ccd596d cloned read-only under same scratch root. Original code MIT with bg3fgvk-MIT notice; SDK/runtime licenses separate and Nexus package permission flags differ, so source and packaged binary permissions must be reviewed independently. Useful source modules: native_hud.cpp pre-HUD capture,frame_association.h exact eval/submit/present association,resource tracking,NGX identity capture,patched Streamline2.14.1 queue allocation. DLSS-G nativeVulkan; XeSS Vulkan/D3D12 bridge; defaultASIloader; binary explicitly gates RDR2.exe/appId, so not drop-in BG3. Current source says it matches0.82; Nexus warns older snapshots may differ. Next compare these components as possible portable core, keep BG3 loader/ownership adapter, isolate original game's baseline exit before further UI/mod launch. RDR2 game installation has NOT been modified.",
       "category": "implementation",
       "tags": [
         "experimental",
@@ -9107,8 +9107,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-22T23:14:28.596Z",
-      "lease_until": "2026-10-23T11:14:28.596Z",
+      "updated_at": "2026-10-22T23:16:15.299Z",
+      "lease_until": "2026-10-23T11:16:15.299Z",
       "amendment_count": 1,
       "amendments": [
         {
