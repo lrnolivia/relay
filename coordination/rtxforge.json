@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T00:25:50.716Z",
+  "updated_at": "2026-10-22T00:26:07.620Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1780,6 +1780,42 @@
           "branch": "rtxforge/linux-runtime-parity-20261021",
           "head_sha": "5ac33647c83914d961b7054010ddde896af7a43d"
         }
+      }
+    },
+    {
+      "id": "rtxforge-windows-presets-adopt-linux-20261021",
+      "owner": "01a13ce6-a9d7-7790-a1a8-58b870d22789",
+      "goal": "Windows desktop Presets adopts the Linux design Lauren chose on 2026-10-21: footer buttons Reset · Select games · Apply to all, and the DLSS presets card moved to the top of the left column under Multi-Frame Generation (above Neural rendering).",
+      "acceptance": "Lauren, 2026-10-21: \"i like Reset/Select Games/Apply To All, i think i want Windows to adopt that. as well as the DLSS Presets panel move.\" Footer replaces Discard link + Save defaults + Apply to games… flyout with right-aligned Reset (discard unsaved, disabled when clean), Select games (enter existing Library presets mode), Apply to all (accent; reviewed apply to every configured game AND save as library defaults on confirm; with no configured games saves defaults only, no writes). Busy disables all. DLSS presets card (DLSS preset + Ray Reconstruction preset, same copy) moves from the full-width bottom card to the top of the left column under MFG; single-column order MFG → DLSS presets → Neural rendering → Image tuning → Sharpening → Performance; embedded/legacy keep relative order. Engine, shared control schema and review paths unchanged. Validate: WinUI x64 0 warnings/errors, preset harness tests, native check of Reset/Select games/Apply to all and empty-library save, Dark+Light screenshots. Draft PR only; no merge/release without Lauren. Linux reference: gui/rtxforge_gtk.py build_presets_page / feature_presets.py at Linux integration commit 9eca185+. Full spec saved locally at /home/loew/Documents/Codex/2026-10-21/task/windows-presets-adopt-linux-20261021.md.",
+      "next_action": "Windows worker: claim, implement per acceptance in a Windows checkout, build/test natively, draft PR.",
+      "paths": [
+        "windows/RtxForge.Windows/Views/PresetsPage.cs",
+        "windows/RtxForge.Windows/Controls/PresetControlsView.cs"
+      ],
+      "resources": [
+        "rtxforge-windows-presets"
+      ],
+      "category": "design",
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-22T00:26:07.620Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Windows desktop Presets adopts the Linux design Lauren chose on 2026-10-21: footer buttons Reset · Select games · Apply to all, and the DLSS presets card moved to the top of the left column under Multi-Frame Generation (above Neural rendering).",
+          "acceptance": "Lauren, 2026-10-21: \"i like Reset/Select Games/Apply To All, i think i want Windows to adopt that. as well as the DLSS Presets panel move.\" Footer replaces Discard link + Save defaults + Apply to games… flyout with right-aligned Reset (discard unsaved, disabled when clean), Select games (enter existing Library presets mode), Apply to all (accent; reviewed apply to every configured game AND save as library defaults on confirm; with no configured games saves defaults only, no writes). Busy disables all. DLSS presets card (DLSS preset + Ray Reconstruction preset, same copy) moves from the full-width bottom card to the top of the left column under MFG; single-column order MFG → DLSS presets → Neural rendering → Image tuning → Sharpening → Performance; embedded/legacy keep relative order. Engine, shared control schema and review paths unchanged. Validate: WinUI x64 0 warnings/errors, preset harness tests, native check of Reset/Select games/Apply to all and empty-library save, Dark+Light screenshots. Draft PR only; no merge/release without Lauren. Linux reference: gui/rtxforge_gtk.py build_presets_page / feature_presets.py at Linux integration commit 9eca185+. Full spec saved locally at /home/loew/Documents/Codex/2026-10-21/task/windows-presets-adopt-linux-20261021.md.",
+          "at": "2026-10-22T00:26:07.620Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-windows-presets-adopt-linux-20261021:acceptance:0",
+            "text": "Lauren, 2026-10-21: \"i like Reset/Select Games/Apply To All, i think i want Windows to adopt that. as well as the DLSS Presets panel move.\" Footer replaces Discard link + Save defaults + Apply to games… flyout with right-aligned Reset (discard unsaved, disabled when clean), Select games (enter existing Library presets mode), Apply to all (accent; reviewed apply to every configured game AND save as library defaults on confirm; with no configured games saves defaults only, no writes). Busy disables all. DLSS presets card (DLSS preset + Ray Reconstruction preset, same copy) moves from the full-width bottom card to the top of the left column under MFG; single-column order MFG → DLSS presets → Neural rendering → Image tuning → Sharpening → Performance; embedded/legacy keep relative order. Engine, shared control schema and review paths unchanged. Validate: WinUI x64 0 warnings/errors, preset harness tests, native check of Reset/Select games/Apply to all and empty-library save, Dark+Light screenshots. Draft PR only; no merge/release without Lauren. Linux reference: gui/rtxforge_gtk.py build_presets_page / feature_presets.py at Linux integration commit 9eca185+. Full spec saved locally at /home/loew/Documents/Codex/2026-10-21/task/windows-presets-adopt-linux-20261021.md.",
+            "at": "2026-10-22T00:26:07.620Z"
+          }
+        ]
       }
     }
   ],
