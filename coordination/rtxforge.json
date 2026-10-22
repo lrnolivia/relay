@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T02:36:44.593Z",
+  "updated_at": "2026-10-22T02:37:02.271Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7012,6 +7012,53 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-feeder-overlay-20261021",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/feeder-overlay-20261021",
+      "paths": [
+        "scripts/feeder_provider.py",
+        "tests/test_feeder_provider.py",
+        "windows/tests/test_feeder_provider.py",
+        "windows/feeder-panel/",
+        "windows/build/Build-FeederPanel.ps1",
+        "windows/build/Bundle-Engine.ps1",
+        "windows/engine-host/rtxforge_win_host.py",
+        ".github/workflows/windows-build.yml"
+      ],
+      "resources": [
+        "rtxforge-windows-app",
+        "feeder-panel"
+      ],
+      "goal": "Lauren (2026-10-21): wire the Feeder NR provider and its Windows install route (Mass Effect LE 1/2/3, The Sims 4) and give Feeder games the rtxForge overlay. Fix EA-wrapped DX11 eligibility (delay imports) and stale install records after Steam verification. Ship a ReShade addon (ForgePanel) opening the rtxForge panel on the panel hotkey: live NR on/off through RenoDX's toggle key, plus Model strength, passes, resolution and preset written to [RenoDX.DLSS5] in the game's ReShade.ini, labeled as applying on next launch; it also hides ReShade's startup banner (replacing quiet-startup). Presets panel apply for Feeder games writes the same [RenoDX.DLSS5] keys in the same ReShade.ini (shared with Linux on the dual-boot library), so overlay and presets agree.",
+      "acceptance": "Feeder install/apply review and execute succeed for ME1/ME2/ME3; Presets apply writes [RenoDX.DLSS5] in each game's ReShade.ini and refuses while the game runs; addon builds reproducibly from pinned ReShade 6.8.0 (18deaa52) and ImGui (3912b3d9) headers locally and in CI; Feeder route installs, records and restores the addon and retires the manual quiet-startup addon; in game the panel opens on the hotkey, toggles NR live (RenoDX log shows the toggle) and saves tuning that RenoDX loads next launch; Windows tests and CI green; draft PR via Relay.",
+      "next_action": "Write the addon and build script, add Feeder apply and addon install to feeder_provider, bundle it, test on ME, open draft PR.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "f4824d8b304535b6d700ee82b89f73942d41c2b1",
+      "state": "active",
+      "created_at": "2026-10-22T02:37:02.271Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-21): wire the Feeder NR provider and its Windows install route (Mass Effect LE 1/2/3, The Sims 4) and give Feeder games the rtxForge overlay. Fix EA-wrapped DX11 eligibility (delay imports) and stale install records after Steam verification. Ship a ReShade addon (ForgePanel) opening the rtxForge panel on the panel hotkey: live NR on/off through RenoDX's toggle key, plus Model strength, passes, resolution and preset written to [RenoDX.DLSS5] in the game's ReShade.ini, labeled as applying on next launch; it also hides ReShade's startup banner (replacing quiet-startup). Presets panel apply for Feeder games writes the same [RenoDX.DLSS5] keys in the same ReShade.ini (shared with Linux on the dual-boot library), so overlay and presets agree.",
+          "acceptance": "Feeder install/apply review and execute succeed for ME1/ME2/ME3; Presets apply writes [RenoDX.DLSS5] in each game's ReShade.ini and refuses while the game runs; addon builds reproducibly from pinned ReShade 6.8.0 (18deaa52) and ImGui (3912b3d9) headers locally and in CI; Feeder route installs, records and restores the addon and retires the manual quiet-startup addon; in game the panel opens on the hotkey, toggles NR live (RenoDX log shows the toggle) and saves tuning that RenoDX loads next launch; Windows tests and CI green; draft PR via Relay.",
+          "at": "2026-10-22T02:37:02.271Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-feeder-overlay-20261021:acceptance:0",
+            "text": "Feeder install/apply review and execute succeed for ME1/ME2/ME3; Presets apply writes [RenoDX.DLSS5] in each game's ReShade.ini and refuses while the game runs; addon builds reproducibly from pinned ReShade 6.8.0 (18deaa52) and ImGui (3912b3d9) headers locally and in CI; Feeder route installs, records and restores the addon and retires the manual quiet-startup addon; in game the panel opens on the hotkey, toggles NR live (RenoDX log shows the toggle) and saves tuning that RenoDX loads next launch; Windows tests and CI green; draft PR via Relay.",
+            "at": "2026-10-22T02:37:02.271Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-22T02:37:02.271Z",
+      "lease_until": "2026-10-22T14:37:02.271Z"
     }
   ]
 }
