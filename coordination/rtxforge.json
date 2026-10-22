@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-22T22:13:52.178Z",
+  "updated_at": "2026-10-22T22:45:19.453Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2837,6 +2837,57 @@
             "id": "rtxforge-skynizz-v130-rebase-20261022:acceptance:0",
             "text": "All three patches apply to Skynizz v1.3.0 with conflicts resolved; digests in source.json/placement-candidate.json/panel-candidate.json updated; workflows pin fc702f8ca22f97b01bd6a02f3386bffb3484fc35; Windows CI panel-candidate and WinUI builds pass; draft PR stacked on rtxforge/feeder-overlay-20261021; runtime_verified stays false.",
             "at": "2026-10-22T07:22:18.367Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-vulkan-dlssg-20261022",
+      "owner": "01a165c7-6170-7223-ad38-eb1eeafb7972",
+      "goal": "Lead bg3fgvk integration into rtxForge: begin with source/release review, deliver a pinned Experimental BG3 Vulkan DLSS-G route, then extract a profiled Vulkan DLSS-SR-to-DLSS-G adapter for separately tested games. Lauren authorized getting this started on 2026-10-22; read source and report before touching any game.",
+      "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary.",
+      "next_action": "Kickoff review 2026-10-22: inspected thierbig/bg3fgvk v1.2.0 source 66082e6f691fba1c48e319b688a25fa5ae196e56 (annotated tag object 6f8bfe6255f34a94e2963223d7045097f369edc5). Download bg3fgvk-v1.2.0.zip, asset603771339, 5,055,411 bytes, locally verified SHA256 f5ffa33f51990cfd929e356085ced4a7b4746c3249094f1433e1639819d15e89. Seven runtime DLLs form the Streamline2.12.0 bundle, including nvngx_dlssg310.7.0.0; retain LICENSE.txt and STREAMLINE-LICENSE.txt. Source reads depth/MVs/jitter/reset from NVSDK_NGX_VULKAN_EvaluateFeature; it synthesizes camera perspective FOV0.84, near0.05/far10000 and identity reprojection, assumes attachment layouts and hard-codes applicationId0xE658703. Gate is60 successful tagged evaluation presents ON /30 idle presents OFF; this is a DLSS activity heuristic, not semantic menu detection. TagHUDLess and TagUI default off; optional UI buffer is transparent, not extracted game HUD. Hooks must install before Vulkan device/swapchain creation. Existing Skynizz BG3 refusal is correct for that D3D12-only provider and must stay until a distinct Vulkan route exists. rtxForge main inspected f4824d8b304535b6d700ee82b89f73942d41c2b1. Integration paths currently reserved by active Linux/runtime and Windows/Feeder owners, so queue admission/handoff before edits. Next finish upstream host tests and archive inventory, deliver report, then admit a narrow candidate manifest/provider scope and fixture-only adapter work. No product/game files, Steam settings, drivers or installed app changed. Sources: https://github.com/thierbig/bg3fgvk/tree/66082e6f691fba1c48e319b688a25fa5ae196e56 and https://github.com/thierbig/bg3fgvk/releases/tag/v1.2.0 .",
+      "paths": [
+        "providers/bg3fgvk/",
+        "scripts/vulkan_dlssg_provider.py",
+        "tests/test_vulkan_dlssg_provider.py",
+        "providers/lock.json",
+        "scripts/package_catalog.py",
+        "scripts/desktop_service.py",
+        "scripts/planning.py",
+        "windows/engine-host/rtxforge_win_host.py"
+      ],
+      "resources": [
+        "rtxforge-vulkan-dlssg",
+        "bg3-vulkan-loader-ownership",
+        "rtxforge-package-routing"
+      ],
+      "category": "implementation",
+      "tags": [
+        "experimental",
+        "vulkan",
+        "bg3fgvk",
+        "source-reviewed",
+        "no-game-writes"
+      ],
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-22T22:45:19.453Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lead bg3fgvk integration into rtxForge: begin with source/release review, deliver a pinned Experimental BG3 Vulkan DLSS-G route, then extract a profiled Vulkan DLSS-SR-to-DLSS-G adapter for separately tested games. Lauren authorized getting this started on 2026-10-22; read source and report before touching any game.",
+          "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary.",
+          "at": "2026-10-22T22:45:19.453Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-vulkan-dlssg-20261022:acceptance:0",
+            "text": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary.",
+            "at": "2026-10-22T22:45:19.453Z"
           }
         ]
       }
