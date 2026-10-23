@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T23:27:40.146Z",
+  "updated_at": "2026-10-23T23:47:53.749Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -15888,14 +15888,17 @@
       "branch": "rtxforge/linux-website-screenshots-20261023",
       "paths": [
         "website/public/assets/screenshots/",
-        "website/public/screenshots.mjs"
+        "website/public/screenshots.mjs",
+        "website/public/features.js",
+        "website/public/styles.css",
+        "website/README.md"
       ],
       "resources": [
         "rtxforge-linux-capture-session"
       ],
       "goal": "Capture the Linux 1.0 Beta website screenshot set (dark+light SDR) matching the shipped Windows set, from the Linux RC build (PR67 head 28a468b) with the private full-library-20261021-v2 sample in demo mode, and wire it into website/public/screenshots.mjs via a draft PR.",
       "acceptance": "Linux dark+light captures for every Windows view that applies (desktop library, library selected, details, install review/progress/done, presets; Game Mode library, selected, details DLSS Files, presets, install review/progress/done), linux-<view>-{dark,light}.webp, wired with a linux() helper and Linux alt text/provenance, site renders them locally, draft PR with file/dimension/provenance table. Linux overlay only if authentic Proton gameplay capture is possible, else recorded as missing. Coordinates with (does not replace) rtxforge-hdr-sdr-native-media-capture-20261021: this covers its Linux SDR UI half only; HDR and Windows refresh stay there. No merge/deploy, no real game installs, sample never committed.",
-      "next_action": "Preflight, build capture-only demo shim in scratch from PR67 head, capture Linux dark+light set, open draft PR.",
+      "next_action": "28 Linux captures encoded and wired; add a Linux-specific Presets feature crop (features.js data-os + styles.css) and refresh the README screenshot notes, then open the draft PR.",
       "ledger_refs": [
         "rtxforge-hdr-sdr-native-media-capture-20261021"
       ],
@@ -15922,8 +15925,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T23:27:40.146Z",
-      "lease_until": "2026-10-24T11:27:40.146Z"
+      "updated_at": "2026-10-23T23:47:53.749Z",
+      "lease_until": "2026-10-24T11:47:53.749Z"
     }
   ]
 }
