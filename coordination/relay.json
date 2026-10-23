@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-23T08:09:29.981Z",
+  "updated_at": "2026-10-23T08:09:47.520Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -9738,7 +9738,7 @@
       ],
       "primary_staff": "rafael",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-23T08:03:58.381Z",
       "objective_history": {
         "baseline": {
@@ -18098,6 +18098,87 @@
           "head_sha": null
         }
       }
+    },
+    {
+      "id": "relay-intent-aware-test-maintenance-20261023",
+      "owner": "claude-code-session_01LNEq56CVnhpMG8CFnhv87D",
+      "branch": "relay/intent-aware-test-maintenance-20261023",
+      "paths": [
+        "docs/relay/TEST_MAINTENANCE_20261023.md",
+        "src/test-maintenance.js",
+        "src/test-maintenance.test.js",
+        "src/resume-checkpoints.js",
+        "src/resume-checkpoints.test.js",
+        "scripts/relay-executor.mjs",
+        "scripts/relay-executor.test.mjs",
+        "scripts/relay-native-continuity.mjs",
+        "scripts/relay-native-continuity.test.mjs",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "LOEW_CHAT_BIBLE.md",
+        "contracts/manifest.json",
+        "test/test-maintenance-contract.test.mjs",
+        "test/fixtures/test-maintenance/"
+      ],
+      "resources": [
+        "intent-aware-test-maintenance"
+      ],
+      "goal": "Implement a shared, intent-aware test-maintenance workflow for Claude and Codex in Relay, integrating project-local official Playwright Test Agents where applicable without embedding browser agents in the Relay server.",
+      "acceptance": "1. Before changing tests, workers compare the approved task/acceptance criteria and source diff, identifying affected behaviors as unchanged, intentionally changed, intentionally removed, or unresolved. Existing tests are evidence, not authority over explicit approved requirements. 2. Update affected test plans, unit/integration/E2E tests, fixtures and snapshots in the same change as the behavior; preserve coverage of unchanged behavior. Never restore intentionally removed functionality merely to satisfy obsolete assertions. Add replacement or absence assertions where meaningful. 3. Require a concise, reviewable rationale tied to the approved change for deleted/replaced assertions, changed snapshots, skipped/quarantined tests, or reduced coverage. No silent blanket snapshot updates, weakening assertions or skips to achieve green CI; unexplained failures remain regressions or unresolved requirements. Do not add redundant user approval gates for already authorized changes. 4. Use official Playwright planner/generator/healer in worker project environments when suitable; Relay supplies canonical requirements and captures structured progress/evidence. User handles installation on Claude and Codex. Do not install tools or alter user machines as part of this assignment. Do not force Playwright onto native GTK/Windows UI or non-browser suites; retain appropriate native/unit/integration tooling. 5. Keep one canonical shared workflow in Relay and minimal host adapters/references for Claude and Codex, without duplicate conflicting maintenance documents in product repos. Necessary runnable test code/configuration stays with its project. 6. Report actual test counts, skips with reasons, regression vs obsolete-expectation classification, run identity and exact tested commit through existing telemetry/cards. Unknown is unknown; do not fabricate totals. 7. Demonstrate intentional feature removal updates the obsolete test without resurrecting the feature; an unintended regression still fails; changed fixture/selector can be repaired without weakening behavior assertions; skip/coverage reduction is visible. Add regression coverage for the workflow and verify both agent adapters, explicitly marking untested hosts. 8. Reuse current coordination/verification paths, avoid active overlapping claims, deliver through non-default branch and draft PR with checks and production readback when released.",
+      "next_action": "Claude (cse_01LNEq56CVnhpMG8CFnhv87D) implementing: canonical intent-aware test-maintenance module + doc; surface it in resume checkpoints and claude-cli/codex-cli/native executor prompts with Playwright Test Agents setup (inspect existing Playwright version/config/agent definitions first; npx playwright init-agents --loop=claude or --loop=codex only when missing or after a Playwright upgrade; Playwright MCP alone is not planner/generator/healer; no installs on user machines; native/unit/integration suites keep their own tooling). Structured classification/skip-reason report alongside existing CI telemetry (telemetry files stay with relay-live-work-cards-staff-ci-20261023). Then regression coverage, draft PR, checks, merge, deploy, production readback.",
+      "category": "implementation",
+      "primary_team": "source",
+      "supporting_teams": [
+        "skills",
+        "inspector"
+      ],
+      "primary_staff": "rafael",
+      "supporting_staff": [],
+      "base_sha": "4bfac31b190778a809efb0966512256740a04a66",
+      "state": "active",
+      "created_at": "2026-10-23T08:09:47.520Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Implement a shared, intent-aware test-maintenance workflow for Claude and Codex in Relay, integrating project-local official Playwright Test Agents where applicable without embedding browser agents in the Relay server.",
+          "acceptance": "1. Before changing tests, workers compare the approved task/acceptance criteria and source diff, identifying affected behaviors as unchanged, intentionally changed, intentionally removed, or unresolved. Existing tests are evidence, not authority over explicit approved requirements. 2. Update affected test plans, unit/integration/E2E tests, fixtures and snapshots in the same change as the behavior; preserve coverage of unchanged behavior. Never restore intentionally removed functionality merely to satisfy obsolete assertions. Add replacement or absence assertions where meaningful. 3. Require a concise, reviewable rationale tied to the approved change for deleted/replaced assertions, changed snapshots, skipped/quarantined tests, or reduced coverage. No silent blanket snapshot updates, weakening assertions or skips to achieve green CI; unexplained failures remain regressions or unresolved requirements. Do not add redundant user approval gates for already authorized changes. 4. Use official Playwright planner/generator/healer in worker project environments when suitable; Relay supplies canonical requirements and captures structured progress/evidence. User handles installation on Claude and Codex. Do not install tools or alter user machines as part of this assignment. Do not force Playwright onto native GTK/Windows UI or non-browser suites; retain appropriate native/unit/integration tooling. 5. Keep one canonical shared workflow in Relay and minimal host adapters/references for Claude and Codex, without duplicate conflicting maintenance documents in product repos. Necessary runnable test code/configuration stays with its project. 6. Report actual test counts, skips with reasons, regression vs obsolete-expectation classification, run identity and exact tested commit through existing telemetry/cards. Unknown is unknown; do not fabricate totals. 7. Demonstrate intentional feature removal updates the obsolete test without resurrecting the feature; an unintended regression still fails; changed fixture/selector can be repaired without weakening behavior assertions; skip/coverage reduction is visible. Add regression coverage for the workflow and verify both agent adapters, explicitly marking untested hosts. 8. Reuse current coordination/verification paths, avoid active overlapping claims, deliver through non-default branch and draft PR with checks and production readback when released.",
+          "at": "2026-10-23T08:03:58.381Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-intent-aware-test-maintenance-20261023:acceptance:0",
+            "text": "1. Before changing tests, workers compare the approved task/acceptance criteria and source diff, identifying affected behaviors as unchanged, intentionally changed, intentionally removed, or unresolved. Existing tests are evidence, not authority over explicit approved requirements. 2. Update affected test plans, unit/integration/E2E tests, fixtures and snapshots in the same change as the behavior; preserve coverage of unchanged behavior. Never restore intentionally removed functionality merely to satisfy obsolete assertions. Add replacement or absence assertions where meaningful. 3. Require a concise, reviewable rationale tied to the approved change for deleted/replaced assertions, changed snapshots, skipped/quarantined tests, or reduced coverage. No silent blanket snapshot updates, weakening assertions or skips to achieve green CI; unexplained failures remain regressions or unresolved requirements. Do not add redundant user approval gates for already authorized changes. 4. Use official Playwright planner/generator/healer in worker project environments when suitable; Relay supplies canonical requirements and captures structured progress/evidence. User handles installation on Claude and Codex. Do not install tools or alter user machines as part of this assignment. Do not force Playwright onto native GTK/Windows UI or non-browser suites; retain appropriate native/unit/integration tooling. 5. Keep one canonical shared workflow in Relay and minimal host adapters/references for Claude and Codex, without duplicate conflicting maintenance documents in product repos. Necessary runnable test code/configuration stays with its project. 6. Report actual test counts, skips with reasons, regression vs obsolete-expectation classification, run identity and exact tested commit through existing telemetry/cards. Unknown is unknown; do not fabricate totals. 7. Demonstrate intentional feature removal updates the obsolete test without resurrecting the feature; an unintended regression still fails; changed fixture/selector can be repaired without weakening behavior assertions; skip/coverage reduction is visible. Add regression coverage for the workflow and verify both agent adapters, explicitly marking untested hosts. 8. Reuse current coordination/verification paths, avoid active overlapping claims, deliver through non-default branch and draft PR with checks and production readback when released.",
+            "at": "2026-10-23T08:03:58.381Z"
+          }
+        ]
+      },
+      "amendments": [
+        {
+          "at": "2026-10-23T08:06:01.277Z",
+          "by": "01a1586d-75af-751f-96b1-2556defbe011",
+          "reason": "User clarified Relay should tell the agents how to set up Playwright rather than asking her to relay installation instructions manually (Sentinel_4e6fc2231f9c8191a7610237e899e8e9).",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Write and implement this bounded workflow using existing canonical Relay documentation/worker adapters; refine exact claim paths before edits. User requested write-up, not immediate worker launch. Official references: https://playwright.dev/docs/test-agents and https://github.com/microsoft/playwright-mcp . Test Agents are project-local definitions initialized for each host, not equivalent to merely adding the MCP server. Healer can skip broken functionality upstream, so retain explicit skip/expectation-change review. User will install Playwright on both agents. Source request: Sentinel_cda364d516308191a17b03c5bdc51ffc: 'okay write that up for relay and i'll install playwright on both agents. is it an official plugin or mcp?'. Earlier request: tests must not expect functionality just intentionally removed."
+          },
+          "after": {
+            "next_action": "Implement the shared test-maintenance workflow and agent-facing setup guidance in Relay. Latest user clarification: 'sounds like something to tell relay to tell the agents'. Relay must surface the appropriate setup instructions during Claude/Codex assignment onboarding/resumption: inspect existing project Playwright version/config and agent definitions first; for supported projects initialize official Test Agents with npx playwright init-agents --loop=claude or --loop=codex as appropriate, and regenerate definitions after Playwright updates. Explain that Microsoft Playwright MCP browser tools alone are not the planner/generator/healer setup. Do not make Lauren manually carry these instructions across chats. Keep setup idempotent, preserve existing configuration, avoid reinstalling or regenerating on every task, respect environment permissions, and report actual capability verification or specific blockers. User originally said she would install Playwright; this clarification authorizes writing agent-facing setup instructions, not parent-side installation or new worker launch. Canonical refs: https://playwright.dev/docs/test-agents and https://github.com/microsoft/playwright-mcp . Preserve all existing acceptance and guardrails; keep native/unit/integration testing supported."
+          }
+        }
+      ],
+      "amendment_count": 1,
+      "handoffs": [
+        {
+          "at": "2026-10-23T08:09:29.981Z",
+          "from": "01a1586d-75af-751f-96b1-2556defbe011",
+          "to": "claude-code-session_01LNEq56CVnhpMG8CFnhv87D",
+          "next_action": "Lauren gave this queued assignment to Claude directly in Claude Code cloud session cse_01LNEq56CVnhpMG8CFnhv87D ('Implement Relay assignment relay-intent-aware-test-maintenance-20261023. Read its full acceptance criteria and latest next_action, claim it under your own identity...'). No Codex worker started. Successor claims with branch relay/intent-aware-test-maintenance-20261023 (Lauren approved the relay/ branch) and preserves goal, acceptance and the amended next_action exactly."
+        }
+      ],
+      "updated_at": "2026-10-23T08:09:47.520Z",
+      "lease_until": "2026-10-23T20:09:47.520Z"
     }
   ],
   "migrated_from": "loew-inspector"
