@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "project": "rtxforge",
+  "classification": "READY_TO_INSTALL",
+  "authorization": {
+    "chat": "01a1659a-f730-7830-b8a7-575b8daece8c",
+    "user_message": "01a16730-890e-7b53-b749-6da24054e706",
+    "text": "install the final windows build and open it when you're done",
+    "verified_via": "read_thread actual userMessage"
+  },
+  "source": {
+    "repository": "lrnolivia/rtxForge",
+    "main": "ac0835dbe1dbdd6041705fb0e2aecc0f920ed5b6",
+    "reviewed_head": "c544aae691d8af3a4dd5074a77999d210ed15653",
+    "tree": "c9578a9205293f29470aa422155f69a610897b41",
+    "overlay_merge": "013820d89eeffb6b95b1aa169786361f74469d4b",
+    "same_tree_verified": true
+  },
+  "artifact": {
+    "directory": "C:/Users/lrnol/AppData/Local/Temp/rtxforge-vulkan-review-20261022/overlay-install-05",
+    "installer": "rtxForge-Setup-1.0.0-rc.1-x64.exe",
+    "installer_sha256": "bfee59e65ed2d0eb4b51f4c88ee00be165d1e67f6db7e71f29c1ca7296e50275",
+    "app_dll_sha256": "7fe744d47b2994d349f84e8269da043b58606cfbda0769cc1f72d7ed2f773237",
+    "publish_files": 668,
+    "companion_sha256": "5750ac132b4a9585cfc8fa855573d4e779a0cee341b6eba25f43fd6afa65ca3e",
+    "panel_source_sha256": "eace8cd81fcdbeb291102340aa4b19a0848bc713334b3ec913c750d8e0e506e7",
+    "feeder_addon_sha256": "bb02d57fadee1f59c792d28810db08f66de67a98deda9cacfaed86b2d3642e30",
+    "feeder_quiet_sha256": "982fae9e61151e4097ee81db56b72cb15eb150d3154283e76b012653c2233d68",
+    "opti_archive_sha256": "fa1365a1d20cab15ce99f0dae7c58a4550c197f30bea4279a6330b3ba643e929",
+    "font_notices": "Both existing addon OFL notices retained; official Bakbak One/Inter fonts and license files retained in app Assets"
+  },
+  "checks": {
+    "publish": "PASS",
+    "private_engine_hello": "PASS",
+    "all_exact_head_ci": "PASS",
+    "ci": [
+      {
+        "name": "Draft release",
+        "status": "completed",
+        "conclusion": "skipped",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904154357/job/120255373866"
+      },
+      {
+        "name": "WinUI 3 x64",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904154357/job/120253638870"
+      },
+      {
+        "name": "WinUI 3 ARM64",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904154357/job/120253638822"
+      },
+      {
+        "name": "Commit attribution",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904605185/job/120253545025"
+      },
+      {
+        "name": "kde-review",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904154390/job/120252468380"
+      },
+      {
+        "name": "native-review",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904154390/job/120252468324"
+      },
+      {
+        "name": "wayland-review",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904154390/job/120252467980"
+      },
+      {
+        "name": "In-game panel candidate",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904154357/job/120252465478"
+      },
+      {
+        "name": "Commit attribution",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904197202/job/120252270647"
+      },
+      {
+        "name": "Commit attribution",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904154410/job/120252134657"
+      },
+      {
+        "name": "Runner managed branch hygiene",
+        "status": "completed",
+        "conclusion": "skipped",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904153838/job/120252134113"
+      },
+      {
+        "name": "Runner coordination admission",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904153838/job/120252133192"
+      },
+      {
+        "name": "Commit attribution",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/lrnolivia/rtxForge/actions/runs/39904151131/job/120252124585"
+      }
+    ]
+  },
+  "rollback": {
+    "previous_installer": "C:/Users/lrnol/AppData/Local/Temp/rtxforge-vulkan-review-20261022/overlay-install-04/rtxForge-Setup-1.0.0-rc.1-x64.exe",
+    "sha256": "74da84a9090fde5031bc5dc3af07c49e4e8774ab1db7b2b40c38cc38729a71b1",
+    "previous_app_dll_sha256": "9c0cf2fa00253bb5e59fb9a38bba1810e4be1626c4466c9899a44e76c578b023",
+    "backup_files_verified": 668,
+    "settings_sha256": "12741956fd32a38b02eeff7742704c64d42968971fc8cd91f1ad2e925bbbcd8d",
+    "registry_backup": "overlay-registry-before.json",
+    "action": "Reinstall retained prior installer, restore saved settings only if required, verify prior manifest/helper. Games are unchanged by this manager update."
+  },
+  "runtime_before": {
+    "helper_pid": 35024,
+    "games_running": false,
+    "bg3_and_rdr2_runtime": "ddeb4943f0e67905a129f65e8e38426c57ed2f7c1c76ceda11fbb1e410e125c2",
+    "common_bink": "a1d1462cf662d45449ea3a483190c258c8d426824d4062bb21b93885f12ff0d4",
+    "bg3_ini": "6205b9d19932b52b4e39f500b6e89f9736b61e7c3d74086345cc14a0765de656",
+    "rdr2_ini": "85cb1fede72177b44ac4c8953ea369cbaec63a533454d20505205edcd8d6a0e1"
+  },
+  "health_gate": "Installer exit0; all668 installed files match publish manifest; settings/prefs preserved; helper installed MVID and companion identity match, valid two Vulkan targets/no poll errors; manager opens and remains running with visible window. New gameplay/hardware qualification remains explicitly deferred."
+}
