@@ -190,7 +190,7 @@ test('card initializes the standard MCP Apps bridge even when window.openai exis
     const frame=page.frameLocator('#widget');
     await frame.locator('#title').filter({hasText:'Staff routing is ready'}).waitFor();
     assert.equal(await page.evaluate(()=>window.seenInitialize),true);
-    assert.equal(await frame.locator('#team').textContent(),'Julian');
+    assert.equal(await frame.locator('#team').textContent(),'Julian · The Coordinator');
     assert.equal(await frame.locator('#staff').getAttribute('title'),'Julian with Roman');
   } finally {await browser.close()}
 });

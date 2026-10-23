@@ -38,7 +38,14 @@ test('nested runner',()=>{const r=spawnSync(process.execPath,['--test',${JSON.st
     delete env.NODE_TEST_CONTEXT;
     const run = spawnSync(process.execPath, ['--test', join(dir, 'outer.test.mjs')], {cwd: dir, env, encoding: 'utf8'});
     assert.equal(run.status, 1);
+    assert.doesNotMatch(run.stderr, /EINVAL|Unhandled 'error'/);
+    assert.equal(run.stderr.trim(), '');
     assert.match(run.stdout, /^TAP version 13/m);
+    // An all-passing suite must still exit 0 with the reporter attached.
+    await writeFile(join(dir, 'green.test.mjs'), "import test from 'node:test';test('green',()=>{});\n");
+    const green = spawnSync(process.execPath, ['--test', join(dir, 'green.test.mjs')], {cwd: dir, env: telemetryEnv({id: 'green'}, {cwd: root, env: {...env, RELAY_TEST_TELEMETRY_DIR: dir}}), encoding: 'utf8'});
+    assert.equal(green.status, 0, green.stderr);
+    assert.equal(foldSuiteEvents((await readFile(join(dir, 'green.ndjson'), 'utf8')).split('\n').filter(Boolean)).counts.passed, 1);
     const fold = foldSuiteEvents((await readFile(join(dir, 'fixture.ndjson'), 'utf8')).split('\n').filter(Boolean));
     assert.equal(fold.final, true);
     assert.deepEqual(fold.counts, {passed: 4, failed: 1, skipped: 1, todo: 1, cancelled: 0});

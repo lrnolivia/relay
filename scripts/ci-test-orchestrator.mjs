@@ -34,14 +34,15 @@ function validate(suites, timeoutMs) {
 }
 
 // Live test counts: keep the default TAP stdout byte-compatible and add the structured
-// reporter, which writes one NDJSON file per suite. Absent the directory, env is unchanged.
+// reporter, which appends one NDJSON file per suite and prints nothing (its stderr destination
+// stays empty; a /dev/null file destination fails fsync on close). Absent the directory, env is unchanged.
 export function telemetryEnv(suite,{cwd,env}) {
   const dir=env.RELAY_TEST_TELEMETRY_DIR;
   if(!dir)return env;
   if(!/^[a-z][a-z0-9-]{0,63}$/.test(suite.id))throw Error('Invalid telemetry suite id');
   const reporter=resolve(cwd,'scripts/ci-test-telemetry-reporter.mjs');
   if(/\s|"/.test(reporter+dir))throw Error('Telemetry paths must not contain whitespace or quotes');
-  const options=['--test-reporter=tap','--test-reporter-destination=stdout','--test-reporter='+reporter,'--test-reporter-destination='+(process.platform==='win32'?'NUL':'/dev/null')];
+  const options=['--test-reporter=tap','--test-reporter-destination=stdout','--test-reporter='+reporter,'--test-reporter-destination=stderr'];
   const inherited=String(env.NODE_OPTIONS||'').split(/\s+/).filter(flag=>flag&&!flag.startsWith('--test-reporter'));
   // Suites never see the directory, so an orchestrator a test starts cannot write real suite files.
   const {RELAY_TEST_TELEMETRY_DIR:_dir,...rest}=env;
