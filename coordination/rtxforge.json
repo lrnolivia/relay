@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T01:12:00.8096081Z",
+  "updated_at": "2026-10-23T01:30:28.291Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9444,7 +9444,7 @@
       ],
       "goal": "Build one shared experimental Vulkan provider for rtxForge delivering Neural Rendering and native NVIDIA FG/MFG in Baldur's Gate 3 and Red Dead Redemption 2, with per-game loader/input profiles, shared panel/controls, and reversible installation.",
       "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target. Replace the bespoke Vulkan test panel with the exact canonical rtxForge ForgePanel ImGui layout, fonts, styling and controls, adapted to the Vulkan host. Add truthful live NR composition/GPU timing and actual FG rendered/displayed frame telemetry to that panel. Inspect and adopt the existing Universal MFG panel's smooth text rasterization/sampling approach. Reuse canonical source; do not invent a replacement overlay.",
-      "next_action": "Lauren authorized taking shared exact panel/Overlays settings and extending live stats/font rendering across Feeder DX11, Vulkan, OptiScaler. PR57 comment6354717889 delivered; Relay context capacity refused. Former local session6f3ee211 executor absent; transcript unchanged2026-10-22T08:27:30Z. Preserve peer branch0672adb and unrelated work. Implement exact canonical panel Vulkan port + honest backend stats/font scaling; independent MFG welcome defaultoff/native menu defaulton. BG3 sharedDLL8d68350a gameplay NR10-13ms+actual4x userconfirmed; wrongcwd launch caused stock/provider crash, Steam/Larian cwd fixes. SameDLL RDR2 verification pending. Existing PR55, no default promotion. Shared font loader requires Feeder build define; exact canonical panel reuse is the user's repeated requirement. Desktop input currently stopped by physical Escape; code/build work continues. Lauren requested Models.cs remain with PR57 until its merge. Confirmed byte/source unmodified here; return only that path now, then re-admit after merge for VulkanMfgUi/VulkanMfgIntro, GameUiOptions and CopyOverlayFrom. Other shared-panel/settings paths stay here.",
+      "next_action": "Exact canonical panel builds complete (Vulkan61541cef, OptiScaler main compile, Feeder060a1bb5). Same Bink2502eac installed RDR2 through adapter, original preserved; vanilla Vulkan DLSS on/VSync off saved. First provider launch2026-10-23T01:26:54Z crashed c0000005 execute at180136ab8 before fgvk/loaderStart log. WER event98407b8e preserved in scratch universal-rdr2-01/first-provider-launch. User now owns launch/desktop; diagnostic observer only. Investigate common Bink startup vs RDR loader behavior, no NR/MFG runtime pass. Source edits/publication parked while preflight budget5/4; PR57 coordination pending. BG3 remains known working older shared8d68350a. Models.cs stays PR57 until merge; welcome/native-policy still pending.",
       "category": "implementation",
       "tags": [
         "experimental",
@@ -9499,8 +9499,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T01:10:40.869Z",
-      "lease_until": "2026-10-23T13:10:40.869Z",
+      "updated_at": "2026-10-23T01:30:28.291Z",
+      "lease_until": "2026-10-23T13:30:28.291Z",
       "amendment_count": 4,
       "amendments": [
         {
