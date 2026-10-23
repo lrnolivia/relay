@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T00:23:32.213Z",
+  "updated_at": "2026-10-23T00:25:10.256Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9212,7 +9212,7 @@
       ],
       "goal": "Build one shared experimental Vulkan provider for rtxForge delivering Neural Rendering and native NVIDIA FG/MFG in Baldur's Gate 3 and Red Dead Redemption 2, with per-game loader/input profiles, shared panel/controls, and reversible installation.",
       "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone.",
-      "next_action": "User reaffirmed Universal MFG is required alongside NR and shared native Vulkan FG in BG3+RDR2, including RTX40 unlock and measured3x/4x;2x baseline does not complete goal. Shared core, profile/feature ownership, observed resource tracking, RDR ImGui Vulkan renderer and pinned Skynizz native Vulkan NR adapter built at scratch/universal-build-03 (uncommitted source; not game tested). Game-specific Bink tables reviewed(BG3 79,RDR2 73); both loaders pass native startup/forwarding/64KiB worker/missing-plugin/DX11 fixtures. Legacy30 adapterfixturesPASS29+1skip; expanded shared BG3/RDR2 fixturematrix running. Next finish shared journal/packaging fixtures, port pinned Ada unlock with strict signatures/runtime ownership and GPU detection, then commit exact candidate and verify NR+displayedMFGcounts in both games. BG3 prior2x gameplayproof remains regression baseline; new sharedruntime/NR/MFG unverified. Both games currently closed. Desktop coordination needed before UI; other chat was previously released.",
+      "next_action": "Shared source7ecc27e committed/pushed PR55; 98 adapter fixtures (95pass,3Windows skips), both profile loader native fixtures and panel/contracts pass. Candidate01 sharedDLL8d68350a startup BG3 fails ucrtbase c0000409 sub7 at20:20:35EDT before first SR/NR evaluation; logs preserved universal-bg3-01/crash. Isolate with external exception stack capture and controlled startup component gates, then repair and verify NR plus actual Universal MFG gameplay counts in BG3 and RDR2 with identical shared runtime. Existing Universal MFG1.6.1 used as private component, custom Ada port abandoned. RTX20/30 remain unverified opt-in; RTX50 native MFG with NR/overlay/game integration. User explicitly resumed crash diagnosis and both game tests; other chat desktop UI pause coordinated. No promotion.",
       "category": "implementation",
       "tags": [
         "experimental",
@@ -9255,8 +9255,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T00:05:18.845Z",
-      "lease_until": "2026-10-23T12:05:18.845Z",
+      "updated_at": "2026-10-23T00:25:10.256Z",
+      "lease_until": "2026-10-23T12:25:10.256Z",
       "amendment_count": 2,
       "amendments": [
         {
