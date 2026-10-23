@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-23T03:12:03.594Z",
+  "updated_at": "2026-10-23T04:54:57.444Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -9442,6 +9442,62 @@
             "id": "relay-screenshot-evidence-plan-20261007:acceptance:0",
             "text": "Planning/queued only; no implementation claim, worker launch, source patch, deployment or screenshot collection is authorized. Reviewable 8070-word plan saved as Library libfile_ec0bb87065dc819184bcd26d008cd68a, Relay screenshot evidence plan.md, SHA256 2da2c8407f24945e2926e0c582c5e8851fe45c7c27f65af48f3ce91ef10753cf. (1) Extend one canonical Runner Visuals index/artifact system; Relay backend and CTRL-hosted Inspector consume shared IDs without duplicate uploads. (2) Preserve every observed intermediate capture event independently of image-byte deduplication; advertise exact provider coverage and unavailable/withheld/lost states. (3) Specify stable project/feature/task/run/build/commit and dirty-source provenance, Unassigned/reclassification, chronological contact sheets, before/after matching, annotations/review/feedback, stale-target states and screenshots separate from test pass claims. (4) Concrete proposed adapter/MCP schemas, idempotent intake/finalize, durable outbox, bounded retries, safe byte validation, privacy exclusion/redaction/audience/retention/storage budgets and no model polling loops. (5) Backward-compatible migration, no invented legacy provenance, kill switches and deterministic security/failure/recovery/usability/performance tests. (6) Verify current downstream ingest/auth and actual CTRL UI before implementation; review composite-key dedup in pinned Relay operator-review.js without assuming its copy is deployed CTRL code. (7) Bounded refresh-limit diagnostic: determine actual current timers/quotas, units, config/source, owner and layer, exhaustion behavior and redundant consumers across CTRL/Relay/provider; no arbitrary window change. Observed upstream GitHub403 rate_limit reset04:56:01 is evidence of provider exhaustion, not proof of a Relay-configured window. (8) Reconcile current live claims and PR166 before any future admitted work; preserve existing designs, policies and owners. Final architecture review and explicit implementation approval required.",
             "at": "2026-10-07T05:01:59.769Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "steam-prime-millennium-reconnect-20261023",
+      "owner": "lrnolivia",
+      "goal": "Debug and reliably repair Millennium losing the Steam Prime / Fluently fork after Steam's Windows web interface restarts. Deferred at Lauren's request; preserve the working combined theme.",
+      "acceptance": "Deferred maintenance assignment for an external local Steam installation, tracked in Relay's operational backlog because Steam Prime/Millennium has no registered project. This is not a Relay product-code change. Resolve the correct source/project ownership and admission before future implementation. Prove both normal taskbar cold launch and automatic recovery after actual steamwebhelper replacement, with Steam itself remaining running, theme CSS and JavaScript restored, and Desktop plus Big Picture behavior verified. Native unit tests alone cannot satisfy runtime acceptance. Preserve all private combined theme files, settings, games, downloads, and retained recovery artifacts. Keep an exact original-library rollback and verify it. No automatic dispatch or further debugging until Lauren explicitly resumes.\n\nCurrent recovery: original Millennium 3.6.2 DLL restored and SHA256 verified as 8E631676083367622C4FCFCABF23AE02A21E65F54B4ADFB60E2D92DA816FEECF. Existing webhelper hook unchanged: 694C55009A0EADF180F9E88D0B7575B6FF9A1A1976166450D7E9728B5CA88E04. Theme activeTheme remains steam-prime; config SHA256 BD33A8F17CD96E78260D07BC455F258246951EAAF891239C5CF1A769CD36027D; skin SHA256 8AEB0F6D278C7782CA48BE883CF57DF4AADB3B978827840558FCCE5FC6EE7FFB.\n\nRetained local source: C:\\Users\\lrnol\\Repos\\millennium-reconnect, branch codex/windows-theme-reconnect, based on upstream SteamClientHomebrew/Millennium tag v3.6.2 (88fb7c16d04d162cb3e94beedb11a51705ec03fb). Candidate commits 2f1c277a91d96de3db836ea3850a2b1eeee3c9a5 and 47e338ab098a3eab62fc23893d7e308724af4fa7 are local only and BOTH failed real Steam reconnect after cold launch succeeded. Do not reinstall or declare them fixed. First candidate fixed a termination-only watcher deadlock and retained generation-specific handles; revised candidate also cancels stale readers on a generation change. The first candidate fails the retained-writer regression; the revised candidate passes all 10 native pipe/CDP shutdown tests, but still fails integration. Runtime revised test: Steam PID stayed 40976; browser changed 32988 -> 40688; no theme CSS or scripts after 45 seconds. Existing SDK diagnostic missing useParams was present on stock and patched cold launches and is not proven causal. Next investigation must capture the actual blocked native thread / transport / bootstrap stage rather than assume the pipe fixes explain the full failure.\n\nLocal evidence: C:\\Users\\lrnol\\Repos\\relay\\docs\\steam-theme\\millennium-reconnect-2026-10-23.json and qa\\millennium-reconnect-2026-10-23\\ (JUnit, release build logs, restart intents, failed revised-runtime.json). Local packages with original DLL, candidate DLL, source.patch and guarded install/rollback scripts: C:\\Users\\lrnol\\Documents\\Steam Theme\\Millennium reconnect fix-2026-10-23 and .2. Local paths are not remote publication. Both candidates must remain quarantined. Do not resume the separately stopped public-edition work. Preserve legally required third-party notices and use Lauren's verified human identity for project changes; omit voluntary AI/tool/model author credits.",
+      "next_action": "HOLD FOR LATER: Lauren said 'we'll debug later' and requested this assignment only. Do not claim, dispatch, restart Steam/webhelper, install a candidate, or continue debugging until explicit resume. On resume, refresh installed source/runtime and ownership, retain original rollback, then collect native lifecycle/transport evidence at the first divergence before proposing another bounded source correction. Earlier permissions covered two already-consumed live restart tests only.",
+      "paths": [
+        "docs/steam-theme/"
+      ],
+      "resources": [
+        "external-windows-steam-millennium-reconnect",
+        "private-steam-prime-fluently-theme",
+        "local-millennium-reconnect-source"
+      ],
+      "task_class": "maintenance",
+      "category": "maintenance",
+      "labels": [
+        {
+          "key": "target",
+          "value": "external-local-windows-steam"
+        },
+        {
+          "key": "resume",
+          "value": "explicit-user-only"
+        }
+      ],
+      "tags": [
+        "steam-prime",
+        "fluently",
+        "millennium",
+        "windows",
+        "deferred",
+        "no-auto-dispatch"
+      ],
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-23T04:54:57.444Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Debug and reliably repair Millennium losing the Steam Prime / Fluently fork after Steam's Windows web interface restarts. Deferred at Lauren's request; preserve the working combined theme.",
+          "acceptance": "Deferred maintenance assignment for an external local Steam installation, tracked in Relay's operational backlog because Steam Prime/Millennium has no registered project. This is not a Relay product-code change. Resolve the correct source/project ownership and admission before future implementation. Prove both normal taskbar cold launch and automatic recovery after actual steamwebhelper replacement, with Steam itself remaining running, theme CSS and JavaScript restored, and Desktop plus Big Picture behavior verified. Native unit tests alone cannot satisfy runtime acceptance. Preserve all private combined theme files, settings, games, downloads, and retained recovery artifacts. Keep an exact original-library rollback and verify it. No automatic dispatch or further debugging until Lauren explicitly resumes.\n\nCurrent recovery: original Millennium 3.6.2 DLL restored and SHA256 verified as 8E631676083367622C4FCFCABF23AE02A21E65F54B4ADFB60E2D92DA816FEECF. Existing webhelper hook unchanged: 694C55009A0EADF180F9E88D0B7575B6FF9A1A1976166450D7E9728B5CA88E04. Theme activeTheme remains steam-prime; config SHA256 BD33A8F17CD96E78260D07BC455F258246951EAAF891239C5CF1A769CD36027D; skin SHA256 8AEB0F6D278C7782CA48BE883CF57DF4AADB3B978827840558FCCE5FC6EE7FFB.\n\nRetained local source: C:\\Users\\lrnol\\Repos\\millennium-reconnect, branch codex/windows-theme-reconnect, based on upstream SteamClientHomebrew/Millennium tag v3.6.2 (88fb7c16d04d162cb3e94beedb11a51705ec03fb). Candidate commits 2f1c277a91d96de3db836ea3850a2b1eeee3c9a5 and 47e338ab098a3eab62fc23893d7e308724af4fa7 are local only and BOTH failed real Steam reconnect after cold launch succeeded. Do not reinstall or declare them fixed. First candidate fixed a termination-only watcher deadlock and retained generation-specific handles; revised candidate also cancels stale readers on a generation change. The first candidate fails the retained-writer regression; the revised candidate passes all 10 native pipe/CDP shutdown tests, but still fails integration. Runtime revised test: Steam PID stayed 40976; browser changed 32988 -> 40688; no theme CSS or scripts after 45 seconds. Existing SDK diagnostic missing useParams was present on stock and patched cold launches and is not proven causal. Next investigation must capture the actual blocked native thread / transport / bootstrap stage rather than assume the pipe fixes explain the full failure.\n\nLocal evidence: C:\\Users\\lrnol\\Repos\\relay\\docs\\steam-theme\\millennium-reconnect-2026-10-23.json and qa\\millennium-reconnect-2026-10-23\\ (JUnit, release build logs, restart intents, failed revised-runtime.json). Local packages with original DLL, candidate DLL, source.patch and guarded install/rollback scripts: C:\\Users\\lrnol\\Documents\\Steam Theme\\Millennium reconnect fix-2026-10-23 and .2. Local paths are not remote publication. Both candidates must remain quarantined. Do not resume the separately stopped public-edition work. Preserve legally required third-party notices and use Lauren's verified human identity for project changes; omit voluntary AI/tool/model author credits.",
+          "at": "2026-10-23T04:54:57.444Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "steam-prime-millennium-reconnect-20261023:acceptance:0",
+            "text": "Deferred maintenance assignment for an external local Steam installation, tracked in Relay's operational backlog because Steam Prime/Millennium has no registered project. This is not a Relay product-code change. Resolve the correct source/project ownership and admission before future implementation. Prove both normal taskbar cold launch and automatic recovery after actual steamwebhelper replacement, with Steam itself remaining running, theme CSS and JavaScript restored, and Desktop plus Big Picture behavior verified. Native unit tests alone cannot satisfy runtime acceptance. Preserve all private combined theme files, settings, games, downloads, and retained recovery artifacts. Keep an exact original-library rollback and verify it. No automatic dispatch or further debugging until Lauren explicitly resumes.\n\nCurrent recovery: original Millennium 3.6.2 DLL restored and SHA256 verified as 8E631676083367622C4FCFCABF23AE02A21E65F54B4ADFB60E2D92DA816FEECF. Existing webhelper hook unchanged: 694C55009A0EADF180F9E88D0B7575B6FF9A1A1976166450D7E9728B5CA88E04. Theme activeTheme remains steam-prime; config SHA256 BD33A8F17CD96E78260D07BC455F258246951EAAF891239C5CF1A769CD36027D; skin SHA256 8AEB0F6D278C7782CA48BE883CF57DF4AADB3B978827840558FCCE5FC6EE7FFB.\n\nRetained local source: C:\\Users\\lrnol\\Repos\\millennium-reconnect, branch codex/windows-theme-reconnect, based on upstream SteamClientHomebrew/Millennium tag v3.6.2 (88fb7c16d04d162cb3e94beedb11a51705ec03fb). Candidate commits 2f1c277a91d96de3db836ea3850a2b1eeee3c9a5 and 47e338ab098a3eab62fc23893d7e308724af4fa7 are local only and BOTH failed real Steam reconnect after cold launch succeeded. Do not reinstall or declare them fixed. First candidate fixed a termination-only watcher deadlock and retained generation-specific handles; revised candidate also cancels stale readers on a generation change. The first candidate fails the retained-writer regression; the revised candidate passes all 10 native pipe/CDP shutdown tests, but still fails integration. Runtime revised test: Steam PID stayed 40976; browser changed 32988 -> 40688; no theme CSS or scripts after 45 seconds. Existing SDK diagnostic missing useParams was present on stock and patched cold launches and is not proven causal. Next investigation must capture the actual blocked native thread / transport / bootstrap stage rather than assume the pipe fixes explain the full failure.\n\nLocal evidence: C:\\Users\\lrnol\\Repos\\relay\\docs\\steam-theme\\millennium-reconnect-2026-10-23.json and qa\\millennium-reconnect-2026-10-23\\ (JUnit, release build logs, restart intents, failed revised-runtime.json). Local packages with original DLL, candidate DLL, source.patch and guarded install/rollback scripts: C:\\Users\\lrnol\\Documents\\Steam Theme\\Millennium reconnect fix-2026-10-23 and .2. Local paths are not remote publication. Both candidates must remain quarantined. Do not resume the separately stopped public-edition work. Preserve legally required third-party notices and use Lauren's verified human identity for project changes; omit voluntary AI/tool/model author credits.",
+            "at": "2026-10-23T04:54:57.444Z"
           }
         ]
       }
