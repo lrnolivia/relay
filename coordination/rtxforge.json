@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T01:42:58.760Z",
+  "updated_at": "2026-10-23T01:43:53.167Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -2423,7 +2423,7 @@
       "supporting_teams": [],
       "primary_staff": "valentina",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "cancelled",
       "created_at": "2026-10-20T21:54:03.265Z",
       "objective_history": {
         "baseline": {
@@ -2530,7 +2530,7 @@
           }
         ]
       },
-      "updated_at": "2026-10-21T09:20:40.207Z",
+      "updated_at": "2026-10-23T01:43:53.167Z",
       "amendment_count": 15,
       "amendments": [
         {
@@ -2782,7 +2782,20 @@
             "next_action": "Finish and publish overlay/install layout and explicit step controls using existing captures with unchanged colors. Verify current behavior; SDR replacement captures and matching Linux set remain deferred to user-ready sessions."
           }
         }
-      ]
+      ],
+      "retirement": {
+        "at": "2026-10-23T01:43:53.167Z",
+        "intent": {
+          "operation_id": "rtxforge-native-screenshot-retirement-20261022-0146",
+          "owner": "01a15ad4-0fe2-7230-a024-20a4a4dba118",
+          "disposition": "cancelled",
+          "reason": "Lauren explicitly requested retiring this obsolete screenshot branch reservation on 2026-10-22 to release a slot in the four-branch limit blocking PR57. Published work is merged; lease expired 2026-10-21T23:40:03.284Z. Cancellation retires the reservation without asserting completion of deferred media stages.",
+          "evidence": "Owner confirmed no active source/capture/deploy writers; process inspection found only this read-only verification. /tmp/rtxforge-beta-carousel-20261020 is clean, detached at c088607fbc1b05953e342971f6f05d33a31da968. Authenticated GitHub read verified retained branch rtxforge/poster-screenshots-20261020 head00a6699f3f5a1fdb179692c2f0263446b58acb3f. Fresh provider reads confirm merged PR35 (8a2e6e57ffc9cd42a731a4eb24146b9288fad082), PR36 (6e431172e715984c613cf4ccfade97641cbfc387), PR37 (1be085105a868096a44bc9f999daba32c86b4dff), PR39 (600dc7d4f588eede2f3eb2ab157375bfc6b6222d), PR45 (acb51c05f7580dd933d17899a156945296f9ac1f), PR49 (c088607fbc1b05953e342971f6f05d33a31da968); referenced PR38 is also merged (512840cd2fd7df72348dd7c3fed9dab23e6010a6) from separate native-panel-startup branch. All under https://github.com/lrnolivia/rtxForge/pulls. Existing published media/layout release evidence retained in /Users/lrnolivia/.codex/visualizations/2026/10/20/01a15ad4-0fe2-7230-a024-20a4a4dba118/refresh-20261021/followup-review/{release-receipt,qa-production,live-asset-hashes,manifest}.json; files verified present. Original PNGs, cleanup/provenance, branch and prior claim history remain retained, no deletion. HDR/SDR recapture assignment rtxforge-hdr-sdr-native-media-capture-20261021 verified still queued, unchanged and not started; matching Linux captures remain deferred requirements retained in this claim acceptance/history, not delivered or silently dropped. No source change, redeploy, branch deletion, new work admission or capture dispatch is included. Canonical engine/runtime mirror and live MCP pin agree at6425b0739308727cf09db8a100d9b82a3af3b638; existing retired records establish prior retirement cutover.",
+          "superseded_by": null,
+          "branch": "rtxforge/poster-screenshots-20261020",
+          "head_sha": "00a6699f3f5a1fdb179692c2f0263446b58acb3f"
+        }
+      }
     },
     {
       "id": "rtxforge-hdr-sdr-native-media-capture-20261021",
@@ -5623,7 +5636,7 @@
       "primary_staff": "valentina",
       "supporting_staff": [],
       "base_sha": "f7485b19dc302a150d193e1d7e4437cc7e78c2dd",
-      "state": "active",
+      "state": "cancelled",
       "created_at": "2026-10-20T22:22:28.922Z",
       "objective_history": {
         "baseline": {
@@ -5730,7 +5743,7 @@
           }
         ]
       },
-      "updated_at": "2026-10-21T11:40:03.284Z",
+      "updated_at": "2026-10-23T01:43:53.167Z",
       "lease_until": "2026-10-21T23:40:03.284Z",
       "amendment_count": 15,
       "amendments": [
@@ -5983,7 +5996,20 @@
             "next_action": "Finish and publish overlay/install layout and explicit step controls using existing captures with unchanged colors. Verify current behavior; SDR replacement captures and matching Linux set remain deferred to user-ready sessions."
           }
         }
-      ]
+      ],
+      "retirement": {
+        "at": "2026-10-23T01:43:53.167Z",
+        "intent": {
+          "operation_id": "rtxforge-native-screenshot-retirement-20261022-0146",
+          "owner": "01a15ad4-0fe2-7230-a024-20a4a4dba118",
+          "disposition": "cancelled",
+          "reason": "Lauren explicitly requested retiring this obsolete screenshot branch reservation on 2026-10-22 to release a slot in the four-branch limit blocking PR57. Published work is merged; lease expired 2026-10-21T23:40:03.284Z. Cancellation retires the reservation without asserting completion of deferred media stages.",
+          "evidence": "Owner confirmed no active source/capture/deploy writers; process inspection found only this read-only verification. /tmp/rtxforge-beta-carousel-20261020 is clean, detached at c088607fbc1b05953e342971f6f05d33a31da968. Authenticated GitHub read verified retained branch rtxforge/poster-screenshots-20261020 head00a6699f3f5a1fdb179692c2f0263446b58acb3f. Fresh provider reads confirm merged PR35 (8a2e6e57ffc9cd42a731a4eb24146b9288fad082), PR36 (6e431172e715984c613cf4ccfade97641cbfc387), PR37 (1be085105a868096a44bc9f999daba32c86b4dff), PR39 (600dc7d4f588eede2f3eb2ab157375bfc6b6222d), PR45 (acb51c05f7580dd933d17899a156945296f9ac1f), PR49 (c088607fbc1b05953e342971f6f05d33a31da968); referenced PR38 is also merged (512840cd2fd7df72348dd7c3fed9dab23e6010a6) from separate native-panel-startup branch. All under https://github.com/lrnolivia/rtxForge/pulls. Existing published media/layout release evidence retained in /Users/lrnolivia/.codex/visualizations/2026/10/20/01a15ad4-0fe2-7230-a024-20a4a4dba118/refresh-20261021/followup-review/{release-receipt,qa-production,live-asset-hashes,manifest}.json; files verified present. Original PNGs, cleanup/provenance, branch and prior claim history remain retained, no deletion. HDR/SDR recapture assignment rtxforge-hdr-sdr-native-media-capture-20261021 verified still queued, unchanged and not started; matching Linux captures remain deferred requirements retained in this claim acceptance/history, not delivered or silently dropped. No source change, redeploy, branch deletion, new work admission or capture dispatch is included. Canonical engine/runtime mirror and live MCP pin agree at6425b0739308727cf09db8a100d9b82a3af3b638; existing retired records establish prior retirement cutover.",
+          "superseded_by": null,
+          "branch": "rtxforge/poster-screenshots-20261020",
+          "head_sha": "00a6699f3f5a1fdb179692c2f0263446b58acb3f"
+        }
+      }
     },
     {
       "id": "rtxforge-skynizz-nr-provider-20261017",
