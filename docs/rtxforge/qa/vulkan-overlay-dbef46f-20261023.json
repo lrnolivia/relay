@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "project": "rtxforge",
+  "assignment": "rtxforge-vulkan-dlssg-20261022",
+  "artifact": {
+    "repository": "lrnolivia/rtxForge",
+    "head_sha": "dbef46ff6dd4464dd64ca8ea35e159f19659a3c1",
+    "pr": 55,
+    "branch": "rtxforge/vulkan-dlssg-20261022",
+    "environment": "local Windows x64 / RTX 4070 / Steam BG3 Vulkan and RDR2 Vulkan",
+    "runtime_sha256": "23fee7f7eb06d8622cc1a54a2d9ce373dbb80f1f9885022955891514e8777723",
+    "helper_dll_sha256": "8f6920d6e38f055d5cc1fbfea7f22bac91da0b6cab4f4055cd1dd6c5314459bd",
+    "installer_sha256": "eb4909ea1bbc942b42e8683d6e13573195561fca542d9ea2cb89e76bb2370782",
+    "source_tree": "a6f61bb6b00739c41444e75b6d502915578883d4",
+    "ui_head_sha": "02ac2275b35f65524bde13a1744372ef3126b3b7"
+  },
+  "title": "Vulkan shared overlay and combined UI/helper gameplay review",
+  "purpose": "Verify the installed single-row branded welcome, feature/Settings typography, saved game accents and actual helper file status after resolving the overlapping app installs.",
+  "questions": [
+    {
+      "id": "helper_visual",
+      "prompt": "Does BG3's panel now show its saved blue accent and colored NR/FG file indicators?",
+      "reason": "The previous installer lost Vulkan target discovery; actual panel/helper round-trip and visible colors need acceptance on this combined build.",
+      "criterion_id": "panel-helper-gameplay",
+      "kind": "yes_no_not_sure"
+    },
+    {
+      "id": "toast_row",
+      "prompt": "Is the welcome one compact centered row with a small icon and readable assigned-key glyph?",
+      "reason": "Direct user request to shrink the mark and keep the welcome horizontal.",
+      "criterion_id": "shared-branded-welcome",
+      "kind": "yes_no_not_sure"
+    },
+    {
+      "id": "main_type",
+      "prompt": "Are the main feature and Settings headings in Bakbak One, with the smaller text readable in Inter?",
+      "reason": "Direct user typography direction across all three shared panel hosts.",
+      "criterion_id": "canonical-panel-fonts-statistics",
+      "kind": "yes_no_not_sure"
+    }
+  ],
+  "checklist": [
+    {
+      "id": "open",
+      "label": "Open the BG3 panel with the assigned Backtick key.",
+      "reason": "The user owns game inputs; helper mapping will be read independently.",
+      "criterion_id": "panel-helper-gameplay"
+    },
+    {
+      "id": "stats",
+      "label": "In panel Settings, hide and show live statistics.",
+      "reason": "Check the saved visibility preference near the NR/FG controls.",
+      "criterion_id": "optional-live-statistics"
+    },
+    {
+      "id": "both",
+      "label": "Repeat the panel check in RDR2 after leaving BG3.",
+      "reason": "Both profiles share identical native runtime but need separate game observations.",
+      "criterion_id": "shared-provider-two-games"
+    }
+  ],
+  "overall_verdict": "not_sure",
+  "known_issues": [
+    "Vulkan helper preset save/reset remains disabled; live game controls are available.",
+    "Broader focus/HDR/resize and RTX20/30/50 hardware qualification remain incomplete.",
+    "OptiScaler and Feeder packages build the shared prompt; their independent gameplay visual acceptance remains pending.",
+    "2026-10-23 installed app overwritten by later UI installer; helper cannot discover BG3/RDR2 until a combined source build is installed. Single-row welcome and main/Settings brand typography requested; old visual verdict cannot establish new build acceptance."
+  ],
+  "deterministic_evidence": {
+    "source": "dbef46ff6dd4464dd64ca8ea35e159f19659a3c1",
+    "combined_tree": "a6f61bb6b00739c41444e75b6d502915578883d4",
+    "native_build": "21 PASS: actual Win32/Vulkan recreate, font draw, HDR/SDR, single-row1080p/4K bounds",
+    "mfg_ui": "Actual pinned module UI guard suppression/re-enable and independent backend PASS",
+    "feeder": "05 PASS, panel header e9e07f1e",
+    "optiscaler": "Main and NRforwarder recompiled/linked PASS, archive0ca914e195...",
+    "windows_engine": "36 focused tests PASS",
+    "native_channel": "26 actual Windows mapping checks PASS",
+    "combined_publish": "PASS",
+    "installed_files": "666/666 exact publish file hashes verified; settings unchanged byte-for-byte; both game configs preserved",
+    "helper": "Correct private helper discovered both Vulkan targets and attached BG3pid46120; final installed helper28948 started. Final panel request/reply pending."
+  },
+  "visuals": [],
+  "reproduction": [
+    "User launches Steam BG3 in Vulkan mode, loads save with DLSS enabled and VSync off, opens panel using saved Backtick.",
+    "Diagnostics reads the named channel and native logs; no desktop input or debugger.",
+    "User closes BG3 before the separate RDR2 launch."
+  ],
+  "recovery": {
+    "candidate09": "Retained local candidate archive and logs; original game recovery journals preserved.",
+    "app_before": "Task overlay-install-03/app-before retained complete previous UI app.",
+    "last_healthy": "Candidate07 NR+4x gameplay evidence retained separately; no new build visual acceptance inferred."
+  }
+}
