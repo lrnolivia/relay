@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T00:52:11.162Z",
+  "updated_at": "2026-10-23T00:52:56.167Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9462,7 +9462,6 @@
         "windows/RtxForge.Windows/MainWindow.xaml.cs",
         "windows/RtxForge.Windows/Views/CompanionWindow.xaml",
         "windows/RtxForge.Windows/Views/CompanionWindow.xaml.cs",
-        "windows/RtxForge.Windows/Services/OverlayHelper.cs",
         "windows/RtxForge.Windows/MainWindow.Companion.cs",
         "windows/RtxForge.Windows/App.xaml.cs",
         "windows/RtxForge.Windows/Views/GamePage.xaml",
@@ -9526,7 +9525,7 @@
       ],
       "goal": "Lauren (2026-10-21): wire the Feeder NR provider and its Windows install route (Mass Effect LE 1/2/3, The Sims 4) and give Feeder games the rtxForge overlay. Fix EA-wrapped DX11 eligibility (delay imports) and stale install records after Steam verification. Ship a ReShade addon (ForgePanel) opening the rtxForge panel on the panel hotkey: live NR on/off through RenoDX's toggle key, plus Model strength, passes, resolution and preset written to [RenoDX.DLSS5] in the game's ReShade.ini, labeled as applying on next launch; it also hides ReShade's startup banner (replacing quiet-startup). Presets panel apply for Feeder games writes the same [RenoDX.DLSS5] keys in the same ReShade.ini (shared with Linux on the dual-boot library), so overlay and presets agree.",
       "acceptance": "Feeder install/apply review and execute succeed for ME1/ME2/ME3; Presets apply writes [RenoDX.DLSS5] in each game's ReShade.ini and refuses while the game runs; addon builds reproducibly from pinned ReShade 6.8.0 (18deaa52) and ImGui (3912b3d9) headers locally and in CI; Feeder route installs, records and restores the addon and retires the manual quiet-startup addon; in game the panel opens on the hotkey, toggles NR live (RenoDX log shows the toggle) and saves tuning that RenoDX loads next launch; Windows tests and CI green; draft PR via Relay.",
-      "next_action": "Lauren (2026-10-22): items 1-3 (Feeder restore routing, generic copy, compatibility list with Try anyway and opt-in Share result as a prefilled GitHub issue) plus Feeder DX12 NR (Valhalla) and RTX 20/30/50 GPU support (20/30 via Universal MFG, 50 via native MFG, all unverified) are in draft PR #57, done by a cloud thread while this PC session was out of usage. Linux GTK side belongs to rtxforge-linux-latest-feature-parity-20261020 (patch + notes in project files rtxforge/). Still left: in-game Valhalla Feeder DX12 test, the full-library restore and reinstall test on the PC, then merge #57 when CI is green. When the PC session resumes: discard its uncommitted local copies of these edits and pull rtxforge/feeder-overlay-20261021. Lauren explicitly directed bounded panel/Overlays takeover by existing Vulkan assignment. Slice transferred: ForgePanel.h/candidate metadata+patch, Overlays view, model overlay fields, companion settings bindings/tests, Feeder panel. Preserve all other work in PR57. Message delivered to PR57 comment6354717889 after Relay context refused capacity. Former local session6f3ee211 has no live executor, transcript unchanged since2026-10-22T08:27:30Z; cloud branch preserved. Do not write transferred paths until serial handback.",
+      "next_action": "Lauren (2026-10-22): items 1-3 (Feeder restore routing, generic copy, compatibility list with Try anyway and opt-in Share result as a prefilled GitHub issue) plus Feeder DX12 NR (Valhalla) and RTX 20/30/50 GPU support (20/30 via Universal MFG, 50 via native MFG, all unverified) are in draft PR #57, done by a cloud thread while this PC session was out of usage. Linux GTK side belongs to rtxforge-linux-latest-feature-parity-20261020 (patch + notes in project files rtxforge/). Still left: in-game Valhalla Feeder DX12 test, the full-library restore and reinstall test on the PC, then merge #57 when CI is green. When the PC session resumes: discard its uncommitted local copies of these edits and pull rtxforge/feeder-overlay-20261021. Lauren explicitly directed bounded panel/Overlays takeover by existing Vulkan assignment. Slice transferred: ForgePanel.h/candidate metadata+patch, Overlays view, model overlay fields, companion settings bindings/tests, Feeder panel. Preserve all other work in PR57. Message delivered to PR57 comment6354717889 after Relay context refused capacity. Former local session6f3ee211 has no live executor, transcript unchanged since2026-10-22T08:27:30Z; cloud branch preserved. Do not write transferred paths until serial handback. OverlayHelper.cs registry preference binding is included in Lauren's bounded Overlays transfer.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -9550,8 +9549,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T00:52:11.162Z",
-      "lease_until": "2026-10-23T12:52:11.162Z"
+      "updated_at": "2026-10-23T00:52:56.167Z",
+      "lease_until": "2026-10-23T12:52:56.167Z"
     }
   ]
 }
