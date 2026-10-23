@@ -33,6 +33,21 @@ function validate(suites, timeoutMs) {
   }
 }
 
+// Live test counts: keep the default TAP stdout byte-compatible and add the structured
+// reporter, which writes one NDJSON file per suite. Absent the directory, env is unchanged.
+export function telemetryEnv(suite,{cwd,env}) {
+  const dir=env.RELAY_TEST_TELEMETRY_DIR;
+  if(!dir)return env;
+  if(!/^[a-z][a-z0-9-]{0,63}$/.test(suite.id))throw Error('Invalid telemetry suite id');
+  const reporter=resolve(cwd,'scripts/ci-test-telemetry-reporter.mjs');
+  if(/\s|"/.test(reporter+dir))throw Error('Telemetry paths must not contain whitespace or quotes');
+  const options=['--test-reporter=tap','--test-reporter-destination=stdout','--test-reporter='+reporter,'--test-reporter-destination='+(process.platform==='win32'?'NUL':'/dev/null')];
+  const inherited=String(env.NODE_OPTIONS||'').split(/\s+/).filter(flag=>flag&&!flag.startsWith('--test-reporter'));
+  // Suites never see the directory, so an orchestrator a test starts cannot write real suite files.
+  const {RELAY_TEST_TELEMETRY_DIR:_dir,...rest}=env;
+  return {...rest,RELAY_TEST_TELEMETRY_FILE:resolve(dir,suite.id+'.ndjson'),NODE_OPTIONS:[...inherited,...options].join(' ')};
+}
+
 function execute(suite,{cwd,env,timeoutMs,signal,onOutput}) {
   return new Promise(resolveResult=>{
     const start=Date.now(); let child, done=false, timedOut=false, cancelled=false, spawnError=null, timer, killer, settle, forcedPipes=false;
@@ -68,7 +83,7 @@ function execute(suite,{cwd,env,timeoutMs,signal,onOutput}) {
       resolveResult({id:suite.id,required:true,command:[suite.command,...suite.args].map(redact),status,exit_code:!spawnError&&Number.isInteger(code)?code:null,signal:exitSignal||null,duration_ms:Date.now()-start,output_truncated:truncated,forced_pipe_close:forcedPipes,process_cleanup:(timedOut||cancelled)?(process.platform==='win32'?'direct-child-only':'process-group-only'):null,diagnostic:redact(spawnError||failureLines.join('\n')||tail).slice(-8192)});
     };
     if(signal?.aborted){cancelled=true;finish(null,null);return;}
-    try {child=spawn(suite.command,suite.args,{cwd,env,stdio:['ignore','pipe','pipe'],shell:false,detached:process.platform!=='win32'});}
+    try {child=spawn(suite.command,suite.args,{cwd,env:telemetryEnv(suite,{cwd,env}),stdio:['ignore','pipe','pipe'],shell:false,detached:process.platform!=='win32'});}
     catch(error){spawnError=String(error.message);finish(null,null);return;}
     for(const kind of ['stdout','stderr'])child[kind].setEncoding('utf8').on('data',chunk=>{pending[kind]+=chunk;flush(kind);});
     child.on('error',error=>{spawnError=String(error.message);});

@@ -135,3 +135,32 @@ test('assignment routing chooses active staff deterministically and explicit res
   assert.throws(()=>normalizeAssignmentStaff({supporting_staff:['Roman','roman']}),/Duplicate/);
   assert.equal(normalizeAssignmentStaff({primary_role:'unknown-specialty'}).primary_staff,null);
 });
+
+test('routing ranks role and team fit instead of sending all implementation to the first builder', async () => {
+  const { normalizeAssignmentStaff } = await import('./staff-registry.js');
+  const pick = input => normalizeAssignmentStaff(input).primary_staff;
+  assert.equal(pick({category:'implementation'}),'nico');
+  assert.equal(pick({category:'implementation',primary_team:'source'}),'rafael');
+  assert.equal(pick({category:'implementation',resources:['relay-cloud-runtime']}),'gabriel');
+  assert.equal(pick({category:'maintenance'}),'adrian');
+  // An explicit role with no in-team holder falls back to the best cross-team match, not null.
+  assert.equal(pick({primary_role:'builder',primary_team:'source'}),'nico');
+  // Exact verifier role beats the release captain's verification affinity.
+  assert.deepEqual(normalizeAssignmentStaff({primary_role:'integrator',supporting_roles:['verification']}).supporting_staff,['roman']);
+  assert.equal(pick({primary_team:'runner',primary_role:'brand-launch'}),null);
+});
+
+test('card attribution names role and team, keeps the executor owner separate and explains gaps', async () => {
+  const { assignmentStaffAttribution } = await import('./staff-registry.js');
+  const resolved = assignmentStaffAttribution({owner:'claude-code-session_x',primary_staff:'rafael',supporting_staff:['roman'],primary_team:'source',supporting_teams:['inspector']});
+  assert.equal(resolved.status,'resolved');
+  assert.deepEqual(resolved.primary,{id:'rafael',display_name:'Rafael',role:'The Integrator',home_team:'source'});
+  assert.equal(resolved.supporting[0].role,'The Verifier');
+  assert.equal(resolved.executor_owner,'claude-code-session_x');
+  assert.equal(resolved.participation,'routing');
+  const unmatched = assignmentStaffAttribution({primary_staff:null,primary_role:'brand-launch',primary_team:'runner'});
+  assert.equal(unmatched.status,'unresolved');assert.equal(unmatched.reason,'no-match');
+  assert.match(unmatched.explanation,/brand-launch on the runner team/);
+  assert.equal(assignmentStaffAttribution({}).reason,'not-recorded');
+  assert.equal(assignmentStaffAttribution({primary_staff:'ghost'}).reason,'unknown-staff');
+});

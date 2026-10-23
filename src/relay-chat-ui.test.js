@@ -5,7 +5,7 @@ import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI,
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v17.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v18.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -139,11 +139,20 @@ test("context card opens Relay through supported external navigation", () => {
   assert.doesNotMatch(resource.text, /ui:\/\/relay\/control-center\/v1\.html/);
 });
 
-test('only the dedicated render tool owns the compact resource', () => {
-  for(const name of ['relay_runner_coordinate','relay_runner_resume','relay_runner_updates','relay_runner_progress']) {
+test('queries stay data-first while ordinary milestone commands mount the work card', () => {
+  for(const name of ['relay_runner_resume','relay_runner_updates','relay_runner_progress']) {
     const tool={name};
     assert.equal(contextualizeRelayTool(tool),tool);
     assert.equal(isContextualRelayTool(name),true);
+  }
+  for(const name of ['relay_runner_coordinate','relay_execution','relay_source_open_pull_request','relay_source_checks','relay_source_pull_request_action','relay_cloud_deploy_project_version']) {
+    const tool=contextualizeRelayTool({name,inputSchema:{type:'object'},_meta:{existing:true}});
+    assert.equal(tool._meta.ui.resourceUri,RELAY_CONTEXT_CARD_URI,name);
+    assert.equal(tool._meta['openai/outputTemplate'],RELAY_CONTEXT_CARD_URI,name);
+    assert.deepEqual(tool._meta.ui.visibility,['model','app']);
+    assert.equal(tool._meta.existing,true);
+    assert.deepEqual(tool.inputSchema,{type:'object'});
+    assert.equal(isContextualRelayTool(name),true,name);
   }
   const renderer=contextualizeRelayTool(relayContextCardTool());
   assert.equal(renderer._meta.ui.resourceUri,RELAY_CONTEXT_CARD_URI);
@@ -659,4 +668,82 @@ test('neutral fallback cache rotation preserves the preceding current and legacy
  assert.ok(source.includes("uri === 'ui://relay/status-card/v4-legacy-bridge.html'"));
  assert.notEqual(RELAY_CONTEXT_CARD_URI,'ui://relay/context-card/v16.html');
  assert.notEqual(RELAY_STATUS_CARD_URI,'ui://relay/status-card/v4-legacy-bridge.html');
+});
+
+// Normal-work delivery: a host that honors the descriptor's template mounts the card for an
+// ordinary command result, and the same card refreshes itself instead of a new one per step.
+async function mountWorkCard({toolName,args,result,answers}) {
+  const {chromium}=await import('playwright');
+  const {contextualPresentation}=await import('./relay-chat-ui.js');
+  const descriptor=contextualizeRelayTool({name:toolName,inputSchema:{type:'object'}});
+  assert.equal(descriptor._meta.ui.resourceUri,RELAY_CONTEXT_CARD_URI);
+  const present=(name,data)=>contextualPresentation(data,{operation:{name,kind:'command'}});
+  const browser=await chromium.launch({headless:true});
+  const page=await browser.newPage();
+  await page.clock.install();
+  const calls=[];
+  await page.exposeFunction('answerTool',(name,toolArgs)=>{calls.push({name,args:toolArgs});const next=answers.shift();return next?present(name,next):{ok:false,error:{message:'no more answers'}};});
+  const widgetUrl='data:text/html,'+encodeURIComponent(relayContextCardResource().text);
+  await page.setContent(`<!doctype html><script>
+    window.addEventListener('message',async event=>{
+      const frame=document.getElementById('widget');const message=event.data;
+      if(event.source!==frame?.contentWindow||message?.jsonrpc!=='2.0')return;
+      if(message.method==='ui/initialize')frame.contentWindow.postMessage({jsonrpc:'2.0',id:message.id,result:{protocolVersion:'2026-01-26'}},'*');
+      else if(message.method==='ui/notifications/initialized'){
+        frame.contentWindow.postMessage({jsonrpc:'2.0',method:'ui/notifications/tool-input',params:{arguments:${JSON.stringify(args)}}},'*');
+        frame.contentWindow.postMessage({jsonrpc:'2.0',method:'ui/notifications/tool-result',params:{structuredContent:${JSON.stringify(present(toolName,result))}}},'*');
+      } else if(message.method==='tools/call'){
+        const data=await window.answerTool(message.params.name,message.params.arguments);
+        frame.contentWindow.postMessage({jsonrpc:'2.0',id:message.id,result:{structuredContent:data}},'*');
+      }
+    });
+  <\/script><iframe id="widget" src="${widgetUrl}"></iframe>`);
+  return {browser,page,frame:page.frameLocator('#widget'),calls};
+}
+
+test('an ordinary claim mounts a staff-attributed work card that follows the same assignment to completion', async () => {
+  const claim={id:'relay-live-work-cards-staff-ci-20261023',owner:'claude-code-session_x',state:'active',goal:'Repair normal-work cards',next_action:'Implement milestone delivery',primary_staff:'rafael',supporting_staff:['roman'],primary_team:'source',primary_role:'integrator',updated_at:'2026-10-23T05:16:52.405Z'};
+  const done={ok:true,project:'relay',progress:[{...claim,assignment:claim.id,state:'completed'}]};
+  const {browser,page,frame,calls}=await mountWorkCard({toolName:'relay_runner_coordinate',args:{project:'relay',action:'claim'},result:{ok:true,project:'relay',action:'claim',claim},answers:[{ok:true,project:'relay',progress:[{...claim,assignment:claim.id}]},{ok:true,project:'relay',progress:[{...claim,assignment:claim.id,state:'held',waiting_reason:'Waiting for a CI rerun'}]},done]});
+  try {
+    await frame.locator('#title').filter({hasText:'Repair normal-work cards'}).waitFor();
+    // Mount-time recovery reads canonical progress once; the tool result still drives the card.
+    await page.waitForFunction(()=>true);
+    await frame.locator('#rows').filter({hasText:'Work started'}).waitFor();
+    assert.equal(await frame.locator('#team').textContent(),'Rafael · The Integrator');
+    assert.equal(await frame.locator('#staff').isHidden(),false);
+    assert.match(await frame.locator('#rows').textContent(),/Latest step\W*Work started/);
+    await page.clock.runFor(31000);
+    await frame.locator('#state-label').filter({hasText:/hold/i}).waitFor();
+    await page.clock.runFor(31000);
+    await frame.locator('#state-label').filter({hasText:/complete/i}).waitFor();
+    await page.clock.runFor(120000);
+    assert.deepEqual(calls.map(call=>call.args),[{project:'relay'},{project:'relay',assignment:claim.id},{project:'relay',assignment:claim.id}]);
+    assert.ok(calls.every(call=>call.name==='relay_runner_progress'));
+  } finally {await browser.close()}
+});
+
+test('a CI read mounts a live card with real test counts and stops once the run finishes', async () => {
+  const {buildTelemetryPayload,renderCheckRunOutput}=await import('./ci-test-telemetry.js');
+  const sha='b'.repeat(40);
+  const checks=(state,suites,job)=>({check_runs:[{name:'quality',head_sha:sha,started_at:'2026-10-23T05:00:00Z',html_url:'https://github.com/lrnolivia/relay/actions/runs/77/job/5',...job},{name:'relay-tests / quality',status:'in_progress',head_sha:sha,output:renderCheckRunOutput(buildTelemetryPayload({run:{id:'77',attempt:1,job:'quality',url:'https://github.com/lrnolivia/relay/actions/runs/77/attempts/1'},head_sha:sha,state,suites,now:Date.parse('2026-10-23T05:01:00Z')}))}]});
+  const running=checks('running',[{id:'inspector',status:'passed',counts:{passed:300,skipped:4},total:304},{id:'runner',status:'running',counts:{passed:12,failed:1},failures:[{name:'lease renews',message:'expected 2'}]}],{status:'in_progress'});
+  const finished=checks('completed',[{id:'inspector',status:'passed',counts:{passed:300,skipped:4},total:304},{id:'runner',status:'failed',counts:{passed:40,failed:1},total:41,failures:[{name:'lease renews',message:'expected 2'}]}],{status:'completed',conclusion:'failure',completed_at:'2026-10-23T05:04:00Z'});
+  const {browser,page,frame,calls}=await mountWorkCard({toolName:'relay_source_checks',args:{repo:'relay',ref:sha},result:{ok:true,checks:running},answers:[{ok:true,checks:finished}]});
+  try {
+    await frame.locator('#title').filter({hasText:'CI · bbbbbbb'}).waitFor();
+    const rows=await frame.locator('#rows').textContent();
+    assert.match(rows,/312 passed · 1 failed · 4 skipped/);
+    assert.match(rows,/0 of 1 finished/);
+    assert.match(rows,/total tests unknown/);
+    assert.match(rows,/runner: lease renews — expected 2/);
+    assert.equal(await frame.locator('#metric-label').textContent(),'tests reported so far');
+    await page.clock.runFor(16000);
+    await frame.locator('#state-label').filter({hasText:'Failed'}).waitFor();
+    assert.equal(await frame.locator('#metric').textContent(),'340/345');
+    assert.match(await frame.locator('#blocker').textContent(),/1 test failed/);
+    assert.ok(await frame.getByText('Open CI run ›').isVisible());
+    await page.clock.runFor(120000);
+    assert.deepEqual(calls,[{name:'relay_source_checks',args:{repo:'relay',ref:sha}}]);
+  } finally {await browser.close()}
 });

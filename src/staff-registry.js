@@ -263,7 +263,7 @@ function withBindings(person, assignments) {
 }
 
 // Routing metadata never participates in owner, scope or authorization checks.
-const ROLE_ALIASES = Object.freeze({"systems-architect":"architect", "qa-verification":"verifier", "qa":"verifier", "maintenance":"caretaker", "design":"art-director", "architecture":"architect", "implementation":"builder", "research":"researcher", "release":"release-captain", "coordination":"coordinator"});
+const ROLE_ALIASES = Object.freeze({"systems-architect":"architect", "qa-verification":"verifier", "qa":"verifier", "verification":"verifier", "maintenance":"caretaker", "design":"art-director", "architecture":"architect", "implementation":"builder", "integration":"integrator", "research":"researcher", "release":"release-captain", "coordination":"coordinator"});
 export function staffMatchesRole(person, role) {
   const key = ROLE_ALIASES[role] || role;
   return !key || person.role.id === key || person.role_affinities.includes(key);
@@ -278,9 +278,31 @@ export function normalizeAssignmentStaff(input = {}, registry = STAFF) {
     if (!staffMatchesRole(person, role)) throw new Error(`Staff ${person.id} is incompatible with role ${role}`);
     return person.id;
   };
-  const automatic = (role, allowedTeams) => registry.find(p => p.status === "active" && staffMatchesRole(p, role) && (!allowedTeams.length || allowedTeams.some(team=>p.team_memberships?.includes(team))))?.id || null;
+  // Rank instead of taking the first registry hit: an exact role beats an affinity, the
+  // assignment's own team beats a cross-team member, and a category-only task prefers its
+  // team's home staff. Registry order only breaks exact ties, so routing stays deterministic.
+  const automatic = (role, allowedTeams, { categoryOnly = false } = {}) => {
+    const key = ROLE_ALIASES[role] || role;
+    const ranked = registry.filter(p => p.status === "active").map(p => {
+      const exact = Boolean(key) && p.role.id === key, affinity = Boolean(key) && p.role_affinities.includes(key);
+      const home = allowedTeams.includes(p.home_team), member = allowedTeams.some(team => p.team_memberships?.includes(team));
+      const roleScore = exact ? 8 : affinity ? 3 : 0;
+      const teamScore = home ? 4 : member ? 2 : 0;
+      return { id: p.id, roleScore, teamScore, home, score: roleScore + teamScore };
+    });
+    const pick = rows => rows.sort((a, b) => b.score - a.score)[0]?.id || null;
+    const teamFit = rows => allowedTeams.length ? rows.filter(r => r.teamScore > 0) : rows;
+    const roleFit = ranked.filter(r => r.roleScore > 0);
+    if (categoryOnly && allowedTeams.length) {
+      const inTeam = teamFit(roleFit);
+      if (inTeam.length) return pick(inTeam);
+      const homeLead = ranked.filter(r => r.home);
+      if (homeLead.length) return pick(homeLead);
+    }
+    return pick(teamFit(roleFit)) || pick(roleFit);
+  };
   const primary = input.primary_staff === undefined
-    ? automatic(input.primary_role || ROLE_ALIASES[input.category] || (teams.primary_team==='inspector'?'art-director':teams.primary_team==='runner'?'builder':null), teams.primary_team?[teams.primary_team]:[])
+    ? automatic(input.primary_role || ROLE_ALIASES[input.category] || input.category || (teams.primary_team==='inspector'?'art-director':teams.primary_team==='runner'?'builder':null), teams.primary_team?[teams.primary_team]:[], { categoryOnly: !input.primary_role })
     : input.primary_staff === null ? null : resolve(input.primary_staff, input.primary_role);
   let supporting;
   if (input.supporting_staff === undefined) {
@@ -301,4 +323,31 @@ export function assignmentStaffView(assignment = {}, registry = STAFF) {
   };
   // Reads never manufacture durable bindings for legacy records.
   return { primary_team:assignment.primary_team||null,supporting_teams:assignment.supporting_teams||[],primary_staff: view(assignment.primary_staff), supporting_staff: (assignment.supporting_staff || []).map(view).filter(Boolean) };
+}
+// Card-facing attribution. A missing or unmatched staff binding is reported with its reason,
+// never as a blank, and the executor owner stays a separate machine identity.
+export function assignmentStaffAttribution(assignment = {}, registry = STAFF) {
+  const view = person => ({ id: person.id, display_name: person.display_name, role: person.role.title, home_team: person.home_team });
+  const ref = assignment.primary_staff;
+  const person = typeof ref === "string" ? getStaff(ref, registry) : null;
+  const supporting = (Array.isArray(assignment.supporting_staff) ? assignment.supporting_staff : []).map(id => getStaff(id, registry)).filter(Boolean).map(view);
+  const wanted = assignment.primary_role || assignment.category || null;
+  const team = assignment.primary_team || null;
+  const reason = person ? null
+    : ref === undefined ? "not-recorded"
+    : ref === null ? "no-match"
+    : "unknown-staff";
+  const explanation = { "not-recorded": "This assignment has no recorded staff binding.",
+    "no-match": `No active staff matches ${wanted ? "role " + wanted : "this work"}${team ? " on the " + team + " team" : ""}.`,
+    "unknown-staff": "The recorded staff id is not in the registry." }[reason] || null;
+  return {
+    status: person ? "resolved" : "unresolved",
+    primary: person ? view(person) : null,
+    supporting,
+    primary_team: team,
+    supporting_teams: Array.isArray(assignment.supporting_teams) ? assignment.supporting_teams : [],
+    reason, explanation,
+    executor_owner: typeof assignment.owner === "string" ? assignment.owner : null,
+    participation: "routing"
+  };
 }
