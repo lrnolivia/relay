@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T16:28:06.441Z",
+  "updated_at": "2026-10-23T16:28:21.931Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6328,7 +6328,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "superseded",
       "created_at": "2026-10-23T08:29:33.217Z",
       "objective_history": {
         "baseline": {
@@ -6344,7 +6344,21 @@
             "at": "2026-10-23T08:29:33.217Z"
           }
         ]
-      }
+      },
+      "retirement": {
+        "at": "2026-10-23T16:28:21.931Z",
+        "intent": {
+          "operation_id": "retire-linux-cross-distro-rc-20261023",
+          "owner": "claude-code-9d7aaacd-8dfa-4dac-971e-a4560aafaebe",
+          "disposition": "superseded",
+          "reason": "Lauren handed the whole Linux scope to this session; the cross-distro work is delivered under the existing Linux parity claim instead of a separate assignment.",
+          "evidence": "Handoff of rtxforge-linux-latest-feature-parity-20261020 to claude-code-9d7aaacd recorded at 7f8a1fa; rescoped at ca0a0d2 to include the cross-distro files. Queued item never started.",
+          "superseded_by": "rtxforge-linux-latest-feature-parity-20261020",
+          "branch": null,
+          "head_sha": null
+        }
+      },
+      "updated_at": "2026-10-23T16:28:21.931Z"
     }
   ],
   "claims": [
