@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T04:32:31.157Z",
+  "updated_at": "2026-10-23T04:36:21.707Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9387,7 +9387,7 @@
       ],
       "goal": "Build one shared experimental Vulkan provider for rtxForge delivering Neural Rendering and native NVIDIA FG/MFG in Baldur's Gate 3 and Red Dead Redemption 2, with per-game loader/input profiles, shared panel/controls, and reversible installation.",
       "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target. Replace the bespoke Vulkan test panel with the exact canonical rtxForge ForgePanel ImGui layout, fonts, styling and controls, adapted to the Vulkan host. Add truthful live NR composition/GPU timing and actual FG rendered/displayed frame telemetry to that panel. Inspect and adopt the existing Universal MFG panel's smooth text rasterization/sampling approach. Reuse canonical source; do not invent a replacement overlay.",
-      "next_action": "User screenshot candidate09 BG3 confirms panel opens, NR10.48ms Active and actual4x30->120, but helper never answered hello (request2,response0); grey file lights and neutral accent are FAIL PRODUCT. BG3 now closed. Diagnose real installed target discovery/typed JSON/helper errors before claiming connection fixed; add bounded diagnostics. User requests compact single-row small-icon welcome and Bakbak One main MFG/NR/Settings headings with Inter copy. Implement common ForgePanel source, rebuild all3 hosts and update identical shared provider in both closed games after focused checks. Preserve exact09/gameconfigs/lasthealthy07 and04:16 evidence, no game inputs. PR55 fef2dfc currently pushed; QA packet needs_work update pending; acceptance remains incomplete.",
+      "next_action": "Installed candidate10 same runtime23fee7f7eb06d8622cc1a54a2d9ce373dbb80f1f9885022955891514e8777723 in both games through exact adapter repairs; commonBinka1d1462/configs preserved BG3sleep1/RDRsleep0. Source PR55 dbef46ff6dd4464dd64ca8ea35e159f19659a3c1 clean/pushed. Shared48px one-row toast+24pxicon, Bakbak main feature/Settings headings, Inter smallcopy; native21 rowbounds1080/4K/recreate/MFGguard PASS,Feeder05b54960fb andOptiarchive0ca914e195 PASS,36Python+26mapping checks,WinReleasePASS. Diagnosed actual helper failure: other authorized chat's UI installer e278 overwrote our candidate09 app01:15, companionc78f lackedVulkan; valid manualjournals weren'tmissing. Coordinated one task-only clean merge-tree a6f61bb6b00739c41444e75b6d502915578883d4 from overlaydbef/UI02ac2275b35f65524bde13a1744372ef3126b3b7, no newbranch; builtcombined Windows+packages. Innoinstaller eb4909ea1bbc942b42e8683d6e13573195561fca542d9ea2cb89e76bb2370782 installedexit0;666/666 installedfiles hashes matchpublish;settings byte-for-byte unchanged. AppDLL8f6920d6e38f055d5cc1fbfea7f22bac91da0b6cab4f4055cd1dd6c5314459bd. Installedhelper28948+correctinstalledengine companion5750ac13 status discoversbothVulkan targets/nullerrors,attachedBG3pid46120 validmapping. UserlaunchedBG3 manually whilebuild; zero desktopinput, gameuntouchedduringappinstall. NewNRlogs8ms+thousandscompositions; panelclosed(request0), no lights/accentvisualroundtrippassyet. Asyncquestionpending askingopenBacktick. QApacket docs/rtxforge/qa/vulkan-overlay-dbef46f-20261023.json;priorfefpacketneeds_work feedbackboundtooldartifact. All receipts/backups scratchoverlay-install-03. Otherownerinformed exactcombinedinstaller; holdsappwrites. NextreadactualIPChello/statusandvisualanswer,thenRDR2. Presets/HDR/focus/hardwarematrix unfinished;no defaultpromotion;retain07healthyand09rollback.",
       "category": "implementation",
       "tags": [
         "experimental",
@@ -9443,8 +9443,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T04:23:24.273Z",
-      "lease_until": "2026-10-23T16:23:24.273Z",
+      "updated_at": "2026-10-23T04:36:21.707Z",
+      "lease_until": "2026-10-23T16:36:21.707Z",
       "amendment_count": 6,
       "amendments": [
         {
