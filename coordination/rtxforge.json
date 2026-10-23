@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T02:59:43.374Z",
+  "updated_at": "2026-10-23T03:00:11.587Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -3194,13 +3194,20 @@
       "next_action": "Continue the RDR2 startup loader repair on existing PR55 under Lauren's explicit temporary fifth-slot authorization. Two unchanged common-Bink2502eac launches crash in main TLS callback execute180136ab8 before fgvk loaded; external trace ended and dump captured. Review OEP hook vs TLS-safe Vulkan-triggered loading, add native TLS/entry preservation fixtures before packaging. No more unchanged launches. Desktop user-owned: no input. Exact panel/source WIP retained. Shared runtime61541cef not yet gameplay verified. BG3 old8d68350a known working; RDR2 newcandidate02 active with restore journal. Models.cs held by57 until merge; MFGwelcome/native policy pending.",
       "paths": [
         "providers/bg3fgvk/",
+        "providers/vulkan-dlssg/",
         "scripts/vulkan_dlssg_provider.py",
         "tests/test_vulkan_dlssg_provider.py",
-        "providers/lock.json",
-        "scripts/package_catalog.py",
-        "scripts/desktop_service.py",
-        "scripts/planning.py",
-        "windows/engine-host/rtxforge_win_host.py"
+        "providers/skynizz-bridge/ForgePanel.h",
+        "providers/skynizz-bridge/panel-candidate.json",
+        "providers/skynizz-bridge/panel-candidate.patch",
+        "windows/engine-host/companion_controls.py",
+        "windows/tests/test_companion_controls.py",
+        "windows/tests/Settings/Program.cs",
+        "windows/feeder-panel/",
+        "windows/engine-host/overlay_ui.py",
+        "windows/tests/test_overlay_ui.py",
+        "windows/RtxForge.Windows/Services/OverlayHelper.cs",
+        "windows/build/Build-FeederPanel.ps1"
       ],
       "resources": [
         "rtxforge-vulkan-dlssg",
@@ -3261,8 +3268,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T01:36:57.730Z",
-      "amendment_count": 5,
+      "updated_at": "2026-10-23T03:00:11.587Z",
+      "amendment_count": 6,
       "amendments": [
         {
           "at": "2026-10-22T22:58:57.299Z",
@@ -3350,6 +3357,53 @@
               "source-reviewed",
               "no-game-writes",
               "temporary-fifth-slot-user-authorized"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-23T03:00:11.587Z",
+          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
+          "reason": "Lauren (2026-10-23) released windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs to rtxforge-generic-copy-20261023 for one copy-only fix (drops a game-specific mention); rebase and re-claim after it merges if needed.",
+          "fields": [
+            "paths"
+          ],
+          "before": {
+            "paths": [
+              "providers/bg3fgvk/",
+              "providers/vulkan-dlssg/",
+              "scripts/vulkan_dlssg_provider.py",
+              "tests/test_vulkan_dlssg_provider.py",
+              "providers/skynizz-bridge/ForgePanel.h",
+              "providers/skynizz-bridge/panel-candidate.json",
+              "providers/skynizz-bridge/panel-candidate.patch",
+              "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
+              "windows/engine-host/companion_controls.py",
+              "windows/tests/test_companion_controls.py",
+              "windows/tests/Settings/Program.cs",
+              "windows/feeder-panel/",
+              "windows/engine-host/overlay_ui.py",
+              "windows/tests/test_overlay_ui.py",
+              "windows/RtxForge.Windows/Services/OverlayHelper.cs",
+              "windows/build/Build-FeederPanel.ps1"
+            ]
+          },
+          "after": {
+            "paths": [
+              "providers/bg3fgvk/",
+              "providers/vulkan-dlssg/",
+              "scripts/vulkan_dlssg_provider.py",
+              "tests/test_vulkan_dlssg_provider.py",
+              "providers/skynizz-bridge/ForgePanel.h",
+              "providers/skynizz-bridge/panel-candidate.json",
+              "providers/skynizz-bridge/panel-candidate.patch",
+              "windows/engine-host/companion_controls.py",
+              "windows/tests/test_companion_controls.py",
+              "windows/tests/Settings/Program.cs",
+              "windows/feeder-panel/",
+              "windows/engine-host/overlay_ui.py",
+              "windows/tests/test_overlay_ui.py",
+              "windows/RtxForge.Windows/Services/OverlayHelper.cs",
+              "windows/build/Build-FeederPanel.ps1"
             ]
           }
         }
@@ -8634,7 +8688,6 @@
         "providers/skynizz-bridge/ForgePanel.h",
         "providers/skynizz-bridge/panel-candidate.json",
         "providers/skynizz-bridge/panel-candidate.patch",
-        "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
         "windows/engine-host/companion_controls.py",
         "windows/tests/test_companion_controls.py",
         "windows/tests/Settings/Program.cs",
@@ -8711,9 +8764,9 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T02:22:05.093Z",
-      "lease_until": "2026-10-23T14:22:05.093Z",
-      "amendment_count": 5,
+      "updated_at": "2026-10-23T03:00:11.587Z",
+      "lease_until": "2026-10-23T15:00:11.587Z",
+      "amendment_count": 6,
       "amendments": [
         {
           "at": "2026-10-22T22:58:57.299Z",
@@ -8801,6 +8854,53 @@
               "source-reviewed",
               "no-game-writes",
               "temporary-fifth-slot-user-authorized"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-23T03:00:11.587Z",
+          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
+          "reason": "Lauren (2026-10-23) released windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs to rtxforge-generic-copy-20261023 for one copy-only fix (drops a game-specific mention); rebase and re-claim after it merges if needed.",
+          "fields": [
+            "paths"
+          ],
+          "before": {
+            "paths": [
+              "providers/bg3fgvk/",
+              "providers/vulkan-dlssg/",
+              "scripts/vulkan_dlssg_provider.py",
+              "tests/test_vulkan_dlssg_provider.py",
+              "providers/skynizz-bridge/ForgePanel.h",
+              "providers/skynizz-bridge/panel-candidate.json",
+              "providers/skynizz-bridge/panel-candidate.patch",
+              "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
+              "windows/engine-host/companion_controls.py",
+              "windows/tests/test_companion_controls.py",
+              "windows/tests/Settings/Program.cs",
+              "windows/feeder-panel/",
+              "windows/engine-host/overlay_ui.py",
+              "windows/tests/test_overlay_ui.py",
+              "windows/RtxForge.Windows/Services/OverlayHelper.cs",
+              "windows/build/Build-FeederPanel.ps1"
+            ]
+          },
+          "after": {
+            "paths": [
+              "providers/bg3fgvk/",
+              "providers/vulkan-dlssg/",
+              "scripts/vulkan_dlssg_provider.py",
+              "tests/test_vulkan_dlssg_provider.py",
+              "providers/skynizz-bridge/ForgePanel.h",
+              "providers/skynizz-bridge/panel-candidate.json",
+              "providers/skynizz-bridge/panel-candidate.patch",
+              "windows/engine-host/companion_controls.py",
+              "windows/tests/test_companion_controls.py",
+              "windows/tests/Settings/Program.cs",
+              "windows/feeder-panel/",
+              "windows/engine-host/overlay_ui.py",
+              "windows/tests/test_overlay_ui.py",
+              "windows/RtxForge.Windows/Services/OverlayHelper.cs",
+              "windows/build/Build-FeederPanel.ps1"
             ]
           }
         }
