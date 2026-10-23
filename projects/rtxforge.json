@@ -51,6 +51,10 @@
     "contract": "docs/WORK_COORDINATION.md",
     "record": "coordination/rtxforge.json",
     "max_active_branches": 4,
+    "branch_budget_exception": {
+      "max_additional_branches": 1,
+      "paths": ["website/"]
+    },
     "lease_hours": 12,
     "one_active_branch_per_owner": true,
     "resume_existing_assignment": true,

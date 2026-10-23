@@ -1,11 +1,11 @@
 import { githubApiRequest } from './source.js';
 import { createHash } from 'node:crypto';
-import { transition, evaluate, occupying, normalizeScope } from './coordination-engine.js';
+import { transition, evaluate, occupying, normalizeScope, branchBudget } from './coordination-engine.js';
 import { projectCiPolicy, projectCiRoute } from './ci-routing.js';
 import { guardAutonomy } from './autonomy-control.js';
 import { attributedCommitBody, verifyAttributedCommit, reconcileAttributedContentsCommit } from './commit-attribution.js';
 
-export const RUNNER_ENGINE_SHA = '6425b0739308727cf09db8a100d9b82a3af3b638';
+export const RUNNER_ENGINE_SHA = '26fd2b4039b5a4af92f2a7ce6c28688743538d3c';
 export const DEFAULT_RUNNER_CONTROL_REPOSITORY = 'lrnolivia/relay';
 
 export class ControlError extends Error {
@@ -453,7 +453,7 @@ async function runnerControlQuery(name, args, env = {}, apiOverride, phase = 'pu
   if (name === 'relay_runner_audit') {
     return result(context, {
       active: context.record.value.claims.filter(occupying).length,
-      budget: context.policy.max_active_branches,
+      budget: branchBudget(context.record.value.claims, context.policy).limit,
       total_branches: data.branches.length,
       findings: data.findings,
       clean: data.findings.length === 0

@@ -218,3 +218,57 @@ test('CLI read resolves large immutable blobs and rejects identity drift before 
   metadata.size=9*1024*1024;
   assert.throws(()=>read('coordination/relay.json'),/response is incomplete/);
 });
+
+test('CLI and MCP preflight and audit admit only website-scoped overflow with a five-slot total', async t => {
+  const lease = new Date(Date.now() + 3600000).toISOString();
+  const claims = ['a', 'b', 'c', 'd', 'old'].map(id => ({ id, owner: id === 'old' ? 'owner' : id,
+    branch: 'relay/' + id, state: 'active', paths: [id === 'old' ? 'website/' : 'src/' + id + '/'], resources: [],
+    goal: 'Retained work', acceptance: 'Verify scope', created_at: new Date().toISOString(), lease_until: lease }));
+  const registration = { id: 'relay', repository: 'lrnolivia/relay', managed: true, default_branch: 'main',
+    implementation: { branch_prefixes: ['relay/'], excluded_branches: ['main'] },
+    coordination: { status: 'enabled', record: 'coordination/relay.json', max_active_branches: 4, lease_hours: 12,
+      branch_budget_exception: { max_additional_branches: 1, paths: ['website/'] } } };
+  const options = { registration, record: { project: 'relay', claims, queue: [], legacy_branches: ['main'] },
+    branches: claims.map(c => ({ name: c.branch })) };
+  const input = { expected_record_sha: undefined, disposition: undefined, operation_id: undefined,
+    reason: undefined, evidence: undefined, expected_head_sha: undefined, paths: ['website/public/index.html'] };
+  const f = await fixture(t, options);
+  const allowed = await f.run(input, 'preflight');
+  assert.equal(allowed.status, 0, allowed.stderr);
+  assert.equal(JSON.parse(allowed.stdout).admitted, 'old');
+  const audit = await f.run({}, 'audit');
+  assert.equal(audit.status, 0, audit.stderr);
+  assert.equal(JSON.parse(audit.stdout).budget, 5);
+  assert.equal((await f.read()).writes, 0);
+  const { callRunnerControl } = await import('./runner-control.js');
+  const api = source => async path => {
+    const blob = value => ({ type: 'file', sha, encoding: 'base64', content: Buffer.from(JSON.stringify(value)).toString('base64') });
+    if (path.includes('projects/relay.json')) return blob(source.registration);
+    if (path.includes('coordination/relay.json')) return blob(source.record);
+    if (path.includes('src/coordination.mjs')) return { ...blob(''), sha: RUNNER_ENGINE_SHA };
+    if (path.includes('/branches?')) return source.branches;
+    if (path.includes('/pulls?state=open')) return [];
+    throw new Error('Unexpected MCP query ' + path);
+  };
+  const args = { project: 'relay', id: 'old', owner: 'owner', paths: ['website/public/index.html'] };
+  const admitted = await callRunnerControl('relay_runner_preflight', args, {}, api(options));
+  assert.equal(admitted.admitted, 'old');
+  assert.equal((await callRunnerControl('relay_runner_audit', { project: 'relay' }, {}, api(options))).budget, 5);
+  const mixed = structuredClone(options);
+  mixed.record.claims.at(-1).paths.push('src/native.js');
+  const denied = await fixture(t, mixed);
+  const blocked = await denied.run(input, 'preflight');
+  assert.notEqual(blocked.status, 0);
+  assert.match(blocked.stderr, /budget|gate failed/);
+  assert.equal((await denied.read()).writes, 0);
+  await assert.rejects(callRunnerControl('relay_runner_preflight', args, {}, api(mixed)),
+    error => error.code === 'conflict' && error.findings.some(finding => finding.type === 'budget'));
+});
+
+test('only rtxForge opts into one additional website-scoped branch', async () => {
+  const project = JSON.parse(await readFile(new URL('../projects/rtxforge.json', import.meta.url), 'utf8'));
+  assert.equal(project.coordination.max_active_branches, 4);
+  assert.deepEqual(project.coordination.branch_budget_exception, { max_additional_branches: 1, paths: ['website/'] });
+  const relay = JSON.parse(await readFile(new URL('../projects/relay.json', import.meta.url), 'utf8'));
+  assert.equal(relay.coordination.branch_budget_exception, undefined);
+});
