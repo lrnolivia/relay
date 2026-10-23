@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-23T05:08:44.791Z",
+  "updated_at": "2026-10-23T05:12:51.189Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -7652,7 +7652,7 @@
       "supporting_teams": [],
       "primary_staff": "ellis",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "cancelled",
       "created_at": "2026-10-03T03:17:42.108Z",
       "amendment_count": 10,
       "amendments": [
@@ -8824,7 +8824,7 @@
           }
         }
       ],
-      "updated_at": "2026-10-20T19:50:55.467Z",
+      "updated_at": "2026-10-23T05:12:51.189Z",
       "handoffs": [
         {
           "at": "2026-10-03T05:36:15.305Z",
@@ -9011,7 +9011,20 @@
             "reason": "Coordinator review: directly required by observed cached-schema failure; narrow own ingress only, same broker checks and no new credential/access. Direct human instruction in oversight userMessage01a15acc-3229-7c62-b37a-006846ba28f6 authorizes repair and verified rerun."
           }
         }
-      ]
+      ],
+      "retirement": {
+        "at": "2026-10-23T05:12:51.189Z",
+        "intent": {
+          "operation_id": "julian-release-expired-relay-umbrella-20261023",
+          "owner": "01a1576d-4e3d-78f2-bdde-a1658b3598d0",
+          "disposition": "cancelled",
+          "reason": "Lauren explicitly requests releasing this expired umbrella claim so Claude can claim the live card repair. Cancel the stale reservation, not retained source or acceptance history. This does not mark unfinished rebuild objectives delivered.",
+          "evidence": "User message Sentinel_6b5c403db8248191bce56f5696852d0f: 'release that expired claim'. Lease expired 2026-10-21T08:34:54.950Z, last heartbeat 2026-10-20T20:34:54.950Z. Branch relay/mcp-rebuild-20261003 remains at 57edc658257de1d0a768b13a322760df7a2fc3db, returned checks completed Oct20. Existing source, objective history and handoff docs retained, no deletion or completion. Executor read unavailable due unsupported placement format; no executor started. Replacement card work is separately queued relay-live-work-cards-staff-ci-20261023, not a replacement for all original objectives.",
+          "superseded_by": null,
+          "branch": "relay/mcp-rebuild-20261003",
+          "head_sha": "57edc658257de1d0a768b13a322760df7a2fc3db"
+        }
+      }
     },
     {
       "id": "rtxforge-app-evidence-20261003",
@@ -16279,7 +16292,7 @@
       "primary_staff": "ellis",
       "supporting_staff": [],
       "base_sha": "3df50be94ae4089c5e090923123b09afa4dd80ad",
-      "state": "active",
+      "state": "cancelled",
       "created_at": "2026-10-03T05:37:48.707Z",
       "objective_history": {
         "baseline": {
@@ -16308,7 +16321,7 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T20:34:54.950Z",
+      "updated_at": "2026-10-23T05:12:51.189Z",
       "lease_until": "2026-10-21T08:34:54.950Z",
       "handoffs": [
         {
@@ -17571,7 +17584,20 @@
             "reason": "Coordinator review: directly required by observed cached-schema failure; narrow own ingress only, same broker checks and no new credential/access. Direct human instruction in oversight userMessage01a15acc-3229-7c62-b37a-006846ba28f6 authorizes repair and verified rerun."
           }
         }
-      ]
+      ],
+      "retirement": {
+        "at": "2026-10-23T05:12:51.189Z",
+        "intent": {
+          "operation_id": "julian-release-expired-relay-umbrella-20261023",
+          "owner": "01a1576d-4e3d-78f2-bdde-a1658b3598d0",
+          "disposition": "cancelled",
+          "reason": "Lauren explicitly requests releasing this expired umbrella claim so Claude can claim the live card repair. Cancel the stale reservation, not retained source or acceptance history. This does not mark unfinished rebuild objectives delivered.",
+          "evidence": "User message Sentinel_6b5c403db8248191bce56f5696852d0f: 'release that expired claim'. Lease expired 2026-10-21T08:34:54.950Z, last heartbeat 2026-10-20T20:34:54.950Z. Branch relay/mcp-rebuild-20261003 remains at 57edc658257de1d0a768b13a322760df7a2fc3db, returned checks completed Oct20. Existing source, objective history and handoff docs retained, no deletion or completion. Executor read unavailable due unsupported placement format; no executor started. Replacement card work is separately queued relay-live-work-cards-staff-ci-20261023, not a replacement for all original objectives.",
+          "superseded_by": null,
+          "branch": "relay/mcp-rebuild-20261003",
+          "head_sha": "57edc658257de1d0a768b13a322760df7a2fc3db"
+        }
+      }
     },
     {
       "id": "relay-development-cleanup-20261020",
