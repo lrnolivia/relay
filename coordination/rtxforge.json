@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T03:56:02.783Z",
+  "updated_at": "2026-10-23T04:01:59.762Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9258,6 +9258,241 @@
       "completed_at": "2026-10-23T03:36:35.691Z"
     },
     {
+      "id": "rtxforge-vulkan-dlssg-20261022",
+      "owner": "01a165c7-6170-7223-ad38-eb1eeafb7972",
+      "branch": "rtxforge/vulkan-dlssg-20261022",
+      "paths": [
+        "providers/bg3fgvk/",
+        "providers/vulkan-dlssg/",
+        "scripts/vulkan_dlssg_provider.py",
+        "tests/test_vulkan_dlssg_provider.py",
+        "providers/skynizz-bridge/ForgePanel.h",
+        "providers/skynizz-bridge/panel-candidate.json",
+        "providers/skynizz-bridge/panel-candidate.patch",
+        "windows/engine-host/companion_controls.py",
+        "windows/tests/test_companion_controls.py",
+        "windows/tests/Settings/Program.cs",
+        "windows/feeder-panel/",
+        "windows/engine-host/overlay_ui.py",
+        "windows/tests/test_overlay_ui.py",
+        "windows/RtxForge.Windows/Services/OverlayHelper.cs",
+        "windows/build/Build-FeederPanel.ps1",
+        "windows/RtxForge.Windows/Services/NativePanelCoordinator.cs",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.Companion.cs",
+        "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
+        "providers/skynizz-bridge/ForgePanelBrandFont.h"
+      ],
+      "resources": [
+        "rtxforge-bg3fgvk-candidate",
+        "bg3-vulkan-loader-ownership",
+        "bg3-vulkan-provider-installation",
+        "rtxforge-vulkan-dlssg-core",
+        "rdr2-vulkan-provider-installation",
+        "rtxforge-shared-panel-stats",
+        "rtxforge-vulkan-overlay-preferences"
+      ],
+      "goal": "Build one shared experimental Vulkan provider for rtxForge delivering Neural Rendering and native NVIDIA FG/MFG in Baldur's Gate 3 and Red Dead Redemption 2, with per-game loader/input profiles, shared panel/controls, and reversible installation.",
+      "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target. Replace the bespoke Vulkan test panel with the exact canonical rtxForge ForgePanel ImGui layout, fonts, styling and controls, adapted to the Vulkan host. Add truthful live NR composition/GPU timing and actual FG rendered/displayed frame telemetry to that panel. Inspect and adopt the existing Universal MFG panel's smooth text rasterization/sampling approach. Reuse canonical source; do not invent a replacement overlay.",
+      "next_action": "Repair candidate08 BG3 panel crash: exact dump at fgvk+c5cea maps to Win32 DPI callback after Vulkan Shutdown clears main viewport userdata; test recreate+NewFrame. Candidate08 f9f6 and helper ddf866 installed both; game HKCU misses cache and Vulkan Visible(true) absent, so lights/accents not accepted. User requires upstream MFG UI disabled, branded welcome with icon/app name/Bakbak One and smaller assigned-key glyph/name across Vulkan, FeederNR, OptiScaler. Preserve accepted candidate07 rollback and RDR ReflexSleep0; no desktop input.",
+      "category": "implementation",
+      "tags": [
+        "experimental",
+        "vulkan",
+        "bg3fgvk",
+        "source-reviewed",
+        "no-game-writes",
+        "temporary-fifth-slot-user-authorized"
+      ],
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "base_sha": "f4824d8b304535b6d700ee82b89f73942d41c2b1",
+      "state": "active",
+      "created_at": "2026-10-22T22:46:33.903Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lead bg3fgvk integration into rtxForge: begin with source/release review, deliver a pinned Experimental BG3 Vulkan DLSS-G route, then extract a profiled Vulkan DLSS-SR-to-DLSS-G adapter for separately tested games. Lauren authorized getting this started on 2026-10-22; read source and report before touching any game.",
+          "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary.",
+          "at": "2026-10-22T22:45:19.453Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-vulkan-dlssg-20261022:acceptance:0",
+            "text": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary.",
+            "at": "2026-10-22T22:45:19.453Z"
+          },
+          {
+            "id": "rtxforge-vulkan-dlssg-20261022:acceptance:1",
+            "text": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary. Current user authorization2026-10-22: build or source the BG3 Vulkan provider, resolve loader ownership, implement transactional install/restore/repair and fixtures, and test on Lauren's BG3 install. Source review prerequisite is complete. Preserve backups and report exact game/runtime evidence; user says install is not precious.",
+            "at": "2026-10-22T22:58:57.299Z",
+            "reason": "Lauren explicitly continued the same provider task and authorized testing against her actual BG3 installation on2026-10-22. Source review-before-game criterion has been delivered in PR55; preserve the original integration goal and add actual adapter/fixtures/game acceptance."
+          },
+          {
+            "id": "rtxforge-vulkan-dlssg-20261022:acceptance:2",
+            "text": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone.",
+            "at": "2026-10-22T23:49:23.836Z",
+            "reason": "User explicitly made universal BG3 and RDR2 the current goal and added NR. Continue existing branch/PR55; replace the BG3-only panel direction with a shared Vulkan runtime and exact-stack tests."
+          },
+          {
+            "id": "rtxforge-vulkan-dlssg-20261022:acceptance:3",
+            "text": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target.",
+            "at": "2026-10-23T00:32:19.03Z",
+            "reason": "User explicitly requires existing Universal MFG and NR, RTX20/30 opt-in future trials under the existing Universal Experimental badge, and RTX50 native MFG with NR/overlay and missing game integration. Preserve the shared BG3/RDR2 objective and current unverified hardware limits."
+          },
+          {
+            "id": "rtxforge-vulkan-dlssg-20261022:acceptance:4",
+            "text": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target. Replace the bespoke Vulkan test panel with the exact canonical rtxForge ForgePanel ImGui layout, fonts, styling and controls, adapted to the Vulkan host. Add truthful live NR composition/GPU timing and actual FG rendered/displayed frame telemetry to that panel. Inspect and adopt the existing Universal MFG panel's smooth text rasterization/sampling approach. Reuse canonical source; do not invent a replacement overlay.",
+            "at": "2026-10-23T00:41:27.243Z",
+            "reason": "User rejected the bespoke test panel and explicitly requires the EXACT existing rtxForge ImGui panel, with live NR/FG telemetry and the smooth rendering technique used by the existing Universal MFG panel. Preserve shared BG3/RDR2 NR+MFG runtime verification and use canonical panel source without redesign."
+          }
+        ]
+      },
+      "updated_at": "2026-10-23T03:56:02.783Z",
+      "lease_until": "2026-10-23T15:56:02.783Z",
+      "amendment_count": 6,
+      "amendments": [
+        {
+          "at": "2026-10-22T22:58:57.299Z",
+          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
+          "reason": "Lauren explicitly continued the same provider task and authorized testing against her actual BG3 installation on2026-10-22. Source review-before-game criterion has been delivered in PR55; preserve the original integration goal and add actual adapter/fixtures/game acceptance.",
+          "fields": [
+            "acceptance"
+          ],
+          "before": {
+            "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary."
+          },
+          "after": {
+            "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary. Current user authorization2026-10-22: build or source the BG3 Vulkan provider, resolve loader ownership, implement transactional install/restore/repair and fixtures, and test on Lauren's BG3 install. Source review prerequisite is complete. Preserve backups and report exact game/runtime evidence; user says install is not precious."
+          }
+        },
+        {
+          "at": "2026-10-22T23:49:23.836Z",
+          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
+          "reason": "User explicitly made universal BG3 and RDR2 the current goal and added NR. Continue existing branch/PR55; replace the BG3-only panel direction with a shared Vulkan runtime and exact-stack tests.",
+          "fields": [
+            "goal",
+            "acceptance"
+          ],
+          "before": {
+            "goal": "Lead bg3fgvk integration into rtxForge: begin with source/release review, deliver a pinned Experimental BG3 Vulkan DLSS-G route, then extract a profiled Vulkan DLSS-SR-to-DLSS-G adapter for separately tested games. Lauren authorized getting this started on 2026-10-22; read source and report before touching any game.",
+            "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary. Current user authorization2026-10-22: build or source the BG3 Vulkan provider, resolve loader ownership, implement transactional install/restore/repair and fixtures, and test on Lauren's BG3 install. Source review prerequisite is complete. Preserve backups and report exact game/runtime evidence; user says install is not precious."
+          },
+          "after": {
+            "goal": "Build one shared experimental Vulkan provider for rtxForge delivering Neural Rendering and native NVIDIA FG/MFG in Baldur's Gate 3 and Red Dead Redemption 2, with per-game loader/input profiles, shared panel/controls, and reversible installation.",
+            "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone."
+          }
+        },
+        {
+          "at": "2026-10-23T00:32:19.03Z",
+          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
+          "reason": "User explicitly requires existing Universal MFG and NR, RTX20/30 opt-in future trials under the existing Universal Experimental badge, and RTX50 native MFG with NR/overlay and missing game integration. Preserve the shared BG3/RDR2 objective and current unverified hardware limits.",
+          "fields": [
+            "acceptance"
+          ],
+          "before": {
+            "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone."
+          },
+          "after": {
+            "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target."
+          }
+        },
+        {
+          "at": "2026-10-23T00:41:27.243Z",
+          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
+          "reason": "User rejected the bespoke test panel and explicitly requires the EXACT existing rtxForge ImGui panel, with live NR/FG telemetry and the smooth rendering technique used by the existing Universal MFG panel. Preserve shared BG3/RDR2 NR+MFG runtime verification and use canonical panel source without redesign.",
+          "fields": [
+            "acceptance"
+          ],
+          "before": {
+            "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target."
+          },
+          "after": {
+            "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target. Replace the bespoke Vulkan test panel with the exact canonical rtxForge ForgePanel ImGui layout, fonts, styling and controls, adapted to the Vulkan host. Add truthful live NR composition/GPU timing and actual FG rendered/displayed frame telemetry to that panel. Inspect and adopt the existing Universal MFG panel's smooth text rasterization/sampling approach. Reuse canonical source; do not invent a replacement overlay."
+          }
+        },
+        {
+          "at": "2026-10-23T01:36:57.730Z",
+          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
+          "reason": "Direct current user authorization: 'you can start another branch i authorize it', following explanation of the exact five-active-claims versus four-slot budget conflict. Treat as a bounded temporary fifth-slot exception for current rtxforge work, not a policy-wide increase, claim takeover or continuation branch. Preserve this task's existing branch/PR55 and all other owners. Preflight still reports only budget count5; do not describe it as green. Valhalla owner was notified of the user's authorization.",
+          "fields": [
+            "next_action",
+            "tags"
+          ],
+          "before": {
+            "next_action": "Exact canonical panel builds complete (Vulkan61541cef, OptiScaler main compile, Feeder060a1bb5). Same Bink2502eac installed RDR2 through adapter, original preserved; vanilla Vulkan DLSS on/VSync off saved. First provider launch2026-10-23T01:26:54Z crashed c0000005 execute at180136ab8 before fgvk/loaderStart log. WER event98407b8e preserved in scratch universal-rdr2-01/first-provider-launch. User now owns launch/desktop; diagnostic observer only. Investigate common Bink startup vs RDR loader behavior, no NR/MFG runtime pass. Source edits/publication parked while preflight budget5/4; PR57 coordination pending. BG3 remains known working older shared8d68350a. Models.cs stays PR57 until merge; welcome/native-policy still pending.",
+            "tags": [
+              "experimental",
+              "vulkan",
+              "bg3fgvk",
+              "source-reviewed",
+              "no-game-writes"
+            ]
+          },
+          "after": {
+            "next_action": "Continue the RDR2 startup loader repair on existing PR55 under Lauren's explicit temporary fifth-slot authorization. Two unchanged common-Bink2502eac launches crash in main TLS callback execute180136ab8 before fgvk loaded; external trace ended and dump captured. Review OEP hook vs TLS-safe Vulkan-triggered loading, add native TLS/entry preservation fixtures before packaging. No more unchanged launches. Desktop user-owned: no input. Exact panel/source WIP retained. Shared runtime61541cef not yet gameplay verified. BG3 old8d68350a known working; RDR2 newcandidate02 active with restore journal. Models.cs held by57 until merge; MFGwelcome/native policy pending.",
+            "tags": [
+              "experimental",
+              "vulkan",
+              "bg3fgvk",
+              "source-reviewed",
+              "no-game-writes",
+              "temporary-fifth-slot-user-authorized"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-23T03:00:11.587Z",
+          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
+          "reason": "Lauren (2026-10-23) released windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs to rtxforge-generic-copy-20261023 for one copy-only fix (drops a game-specific mention); rebase and re-claim after it merges if needed.",
+          "fields": [
+            "paths"
+          ],
+          "before": {
+            "paths": [
+              "providers/bg3fgvk/",
+              "providers/vulkan-dlssg/",
+              "scripts/vulkan_dlssg_provider.py",
+              "tests/test_vulkan_dlssg_provider.py",
+              "providers/skynizz-bridge/ForgePanel.h",
+              "providers/skynizz-bridge/panel-candidate.json",
+              "providers/skynizz-bridge/panel-candidate.patch",
+              "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
+              "windows/engine-host/companion_controls.py",
+              "windows/tests/test_companion_controls.py",
+              "windows/tests/Settings/Program.cs",
+              "windows/feeder-panel/",
+              "windows/engine-host/overlay_ui.py",
+              "windows/tests/test_overlay_ui.py",
+              "windows/RtxForge.Windows/Services/OverlayHelper.cs",
+              "windows/build/Build-FeederPanel.ps1"
+            ]
+          },
+          "after": {
+            "paths": [
+              "providers/bg3fgvk/",
+              "providers/vulkan-dlssg/",
+              "scripts/vulkan_dlssg_provider.py",
+              "tests/test_vulkan_dlssg_provider.py",
+              "providers/skynizz-bridge/ForgePanel.h",
+              "providers/skynizz-bridge/panel-candidate.json",
+              "providers/skynizz-bridge/panel-candidate.patch",
+              "windows/engine-host/companion_controls.py",
+              "windows/tests/test_companion_controls.py",
+              "windows/tests/Settings/Program.cs",
+              "windows/feeder-panel/",
+              "windows/engine-host/overlay_ui.py",
+              "windows/tests/test_overlay_ui.py",
+              "windows/RtxForge.Windows/Services/OverlayHelper.cs",
+              "windows/build/Build-FeederPanel.ps1"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "rtxforge-linux-latest-feature-parity-20261020",
       "owner": "01a1659a-f730-7830-b8a7-575b8daece8c",
       "branch": "rtxforge/linux-ui-parity-20261021",
@@ -9281,7 +9516,6 @@
         "providers/skynizz-bridge/ForgeNrRoute.h",
         "providers/skynizz-bridge/ForgePanelChannel.h",
         "providers/skynizz-bridge/ForgePanelIcon.h",
-        "providers/skynizz-bridge/Generate-Panel.ps1",
         "providers/skynizz-bridge/Inter-SemiBold.ttf",
         "providers/skynizz-bridge/LICENSE",
         "providers/skynizz-bridge/README.md",
@@ -9349,7 +9583,7 @@
       ],
       "goal": "Linux production parity with newest Windows NR/MFG, Feeder, Adoption, overlay/settings and library refinements, then current website screenshots. This claim carries the GTK/libadwaita UI half; the engine/Proton runtime half was split by Lauren on 2026-10-21 into rtxforge-linux-runtime-parity-20261021 (spawned Claude worker).",
       "acceptance": "Lauren explicitly requested a durable Linux handoff before reboot2026-10-20. Full detailed handoff is recorded in Relay project context, operation IDs linux-parity-handoff-20261020-part-1 through part-8 (revisions102–109), source PR28@2bf9a7b0aa71e1660ffdbcfd2e0928fe443daac5. All eight parts are required acceptance, not optional historical notes. Refresh newest source and subsequent context before work. Deduplicate earlier Linux badge/titlebar/card/operation-scope queue items and preserve Linux ownership. Cover Rescan/manual-folder/pinned artwork/removal/Open Folder; exact operation scope; detected packages and Adoption vs Adopt+clean install with pre-adoption restore boundary; user-friendly supported-feature second review; native NR+Ada MFG plus separate Feeder NR/model upgrades; NR startup OFF unless enabled-on-launch;65% model/local+skin1.0 defaults with repair preservation; independent lightweight helper and left-side translucent accent-matched sidebar; End/custom shortcut, Insert native, Unified/Advanced units, all supported NR/MFG/sharpening controls, applied/observed telemetry and file-ownership pills; desktop+Game Mode+gear Overlay settings, four independent OptiScaler/ReShade menu/welcome choices, default intros off and real working guide/RenoDX flags; reviewed guarded/backed-up existing-game application with shared state; one-time Global NR/MFG changes; efficient batch preparation and hidden-panel behavior; offline-only executable-bound exceptions with no generic anti-cheat or online claim; two-line Poster titles and75–150% desktop artwork scale. Carry accepted Windows focus fix into Linux behavior, do not port focus-stealing. Linux adapters must prove Wine/Proton/NGX/Streamline/native-vs-Feeder paths, Wayland global binding/compositor blur and actual Gamescope surface behavior; Windows registry/WinUI implementation is reference only. Linux currently refuses Skynizz direct install intentionally, and Windows evidence is not Linux runtime proof. Require native GTK/controller, restore/rollback, Steam-open overrides, running/drift/anti-cheat guards and real Ada NR+MFG/Feeder gameplay before promotion. Keep explicit holds and distinct last-healthy/user-approved recovery. Two release channels: rtxForge Beta tag beta curated; rtxForge Development tag development moving; retain legacy updater compatibility.4–5 authentic clean screenshots per OS: Library, Control Resonant Game Details/Features, Presets, Game Mode Details, overlay; newest exact production artifact, controller glyphs not keyboard in Game Mode, no cursor/tooltip, true rounded alpha corners with website CSS shadow, documented dimensions/scale/provenance. Current website brief wins if subsequently refined. Split 2026-10-21: engine/Proton runtime acceptance is delivered under rtxforge-linux-runtime-parity-20261021; this claim's UI consumes its APIs, and whole-parity completion requires both.",
-      "next_action": "User explicitly requests broad smooth content-to-zero-opacity fades at both scroll edges (Game Mode Packages screenshot, current chat2026-10-23). Implement matching Game Mode viewport alpha masks on Windows and Linux, driven by shared depth/curve tokens; activate each edge only when content continues beyond it and retain scrollbars/input/layout. Linux native ScrolledWindow snapshot subclass; Windows live ScrollContentPresenter surface mask (official WinUI Gallery technique), retaining native controls. Cover main views and contextual scrolling surfaces through common construction hooks. Add native rendered-pixel boundary and input regressions plus platform-neutral Windows fade profile coverage; compile Windows x64; run Linux flows/capture4K130 and remeasure affected performance. Current3d0628b pushedPR50 includes Windows wording fixes; exact AppImage already smokes. Prior UI tests and runtime guards remain authoritative; whole parity promotion still waits actual controller/GPU/Wayland/Gamescope/gameplay. No user game files or installed Windows app interaction.",
+      "next_action": "User explicitly requests broad smooth content-to-zero-opacity fades at both scroll edges (Game Mode Packages screenshot, current chat2026-10-23). Implement matching Game Mode viewport alpha masks on Windows and Linux, driven by shared depth/curve tokens; activate each edge only when content continues beyond it and retain scrollbars/input/layout. Linux native ScrolledWindow snapshot subclass; Windows live ScrollContentPresenter surface mask (official WinUI Gallery technique), retaining native controls. Cover main views and contextual scrolling surfaces through common construction hooks. Add native rendered-pixel boundary and input regressions plus platform-neutral Windows fade profile coverage; compile Windows x64; run Linux flows/capture4K130 and remeasure affected performance. Current3d0628b pushedPR50 includes Windows wording fixes; exact AppImage already smokes. Prior UI tests and runtime guards remain authoritative; whole parity promotion still waits actual controller/GPU/Wayland/Gamescope/gameplay. No user game files or installed Windows app interaction. Released Generate-Panel.ps1 reservation for the active overlay worker; no uncommitted changes there. Preserved Linux branch source and history including existing channel changes; ForgePanelChannel.h stays reserved as worker clarified no edit is needed.",
       "category": "implementation",
       "tags": [
         "notes-only",
@@ -9379,8 +9613,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T03:53:30.634Z",
-      "lease_until": "2026-10-23T15:53:30.634Z",
+      "updated_at": "2026-10-23T04:01:59.762Z",
+      "lease_until": "2026-10-23T16:01:59.762Z",
       "handoffs": [
         {
           "at": "2026-10-21T21:34:10.11Z",
@@ -10583,241 +10817,6 @@
               "scripts/package_catalog.py",
               "tests/ui_package_review.py",
               "tests/ui_app_completion.py"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "id": "rtxforge-vulkan-dlssg-20261022",
-      "owner": "01a165c7-6170-7223-ad38-eb1eeafb7972",
-      "branch": "rtxforge/vulkan-dlssg-20261022",
-      "paths": [
-        "providers/bg3fgvk/",
-        "providers/vulkan-dlssg/",
-        "scripts/vulkan_dlssg_provider.py",
-        "tests/test_vulkan_dlssg_provider.py",
-        "providers/skynizz-bridge/ForgePanel.h",
-        "providers/skynizz-bridge/panel-candidate.json",
-        "providers/skynizz-bridge/panel-candidate.patch",
-        "windows/engine-host/companion_controls.py",
-        "windows/tests/test_companion_controls.py",
-        "windows/tests/Settings/Program.cs",
-        "windows/feeder-panel/",
-        "windows/engine-host/overlay_ui.py",
-        "windows/tests/test_overlay_ui.py",
-        "windows/RtxForge.Windows/Services/OverlayHelper.cs",
-        "windows/build/Build-FeederPanel.ps1",
-        "windows/RtxForge.Windows/Services/NativePanelCoordinator.cs",
-        "windows/RtxForge.Windows/Models/Models.cs",
-        "windows/RtxForge.Windows/Services/EngineForgeService.Companion.cs",
-        "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
-        "providers/skynizz-bridge/ForgePanelBrandFont.h"
-      ],
-      "resources": [
-        "rtxforge-bg3fgvk-candidate",
-        "bg3-vulkan-loader-ownership",
-        "bg3-vulkan-provider-installation",
-        "rtxforge-vulkan-dlssg-core",
-        "rdr2-vulkan-provider-installation",
-        "rtxforge-shared-panel-stats",
-        "rtxforge-vulkan-overlay-preferences"
-      ],
-      "goal": "Build one shared experimental Vulkan provider for rtxForge delivering Neural Rendering and native NVIDIA FG/MFG in Baldur's Gate 3 and Red Dead Redemption 2, with per-game loader/input profiles, shared panel/controls, and reversible installation.",
-      "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target. Replace the bespoke Vulkan test panel with the exact canonical rtxForge ForgePanel ImGui layout, fonts, styling and controls, adapted to the Vulkan host. Add truthful live NR composition/GPU timing and actual FG rendered/displayed frame telemetry to that panel. Inspect and adopt the existing Universal MFG panel's smooth text rasterization/sampling approach. Reuse canonical source; do not invent a replacement overlay.",
-      "next_action": "Repair candidate08 BG3 panel crash: exact dump at fgvk+c5cea maps to Win32 DPI callback after Vulkan Shutdown clears main viewport userdata; test recreate+NewFrame. Candidate08 f9f6 and helper ddf866 installed both; game HKCU misses cache and Vulkan Visible(true) absent, so lights/accents not accepted. User requires upstream MFG UI disabled, branded welcome with icon/app name/Bakbak One and smaller assigned-key glyph/name across Vulkan, FeederNR, OptiScaler. Preserve accepted candidate07 rollback and RDR ReflexSleep0; no desktop input.",
-      "category": "implementation",
-      "tags": [
-        "experimental",
-        "vulkan",
-        "bg3fgvk",
-        "source-reviewed",
-        "no-game-writes",
-        "temporary-fifth-slot-user-authorized"
-      ],
-      "primary_team": "source",
-      "supporting_teams": [],
-      "primary_staff": null,
-      "supporting_staff": [],
-      "base_sha": "f4824d8b304535b6d700ee82b89f73942d41c2b1",
-      "state": "active",
-      "created_at": "2026-10-22T22:46:33.903Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Lead bg3fgvk integration into rtxForge: begin with source/release review, deliver a pinned Experimental BG3 Vulkan DLSS-G route, then extract a profiled Vulkan DLSS-SR-to-DLSS-G adapter for separately tested games. Lauren authorized getting this started on 2026-10-22; read source and report before touching any game.",
-          "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary.",
-          "at": "2026-10-22T22:45:19.453Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-vulkan-dlssg-20261022:acceptance:0",
-            "text": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary.",
-            "at": "2026-10-22T22:45:19.453Z"
-          },
-          {
-            "id": "rtxforge-vulkan-dlssg-20261022:acceptance:1",
-            "text": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary. Current user authorization2026-10-22: build or source the BG3 Vulkan provider, resolve loader ownership, implement transactional install/restore/repair and fixtures, and test on Lauren's BG3 install. Source review prerequisite is complete. Preserve backups and report exact game/runtime evidence; user says install is not precious.",
-            "at": "2026-10-22T22:58:57.299Z",
-            "reason": "Lauren explicitly continued the same provider task and authorized testing against her actual BG3 installation on2026-10-22. Source review-before-game criterion has been delivered in PR55; preserve the original integration goal and add actual adapter/fixtures/game acceptance."
-          },
-          {
-            "id": "rtxforge-vulkan-dlssg-20261022:acceptance:2",
-            "text": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone.",
-            "at": "2026-10-22T23:49:23.836Z",
-            "reason": "User explicitly made universal BG3 and RDR2 the current goal and added NR. Continue existing branch/PR55; replace the BG3-only panel direction with a shared Vulkan runtime and exact-stack tests."
-          },
-          {
-            "id": "rtxforge-vulkan-dlssg-20261022:acceptance:3",
-            "text": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target.",
-            "at": "2026-10-23T00:32:19.03Z",
-            "reason": "User explicitly requires existing Universal MFG and NR, RTX20/30 opt-in future trials under the existing Universal Experimental badge, and RTX50 native MFG with NR/overlay and missing game integration. Preserve the shared BG3/RDR2 objective and current unverified hardware limits."
-          },
-          {
-            "id": "rtxforge-vulkan-dlssg-20261022:acceptance:4",
-            "text": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target. Replace the bespoke Vulkan test panel with the exact canonical rtxForge ForgePanel ImGui layout, fonts, styling and controls, adapted to the Vulkan host. Add truthful live NR composition/GPU timing and actual FG rendered/displayed frame telemetry to that panel. Inspect and adopt the existing Universal MFG panel's smooth text rasterization/sampling approach. Reuse canonical source; do not invent a replacement overlay.",
-            "at": "2026-10-23T00:41:27.243Z",
-            "reason": "User rejected the bespoke test panel and explicitly requires the EXACT existing rtxForge ImGui panel, with live NR/FG telemetry and the smooth rendering technique used by the existing Universal MFG panel. Preserve shared BG3/RDR2 NR+MFG runtime verification and use canonical panel source without redesign."
-          }
-        ]
-      },
-      "updated_at": "2026-10-23T03:56:02.783Z",
-      "lease_until": "2026-10-23T15:56:02.783Z",
-      "amendment_count": 6,
-      "amendments": [
-        {
-          "at": "2026-10-22T22:58:57.299Z",
-          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
-          "reason": "Lauren explicitly continued the same provider task and authorized testing against her actual BG3 installation on2026-10-22. Source review-before-game criterion has been delivered in PR55; preserve the original integration goal and add actual adapter/fixtures/game acceptance.",
-          "fields": [
-            "acceptance"
-          ],
-          "before": {
-            "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary."
-          },
-          "after": {
-            "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary. Current user authorization2026-10-22: build or source the BG3 Vulkan provider, resolve loader ownership, implement transactional install/restore/repair and fixtures, and test on Lauren's BG3 install. Source review prerequisite is complete. Preserve backups and report exact game/runtime evidence; user says install is not precious."
-          }
-        },
-        {
-          "at": "2026-10-22T23:49:23.836Z",
-          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
-          "reason": "User explicitly made universal BG3 and RDR2 the current goal and added NR. Continue existing branch/PR55; replace the BG3-only panel direction with a shared Vulkan runtime and exact-stack tests.",
-          "fields": [
-            "goal",
-            "acceptance"
-          ],
-          "before": {
-            "goal": "Lead bg3fgvk integration into rtxForge: begin with source/release review, deliver a pinned Experimental BG3 Vulkan DLSS-G route, then extract a profiled Vulkan DLSS-SR-to-DLSS-G adapter for separately tested games. Lauren authorized getting this started on 2026-10-22; read source and report before touching any game.",
-            "acceptance": "1. Preserve an exact upstream source/release and file inventory with hashes and required third-party notices. 2. Complete source review and report before any game installation or launch. 3. Add a separate BG3 Vulkan deployment adapter with reviewed loader ownership, transactional backup/repair/restore, running-game refusal and fixture tests; do not bypass Skynizz's D3D12-only guard or claim NR support from a different fork. 4. Use Experimental/upstream-reported versus rtxForge-verified provenance; require native Vulkan DLSS-SR/DLAA, supported NVIDIA GPU, HAGS and working Reflex. RTX40 x2 is the initial baseline; x3/x4 need a separately reviewed Ada unlock and exact runtime evidence. 5. General adapter must explicitly profile NGX application identity, camera/depth/motion conventions and Vulkan layouts/lifetimes, hook timing, frame tokens, swapchain and overlays; loader replacement alone does not establish portability. 6. Before support promotion, exact-artifact in-game QA covers presented-frame count, pacing/latency, HUD/text, menus/loading, focus, resize, resolution/HDR and conflicts; BG3, RDR2 and Enshrouded each need separate proof. No game changes or runtime passes are authorized by this kickoff receipt alone; follow the review-before-game boundary. Current user authorization2026-10-22: build or source the BG3 Vulkan provider, resolve loader ownership, implement transactional install/restore/repair and fixtures, and test on Lauren's BG3 install. Source review prerequisite is complete. Preserve backups and report exact game/runtime evidence; user says install is not precious."
-          },
-          "after": {
-            "goal": "Build one shared experimental Vulkan provider for rtxForge delivering Neural Rendering and native NVIDIA FG/MFG in Baldur's Gate 3 and Red Dead Redemption 2, with per-game loader/input profiles, shared panel/controls, and reversible installation.",
-            "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone."
-          }
-        },
-        {
-          "at": "2026-10-23T00:32:19.03Z",
-          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
-          "reason": "User explicitly requires existing Universal MFG and NR, RTX20/30 opt-in future trials under the existing Universal Experimental badge, and RTX50 native MFG with NR/overlay and missing game integration. Preserve the shared BG3/RDR2 objective and current unverified hardware limits.",
-          "fields": [
-            "acceptance"
-          ],
-          "before": {
-            "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone."
-          },
-          "after": {
-            "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target."
-          }
-        },
-        {
-          "at": "2026-10-23T00:41:27.243Z",
-          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
-          "reason": "User rejected the bespoke test panel and explicitly requires the EXACT existing rtxForge ImGui panel, with live NR/FG telemetry and the smooth rendering technique used by the existing Universal MFG panel. Preserve shared BG3/RDR2 NR+MFG runtime verification and use canonical panel source without redesign.",
-          "fields": [
-            "acceptance"
-          ],
-          "before": {
-            "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target."
-          },
-          "after": {
-            "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target. Replace the bespoke Vulkan test panel with the exact canonical rtxForge ForgePanel ImGui layout, fonts, styling and controls, adapted to the Vulkan host. Add truthful live NR composition/GPU timing and actual FG rendered/displayed frame telemetry to that panel. Inspect and adopt the existing Universal MFG panel's smooth text rasterization/sampling approach. Reuse canonical source; do not invent a replacement overlay."
-          }
-        },
-        {
-          "at": "2026-10-23T01:36:57.730Z",
-          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
-          "reason": "Direct current user authorization: 'you can start another branch i authorize it', following explanation of the exact five-active-claims versus four-slot budget conflict. Treat as a bounded temporary fifth-slot exception for current rtxforge work, not a policy-wide increase, claim takeover or continuation branch. Preserve this task's existing branch/PR55 and all other owners. Preflight still reports only budget count5; do not describe it as green. Valhalla owner was notified of the user's authorization.",
-          "fields": [
-            "next_action",
-            "tags"
-          ],
-          "before": {
-            "next_action": "Exact canonical panel builds complete (Vulkan61541cef, OptiScaler main compile, Feeder060a1bb5). Same Bink2502eac installed RDR2 through adapter, original preserved; vanilla Vulkan DLSS on/VSync off saved. First provider launch2026-10-23T01:26:54Z crashed c0000005 execute at180136ab8 before fgvk/loaderStart log. WER event98407b8e preserved in scratch universal-rdr2-01/first-provider-launch. User now owns launch/desktop; diagnostic observer only. Investigate common Bink startup vs RDR loader behavior, no NR/MFG runtime pass. Source edits/publication parked while preflight budget5/4; PR57 coordination pending. BG3 remains known working older shared8d68350a. Models.cs stays PR57 until merge; welcome/native-policy still pending.",
-            "tags": [
-              "experimental",
-              "vulkan",
-              "bg3fgvk",
-              "source-reviewed",
-              "no-game-writes"
-            ]
-          },
-          "after": {
-            "next_action": "Continue the RDR2 startup loader repair on existing PR55 under Lauren's explicit temporary fifth-slot authorization. Two unchanged common-Bink2502eac launches crash in main TLS callback execute180136ab8 before fgvk loaded; external trace ended and dump captured. Review OEP hook vs TLS-safe Vulkan-triggered loading, add native TLS/entry preservation fixtures before packaging. No more unchanged launches. Desktop user-owned: no input. Exact panel/source WIP retained. Shared runtime61541cef not yet gameplay verified. BG3 old8d68350a known working; RDR2 newcandidate02 active with restore journal. Models.cs held by57 until merge; MFGwelcome/native policy pending.",
-            "tags": [
-              "experimental",
-              "vulkan",
-              "bg3fgvk",
-              "source-reviewed",
-              "no-game-writes",
-              "temporary-fifth-slot-user-authorized"
-            ]
-          }
-        },
-        {
-          "at": "2026-10-23T03:00:11.587Z",
-          "by": "01a165c7-6170-7223-ad38-eb1eeafb7972",
-          "reason": "Lauren (2026-10-23) released windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs to rtxforge-generic-copy-20261023 for one copy-only fix (drops a game-specific mention); rebase and re-claim after it merges if needed.",
-          "fields": [
-            "paths"
-          ],
-          "before": {
-            "paths": [
-              "providers/bg3fgvk/",
-              "providers/vulkan-dlssg/",
-              "scripts/vulkan_dlssg_provider.py",
-              "tests/test_vulkan_dlssg_provider.py",
-              "providers/skynizz-bridge/ForgePanel.h",
-              "providers/skynizz-bridge/panel-candidate.json",
-              "providers/skynizz-bridge/panel-candidate.patch",
-              "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
-              "windows/engine-host/companion_controls.py",
-              "windows/tests/test_companion_controls.py",
-              "windows/tests/Settings/Program.cs",
-              "windows/feeder-panel/",
-              "windows/engine-host/overlay_ui.py",
-              "windows/tests/test_overlay_ui.py",
-              "windows/RtxForge.Windows/Services/OverlayHelper.cs",
-              "windows/build/Build-FeederPanel.ps1"
-            ]
-          },
-          "after": {
-            "paths": [
-              "providers/bg3fgvk/",
-              "providers/vulkan-dlssg/",
-              "scripts/vulkan_dlssg_provider.py",
-              "tests/test_vulkan_dlssg_provider.py",
-              "providers/skynizz-bridge/ForgePanel.h",
-              "providers/skynizz-bridge/panel-candidate.json",
-              "providers/skynizz-bridge/panel-candidate.patch",
-              "windows/engine-host/companion_controls.py",
-              "windows/tests/test_companion_controls.py",
-              "windows/tests/Settings/Program.cs",
-              "windows/feeder-panel/",
-              "windows/engine-host/overlay_ui.py",
-              "windows/tests/test_overlay_ui.py",
-              "windows/RtxForge.Windows/Services/OverlayHelper.cs",
-              "windows/build/Build-FeederPanel.ps1"
             ]
           }
         }
