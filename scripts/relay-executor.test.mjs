@@ -247,3 +247,31 @@ test('Claude CLI subprocess uses the existing broker lease, records real adapter
   await assert.rejects(runExecution({config:{provider:'codex',project:'fixture',assignment:'fixture',owner:'fixture',branch:target.branch},workspace,stateDir,rpc,getVersion:()=>{throw Error('must not execute');}}),/provider changed/);
  }finally{await fs.rm(root,{recursive:true,force:true});}
 });
+for (const provider of ['claude','codex']) test(`${provider} CLI receives its own Test Agents adapter and its test-maintenance report reaches the job result`,async()=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-maintenance-fixture-')),workspace=path.join(root,'checkout'),stateDir=path.join(root,'receipts');await fs.mkdir(workspace);
+ const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim();
+ try{
+  git(['init','-b','relay/fixture']);git(['config','user.name','Fixture']);git(['config','user.email','fixture@example.invalid']);git(['remote','add','origin','https://github.com/lrnolivia/fixture.git']);await fs.writeFile(path.join(workspace,'README.md'),'fixture');git(['add','.']);git(['commit','-m','fixture']);
+  let stored=null,etag=0;const bucket={get:async()=>stored?{etag:String(etag),json:async()=>JSON.parse(stored)}:null,put:async(_key,value,{onlyIf})=>{if(stored&&onlyIf.etagMatches!==String(etag))return null;stored=value;return {etag:String(++etag)};}};
+  const head=git(['rev-parse','HEAD']);
+  const target={state:'active',owner:'fixture',branch:'relay/fixture',repository:'lrnolivia/fixture',lease_until:'2099-01-01T00:00:00Z',head_sha:head,goal:'Remove CSV export',acceptance:['CSV export is gone; Save and Share keep working'],paths:['README.md']};
+  await operateJob(bucket,{action:'submit',project:'fixture',assignment:'fixture',expected_owner:'fixture',expected_branch:target.branch,expected_head_sha:head,prompt:'fixture',required_capabilities:[provider+'-cli'],operation_id:'fixture-submit'},target);
+  const rpc=async(name,args)=>name==='relay_runner_resume'?{ok:true}:name==='relay_context'?{ok:true,entries:[],revision:0}:name==='relay_runner_feedback_peek'?{ok:true,feedback:{available:true,events:[],conflicts:[],truncated:false}}:operateJob(bucket,args,target);
+  const report='RELAY_TEST_MAINTENANCE\n'+JSON.stringify({schema:1,tested_commit:head,run:{id:'local-1'},counts:{passed:3,failed:0,skipped:1,total:4},behaviors:[{id:'csv-export',status:'removed'},{id:'share',status:'unchanged'}],tests:[{id:'csv export is removed',outcome:'passed',behavior:'csv-export',classification:'obsolete-expectation',asserts:'absence',rationale:'Approved removal'},{id:'print preview',outcome:'skipped',rationale:'Covered by native suite'}]});
+  const events=provider==='claude'
+   ?[{type:'system',subtype:'init',session_id:'s'},{type:'assistant',message:{content:[{type:'text',text:report}]}},{type:'result',subtype:'success',is_error:false,session_id:'s'}]
+   :[{type:'thread.started',thread_id:'s'},{type:'item.completed',item:{type:'agent_message',text:report}},{type:'turn.completed'}];
+  let prompt='';
+  const result=await runExecution({config:{provider,project:'fixture',assignment:'fixture',owner:'fixture',branch:target.branch,executor_id:provider+'-host',skill_tags:['no-matching-skill']},workspace,stateDir,rpc,getVersion:()=>provider+' synthetic protocol fixture',spawnProcess:(command,_args,options)=>{
+   assert.equal(command,provider);const child=spawn(process.execPath,['-e',`process.stdin.resume();process.stdin.on('end',()=>{for(const e of ${JSON.stringify(events)})console.log(JSON.stringify(e));});`],options);
+   const end=child.stdin.end.bind(child.stdin);child.stdin.end=value=>{prompt=String(value);return end(value);};return child;
+  }});
+  assert.equal(result.state,'succeeded');
+  const data=JSON.parse(prompt.split('\n\n')[1]);
+  assert.match(prompt,/follow context\.test_maintenance/);
+  assert.deepEqual(data.context.test_maintenance.playwright_test_agents.init,{[provider]:`npx playwright init-agents --loop=${provider}`});
+  assert.equal(data.context.test_maintenance.host,provider);
+  const summary=JSON.parse(stored).jobs[0].result.summary;
+  assert.match(summary,/Test maintenance pass · 3 passed, 0 failed, 1 skipped of 4 · commit [a-f0-9]{12} · skips: print preview \(Covered by native suite\)/);
+ }finally{await fs.rm(root,{recursive:true,force:true});}
+});

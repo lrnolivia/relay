@@ -488,6 +488,10 @@ For **field**:
 - production does not prove an unmerged branch
 - if the tested head changes, affected runtime evidence is stale
 
+### 11.10 Intent-aware test maintenance
+
+Before changing tests, Codex and Claude follow the single canonical workflow in `docs/relay/TEST_MAINTENANCE_20261023.md`, which Relay delivers as `test_maintenance` on preflight, resume and executor start. Approved intent outranks existing tests: classify affected tests as regression, obsolete expectation, fixture drift or unresolved; never resurrect removed behavior, weaken assertions, blanket-update snapshots or skip to reach green; report actual counts, skip reasons and the exact tested commit. Product repositories keep runnable tests and configuration, not copies of this workflow.
+
 ## 12. Blocker classes
 
 Repairable/local blockers include our metadata, stale bookkeeping, safe harness defects, transient infrastructure, deterministic tool mistakes, and safe dependency drift.

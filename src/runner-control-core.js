@@ -4,6 +4,7 @@ import { transition, evaluate, occupying, normalizeScope, branchBudget } from '.
 import { projectCiPolicy, projectCiRoute } from './ci-routing.js';
 import { guardAutonomy } from './autonomy-control.js';
 import { attributedCommitBody, verifyAttributedCommit, reconcileAttributedContentsCommit } from './commit-attribution.js';
+import { testMaintenanceGuidance } from './test-maintenance.js';
 
 export const RUNNER_ENGINE_SHA = '26fd2b4039b5a4af92f2a7ce6c28688743538d3c';
 export const DEFAULT_RUNNER_CONTROL_REPOSITORY = 'lrnolivia/relay';
@@ -441,13 +442,16 @@ async function runnerControlQuery(name, args, env = {}, apiOverride, phase = 'pu
       limitation:'Local preparation evidence only; no remote write, publication or host permission is granted',
       owner:claim.owner, branch:claim.branch,
       publication_blockers: data.branches.some(branch => branch.name === claim.branch) ? [] : [{type:'missing_branch',assignment:claim.id,branch:claim.branch}],
-      findings:data.findings
+      findings:data.findings,
+      test_maintenance: testMaintenanceGuidance({ category: claim.category || null })
     });
     return result(context, {
       admitted: claim.id,
       owner: claim.owner,
       branch: claim.branch,
-      findings: data.findings
+      findings: data.findings,
+      // Preflight is the start-of-work admission step for every host.
+      test_maintenance: testMaintenanceGuidance({ category: claim.category || null })
     });
   }
   if (name === 'relay_runner_audit') {
