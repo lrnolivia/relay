@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T01:40:23.955Z",
+  "updated_at": "2026-10-23T01:41:01.723Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9758,7 +9758,7 @@
       ],
       "goal": "Build an independent reusable DLSS Super Resolution and native DLSS FG/MFG injector for games without native support, starting with Assassin's Creed Valhalla on Windows. Lauren selected independent implementation in this chat on 2026-10-22; no PureDark binary dependency or restricted code reuse.",
       "acceptance": "Preserve the full SR+MFG objective across stages: (1) a pinned, independently built DX12 diagnostic runtime identifies Valhalla scene color, depth, geometric motion vectors, camera jitter and TAA/HUD boundaries against an exact executable; (2) validate SR alone at reduced internal resolution with correct temporal history, UI and measurable cost; (3) prove actual native 2x DLSS-G presentation and pacing, then reuse rtxForge's existing Universal MFG component for separately verified multipliers on RTX4070; (4) integrate reversible reviewed deployment, conflicts/restore and truthful experimental status without altering peer-owned routes. Shared runtime and explicit game profiles; a second game is needed before claiming cross-game support. Preserve required third-party notices and human owner identity; omit voluntary AI/model/tool credits. Diagnostic code/build success never implies SR/FG runtime support. Preserve the existing Feeder install; no game mutation while another assignment owns its test path.",
-      "next_action": "Independent D3D12 diagnostic committed/pushed at 1599255aae62e9faa41998db07fed5b2db7c56cc; draft PR58 https://github.com/lrnolivia/rtxForge/pull/58 attached. MSVC build and lifetime CTest pass. Controlled RTX4070 two-pass harness capture validates four draws, six resources and changing camera constants; addon SHA256 9a35d052eb1981fe3fa29f04945b27f723fe4a52c713699c1ead5eceb6f73a9f. Isolated Valhalla lab PID45356 launched and rendering; actual capture-1-1200.json SHA256 75e76a9462b92b89ae4b32678796f120510f57ae14f43f2267f089b95251bb06 has ten draws/dispatches, thirteen submits, but catalog drops invalidate complete input mapping. User confirmed game is up. Next fix descriptor lifetime/capacity tracking, obtain gameplay capture and validate native scene/depth/motion/jitter/TAA/HUD. Original Feeder install untouched. SR and FG remain unimplemented; full acceptance unchanged. Four-branch capacity exception is explicitly authorized for this assignment only; admission budget failure is waived by user, not ordinary preflight pass.",
+      "next_action": "Draft PR58 now head 63e93bf3c686a4c92d7dc55363256abae8215eee; independent recorder only, full SR+FG acceptance remains pending. User confirmed Valhalla launched, pressed F10 and then exited. PID45356 produced automatic capture plus four detailed frames (9365,9415,9458,10332); preserved at %LOCALAPPDATA%/rtxForge/diagnostics/render-bridge/45356. First F10 capture SHA256 dcaad399d3681b2eb733d0ec7584b493d9519eac2a5ea502978fa12bff9ae1fd. Initial captures have major catalog drops and sampled ranges; no semantic DLSS inputs established. Reproduced null descriptor bank exhaustion in controlled GPU harness; fixed empty-entry storage and replacement at capacity, added classified drops/expected binding types/offline analyzer. MSVC build, lifetime/capacity tests and real RTX4070 262145-null stress capture pass with zero drops/unresolved bindings; final harness PID42848 capture SHA256 43cdcf88a58919976398449b1e65f21df585241f8e8b668cfa6da8b317eb7b79. Clean build receipt pins source63e93bf and SDK18deaa52; DLL SHA256 1dc6497f7e517b1da8f2012a7bb8eebb5ee83763858db43b2ba07c021c93627a staged ONLY in G:/Forge Lab/games-windows/Valhalla-render-bridge-01a16643, old DLL backed up, AutoFrame=0/Frames=1/F10 manual. Original Feeder install untouched. Game remains closed; user owns desktop launching. Next safe action: fresh user-launched lab run and F10 gameplay capture using corrected recorder; inspect classified limits, then GPU readback and verify color/depth/geometric motion/jitter/TAA/HUD against exact exe before implementing SR, native2xFG and existing UniversalMFG. Capacity exception remains explicitly human-authorized for this assignment only; ordinary budget check failure is not a preflight pass.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -9767,8 +9767,8 @@
       "base_sha": "58712a2da5cc900b4dc340ff7dba24525c7cc185",
       "state": "active",
       "created_at": "2026-10-23T01:12:00.8096081Z",
-      "updated_at": "2026-10-23T01:33:59.772Z",
-      "lease_until": "2026-10-23T13:33:59.772Z",
+      "updated_at": "2026-10-23T01:41:01.723Z",
+      "lease_until": "2026-10-23T13:41:01.723Z",
       "objective_history": {
         "baseline": {
           "goal": "Build an independent reusable DLSS Super Resolution and native DLSS FG/MFG injector for games without native support, starting with Assassin's Creed Valhalla on Windows. Lauren selected independent implementation in this chat on 2026-10-22; no PureDark binary dependency or restricted code reuse.",
