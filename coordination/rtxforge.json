@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T03:15:36.233Z",
+  "updated_at": "2026-10-23T03:22:55.840Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -3787,7 +3787,7 @@
       "supporting_teams": [],
       "primary_staff": null,
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-23T02:47:36.823Z",
       "objective_history": {
         "baseline": {
@@ -3803,7 +3803,9 @@
             "at": "2026-10-23T02:47:36.823Z"
           }
         ]
-      }
+      },
+      "completed_at": "2026-10-23T03:22:55.840Z",
+      "updated_at": "2026-10-23T03:22:55.840Z"
     }
   ],
   "claims": [
@@ -10497,7 +10499,7 @@
       "primary_staff": null,
       "supporting_staff": [],
       "base_sha": "bb50703339df6a813da812b07882fc1f569fdadf",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-23T03:12:36.124Z",
       "objective_history": {
         "baseline": {
@@ -10514,8 +10516,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T03:12:36.124Z",
-      "lease_until": "2026-10-23T15:12:36.124Z"
+      "updated_at": "2026-10-23T03:22:55.840Z",
+      "lease_until": "2026-10-23T15:22:55.840Z",
+      "pr": 61,
+      "merged_head_sha": "f4b1c0f078c9b6d56476ecf37ae19da01d34e968",
+      "merge_commit_sha": "5554ddf6eb0f439940c7452c9d25d10f3ead1c86",
+      "evidence": "October27 website update delivered. PR61 reviewed headf4b1c0f078c9b6d56476ecf37ae19da01d34e968 merged by human Git as5554ddf6eb0f439940c7452c9d25d10f3ead1c86; exact final GitHub author/committer Lauren Olivia <lrnoliv@gmail.com> verified. Only website/public/index.html and website/README.md changed: visible Tuesday,October27 and datetime2026-10-27. Website npm check, all6 tests and Wrangler dry run passed; commit attribution and Runner admission CI passed. Production rtxforge.loew.fi deployed via existing authorized Wrangler account, Worker8a937376-8e7d-4c28-ba8e-8f4ee7e7a13b at100%, deploymentf601006f-96d5-4147-8c1e-507523afe4ca. Relay VERIFY HTTP200 confirms new date and old2026-10-23 absent. Actual Chromium production checks:1440WindowsDark,1440LinuxLight,390WindowsLight,390LinuxDark all visible correctdate/datetime and nohorizontaloverflow. Originalrelease availability/download behavior preserved; no native release or screenshot changes. Prior Worker051e0328-cf6a-4c82-96f8-46b158f3bf03 retained as rollback. Private receipt/logs/rendered evidence /tmp/rtxforge-website-date-20261022-evidence/release-receipt.json and production-browser.json. Permanent website fifth-slot policy delivered separately by RelayPR252, merge446ed6a, liveengine26fd2b4039b5a4af92f2a7ce6c28688743538d3c and Worker331206c2; this task's successful fifth admission/preflight verifies practical use. Four prior native reservations and original retired screenshot history preserved; deferred HDR/SDR captures remain queued and unstarted. All acceptance for this date update complete.",
+      "work_accounted": true,
+      "completed_at": "2026-10-23T03:22:55.840Z"
     },
     {
       "id": "rtxforge-vulkan-dlssg-20261022",
