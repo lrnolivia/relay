@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-23T04:54:57.444Z",
+  "updated_at": "2026-10-23T05:02:37.231Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -9498,6 +9498,46 @@
             "id": "steam-prime-millennium-reconnect-20261023:acceptance:0",
             "text": "Deferred maintenance assignment for an external local Steam installation, tracked in Relay's operational backlog because Steam Prime/Millennium has no registered project. This is not a Relay product-code change. Resolve the correct source/project ownership and admission before future implementation. Prove both normal taskbar cold launch and automatic recovery after actual steamwebhelper replacement, with Steam itself remaining running, theme CSS and JavaScript restored, and Desktop plus Big Picture behavior verified. Native unit tests alone cannot satisfy runtime acceptance. Preserve all private combined theme files, settings, games, downloads, and retained recovery artifacts. Keep an exact original-library rollback and verify it. No automatic dispatch or further debugging until Lauren explicitly resumes.\n\nCurrent recovery: original Millennium 3.6.2 DLL restored and SHA256 verified as 8E631676083367622C4FCFCABF23AE02A21E65F54B4ADFB60E2D92DA816FEECF. Existing webhelper hook unchanged: 694C55009A0EADF180F9E88D0B7575B6FF9A1A1976166450D7E9728B5CA88E04. Theme activeTheme remains steam-prime; config SHA256 BD33A8F17CD96E78260D07BC455F258246951EAAF891239C5CF1A769CD36027D; skin SHA256 8AEB0F6D278C7782CA48BE883CF57DF4AADB3B978827840558FCCE5FC6EE7FFB.\n\nRetained local source: C:\\Users\\lrnol\\Repos\\millennium-reconnect, branch codex/windows-theme-reconnect, based on upstream SteamClientHomebrew/Millennium tag v3.6.2 (88fb7c16d04d162cb3e94beedb11a51705ec03fb). Candidate commits 2f1c277a91d96de3db836ea3850a2b1eeee3c9a5 and 47e338ab098a3eab62fc23893d7e308724af4fa7 are local only and BOTH failed real Steam reconnect after cold launch succeeded. Do not reinstall or declare them fixed. First candidate fixed a termination-only watcher deadlock and retained generation-specific handles; revised candidate also cancels stale readers on a generation change. The first candidate fails the retained-writer regression; the revised candidate passes all 10 native pipe/CDP shutdown tests, but still fails integration. Runtime revised test: Steam PID stayed 40976; browser changed 32988 -> 40688; no theme CSS or scripts after 45 seconds. Existing SDK diagnostic missing useParams was present on stock and patched cold launches and is not proven causal. Next investigation must capture the actual blocked native thread / transport / bootstrap stage rather than assume the pipe fixes explain the full failure.\n\nLocal evidence: C:\\Users\\lrnol\\Repos\\relay\\docs\\steam-theme\\millennium-reconnect-2026-10-23.json and qa\\millennium-reconnect-2026-10-23\\ (JUnit, release build logs, restart intents, failed revised-runtime.json). Local packages with original DLL, candidate DLL, source.patch and guarded install/rollback scripts: C:\\Users\\lrnol\\Documents\\Steam Theme\\Millennium reconnect fix-2026-10-23 and .2. Local paths are not remote publication. Both candidates must remain quarantined. Do not resume the separately stopped public-edition work. Preserve legally required third-party notices and use Lauren's verified human identity for project changes; omit voluntary AI/tool/model author credits.",
             "at": "2026-10-23T04:54:57.444Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "relay-static-card-mount-claude-desktop-20261023",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "goal": "Lauren (2026-10-23): in the Claude desktop app (Code tab), the static Relay test cards don't render, while every scripted card does. Observed in one session at about 05:00 UTC: relay_render_context_card (rtxforge status explorer), relay_test_card_connection (build 20261001.1), relay_test_card_lifecycle_standard (build 20261002.1) and relay_test_card_action (build 20261001.1, Check data action worked) all mounted and reported card appeared, script started, host connected and data arrived. relay_test_card_static_compat (variant B) showed only the collapsed tool line 'Used relay: relay · test B: compatibility static', with no widget, and relay_test_card_static_standard (variant A) showed no widget either. Both static variants deliberately contain no scripts.",
+      "acceptance": "Explain why script-free card variants don't mount in the Claude desktop host while scripted variants do (resource metadata, MIME type, missing host handshake or host policy). Either make the static variants mount there, or record in CARD_MOUNT_VARIANTS that Claude desktop needs the scripted lifecycle and stop relying on static variants for that host. Update the variant tests. Re-run the card tests in Claude desktop and record the result.",
+      "next_action": "Compare the static-standard and static-compat resource definitions with lifecycle-standard in src/relay-card-variants.js, then re-test all five cards in the Claude desktop Code tab and record which mount.",
+      "paths": [
+        "src/relay-card-variants.js",
+        "src/relay-card-variants.test.js",
+        "docs/relay/CARD_MOUNT_VARIANTS_20261002.md"
+      ],
+      "resources": [],
+      "category": "qa-verification",
+      "tags": [
+        "cards",
+        "claude-desktop",
+        "mcp-apps"
+      ],
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-23T05:02:37.231Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-23): in the Claude desktop app (Code tab), the static Relay test cards don't render, while every scripted card does. Observed in one session at about 05:00 UTC: relay_render_context_card (rtxforge status explorer), relay_test_card_connection (build 20261001.1), relay_test_card_lifecycle_standard (build 20261002.1) and relay_test_card_action (build 20261001.1, Check data action worked) all mounted and reported card appeared, script started, host connected and data arrived. relay_test_card_static_compat (variant B) showed only the collapsed tool line 'Used relay: relay · test B: compatibility static', with no widget, and relay_test_card_static_standard (variant A) showed no widget either. Both static variants deliberately contain no scripts.",
+          "acceptance": "Explain why script-free card variants don't mount in the Claude desktop host while scripted variants do (resource metadata, MIME type, missing host handshake or host policy). Either make the static variants mount there, or record in CARD_MOUNT_VARIANTS that Claude desktop needs the scripted lifecycle and stop relying on static variants for that host. Update the variant tests. Re-run the card tests in Claude desktop and record the result.",
+          "at": "2026-10-23T05:02:37.231Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-static-card-mount-claude-desktop-20261023:acceptance:0",
+            "text": "Explain why script-free card variants don't mount in the Claude desktop host while scripted variants do (resource metadata, MIME type, missing host handshake or host policy). Either make the static variants mount there, or record in CARD_MOUNT_VARIANTS that Claude desktop needs the scripted lifecycle and stop relying on static variants for that host. Update the variant tests. Re-run the card tests in Claude desktop and record the result.",
+            "at": "2026-10-23T05:02:37.231Z"
           }
         ]
       }
