@@ -50,11 +50,12 @@
       "criterion_id": "shared-provider-two-games"
     }
   ],
-  "overall_verdict": "not_sure",
+  "overall_verdict": "needs_work",
   "known_issues": [
     "Vulkan helper preset save/reset remains disabled; live game controls are available.",
     "Broader focus/HDR/resize and RTX20/30/50 hardware qualification remain incomplete.",
-    "OptiScaler and Feeder packages build the shared prompt; their independent gameplay visual acceptance remains pending."
+    "OptiScaler and Feeder packages build the shared prompt; their independent gameplay visual acceptance remains pending.",
+    "2026-10-23 installed app overwritten by later UI installer; helper cannot discover BG3/RDR2 until a combined source build is installed. Single-row welcome and main/Settings brand typography requested; old visual verdict cannot establish new build acceptance."
   ],
   "deterministic_evidence": [
     "Real Win32/Vulkan renderer recreation plus NewFrame passes; the unfixed control reproduces c0000005 at the same DPI callback as the BG3 dump.",
@@ -72,5 +73,14 @@
   "recovery": [
     "Retained candidate07 runtime/common Bink and original recovery journals; RDR2 ReflexSleep remains 0.",
     "Previous app/settings backup retained in allocated task artifacts."
+  ],
+  "feedback": [
+    {
+      "source": "Lauren's current chat and BG3 screenshot",
+      "artifact": "candidate09 Vulkan runtime 6f5beaf65b73288de21f39565e3d0ec550e311c533ecbe373b0066da50385f2f",
+      "result": "Panel opens in gameplay and reports NR10.48ms Active / FG30->1204.00x; all DLSS lights grey, neutral accent and Waiting for background helper footer.",
+      "request": "Compact single-row welcome with smaller icon; Bakbak One for all main feature and Settings headings, Inter smaller labels and copy.",
+      "diagnosis": "PR50 UI installer installed after candidate09 app and replaced helper script5750ac13 with c78f99f9 lacking Vulkan target discovery. Source script verifies both existing external recovery journals and their NR/FG file ownership. Runtime backend is functioning; helper/combined-app acceptance fails."
+    }
   ]
 }
