@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T16:52:42.974Z",
+  "updated_at": "2026-10-23T16:54:26.837Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -1419,7 +1419,7 @@
       "supporting_teams": [],
       "primary_staff": null,
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-20T20:47:46.576Z",
       "objective_history": {
         "baseline": {
@@ -1462,7 +1462,7 @@
           "next_action": "Handoff directed by Lauren 2026-10-23 ~08:30Z in Claude Code session 9d7aaacd: 'claim any and all work or files you need' / 'linux scope is ALL YOURS now'. Previous owner 01a1659a must stop Linux writes. Successor finishes the Linux 1.0 Beta RC (Bazzite build+test first, then SteamOS/CachyOS/other gaming distros app launch and feature installs) from origin/main 1612052 on rtxforge/linux-beta-rc-20261023."
         }
       ],
-      "updated_at": "2026-10-23T16:16:58.422Z",
+      "updated_at": "2026-10-23T16:54:26.837Z",
       "amendment_count": 20,
       "amendments": [
         {
@@ -4898,7 +4898,8 @@
             ]
           }
         }
-      ]
+      ],
+      "completed_at": "2026-10-23T16:54:26.837Z"
     },
     {
       "id": "rtxforge-beta-native-screenshot-refresh-20261020",
@@ -12302,7 +12303,7 @@
       "primary_staff": null,
       "supporting_staff": [],
       "base_sha": "f4824d8b304535b6d700ee82b89f73942d41c2b1",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-21T20:40:52.88Z",
       "objective_history": {
         "baseline": {
@@ -12319,8 +12320,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T16:52:42.974Z",
-      "lease_until": "2026-10-24T04:52:42.974Z",
+      "updated_at": "2026-10-23T16:54:26.837Z",
+      "lease_until": "2026-10-24T04:54:26.837Z",
       "handoffs": [
         {
           "at": "2026-10-21T21:34:10.11Z",
@@ -15782,7 +15783,13 @@
             ]
           }
         }
-      ]
+      ],
+      "pr": 66,
+      "merged_head_sha": "beb3b34bd2e44a1bb3873ec7cbd7af9788aa185f",
+      "merge_commit_sha": "d0eea490dab30053944624a660018d2b5785171f",
+      "evidence": "Branch rtxforge/linux-ui-parity-20261021 fully merged. PR65 (head 551bc9e) merged to main as acff907 after all hosted checks passed (native/kde/wayland review, WinUI 3 x64+ARM64, in-game panel candidate, attribution, coordination admission): Linux artwork rest stroke removed to match Windows PR64; Game Mode panel-shortcut recorder (app-wide and per game); cross-distro launcher with dependency guidance, distrobox --container route and setup acceptance; /proc NVIDIA GPU fallback; inode-deduped Steam libraries; docs/linux/distros.md. PR66 (head beb3b34, docs only) merged as d0eea49 after its checks passed: Game Mode installs/repairs/restores run with Steam open via the per-game Proton prefix route (Lauren's correction). Local evidence: Bazzite native tests, GTK smoke, ui_game_mode, 4K scaling; CachyOS container test set + GTK smoke; Fedora 44 container package-ui-review set; container route GTK smoke from the AppImage. RC AppImage 551bc9e installed locally with previous builds retained. Not verified: SteamOS hardware; Linux NR/MFG gameplay. No release published.",
+      "work_accounted": true,
+      "completed_at": "2026-10-23T16:54:26.837Z"
     }
   ]
 }
