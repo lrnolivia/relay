@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T03:09:23.044Z",
+  "updated_at": "2026-10-23T03:12:36.124Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -3787,7 +3787,7 @@
       "supporting_teams": [],
       "primary_staff": null,
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-23T02:47:36.823Z",
       "objective_history": {
         "baseline": {
@@ -10744,6 +10744,52 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-beta-launch-date-20261027",
+      "owner": "01a15ad4-0fe2-7230-a024-20a4a4dba118",
+      "branch": "rtxforge/beta-launch-date-20261027",
+      "paths": [
+        "website/public/index.html",
+        "website/README.md"
+      ],
+      "resources": [
+        "rtxforge-landing-release-date",
+        "rtxforge-landing-worker"
+      ],
+      "goal": "Move the rtxForge website Public Beta launch date to Tuesday, October 27, 2026, and publish the verified copy change.",
+      "acceptance": "Direct Lauren authorization 2026-10-22: 'update the website, we'll have to push this beta release to next week. Oct 27th feels nice.' Change website/public/index.html time datetime from2026-10-23 to2026-10-27 and visible Friday, October23 to Tuesday, October27; synchronize website/README.md release-channel description. Search live main website for other old launch-date references. Preserve layout, screenshots, genuine release-availability logic, download destinations, and other work. This authorizes the routine reviewed website PR, human Git merge, existing deployment and production verification; it does not publish native app releases, start captures, contact chats, or change another claim. Use Lauren Olivia <lrnoliv@gmail.com> verified attribution; omit voluntary tool/model credits. Retired screenshot claim/branch must not be reused.",
+      "next_action": "Use the newly deployed permanent website exception to change the two date references to Tuesday October27; run website check, draft PR and exact-head CI, human Git merge, deploy with existing Wrangler account and verify production date in both OS/theme views. No app release or screenshot recapture.",
+      "category": "maintenance",
+      "tags": [
+        "website",
+        "beta",
+        "release-date"
+      ],
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "base_sha": "bb50703339df6a813da812b07882fc1f569fdadf",
+      "state": "active",
+      "created_at": "2026-10-23T03:12:36.124Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Move the rtxForge website Public Beta launch date to Tuesday, October 27, 2026, and publish the verified copy change.",
+          "acceptance": "Direct Lauren authorization 2026-10-22: 'update the website, we'll have to push this beta release to next week. Oct 27th feels nice.' Change website/public/index.html time datetime from2026-10-23 to2026-10-27 and visible Friday, October23 to Tuesday, October27; synchronize website/README.md release-channel description. Search live main website for other old launch-date references. Preserve layout, screenshots, genuine release-availability logic, download destinations, and other work. This authorizes the routine reviewed website PR, human Git merge, existing deployment and production verification; it does not publish native app releases, start captures, contact chats, or change another claim. Use Lauren Olivia <lrnoliv@gmail.com> verified attribution; omit voluntary tool/model credits. Retired screenshot claim/branch must not be reused.",
+          "at": "2026-10-23T02:47:36.823Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta-launch-date-20261027:acceptance:0",
+            "text": "Direct Lauren authorization 2026-10-22: 'update the website, we'll have to push this beta release to next week. Oct 27th feels nice.' Change website/public/index.html time datetime from2026-10-23 to2026-10-27 and visible Friday, October23 to Tuesday, October27; synchronize website/README.md release-channel description. Search live main website for other old launch-date references. Preserve layout, screenshots, genuine release-availability logic, download destinations, and other work. This authorizes the routine reviewed website PR, human Git merge, existing deployment and production verification; it does not publish native app releases, start captures, contact chats, or change another claim. Use Lauren Olivia <lrnoliv@gmail.com> verified attribution; omit voluntary tool/model credits. Retired screenshot claim/branch must not be reused.",
+            "at": "2026-10-23T02:47:36.823Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-23T03:12:36.124Z",
+      "lease_until": "2026-10-23T15:12:36.124Z"
     }
   ]
 }
