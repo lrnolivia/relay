@@ -6,6 +6,7 @@ import {dirname,join,relative,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {REQUIRED_SUITES,runSuites,redact} from './ci-test-orchestrator.mjs';
 import {BUILD_OUTPUTS,verifyBuild} from './release-toolchain.mjs';
+import {createTelemetryPublisher,payloadFor,readSuiteTelemetry} from './ci-test-telemetry-publish.mjs';
 
 // Last healthy run 37758371704: 24.5s control / 26.0s interface.
 // Serial execution remains within each group; only separate snapshots overlap.
@@ -106,6 +107,10 @@ async function main(){
   process.once('SIGINT',stop);process.once('SIGTERM',stop);
   const output=join(root,'qa-evidence/test-workflow/result.json');let parent,identity={source_sha:env.RELAY_SOURCE_SHA||null,run_id:env.GITHUB_RUN_ID||null,run_attempt:env.GITHUB_RUN_ATTEMPT||null},report;
   const started=Date.now();
+  // Live test counts for Relay's CI card; the token stays in this parent and never reaches suites.
+  const publisher=createTelemetryPublisher({env,log:message=>process.stdout.write('::warning::'+message+'\n')});
+  let telemetryDir=null,latest=null,pulseTimer=null;
+  const pulse=async(final=false)=>{if(!telemetryDir||!latest)return;const folds=await readSuiteTelemetry(telemetryDir,REQUIRED_SUITES.map(s=>s.id));await publisher.publish(payloadFor({report:latest,folds,groups:SUITE_GROUPS,run:publisher.run,head_sha:identity.source_sha,final}),{final});};
   try{
     const receipt=JSON.parse(await readFile(join(root,'qa-evidence/toolchain/build.json')));
     await verifyBuild(receipt,{root,env});
@@ -113,11 +118,14 @@ async function main(){
     report=aggregateGroups({reports:[],identity});await save(output,report);
     parent=await mkdtemp(join(env.RUNNER_TEMP||tmpdir(),'relay-ci-suites-'));
     if(!relative(root,parent).startsWith('..'))throw Error('Suite workspaces must be outside the canonical checkout');
+    telemetryDir=join(parent,'telemetry');await mkdir(telemetryDir,{recursive:true});latest=report;
+    pulseTimer=setInterval(()=>{pulse().catch(()=>{});},10000);pulseTimer.unref?.();
     const workspaces=[];
     // Copy once per group; npm install/build/browser installation never repeat.
     for(const group of SUITE_GROUPS){const cwd=join(parent,group.id);await prepareSnapshot({root,directory:cwd,receipt,env});workspaces.push({id:group.id,cwd,temp:join(parent,group.id+'-tmp')});}
     const prepared=Date.now();
-    report=await runParallelGroups({workspaces,identity,env,signal:controller.signal,verify:cwd=>verifyBuild(receipt,{root:cwd,env}),onOutput:(group,text)=>process.stdout.write(text.split('\n').map(line=>line?'['+group+'] '+line:'').join('\n')),onReport:async(aggregate,group)=>{if(group)await save(join(root,'qa-evidence/test-workflow',group.group+'.json'),group);await save(output,aggregate);}});
+    const groupEnv={...env,RELAY_TEST_TELEMETRY_DIR:telemetryDir};delete groupEnv.RELAY_TEST_TELEMETRY_TOKEN;delete groupEnv.RELAY_TEST_TELEMETRY_STATE;
+    report=await runParallelGroups({workspaces,identity,env:groupEnv,signal:controller.signal,verify:cwd=>verifyBuild(receipt,{root:cwd,env}),onOutput:(group,text)=>process.stdout.write(text.split('\n').map(line=>line?'['+group+'] '+line:'').join('\n')),onReport:async(aggregate,group)=>{if(group)await save(join(root,'qa-evidence/test-workflow',group.group+'.json'),group);await save(output,aggregate);latest=aggregate;pulse().catch(()=>{});}});
     // Preserve each group's evidence before publishing the historical artifact paths.
     for(const workspace of workspaces){
       const evidence=join(workspace.cwd,'qa-evidence');
@@ -127,7 +135,10 @@ async function main(){
     await verifyBuild(receipt,{root,env});
     report.timing={prepare_ms:prepared-started,parallel_and_evidence_ms:Date.now()-prepared,total_ms:Date.now()-started};
   }catch(cause){report={...(report||aggregateGroups({reports:[],identity})),exit_code:1,error:redact(cause.message)};}
-  finally{if(parent)await rm(parent,{recursive:true,force:true}).catch(cause=>{report={...report,exit_code:1,cleanup_error:redact(cause.message)};});process.removeListener('SIGINT',stop);process.removeListener('SIGTERM',stop);}
+  finally{
+    clearInterval(pulseTimer);
+    if(telemetryDir){latest=report;await pulse(true).catch(()=>{});await copyEvidence(telemetryDir,join(root,'qa-evidence/parallel-suites/telemetry')).catch(()=>{});}
+    if(parent)await rm(parent,{recursive:true,force:true}).catch(cause=>{report={...report,exit_code:1,cleanup_error:redact(cause.message)};});process.removeListener('SIGINT',stop);process.removeListener('SIGTERM',stop);}
   await save(output,report);
   for(const result of report.results)process.stdout.write('::notice::Required suite '+result.id+': '+result.status+'; original exit '+result.exit_code+'\n');
   if(report.exit_code)process.stderr.write('::error::Parallel suite gate is nonpassing; see required-suite accounting and both group logs\n');

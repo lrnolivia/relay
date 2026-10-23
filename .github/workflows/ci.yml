@@ -38,6 +38,8 @@ on:
 
 permissions:
   contents: read
+  # Observational relay-tests check runs carry live test counts; they always conclude neutral.
+  checks: write
 
 env:
   RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -161,7 +163,15 @@ jobs:
         env:
           RELAY_QA_OUTPUT: ${{ github.workspace }}/qa-evidence/relay-motion
           RELAY_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          RELAY_TEST_TELEMETRY_TOKEN: ${{ github.token }}
+          RELAY_TEST_TELEMETRY_STATE: ${{ runner.temp }}/relay-test-telemetry.json
         run: node scripts/ci-parallel-suites.mjs
+      - name: Finish live test telemetry if the suite process stopped early
+        if: always() && steps.verify-suites.outcome != 'skipped'
+        env:
+          RELAY_TEST_TELEMETRY_TOKEN: ${{ github.token }}
+          RELAY_TEST_TELEMETRY_STATE: ${{ runner.temp }}/relay-test-telemetry.json
+        run: node scripts/ci-test-telemetry-publish.mjs --finalize
       - name: Account for suites blocked by setup
         if: always() && (steps.setup-toolchain.outcome != 'success' || steps.setup-focused.outcome != 'success' || steps.setup-install.outcome != 'success' || steps.setup-contracts.outcome != 'success' || steps.setup-tool-surface.outcome != 'success' || steps.setup-browser.outcome != 'success' || steps.setup-build.outcome != 'success' || steps.setup-typecheck.outcome != 'success' || steps.setup-runtime.outcome != 'success')
         env:
