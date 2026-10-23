@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T02:05:26.165Z",
+  "updated_at": "2026-10-23T02:08:05.001Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9560,7 +9560,7 @@
       ],
       "goal": "Build one shared experimental Vulkan provider for rtxForge delivering Neural Rendering and native NVIDIA FG/MFG in Baldur's Gate 3 and Red Dead Redemption 2, with per-game loader/input profiles, shared panel/controls, and reversible installation.",
       "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target. Replace the bespoke Vulkan test panel with the exact canonical rtxForge ForgePanel ImGui layout, fonts, styling and controls, adapted to the Vulkan host. Add truthful live NR composition/GPU timing and actual FG rendered/displayed frame telemetry to that panel. Inspect and adopt the existing Universal MFG panel's smooth text rasterization/sampling approach. Reuse canonical source; do not invent a replacement overlay.",
-      "next_action": "PR55 published/read back at c8c5b8eb7e84b6a77fda9bde44df13a10ce6275b, clean checkout; main90e9145 merged. Budget conflict reconciled: active3/4, preflight passes (user's temporary fifth-slot authorization retained historically). New common Bink a1d1462cf662d45449ea3a483190c258c8d426824d4062bb21b93885f12ff0d4 preserves OEP, defers to safe Vulkan lookup and passes both export tables/TLS entry-byte/small-stack/DX11/missing-provider fixtures. Same runtime61541cef035380cc1d0556df690495e6dd880df1e5da82f61e753ed96b1a09b8 and exact same Bink installed ACTIVE in BG3 and RDR2 via candidate03; original hashes/recovery retained, old NR/MFG settings preserved. Actual BG3 old->new inventory restore/install exposed and fixed adapter transition; prior journal/evidence now retained by hashed chain. Adapter104 tests101pass3WinSkip. Initial RDRcommon2502 crash twice before fgvk in TLS (execute180136ab8); dump/trace local universal-rdr2-01/crash-trace; no third unchanged retry. Newcandidate03 no process launched yet. Lauren said she will launch; diagnostics only, Computer Use stopped with Escape; do not send desktop input. Await manual RDR2 gameplay/logs then same-stack BG3; no current-stack gameplay pass. Canonical panel CPU drawing passes SDR/HDR/DPI; Feeder/Opti compiled but helper save route and functional MFG welcome/native menu policy/settings still incomplete. PR57 merged; Models may be re-admitted when needed. Keep Universal Experimental and draft; no promotion.",
+      "next_action": "PR55 draft published at09ea0926f4d47cafacff77d1f513cd08f7b6a595, clean checkout. Candidate03 commonBink startup succeeded in RDR2 pid57784 and captured valid native DLSS inputs, but no SL instance/device/present occurred: direct Vulkan exports bypassed routing, NR/FG/panel inactive. User exited normally. Preserved full log universal-rdr2-01/candidate03-after-exit/fgvk.log sha520aa16309139831d8e31ffe7fb9c541f6786f5d58248167d75e5381131edfb5. Added direct CI/CD/swapchain/export resource/submission captures, SL physical-device association priming and RDR2 KHR/EXT BDA enumeration contract. Native build12 and native/panel contracts pass. Packaged candidate04 runtimec71095c2ea5ed06f0c7860a276ef24111eb21e2769bacbb1ec64779a3e937d55, samecommonBinka1d1462cf662d45449ea3a483190c258c8d426824d4062bb21b93885f12ff0d4. BOTHgames repaired via reviewed plans and hash verified; configs6205b9d1 unchanged NRon requested4x; original Bink retained. User told RDR2 ready to launch normally; diagnostics only, Computer Use Escape stop persists. No current-stack gameplay pass; await user's RDR2 launch and check SL/NR/actual displayed cadence, then same-stack BG3. Prior real BG3 NR4x passed older8d683 runtime only. 104adaptertests101pass3WindowsSkip remain lastfocusedpass; noadapterchanges thisbatch. Helper save/preset and actual MFG welcome/native-menu controls stillpending; Models no currentclaim afterPR57merge. Keep Universal Experimental, runtime_verified/default_promoted false.",
       "category": "implementation",
       "tags": [
         "experimental",
@@ -9616,8 +9616,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T01:52:22.445Z",
-      "lease_until": "2026-10-23T13:52:22.445Z",
+      "updated_at": "2026-10-23T02:08:05.001Z",
+      "lease_until": "2026-10-23T14:08:05.001Z",
       "amendment_count": 5,
       "amendments": [
         {
