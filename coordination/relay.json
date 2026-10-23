@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-23T02:57:45.841Z",
+  "updated_at": "2026-10-23T02:59:52.040Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -17525,7 +17525,8 @@
         "packages/runner/test/coordination.test.mjs",
         "src/coordination-transport.test.js",
         "projects/rtxforge.json",
-        "docs/rtxforge/WEBSITE_BRANCH_SLOT_20261022.md"
+        "docs/rtxforge/WEBSITE_BRANCH_SLOT_20261022.md",
+        "scripts/coordinate.mjs"
       ],
       "resources": [
         "runner-scoped-branch-budget",
@@ -17533,7 +17534,7 @@
       ],
       "goal": "Provide a permanent fifth rtxForge branch slot usable only by website-scoped work while preserving four general slots.",
       "acceptance": "Direct Lauren2026-10-22 authorization: 'make a fifth permament exception slot for website updates'. Add project-scoped deterministic budget exception allowing at most one extra active claim, eligible only when every declared path is inside website/. Four non-website claims remain maximum; mixed native/website scopes, nonwebsite fifth claims, sixth claims and scope expansion bypasses must fail. Preserve ordinary owner/path/resource/expired/retirement guards; no other project budget change. Test shared engine and MCP/CLI adapter applicability. Synchronize runtime mirror/pin, review exact-head checks, human-Git merge, verify existing Workers Build deploy and live policy/engine. Document in Relay docs/rtxforge/. Use verified Lauren attribution and omit voluntary tool credits. Preserve all concurrent work; no other owner claim changes. Once policy is live, queued website date task is separately admitted/published/completed.",
-      "next_action": "Inspect shared admission/evaluation and adapter tests, then implement narrow opt-in path-scoped overflow policy, run focused and required tests, PR/merge through normal gates and verify Workers Build before website claim.",
+      "next_action": "Implement path-scoped fifth-slot budget and matching audit totals in shared engine, MCP and CLI; test admission, scope changes and lifecycle. Existing website date task remains queued until runtime/policy publication.",
       "category": "maintenance",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -17557,8 +17558,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T02:57:45.841Z",
-      "lease_until": "2026-10-23T14:57:45.841Z"
+      "updated_at": "2026-10-23T02:59:52.040Z",
+      "lease_until": "2026-10-23T14:59:52.040Z"
     }
   ],
   "migrated_from": "loew-inspector"
