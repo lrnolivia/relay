@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T03:12:36.124Z",
+  "updated_at": "2026-10-23T03:14:02.487Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -10515,6 +10515,52 @@
       "lease_until": "2026-10-23T15:07:35.522Z"
     },
     {
+      "id": "rtxforge-beta-launch-date-20261027",
+      "owner": "01a15ad4-0fe2-7230-a024-20a4a4dba118",
+      "branch": "rtxforge/beta-launch-date-20261027",
+      "paths": [
+        "website/public/index.html",
+        "website/README.md"
+      ],
+      "resources": [
+        "rtxforge-landing-release-date",
+        "rtxforge-landing-worker"
+      ],
+      "goal": "Move the rtxForge website Public Beta launch date to Tuesday, October 27, 2026, and publish the verified copy change.",
+      "acceptance": "Direct Lauren authorization 2026-10-22: 'update the website, we'll have to push this beta release to next week. Oct 27th feels nice.' Change website/public/index.html time datetime from2026-10-23 to2026-10-27 and visible Friday, October23 to Tuesday, October27; synchronize website/README.md release-channel description. Search live main website for other old launch-date references. Preserve layout, screenshots, genuine release-availability logic, download destinations, and other work. This authorizes the routine reviewed website PR, human Git merge, existing deployment and production verification; it does not publish native app releases, start captures, contact chats, or change another claim. Use Lauren Olivia <lrnoliv@gmail.com> verified attribution; omit voluntary tool/model credits. Retired screenshot claim/branch must not be reused.",
+      "next_action": "Use the newly deployed permanent website exception to change the two date references to Tuesday October27; run website check, draft PR and exact-head CI, human Git merge, deploy with existing Wrangler account and verify production date in both OS/theme views. No app release or screenshot recapture.",
+      "category": "maintenance",
+      "tags": [
+        "website",
+        "beta",
+        "release-date"
+      ],
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "base_sha": "bb50703339df6a813da812b07882fc1f569fdadf",
+      "state": "active",
+      "created_at": "2026-10-23T03:12:36.124Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Move the rtxForge website Public Beta launch date to Tuesday, October 27, 2026, and publish the verified copy change.",
+          "acceptance": "Direct Lauren authorization 2026-10-22: 'update the website, we'll have to push this beta release to next week. Oct 27th feels nice.' Change website/public/index.html time datetime from2026-10-23 to2026-10-27 and visible Friday, October23 to Tuesday, October27; synchronize website/README.md release-channel description. Search live main website for other old launch-date references. Preserve layout, screenshots, genuine release-availability logic, download destinations, and other work. This authorizes the routine reviewed website PR, human Git merge, existing deployment and production verification; it does not publish native app releases, start captures, contact chats, or change another claim. Use Lauren Olivia <lrnoliv@gmail.com> verified attribution; omit voluntary tool/model credits. Retired screenshot claim/branch must not be reused.",
+          "at": "2026-10-23T02:47:36.823Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta-launch-date-20261027:acceptance:0",
+            "text": "Direct Lauren authorization 2026-10-22: 'update the website, we'll have to push this beta release to next week. Oct 27th feels nice.' Change website/public/index.html time datetime from2026-10-23 to2026-10-27 and visible Friday, October23 to Tuesday, October27; synchronize website/README.md release-channel description. Search live main website for other old launch-date references. Preserve layout, screenshots, genuine release-availability logic, download destinations, and other work. This authorizes the routine reviewed website PR, human Git merge, existing deployment and production verification; it does not publish native app releases, start captures, contact chats, or change another claim. Use Lauren Olivia <lrnoliv@gmail.com> verified attribution; omit voluntary tool/model credits. Retired screenshot claim/branch must not be reused.",
+            "at": "2026-10-23T02:47:36.823Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-23T03:12:36.124Z",
+      "lease_until": "2026-10-23T15:12:36.124Z"
+    },
+    {
       "id": "rtxforge-vulkan-dlssg-20261022",
       "owner": "01a165c7-6170-7223-ad38-eb1eeafb7972",
       "branch": "rtxforge/vulkan-dlssg-20261022",
@@ -10534,7 +10580,9 @@
         "windows/tests/test_overlay_ui.py",
         "windows/RtxForge.Windows/Services/OverlayHelper.cs",
         "windows/build/Build-FeederPanel.ps1",
-        "windows/RtxForge.Windows/Services/NativePanelCoordinator.cs"
+        "windows/RtxForge.Windows/Services/NativePanelCoordinator.cs",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.Companion.cs"
       ],
       "resources": [
         "rtxforge-bg3fgvk-candidate",
@@ -10547,7 +10595,7 @@
       ],
       "goal": "Build one shared experimental Vulkan provider for rtxForge delivering Neural Rendering and native NVIDIA FG/MFG in Baldur's Gate 3 and Red Dead Redemption 2, with per-game loader/input profiles, shared panel/controls, and reversible installation.",
       "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target. Replace the bespoke Vulkan test panel with the exact canonical rtxForge ForgePanel ImGui layout, fonts, styling and controls, adapted to the Vulkan host. Add truthful live NR composition/GPU timing and actual FG rendered/displayed frame telemetry to that panel. Inspect and adopt the existing Universal MFG panel's smooth text rasterization/sampling approach. Reuse canonical source; do not invent a replacement overlay.",
-      "next_action": "Lauren confirms candidate07 BG3 gameplay launch/NR/MFG/canonical overlay. Preserve runtimefceb42b2/Binka1d1462c exact tested stack. Fix confirmed DLSS-file lights/accent via verified Vulkan-journal helper discovery and target palette caching. Add formerly completed Feeder NativePanelCoordinator.cs for target cache; leave reserved Models.cs and OverlayPreferencesView.cs alone pending handoff/rebase. Coordination PR55 comment6356422773. User owns input/launch, diagnostics only. RDR07 attached-recorder cleanexit beforeSL is unqualified; usepassive capture. Keep full sharedprovider/overlay acceptance and no defaultpromotion.",
+      "next_action": "BG3candidate07 useraccepted gameplayNR+MFG+canonicalpanel, measuredfouractual4xintervals. Vulkan helper discovery/fileownership fixtures34PASS; nativebuild17andWindowsC#buildPASS. Continue compact stats near NR/FG toggles and persistent Show live statistics preference. GameModeclaim now COMPLETED, writerquiescence recorded, so claim narrow Models.cs preference/CopyOverlayFrom slice plus EngineForgeService.Companion.cs correct provider identity. PR55comment6356422773 records userauthorizedpanel/settingscoordination. OverlayPreferencesView stillcopytaskPR60, leavealoneuntilmerge. Sourcepatchnotyetinstalled; retain BG3fceb42b2/Binka1d1462c gameplaypass. Userownsdesktop. NoRDRgameplaypass; attachedcaptureinterference remainsseparate.",
       "category": "implementation",
       "tags": [
         "experimental",
@@ -10603,8 +10651,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T03:09:23.044Z",
-      "lease_until": "2026-10-23T15:09:23.044Z",
+      "updated_at": "2026-10-23T03:14:02.487Z",
+      "lease_until": "2026-10-23T15:14:02.487Z",
       "amendment_count": 6,
       "amendments": [
         {
@@ -10744,52 +10792,6 @@
           }
         }
       ]
-    },
-    {
-      "id": "rtxforge-beta-launch-date-20261027",
-      "owner": "01a15ad4-0fe2-7230-a024-20a4a4dba118",
-      "branch": "rtxforge/beta-launch-date-20261027",
-      "paths": [
-        "website/public/index.html",
-        "website/README.md"
-      ],
-      "resources": [
-        "rtxforge-landing-release-date",
-        "rtxforge-landing-worker"
-      ],
-      "goal": "Move the rtxForge website Public Beta launch date to Tuesday, October 27, 2026, and publish the verified copy change.",
-      "acceptance": "Direct Lauren authorization 2026-10-22: 'update the website, we'll have to push this beta release to next week. Oct 27th feels nice.' Change website/public/index.html time datetime from2026-10-23 to2026-10-27 and visible Friday, October23 to Tuesday, October27; synchronize website/README.md release-channel description. Search live main website for other old launch-date references. Preserve layout, screenshots, genuine release-availability logic, download destinations, and other work. This authorizes the routine reviewed website PR, human Git merge, existing deployment and production verification; it does not publish native app releases, start captures, contact chats, or change another claim. Use Lauren Olivia <lrnoliv@gmail.com> verified attribution; omit voluntary tool/model credits. Retired screenshot claim/branch must not be reused.",
-      "next_action": "Use the newly deployed permanent website exception to change the two date references to Tuesday October27; run website check, draft PR and exact-head CI, human Git merge, deploy with existing Wrangler account and verify production date in both OS/theme views. No app release or screenshot recapture.",
-      "category": "maintenance",
-      "tags": [
-        "website",
-        "beta",
-        "release-date"
-      ],
-      "primary_team": "release",
-      "supporting_teams": [],
-      "primary_staff": null,
-      "supporting_staff": [],
-      "base_sha": "bb50703339df6a813da812b07882fc1f569fdadf",
-      "state": "active",
-      "created_at": "2026-10-23T03:12:36.124Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Move the rtxForge website Public Beta launch date to Tuesday, October 27, 2026, and publish the verified copy change.",
-          "acceptance": "Direct Lauren authorization 2026-10-22: 'update the website, we'll have to push this beta release to next week. Oct 27th feels nice.' Change website/public/index.html time datetime from2026-10-23 to2026-10-27 and visible Friday, October23 to Tuesday, October27; synchronize website/README.md release-channel description. Search live main website for other old launch-date references. Preserve layout, screenshots, genuine release-availability logic, download destinations, and other work. This authorizes the routine reviewed website PR, human Git merge, existing deployment and production verification; it does not publish native app releases, start captures, contact chats, or change another claim. Use Lauren Olivia <lrnoliv@gmail.com> verified attribution; omit voluntary tool/model credits. Retired screenshot claim/branch must not be reused.",
-          "at": "2026-10-23T02:47:36.823Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-beta-launch-date-20261027:acceptance:0",
-            "text": "Direct Lauren authorization 2026-10-22: 'update the website, we'll have to push this beta release to next week. Oct 27th feels nice.' Change website/public/index.html time datetime from2026-10-23 to2026-10-27 and visible Friday, October23 to Tuesday, October27; synchronize website/README.md release-channel description. Search live main website for other old launch-date references. Preserve layout, screenshots, genuine release-availability logic, download destinations, and other work. This authorizes the routine reviewed website PR, human Git merge, existing deployment and production verification; it does not publish native app releases, start captures, contact chats, or change another claim. Use Lauren Olivia <lrnoliv@gmail.com> verified attribution; omit voluntary tool/model credits. Retired screenshot claim/branch must not be reused.",
-            "at": "2026-10-23T02:47:36.823Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-23T03:12:36.124Z",
-      "lease_until": "2026-10-23T15:12:36.124Z"
     }
   ]
 }
