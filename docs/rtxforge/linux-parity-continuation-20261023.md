@@ -1,6 +1,6 @@
 # Linux parity continuation — 23 October 2026
 
-Source: cbcbc914d53cdb6b9d99329dc6b315a5b0a1560d
+Source: 903184acef5d43ab5dc8a3463ced4bf00f5c1851
 PR: https://github.com/lrnolivia/rtxForge/pull/63
 
 The owner requested Windows completion now and Linux work later. Prepared Linux source is pushed with the shared engine. Final Linux acceptance remains pending.
@@ -14,3 +14,5 @@ Resume: validate this exact source in hosted Fedora GTK; exercise global/per-gam
 Disposable environment: C:/Users/lrnol/rtxForge-previews/motion/linux-vm/build.qcow2; guest /home/fedora/linux-parity; SSH 127.0.0.1:22228 with build_key/known_hosts alongside the disk. QEMU is off. Two PC restarts were reported; Windows logged bugcheck 0x139, cause undetermined. No further diagnosis requested. Use hosted builds or real Bazzite later. No actual game files changed.
 
 Runtime component: vulkan-runtime-1.0.0-rc.1 release, outer bundle SHA-256 663bd10a35bdd31130a6d2b6a594a76e7c5e98ab4481f5c4606c239027047902, candidate source 13e5de743440fd3ee6e903ef8b88493764363c4b. Experimental, not hardware-qualified.
+
+Current disposition: Linux is explicitly deferred to the next worker by the owner. The prepared files are committed on PR #63, with no dirty source remaining. Source 903184a also preserves legacy engine-review compatibility; 19 focused review/overlay/route fixtures passed locally. Hosted Fedora engine checks passed on this revision and native UI captures are running. Windows local self-contained publish/installer built; approved existing bridge/Feeder binaries were reused without modifying native source. Final Windows install in progress. Do not require the next Linux worker to rebuild through the local VM.
