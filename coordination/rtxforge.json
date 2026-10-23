@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T08:21:12.336Z",
+  "updated_at": "2026-10-23T08:29:33.217Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6292,6 +6292,50 @@
             "id": "rtxforge-proton-vulkan-layer-panel-20261023:acceptance:0",
             "text": "A native Linux Vulkan layer (implicit, opt-in per game by environment variable or launch option, reversible) draws the rtxForge panel in at least one DX12 game via VKD3D-Proton, one DX11 game via DXVK and one native Vulkan game under Proton, with OptiScaler's menu disabled. The hotkey opens and closes the panel without reaching the game; controls change NR/MFG settings through the same channel as Windows. No crash across menu, loading, alt-tab, HDR and resolution changes in each test game. The layer installs and restores through a reviewed rtxForge operation. Linux tests and CI are green; draft PR via Relay. First step: confirm the existing Vulkan panel runs under Proton in BG3 or No Man's Sky as a baseline.",
             "at": "2026-10-23T04:59:13.268Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-linux-cross-distro-rc-20261023",
+      "owner": "claude-code-9d7aaacd-8dfa-4dac-971e-a4560aafaebe",
+      "goal": "Lauren (2026-10-23): build and test the current Linux 1.0 Beta RC on Bazzite first, then make the Linux app launch and complete feature installs on SteamOS, CachyOS and other Linux gaming distros, simplest way, without heavy packaging work. Covers host dependency detection/guidance (GTK4, libadwaita>=1.7, PyGObject, 7z/bsdtar), Steam root and library discovery (native, ~/.steam, Flatpak Steam, SD/mounted libraries), hardware detection fallbacks and installer docs.",
+      "acceptance": "Linux CI test set and GTK smoke pass on exact head; AppImage builds and launches on Bazzite; cross-distro fixtures cover Steam roots for SteamOS/CachyOS/Flatpak Steam and missing-GTK guidance; draft PR only, human attribution Lauren Olivia, no tool coauthors. No runtime claim for SteamOS/CachyOS without a real run there.",
+      "next_action": "Waiting on ownership: overlaps active rtxforge-linux-latest-feature-parity-20261020 (owner 01a1659a). Needs that owner's handoff or a split before source writes. Read-only evidence so far: origin/main 1612052 Linux CI test set passes locally on Bazzite.",
+      "paths": [
+        "scripts/desktop_frontend.py",
+        "scripts/hardware.py",
+        "scripts/desktop_install.py",
+        "scripts/steam_self_install.py",
+        "scripts/game_launch.py",
+        "scripts/discovery.py",
+        "packaging/",
+        "docs/INSTALLATION.md",
+        "docs/linux/",
+        "tests/test_cross_distro.py"
+      ],
+      "resources": [
+        "rtxforge-linux-cross-distro"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-23T08:29:33.217Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-23): build and test the current Linux 1.0 Beta RC on Bazzite first, then make the Linux app launch and complete feature installs on SteamOS, CachyOS and other Linux gaming distros, simplest way, without heavy packaging work. Covers host dependency detection/guidance (GTK4, libadwaita>=1.7, PyGObject, 7z/bsdtar), Steam root and library discovery (native, ~/.steam, Flatpak Steam, SD/mounted libraries), hardware detection fallbacks and installer docs.",
+          "acceptance": "Linux CI test set and GTK smoke pass on exact head; AppImage builds and launches on Bazzite; cross-distro fixtures cover Steam roots for SteamOS/CachyOS/Flatpak Steam and missing-GTK guidance; draft PR only, human attribution Lauren Olivia, no tool coauthors. No runtime claim for SteamOS/CachyOS without a real run there.",
+          "at": "2026-10-23T08:29:33.217Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-cross-distro-rc-20261023:acceptance:0",
+            "text": "Linux CI test set and GTK smoke pass on exact head; AppImage builds and launches on Bazzite; cross-distro fixtures cover Steam roots for SteamOS/CachyOS/Flatpak Steam and missing-GTK guidance; draft PR only, human attribution Lauren Olivia, no tool coauthors. No runtime claim for SteamOS/CachyOS without a real run there.",
+            "at": "2026-10-23T08:29:33.217Z"
           }
         ]
       }
