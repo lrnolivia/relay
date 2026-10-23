@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T03:14:49.185Z",
+  "updated_at": "2026-10-23T03:15:36.233Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -10760,14 +10760,15 @@
         "scripts/ada_mfg_provider.py",
         "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
         "windows/RtxForge.Windows/Views/LibraryPage.xaml",
-        "windows/RtxForge.Windows/Controls/LibrarySkeleton.cs"
+        "windows/RtxForge.Windows/Controls/LibrarySkeleton.cs",
+        "windows/RtxForge.Windows/ViewModels/GameItem.cs"
       ],
       "resources": [
         "rtxforge-generic-copy"
       ],
       "goal": "Lauren (2026-10-23): user-facing text names no specific game, hardware generation or fixed package release; references are generic or read from what is installed or detected. Fix the strings left on main after #57/#59.",
       "acceptance": "No user-facing string in these four files names a game, a GPU generation or a fixed release; affected tests pass; draft PR via Relay.",
-      "next_action": "Lauren (2026-10-23): show the library's 'Finding your games' loading label as a small toast at the bottom instead of a large centered title (LibrarySkeleton.cs); add to PR #60, then merge locally as Lauren when CI is green.",
+      "next_action": "Lauren (2026-10-23): loading toast (LibrarySkeleton.cs) and an unselected poster/capsule ring in the card's grey (GameItem.cs CardRing); add both to PR #60, then merge locally as Lauren when CI is green and install.",
       "category": "maintenance",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -10791,8 +10792,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T03:14:21.366Z",
-      "lease_until": "2026-10-23T15:14:21.366Z"
+      "updated_at": "2026-10-23T03:15:36.233Z",
+      "lease_until": "2026-10-23T15:15:36.233Z"
     }
   ]
 }
