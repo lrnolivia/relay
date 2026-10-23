@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T04:50:51.077Z",
+  "updated_at": "2026-10-23T04:59:13.268Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -3918,6 +3918,46 @@
       },
       "completed_at": "2026-10-23T03:22:55.840Z",
       "updated_at": "2026-10-23T03:22:55.840Z"
+    },
+    {
+      "id": "rtxforge-proton-vulkan-layer-panel-20261023",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "goal": "Lauren (2026-10-23): on Linux, OptiScaler's in-game menu tends to crash games under Proton. Build the rtxForge panel as a native Linux Vulkan layer, the way MangoHud and vkBasalt work, so it sits underneath DXVK and VKD3D-Proton and covers every Proton game whatever its API (DX11, DX12 or native Vulkan), with OptiScaler's own menu turned off. Reuse the shared canonical panel (controls, look and stats) from the Vulkan DLSS-G work. Input can't come from the game's Win32 messages, so the hotkey and controls go through the rtxForge background helper or Linux input events.",
+      "acceptance": "A native Linux Vulkan layer (implicit, opt-in per game by environment variable or launch option, reversible) draws the rtxForge panel in at least one DX12 game via VKD3D-Proton, one DX11 game via DXVK and one native Vulkan game under Proton, with OptiScaler's menu disabled. The hotkey opens and closes the panel without reaching the game; controls change NR/MFG settings through the same channel as Windows. No crash across menu, loading, alt-tab, HDR and resolution changes in each test game. The layer installs and restores through a reviewed rtxForge operation. Linux tests and CI are green; draft PR via Relay. First step: confirm the existing Vulkan panel runs under Proton in BG3 or No Man's Sky as a baseline.",
+      "next_action": "Coordinate with the Linux parity claim (owns scripts/proton_overlay.py and proton_* modules) and the Vulkan DLSS-G claim (owns the canonical panel and companion controls) before widening paths. Start with a baseline: run the current Vulkan DLSS-G panel under Proton in BG3 or No Man's Sky, then prototype the layer (vk_layer manifest, swapchain/present interception, ImGui Vulkan backend, helper-driven input).",
+      "paths": [
+        "linux/vulkan-layer/",
+        "tests/test_vulkan_layer_panel.py"
+      ],
+      "resources": [],
+      "category": "implementation",
+      "tags": [
+        "linux",
+        "proton",
+        "overlay",
+        "vulkan-layer"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-23T04:59:13.268Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-23): on Linux, OptiScaler's in-game menu tends to crash games under Proton. Build the rtxForge panel as a native Linux Vulkan layer, the way MangoHud and vkBasalt work, so it sits underneath DXVK and VKD3D-Proton and covers every Proton game whatever its API (DX11, DX12 or native Vulkan), with OptiScaler's own menu turned off. Reuse the shared canonical panel (controls, look and stats) from the Vulkan DLSS-G work. Input can't come from the game's Win32 messages, so the hotkey and controls go through the rtxForge background helper or Linux input events.",
+          "acceptance": "A native Linux Vulkan layer (implicit, opt-in per game by environment variable or launch option, reversible) draws the rtxForge panel in at least one DX12 game via VKD3D-Proton, one DX11 game via DXVK and one native Vulkan game under Proton, with OptiScaler's menu disabled. The hotkey opens and closes the panel without reaching the game; controls change NR/MFG settings through the same channel as Windows. No crash across menu, loading, alt-tab, HDR and resolution changes in each test game. The layer installs and restores through a reviewed rtxForge operation. Linux tests and CI are green; draft PR via Relay. First step: confirm the existing Vulkan panel runs under Proton in BG3 or No Man's Sky as a baseline.",
+          "at": "2026-10-23T04:59:13.268Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-proton-vulkan-layer-panel-20261023:acceptance:0",
+            "text": "A native Linux Vulkan layer (implicit, opt-in per game by environment variable or launch option, reversible) draws the rtxForge panel in at least one DX12 game via VKD3D-Proton, one DX11 game via DXVK and one native Vulkan game under Proton, with OptiScaler's menu disabled. The hotkey opens and closes the panel without reaching the game; controls change NR/MFG settings through the same channel as Windows. No crash across menu, loading, alt-tab, HDR and resolution changes in each test game. The layer installs and restores through a reviewed rtxForge operation. Linux tests and CI are green; draft PR via Relay. First step: confirm the existing Vulkan panel runs under Proton in BG3 or No Man's Sky as a baseline.",
+            "at": "2026-10-23T04:59:13.268Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
