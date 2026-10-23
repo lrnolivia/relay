@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-23T08:09:47.520Z",
+  "updated_at": "2026-10-23T08:12:40.177Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18109,6 +18109,8 @@
         "src/test-maintenance.test.js",
         "src/resume-checkpoints.js",
         "src/resume-checkpoints.test.js",
+        "src/runner-control-core.js",
+        "src/runner-control.test.js",
         "scripts/relay-executor.mjs",
         "scripts/relay-executor.test.mjs",
         "scripts/relay-native-continuity.mjs",
@@ -18125,7 +18127,7 @@
       ],
       "goal": "Implement a shared, intent-aware test-maintenance workflow for Claude and Codex in Relay, integrating project-local official Playwright Test Agents where applicable without embedding browser agents in the Relay server.",
       "acceptance": "1. Before changing tests, workers compare the approved task/acceptance criteria and source diff, identifying affected behaviors as unchanged, intentionally changed, intentionally removed, or unresolved. Existing tests are evidence, not authority over explicit approved requirements. 2. Update affected test plans, unit/integration/E2E tests, fixtures and snapshots in the same change as the behavior; preserve coverage of unchanged behavior. Never restore intentionally removed functionality merely to satisfy obsolete assertions. Add replacement or absence assertions where meaningful. 3. Require a concise, reviewable rationale tied to the approved change for deleted/replaced assertions, changed snapshots, skipped/quarantined tests, or reduced coverage. No silent blanket snapshot updates, weakening assertions or skips to achieve green CI; unexplained failures remain regressions or unresolved requirements. Do not add redundant user approval gates for already authorized changes. 4. Use official Playwright planner/generator/healer in worker project environments when suitable; Relay supplies canonical requirements and captures structured progress/evidence. User handles installation on Claude and Codex. Do not install tools or alter user machines as part of this assignment. Do not force Playwright onto native GTK/Windows UI or non-browser suites; retain appropriate native/unit/integration tooling. 5. Keep one canonical shared workflow in Relay and minimal host adapters/references for Claude and Codex, without duplicate conflicting maintenance documents in product repos. Necessary runnable test code/configuration stays with its project. 6. Report actual test counts, skips with reasons, regression vs obsolete-expectation classification, run identity and exact tested commit through existing telemetry/cards. Unknown is unknown; do not fabricate totals. 7. Demonstrate intentional feature removal updates the obsolete test without resurrecting the feature; an unintended regression still fails; changed fixture/selector can be repaired without weakening behavior assertions; skip/coverage reduction is visible. Add regression coverage for the workflow and verify both agent adapters, explicitly marking untested hosts. 8. Reuse current coordination/verification paths, avoid active overlapping claims, deliver through non-default branch and draft PR with checks and production readback when released.",
-      "next_action": "Claude (cse_01LNEq56CVnhpMG8CFnhv87D) implementing: canonical intent-aware test-maintenance module + doc; surface it in resume checkpoints and claude-cli/codex-cli/native executor prompts with Playwright Test Agents setup (inspect existing Playwright version/config/agent definitions first; npx playwright init-agents --loop=claude or --loop=codex only when missing or after a Playwright upgrade; Playwright MCP alone is not planner/generator/healer; no installs on user machines; native/unit/integration suites keep their own tooling). Structured classification/skip-reason report alongside existing CI telemetry (telemetry files stay with relay-live-work-cards-staff-ci-20261023). Then regression coverage, draft PR, checks, merge, deploy, production readback.",
+      "next_action": "Claude (cse_01LNEq56CVnhpMG8CFnhv87D): canonical module src/test-maintenance.js written; wired into resume checkpoints, preflight (runner-control-core) and claude-cli/codex-cli executor prompts + report capture. Next: canonical doc, AGENTS/CLAUDE adapters, regression tests (removal/regression/fixture-drift/skip demos), full test run, draft PR, CI, merge, deploy, production readback.",
       "category": "implementation",
       "primary_team": "source",
       "supporting_teams": [
@@ -18152,6 +18154,8 @@
           }
         ]
       },
+      "updated_at": "2026-10-23T08:12:40.177Z",
+      "lease_until": "2026-10-23T20:12:40.177Z",
       "amendments": [
         {
           "at": "2026-10-23T08:06:01.277Z",
@@ -18176,9 +18180,7 @@
           "to": "claude-code-session_01LNEq56CVnhpMG8CFnhv87D",
           "next_action": "Lauren gave this queued assignment to Claude directly in Claude Code cloud session cse_01LNEq56CVnhpMG8CFnhv87D ('Implement Relay assignment relay-intent-aware-test-maintenance-20261023. Read its full acceptance criteria and latest next_action, claim it under your own identity...'). No Codex worker started. Successor claims with branch relay/intent-aware-test-maintenance-20261023 (Lauren approved the relay/ branch) and preserves goal, acceptance and the amended next_action exactly."
         }
-      ],
-      "updated_at": "2026-10-23T08:09:47.520Z",
-      "lease_until": "2026-10-23T20:09:47.520Z"
+      ]
     }
   ],
   "migrated_from": "loew-inspector"
