@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T07:45:57.905Z",
+  "updated_at": "2026-10-23T08:21:12.336Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -15684,7 +15684,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "cbf10c4e0549ac1c6db872ea620957dc7adf9bde",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-23T07:45:57.905Z",
       "objective_history": {
         "baseline": {
@@ -15701,8 +15701,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T07:45:57.905Z",
-      "lease_until": "2026-10-23T19:45:57.905Z"
+      "updated_at": "2026-10-23T08:21:12.336Z",
+      "lease_until": "2026-10-23T20:21:12.336Z",
+      "pr": 64,
+      "merged_head_sha": "3989116ed3f8a973d7bd70c994db9a5f8b3376bf",
+      "merge_commit_sha": "1612052bcfd55abad42b5e0c29acff69a1b356f9",
+      "evidence": "PR #64 (head 3989116, rebased on main b9fd389 after PR63) merged by Lauren's verified git as 1612052; GitHub reads it merged by lrnolivia. Lauren explicitly chose to merge before the hosted Windows builds finished (two-file visual change on a green main); attribution and admission had passed, Windows builds were still running at merge. The same 3989116 build is installed locally (ProductVersion 1.0.0+3989116, 103 engine files) and was checked in --preview: no artwork stroke at rest, hover/selected unchanged. Linux equivalent is noted in the Linux parity claim's next action.",
+      "work_accounted": true,
+      "completed_at": "2026-10-23T08:21:12.336Z"
     }
   ]
 }
