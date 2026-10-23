@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T16:54:26.837Z",
+  "updated_at": "2026-10-23T17:06:06.650Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -15790,6 +15790,50 @@
       "evidence": "Branch rtxforge/linux-ui-parity-20261021 fully merged. PR65 (head 551bc9e) merged to main as acff907 after all hosted checks passed (native/kde/wayland review, WinUI 3 x64+ARM64, in-game panel candidate, attribution, coordination admission): Linux artwork rest stroke removed to match Windows PR64; Game Mode panel-shortcut recorder (app-wide and per game); cross-distro launcher with dependency guidance, distrobox --container route and setup acceptance; /proc NVIDIA GPU fallback; inode-deduped Steam libraries; docs/linux/distros.md. PR66 (head beb3b34, docs only) merged as d0eea49 after its checks passed: Game Mode installs/repairs/restores run with Steam open via the per-game Proton prefix route (Lauren's correction). Local evidence: Bazzite native tests, GTK smoke, ui_game_mode, 4K scaling; CachyOS container test set + GTK smoke; Fedora 44 container package-ui-review set; container route GTK smoke from the AppImage. RC AppImage 551bc9e installed locally with previous builds retained. Not verified: SteamOS hardware; Linux NR/MFG gameplay. No release published.",
       "work_accounted": true,
       "completed_at": "2026-10-23T16:54:26.837Z"
+    },
+    {
+      "id": "rtxforge-linux-rc-fixes-20261023",
+      "owner": "claude-code-9d7aaacd-8dfa-4dac-971e-a4560aafaebe",
+      "branch": "rtxforge/linux-rc-fixes-20261023",
+      "paths": [
+        "scripts/desktop_service.py",
+        "scripts/library_media.py",
+        "gui/rtxforge_gtk.py",
+        "packaging/build_appimage.py",
+        "tests/test_library_media_retry.py"
+      ],
+      "resources": [
+        "rtxforge-linux-desktop-ui",
+        "rtxforge-linux-runtime"
+      ],
+      "goal": "Lauren (2026-10-23) after installing the Linux 1.0 Beta RC on Bazzite: Feeder NR installs (Mass Effect LE etc.) shown as unsupported, library cards missing artwork, Game Mode not fullscreen; plus the in-game panel helper failing to load from the AppImage (feeder_controls not bundled).",
+      "acceptance": "Real-library scan shows Feeder NR installs as installed NR Only; artwork retried and present for the reported games where any source has it; Game Mode enters and leaves fullscreen like Windows; AppImage bundles feeder_controls and refuses builds missing bundled host imports; Linux tests and GTK smoke pass; hosted CI green; human attribution Lauren Olivia, no tool coauthors.",
+      "next_action": "Four commits ready locally on top of main d0eea49 (15acc64); installed on Lauren's Bazzite machine. Push, open PR, merge when hosted CI passes.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "d0eea490dab30053944624a660018d2b5785171f",
+      "state": "active",
+      "created_at": "2026-10-23T17:06:06.650Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-23) after installing the Linux 1.0 Beta RC on Bazzite: Feeder NR installs (Mass Effect LE etc.) shown as unsupported, library cards missing artwork, Game Mode not fullscreen; plus the in-game panel helper failing to load from the AppImage (feeder_controls not bundled).",
+          "acceptance": "Real-library scan shows Feeder NR installs as installed NR Only; artwork retried and present for the reported games where any source has it; Game Mode enters and leaves fullscreen like Windows; AppImage bundles feeder_controls and refuses builds missing bundled host imports; Linux tests and GTK smoke pass; hosted CI green; human attribution Lauren Olivia, no tool coauthors.",
+          "at": "2026-10-23T17:06:06.650Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-rc-fixes-20261023:acceptance:0",
+            "text": "Real-library scan shows Feeder NR installs as installed NR Only; artwork retried and present for the reported games where any source has it; Game Mode enters and leaves fullscreen like Windows; AppImage bundles feeder_controls and refuses builds missing bundled host imports; Linux tests and GTK smoke pass; hosted CI green; human attribution Lauren Olivia, no tool coauthors.",
+            "at": "2026-10-23T17:06:06.650Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-23T17:06:06.650Z",
+      "lease_until": "2026-10-24T05:06:06.650Z"
     }
   ]
 }
