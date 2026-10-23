@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T01:36:57.730Z",
+  "updated_at": "2026-10-23T01:40:23.955Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9716,7 +9716,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "f4824d8b304535b6d700ee82b89f73942d41c2b1",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-22T02:37:02.271Z",
       "objective_history": {
         "baseline": {
@@ -9733,8 +9733,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T01:10:47.534Z",
-      "lease_until": "2026-10-23T13:10:47.534Z"
+      "updated_at": "2026-10-23T01:40:23.955Z",
+      "lease_until": "2026-10-23T13:40:23.955Z",
+      "pr": 57,
+      "merged_head_sha": "f74b4d26293a53aec738d16d09b73d72e6473d93",
+      "merge_commit_sha": "90e9145c563c4a03d0943d9e315a7d6c15859539",
+      "evidence": "PR #57 merged by Lauren's direction (2026-10-23 01:39Z \"yeah merge\") as 90e9145. Windows build (x64/ARM64), package UI reviews, attribution and in-game panel candidate green on head f74b4d2; admission's last result was red only on the project branch budget (5 of 4), not scope. Valhalla Feeder NR on DirectX 12 confirmed in game by Lauren. Full-library restore/reinstall test parked by Lauren for later. Linux GTK side left as a patch for rtxforge-linux-latest-feature-parity-20261020 (project files rtxforge/compat-list-linux-gtk.patch + notes). Models.cs returns to rtxforge-vulkan-dlssg-20261022 after this merge, per #55 comment 6354958246.",
+      "work_accounted": true,
+      "completed_at": "2026-10-23T01:40:23.955Z"
     },
     {
       "id": "rtxforge-independent-valhalla-injector-20261022",
