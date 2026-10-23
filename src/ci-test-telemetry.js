@@ -11,15 +11,18 @@ const text = (value, limit) => typeof value === 'string' ? value.replace(/\s+/g,
 const count = value => Number.isSafeInteger(value) && value >= 0 ? value : 0;
 const zero = () => Object.fromEntries(OUTCOMES.map(key => [key, 0]));
 
-// Fold one suite's reporter NDJSON. The runner's final summary is authoritative; running
+// Fold one suite's reporter NDJSON. Only the first runner's events count, and its final summary is authoritative; running
 // counts cover the interval before it arrives. Malformed lines are ignored, not guessed.
 export function foldSuiteEvents(lines = []) {
   const running = zero(), failures = [];
-  let summary = null, files = 0, started_at = null, ended_at = null;
+  let summary = null, files = 0, started_at = null, ended_at = null, owner;
   for (const line of lines) {
     let event;
     try { event = typeof line === 'string' ? JSON.parse(line) : line; } catch { continue; }
     if (!event || typeof event !== 'object') continue;
+    // The suite's own runner starts first; events from a runner nested inside a test are not its counts.
+    if (owner === undefined) owner = event.type === 'start' ? event.pid : null;
+    if (owner != null && event.pid !== owner) continue;
     if (event.type === 'start' && started_at == null && Number.isFinite(event.at)) started_at = event.at;
     if (event.type === 'end' && Number.isFinite(event.at)) ended_at = event.at;
     if (event.type === 'file') files += 1;

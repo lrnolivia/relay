@@ -66,8 +66,14 @@ Local browser tests used the container's Chromium 1194 through a scratch `PLAYWR
 
 | surface | status |
 |---|---|
-| ChatGPT web, ChatGPT desktop | **Unverified.** This executor cannot drive ChatGPT. After deployment and a tool refresh, run an ordinary claim → heartbeat → complete without asking for a card, plus a `relay_source_checks` read during real CI, and record screenshots. |
-| Claude (claude.ai / desktop, MCP Apps) | **Unverified.** Same procedure. The cloud Claude Code session that built this renders no MCP Apps UI, so it cannot provide the screenshots. |
-| Real CI telemetry | Verified only once this branch's own CI run publishes a `relay-tests / quality` observer; that run's link and counts are recorded below when it finishes. |
+| Claude desktop app, Code tab (cloud session) | **Verified** on production `25ab337` / Workers version `d57a5198`, 2026-10-23 05:47–05:49Z, from Lauren's screen recording (feedback `fbr_3d7bf2e8…`). Throwaway assignment `card-smoke-2026-10-23-iz1a`: queue, claim, heartbeat, hold and retire each auto-mounted a card showing Rafael · The Integrator, without a render request. `relay_source_checks` mounted the CI card (1053/1054 passed, 3 of 3 jobs, 5 of 5 suites, run #39907207348, 3m 54s, Open CI run). Queries and refused calls showed no card. |
+| ChatGPT web, ChatGPT desktop | **Unverified.** Run the same smoke procedure there. |
+| Real CI telemetry | **Verified.** PR #253 run 39906910195 published `relay-tests / quality` (neutral) with 1053 passed and 1 skipped across the five suites, matching each suite's own TAP summary. |
+
+The smoke run found two defects, both fixed in the follow-up:
+- After the retire, every earlier card refreshed to "Cancelled" and lost its own step. A card now keeps the step it was mounted for ("This step: Work started") beside the live state.
+- The CI card listed a "Failed test" while counts said 0 failed. It came from a nested runner in `test/source-test-contracts.test.mjs`: a fixture that deliberately fails, whose test clears `NODE_TEST_CONTEXT`. Telemetry events now carry their runner's pid, and the fold keeps only the suite's own top-level runner.
+
+Known, not in this assignment's paths: the generic `human_v1` check summary can read "Check finished" because it counts the neutral observer. The CI card's own state ("Passed") comes from the jobs.
 
 Static and sample test cards (`relay_test_card_*`) are not evidence for this assignment. Production deployment and readback follow the normal authorized release gates and are recorded here when they happen.
