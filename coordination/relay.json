@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-23T05:16:52.405Z",
+  "updated_at": "2026-10-23T05:36:00.747Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -17777,7 +17777,7 @@
         "scripts/ci-parallel-suites.mjs",
         "scripts/ci-test-telemetry-reporter.mjs",
         "scripts/ci-test-telemetry-publish.mjs",
-        "scripts/ci-test-telemetry.test.mjs",
+        "test/ci-test-telemetry.test.mjs",
         ".github/workflows/ci.yml",
         "test/ci-parallel-suites.test.mjs",
         "contracts/ci-test-telemetry.schema.json",
@@ -17790,7 +17790,7 @@
       ],
       "goal": "Repair Relay's normal-work visual feedback end to end for Claude to implement. Lauren sees only Nico and Julian mentioned and no cards during ordinary work in any chat, although explicit test cards function. Deliver automatic, evidence-backed work-step cards and live CI cards with actual test pass/fail counts and progress, plus truthful role-based staff attribution. This is queued for Lauren to give to Claude; do not start a Codex worker.",
       "acceptance": "1. A normal multi-step assignment, without asking for a card or calling a sample/test tool, visibly presents work starting, current step, meaningful transitions, blockers, and completion in the actual chat host. Reuse/update the same card where supported rather than flooding the chat. Show real activity, never invented progress. 2. Starting real CI automatically presents a live CI card with run identity/link, queued/running state, current jobs/suites, elapsed time, actual passed/failed/skipped counts as results arrive, known totals/progress when available, and final success/failure/cancelled result. Clearly distinguish test counts from job counts; unknown totals remain unknown. Add actual structured test telemetry where needed, not simulated counters; handle retries, parallel/sharded suites without duplicate counts, stale data/disconnection, and failure drill-down. 3. Test normal lifecycle and real CI from ChatGPT web/desktop and Claude supported host paths where available; record exact tested surfaces and honest blockers, never equate static/sample card success with integration proof. Do not require the user to manually request rendering at every step. 4. Show recorded staff name/role on real assignment cards; resolve meaningful task role/team attribution rather than routing all implementation to Nico or rotating names decoratively. Preserve canonical executor owner separately; do not imply named staff performed work without evidence. Unresolved attribution must be explicit, not silently null. 5. Current summaries exclude completed/cancelled/superseded terminal claims and prioritize actual current assignment. 6. Regression coverage for normal dispatch-to-visible-render delivery, live CI transitions/counters, staff display and role/team matching, and terminal summary selection. Provide real host screenshots/recording and production deployment/readback receipts after authorized gates, keeping unsupported surfaces marked unverified.",
-      "next_action": "Claude Code cloud session session_01WLGYFCDkG53syBZwbf19nX (claude-code-remote, anthropic_cloud, no native desktop control) holds this after Lauren's handoff. The umbrella overlap was cleared by retirement op julian-release-expired-relay-umbrella-20261023. Lauren separately approved the CI hook files (ci.yml, ci-test-orchestrator, ci-parallel-suites) for real test telemetry. Next: implement milestone card delivery, structured CI test telemetry plus live CI card, staff attribution scoring with explicit unresolved state, and terminal summary selection, with regression tests; then a draft PR.",
+      "next_action": "Implementation batch done locally: milestone card delivery (v18 card, in-place live refresh), CI test telemetry reporter, publisher and neutral relay-tests observer, CI card model, staff ranking with explicit unresolved attribution, and terminal summary selection, with focused and browser regression tests passing. Next: commit with Lauren attribution, a clean build, all five suites, push branch relay/live-work-cards-20261023, draft PR, then watch CI to confirm the real relay-tests observer reports counts. Host screenshots (ChatGPT web/desktop, Claude) still need a session with UI.",
       "category": "implementation",
       "primary_role": "integrator",
       "supporting_roles": [
@@ -17822,6 +17822,8 @@
           }
         ]
       },
+      "updated_at": "2026-10-23T05:36:00.747Z",
+      "lease_until": "2026-10-23T17:36:00.747Z",
       "handoffs": [
         {
           "at": "2026-10-23T05:16:34.766Z",
@@ -17829,9 +17831,7 @@
           "to": "claude-code-session_01WLGYFCDkG53syBZwbf19nX",
           "next_action": "Lauren gave this queued assignment to Claude, as its queue note planned ('Lauren will give Claude this assignment'). She did it directly in Claude Code cloud session session_01WLGYFCDkG53syBZwbf19nX ('Pick up Relay assignment relay-live-work-cards-staff-ci-20261023 ... Fix normal-work card delivery, live CI cards ... staff attribution'). No Codex worker started. Successor claims with branch relay/live-work-cards-20261023 and preserves goal and acceptance exactly."
         }
-      ],
-      "updated_at": "2026-10-23T05:16:52.405Z",
-      "lease_until": "2026-10-23T17:16:52.405Z"
+      ]
     }
   ],
   "migrated_from": "loew-inspector"
