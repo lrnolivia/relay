@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T03:24:03.713Z",
+  "updated_at": "2026-10-23T03:29:51.534Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -10560,7 +10560,7 @@
       ],
       "goal": "Build one shared experimental Vulkan provider for rtxForge delivering Neural Rendering and native NVIDIA FG/MFG in Baldur's Gate 3 and Red Dead Redemption 2, with per-game loader/input profiles, shared panel/controls, and reversible installation.",
       "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target. Replace the bespoke Vulkan test panel with the exact canonical rtxForge ForgePanel ImGui layout, fonts, styling and controls, adapted to the Vulkan host. Add truthful live NR composition/GPU timing and actual FG rendered/displayed frame telemetry to that panel. Inspect and adopt the existing Universal MFG panel's smooth text rasterization/sampling approach. Reuse canonical source; do not invent a replacement overlay.",
-      "next_action": "PR55 draft clean/pushed2cce7df11a31a80ddfdb064d956a1e0f16ec08f5. BG3candidate07 runtimefceb42b2/commonBinka1d1462c USERACCEPTED launch+NR+MFG+canonicalpanel; four300->1200 intervals withNRactive, coldstartwarmupsuccess. Retain installedtested07 BOTHgames. Newoverlay/helper source discovers verifiedVulkanjournals, checksloader/providerhashes+fullprocesspath, DLLownershiplights, saved/artaccentcacheandrefreshafterreply; compactstatsnearNR/FG withpersistedoverlay_live_stats/registryShowLiveStats/in-gamesetting. Presetsstilldisabledhonestly.34helpertests+settingspersistence+Windowsx64build0warningsPASS; native18allcontracts/actualVulkanbackend/canonicalSDRHDRDPIchecksPASS runtimef9f6fd53; Feedercurrentheaderaddon0c5b2b59PASS; OptiScalermenu_commonrecompiledexactheader4948597bPASS (knownupstreamwarnings), forwarder/packagepending. NOTINSTALLEDnewoverlay/helper. ModelsclaimedafterGameModeCOMPLETED; NativePanelCoordinator/EngineCompanionclaimed. DesktopstatstogglewaitingOverlayPreferencesView ownerPR60; comment6356537665requestsrelease, donoteditreservedview. PR55bodyupdated/readbackpending. RDRNORMALno-debugger07pid31496 started23:20:22, acquire2bridgeOBSERVED23:20:42, rendererinitialized/presents>200, alivepastprevious3presentAV. NoSR/NR/FGgameplayyet; ChatGPTforeground, useraskedleavegamefocused. Noattachedrecorder, noinput. NextmonitorRDRgameplay; preservelogs/verdict, finishdesktopbindingafterhandoffandcoordinatefullhelperdelivery. Welcome/nativeUIcontrols+Vulkanpresetsstillpending; source runtime_verified/default_promotedfalse.",
+      "next_action": "PR55 clean/pushed2cce7df11a31a80ddfdb064d956a1e0f16ec08f5; bodyreadbackverified. BG3candidate07fceb42b2/commonBinka1d1462c USERacceptedNR+MFG+overlay, fouractual4xintervals; untouched. Newhelper/accent/compactperfeaturestats+persistedoverlay_live_stats built/publishedNOTINSTALLED.34helpertests, Settingspersistence, Windowsx64zeroerrors/warnings, native18contracts+actualVulkanbackend/SDRHDRDPI PASS; Feeder03addon0c5b2b59; OptiScalerrecompiledmenu_commonagainstexact4948597bheaderPASS. DesktopstatstogglewaitingreservedOverlayPreferencesViewPR60; comments6356537665/6356651957coordinatefullbuilddelivery. Native18runtimef9f6fd53notinstalled. RDRnormalno-debugger07pid31496 acquire2bridgeobserved, passedold3presentcrash, butmenu/loading~2presents/sec:0SR/NR evals,actual1x,g_wdPos3postpresentmarker/Reflexpath. UserconfirmsRDR2menuperformanceunusable, gameplayloadingthenprocessclosed. Rawlogs/config/sourcehashes scratchcandidate07-rdr2-pid31496; noattacheddebugger. Preparedsingle-variableA/B; afterverifiedgameclosedappliedONLYReflexSleep1->0 at03:29:11Z. RDRconfig85cb1fede72177b44ac4c8953ea369cbaec63a533454d20505205edcd8d6a0e1; original6205b9d1backupwithhashguardrollback. SAMEruntimefceb42b2andBinka1d1462c; ReflexMode2/NRon/4x/workscale.5 unchanged. Usertoldreadytorelaunch; diagnosticsONLY,noinput. NoRDRNR/FGpassand500mswaitnotyetattributedtocall. NextreadRDRmanualrelaunchperformance+firstSR/NR/FG,keepBG3stable; thenpassivecalltimingifneeded. Welcome/nativeUIpolicyandVulkanpresetsstillpending; defaultpromotionfalse.",
       "category": "implementation",
       "tags": [
         "experimental",
@@ -10616,8 +10616,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T03:23:36.727Z",
-      "lease_until": "2026-10-23T15:23:36.727Z",
+      "updated_at": "2026-10-23T03:29:51.534Z",
+      "lease_until": "2026-10-23T15:29:51.534Z",
       "amendment_count": 6,
       "amendments": [
         {
