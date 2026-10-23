@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "classification": "READY_TO_INSTALL",
+  "classification": "PASS_INSTALL_AND_OPEN",
   "authorization": {
     "chat": "01a1659a-f730-7830-b8a7-575b8daece8c",
     "user_message": "01a16730-890e-7b53-b749-6da24054e706",
@@ -131,5 +131,53 @@
     "bg3_ini": "6205b9d19932b52b4e39f500b6e89f9736b61e7c3d74086345cc14a0765de656",
     "rdr2_ini": "85cb1fede72177b44ac4c8953ea369cbaec63a533454d20505205edcd8d6a0e1"
   },
-  "health_gate": "Installer exit0; all668 installed files match publish manifest; settings/prefs preserved; helper installed MVID and companion identity match, valid two Vulkan targets/no poll errors; manager opens and remains running with visible window. New gameplay/hardware qualification remains explicitly deferred."
+  "health_gate": "Installer exit0; all668 installed files match publish manifest; settings/prefs preserved; helper installed MVID and companion identity match, valid two Vulkan targets/no poll errors; manager opens and remains running with visible window. New gameplay/hardware qualification remains explicitly deferred.",
+  "installed": {
+    "path": "C:/Users/lrnol/AppData/Local/Programs/rtxForge",
+    "installer_exit": 0,
+    "verified_publish_files": 668,
+    "settings_unchanged": true,
+    "settings_sha256": "12741956fd32a38b02eeff7742704c64d42968971fc8cd91f1ad2e925bbbcd8d",
+    "overlay_registry_unchanged": true,
+    "bg3_rdr2_provider_loader_ini_unchanged": true,
+    "manager_pid": 48140,
+    "window_title": "rtxForge",
+    "visible_window_handle": 5834426,
+    "responding": true,
+    "helper_pid": 23556,
+    "app_mvid": "9c147a7fdfc4441d908e613ebab6fc23",
+    "installed_mvid_matches_helper": true,
+    "engine_root": "C:\\Users\\lrnol\\AppData\\Local\\Programs\\rtxForge\\engine",
+    "companion_sha256": "5750ac132b4a9585cfc8fa855573d4e779a0cee341b6eba25f43fd6afa65ca3e",
+    "vulkan_targets": [
+      {
+        "name": "Baldur's Gate 3",
+        "game": "G:\\SteamLibrary\\steamapps\\common\\Baldurs Gate 3\\bin",
+        "provider": "vulkan-native"
+      },
+      {
+        "name": "Red Dead Redemption 2",
+        "game": "G:\\SteamLibrary\\steamapps\\common\\Red Dead Redemption 2",
+        "provider": "vulkan-native"
+      }
+    ],
+    "target_error": null,
+    "poll_error": null,
+    "problem": null,
+    "game_pid": 0
+  },
+  "local_evidence": {
+    "installed_receipt": "installed-receipt.json",
+    "installed_receipt_sha256": "18331c430921c0d25905320435c704931a8afb1d96e156f976b64dca3cf62b6c",
+    "publish_manifest": "publish-manifest.json",
+    "publish_manifest_sha256": "fd4e4a76d52d4a97a3a26092bc584f8569a5fb343e890a90e78630c766d638d3",
+    "helper_status": "installed-helper-status.json",
+    "helper_status_sha256": "538bbd7f6867c4455e5f0959dab7f67dad7019c0e878d70c8b2c5bf74ce2b7f9",
+    "installer_log": "install.log",
+    "source_build_log": "publish.log",
+    "installer_build_log": "build-installer-final.log",
+    "opening": "Installed manager started without launch arguments; visible responding rtxForge window verified by process/window properties and still running after helper verification."
+  },
+  "remaining": "This verifies final combined Windows installation, settings/package preservation, helper identity and manager opening. It does not establish additional UI visual/hardware/NR/MFG gameplay qualification. All prior targeted BG3 acceptance and Universal Experimental limits remain as in shared-overlay-13e5de7 receipt. No game launched, controlled or force-closed.",
+  "recovery_disposition": "overlay-install-05 is current installed build with installation/opening health verified; overlay-install-04 installer and complete app/settings/registry backup retained. Prior human-approved visual target remains separately recorded; installation does not create a new human visual approval."
 }
