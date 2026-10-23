@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T04:20:09.954Z",
+  "updated_at": "2026-10-23T04:23:24.273Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -10717,7 +10717,7 @@
       ],
       "goal": "Build one shared experimental Vulkan provider for rtxForge delivering Neural Rendering and native NVIDIA FG/MFG in Baldur's Gate 3 and Red Dead Redemption 2, with per-game loader/input profiles, shared panel/controls, and reversible installation.",
       "acceptance": "Source/build review and pinned dependencies; one shared runtime binary with BG3/RDR2 profiles; explicit loader ownership and transactional install/restore with conflict/interruption fixtures for both games; preserve proven BG3 native 2x FG regression evidence. User explicitly authorizes testing BG3 and RDR2 installations. Verify NR execution and native presented FG/MFG counts together in gameplay on each exact stack; include menu/loading, focus, HUD, HDR/swapchain transitions. Treat NR Vulkan interoperability and RTX40 MFG unlock as unverified until exact-stack runtime evidence exists. Preserve source/runtime legal notices, user saves/mods and recoverable original game files; no default promotion on source tests alone. Use the existing pinned Universal MFG component rather than a competing hardware unlock. Expose RTX20/30 as unverified opt-in trials without claiming hardware verification; RTX50 uses native MFG capabilities with NR/overlay and game FG integration. Use the existing Universal Experimental compatibility label. Preserve smooth text rendering as a shared Vulkan panel quality target. Replace the bespoke Vulkan test panel with the exact canonical rtxForge ForgePanel ImGui layout, fonts, styling and controls, adapted to the Vulkan host. Add truthful live NR composition/GPU timing and actual FG rendered/displayed frame telemetry to that panel. Inspect and adopt the existing Universal MFG panel's smooth text rasterization/sampling approach. Reuse canonical source; do not invent a replacement overlay.",
-      "next_action": "Candidate09 INSTALLED both Steam games: shared runtime6f5beaf65b73288de21f39565e3d0ec550e311c533ecbe373b0066da50385f2f/commonBinka1d1462; configs preserved BG3sleep1/RDRsleep0. Helper20369e94 installed PID3608+private engine49356; exact installed/publish hashes/settings preservation verified. Sourcefef2dfc7510641b2777f971690e96b7ebc8cf833 clean/pushedPR55. BG3candidate08pid6652 crash dump+matched relink maps c5cea to Win32 DPI callback after Vulkan Shutdown cleared viewport. Native20 real recreate+NewFrame PASS; unfixed control AVc0000005. Rebind Win32 on recreation, fix Vulkan Visible IPC, send saved accent/title through helper reply (games see stale HKCU). MFG1.6.1 vendor24e3 unchanged; exact36byte source-reviewed OverlayAllowed guard detoured defaultoff, fixture realmodule verifies suppression/re-enable/backendownership. Centered56px brandedtoast/shared Bakbak+smallkeycap+savedkey in Vulkan/Feeder/Opti; independentwelcome/stats/nativeMfgmenu prefs. Settings/34helper/Skynizzpin tests PASS; Feeder04 compiled currentheaderaed572; Opti main+forwarder+packagef20bb passed; Winx64publish+installer d8678316 PASS. Installed app includesnew Feeder/Optipayloads. BG3pid44492 launched00:16 byuser; quietpolicy log confirmsactive, gameplay/helperreply/visual checks pending. No desktopinput. Preserve07 provenNR+4x rollback and08 forensic evidence. Scratchoverlay-install-02 receipts/backups. NextreadIPC+logs verifyBG3thenRDR2 newbuild; resolveOptipackage sourcecommitmetadata to fef2 before distribution. FullHDR/focus/hardwarematrix and Vulkanpreset/save unfinished; no defaultpromotion.",
+      "next_action": "User screenshot candidate09 BG3 confirms panel opens, NR10.48ms Active and actual4x30->120, but helper never answered hello (request2,response0); grey file lights and neutral accent are FAIL PRODUCT. BG3 now closed. Diagnose real installed target discovery/typed JSON/helper errors before claiming connection fixed; add bounded diagnostics. User requests compact single-row small-icon welcome and Bakbak One main MFG/NR/Settings headings with Inter copy. Implement common ForgePanel source, rebuild all3 hosts and update identical shared provider in both closed games after focused checks. Preserve exact09/gameconfigs/lasthealthy07 and04:16 evidence, no game inputs. PR55 fef2dfc currently pushed; QA packet needs_work update pending; acceptance remains incomplete.",
       "category": "implementation",
       "tags": [
         "experimental",
@@ -10773,8 +10773,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T04:16:53.935Z",
-      "lease_until": "2026-10-23T16:16:53.935Z",
+      "updated_at": "2026-10-23T04:23:24.273Z",
+      "lease_until": "2026-10-23T16:23:24.273Z",
       "amendment_count": 6,
       "amendments": [
         {
