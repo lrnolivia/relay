@@ -19,6 +19,29 @@ export function covered(file, scopes) {
   return scopes.some((scope) => file === scope || (scope.endsWith('/') && file.startsWith(scope)));
 }
 
+// An optional project policy reserves overflow capacity for a bounded file scope.
+// Eligibility follows the complete declared scope, never a branch name or tag.
+export function branchBudget(claims, policy) {
+  const active = claims.filter(occupying);
+  const exception = policy.branch_budget_exception;
+  let additional = 0, eligible = 0;
+  if (exception !== undefined) {
+    if (!exception || Array.isArray(exception) ||
+        !Number.isInteger(exception.max_additional_branches) || exception.max_additional_branches < 1 ||
+        !Array.isArray(exception.paths) || !exception.paths.length) {
+      throw new Error('Invalid scoped branch budget exception policy.');
+    }
+    const scopes = exception.paths.map(normalizeScope);
+    additional = exception.max_additional_branches;
+    eligible = active.filter(claim => claim.paths?.length &&
+      claim.paths.every(path => covered(normalizeScope(path), scopes))).length;
+  }
+  return {
+    limit: policy.max_active_branches + additional,
+    over_limit: active.length > policy.max_active_branches + Math.min(additional, eligible)
+  };
+}
+
 const TASK_CLASSES = new Set(['design', 'architecture', 'maintenance']);
 const CATEGORIES = new Set(['architecture', 'design', 'implementation', 'research', 'qa-verification', 'maintenance', 'release', 'coordination']);
 const ROLE_ID = /^[a-z][a-z0-9-]{0,63}$/;
@@ -233,6 +256,9 @@ export function transition(record, request, policy, now = new Date()) {
     const changed = supplied.filter((field) => JSON.stringify(before[field]) !== JSON.stringify(preview[field]));
     if (!changed.length) throw new Error('Amendment does not change assignment state.');
     if (current) {
+      if (branchBudget(claims.map(claim => claim.id === current.id ? preview : claim), policy).over_limit) {
+        throw new Error('Amendment exceeds the active branch budget; retain the exception scope or release capacity first.');
+      }
       for (const claim of claims.filter((claim) => claim.id !== current.id && occupying(claim))) {
         if (preview.paths.some((a) => claim.paths.some((b) => overlaps(a, b))) || preview.resources.some((resource) => claim.resources.includes(resource))) {
           throw new Error(`Amendment overlaps ${claim.id}. Split or defer the scope instead.`);
@@ -278,7 +304,7 @@ export function transition(record, request, policy, now = new Date()) {
     const resources = normalizeResources(request.resources ?? []);
     if (!paths.length || resources.some((r) => typeof r !== 'string' || !r)) throw new Error('Explicit paths and valid resource names are required.');
     const active = claims.filter(occupying);
-    if (active.length >= policy.max_active_branches) throw new Error('Active branch budget reached. Finish or reconcile existing work before starting another implementation.');
+    if (branchBudget([...active, { paths, state: 'active' }], policy).over_limit) throw new Error('Active branch budget reached. Finish or reconcile existing work before starting another implementation.');
     for (const c of active) {
       if (c.owner === request.owner) throw new Error('Owner already has an active implementation. Finish it or hand it off first.');
       if (c.branch === request.branch) throw new Error('Branch already has an owner.');
@@ -346,7 +372,7 @@ export function evaluate(record, policy, branches, prs, now = new Date()) {
   const findings = [];
   const active = record.claims.filter(occupying);
   const legacy = new Set(record.legacy_branches);
-  if (active.length > policy.max_active_branches) findings.push({ type: 'budget', count: active.length });
+  if (branchBudget(active, policy).over_limit) findings.push({ type: 'budget', count: active.length });
   for (const c of active) {
     if (new Date(c.lease_until) <= now) findings.push({ type: 'expired', assignment: c.id, branch: c.branch, action: 'Reconcile or renew; ownership is retained.' });
     if (!branches.some((b) => b.name === c.branch) && now - new Date(c.created_at) > 3600000) findings.push({ type: 'missing_branch', assignment: c.id, branch: c.branch });

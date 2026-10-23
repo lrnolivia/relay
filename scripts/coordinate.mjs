@@ -3,7 +3,7 @@ import { coordinationOutcome } from './coordination-report.mjs';
 import fs from 'node:fs/promises';
 import { callRunnerControl } from '../src/runner-control.js';
 import { execFileSync } from 'node:child_process';
-import { transition, evaluate, occupying, retired } from '../src/coordination.mjs';
+import { transition, evaluate, occupying, retired, branchBudget } from '../src/coordination.mjs';
 import { attributedCommitBody, verifyAttributedCommit } from '../src/commit-attribution.js';
 import { localWorkPreflight } from '../src/runner-control-core.js';
 
@@ -134,7 +134,7 @@ if (action === 'local-preflight') {
   for (const pr of prs) pr.files = (await pages(`repos/${policy.repository}/pulls/${pr.number}/files`)).map((f) => f.filename);
   const findings = evaluate(snapshot.value, policy, branches, prs);
   const report = { project, checked_at: new Date().toISOString(), active: snapshot.value.claims.filter(occupying).length,
-    budget: policy.max_active_branches, total_branches: branches.length, legacy_branches: snapshot.value.legacy_branches.length, findings };
+    budget: branchBudget(snapshot.value.claims, policy).limit, total_branches: branches.length, legacy_branches: snapshot.value.legacy_branches.length, findings };
   if (action === 'preflight') {
     if (!inputFile) throw new Error('Preflight requires a request with id, owner and current changed paths.');
     const request = JSON.parse(await fs.readFile(inputFile, 'utf8'));

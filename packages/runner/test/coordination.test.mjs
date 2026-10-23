@@ -231,3 +231,83 @@ test('explicit historical queue reconciliation preserves both owners and never i
  assert.deepEqual(transition(result,request,policy,now),result);
  assert.throws(()=>transition(record,{...request,expected_queue_owner:'unrelated'},policy,now),/ownership/);
 });
+
+const websitePolicy = { ...policy, max_active_branches: 4,
+  branch_budget_exception: { max_additional_branches: 1, paths: ['website/'] } };
+const admitWebsite = (record, id, paths) => transition(record, request(id, paths), websitePolicy, now);
+const fourNative = () => ['a', 'b', 'c', 'd'].reduce((record, id) => admitWebsite(record, id), empty());
+const fullWebsite = () => admitWebsite(fourNative(), 'web', ['website/public/index.html', 'website/README.md']);
+
+test('scoped overflow permits one website fifth branch and never a native fifth or any sixth', () => {
+  const native = fourNative();
+  for (const paths of [['src/e/'], ['website/', 'src/e/'], ['website-sibling/'], ['website']]) {
+    assert.throws(() => admitWebsite(native, 'e', paths), /budget/);
+  }
+  const full = fullWebsite();
+  assert.equal(full.claims.length, 5);
+  assert.throws(() => admitWebsite(full, 'six', ['website/other/']), /budget/);
+  assert.throws(() => admitWebsite(full, 'six'), /budget/);
+  assert.equal(native.claims.length, 4);
+  const websiteFirst = ['a', 'b', 'c', 'd'].reduce((record, id) => admitWebsite(record, id),
+    admitWebsite(empty(), 'web', ['website/']));
+  assert.equal(websiteFirst.claims.length, 5);
+  assert.throws(() => admitWebsite(websiteFirst, 'e'), /budget/);
+});
+
+test('website exception cannot be converted to native work through amend or rescope', () => {
+  const record = fullWebsite();
+  for (const action of ['amend', 'rescope']) {
+    assert.throws(() => transition(record, { action, id: 'web', owner: 'web',
+      paths: ['website/public/index.html', 'src/native.js'], resources: [], reason: 'Expand scope' }, websitePolicy, now), /budget/);
+  }
+  const narrowed = transition(record, { action: 'rescope', id: 'web', owner: 'web',
+    paths: ['website/public/index.html'], resources: [] }, websitePolicy, now);
+  assert.equal(narrowed.claims.length, 5);
+  assert.deepEqual(record.claims.at(-1).paths, ['website/public/index.html', 'website/README.md']);
+  assert.equal(transition(record, { action: 'amend', id: 'web', owner: 'web',
+    reason: 'Record progress', next_action: 'Verify date' }, websitePolicy, now).claims.length, 5);
+});
+
+test('overflow retains ordinary owner, file and semantic resource conflict checks', () => {
+  const record = fullWebsite();
+  record.claims.pop();
+  record.claims[0].resources = ['website-deploy'];
+  assert.throws(() => transition(record, { ...request('web', ['website/']), owner: 'a' }, websitePolicy, now), /Owner already/);
+  assert.throws(() => transition(record, { ...request('web', ['website/']), resources: ['website-deploy'] }, websitePolicy, now), /overlaps/);
+  const one = admitWebsite(empty(), 'web', ['website/']);
+  assert.throws(() => admitWebsite(one, 'other', ['website/public/index.html']), /overlaps/);
+});
+
+test('held expired website work keeps its slot; verified completion or retirement releases it', () => {
+  let record = fullWebsite();
+  record = transition(record, { action: 'hold', id: 'web', owner: 'web', next_action: 'Recover' }, websitePolicy, now);
+  assert.throws(() => transition(record, request('another', ['website/other/']), websitePolicy, new Date('2026-10-05')), /budget/);
+  for (const proof of [
+    { action: 'complete', id: 'web', owner: 'web', pr: 1, merged_head_sha: 'abc', merge_commit_sha: 'def', evidence: 'Merged website', work_accounted: true },
+    retireRequest({ id: 'web', owner: 'web', operation_id: 'retire-web' })
+  ]) {
+    const released = transition(record, proof, websitePolicy, now);
+    assert.equal(admitWebsite(released, 'replacement', ['website/']).claims.length, 6);
+    assert.throws(() => admitWebsite(released, 'native-fifth'), /budget/);
+  }
+});
+
+test('audit and PR scope checks agree with admission for the scoped fifth slot', () => {
+  const record = fullWebsite(), branches = record.claims.map(c => ({ name: c.branch }));
+  assert.deepEqual(evaluate(record, websitePolicy, branches, [], now), []);
+  const drift = evaluate(record, websitePolicy, branches, [{ number: 5,
+    head: { ref: 'field/web', repo: { full_name: policy.repository } }, files: ['src/native.js'] }], now);
+  assert.equal(drift[0].type, 'scope_drift');
+  record.claims.at(-1).paths.push('src/extra/');
+  assert.equal(evaluate(record, websitePolicy, branches, [], now)[0].type, 'budget');
+  assert.equal(evaluate(fullWebsite(), policy, branches, [], now)[0].type, 'budget');
+});
+
+test('malformed overflow policies fail closed', () => {
+  for (const exception of [null, {}, { max_additional_branches: 0, paths: ['website/'] },
+    { max_additional_branches: 1.5, paths: ['website/'] }, { max_additional_branches: 1, paths: [] },
+    { max_additional_branches: 1, paths: ['../'] }]) {
+    assert.throws(() => transition(empty(), request('web', ['website/']),
+      { ...websitePolicy, branch_budget_exception: exception }, now));
+  }
+});
