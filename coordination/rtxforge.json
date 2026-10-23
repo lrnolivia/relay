@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T03:38:00.166Z",
+  "updated_at": "2026-10-23T03:40:41.928Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9562,7 +9562,10 @@
         "tests/ui_package_review.py",
         "tests/ui_app_completion.py",
         "scripts/engine_bridge.py",
-        "scripts/skynizz_provider.py"
+        "scripts/skynizz_provider.py",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Library.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Pages.cs",
+        "windows/RtxForge.Windows/Views/LibraryPage.xaml.cs"
       ],
       "resources": [
         "rtxforge-linux-parity-handoff",
@@ -9572,7 +9575,7 @@
       ],
       "goal": "Linux production parity with newest Windows NR/MFG, Feeder, Adoption, overlay/settings and library refinements, then current website screenshots. This claim carries the GTK/libadwaita UI half; the engine/Proton runtime half was split by Lauren on 2026-10-21 into rtxforge-linux-runtime-parity-20261021 (spawned Claude worker).",
       "acceptance": "Lauren explicitly requested a durable Linux handoff before reboot2026-10-20. Full detailed handoff is recorded in Relay project context, operation IDs linux-parity-handoff-20261020-part-1 through part-8 (revisions102–109), source PR28@2bf9a7b0aa71e1660ffdbcfd2e0928fe443daac5. All eight parts are required acceptance, not optional historical notes. Refresh newest source and subsequent context before work. Deduplicate earlier Linux badge/titlebar/card/operation-scope queue items and preserve Linux ownership. Cover Rescan/manual-folder/pinned artwork/removal/Open Folder; exact operation scope; detected packages and Adoption vs Adopt+clean install with pre-adoption restore boundary; user-friendly supported-feature second review; native NR+Ada MFG plus separate Feeder NR/model upgrades; NR startup OFF unless enabled-on-launch;65% model/local+skin1.0 defaults with repair preservation; independent lightweight helper and left-side translucent accent-matched sidebar; End/custom shortcut, Insert native, Unified/Advanced units, all supported NR/MFG/sharpening controls, applied/observed telemetry and file-ownership pills; desktop+Game Mode+gear Overlay settings, four independent OptiScaler/ReShade menu/welcome choices, default intros off and real working guide/RenoDX flags; reviewed guarded/backed-up existing-game application with shared state; one-time Global NR/MFG changes; efficient batch preparation and hidden-panel behavior; offline-only executable-bound exceptions with no generic anti-cheat or online claim; two-line Poster titles and75–150% desktop artwork scale. Carry accepted Windows focus fix into Linux behavior, do not port focus-stealing. Linux adapters must prove Wine/Proton/NGX/Streamline/native-vs-Feeder paths, Wayland global binding/compositor blur and actual Gamescope surface behavior; Windows registry/WinUI implementation is reference only. Linux currently refuses Skynizz direct install intentionally, and Windows evidence is not Linux runtime proof. Require native GTK/controller, restore/rollback, Steam-open overrides, running/drift/anti-cheat guards and real Ada NR+MFG/Feeder gameplay before promotion. Keep explicit holds and distinct last-healthy/user-approved recovery. Two release channels: rtxForge Beta tag beta curated; rtxForge Development tag development moving; retain legacy updater compatibility.4–5 authentic clean screenshots per OS: Library, Control Resonant Game Details/Features, Presets, Game Mode Details, overlay; newest exact production artifact, controller glyphs not keyboard in Game Mode, no cursor/tooltip, true rounded alpha corners with website CSS shadow, documented dimensions/scale/provenance. Current website brief wins if subsequently refined. Split 2026-10-21: engine/Proton runtime acceptance is delivered under rtxforge-linux-runtime-parity-20261021; this claim's UI consumes its APIs, and whole-parity completion requires both.",
-      "next_action": "Generic-copy PR60 merged at 39657731868891d15466753f59a02c10dd04cf36 and its claim is completed. Reclaim the two inherited engine files serially, integrate fresh main without dropping original Linux runtime APIs or copy changes, then run complete-path publication preflight. Linux UI candidate018d749731d23fb8b1050a875d27336816a76c44 passes rapid page focus/reversal and 240-game Back/scroll, deferred hidden Desktop layout restoration, full flow at three sizes, 4K/130% scaling, 30 native UI tests, 172 broader fixtures (TMPDIR on disk; tmpfs lacked required2GiB reserve). AppImage demo smoke passed. Measured software-only4K frame-clock median17.77ms/p9591.06ms; D-pad dispatchp951.25ms. Build exact integrated AppImage, preserve final recording, publish existing draft PR50 and verify CI. Context capacity full; native Visuals ingestion route unavailable. Physical controller/GPU, Wayland/Gamescope and actual NR/MFG/overlay gameplay remain unverified and block whole-parity promotion. Windows wording request is retained in prior heartbeat, not implemented in this Linux scope.",
+      "next_action": "Lauren explicitly authorizes taking over released Windows wording corrections (current chat 2026-10-23). Verified Game Mode motion and generic-copy claims completed; no active owner covers these three files. Match Windows Game Mode action labels to Desktop and Linux: Install Features / Restore Original Files / Update DLSS, and Install Selected (N) / Restore Selected (N). Add selected Restore wording to Windows Desktop, remove Game Mode Settings couch subtitle; theme-link label already matches. Preserve all action targets, guards, layouts and Linux APIs. Compile Windows x64 without launching installed Windows app, finish integrated Linux AppImage2794a7b and source-bound QA, update existing PR50 (2794a7b now pushed). Hardware/runtime gameplay gates remain unverified; no whole-parity promotion.",
       "category": "implementation",
       "tags": [
         "notes-only",
@@ -9602,8 +9605,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T03:38:00.166Z",
-      "lease_until": "2026-10-23T15:38:00.166Z",
+      "updated_at": "2026-10-23T03:40:41.928Z",
+      "lease_until": "2026-10-23T15:40:41.928Z",
       "handoffs": [
         {
           "at": "2026-10-21T21:34:10.11Z",
