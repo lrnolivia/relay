@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T23:47:53.749Z",
+  "updated_at": "2026-10-23T23:50:11.584Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -15898,7 +15898,7 @@
       ],
       "goal": "Capture the Linux 1.0 Beta website screenshot set (dark+light SDR) matching the shipped Windows set, from the Linux RC build (PR67 head 28a468b) with the private full-library-20261021-v2 sample in demo mode, and wire it into website/public/screenshots.mjs via a draft PR.",
       "acceptance": "Linux dark+light captures for every Windows view that applies (desktop library, library selected, details, install review/progress/done, presets; Game Mode library, selected, details DLSS Files, presets, install review/progress/done), linux-<view>-{dark,light}.webp, wired with a linux() helper and Linux alt text/provenance, site renders them locally, draft PR with file/dimension/provenance table. Linux overlay only if authentic Proton gameplay capture is possible, else recorded as missing. Coordinates with (does not replace) rtxforge-hdr-sdr-native-media-capture-20261021: this covers its Linux SDR UI half only; HDR and Windows refresh stay there. No merge/deploy, no real game installs, sample never committed.",
-      "next_action": "28 Linux captures encoded and wired; add a Linux-specific Presets feature crop (features.js data-os + styles.css) and refresh the README screenshot notes, then open the draft PR.",
+      "next_action": "Draft PR #68 open (head fe627a3): 28 Linux dark+light WebPs (14 scenes) from PR67 head 28a468b in demo mode with the full-library-20261021-v2 sample, wired via linux() helper, Linux Presets feature crop, README notes; npm run check and local browser checks pass. Missing: Linux gameplay overlay (no authentic Proton capture attempted). Product follow-ups: fresh-install Presets shows 'Unsaved changes' (feature_controls {}), review line shows lowercase 'skynizz'. Masters/hashes/driver private at ~/.local/share/rtxForge-samples/linux-captures-20261023. Awaiting Lauren review; do not merge/deploy.",
       "ledger_refs": [
         "rtxforge-hdr-sdr-native-media-capture-20261021"
       ],
@@ -15925,8 +15925,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T23:47:53.749Z",
-      "lease_until": "2026-10-24T11:47:53.749Z"
+      "updated_at": "2026-10-23T23:50:11.584Z",
+      "lease_until": "2026-10-24T11:50:11.584Z"
     }
   ]
 }
