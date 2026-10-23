@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T02:13:13.608Z",
+  "updated_at": "2026-10-23T02:18:18.036Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -9869,17 +9869,17 @@
       ],
       "goal": "Build an independent reusable DLSS Super Resolution and native DLSS FG/MFG injector for games without native support, starting with Assassin's Creed Valhalla on Windows. Lauren selected independent implementation in this chat on 2026-10-22; no PureDark binary dependency or restricted code reuse.",
       "acceptance": "Preserve the full SR+MFG objective across stages: (1) a pinned, independently built DX12 diagnostic runtime identifies Valhalla scene color, depth, geometric motion vectors, camera jitter and TAA/HUD boundaries against an exact executable; (2) validate SR alone at reduced internal resolution with correct temporal history, UI and measurable cost; (3) prove actual native 2x DLSS-G presentation and pacing, then reuse rtxForge's existing Universal MFG component for separately verified multipliers on RTX4070; (4) integrate reversible reviewed deployment, conflicts/restore and truthful experimental status without altering peer-owned routes. Shared runtime and explicit game profiles; a second game is needed before claiming cross-game support. Preserve required third-party notices and human owner identity; omit voluntary AI/model/tool credits. Diagnostic code/build success never implies SR/FG runtime support. Preserve the existing Feeder install; no game mutation while another assignment owns its test path.",
-      "next_action": "PR58 head62a760fa67d2aa3c033bae2a4ef7b5e5e85bfa78 pushed; full SR+FG acceptance incomplete. Lab PID3436 exited during save load, orderly ReShade shutdown/no Windows crash event; cause unproven. Baseline39364 stopped before save per user: reproduce WITH first. ProcDump download/run rejected by automatic approval review ('blocked by policy'); no part executed. In-addon bounded first-chance logging added. WITH PID50864 loaded save, user moved/F10, exited0x00000000. Capture50864/capture-1-10302.json SHA94c9a209edba2003fdfe35122749daab28fd14340e65bdb0ef3a7e527c4ad10a:517 resources,1398 events; catalog/range/constant/shader gaps remain. Its logger exhausted shared budget on startup illegal instructions; no crash-absence claim. Separate per-code budgets now pass synthetic20-illegal+AV probe preserving app handler/rendering. Reproduced/fixed table pressure (old55708 drops9views/65535descriptors; final22920 full graph zero drops at327685descriptors/65545views) via dead-history/binding collection, pinned capture metadata and larger finite budgets. Reproduced/fixed missed copied RTV/DSV (old34440 missing attachments despite0drops; final50344 full graph passes) by querying current bindings. MSVC/CTest pass. Clean receipt source62a760f/SDK18deaa52; final DLL4ac09e6cc6ad8f8580e4155ed02c4004089a014923c6bdb94baf8513075dcd8c staged only in G:/Forge Lab/games-windows/Valhalla-render-bridge-01a16643; prior binary/log backed up. Game closed; original Feeder untouched. Next: fresh user gameplay capture with final fixes, inspect remaining coverage, GPU readback/semantic color/depth/motion/jitter/TAA/HUD verification, then SR/nativeFG/MFG. No auto relaunch after user finished. Assignment capacity exception human-authorized; ordinary budget failure is not preflight pass.",
+      "next_action": "Paused at Lauren's explicit request: pause for now, resume later. Draft PR58 https://github.com/lrnolivia/rtxForge/pull/58 and pushed head 62a760fa67d2aa3c033bae2a4ef7b5e5e85bfa78 are preserved. Uncommitted texture readback work remains in G:\\TaskScratch\\rtxforge-valhalla-source-01a16643: CMakeLists.txt, addon.cpp, d3d12_harness.cpp, new texture_readback.hpp, render_readback.py, tests/verify_readbacks.py. Native controlled input plus addon PRESENT readback test PID42128 exited 0; five images passed pixel verification with DLL SHA2032f8cff8f5870b553a629280ae4bb13fb9305e2ab47c43f2e9bb4bb557954e in build/Release and harness. WIP is not committed, pushed, or installed in the isolated Valhalla lab; lab remains on committed 62a diagnostics. No game or harness process running at pause. Normal Valhalla Feeder NR installation remains unchanged. Resume by reviewing/sealing readback batch lifecycle after signal, unsupported format limits, metadata transforms, and appropriate negative checks; update product documentation and regenerate the build receipt before committing or staging. Then validate Valhalla resource semantics and safe GPU readback. Controlled harness success is not Valhalla input verification. DLSS SR, native FG, and MFG remain unimplemented. No further work or game launches until the user resumes.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "58712a2da5cc900b4dc340ff7dba24525c7cc185",
-      "state": "active",
+      "state": "held",
       "created_at": "2026-10-23T01:12:00.8096081Z",
-      "updated_at": "2026-10-23T02:03:23.374Z",
-      "lease_until": "2026-10-23T14:03:23.374Z",
+      "updated_at": "2026-10-23T02:18:18.036Z",
+      "lease_until": "2026-10-23T14:18:18.036Z",
       "objective_history": {
         "baseline": {
           "goal": "Build an independent reusable DLSS Super Resolution and native DLSS FG/MFG injector for games without native support, starting with Assassin's Creed Valhalla on Windows. Lauren selected independent implementation in this chat on 2026-10-22; no PureDark binary dependency or restricted code reuse.",
