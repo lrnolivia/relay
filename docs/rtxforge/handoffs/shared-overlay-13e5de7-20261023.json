@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "project": "rtxforge",
+  "assignment": "rtxforge-vulkan-dlssg-20261022",
+  "artifact": {
+    "schema": 1,
+    "kind": "task-only-build-tree",
+    "tree": "6766b99c97846f16bcae7c0f4a66a33ef066e468",
+    "overlay_head": "13e5de743440fd3ee6e903ef8b88493764363c4b",
+    "ui_head": "02ac2275b35f65524bde13a1744372ef3126b3b7",
+    "new_branch": false,
+    "merge_conflicts": false,
+    "panel_source": "eace8cd81fcdbeb291102340aa4b19a0848bc713334b3ec913c750d8e0e506e7",
+    "gameplay_tests": "deferred by current user direction; later named ME1 FeederNR DX and Control Resonant OptiScaler",
+    "installer_sha256": "74da84a9090fde5031bc5dc3af07c49e4e8774ab1db7b2b40c38cc38729a71b1",
+    "installer_exit_code": 0,
+    "verified_installed_files": 668,
+    "settings_unchanged": true,
+    "app_dll_sha256": "9c0cf2fa00253bb5e59fb9a38bba1810e4be1626c4466c9899a44e76c578b023",
+    "runtime_sha256": "ddeb4943f0e67905a129f65e8e38426c57ed2f7c1c76ceda11fbb1e410e125c2",
+    "feeder_addon_sha256": "bb02d57fadee1f59c792d28810db08f66de67a98deda9cacfaed86b2d3642e30",
+    "optiscaler_archive_sha256": "fa1365a1d20cab15ce99f0dae7c58a4550c197f30bea4279a6330b3ba643e929"
+  },
+  "source_repository": "lrnolivia/rtxForge",
+  "pr": 55,
+  "classification": "PASS source/build/install; gameplay of latest UI batch intentionally not run",
+  "scope": [
+    "Same ForgePanel source for FeederNR DX11, OptiScaler and standalone Vulkan provider",
+    "Approved single-row branded toast retained with top-center default and four optional corners",
+    "Shared Desktop/GameMode/in-game welcome position preference and startup read-only helper handshake",
+    "Green verified managed files, lighter green game-provided files, amber changed/missing managed files, grey absent optional files",
+    "Equal-width Inter number cells and fixed NR/MFG readout columns",
+    "Helper tray selects official ICO frame matching DPI"
+  ],
+  "checks": {
+    "shared_source_sha256": "eace8cd81fcdbeb291102340aa4b19a0848bc713334b3ec913c750d8e0e506e7",
+    "builds": [
+      "Vulkan native23 shared runtime and forwarder PASS",
+      "Feeder addon07 PASS (DX11 host)",
+      "OptiScaler main and NR forwarder rebuilt PASS",
+      "Combined WinUI x64 self-contained publish PASS",
+      "Installer exit0;668/668 installed files match publish;settings preserved"
+    ],
+    "core_native_checks": "Existing automated host/recreation/color/telemetry fixtures PASS; no game launched for this batch",
+    "games": "Same runtime installed BG3 and RDR2 through reviewed adapter repairs; both configs unchanged, RDR2sleep0/BG3sleep1"
+  },
+  "human_qa": {
+    "previous_artifact": "candidate10 runtime23fee7f7 + combinedtreea6f61bb / app8f6920d6",
+    "colors_lights": "Colors and lights appear",
+    "welcome_layout": "ooh that toast is PERFECT",
+    "scope": "Targeted approval of prior toast layout and BG3 colors/lights; no whole-build or latest-artifact gameplay approval inferred.",
+    "user_direction": "after that we're done...don't even need to test that; code wise...we can test them later",
+    "later_optional_checks": [
+      "Mass Effect1: DX11 FeederNR",
+      "Control Resonant: OptiScaler"
+    ],
+    "previous_screenshot_sha256": "d7637d5f7fffb9f1aee5b354a4a65a76e192fabe06104c3ff4c49fc5f8d70f7f",
+    "visual_ingest": "Chat screenshot preserved in allocated task artifacts; Visuals registration pending an available ingestion route. No ID invented."
+  },
+  "recovery": {
+    "app_before": "Task overlay-install-04/app-before retains complete prior combined app",
+    "native_before": "Candidate10 archive retained; original game recovery journals intact",
+    "earlier_healthy": "Candidate07 NR+4x gameplay evidence retained separately",
+    "no_save_changes": true
+  },
+  "remaining": "Universal Experimental remains; RTX20/30/50 hardware matrix and broad focus/HDR qualification remain unverified. Vulkan helper presets remain unavailable. No further gameplay tests in this completed UI batch."
+}
