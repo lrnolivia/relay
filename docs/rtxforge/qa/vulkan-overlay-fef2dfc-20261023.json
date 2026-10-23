@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "project": "rtxforge",
+  "assignment": "rtxforge-vulkan-dlssg-20261022",
+  "artifact": {
+    "repository": "lrnolivia/rtxForge",
+    "head_sha": "fef2dfc7510641b2777f971690e96b7ebc8cf833",
+    "pr": 55,
+    "branch": "rtxforge/vulkan-dlssg-20261022",
+    "environment": "local Windows x64 / RTX 4070 / Steam BG3 Vulkan and RDR2 Vulkan",
+    "runtime_sha256": "6f5beaf65b73288de21f39565e3d0ec550e311c533ecbe373b0066da50385f2f",
+    "helper_dll_sha256": "20369e94ceb578831f9acf0a8d5a17cf98c9b777486aa60e687e956f4e80aba9",
+    "installer_sha256": "d86783166edfa2a75beefe73489925c45c2b7809ef9f0399b9a6378d6e12a944"
+  },
+  "title": "Shared branded Vulkan overlay test",
+  "purpose": "Review welcome placement, typography, accent readability and compact feature measurements on the installed replacement; verify runtime behavior separately from visual acceptance.",
+  "questions": [
+    {
+      "id": "toast_layout",
+      "prompt": "Is the welcome toast centered with comfortable space above it, and is the keycap clearly smaller than the rtxForge icon?",
+      "reason": "Direct user request for top-center placement, extra top padding, official icon/wordmark and smaller shortcut glyph.",
+      "criterion_id": "shared-branded-welcome",
+      "kind": "yes_no_not_sure"
+    },
+    {
+      "id": "panel_typography",
+      "prompt": "Are the Bakbak One app/game headings and the compact NR/FG measurements easy to read without crowding the controls?",
+      "reason": "Use official typography and present live values near their feature toggles.",
+      "criterion_id": "canonical-panel-fonts-statistics",
+      "kind": "yes_no_not_sure"
+    }
+  ],
+  "checklist": [
+    {
+      "id": "open",
+      "label": "Open the rtxForge panel with its assigned shortcut.",
+      "reason": "The user owns game input; diagnostics will verify the helper exchange.",
+      "criterion_id": "panel-helper-gameplay"
+    },
+    {
+      "id": "stats",
+      "label": "Hide and show live statistics in the panel settings.",
+      "reason": "Observe the visibility preference while leaving NR/FG controls available.",
+      "criterion_id": "optional-live-statistics"
+    },
+    {
+      "id": "both-games",
+      "label": "Repeat the visual check in BG3 and RDR2.",
+      "reason": "Same runtime/provider needs separate game acceptance.",
+      "criterion_id": "shared-provider-two-games"
+    }
+  ],
+  "overall_verdict": "not_sure",
+  "known_issues": [
+    "Vulkan helper preset save/reset remains disabled; live game controls are available.",
+    "Broader focus/HDR/resize and RTX20/30/50 hardware qualification remain incomplete.",
+    "OptiScaler and Feeder packages build the shared prompt; their independent gameplay visual acceptance remains pending."
+  ],
+  "deterministic_evidence": [
+    "Real Win32/Vulkan renderer recreation plus NewFrame passes; the unfixed control reproduces c0000005 at the same DPI callback as the BG3 dump.",
+    "Pinned real MFG module fixture confirms standalone UI suppression/re-enable leaves backend ownership active; vendor file hash unchanged.",
+    "Canonical panel SDR/HDR/DPI and welcome top-center geometry pass.",
+    "Settings persistence/copy/default checks, 34 helper tests and Skynizz source pins pass.",
+    "Both game installations and helper hashes verified; known good configurations preserved."
+  ],
+  "visuals": [],
+  "reproduction": [
+    "User launches Steam BG3 in Vulkan mode, loads save with DLSS enabled and VSync off, opens panel using saved Backtick.",
+    "Diagnostics reads the named channel and native logs; no desktop input or debugger.",
+    "User closes BG3 before the separate RDR2 launch."
+  ],
+  "recovery": [
+    "Retained candidate07 runtime/common Bink and original recovery journals; RDR2 ReflexSleep remains 0.",
+    "Previous app/settings backup retained in allocated task artifacts."
+  ]
+}
