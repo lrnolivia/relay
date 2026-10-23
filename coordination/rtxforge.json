@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-23T17:06:06.650Z",
+  "updated_at": "2026-10-23T17:35:43.407Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -15798,17 +15798,25 @@
       "paths": [
         "scripts/desktop_service.py",
         "scripts/library_media.py",
+        "scripts/offline_routes.py",
         "gui/rtxforge_gtk.py",
+        "gui/game_mode.py",
+        "gui/game_mode_tools.py",
+        "gui/game_mode_presets.py",
+        "gui/overview_facts.py",
         "packaging/build_appimage.py",
-        "tests/test_library_media_retry.py"
+        "tests/test_library_media_retry.py",
+        "tests/test_offline_routes_linux.py",
+        "tests/ui_game_mode.py"
       ],
       "resources": [
         "rtxforge-linux-desktop-ui",
-        "rtxforge-linux-runtime"
+        "rtxforge-linux-runtime",
+        "rtxforge-linux-game-mode"
       ],
       "goal": "Lauren (2026-10-23) after installing the Linux 1.0 Beta RC on Bazzite: Feeder NR installs (Mass Effect LE etc.) shown as unsupported, library cards missing artwork, Game Mode not fullscreen; plus the in-game panel helper failing to load from the AppImage (feeder_controls not bundled).",
       "acceptance": "Real-library scan shows Feeder NR installs as installed NR Only; artwork retried and present for the reported games where any source has it; Game Mode enters and leaves fullscreen like Windows; AppImage bundles feeder_controls and refuses builds missing bundled host imports; Linux tests and GTK smoke pass; hosted CI green; human attribution Lauren Olivia, no tool coauthors.",
-      "next_action": "Four commits ready locally on top of main d0eea49 (15acc64); installed on Lauren's Bazzite machine. Push, open PR, merge when hosted CI passes.",
+      "next_action": "Lauren 2026-10-23 follow-ups added: Gears of War E-Day offline-only Adoption on Linux (protected launcher detection via Proton host processes), Game Mode Presets on the Windows PresetRows layout, Game Mode glyph parity. Six commits on PR67 branch; push, rebuild/install locally, merge when hosted CI passes.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -15832,8 +15840,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-23T17:06:06.650Z",
-      "lease_until": "2026-10-24T05:06:06.650Z"
+      "updated_at": "2026-10-23T17:35:43.407Z",
+      "lease_until": "2026-10-24T05:35:43.407Z"
     }
   ]
 }
