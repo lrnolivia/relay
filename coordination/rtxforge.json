@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-24T01:49:29.942Z",
+  "updated_at": "2026-10-24T01:56:21.309Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -15941,6 +15941,48 @@
       "evidence": "PR #68 merged to main as 2ca193542bf537fcfb47cfcceb7e8b8a0735c23e (head fe627a3dc2d6a9dba5fa283d79a82a5c3387c33b, all checks passed; merged on Lauren's 'merge'). Delivers 28 Linux dark+light WebPs (14 scenes) captured from PR67 head 28a468b in demo mode with the full-library-20261021-v2 sample, linux() wiring in screenshots.mjs (Windows entries byte-identical), Linux Presets feature crop, README notes; npm run check and local browser checks passed. Website NOT deployed. Recorded missing: Linux gameplay overlay (no authentic Proton capture). Product follow-ups: fresh-install Presets 'Unsaved changes' (feature_controls {}), lowercase 'skynizz' in review summary. Masters/hashes/driver private at ~/.local/share/rtxForge-samples/linux-captures-20261023. HDR and Windows refresh remain with rtxforge-hdr-sdr-native-media-capture-20261021.",
       "work_accounted": true,
       "completed_at": "2026-10-24T01:49:29.942Z"
+    },
+    {
+      "id": "rtxforge-linux-ui-polish-20261024",
+      "owner": "claude-code-9d7aaacd-8dfa-4dac-971e-a4560aafaebe",
+      "branch": "rtxforge/linux-ui-polish-20261024",
+      "paths": [
+        "gui/rtxforge_gtk.py",
+        "gui/action_labels.py",
+        "gui/game_mode.py",
+        "tests/linux_ui/test_action_labels.py"
+      ],
+      "resources": [
+        "rtxforge-linux-desktop-ui"
+      ],
+      "goal": "Lauren (2026-10-24): fix the two Linux UI bugs found during the website screenshot run: fresh-install desktop Presets showing 'Unsaved changes' before any edit, and the install review printing the raw provider id 'skynizz'.",
+      "acceptance": "Fresh install shows Saved and only an edit shows Unsaved changes (Skynizz, Feeder, Vulkan and y4my); review line names every provider like Windows; unit tests, ui_game_mode, ui_app_completion and GTK smoke pass; hosted CI green; human attribution Lauren Olivia, no tool coauthors.",
+      "next_action": "Two commits ready on top of main 2ca1935; push, open PR, merge when hosted CI passes.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "2ca193542bf537fcfb47cfcceb7e8b8a0735c23e",
+      "state": "active",
+      "created_at": "2026-10-24T01:56:21.309Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-24): fix the two Linux UI bugs found during the website screenshot run: fresh-install desktop Presets showing 'Unsaved changes' before any edit, and the install review printing the raw provider id 'skynizz'.",
+          "acceptance": "Fresh install shows Saved and only an edit shows Unsaved changes (Skynizz, Feeder, Vulkan and y4my); review line names every provider like Windows; unit tests, ui_game_mode, ui_app_completion and GTK smoke pass; hosted CI green; human attribution Lauren Olivia, no tool coauthors.",
+          "at": "2026-10-24T01:56:21.309Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-ui-polish-20261024:acceptance:0",
+            "text": "Fresh install shows Saved and only an edit shows Unsaved changes (Skynizz, Feeder, Vulkan and y4my); review line names every provider like Windows; unit tests, ui_game_mode, ui_app_completion and GTK smoke pass; hosted CI green; human attribution Lauren Olivia, no tool coauthors.",
+            "at": "2026-10-24T01:56:21.309Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-24T01:56:21.309Z",
+      "lease_until": "2026-10-24T13:56:21.309Z"
     }
   ]
 }
