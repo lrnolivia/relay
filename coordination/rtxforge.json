@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-24T01:56:21.309Z",
+  "updated_at": "2026-10-24T02:56:40.354Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -15964,7 +15964,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "2ca193542bf537fcfb47cfcceb7e8b8a0735c23e",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-24T01:56:21.309Z",
       "objective_history": {
         "baseline": {
@@ -15981,8 +15981,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-24T01:56:21.309Z",
-      "lease_until": "2026-10-24T13:56:21.309Z"
+      "updated_at": "2026-10-24T02:56:40.354Z",
+      "lease_until": "2026-10-24T14:56:40.354Z",
+      "pr": 69,
+      "merged_head_sha": "f4f2d448c57a6c5ad44726d45c9a17ff5b2ce1ef",
+      "merge_commit_sha": "2057e72d16b14a4fb09c670323fc4eab3706681d",
+      "evidence": "PR69 head f4f2d44 merged to main as 2057e72 (local --no-ff merge as Lauren) after all hosted checks passed: native/kde/wayland review, WinUI 3 x64 and ARM64, in-game panel candidate, attribution, coordination admission. Fresh-install desktop Presets now shows Saved and only an edit shows Unsaved changes (reproduced on main 2ca1935 with Skynizz; verified fixed in demo mode with fresh settings for Skynizz, Feeder, Vulkan and y4my). Review line names every provider via shared action_labels.provider_name (Install · Skynizz · MFG Auto). Unit tests incl. new tests/linux_ui/test_action_labels.py, ui_game_mode, ui_app_completion and GTK smoke pass. Build f4f2d44 installed on Lauren's Bazzite machine.",
+      "work_accounted": true,
+      "completed_at": "2026-10-24T02:56:40.354Z"
     }
   ]
 }
