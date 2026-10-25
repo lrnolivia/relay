@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:59:59.416Z",
+  "updated_at": "2026-10-25T06:04:56.769Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16653,7 +16653,9 @@
         "providers/skynizz-bridge/ForgePanel.h",
         "providers/skynizz-bridge/panel-candidate.patch",
         "providers/skynizz-bridge/panel-candidate.json",
-        "tests/test_skynizz_bridge.py"
+        "tests/test_skynizz_bridge.py",
+        "scripts/overlay_settings.py",
+        "tests/test_overlay_settings.py"
       ],
       "resources": [
         "windows-game-mode-input",
@@ -16665,7 +16667,7 @@
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
       "acceptance": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks. Filled-button pointer hover enriches chromatic fills with white ink, or lightens neutral fills with medium/dark grey ink; glow follows the hover color and normal fill/ink restore on exit. Sidebar hover/focus on an inactive tab uses neutral fill, glow and focus stroke; only the active view uses the accent highlight, retaining fixed half tint. Collapsed game hero has a larger title vertically aligned with the poster. Controller-selected posters receive artwork glow even with a stationary mouse over another poster. Right-stick input uses active mapped controller readings and native gamepad key fallback when axes are not projected, with foreground and modal routing preserved.",
-      "next_action": "Add persisted overlay Light/Dark/Follow app choice across manager and shared native panel; preserve HDR conversion and shared Feeder/Vulkan panel sources, then regenerate the pinned patch and validate.",
+      "next_action": "Keep shared overlay preference validation in sync with Light/Dark/Follow app so per-game overlay reviews accept the new theme; finish exact source/build/native preview checks.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16749,8 +16751,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-25T05:59:04.455Z",
-      "lease_until": "2026-10-25T17:59:04.455Z",
+      "updated_at": "2026-10-25T06:04:56.769Z",
+      "lease_until": "2026-10-25T18:04:56.769Z",
       "amendment_count": 10,
       "amendments": [
         {
