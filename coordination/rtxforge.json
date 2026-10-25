@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:22:31.564Z",
+  "updated_at": "2026-10-25T05:23:11.054Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16545,11 +16545,12 @@
       ],
       "resources": [
         "rtxforge-landing-layout",
-        "rtxforge-landing-worker"
+        "rtxforge-landing-worker",
+        "loewfi-route-rtxforge"
       ],
       "goal": "Add auto-looping card pagination and make loew.fi/rtxforge/ the primary website URL with the subdomain retained as a redirect.",
       "acceptance": "Preserve card pagination objective and checks: auto-loop Install and Game Mode, dots only, no labels, slow fades, OS/theme correctness and reduced-motion. Also serve the complete site at loew.fi/rtxforge/ with working assets/install guide/downloads, updated canonical/share URLs, and old subdomain redirect preserving path/query. Limit Cloudflare routing to the rtxforge path and preserve loew.fi home/other paths. Verify redirects and primary rendered desktop/mobile themes, required source checks and production before completion.",
-      "next_action": "Inspect existing loew.fi routes, implement bounded prefix routing and canonical migration on this branch, then verify and publish the combined update.",
+      "next_action": "Add path-scoped loew.fi/rtxforge route and subdomain redirects without changing the loew.fi root site.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -16578,8 +16579,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-25T05:22:31.564Z",
-      "lease_until": "2026-10-25T17:22:31.564Z",
+      "updated_at": "2026-10-25T05:23:11.054Z",
+      "lease_until": "2026-10-25T17:23:11.054Z",
       "amendment_count": 1,
       "amendments": [
         {
