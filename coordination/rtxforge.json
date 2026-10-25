@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:47:43.508Z",
+  "updated_at": "2026-10-25T05:51:05.318Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16542,8 +16542,8 @@
         "windows-install-preparation-routing"
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
-      "acceptance": "Retain all prior requested controls, presentation and install acceptance. Latest surface correction: acrylic material remains fully opaque as a material; only tint strength varies. Default tint is five points softer than earlier 15 (10), and current saved tint reduced five points; navbar tint is 15 points lower clamped at zero. No visible numeric percentages or navigation-opacity note. Sidebar highlights share acrylic with contrast adjustment. Navigation slides are now 340ms incoming/280ms outgoing with a more visible transient blur; entrance cascades use280ms reveals and40ms staggering, with no repeated full entrance on navigation. Review actual newly rebuilt preview, not the old still-open process. Native physical menu clicking and final acrylic appearance remain unverified; do not mark those passed from a build alone.",
-      "next_action": "Replace old preview35984 with corrected candidate, verify actual acrylic output and updated motion, run final regressions, and publish exact source as a reviewable draft.",
+      "acceptance": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks.",
+      "next_action": "Separate stationary light layers from page/panel slide hosts, expand artwork-only viewport clipping by blur bleed, build and verify current candidate, then replace the preview with exact rebuilt source.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16600,12 +16600,18 @@
             "text": "Retain all prior requested controls, presentation and install acceptance. Latest surface correction: acrylic material remains fully opaque as a material; only tint strength varies. Default tint is five points softer than earlier 15 (10), and current saved tint reduced five points; navbar tint is 15 points lower clamped at zero. No visible numeric percentages or navigation-opacity note. Sidebar highlights share acrylic with contrast adjustment. Navigation slides are now 340ms incoming/280ms outgoing with a more visible transient blur; entrance cascades use280ms reveals and40ms staggering, with no repeated full entrance on navigation. Review actual newly rebuilt preview, not the old still-open process. Native physical menu clicking and final acrylic appearance remain unverified; do not mark those passed from a build alone.",
             "at": "2026-10-25T05:45:53.492Z",
             "reason": "User reported lost blur/excess transparency; corrected whole-material-opacity mistake by restoring AcrylicBrush.Opacity=1 and varying only TintOpacity. User then requested five points softer, removal of the navigation note, slower visible slides/blur, and reported that stale preview still looked wrong."
+          },
+          {
+            "id": "rtxforge-controller-navigation-20261025:acceptance:7",
+            "text": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks.",
+            "at": "2026-10-25T05:51:05.318Z",
+            "reason": "Latest user visual feedback fixes sidebar accent tint at one-half independently of the slider, requests stationary glows that appear after navigation settles, and shows a hard artwork glow cutoff at the scroll viewport edge."
           }
         ]
       },
-      "updated_at": "2026-10-25T05:45:53.492Z",
-      "lease_until": "2026-10-25T17:45:53.492Z",
-      "amendment_count": 6,
+      "updated_at": "2026-10-25T05:51:05.318Z",
+      "lease_until": "2026-10-25T17:51:05.318Z",
+      "amendment_count": 7,
       "amendments": [
         {
           "at": "2026-10-25T05:18:11.498Z",
@@ -16707,6 +16713,23 @@
           "after": {
             "acceptance": "Retain all prior requested controls, presentation and install acceptance. Latest surface correction: acrylic material remains fully opaque as a material; only tint strength varies. Default tint is five points softer than earlier 15 (10), and current saved tint reduced five points; navbar tint is 15 points lower clamped at zero. No visible numeric percentages or navigation-opacity note. Sidebar highlights share acrylic with contrast adjustment. Navigation slides are now 340ms incoming/280ms outgoing with a more visible transient blur; entrance cascades use280ms reveals and40ms staggering, with no repeated full entrance on navigation. Review actual newly rebuilt preview, not the old still-open process. Native physical menu clicking and final acrylic appearance remain unverified; do not mark those passed from a build alone.",
             "next_action": "Replace old preview35984 with corrected candidate, verify actual acrylic output and updated motion, run final regressions, and publish exact source as a reviewable draft."
+          }
+        },
+        {
+          "at": "2026-10-25T05:51:05.318Z",
+          "by": "01a17179-1891-73e0-b1c3-cdd052ddbfe4",
+          "reason": "Latest user visual feedback fixes sidebar accent tint at one-half independently of the slider, requests stationary glows that appear after navigation settles, and shows a hard artwork glow cutoff at the scroll viewport edge.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Retain all prior requested controls, presentation and install acceptance. Latest surface correction: acrylic material remains fully opaque as a material; only tint strength varies. Default tint is five points softer than earlier 15 (10), and current saved tint reduced five points; navbar tint is 15 points lower clamped at zero. No visible numeric percentages or navigation-opacity note. Sidebar highlights share acrylic with contrast adjustment. Navigation slides are now 340ms incoming/280ms outgoing with a more visible transient blur; entrance cascades use280ms reveals and40ms staggering, with no repeated full entrance on navigation. Review actual newly rebuilt preview, not the old still-open process. Native physical menu clicking and final acrylic appearance remain unverified; do not mark those passed from a build alone.",
+            "next_action": "Replace old preview35984 with corrected candidate, verify actual acrylic output and updated motion, run final regressions, and publish exact source as a reviewable draft."
+          },
+          "after": {
+            "acceptance": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks.",
+            "next_action": "Separate stationary light layers from page/panel slide hosts, expand artwork-only viewport clipping by blur bleed, build and verify current candidate, then replace the preview with exact rebuilt source."
           }
         }
       ]
