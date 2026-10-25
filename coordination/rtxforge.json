@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:51:38.571Z",
+  "updated_at": "2026-10-25T05:52:49.545Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16542,8 +16542,8 @@
         "windows-install-preparation-routing"
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
-      "acceptance": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks.",
-      "next_action": "Separate stationary light layers from page/panel slide hosts, expand artwork-only viewport clipping by blur bleed, build and verify current candidate, then replace the preview with exact rebuilt source.",
+      "acceptance": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks. Filled-button pointer hover enriches chromatic fills with white ink, or lightens neutral fills with medium/dark grey ink; glow follows the hover color and normal fill/ink restore on exit.",
+      "next_action": "Implement stationary delayed glow layers and artwork bleed clipping, add reversible filled-button hover colors with contrast checks, then rebuild and replace the actual native preview.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16606,12 +16606,18 @@
             "text": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks.",
             "at": "2026-10-25T05:51:05.318Z",
             "reason": "Latest user visual feedback fixes sidebar accent tint at one-half independently of the slider, requests stationary glows that appear after navigation settles, and shows a hard artwork glow cutoff at the scroll viewport edge."
+          },
+          {
+            "id": "rtxforge-controller-navigation-20261025:acceptance:8",
+            "text": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks. Filled-button pointer hover enriches chromatic fills with white ink, or lightens neutral fills with medium/dark grey ink; glow follows the hover color and normal fill/ink restore on exit.",
+            "at": "2026-10-25T05:52:49.545Z",
+            "reason": "User additionally requests richer colored filled-button hover with white text, and lighter neutral filled-button hover with medium/dark grey text."
           }
         ]
       },
-      "updated_at": "2026-10-25T05:51:05.318Z",
-      "lease_until": "2026-10-25T17:51:05.318Z",
-      "amendment_count": 7,
+      "updated_at": "2026-10-25T05:52:49.545Z",
+      "lease_until": "2026-10-25T17:52:49.545Z",
+      "amendment_count": 8,
       "amendments": [
         {
           "at": "2026-10-25T05:18:11.498Z",
@@ -16730,6 +16736,23 @@
           "after": {
             "acceptance": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks.",
             "next_action": "Separate stationary light layers from page/panel slide hosts, expand artwork-only viewport clipping by blur bleed, build and verify current candidate, then replace the preview with exact rebuilt source."
+          }
+        },
+        {
+          "at": "2026-10-25T05:52:49.545Z",
+          "by": "01a17179-1891-73e0-b1c3-cdd052ddbfe4",
+          "reason": "User additionally requests richer colored filled-button hover with white text, and lighter neutral filled-button hover with medium/dark grey text.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks.",
+            "next_action": "Separate stationary light layers from page/panel slide hosts, expand artwork-only viewport clipping by blur bleed, build and verify current candidate, then replace the preview with exact rebuilt source."
+          },
+          "after": {
+            "acceptance": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks. Filled-button pointer hover enriches chromatic fills with white ink, or lightens neutral fills with medium/dark grey ink; glow follows the hover color and normal fill/ink restore on exit.",
+            "next_action": "Implement stationary delayed glow layers and artwork bleed clipping, add reversible filled-button hover colors with contrast checks, then rebuild and replace the actual native preview."
           }
         }
       ]
