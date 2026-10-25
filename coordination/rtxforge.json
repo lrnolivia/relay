@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:31:05.900Z",
+  "updated_at": "2026-10-25T05:32:42.800Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16522,19 +16522,22 @@
         "windows/RtxForge.Windows/MainWindow.GameMode.cs",
         "windows/RtxForge.Windows/Themes/GameMode.xaml",
         "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/Models/OperationRoutes.cs",
         "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
         "windows/RtxForge.Windows/Controls/OperationDialog.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
         "windows/tests/"
       ],
       "resources": [
         "windows-game-mode-input",
         "windows-game-mode-button-appearance",
         "windows-game-mode-opacity-setting",
-        "windows-install-phase-labels"
+        "windows-install-phase-labels",
+        "windows-install-preparation-routing"
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
       "acceptance": "Complete prior controller navigation/glyph, row edge, shared glow fade, native selected-fill, mouse-menu and unclipped button-glow criteria. Persisted Appearance opacity slider defaults to 15% (latest explicit user direction); navbar stays 15 percentage points lower. Sidebar highlight surfaces use the same frosted effect with readable contrast. Both install interfaces have a dedicated Preparing progress view followed by a static review listing games, game engines and planned features, then install progress and Done. Investigate preparation/install slowness with measurements and make bounded safe improvements; preserve exact reviewed writes, cancellation/restore and provider routing. Build, focused tests and native verification; publish reviewable source.",
-      "next_action": "Measure preparation bottlenecks, restore preparation progress in both interfaces, use 15% default and frosted readable highlights, and finish native pointer routing diagnosis.",
+      "next_action": "Batch consecutive games sharing a preparation route without changing route, review tokens, game order or safe writes; preserve engine progress phases. Restore dedicated preparation view and static review, use 15% default and frosted highlights.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16582,8 +16585,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-25T05:31:05.900Z",
-      "lease_until": "2026-10-25T17:31:05.900Z",
+      "updated_at": "2026-10-25T05:32:42.800Z",
+      "lease_until": "2026-10-25T17:32:42.800Z",
       "amendment_count": 4,
       "amendments": [
         {
