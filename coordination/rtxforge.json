@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T00:34:39.771Z",
+  "updated_at": "2026-10-25T00:55:41.899Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16013,7 +16013,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "2057e72d16b14a4fb09c670323fc4eab3706681d",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-25T00:34:39.771Z",
       "objective_history": {
         "baseline": {
@@ -16030,8 +16030,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-25T00:34:39.771Z",
-      "lease_until": "2026-10-25T12:34:39.771Z"
+      "updated_at": "2026-10-25T00:55:41.899Z",
+      "lease_until": "2026-10-25T12:55:41.899Z",
+      "pr": 70,
+      "merged_head_sha": "2efd251c68717dba25d938b7a9a93c38d4bd36ea",
+      "merge_commit_sha": "3d1f82a1ca735fbdae095db91d43855d3c059022",
+      "evidence": "PR #70 (head 2efd251) merged by Lauren's verified git as 3d1f82a after every check passed, including WinUI 3 x64 and ARM64, In-game panel candidate, native/kde/wayland review, attribution and admission. Installer rebuilt like CI (bridge from clean Skynizz fc702f8, Vulkan bundle 663bd10a) and installed (108 engine files, Vulkan runtime present). Real-library reviews: BG3/RDR2 restore ready; Skynizz installs no longer refuse on the bridge receipt. Scan with warm cache ~8s (was 26s). Game Mode caption buttons collapsed defensively; not reproduced on screen before the fix.",
+      "work_accounted": true,
+      "completed_at": "2026-10-25T00:55:41.899Z"
     }
   ]
 }
