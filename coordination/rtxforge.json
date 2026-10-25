@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:26:34.628Z",
+  "updated_at": "2026-10-25T05:31:05.900Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16533,8 +16533,8 @@
         "windows-install-phase-labels"
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
-      "acceptance": "Preserve and complete prior controller, row edge, shared artwork fade and frosted card acceptance. Appearance has a persisted live card-opacity slider defaulting to 90%, with navbar opacity always 15 percentage points lower. Selected controls retain native readable fills in Dark/Night throughout view/layout changes. Modal and other button glows are not clipped by layout-only scroll containers; the ellipsis main menu supports mouse interaction. Rename the install Checking phase to Preparing consistently and compare Game Mode with the current Desktop install flow. Build, focused tests and proportionate native checks pass; publish reviewable source.",
-      "next_action": "Rename preparation stage in Desktop and Game Mode together; verify shared preparation/review/execute semantics while finishing opacity, native fills and modal pointer/glow checks.",
+      "acceptance": "Complete prior controller navigation/glyph, row edge, shared glow fade, native selected-fill, mouse-menu and unclipped button-glow criteria. Persisted Appearance opacity slider defaults to 15% (latest explicit user direction); navbar stays 15 percentage points lower. Sidebar highlight surfaces use the same frosted effect with readable contrast. Both install interfaces have a dedicated Preparing progress view followed by a static review listing games, game engines and planned features, then install progress and Done. Investigate preparation/install slowness with measurements and make bounded safe improvements; preserve exact reviewed writes, cancellation/restore and provider routing. Build, focused tests and native verification; publish reviewable source.",
+      "next_action": "Measure preparation bottlenecks, restore preparation progress in both interfaces, use 15% default and frosted readable highlights, and finish native pointer routing diagnosis.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16573,12 +16573,18 @@
             "text": "Preserve and complete prior controller, row edge, shared artwork fade and frosted card acceptance. Appearance has a persisted live card-opacity slider defaulting to 90%, with navbar opacity always 15 percentage points lower. Selected controls retain native readable fills in Dark/Night throughout view/layout changes. Modal and other button glows are not clipped by layout-only scroll containers; the ellipsis main menu supports mouse interaction. Rename the install Checking phase to Preparing consistently and compare Game Mode with the current Desktop install flow. Build, focused tests and proportionate native checks pass; publish reviewable source.",
             "at": "2026-10-25T05:25:23.691Z",
             "reason": "User added slider/navbar opacity relationship, screenshot-proven missing selected fills, clipped button glow, mouse main-menu behavior, and install-phase label/parity review."
+          },
+          {
+            "id": "rtxforge-controller-navigation-20261025:acceptance:4",
+            "text": "Complete prior controller navigation/glyph, row edge, shared glow fade, native selected-fill, mouse-menu and unclipped button-glow criteria. Persisted Appearance opacity slider defaults to 15% (latest explicit user direction); navbar stays 15 percentage points lower. Sidebar highlight surfaces use the same frosted effect with readable contrast. Both install interfaces have a dedicated Preparing progress view followed by a static review listing games, game engines and planned features, then install progress and Done. Investigate preparation/install slowness with measurements and make bounded safe improvements; preserve exact reviewed writes, cancellation/restore and provider routing. Build, focused tests and native verification; publish reviewable source.",
+            "at": "2026-10-25T05:31:05.900Z",
+            "reason": "Latest user direction replaces the 90% default with 15%, applies opacity to sidebar highlights, requests dedicated preparation progress/static review with engines and features, and asks to address install slowness."
           }
         ]
       },
-      "updated_at": "2026-10-25T05:26:34.628Z",
-      "lease_until": "2026-10-25T17:26:34.628Z",
-      "amendment_count": 3,
+      "updated_at": "2026-10-25T05:31:05.900Z",
+      "lease_until": "2026-10-25T17:31:05.900Z",
+      "amendment_count": 4,
       "amendments": [
         {
           "at": "2026-10-25T05:18:11.498Z",
@@ -16629,6 +16635,23 @@
           "after": {
             "acceptance": "Preserve and complete prior controller, row edge, shared artwork fade and frosted card acceptance. Appearance has a persisted live card-opacity slider defaulting to 90%, with navbar opacity always 15 percentage points lower. Selected controls retain native readable fills in Dark/Night throughout view/layout changes. Modal and other button glows are not clipped by layout-only scroll containers; the ellipsis main menu supports mouse interaction. Rename the install Checking phase to Preparing consistently and compare Game Mode with the current Desktop install flow. Build, focused tests and proportionate native checks pass; publish reviewable source.",
             "next_action": "Implement live opacity settings and permanent native selection fills, reproduce mouse modal issue, compare install UI stages and rename phase consistently."
+          }
+        },
+        {
+          "at": "2026-10-25T05:31:05.900Z",
+          "by": "01a17179-1891-73e0-b1c3-cdd052ddbfe4",
+          "reason": "Latest user direction replaces the 90% default with 15%, applies opacity to sidebar highlights, requests dedicated preparation progress/static review with engines and features, and asks to address install slowness.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Preserve and complete prior controller, row edge, shared artwork fade and frosted card acceptance. Appearance has a persisted live card-opacity slider defaulting to 90%, with navbar opacity always 15 percentage points lower. Selected controls retain native readable fills in Dark/Night throughout view/layout changes. Modal and other button glows are not clipped by layout-only scroll containers; the ellipsis main menu supports mouse interaction. Rename the install Checking phase to Preparing consistently and compare Game Mode with the current Desktop install flow. Build, focused tests and proportionate native checks pass; publish reviewable source.",
+            "next_action": "Rename preparation stage in Desktop and Game Mode together; verify shared preparation/review/execute semantics while finishing opacity, native fills and modal pointer/glow checks."
+          },
+          "after": {
+            "acceptance": "Complete prior controller navigation/glyph, row edge, shared glow fade, native selected-fill, mouse-menu and unclipped button-glow criteria. Persisted Appearance opacity slider defaults to 15% (latest explicit user direction); navbar stays 15 percentage points lower. Sidebar highlight surfaces use the same frosted effect with readable contrast. Both install interfaces have a dedicated Preparing progress view followed by a static review listing games, game engines and planned features, then install progress and Done. Investigate preparation/install slowness with measurements and make bounded safe improvements; preserve exact reviewed writes, cancellation/restore and provider routing. Build, focused tests and native verification; publish reviewable source.",
+            "next_action": "Measure preparation bottlenecks, restore preparation progress in both interfaces, use 15% default and frosted readable highlights, and finish native pointer routing diagnosis."
           }
         }
       ]
