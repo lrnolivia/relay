@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T04:08:44.630Z",
+  "updated_at": "2026-10-25T04:15:15.136Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16212,7 +16212,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "8b19a815fa25f9d384492dad4edbd39191399588",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-25T03:57:50.941Z",
       "objective_history": {
         "baseline": {
@@ -16229,8 +16229,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-25T03:57:50.941Z",
-      "lease_until": "2026-10-25T15:57:50.941Z"
+      "updated_at": "2026-10-25T04:15:15.136Z",
+      "lease_until": "2026-10-25T16:15:15.136Z",
+      "pr": 73,
+      "merged_head_sha": "5459c26150f5b463f2540b321140c34b878f9e37",
+      "merge_commit_sha": "cc9449a55e48d1f97587464a76dd2cad7551daf8",
+      "evidence": "PR #73 merged into main as cc9449a (Lauren, --no-ff) after all CI passed at 5459c26 incl. WinUI x64/ARM64. Per-game alphabetical prepare and run; measured 8 Feeder games 6.5s one-by-one vs 6.1s batch (14.6s before). Local install pending: rtxForge was open.",
+      "work_accounted": true,
+      "completed_at": "2026-10-25T04:15:15.136Z"
     },
     {
       "id": "rtxforge-hero-library-layout-20261025",
