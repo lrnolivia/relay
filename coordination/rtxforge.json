@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T00:55:41.899Z",
+  "updated_at": "2026-10-25T01:52:52.178Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6401,6 +6401,46 @@
       },
       "completed_at": "2026-10-24T01:49:29.942Z",
       "updated_at": "2026-10-24T01:49:29.942Z"
+    },
+    {
+      "id": "rtxforge-linux-rc1-followups-20261025",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "goal": "Lauren (2026-10-25): carry the Windows RC1 fixes (PR #70, main 3d1f82a, and PR #64) over to Linux. (1) Library artwork has no stroke at rest: in gui/rtxforge_gtk.py make .game-card .gallery-artwork-ring transparent/0px at rest, keep the game-color ring on hover/focus and the lighter 2px selected band. (2) Library scan cache: scripts/feeder_provider.cached_probe now caches renderer detection per executable (path, size, mtime) in memory and in $XDG_CACHE_HOME or ~/.cache/rtxForge/exe-probes.json; it is shared Python, so Linux gets it from main, but confirm the Linux scan uses it and measure cold vs warm scan time. (3) Game Mode window chrome: Windows now hides caption buttons in Game Mode; confirm Linux Game Mode (GTK fullscreen/Gamescope) shows no window controls. (4) Packaging: the Windows 'Vulkan package is missing from this build' and 'Bundled bridge does not match the admitted source patch' errors came from a build without the Vulkan payload and with a stale bridge; make sure the AppImage bundles the Vulkan runtime (Build-VulkanProvider / providers/vulkan-dlssg distribution) and a bridge built from the pinned Skynizz source, and that BG3/RDR2 restore reviews pass.",
+      "acceptance": "Linux library artwork has no stroke at rest with hover and selected unchanged; the Linux scan is measured cold and warm with the probe cache working; Linux Game Mode shows no window controls; the AppImage contains the Vulkan runtime and a bridge matching the admitted source patch, and BG3/RDR2 restore reviews pass; Linux CI green; PR via Relay.",
+      "next_action": "Rebase onto main 3d1f82a. Make the gallery-artwork-ring rest change in gui/rtxforge_gtk.py, verify Game Mode window chrome, time the scan cold and warm, check the AppImage payloads, then open a PR.",
+      "paths": [
+        "gui/",
+        "packaging/build_appimage.py",
+        ".github/workflows/linux-build.yml"
+      ],
+      "resources": [],
+      "category": "implementation",
+      "tags": [
+        "linux",
+        "rc1",
+        "parity"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-25T01:52:52.178Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-25): carry the Windows RC1 fixes (PR #70, main 3d1f82a, and PR #64) over to Linux. (1) Library artwork has no stroke at rest: in gui/rtxforge_gtk.py make .game-card .gallery-artwork-ring transparent/0px at rest, keep the game-color ring on hover/focus and the lighter 2px selected band. (2) Library scan cache: scripts/feeder_provider.cached_probe now caches renderer detection per executable (path, size, mtime) in memory and in $XDG_CACHE_HOME or ~/.cache/rtxForge/exe-probes.json; it is shared Python, so Linux gets it from main, but confirm the Linux scan uses it and measure cold vs warm scan time. (3) Game Mode window chrome: Windows now hides caption buttons in Game Mode; confirm Linux Game Mode (GTK fullscreen/Gamescope) shows no window controls. (4) Packaging: the Windows 'Vulkan package is missing from this build' and 'Bundled bridge does not match the admitted source patch' errors came from a build without the Vulkan payload and with a stale bridge; make sure the AppImage bundles the Vulkan runtime (Build-VulkanProvider / providers/vulkan-dlssg distribution) and a bridge built from the pinned Skynizz source, and that BG3/RDR2 restore reviews pass.",
+          "acceptance": "Linux library artwork has no stroke at rest with hover and selected unchanged; the Linux scan is measured cold and warm with the probe cache working; Linux Game Mode shows no window controls; the AppImage contains the Vulkan runtime and a bridge matching the admitted source patch, and BG3/RDR2 restore reviews pass; Linux CI green; PR via Relay.",
+          "at": "2026-10-25T01:52:52.178Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-rc1-followups-20261025:acceptance:0",
+            "text": "Linux library artwork has no stroke at rest with hover and selected unchanged; the Linux scan is measured cold and warm with the probe cache working; Linux Game Mode shows no window controls; the AppImage contains the Vulkan runtime and a bridge matching the admitted source patch, and BG3/RDR2 restore reviews pass; Linux CI green; PR via Relay.",
+            "at": "2026-10-25T01:52:52.178Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
