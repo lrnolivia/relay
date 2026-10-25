@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-24T02:56:40.354Z",
+  "updated_at": "2026-10-25T00:34:39.771Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -15989,6 +15989,49 @@
       "evidence": "PR69 head f4f2d44 merged to main as 2057e72 (local --no-ff merge as Lauren) after all hosted checks passed: native/kde/wayland review, WinUI 3 x64 and ARM64, in-game panel candidate, attribution, coordination admission. Fresh-install desktop Presets now shows Saved and only an edit shows Unsaved changes (reproduced on main 2ca1935 with Skynizz; verified fixed in demo mode with fresh settings for Skynizz, Feeder, Vulkan and y4my). Review line names every provider via shared action_labels.provider_name (Install · Skynizz · MFG Auto). Unit tests incl. new tests/linux_ui/test_action_labels.py, ui_game_mode, ui_app_completion and GTK smoke pass. Build f4f2d44 installed on Lauren's Bazzite machine.",
       "work_accounted": true,
       "completed_at": "2026-10-24T02:56:40.354Z"
+    },
+    {
+      "id": "rtxforge-rc1-fixes-20261024",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/rc1-fixes-20261024",
+      "paths": [
+        "windows/RtxForge.Windows/MainWindow.GameMode.cs",
+        "scripts/compat_list.py",
+        "scripts/feeder_provider.py",
+        "tests/test_compat_list.py",
+        "tests/test_feeder_provider.py"
+      ],
+      "resources": [
+        "rtxforge-windows-rc1-fixes"
+      ],
+      "goal": "Lauren (2026-10-24): fix Windows RC1 reports: (1) window caption buttons visible in Game Mode; (2) the library takes very long to load (scan 26s, ~17s re-reading game executables for renderer detection in compat_list.renderers and feeder_provider.graphics_apis); (3) install/restore error 'Vulkan package is missing from this build' came from a locally built installer missing the Vulkan payload and with a stale bridge, so rebuild the installer the way CI does.",
+      "acceptance": "Game Mode hides the window caption buttons and restores them on exit; library scan reuses cached renderer results for unchanged executables and uses fast byte searches, with tests; a correctly built installer (fresh bridge and Vulkan package) installs; BG3/RDR2 restore and Skynizz install reviews no longer refuse; PR merged as Lauren after CI.",
+      "next_action": "Branch off main 2057e72, collapse the title bar in Game Mode, cache renderer detection, run tests, build the bridge and Vulkan package and installer, install, PR, CI, merge.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "2057e72d16b14a4fb09c670323fc4eab3706681d",
+      "state": "active",
+      "created_at": "2026-10-25T00:34:39.771Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-24): fix Windows RC1 reports: (1) window caption buttons visible in Game Mode; (2) the library takes very long to load (scan 26s, ~17s re-reading game executables for renderer detection in compat_list.renderers and feeder_provider.graphics_apis); (3) install/restore error 'Vulkan package is missing from this build' came from a locally built installer missing the Vulkan payload and with a stale bridge, so rebuild the installer the way CI does.",
+          "acceptance": "Game Mode hides the window caption buttons and restores them on exit; library scan reuses cached renderer results for unchanged executables and uses fast byte searches, with tests; a correctly built installer (fresh bridge and Vulkan package) installs; BG3/RDR2 restore and Skynizz install reviews no longer refuse; PR merged as Lauren after CI.",
+          "at": "2026-10-25T00:34:39.771Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-rc1-fixes-20261024:acceptance:0",
+            "text": "Game Mode hides the window caption buttons and restores them on exit; library scan reuses cached renderer results for unchanged executables and uses fast byte searches, with tests; a correctly built installer (fresh bridge and Vulkan package) installs; BG3/RDR2 restore and Skynizz install reviews no longer refuse; PR merged as Lauren after CI.",
+            "at": "2026-10-25T00:34:39.771Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-25T00:34:39.771Z",
+      "lease_until": "2026-10-25T12:34:39.771Z"
     }
   ]
 }
