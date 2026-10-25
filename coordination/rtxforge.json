@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T02:27:00.757Z",
+  "updated_at": "2026-10-25T02:35:11.271Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16136,6 +16136,49 @@
       "evidence": "PR #71 merged into main as fe9c6e0 (Lauren, --no-ff) after all CI passed incl. WinUI x64/ARM64. Local Python suites, CI test list, WinUI build and Settings tests pass; installer 8108969 installed locally; Packages preview shows the Vulkan card as automatic with confirmed games.",
       "work_accounted": true,
       "completed_at": "2026-10-25T02:27:00.757Z"
+    },
+    {
+      "id": "rtxforge-unified-review-20261025",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/unified-review-20261025",
+      "paths": [
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+        "windows/RtxForge.Windows/Controls/OperationDialog.cs",
+        "windows/RtxForge.Windows/Controls/SupportedFeatureCard.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Operations.cs",
+        "windows/RtxForge.Windows/Models/Models.cs"
+      ],
+      "resources": [
+        "rtxforge-unified-review"
+      ],
+      "goal": "Lauren (2026-10-25): one unified, simplified install review. Games that get only part of the selection (e.g. NR only via Feeder) appear in the same review list with the same art/accent rows instead of a second screen; the checking screen counts all games together instead of per package; fix the mixed-package install error where a discarded review token stopped the run.",
+      "acceptance": "Mixed OptiScaler/Feeder/Vulkan installs complete without the missing-token error; review shows all games in one list with matching rows and a per-game feature badge; checking progress counts every selected game once across packages; desktop and Game Mode match; tests and both builds pass; installed locally; PR merged as Lauren after CI.",
+      "next_action": "Fix the token discard, merge supported rows into the review list in both UIs, aggregate checking progress, build, test, install, PR.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "fe9c6e07c1418c6b534bdcf6d814d342b256e3de",
+      "state": "active",
+      "created_at": "2026-10-25T02:35:11.271Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-25): one unified, simplified install review. Games that get only part of the selection (e.g. NR only via Feeder) appear in the same review list with the same art/accent rows instead of a second screen; the checking screen counts all games together instead of per package; fix the mixed-package install error where a discarded review token stopped the run.",
+          "acceptance": "Mixed OptiScaler/Feeder/Vulkan installs complete without the missing-token error; review shows all games in one list with matching rows and a per-game feature badge; checking progress counts every selected game once across packages; desktop and Game Mode match; tests and both builds pass; installed locally; PR merged as Lauren after CI.",
+          "at": "2026-10-25T02:35:11.271Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-unified-review-20261025:acceptance:0",
+            "text": "Mixed OptiScaler/Feeder/Vulkan installs complete without the missing-token error; review shows all games in one list with matching rows and a per-game feature badge; checking progress counts every selected game once across packages; desktop and Game Mode match; tests and both builds pass; installed locally; PR merged as Lauren after CI.",
+            "at": "2026-10-25T02:35:11.271Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-25T02:35:11.271Z",
+      "lease_until": "2026-10-25T14:35:11.271Z"
     }
   ]
 }
