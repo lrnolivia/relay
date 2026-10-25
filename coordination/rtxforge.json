@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:16:47.274Z",
+  "updated_at": "2026-10-25T05:18:11.498Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16459,8 +16459,8 @@
         "windows-game-mode-button-appearance"
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
-      "acceptance": "Right stick scrolls the library or details content rather than section navigation; bumpers cycle main tabs; Valve physical input selects Steam glyphs without Steam Input and hints persist for controller-originated mouse/keyboard; buttons retain readable fills/text across views. Build and focused behavioral checks pass; publish a reviewable change.",
-      "next_action": "Create an isolated current-main checkout; inspect current input and button-state code, implement and verify all four requested fixes.",
+      "acceptance": "Right stick scrolls the library or details main content rather than section navigation; bumpers cycle all five main tabs; Valve physical input selects Steam glyphs without Steam Input and hints persist for controller-originated mouse/keyboard; buttons retain readable fills/text across views. Row focus strokes sit on the actual row boundary and follow first/last row corners, as requested in the user's follow-up screenshot. Build and focused behavioral checks pass; publish a reviewable change.",
+      "next_action": "Verify row boundary stroke, button fills and all controller behavior in the foreground native preview; preserve source and publish reviewed PR.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16481,11 +16481,37 @@
             "id": "rtxforge-controller-navigation-20261025:acceptance:0",
             "text": "Right stick scrolls the library or details content rather than section navigation; bumpers cycle main tabs; Valve physical input selects Steam glyphs without Steam Input and hints persist for controller-originated mouse/keyboard; buttons retain readable fills/text across views. Build and focused behavioral checks pass; publish a reviewable change.",
             "at": "2026-10-25T05:13:41.496Z"
+          },
+          {
+            "id": "rtxforge-controller-navigation-20261025:acceptance:1",
+            "text": "Right stick scrolls the library or details main content rather than section navigation; bumpers cycle all five main tabs; Valve physical input selects Steam glyphs without Steam Input and hints persist for controller-originated mouse/keyboard; buttons retain readable fills/text across views. Row focus strokes sit on the actual row boundary and follow first/last row corners, as requested in the user's follow-up screenshot. Build and focused behavioral checks pass; publish a reviewable change.",
+            "at": "2026-10-25T05:18:11.498Z",
+            "reason": "User follow-up requests menu row focus strokes at the actual surface edge; GmUi.cs is already within admitted scope."
           }
         ]
       },
-      "updated_at": "2026-10-25T05:13:41.496Z",
-      "lease_until": "2026-10-25T17:13:41.496Z"
+      "updated_at": "2026-10-25T05:18:11.498Z",
+      "lease_until": "2026-10-25T17:18:11.498Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-25T05:18:11.498Z",
+          "by": "01a17179-1891-73e0-b1c3-cdd052ddbfe4",
+          "reason": "User follow-up requests menu row focus strokes at the actual surface edge; GmUi.cs is already within admitted scope.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Right stick scrolls the library or details content rather than section navigation; bumpers cycle main tabs; Valve physical input selects Steam glyphs without Steam Input and hints persist for controller-originated mouse/keyboard; buttons retain readable fills/text across views. Build and focused behavioral checks pass; publish a reviewable change.",
+            "next_action": "Create an isolated current-main checkout; inspect current input and button-state code, implement and verify all four requested fixes."
+          },
+          "after": {
+            "acceptance": "Right stick scrolls the library or details main content rather than section navigation; bumpers cycle all five main tabs; Valve physical input selects Steam glyphs without Steam Input and hints persist for controller-originated mouse/keyboard; buttons retain readable fills/text across views. Row focus strokes sit on the actual row boundary and follow first/last row corners, as requested in the user's follow-up screenshot. Build and focused behavioral checks pass; publish a reviewable change.",
+            "next_action": "Verify row boundary stroke, button fills and all controller behavior in the foreground native preview; preserve source and publish reviewed PR."
+          }
+        }
+      ]
     },
     {
       "id": "rtxforge-card-pagination-20261025",
