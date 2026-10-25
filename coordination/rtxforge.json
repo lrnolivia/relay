@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:23:58.924Z",
+  "updated_at": "2026-10-25T05:25:23.691Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16531,8 +16531,8 @@
         "windows-game-mode-opacity-setting"
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
-      "acceptance": "Right stick scrolls the library or details main content rather than section navigation; bumpers cycle all five main tabs; Valve physical input selects Steam glyphs without Steam Input and hints persist for controller-originated mouse/keyboard; buttons retain readable fills/text across views. Row focus strokes sit on the actual row boundary and follow first/last row corners. Artwork glow uses the scroll content's same gradient fade. All Game Mode solid card surfaces use subtle native frosted blur at 90% opacity, explicitly confirmed by the user. Build and focused behavioral checks pass; publish a reviewable change.",
-      "next_action": "Add persisted Appearance slider and derived navbar opacity, and replace compositor-owned selected fills with native button surfaces to fix the screenshot's dark ink regression.",
+      "acceptance": "Preserve and complete prior controller, row edge, shared artwork fade and frosted card acceptance. Appearance has a persisted live card-opacity slider defaulting to 90%, with navbar opacity always 15 percentage points lower. Selected controls retain native readable fills in Dark/Night throughout view/layout changes. Modal and other button glows are not clipped by layout-only scroll containers; the ellipsis main menu supports mouse interaction. Rename the install Checking phase to Preparing consistently and compare Game Mode with the current Desktop install flow. Build, focused tests and proportionate native checks pass; publish reviewable source.",
+      "next_action": "Implement live opacity settings and permanent native selection fills, reproduce mouse modal issue, compare install UI stages and rename phase consistently.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16565,12 +16565,18 @@
             "text": "Right stick scrolls the library or details main content rather than section navigation; bumpers cycle all five main tabs; Valve physical input selects Steam glyphs without Steam Input and hints persist for controller-originated mouse/keyboard; buttons retain readable fills/text across views. Row focus strokes sit on the actual row boundary and follow first/last row corners. Artwork glow uses the scroll content's same gradient fade. All Game Mode solid card surfaces use subtle native frosted blur at 90% opacity, explicitly confirmed by the user. Build and focused behavioral checks pass; publish a reviewable change.",
             "at": "2026-10-25T05:20:12.828Z",
             "reason": "User added two related Game Mode presentation fixes: fade artwork glow with scroll content and make cards 90% opacity with subtle blur; user explicitly chose 90% opacity in clarification. Both remain within claimed GameMode directory."
+          },
+          {
+            "id": "rtxforge-controller-navigation-20261025:acceptance:3",
+            "text": "Preserve and complete prior controller, row edge, shared artwork fade and frosted card acceptance. Appearance has a persisted live card-opacity slider defaulting to 90%, with navbar opacity always 15 percentage points lower. Selected controls retain native readable fills in Dark/Night throughout view/layout changes. Modal and other button glows are not clipped by layout-only scroll containers; the ellipsis main menu supports mouse interaction. Rename the install Checking phase to Preparing consistently and compare Game Mode with the current Desktop install flow. Build, focused tests and proportionate native checks pass; publish reviewable source.",
+            "at": "2026-10-25T05:25:23.691Z",
+            "reason": "User added slider/navbar opacity relationship, screenshot-proven missing selected fills, clipped button glow, mouse main-menu behavior, and install-phase label/parity review."
           }
         ]
       },
-      "updated_at": "2026-10-25T05:23:58.924Z",
-      "lease_until": "2026-10-25T17:23:58.924Z",
-      "amendment_count": 2,
+      "updated_at": "2026-10-25T05:25:23.691Z",
+      "lease_until": "2026-10-25T17:25:23.691Z",
+      "amendment_count": 3,
       "amendments": [
         {
           "at": "2026-10-25T05:18:11.498Z",
@@ -16604,6 +16610,23 @@
           "after": {
             "acceptance": "Right stick scrolls the library or details main content rather than section navigation; bumpers cycle all five main tabs; Valve physical input selects Steam glyphs without Steam Input and hints persist for controller-originated mouse/keyboard; buttons retain readable fills/text across views. Row focus strokes sit on the actual row boundary and follow first/last row corners. Artwork glow uses the scroll content's same gradient fade. All Game Mode solid card surfaces use subtle native frosted blur at 90% opacity, explicitly confirmed by the user. Build and focused behavioral checks pass; publish a reviewable change.",
             "next_action": "Complete native foreground verification of controller routing, row edges, shared glow fade and 90% acrylic card surfaces; publish exact tested source."
+          }
+        },
+        {
+          "at": "2026-10-25T05:25:23.691Z",
+          "by": "01a17179-1891-73e0-b1c3-cdd052ddbfe4",
+          "reason": "User added slider/navbar opacity relationship, screenshot-proven missing selected fills, clipped button glow, mouse main-menu behavior, and install-phase label/parity review.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Right stick scrolls the library or details main content rather than section navigation; bumpers cycle all five main tabs; Valve physical input selects Steam glyphs without Steam Input and hints persist for controller-originated mouse/keyboard; buttons retain readable fills/text across views. Row focus strokes sit on the actual row boundary and follow first/last row corners. Artwork glow uses the scroll content's same gradient fade. All Game Mode solid card surfaces use subtle native frosted blur at 90% opacity, explicitly confirmed by the user. Build and focused behavioral checks pass; publish a reviewable change.",
+            "next_action": "Add persisted Appearance slider and derived navbar opacity, and replace compositor-owned selected fills with native button surfaces to fix the screenshot's dark ink regression."
+          },
+          "after": {
+            "acceptance": "Preserve and complete prior controller, row edge, shared artwork fade and frosted card acceptance. Appearance has a persisted live card-opacity slider defaulting to 90%, with navbar opacity always 15 percentage points lower. Selected controls retain native readable fills in Dark/Night throughout view/layout changes. Modal and other button glows are not clipped by layout-only scroll containers; the ellipsis main menu supports mouse interaction. Rename the install Checking phase to Preparing consistently and compare Game Mode with the current Desktop install flow. Build, focused tests and proportionate native checks pass; publish reviewable source.",
+            "next_action": "Implement live opacity settings and permanent native selection fills, reproduce mouse modal issue, compare install UI stages and rename phase consistently."
           }
         }
       ]
