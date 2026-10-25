@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:16:08.612Z",
+  "updated_at": "2026-10-25T05:16:47.274Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16486,6 +16486,45 @@
       },
       "updated_at": "2026-10-25T05:13:41.496Z",
       "lease_until": "2026-10-25T17:13:41.496Z"
+    },
+    {
+      "id": "rtxforge-card-pagination-20261025",
+      "owner": "01a15ad4-0fe2-7230-a024-20a4a4dba118",
+      "branch": "rtxforge/card-pagination-20261025",
+      "paths": [
+        "website/"
+      ],
+      "resources": [
+        "rtxforge-landing-layout",
+        "rtxforge-landing-worker"
+      ],
+      "goal": "Replace installation strip with auto-looping carousel and add pagination to both Install and Game Mode cards.",
+      "acceptance": "Install card shows one tightly framed Review/Installing/Done image at a time with automatic looping and pagination only; no visible labels/arrows/play controls. Game Mode retains slow fades and gets pagination. Dots support manual and keyboard navigation. Preserve theme/OS correctness, image links, hover/focus/offscreen/hidden suspension and reduced motion. Check responsive behavior, run checks and publish.",
+      "next_action": "Implement shared scoped image rotation behavior and verify both card loops and pagination before publishing.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "64c65809a76ca6776829dcf9f28a87981fe519ee",
+      "state": "active",
+      "created_at": "2026-10-25T05:16:47.274Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Replace installation strip with auto-looping carousel and add pagination to both Install and Game Mode cards.",
+          "acceptance": "Install card shows one tightly framed Review/Installing/Done image at a time with automatic looping and pagination only; no visible labels/arrows/play controls. Game Mode retains slow fades and gets pagination. Dots support manual and keyboard navigation. Preserve theme/OS correctness, image links, hover/focus/offscreen/hidden suspension and reduced motion. Check responsive behavior, run checks and publish.",
+          "at": "2026-10-25T05:16:47.274Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-card-pagination-20261025:acceptance:0",
+            "text": "Install card shows one tightly framed Review/Installing/Done image at a time with automatic looping and pagination only; no visible labels/arrows/play controls. Game Mode retains slow fades and gets pagination. Dots support manual and keyboard navigation. Preserve theme/OS correctness, image links, hover/focus/offscreen/hidden suspension and reduced motion. Check responsive behavior, run checks and publish.",
+            "at": "2026-10-25T05:16:47.274Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-25T05:16:47.274Z",
+      "lease_until": "2026-10-25T17:16:47.274Z"
     }
   ]
 }
