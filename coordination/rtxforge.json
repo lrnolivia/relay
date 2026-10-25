@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T02:42:43.245Z",
+  "updated_at": "2026-10-25T02:50:19.901Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16148,14 +16148,16 @@
         "windows/RtxForge.Windows/GameMode/GameModeView.Operations.cs",
         "windows/RtxForge.Windows/Models/Models.cs",
         "windows/RtxForge.Windows/Services/ForgeService.cs",
-        "windows/RtxForge.Windows/MainWindow.xaml.cs"
+        "windows/RtxForge.Windows/MainWindow.xaml.cs",
+        "scripts/feeder_provider.py",
+        "tests/test_feeder_provider.py"
       ],
       "resources": [
         "rtxforge-unified-review"
       ],
       "goal": "Lauren (2026-10-25): one unified, simplified install review. Games that get only part of the selection (e.g. NR only via Feeder) appear in the same review list with the same art/accent rows instead of a second screen; the checking screen counts all games together instead of per package; fix the mixed-package install error where a discarded review token stopped the run.",
       "acceptance": "Mixed OptiScaler/Feeder/Vulkan installs complete without the missing-token error; review shows all games in one list with matching rows and a per-game feature badge; checking progress counts every selected game once across packages; desktop and Game Mode match; tests and both builds pass; installed locally; PR merged as Lauren after CI.",
-      "next_action": "Lauren: fold Adoption into group installs (one review and run instead of a separate Adoption first). Add to PR #72, rerun CI, merge as Lauren.",
+      "next_action": "Lauren asked for faster review/check: Feeder review session cache (29s to 11.7s for 14 games measured). Add to PR #72, rerun CI, merge as Lauren.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16179,8 +16181,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-25T02:42:43.245Z",
-      "lease_until": "2026-10-25T14:42:43.245Z"
+      "updated_at": "2026-10-25T02:50:19.901Z",
+      "lease_until": "2026-10-25T14:50:19.901Z"
     }
   ]
 }
