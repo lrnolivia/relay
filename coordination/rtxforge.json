@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T01:57:16.966Z",
+  "updated_at": "2026-10-25T02:12:54.719Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16092,6 +16092,7 @@
         "windows/RtxForge.Windows/Models/Models.cs",
         "windows/RtxForge.Windows/Services/EngineForgeService.cs",
         "windows/RtxForge.Windows/Services/EngineForgeService.Features.cs",
+        "windows/RtxForge.Windows/Services/ForgeService.cs",
         "windows/RtxForge.Windows/Views/PackagesPage.cs",
         "windows/RtxForge.Windows/GameMode/GameModeView.Tools.cs",
         "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
@@ -16103,7 +16104,7 @@
       ],
       "goal": "Lauren (2026-10-25): Vulkan NR + Universal MFG works like Feeder NR: used automatically for the profiled Vulkan games alongside the chosen OptiScaler package, on by default (no Universal Experimental Vulkan opt-in), and the confirmed games (BG3, RDR2) shown from the package's profiles rather than in its description.",
       "acceptance": "Scan routes profiled Vulkan games to the Vulkan package whenever it is bundled, whatever DLSS package is selected; install/restore of those games uses the Vulkan route without an opt-in; Packages shows the Vulkan card beside Feeder as used automatically with confirmed games listed from its profiles; the opt-in toggles are gone; tests pass; build installed; PR merged as Lauren after CI.",
-      "next_action": "Branch off main 3d1f82a, make vulkan_app.decorate route automatically, drop the opt-in gate, list confirmed games in the catalog, move the card to the automatic group in both UIs, remove the toggles, test, build, install, PR.",
+      "next_action": "Preflight, push, open the PR, wait for CI, merge locally as Lauren. ForgeService.cs added for the preview catalog's Vulkan card.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16127,8 +16128,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-25T01:57:16.966Z",
-      "lease_until": "2026-10-25T13:57:16.966Z"
+      "updated_at": "2026-10-25T02:12:54.719Z",
+      "lease_until": "2026-10-25T14:12:54.719Z"
     }
   ]
 }
