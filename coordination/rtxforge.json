@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:20:12.828Z",
+  "updated_at": "2026-10-25T05:22:31.564Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16547,9 +16547,9 @@
         "rtxforge-landing-layout",
         "rtxforge-landing-worker"
       ],
-      "goal": "Replace installation strip with auto-looping carousel and add pagination to both Install and Game Mode cards.",
-      "acceptance": "Install card shows one tightly framed Review/Installing/Done image at a time with automatic looping and pagination only; no visible labels/arrows/play controls. Game Mode retains slow fades and gets pagination. Dots support manual and keyboard navigation. Preserve theme/OS correctness, image links, hover/focus/offscreen/hidden suspension and reduced motion. Check responsive behavior, run checks and publish.",
-      "next_action": "Implement shared scoped image rotation behavior and verify both card loops and pagination before publishing.",
+      "goal": "Add auto-looping card pagination and make loew.fi/rtxforge/ the primary website URL with the subdomain retained as a redirect.",
+      "acceptance": "Preserve card pagination objective and checks: auto-loop Install and Game Mode, dots only, no labels, slow fades, OS/theme correctness and reduced-motion. Also serve the complete site at loew.fi/rtxforge/ with working assets/install guide/downloads, updated canonical/share URLs, and old subdomain redirect preserving path/query. Limit Cloudflare routing to the rtxforge path and preserve loew.fi home/other paths. Verify redirects and primary rendered desktop/mobile themes, required source checks and production before completion.",
+      "next_action": "Inspect existing loew.fi routes, implement bounded prefix routing and canonical migration on this branch, then verify and publish the combined update.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -16569,11 +16569,40 @@
             "id": "rtxforge-card-pagination-20261025:acceptance:0",
             "text": "Install card shows one tightly framed Review/Installing/Done image at a time with automatic looping and pagination only; no visible labels/arrows/play controls. Game Mode retains slow fades and gets pagination. Dots support manual and keyboard navigation. Preserve theme/OS correctness, image links, hover/focus/offscreen/hidden suspension and reduced motion. Check responsive behavior, run checks and publish.",
             "at": "2026-10-25T05:16:47.274Z"
+          },
+          {
+            "id": "rtxforge-card-pagination-20261025:acceptance:1",
+            "text": "Preserve card pagination objective and checks: auto-loop Install and Game Mode, dots only, no labels, slow fades, OS/theme correctness and reduced-motion. Also serve the complete site at loew.fi/rtxforge/ with working assets/install guide/downloads, updated canonical/share URLs, and old subdomain redirect preserving path/query. Limit Cloudflare routing to the rtxforge path and preserve loew.fi home/other paths. Verify redirects and primary rendered desktop/mobile themes, required source checks and production before completion.",
+            "at": "2026-10-25T05:22:31.564Z",
+            "reason": "Lauren added an explicit primary URL move to loew.fi/rtxforge while card pagination is in progress."
           }
         ]
       },
-      "updated_at": "2026-10-25T05:16:47.274Z",
-      "lease_until": "2026-10-25T17:16:47.274Z"
+      "updated_at": "2026-10-25T05:22:31.564Z",
+      "lease_until": "2026-10-25T17:22:31.564Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-25T05:22:31.564Z",
+          "by": "01a15ad4-0fe2-7230-a024-20a4a4dba118",
+          "reason": "Lauren added an explicit primary URL move to loew.fi/rtxforge while card pagination is in progress.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Replace installation strip with auto-looping carousel and add pagination to both Install and Game Mode cards.",
+            "acceptance": "Install card shows one tightly framed Review/Installing/Done image at a time with automatic looping and pagination only; no visible labels/arrows/play controls. Game Mode retains slow fades and gets pagination. Dots support manual and keyboard navigation. Preserve theme/OS correctness, image links, hover/focus/offscreen/hidden suspension and reduced motion. Check responsive behavior, run checks and publish.",
+            "next_action": "Implement shared scoped image rotation behavior and verify both card loops and pagination before publishing."
+          },
+          "after": {
+            "goal": "Add auto-looping card pagination and make loew.fi/rtxforge/ the primary website URL with the subdomain retained as a redirect.",
+            "acceptance": "Preserve card pagination objective and checks: auto-loop Install and Game Mode, dots only, no labels, slow fades, OS/theme correctness and reduced-motion. Also serve the complete site at loew.fi/rtxforge/ with working assets/install guide/downloads, updated canonical/share URLs, and old subdomain redirect preserving path/query. Limit Cloudflare routing to the rtxforge path and preserve loew.fi home/other paths. Verify redirects and primary rendered desktop/mobile themes, required source checks and production before completion.",
+            "next_action": "Inspect existing loew.fi routes, implement bounded prefix routing and canonical migration on this branch, then verify and publish the combined update."
+          }
+        }
+      ]
     }
   ]
 }
