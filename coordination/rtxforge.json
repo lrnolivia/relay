@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:25:23.691Z",
+  "updated_at": "2026-10-25T05:26:34.628Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16523,16 +16523,18 @@
         "windows/RtxForge.Windows/Themes/GameMode.xaml",
         "windows/RtxForge.Windows/Models/Models.cs",
         "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+        "windows/RtxForge.Windows/Controls/OperationDialog.cs",
         "windows/tests/"
       ],
       "resources": [
         "windows-game-mode-input",
         "windows-game-mode-button-appearance",
-        "windows-game-mode-opacity-setting"
+        "windows-game-mode-opacity-setting",
+        "windows-install-phase-labels"
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
       "acceptance": "Preserve and complete prior controller, row edge, shared artwork fade and frosted card acceptance. Appearance has a persisted live card-opacity slider defaulting to 90%, with navbar opacity always 15 percentage points lower. Selected controls retain native readable fills in Dark/Night throughout view/layout changes. Modal and other button glows are not clipped by layout-only scroll containers; the ellipsis main menu supports mouse interaction. Rename the install Checking phase to Preparing consistently and compare Game Mode with the current Desktop install flow. Build, focused tests and proportionate native checks pass; publish reviewable source.",
-      "next_action": "Implement live opacity settings and permanent native selection fills, reproduce mouse modal issue, compare install UI stages and rename phase consistently.",
+      "next_action": "Rename preparation stage in Desktop and Game Mode together; verify shared preparation/review/execute semantics while finishing opacity, native fills and modal pointer/glow checks.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16574,8 +16576,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-25T05:25:23.691Z",
-      "lease_until": "2026-10-25T17:25:23.691Z",
+      "updated_at": "2026-10-25T05:26:34.628Z",
+      "lease_until": "2026-10-25T17:26:34.628Z",
       "amendment_count": 3,
       "amendments": [
         {
