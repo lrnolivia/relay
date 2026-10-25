@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:32:42.800Z",
+  "updated_at": "2026-10-25T05:33:36.836Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16464,7 +16464,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "64c65809a76ca6776829dcf9f28a87981fe519ee",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-25T05:16:47.274Z",
       "objective_history": {
         "baseline": {
@@ -16487,8 +16487,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-25T05:23:11.054Z",
-      "lease_until": "2026-10-25T17:23:11.054Z",
+      "updated_at": "2026-10-25T05:33:36.836Z",
+      "lease_until": "2026-10-25T17:33:36.836Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -16511,7 +16511,13 @@
             "next_action": "Inspect existing loew.fi routes, implement bounded prefix routing and canonical migration on this branch, then verify and publish the combined update."
           }
         }
-      ]
+      ],
+      "pr": 78,
+      "merged_head_sha": "17c894efd413b6b547308f36160430da88d5ae89",
+      "merge_commit_sha": "fcdcc851dd745a53de85387aa192940c23ac8da0",
+      "evidence": "PR78 merged fcdcc851dd745a53de85387aa192940c23ac8da0 from reviewed17c894efd413b6b547308f36160430da88d5ae89. Required checks pass; website10 release/routing tests, syntax,dryrun pass. Local and production8 OS/theme/viewport cells pass: images,manual/keyboardpagination,fullhero,Overlay,no labels/overflow. Actual timed local+production full loops for both cards and1600ms fades pass; reduced-motion pause andOS/themeupdates pass. Primary https://loew.fi/rtxforge/200; oldsubdomain root/guide/assets301preservepathquery; bareprimarywithOSquery301works; guide/backnavigation/canonicalURLschecked. loew.fi homecontentunchanged exceptCloudflare perrequestchallengeids; similarprefixdelegatesorigin404. Worker8d99f0bc-4551-44e2-9197-c58016788e7f100%;deploymentdab4e1b4-d1f1-4f50-82a7-6b511ba3d735. Newroute69cf3d419a764957b6f4eaad9e34ce57 loew.fi/rtxforge*->rtxforge, existingrelayrouteunchanged. RollbackrestorepriorWorker3b67c297-de60-45f6-940d-cbec3b07a3c6 andremoveonlynewpathroute. Evidence /Users/lrnolivia/.codex/visualizations/2026/10/20/01a15ad4-0fe2-7230-a024-20a4a4dba118/card-pagination-primary-url-20261025/.",
+      "work_accounted": true,
+      "completed_at": "2026-10-25T05:33:36.836Z"
     },
     {
       "id": "rtxforge-controller-navigation-20261025",
