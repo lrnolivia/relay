@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T03:24:38.770Z",
+  "updated_at": "2026-10-25T03:57:50.941Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16189,6 +16189,48 @@
       "evidence": "PR #72 merged into main as 8b19a81 (Lauren, --no-ff) after all CI passed at 84ef30d incl. WinUI x64/ARM64. Unified one-screen check+review (desktop previewed; Game Mode built), missing-token mixed-install fix, alphabetical order, adoption folded into group installs, Feeder review session cache (29s to 11.7s on a real 14-game review). Local install pending: app was open.",
       "work_accounted": true,
       "completed_at": "2026-10-25T03:24:38.770Z"
+    },
+    {
+      "id": "rtxforge-alphabetical-check-20261025",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/alphabetical-check-20261025",
+      "paths": [
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+        "scripts/feeder_provider.py",
+        "scripts/engine_bridge.py",
+        "tests/test_feeder_provider.py"
+      ],
+      "resources": [
+        "rtxforge-alphabetical-check"
+      ],
+      "goal": "Lauren (2026-10-25): checking should not follow engine/package order; check every game alphabetically as listed, across OptiScaler/Feeder/Vulkan, without making checking slower.",
+      "acceptance": "Multi-game reviews prepare one game at a time in name order with each game's own route, so checking and installing both run alphabetically; per-game checking costs no more than batching (shared Feeder hashes/inventory across reviews, engine module compiled once per process); tests and both builds pass; installed locally; PR merged as Lauren after CI.",
+      "next_action": "Per-game prepare in name order in EngineForgeService, commit the measured engine speedups (one-by-one 6.5s vs batch 6.1s for 8 Feeder games), test, PR, CI, merge, install.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "8b19a815fa25f9d384492dad4edbd39191399588",
+      "state": "active",
+      "created_at": "2026-10-25T03:57:50.941Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-25): checking should not follow engine/package order; check every game alphabetically as listed, across OptiScaler/Feeder/Vulkan, without making checking slower.",
+          "acceptance": "Multi-game reviews prepare one game at a time in name order with each game's own route, so checking and installing both run alphabetically; per-game checking costs no more than batching (shared Feeder hashes/inventory across reviews, engine module compiled once per process); tests and both builds pass; installed locally; PR merged as Lauren after CI.",
+          "at": "2026-10-25T03:57:50.941Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-alphabetical-check-20261025:acceptance:0",
+            "text": "Multi-game reviews prepare one game at a time in name order with each game's own route, so checking and installing both run alphabetically; per-game checking costs no more than batching (shared Feeder hashes/inventory across reviews, engine module compiled once per process); tests and both builds pass; installed locally; PR merged as Lauren after CI.",
+            "at": "2026-10-25T03:57:50.941Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-25T03:57:50.941Z",
+      "lease_until": "2026-10-25T15:57:50.941Z"
     }
   ]
 }
