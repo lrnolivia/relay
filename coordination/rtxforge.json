@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:44:54.059Z",
+  "updated_at": "2026-10-25T05:45:53.492Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16542,8 +16542,8 @@
         "windows-install-preparation-routing"
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
-      "acceptance": "Complete all prior controller, opacity, selected-fill, row-edge, artwork/button-glow, mouse-menu and installation-flow acceptance. Default opacity is 15%; UI shows Card translucency, Clearer/More solid endpoints and no visible percentages or thumb numeric tooltip; navbar remains 15 percentage points lower; sidebar highlights share the material and adapt contrast. Remove Posters/Wide Capsule/List checkmarks. Both interfaces use dedicated Preparing progress then static game/package/features review. Batch shared preparation routes while preserving tokens, scope and order. Replace upward page float with fast directional horizontal navigation slides and brief motion blur; cohesive top-down entrance/cascading library reveals only when entering Game Mode, with appropriate exit and reduced-motion behavior. Validate and publish exact reviewable source.",
-      "next_action": "Combined candidate builds with zero warnings/errors; controller31, motion6322, scope/order, opacity persistence, review-copy7 and comprehensive Skynizz lifecycle fixture pass. Six menu buttons pass native hit testing. Full interactive native smoke cannot start while preview is background; preserve this harness limitation separately from product acceptance, publish reviewable source and exact local candidate.",
+      "acceptance": "Retain all prior requested controls, presentation and install acceptance. Latest surface correction: acrylic material remains fully opaque as a material; only tint strength varies. Default tint is five points softer than earlier 15 (10), and current saved tint reduced five points; navbar tint is 15 points lower clamped at zero. No visible numeric percentages or navigation-opacity note. Sidebar highlights share acrylic with contrast adjustment. Navigation slides are now 340ms incoming/280ms outgoing with a more visible transient blur; entrance cascades use280ms reveals and40ms staggering, with no repeated full entrance on navigation. Review actual newly rebuilt preview, not the old still-open process. Native physical menu clicking and final acrylic appearance remain unverified; do not mark those passed from a build alone.",
+      "next_action": "Replace old preview35984 with corrected candidate, verify actual acrylic output and updated motion, run final regressions, and publish exact source as a reviewable draft.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16594,12 +16594,18 @@
             "text": "Complete all prior controller, opacity, selected-fill, row-edge, artwork/button-glow, mouse-menu and installation-flow acceptance. Default opacity is 15%; UI shows Card translucency, Clearer/More solid endpoints and no visible percentages or thumb numeric tooltip; navbar remains 15 percentage points lower; sidebar highlights share the material and adapt contrast. Remove Posters/Wide Capsule/List checkmarks. Both interfaces use dedicated Preparing progress then static game/package/features review. Batch shared preparation routes while preserving tokens, scope and order. Replace upward page float with fast directional horizontal navigation slides and brief motion blur; cohesive top-down entrance/cascading library reveals only when entering Game Mode, with appropriate exit and reduced-motion behavior. Validate and publish exact reviewable source.",
             "at": "2026-10-25T05:36:26.699Z",
             "reason": "User added fast horizontal nav/panel transitions with motion blur, one-time coordinated Game Mode entrance/cascading cards and exit; also removed library layout ticks and visible opacity numbers."
+          },
+          {
+            "id": "rtxforge-controller-navigation-20261025:acceptance:6",
+            "text": "Retain all prior requested controls, presentation and install acceptance. Latest surface correction: acrylic material remains fully opaque as a material; only tint strength varies. Default tint is five points softer than earlier 15 (10), and current saved tint reduced five points; navbar tint is 15 points lower clamped at zero. No visible numeric percentages or navigation-opacity note. Sidebar highlights share acrylic with contrast adjustment. Navigation slides are now 340ms incoming/280ms outgoing with a more visible transient blur; entrance cascades use280ms reveals and40ms staggering, with no repeated full entrance on navigation. Review actual newly rebuilt preview, not the old still-open process. Native physical menu clicking and final acrylic appearance remain unverified; do not mark those passed from a build alone.",
+            "at": "2026-10-25T05:45:53.492Z",
+            "reason": "User reported lost blur/excess transparency; corrected whole-material-opacity mistake by restoring AcrylicBrush.Opacity=1 and varying only TintOpacity. User then requested five points softer, removal of the navigation note, slower visible slides/blur, and reported that stale preview still looked wrong."
           }
         ]
       },
-      "updated_at": "2026-10-25T05:42:10.855Z",
-      "lease_until": "2026-10-25T17:42:10.855Z",
-      "amendment_count": 5,
+      "updated_at": "2026-10-25T05:45:53.492Z",
+      "lease_until": "2026-10-25T17:45:53.492Z",
+      "amendment_count": 6,
       "amendments": [
         {
           "at": "2026-10-25T05:18:11.498Z",
@@ -16684,6 +16690,23 @@
           "after": {
             "acceptance": "Complete all prior controller, opacity, selected-fill, row-edge, artwork/button-glow, mouse-menu and installation-flow acceptance. Default opacity is 15%; UI shows Card translucency, Clearer/More solid endpoints and no visible percentages or thumb numeric tooltip; navbar remains 15 percentage points lower; sidebar highlights share the material and adapt contrast. Remove Posters/Wide Capsule/List checkmarks. Both interfaces use dedicated Preparing progress then static game/package/features review. Batch shared preparation routes while preserving tokens, scope and order. Replace upward page float with fast directional horizontal navigation slides and brief motion blur; cohesive top-down entrance/cascading library reveals only when entering Game Mode, with appropriate exit and reduced-motion behavior. Validate and publish exact reviewable source.",
             "next_action": "Implement finite directional transitions and one-time entrance with timely animation cleanup; finish native pointer and contrast checks, then source publication."
+          }
+        },
+        {
+          "at": "2026-10-25T05:45:53.492Z",
+          "by": "01a17179-1891-73e0-b1c3-cdd052ddbfe4",
+          "reason": "User reported lost blur/excess transparency; corrected whole-material-opacity mistake by restoring AcrylicBrush.Opacity=1 and varying only TintOpacity. User then requested five points softer, removal of the navigation note, slower visible slides/blur, and reported that stale preview still looked wrong.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Complete all prior controller, opacity, selected-fill, row-edge, artwork/button-glow, mouse-menu and installation-flow acceptance. Default opacity is 15%; UI shows Card translucency, Clearer/More solid endpoints and no visible percentages or thumb numeric tooltip; navbar remains 15 percentage points lower; sidebar highlights share the material and adapt contrast. Remove Posters/Wide Capsule/List checkmarks. Both interfaces use dedicated Preparing progress then static game/package/features review. Batch shared preparation routes while preserving tokens, scope and order. Replace upward page float with fast directional horizontal navigation slides and brief motion blur; cohesive top-down entrance/cascading library reveals only when entering Game Mode, with appropriate exit and reduced-motion behavior. Validate and publish exact reviewable source.",
+            "next_action": "Combined candidate builds with zero warnings/errors; controller31, motion6322, scope/order, opacity persistence, review-copy7 and comprehensive Skynizz lifecycle fixture pass. Six menu buttons pass native hit testing. Full interactive native smoke cannot start while preview is background; preserve this harness limitation separately from product acceptance, publish reviewable source and exact local candidate."
+          },
+          "after": {
+            "acceptance": "Retain all prior requested controls, presentation and install acceptance. Latest surface correction: acrylic material remains fully opaque as a material; only tint strength varies. Default tint is five points softer than earlier 15 (10), and current saved tint reduced five points; navbar tint is 15 points lower clamped at zero. No visible numeric percentages or navigation-opacity note. Sidebar highlights share acrylic with contrast adjustment. Navigation slides are now 340ms incoming/280ms outgoing with a more visible transient blur; entrance cascades use280ms reveals and40ms staggering, with no repeated full entrance on navigation. Review actual newly rebuilt preview, not the old still-open process. Native physical menu clicking and final acrylic appearance remain unverified; do not mark those passed from a build alone.",
+            "next_action": "Replace old preview35984 with corrected candidate, verify actual acrylic output and updated motion, run final regressions, and publish exact source as a reviewable draft."
           }
         }
       ]
