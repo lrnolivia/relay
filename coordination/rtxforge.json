@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T02:35:11.271Z",
+  "updated_at": "2026-10-25T02:40:06.669Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16146,14 +16146,15 @@
         "windows/RtxForge.Windows/Controls/OperationDialog.cs",
         "windows/RtxForge.Windows/Controls/SupportedFeatureCard.cs",
         "windows/RtxForge.Windows/GameMode/GameModeView.Operations.cs",
-        "windows/RtxForge.Windows/Models/Models.cs"
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/Services/ForgeService.cs"
       ],
       "resources": [
         "rtxforge-unified-review"
       ],
       "goal": "Lauren (2026-10-25): one unified, simplified install review. Games that get only part of the selection (e.g. NR only via Feeder) appear in the same review list with the same art/accent rows instead of a second screen; the checking screen counts all games together instead of per package; fix the mixed-package install error where a discarded review token stopped the run.",
       "acceptance": "Mixed OptiScaler/Feeder/Vulkan installs complete without the missing-token error; review shows all games in one list with matching rows and a per-game feature badge; checking progress counts every selected game once across packages; desktop and Game Mode match; tests and both builds pass; installed locally; PR merged as Lauren after CI.",
-      "next_action": "Fix the token discard, merge supported rows into the review list in both UIs, aggregate checking progress, build, test, install, PR.",
+      "next_action": "Preflight, open the PR, wait for CI, merge locally as Lauren. ForgeService.cs added for the preview's mixed-install sample.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16177,8 +16178,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-25T02:35:11.271Z",
-      "lease_until": "2026-10-25T14:35:11.271Z"
+      "updated_at": "2026-10-25T02:40:06.669Z",
+      "lease_until": "2026-10-25T14:40:06.669Z"
     }
   ]
 }
