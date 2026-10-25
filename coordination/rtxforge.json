@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T05:33:36.836Z",
+  "updated_at": "2026-10-25T05:36:26.699Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16542,8 +16542,8 @@
         "windows-install-preparation-routing"
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
-      "acceptance": "Complete prior controller navigation/glyph, row edge, shared glow fade, native selected-fill, mouse-menu and unclipped button-glow criteria. Persisted Appearance opacity slider defaults to 15% (latest explicit user direction); navbar stays 15 percentage points lower. Sidebar highlight surfaces use the same frosted effect with readable contrast. Both install interfaces have a dedicated Preparing progress view followed by a static review listing games, game engines and planned features, then install progress and Done. Investigate preparation/install slowness with measurements and make bounded safe improvements; preserve exact reviewed writes, cancellation/restore and provider routing. Build, focused tests and native verification; publish reviewable source.",
-      "next_action": "Batch consecutive games sharing a preparation route without changing route, review tokens, game order or safe writes; preserve engine progress phases. Restore dedicated preparation view and static review, use 15% default and frosted highlights.",
+      "acceptance": "Complete all prior controller, opacity, selected-fill, row-edge, artwork/button-glow, mouse-menu and installation-flow acceptance. Default opacity is 15%; UI shows Card translucency, Clearer/More solid endpoints and no visible percentages or thumb numeric tooltip; navbar remains 15 percentage points lower; sidebar highlights share the material and adapt contrast. Remove Posters/Wide Capsule/List checkmarks. Both interfaces use dedicated Preparing progress then static game/package/features review. Batch shared preparation routes while preserving tokens, scope and order. Replace upward page float with fast directional horizontal navigation slides and brief motion blur; cohesive top-down entrance/cascading library reveals only when entering Game Mode, with appropriate exit and reduced-motion behavior. Validate and publish exact reviewable source.",
+      "next_action": "Implement finite directional transitions and one-time entrance with timely animation cleanup; finish native pointer and contrast checks, then source publication.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16588,12 +16588,18 @@
             "text": "Complete prior controller navigation/glyph, row edge, shared glow fade, native selected-fill, mouse-menu and unclipped button-glow criteria. Persisted Appearance opacity slider defaults to 15% (latest explicit user direction); navbar stays 15 percentage points lower. Sidebar highlight surfaces use the same frosted effect with readable contrast. Both install interfaces have a dedicated Preparing progress view followed by a static review listing games, game engines and planned features, then install progress and Done. Investigate preparation/install slowness with measurements and make bounded safe improvements; preserve exact reviewed writes, cancellation/restore and provider routing. Build, focused tests and native verification; publish reviewable source.",
             "at": "2026-10-25T05:31:05.900Z",
             "reason": "Latest user direction replaces the 90% default with 15%, applies opacity to sidebar highlights, requests dedicated preparation progress/static review with engines and features, and asks to address install slowness."
+          },
+          {
+            "id": "rtxforge-controller-navigation-20261025:acceptance:5",
+            "text": "Complete all prior controller, opacity, selected-fill, row-edge, artwork/button-glow, mouse-menu and installation-flow acceptance. Default opacity is 15%; UI shows Card translucency, Clearer/More solid endpoints and no visible percentages or thumb numeric tooltip; navbar remains 15 percentage points lower; sidebar highlights share the material and adapt contrast. Remove Posters/Wide Capsule/List checkmarks. Both interfaces use dedicated Preparing progress then static game/package/features review. Batch shared preparation routes while preserving tokens, scope and order. Replace upward page float with fast directional horizontal navigation slides and brief motion blur; cohesive top-down entrance/cascading library reveals only when entering Game Mode, with appropriate exit and reduced-motion behavior. Validate and publish exact reviewable source.",
+            "at": "2026-10-25T05:36:26.699Z",
+            "reason": "User added fast horizontal nav/panel transitions with motion blur, one-time coordinated Game Mode entrance/cascading cards and exit; also removed library layout ticks and visible opacity numbers."
           }
         ]
       },
-      "updated_at": "2026-10-25T05:32:42.800Z",
-      "lease_until": "2026-10-25T17:32:42.800Z",
-      "amendment_count": 4,
+      "updated_at": "2026-10-25T05:36:26.699Z",
+      "lease_until": "2026-10-25T17:36:26.699Z",
+      "amendment_count": 5,
       "amendments": [
         {
           "at": "2026-10-25T05:18:11.498Z",
@@ -16661,6 +16667,23 @@
           "after": {
             "acceptance": "Complete prior controller navigation/glyph, row edge, shared glow fade, native selected-fill, mouse-menu and unclipped button-glow criteria. Persisted Appearance opacity slider defaults to 15% (latest explicit user direction); navbar stays 15 percentage points lower. Sidebar highlight surfaces use the same frosted effect with readable contrast. Both install interfaces have a dedicated Preparing progress view followed by a static review listing games, game engines and planned features, then install progress and Done. Investigate preparation/install slowness with measurements and make bounded safe improvements; preserve exact reviewed writes, cancellation/restore and provider routing. Build, focused tests and native verification; publish reviewable source.",
             "next_action": "Measure preparation bottlenecks, restore preparation progress in both interfaces, use 15% default and frosted readable highlights, and finish native pointer routing diagnosis."
+          }
+        },
+        {
+          "at": "2026-10-25T05:36:26.699Z",
+          "by": "01a17179-1891-73e0-b1c3-cdd052ddbfe4",
+          "reason": "User added fast horizontal nav/panel transitions with motion blur, one-time coordinated Game Mode entrance/cascading cards and exit; also removed library layout ticks and visible opacity numbers.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Complete prior controller navigation/glyph, row edge, shared glow fade, native selected-fill, mouse-menu and unclipped button-glow criteria. Persisted Appearance opacity slider defaults to 15% (latest explicit user direction); navbar stays 15 percentage points lower. Sidebar highlight surfaces use the same frosted effect with readable contrast. Both install interfaces have a dedicated Preparing progress view followed by a static review listing games, game engines and planned features, then install progress and Done. Investigate preparation/install slowness with measurements and make bounded safe improvements; preserve exact reviewed writes, cancellation/restore and provider routing. Build, focused tests and native verification; publish reviewable source.",
+            "next_action": "Batch consecutive games sharing a preparation route without changing route, review tokens, game order or safe writes; preserve engine progress phases. Restore dedicated preparation view and static review, use 15% default and frosted highlights."
+          },
+          "after": {
+            "acceptance": "Complete all prior controller, opacity, selected-fill, row-edge, artwork/button-glow, mouse-menu and installation-flow acceptance. Default opacity is 15%; UI shows Card translucency, Clearer/More solid endpoints and no visible percentages or thumb numeric tooltip; navbar remains 15 percentage points lower; sidebar highlights share the material and adapt contrast. Remove Posters/Wide Capsule/List checkmarks. Both interfaces use dedicated Preparing progress then static game/package/features review. Batch shared preparation routes while preserving tokens, scope and order. Replace upward page float with fast directional horizontal navigation slides and brief motion blur; cohesive top-down entrance/cascading library reveals only when entering Game Mode, with appropriate exit and reduced-motion behavior. Validate and publish exact reviewable source.",
+            "next_action": "Implement finite directional transitions and one-time entrance with timely animation cleanup; finish native pointer and contrast checks, then source publication."
           }
         }
       ]
