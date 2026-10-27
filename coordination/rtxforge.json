@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T22:53:44.787Z",
+  "updated_at": "2026-10-27T22:59:14.575Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6276,7 +6276,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "cancelled",
       "created_at": "2026-10-23T01:09:20.152Z",
       "objective_history": {
         "baseline": {
@@ -6292,6 +6292,20 @@
             "at": "2026-10-23T01:09:20.152Z"
           }
         ]
+      },
+      "updated_at": "2026-10-27T22:59:14.575Z",
+      "retirement": {
+        "at": "2026-10-27T22:59:14.575Z",
+        "intent": {
+          "operation_id": "retire-valhalla-injector-free-slot-20261027",
+          "owner": "01a16643-7413-7071-8d4b-e7b4e8096592",
+          "disposition": "cancelled",
+          "reason": "Lauren asked in chat on 2026-10-27 to open a Relay slot (the 4-branch budget was full). This claim had been paused at her request since 2026-10-23 (lease expired, no writers), so it is the one released. The work is kept, not delivered or discarded, and re-queued as rtxforge-independent-valhalla-injector-resume-20261027 to pick up later.",
+          "evidence": "Branch rtxforge/independent-valhalla-injector stays at 62a760fa67d2aa3c033bae2a4ef7b5e5e85bfa78, and draft PR58 (https://github.com/lrnolivia/rtxForge/pull/58) stays open. Uncommitted texture readback WIP stays untouched in G:\\TaskScratch\\rtxforge-valhalla-source-01a16643 on the Windows PC. Nothing was deleted, and no game or lab state changed. Recorded by session claude-code-3644d5f4 on Lauren's instruction.",
+          "superseded_by": null,
+          "branch": "rtxforge/independent-valhalla-injector",
+          "head_sha": "62a760fa67d2aa3c033bae2a4ef7b5e5e85bfa78"
+        }
       }
     },
     {
@@ -11586,9 +11600,9 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "58712a2da5cc900b4dc340ff7dba24525c7cc185",
-      "state": "held",
+      "state": "cancelled",
       "created_at": "2026-10-23T01:12:00.8096081Z",
-      "updated_at": "2026-10-23T02:18:18.036Z",
+      "updated_at": "2026-10-27T22:59:14.575Z",
       "lease_until": "2026-10-23T14:18:18.036Z",
       "objective_history": {
         "baseline": {
@@ -11612,6 +11626,19 @@
         "default_limit": 4,
         "active_before": 4,
         "scope": "This assignment only. No global policy change, ownership takeover, check waiver or additional worker authorization."
+      },
+      "retirement": {
+        "at": "2026-10-27T22:59:14.575Z",
+        "intent": {
+          "operation_id": "retire-valhalla-injector-free-slot-20261027",
+          "owner": "01a16643-7413-7071-8d4b-e7b4e8096592",
+          "disposition": "cancelled",
+          "reason": "Lauren asked in chat on 2026-10-27 to open a Relay slot (the 4-branch budget was full). This claim had been paused at her request since 2026-10-23 (lease expired, no writers), so it is the one released. The work is kept, not delivered or discarded, and re-queued as rtxforge-independent-valhalla-injector-resume-20261027 to pick up later.",
+          "evidence": "Branch rtxforge/independent-valhalla-injector stays at 62a760fa67d2aa3c033bae2a4ef7b5e5e85bfa78, and draft PR58 (https://github.com/lrnolivia/rtxForge/pull/58) stays open. Uncommitted texture readback WIP stays untouched in G:\\TaskScratch\\rtxforge-valhalla-source-01a16643 on the Windows PC. Nothing was deleted, and no game or lab state changed. Recorded by session claude-code-3644d5f4 on Lauren's instruction.",
+          "superseded_by": null,
+          "branch": "rtxforge/independent-valhalla-injector",
+          "head_sha": "62a760fa67d2aa3c033bae2a4ef7b5e5e85bfa78"
+        }
       }
     },
     {
