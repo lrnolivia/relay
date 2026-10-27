@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T22:31:12.445Z",
+  "updated_at": "2026-10-27T22:51:06.648Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17287,6 +17287,42 @@
       "evidence": "PR #83 merged by lrnolivia as 5092357a2c401b47f311b9fc87fadd6b32c13169 (author Lauren Olivia); checks green. docs/releases/1.0-beta.md no longer carries the Beta 1 feature list. Live beta release body edited to match (Beta 1 list removed, build footer kept); API readback shows prerelease=true, no 'Frosted cards' text.",
       "work_accounted": true,
       "completed_at": "2026-10-27T22:31:12.445Z"
+    },
+    {
+      "id": "rtxforge-linux-no-scroll-fades-20261027",
+      "owner": "claude-code-1d36b48f-44a1-4af5-9ab4-e2df1c687d2e",
+      "branch": "rtxforge/linux-no-scroll-fades-20261027",
+      "paths": [
+        "gui/rtxforge_gtk.py"
+      ],
+      "resources": [],
+      "goal": "Remove the bottom gradient fades from desktop-mode scroll views in the Linux GTK app (Settings/Presets pages, progress/review dialog body, Library bottom gutter). Game Mode untouched.",
+      "acceptance": "No gradient fade at any desktop-mode scroll view edge; no leftover gap where a fade was unless spacing is still needed; scroll_bottom_fade helper and fade CSS removed if unused; Game Mode unchanged; tests/ and GTK UI tests pass under xvfb; before/after screenshots of Library and Settings in dark and light.",
+      "next_action": "Preflight, then remove fades in gui/rtxforge_gtk.py, run tests, capture screenshots, open draft PR.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "5092357a2c401b47f311b9fc87fadd6b32c13169",
+      "state": "active",
+      "created_at": "2026-10-27T22:51:06.648Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Remove the bottom gradient fades from desktop-mode scroll views in the Linux GTK app (Settings/Presets pages, progress/review dialog body, Library bottom gutter). Game Mode untouched.",
+          "acceptance": "No gradient fade at any desktop-mode scroll view edge; no leftover gap where a fade was unless spacing is still needed; scroll_bottom_fade helper and fade CSS removed if unused; Game Mode unchanged; tests/ and GTK UI tests pass under xvfb; before/after screenshots of Library and Settings in dark and light.",
+          "at": "2026-10-27T22:51:06.648Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-no-scroll-fades-20261027:acceptance:0",
+            "text": "No gradient fade at any desktop-mode scroll view edge; no leftover gap where a fade was unless spacing is still needed; scroll_bottom_fade helper and fade CSS removed if unused; Game Mode unchanged; tests/ and GTK UI tests pass under xvfb; before/after screenshots of Library and Settings in dark and light.",
+            "at": "2026-10-27T22:51:06.648Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-27T22:51:06.648Z",
+      "lease_until": "2026-10-28T10:51:06.648Z"
     }
   ]
 }
