@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T03:57:38.199Z",
+  "updated_at": "2026-10-27T04:10:47.564Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16721,7 +16721,10 @@
         "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
         "windows/engine-host/rtxforge_win_host.py",
         "windows/engine-host/install_prefetch.py",
-        "scripts/engine_bridge.py"
+        "scripts/engine_bridge.py",
+        "scripts/app_update.py",
+        "tests/test_app_update.py",
+        "windows/engine-host/win_features.py"
       ],
       "resources": [
         "windows-game-mode-input",
@@ -16737,7 +16740,7 @@
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
       "acceptance": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks. Filled-button pointer hover enriches chromatic fills with white ink, or lightens neutral fills with medium/dark grey ink; glow follows the hover color and normal fill/ink restore on exit. Sidebar hover/focus on an inactive tab uses neutral fill, glow and focus stroke; only the active view uses the accent highlight, retaining fixed half tint. Collapsed game hero has a larger title vertically aligned with the poster. Controller-selected posters receive artwork glow even with a stationary mouse over another poster. Right-stick input uses active mapped controller readings and native gamepad key fallback when axes are not projected, with foreground and modal routing preserved. Overlay supports persisted Dark, Light and Follow app themes in Desktop/Game Mode editors and its own native settings, including per-game overrides; preserve HDR output conversion and avoid extra render passes. Shared overlay review validation accepts and describes the theme. Physical Steam right-stick reports are decoded read-only without changing desktop/lizard mode. Native main-menu mouse-row navigation is verified; final visual/hardware scroll acceptance still requires observed motion. Publish rtxForge 1.0 Beta from reviewed main with Windows installer, portable ZIP and checksums, and update the production website to real published assets. Preserve Linux continuous updater and website routing; record rollback identity and verify production. User authorized Beta publication with the remaining intermittent modal-list scroll, physical stick feel and in-game Light/HDR verification limits disclosed. Install the latest tested build locally and verify launch with settings preserved. Preparing always uses generic Downloading packages/files caption with progress. Its first step stages current DLSS components and each selected feature package once using existing verified caches, then builds per-game reviews and deploys only reviewed plans. Successful catalogs are reused across games/reviews and rate limits honor backoff. A rate-limited optional native DLSS update does not abort feature installation; review explicitly keeps current DLSS files. Single card actions are compact and consistently right aligned. Move theme linking and card translucency from Desktop Appearance to Gaming Mode and add the same System/Light/Dark/Night theme choices there. Desktop hero height is consistent across games and shorter, based on the Starfield reference.",
-      "next_action": "Run final focused regressions and publish source to PR80, then exact-source CI, merge, opt-in Beta release, local updated installation and production website verification.",
+      "next_action": "Release review found current updaters reject beta.1 and Windows discovery only accepts windows-v tags. Add backward-compatible Beta version/channel recognition with verified installer selection before publishing; retain continuous Linux channel and exact reviewed download checks.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16839,8 +16842,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-27T03:57:38.199Z",
-      "lease_until": "2026-10-27T15:57:38.199Z",
+      "updated_at": "2026-10-27T04:10:47.564Z",
+      "lease_until": "2026-10-27T16:10:47.564Z",
       "amendment_count": 13,
       "amendments": [
         {
