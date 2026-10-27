@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T23:38:05.071Z",
+  "updated_at": "2026-10-27T23:40:04.386Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17640,7 +17640,7 @@
       "resources": [],
       "goal": "Fix two Proton runtime failures of Skynizz NR + Universal MFG on CONTROL Resonant: F6 is the NR comparison key (one press runs the full-res 4K Vanilla model and collapses frame pacing), and the MFG Unlocker cannot select the GPU because Proton's default nvcuda.dll is an empty stub unless PROTON_NVIDIA_NVCUDA is on.",
       "acceptance": "Skynizz installs bind F6 to the NR toggle and unbind the comparison key while still auto; the Proton gate refuses MFG with a stable reason when the prefix's nvcuda.dll is Proton's stub or the build lacks nvidia-libs nvcuda; the runtime report explains gpuSelectionFailure; unit tests pass; draft PR only.",
-      "next_action": "Create worktree off origin/main, apply the tested patch, commit as Lauren, open a draft PR.",
+      "next_action": "Draft PR #88 is open (commit e3a2fcc). Waiting on CI and on Lauren's retest of CONTROL Resonant and The Witcher 3 with PROTON_NVIDIA_NVCUDA=1 set through the RTX MG Proton build's user_settings.py. Merge only with Lauren.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -17664,8 +17664,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-27T23:38:05.071Z",
-      "lease_until": "2026-10-28T11:38:05.071Z"
+      "updated_at": "2026-10-27T23:40:04.386Z",
+      "lease_until": "2026-10-28T11:40:04.386Z"
     }
   ]
 }
