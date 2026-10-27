@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T23:53:57.733Z",
+  "updated_at": "2026-10-27T23:57:42.222Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6562,7 +6562,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-27T22:27:09.093Z",
       "objective_history": {
         "baseline": {
@@ -6587,7 +6587,8 @@
           "next_action": "Handoff authorized by Lauren in chat on 2026-10-27 (\"Record handoff now\"), recorded by the successor session. Successor claims with narrowed paths (no scripts/, tests/ or website/ while held claims cover them) and starts PR 1: release plumbing (linux-build.yml publish_beta + expected_sha, windows-build.yml beta checks scoped to Windows assets, two-OS beta policy docs)."
         }
       ],
-      "updated_at": "2026-10-27T22:53:08.131Z"
+      "updated_at": "2026-10-27T23:57:42.222Z",
+      "completed_at": "2026-10-27T23:57:42.222Z"
     },
     {
       "id": "rtxforge-independent-valhalla-injector-resume-20261027",
@@ -17464,7 +17465,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "5092357a2c401b47f311b9fc87fadd6b32c13169",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-27T22:53:44.787Z",
       "objective_history": {
         "baseline": {
@@ -17489,8 +17490,14 @@
           "next_action": "Handoff authorized by Lauren in chat on 2026-10-27 (\"Record handoff now\"), recorded by the successor session. Successor claims with narrowed paths (no scripts/, tests/ or website/ while held claims cover them) and starts PR 1: release plumbing (linux-build.yml publish_beta + expected_sha, windows-build.yml beta checks scoped to Windows assets, two-OS beta policy docs)."
         }
       ],
-      "updated_at": "2026-10-27T22:59:42.862Z",
-      "lease_until": "2026-10-28T10:59:42.862Z"
+      "updated_at": "2026-10-27T23:57:42.222Z",
+      "lease_until": "2026-10-28T11:57:42.222Z",
+      "pr": 84,
+      "merged_head_sha": "c2ab4795b163a225b8b29ee8b8ce182ed91d699a",
+      "merge_commit_sha": "45a07198d942ee8cf643af5346695b4c92e63692",
+      "evidence": "PR lrnolivia/rtxForge#84 (release plumbing) merged on Lauren's instruction relayed by her session (\"you merge as it makes sense bab\"): local --no-ff merge as Lauren of reviewed head c2ab4795b163a225b8b29ee8b8ce182ed91d699a onto main 4db9d0b, merge commit 45a07198d942ee8cf643af5346695b4c92e63692, pushed with lease. Hosted checks green at head: native/kde/wayland review, WinUI 3 x64/ARM64, in-game panel candidate, commit attribution (re-run after removing a tool credit from the PR body), coordination admission. tests/test_beta_release_workflows.py passes on the merged tree. Delivered: linux-build.yml publish_beta + expected_sha job uploading rtxForge-<version>-x86_64.AppImage, .sha256 and rtxforge-beta-linux.json with .previous-<sha12> rollback; windows-build.yml publish-beta scoped to Windows assets with per-OS notes lines; shared rtxforge-beta-release concurrency; docs/linux/BETA-RELEASE.md. NOT delivered by this PR: UI parity groups (1)-(4), updater beta channel (another session owns scripts/app_update.py), website download, docs/releases/1.0-beta.md Linux section, real-hardware Proton smoke test. Visual fixes continue under a separate assignment.",
+      "work_accounted": true,
+      "completed_at": "2026-10-27T23:57:42.222Z"
     },
     {
       "id": "rtxforge-linux-dualboot-setup-not-adopt-20261027",
