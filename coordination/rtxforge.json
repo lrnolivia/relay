@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T23:30:40.568Z",
+  "updated_at": "2026-10-27T23:32:32.561Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16918,7 +16918,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "9a1e16dccdaafcfb569fa13f1ba51a789323ebf4",
-      "state": "active",
+      "state": "cancelled",
       "created_at": "2026-10-25T05:13:41.496Z",
       "objective_history": {
         "baseline": {
@@ -17013,7 +17013,7 @@
           }
         ]
       },
-      "updated_at": "2026-10-27T06:21:14.396Z",
+      "updated_at": "2026-10-27T23:32:32.561Z",
       "lease_until": "2026-10-27T18:21:14.396Z",
       "amendment_count": 14,
       "amendments": [
@@ -17318,7 +17318,20 @@
             ]
           }
         }
-      ]
+      ],
+      "retirement": {
+        "at": "2026-10-27T23:32:32.561Z",
+        "intent": {
+          "operation_id": "retire-controller-navigation-20261027-lauren",
+          "owner": "01a17179-1891-73e0-b1c3-cdd052ddbfe4",
+          "disposition": "cancelled",
+          "reason": "Lauren said the Windows controller-navigation claim can be retired, to free a branch slot for the Linux NR/MFG Proton fix.",
+          "evidence": "Branch rtxforge/controller-navigation-20261025 no longer exists on origin (GitHub 404); its PR lrnolivia/rtxForge#80 is merged. Retired from session claude-code-63b51790 at Lauren's explicit instruction on 2026-10-27.",
+          "superseded_by": null,
+          "branch": "rtxforge/controller-navigation-20261025",
+          "head_sha": null
+        }
+      }
     },
     {
       "id": "rtxforge-engine-memory-beta2-20261027",
