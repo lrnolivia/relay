@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T23:09:09.000Z",
+  "updated_at": "2026-10-27T23:22:52.142Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6624,6 +6624,43 @@
             "id": "rtxforge-independent-valhalla-injector-resume-20261027:acceptance:0",
             "text": "Same as rtxforge-independent-valhalla-injector-20261022 (stages 1-4: diagnostic runtime against the exact executable, SR alone validated, native 2x DLSS-G then Universal MFG multipliers on RTX 4070, reversible reviewed deployment). Diagnostic success never implies SR/FG runtime support.",
             "at": "2026-10-27T22:59:31.819Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-linux-overlay-helper-20261027",
+      "owner": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+      "goal": "Run the Linux in-game panel helper without the rtxForge window: a headless --overlay-helper mode started at login by a systemd user service (Desktop and Game Mode), single-instance with the in-window host, so the Proton panel gets its data and actions like the Windows helper.",
+      "acceptance": "rtxForge --overlay-helper runs linux_overlay_host.Host headless with a real engine; only one host runs per user (window or helper); desktop install writes and enables a systemd user unit that starts it at login when overlay_helper is on; unit tests cover the lock, entry point and unit; draft PR for Lauren.",
+      "next_action": "Claim when the active branch budget frees up, then implement the headless helper, single-instance lock and systemd user unit.",
+      "paths": [
+        "scripts/linux_overlay_helper.py",
+        "scripts/linux_overlay_host.py",
+        "scripts/desktop_frontend.py",
+        "scripts/desktop_install.py",
+        "tests/test_linux_overlay_helper.py"
+      ],
+      "resources": [],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-27T23:22:52.142Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Run the Linux in-game panel helper without the rtxForge window: a headless --overlay-helper mode started at login by a systemd user service (Desktop and Game Mode), single-instance with the in-window host, so the Proton panel gets its data and actions like the Windows helper.",
+          "acceptance": "rtxForge --overlay-helper runs linux_overlay_host.Host headless with a real engine; only one host runs per user (window or helper); desktop install writes and enables a systemd user unit that starts it at login when overlay_helper is on; unit tests cover the lock, entry point and unit; draft PR for Lauren.",
+          "at": "2026-10-27T23:22:52.142Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-overlay-helper-20261027:acceptance:0",
+            "text": "rtxForge --overlay-helper runs linux_overlay_host.Host headless with a real engine; only one host runs per user (window or helper); desktop install writes and enables a systemd user unit that starts it at login when overlay_helper is on; unit tests cover the lock, entry point and unit; draft PR for Lauren.",
+            "at": "2026-10-27T23:22:52.142Z"
           }
         ]
       }
