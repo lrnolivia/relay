@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T22:59:42.862Z",
+  "updated_at": "2026-10-27T23:00:09.565Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17458,6 +17458,54 @@
       ],
       "updated_at": "2026-10-27T22:59:42.862Z",
       "lease_until": "2026-10-28T10:59:42.862Z"
+    },
+    {
+      "id": "rtxforge-linux-dualboot-setup-not-adopt-20261027",
+      "owner": "claude-code-3644d5f4-ddc6-439e-82d4-ce1a80724bfa",
+      "branch": "rtxforge/linux-setup-not-adopt-20261027",
+      "paths": [
+        "scripts/cross_os.py",
+        "scripts/engine_bridge.py",
+        "scripts/desktop_service.py",
+        "scripts/package_adoption.py",
+        "scripts/feeder_provider.py",
+        "tests/test_dualboot_setup.py"
+      ],
+      "resources": [],
+      "goal": "Lauren (2026-10-27): on Linux, games installed with rtxForge on Windows (dual boot) must never be offered Adopt; they get only the one-button Set Up for Linux, which must not break the Windows install. Diagnosed on her library: package_adoption.decorate clears installed_on='windows' and offers Adopt whenever Linux has no local baseline and the record is not adaptable; this hits (a) records Windows' btrfs driver wrote as nfsnobody 0600 that Linux cannot read, (b) shared-state records whose DLSS runtimes Windows changed after install (1666 Amsterdam, PRAGMATA), (c) Windows Feeder installs, which write no record.",
+      "acceptance": "Any readable Windows record keeps installed_on='windows' with adoption_available false; a drifted (non-intact) Windows record gets the Proton-setting-only Set Up (no game file changes) on Linux, while Windows behaviour is unchanged; an unreadable record is blocked with a message naming the permission problem and the fix, never Adopt; recognised rtxForge Feeder stacks on Linux show as installed on Windows without Adopt. Unit tests cover each case; existing cross-OS/adoption tests pass; a scan of Lauren's real library shows no Adopt for these games. Linux CI green, draft PR via Relay, human attribution.",
+      "next_action": "Implemented and unit-tested in worktree rtxForge-wt-setup off origin/main 5092357 (tests/test_dualboot_setup.py: 9 pass). Next: check the real-library scan, commit, push, open a draft PR. Follow-ups outside this claim: Windows Update DLSS should rewrite the record (dlss_updates.py, held by controller-navigation), Windows should write readable files on btrfs, Set Up for Linux for Feeder installs, and add test_dualboot_setup to linux-build.yml (held by the beta plumbing claim).",
+      "category": "implementation",
+      "tags": [
+        "linux",
+        "cross-os",
+        "dualboot",
+        "adoption"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "5092357a2c401b47f311b9fc87fadd6b32c13169",
+      "state": "active",
+      "created_at": "2026-10-27T23:00:09.565Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-27): on Linux, games installed with rtxForge on Windows (dual boot) must never be offered Adopt; they get only the one-button Set Up for Linux, which must not break the Windows install. Diagnosed on her library: package_adoption.decorate clears installed_on='windows' and offers Adopt whenever Linux has no local baseline and the record is not adaptable; this hits (a) records Windows' btrfs driver wrote as nfsnobody 0600 that Linux cannot read, (b) shared-state records whose DLSS runtimes Windows changed after install (1666 Amsterdam, PRAGMATA), (c) Windows Feeder installs, which write no record.",
+          "acceptance": "Any readable Windows record keeps installed_on='windows' with adoption_available false; a drifted (non-intact) Windows record gets the Proton-setting-only Set Up (no game file changes) on Linux, while Windows behaviour is unchanged; an unreadable record is blocked with a message naming the permission problem and the fix, never Adopt; recognised rtxForge Feeder stacks on Linux show as installed on Windows without Adopt. Unit tests cover each case; existing cross-OS/adoption tests pass; a scan of Lauren's real library shows no Adopt for these games. Linux CI green, draft PR via Relay, human attribution.",
+          "at": "2026-10-27T23:00:09.565Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-dualboot-setup-not-adopt-20261027:acceptance:0",
+            "text": "Any readable Windows record keeps installed_on='windows' with adoption_available false; a drifted (non-intact) Windows record gets the Proton-setting-only Set Up (no game file changes) on Linux, while Windows behaviour is unchanged; an unreadable record is blocked with a message naming the permission problem and the fix, never Adopt; recognised rtxForge Feeder stacks on Linux show as installed on Windows without Adopt. Unit tests cover each case; existing cross-OS/adoption tests pass; a scan of Lauren's real library shows no Adopt for these games. Linux CI green, draft PR via Relay, human attribution.",
+            "at": "2026-10-27T23:00:09.565Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-27T23:00:09.565Z",
+      "lease_until": "2026-10-28T11:00:09.565Z"
     }
   ]
 }
