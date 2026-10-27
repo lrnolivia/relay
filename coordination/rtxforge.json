@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T23:52:50.604Z",
+  "updated_at": "2026-10-27T23:53:09.643Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17696,7 +17696,7 @@
       "resources": [],
       "goal": "Under Wine/Proton, the Skynizz bridge's in-game panel creates its channel as a file-backed mapping (%LOCALAPPDATA%\\rtxForge\\panel.<pid>.map, exclusive create, delete-on-close) so the Linux host/helper can answer it; Windows keeps the named mapping unchanged.",
       "acceptance": "ForgePanelChannel.h selects the file mapping only when ntdll exports wine_get_version; the protocol and header layout are unchanged; panel-candidate.json source hash updated; the panel candidate builds in CI; in CONTROL Resonant under Proton the panel stops showing 'waiting on helper' and the Linux helper logs hello/status; draft PR for Lauren.",
-      "next_action": "Implement the Wine file-backed mapping in ForgePanelChannel.h, update the panel candidate hash, build in CI, then test in Control with the helper.",
+      "next_action": "Draft PR #89 open at 759f592. CI builds the panel candidate; next: install the CI bridge in CONTROL Resonant under Proton with the helper running and confirm hello/status, then Lauren decides on merge.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -17720,8 +17720,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-27T23:51:40.817Z",
-      "lease_until": "2026-10-28T11:51:40.817Z"
+      "updated_at": "2026-10-27T23:53:09.643Z",
+      "lease_until": "2026-10-28T11:53:09.643Z"
     },
     {
       "id": "rtxforge-linux-updater-beta-channel-20261027",
