@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T22:59:14.575Z",
+  "updated_at": "2026-10-27T22:59:31.819Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6588,6 +6588,45 @@
         }
       ],
       "updated_at": "2026-10-27T22:53:08.131Z"
+    },
+    {
+      "id": "rtxforge-independent-valhalla-injector-resume-20261027",
+      "owner": "01a16643-7413-7071-8d4b-e7b4e8096592",
+      "goal": "Resume the independent DLSS SR + native DLSS FG/MFG injector (starting with AC Valhalla on Windows) that Lauren paused on 2026-10-23. Its claim rtxforge-independent-valhalla-injector-20261022 was released on 2026-10-27 to free a branch slot. Original goal: an independent reusable DLSS Super Resolution and native DLSS FG/MFG injector for games without native support, with no PureDark binary dependency or restricted code reuse.",
+      "acceptance": "Same as rtxforge-independent-valhalla-injector-20261022 (stages 1-4: diagnostic runtime against the exact executable, SR alone validated, native 2x DLSS-G then Universal MFG multipliers on RTX 4070, reversible reviewed deployment). Diagnostic success never implies SR/FG runtime support.",
+      "next_action": "Do not start until Lauren resumes it. Then claim and adopt existing branch rtxforge/independent-valhalla-injector at 62a760fa67d2aa3c033bae2a4ef7b5e5e85bfa78 (draft PR58). The uncommitted texture readback WIP is in G:\\TaskScratch\\rtxforge-valhalla-source-01a16643 on the Windows PC. Continue from the old claim's next_action: seal the readback batch lifecycle, format limits, metadata transforms and negative checks, then Valhalla resource semantics.",
+      "paths": [
+        "providers/render-bridge/",
+        "windows/render-bridge/",
+        "windows/build/Build-RenderBridge.ps1",
+        "tests/test_render_bridge.py"
+      ],
+      "resources": [
+        "rtxforge-independent-dx12-render-bridge",
+        "valhalla-dx12-renderer"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-27T22:59:31.819Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Resume the independent DLSS SR + native DLSS FG/MFG injector (starting with AC Valhalla on Windows) that Lauren paused on 2026-10-23. Its claim rtxforge-independent-valhalla-injector-20261022 was released on 2026-10-27 to free a branch slot. Original goal: an independent reusable DLSS Super Resolution and native DLSS FG/MFG injector for games without native support, with no PureDark binary dependency or restricted code reuse.",
+          "acceptance": "Same as rtxforge-independent-valhalla-injector-20261022 (stages 1-4: diagnostic runtime against the exact executable, SR alone validated, native 2x DLSS-G then Universal MFG multipliers on RTX 4070, reversible reviewed deployment). Diagnostic success never implies SR/FG runtime support.",
+          "at": "2026-10-27T22:59:31.819Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-independent-valhalla-injector-resume-20261027:acceptance:0",
+            "text": "Same as rtxforge-independent-valhalla-injector-20261022 (stages 1-4: diagnostic runtime against the exact executable, SR alone validated, native 2x DLSS-G then Universal MFG multipliers on RTX 4070, reversible reviewed deployment). Diagnostic success never implies SR/FG runtime support.",
+            "at": "2026-10-27T22:59:31.819Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
