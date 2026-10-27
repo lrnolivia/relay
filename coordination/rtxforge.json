@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T23:40:04.386Z",
+  "updated_at": "2026-10-27T23:48:08.722Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6665,7 +6665,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-27T23:22:52.142Z",
       "objective_history": {
         "baseline": {
@@ -6681,7 +6681,9 @@
             "at": "2026-10-27T23:22:52.142Z"
           }
         ]
-      }
+      },
+      "completed_at": "2026-10-27T23:48:08.722Z",
+      "updated_at": "2026-10-27T23:48:08.722Z"
     }
   ],
   "claims": [
@@ -17604,7 +17606,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "0320fe48f7dbce3864d7e494adb2d8286ac8d620",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-27T23:26:21.123Z",
       "objective_history": {
         "baseline": {
@@ -17621,8 +17623,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-27T23:30:40.568Z",
-      "lease_until": "2026-10-28T11:30:40.568Z"
+      "updated_at": "2026-10-27T23:48:08.722Z",
+      "lease_until": "2026-10-28T11:48:08.722Z",
+      "pr": 87,
+      "merged_head_sha": "0620c02389cabde52e221d781908f302b76686ff",
+      "merge_commit_sha": "11b288c66ce497c67075a6d35f7c5607dd35f191",
+      "evidence": "PR lrnolivia/rtxForge#87 merged at Lauren's instruction (\"lets do 87\") at head 0620c02389cabde52e221d781908f302b76686ff, merge commit 11b288c66ce497c67075a6d35f7c5607dd35f191 (2026-10-27T23:47:53Z). Hosted checks passed (native/wayland/kde review, WinUI 3 x64/ARM64, panel candidate, attribution, coordination). Locally: 11 new tests in tests/linux_runtime/test_linux_overlay_helper.py pass, plus test_setup, test_frontend_session, test_steam_self_install, test_app_update and test_cross_distro; a real headless run stopped cleanly and released its lock. Known gap recorded on the PR: the bridge has no Wine file channel yet, so the panel shows 'waiting on helper' until that lands.",
+      "work_accounted": true,
+      "completed_at": "2026-10-27T23:48:08.722Z"
     },
     {
       "id": "rtxforge-linux-proton-nr-mfg-runtime-20261027",
