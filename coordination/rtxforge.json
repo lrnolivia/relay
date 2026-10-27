@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T22:51:33.025Z",
+  "updated_at": "2026-10-27T22:53:08.131Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6519,10 +6519,10 @@
     },
     {
       "id": "rtxforge-linux-beta-parity-20261027",
-      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "owner": "claude-code-3c415da9-ca6b-43a0-88ee-3227be7b9826",
       "goal": "Lauren (2026-10-27): bring the Linux (GTK4/libadwaita) app up to parity with Windows 1.0 Beta 2 (main 5ad4bb4) and release it on GitHub in the same 1.0 Beta release. Parity covers: (1) docs/LINUX-CATCHUP.md 'Still to port': Presets built from the shared control schema and sent as feature_controls, Dynamic gating from dynamic_mfg_available/detail, fresh Skynizz installs under Proton behind the existing opt-in, and library/game page parity (hero focal point in the shared engine, credits, Needs Attention, Feeder storage, narrow layouts, collapsing hero). (2) Beta 1 features: Game Mode controller navigation (bumper tabs, right-stick scrolling, Steam Controller glyphs), frosted cards and translucency, the Preparing stage plus static install review with cached downloads, compact desktop card actions, overlay Dark/Light/Follow themes. (3) Beta 2 UI fixes: one progress style per step (never falls back to an indeterminate bar or moves backwards mid-step, as Windows StepCount) and a fixed-width progress dialog that trims long titles. (4) The queued Linux items, which this assignment absorbs: linux-rc1-followups-20261025, linux-poster-os-badge-20261014, linux-details-os-badge-20261014, linux-wider-poster-cards-20261014, linux-titlebar-brand-reveal-20261014, linux-operation-scope-check-20261016. Release: publish the Linux AppImage (plus .sha256) to the existing 'beta' GitHub release beside the Windows assets, with the same reviewed-main + expected_sha gate Windows uses. Out of scope: the in-game panel helper under Proton (proton-vulkan-layer-panel-20261023 and the rtxforge-relay.exe plan stay separate; list them as Beta known limits).",
       "acceptance": "Every item in groups (1)-(4) is implemented in gui/ or the shared engine and checked against the matching Windows screen; LINUX-CATCHUP.md is updated to say what is done. The LINUX-CATCHUP smoke test passes on real Linux hardware with Proton (install, launch, restore, Windows sees the restore), confirmed by Lauren before publication, and the library-wide install engine stays well under 1 GB RSS on Linux. linux-build.yml gains a publish_beta + expected_sha dispatch that builds from reviewed main and uploads rtxForge-<version>-x86_64.AppImage and its .sha256 to the 'beta' release, keeping the previous Linux files as .previous-<sha12> assets; windows-build.yml's beta checks count only Windows assets so each OS can publish without breaking the other; the beta tag policy for two OSes is documented. The Linux updater can follow the beta channel, the website lists the Linux download, and docs/releases/1.0-beta.md gets a Linux section in place of the 'does not replace the existing Linux updater channel' line. The continuous channel keeps working. Linux and Windows CI green; draft PR via Relay; merged as Lauren; release verified by listing its assets.",
-      "next_action": "Claim when Lauren starts it. Read docs/LINUX-CATCHUP.md and the six absorbed queue items, then split into PRs: release plumbing (linux-build.yml/windows-build.yml beta upload) first, then UI parity groups. website/ is held by rtxforge-controller-navigation-20261025; coordinate before touching it. Ask Lauren whether to retire the absorbed queue items as superseded.",
+      "next_action": "Handoff authorized by Lauren in chat on 2026-10-27 (\"Record handoff now\"), recorded by the successor session. Successor claims with narrowed paths (no scripts/, tests/ or website/ while held claims cover them) and starts PR 1: release plumbing (linux-build.yml publish_beta + expected_sha, windows-build.yml beta checks scoped to Windows assets, two-OS beta policy docs).",
       "paths": [
         "gui/",
         "engine/",
@@ -6564,7 +6564,16 @@
             "at": "2026-10-27T22:27:09.093Z"
           }
         ]
-      }
+      },
+      "handoffs": [
+        {
+          "at": "2026-10-27T22:53:08.131Z",
+          "from": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+          "to": "claude-code-3c415da9-ca6b-43a0-88ee-3227be7b9826",
+          "next_action": "Handoff authorized by Lauren in chat on 2026-10-27 (\"Record handoff now\"), recorded by the successor session. Successor claims with narrowed paths (no scripts/, tests/ or website/ while held claims cover them) and starts PR 1: release plumbing (linux-build.yml publish_beta + expected_sha, windows-build.yml beta checks scoped to Windows assets, two-OS beta policy docs)."
+        }
+      ],
+      "updated_at": "2026-10-27T22:53:08.131Z"
     }
   ],
   "claims": [
