@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T23:32:32.561Z",
+  "updated_at": "2026-10-27T23:38:05.071Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17623,6 +17623,49 @@
       },
       "updated_at": "2026-10-27T23:30:40.568Z",
       "lease_until": "2026-10-28T11:30:40.568Z"
+    },
+    {
+      "id": "rtxforge-linux-proton-nr-mfg-runtime-20261027",
+      "owner": "claude-code-linux-nr-mfg-runtime-20261027",
+      "branch": "rtxforge/linux-proton-nr-mfg-runtime-20261027",
+      "paths": [
+        "scripts/skynizz_provider.py",
+        "scripts/proton_stack.py",
+        "scripts/proton_mfg.py",
+        "tests/test_universal_mfg_provider.py",
+        "tests/linux_runtime/stack_fixture.py",
+        "tests/linux_runtime/test_proton_stack.py",
+        "tests/linux_runtime/test_proton_mfg.py"
+      ],
+      "resources": [],
+      "goal": "Fix two Proton runtime failures of Skynizz NR + Universal MFG on CONTROL Resonant: F6 is the NR comparison key (one press runs the full-res 4K Vanilla model and collapses frame pacing), and the MFG Unlocker cannot select the GPU because Proton's default nvcuda.dll is an empty stub unless PROTON_NVIDIA_NVCUDA is on.",
+      "acceptance": "Skynizz installs bind F6 to the NR toggle and unbind the comparison key while still auto; the Proton gate refuses MFG with a stable reason when the prefix's nvcuda.dll is Proton's stub or the build lacks nvidia-libs nvcuda; the runtime report explains gpuSelectionFailure; unit tests pass; draft PR only.",
+      "next_action": "Create worktree off origin/main, apply the tested patch, commit as Lauren, open a draft PR.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "0320fe48f7dbce3864d7e494adb2d8286ac8d620",
+      "state": "active",
+      "created_at": "2026-10-27T23:38:05.071Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Fix two Proton runtime failures of Skynizz NR + Universal MFG on CONTROL Resonant: F6 is the NR comparison key (one press runs the full-res 4K Vanilla model and collapses frame pacing), and the MFG Unlocker cannot select the GPU because Proton's default nvcuda.dll is an empty stub unless PROTON_NVIDIA_NVCUDA is on.",
+          "acceptance": "Skynizz installs bind F6 to the NR toggle and unbind the comparison key while still auto; the Proton gate refuses MFG with a stable reason when the prefix's nvcuda.dll is Proton's stub or the build lacks nvidia-libs nvcuda; the runtime report explains gpuSelectionFailure; unit tests pass; draft PR only.",
+          "at": "2026-10-27T23:38:05.071Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-proton-nr-mfg-runtime-20261027:acceptance:0",
+            "text": "Skynizz installs bind F6 to the NR toggle and unbind the comparison key while still auto; the Proton gate refuses MFG with a stable reason when the prefix's nvcuda.dll is Proton's stub or the build lacks nvidia-libs nvcuda; the runtime report explains gpuSelectionFailure; unit tests pass; draft PR only.",
+            "at": "2026-10-27T23:38:05.071Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-27T23:38:05.071Z",
+      "lease_until": "2026-10-28T11:38:05.071Z"
     }
   ]
 }
