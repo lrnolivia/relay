@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T23:26:01.250Z",
+  "updated_at": "2026-10-27T23:26:21.123Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6647,7 +6647,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-27T23:22:52.142Z",
       "objective_history": {
         "baseline": {
@@ -17551,6 +17551,47 @@
       "evidence": "PR lrnolivia/rtxForge#86 merged on Lauren's instruction at reviewed head 95f2bb97ffc9700c5532fddf18d802ae6f71168b, merge commit 0320fe48f7dbce3864d7e494adb2d8286ac8d620 (2026-10-27T23:24:39Z). All hosted checks passed before merge: native-review, wayland-review, kde-review, WinUI 3 x64/ARM64, In-game panel candidate, Commit attribution, Runner coordination admission. Completed from session claude-code-63b51790 at Lauren's explicit request because the owner session's inbox could not receive cross-session messages.",
       "work_accounted": true,
       "completed_at": "2026-10-27T23:26:01.250Z"
+    },
+    {
+      "id": "rtxforge-linux-overlay-helper-20261027",
+      "owner": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+      "branch": "rtxforge/linux-overlay-helper-20261027",
+      "paths": [
+        "scripts/linux_overlay_helper.py",
+        "scripts/linux_overlay_host.py",
+        "scripts/desktop_frontend.py",
+        "scripts/desktop_install.py",
+        "tests/test_linux_overlay_helper.py"
+      ],
+      "resources": [],
+      "goal": "Run the Linux in-game panel helper without the rtxForge window: a headless --overlay-helper mode started at login by a systemd user service (Desktop and Game Mode), single-instance with the in-window host, so the Proton panel gets its data and actions like the Windows helper.",
+      "acceptance": "rtxForge --overlay-helper runs linux_overlay_host.Host headless with a real engine; only one host runs per user (window or helper); desktop install writes and enables a systemd user unit that starts it at login when overlay_helper is on; unit tests cover the lock, entry point and unit; draft PR for Lauren.",
+      "next_action": "Implement the headless helper, the single-instance lock and the systemd user unit, then test and open a draft PR.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "0320fe48f7dbce3864d7e494adb2d8286ac8d620",
+      "state": "active",
+      "created_at": "2026-10-27T23:26:21.123Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Run the Linux in-game panel helper without the rtxForge window: a headless --overlay-helper mode started at login by a systemd user service (Desktop and Game Mode), single-instance with the in-window host, so the Proton panel gets its data and actions like the Windows helper.",
+          "acceptance": "rtxForge --overlay-helper runs linux_overlay_host.Host headless with a real engine; only one host runs per user (window or helper); desktop install writes and enables a systemd user unit that starts it at login when overlay_helper is on; unit tests cover the lock, entry point and unit; draft PR for Lauren.",
+          "at": "2026-10-27T23:22:52.142Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-overlay-helper-20261027:acceptance:0",
+            "text": "rtxForge --overlay-helper runs linux_overlay_host.Host headless with a real engine; only one host runs per user (window or helper); desktop install writes and enables a systemd user unit that starts it at login when overlay_helper is on; unit tests cover the lock, entry point and unit; draft PR for Lauren.",
+            "at": "2026-10-27T23:22:52.142Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-27T23:26:21.123Z",
+      "lease_until": "2026-10-28T11:26:21.123Z"
     }
   ]
 }
