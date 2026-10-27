@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T06:21:14.396Z",
+  "updated_at": "2026-10-27T06:21:36.831Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17140,6 +17140,55 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-engine-memory-beta2-20261027",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/engine-memory-beta2-20261027",
+      "paths": [
+        "engine/rtxengine.py",
+        "scripts/engine_bridge.py",
+        "scripts/transactions.py",
+        "windows/engine-host/rtxforge_win_host.py",
+        "windows/engine-host/sl_override.py",
+        "windows/RtxForge.Windows/Controls/OperationStepPanel.cs",
+        "windows/RtxForge.Windows/Controls/OperationDialog.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Operations.cs",
+        "windows/tests/test_payload_memory.py",
+        "windows/tests/test_app_update.py",
+        ".github/workflows/windows-build.yml",
+        "VERSION",
+        "docs/releases/1.0-beta.md"
+      ],
+      "resources": [],
+      "goal": "Stop the Windows engine growing to 3-4 GB and saturating disk I/O during library-wide installs, fix the progress modal changing styles and widening for long titles, and publish the fixes as 1.0.0-beta.2 on the existing 1.0 Beta release (Lauren, 2026-10-27).",
+      "acceptance": "Large provider/NR payload files are file-backed and digest-verified on write; per-game NR models are not held in memory; review hashes each unchanged file once and the PE import reader maps the EXE; identical files are verified in place; progress keeps one style per step and trims long titles; Windows and Linux CI pass; Beta updated to 1.0.0-beta.2 with beta.1 kept as .previous rollback assets; installed locally from the published installer.",
+      "next_action": "Commit on the claim branch, push, open draft PR, read checks; after green, merge as Lauren and dispatch Beta publication at the merged main SHA.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "9bf40c6b54ec781a46f8930faf45c9e6dd057176",
+      "state": "active",
+      "created_at": "2026-10-27T06:21:36.831Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Stop the Windows engine growing to 3-4 GB and saturating disk I/O during library-wide installs, fix the progress modal changing styles and widening for long titles, and publish the fixes as 1.0.0-beta.2 on the existing 1.0 Beta release (Lauren, 2026-10-27).",
+          "acceptance": "Large provider/NR payload files are file-backed and digest-verified on write; per-game NR models are not held in memory; review hashes each unchanged file once and the PE import reader maps the EXE; identical files are verified in place; progress keeps one style per step and trims long titles; Windows and Linux CI pass; Beta updated to 1.0.0-beta.2 with beta.1 kept as .previous rollback assets; installed locally from the published installer.",
+          "at": "2026-10-27T06:21:36.831Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-engine-memory-beta2-20261027:acceptance:0",
+            "text": "Large provider/NR payload files are file-backed and digest-verified on write; per-game NR models are not held in memory; review hashes each unchanged file once and the PE import reader maps the EXE; identical files are verified in place; progress keeps one style per step and trims long titles; Windows and Linux CI pass; Beta updated to 1.0.0-beta.2 with beta.1 kept as .previous rollback assets; installed locally from the published installer.",
+            "at": "2026-10-27T06:21:36.831Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-27T06:21:36.831Z",
+      "lease_until": "2026-10-27T18:21:36.831Z"
     }
   ]
 }
