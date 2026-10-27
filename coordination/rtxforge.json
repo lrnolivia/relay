@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T03:39:37.861Z",
+  "updated_at": "2026-10-27T03:41:14.986Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16714,7 +16714,8 @@
         "docs/releases/1.0-beta.md",
         "windows/RtxForge.Windows/Views/ExtrasPage.cs",
         "windows/RtxForge.Windows/Controls/OverlayUiReviewView.cs",
-        "windows/RtxForge.Windows/Controls/Prefs.cs"
+        "windows/RtxForge.Windows/Controls/Preferences.cs",
+        "windows/RtxForge.Windows/Controls/GlobalControlsView.cs"
       ],
       "resources": [
         "windows-game-mode-input",
@@ -16728,7 +16729,7 @@
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
       "acceptance": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks. Filled-button pointer hover enriches chromatic fills with white ink, or lightens neutral fills with medium/dark grey ink; glow follows the hover color and normal fill/ink restore on exit. Sidebar hover/focus on an inactive tab uses neutral fill, glow and focus stroke; only the active view uses the accent highlight, retaining fixed half tint. Collapsed game hero has a larger title vertically aligned with the poster. Controller-selected posters receive artwork glow even with a stationary mouse over another poster. Right-stick input uses active mapped controller readings and native gamepad key fallback when axes are not projected, with foreground and modal routing preserved. Overlay supports persisted Dark, Light and Follow app themes in Desktop/Game Mode editors and its own native settings, including per-game overrides; preserve HDR output conversion and avoid extra render passes. Shared overlay review validation accepts and describes the theme. Physical Steam right-stick reports are decoded read-only without changing desktop/lizard mode. Native main-menu mouse-row navigation is verified; final visual/hardware scroll acceptance still requires observed motion. Publish rtxForge 1.0 Beta from reviewed main with Windows installer, portable ZIP and checksums, and update the production website to real published assets. Preserve Linux continuous updater and website routing; record rollback identity and verify production. User authorized Beta publication with the remaining intermittent modal-list scroll, physical stick feel and in-game Light/HDR verification limits disclosed. Install the latest tested build locally and verify launch with settings preserved.",
-      "next_action": "Apply requested compact right-aligned single-action card buttons through shared Prefs action helper and Extras overlay review; keep progress visible with generic Preparing copy, then build and package Beta.",
+      "next_action": "Finish compact right-aligned card actions, generic Preparing caption, move Game Mode appearance controls into Desktop Gaming Mode settings and add matching color theme picker there; verify before Beta.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16824,8 +16825,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-27T03:39:37.861Z",
-      "lease_until": "2026-10-27T15:39:37.861Z",
+      "updated_at": "2026-10-27T03:41:14.986Z",
+      "lease_until": "2026-10-27T15:41:14.986Z",
       "amendment_count": 12,
       "amendments": [
         {
