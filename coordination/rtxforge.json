@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-25T06:20:31.721Z",
+  "updated_at": "2026-10-27T03:28:30.766Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -16655,7 +16655,11 @@
         "providers/skynizz-bridge/panel-candidate.json",
         "tests/test_skynizz_bridge.py",
         "scripts/overlay_settings.py",
-        "tests/test_overlay_settings.py"
+        "tests/test_overlay_settings.py",
+        "VERSION",
+        ".github/workflows/windows-build.yml",
+        "website/",
+        "docs/releases/1.0-beta.md"
       ],
       "resources": [
         "windows-game-mode-input",
@@ -16663,11 +16667,13 @@
         "windows-game-mode-opacity-setting",
         "windows-install-phase-labels",
         "windows-install-preparation-routing",
-        "rtxforge-overlay-theme"
+        "rtxforge-overlay-theme",
+        "rtxforge-windows-beta-release",
+        "rtxforge-website"
       ],
       "goal": "Fix Game Mode right-stick main-view scrolling, bumper main navigation, Steam Controller hints in desktop/lizard mode, and button fill/text regressions on view switches.",
       "acceptance": "Preserve all previously requested controller, install, acrylic and motion behavior. Sidebar accent highlights use fixed half tint independent of card setting. Only page/panel surfaces slide horizontally; their glow layers remain outside the sliding/captured layer, hide during transit and fade in after settling. Selection glows appear at their new positions rather than sliding. Artwork glow gets blur bleed beyond unfaded viewport edges while still sharing the content gradient at active scroll fades. Native mouse menu clicking and final visual acceptance remain pending actual foreground checks. Filled-button pointer hover enriches chromatic fills with white ink, or lightens neutral fills with medium/dark grey ink; glow follows the hover color and normal fill/ink restore on exit. Sidebar hover/focus on an inactive tab uses neutral fill, glow and focus stroke; only the active view uses the accent highlight, retaining fixed half tint. Collapsed game hero has a larger title vertically aligned with the poster. Controller-selected posters receive artwork glow even with a stationary mouse over another poster. Right-stick input uses active mapped controller readings and native gamepad key fallback when axes are not projected, with foreground and modal routing preserved. Overlay supports persisted Dark, Light and Follow app themes in Desktop/Game Mode editors and its own native settings, including per-game overrides; preserve HDR output conversion and avoid extra render passes. Shared overlay review validation accepts and describes the theme. Physical Steam right-stick reports are decoded read-only without changing desktop/lizard mode. Native main-menu mouse-row navigation is verified; final visual/hardware scroll acceptance still requires observed motion.",
-      "next_action": "Source3946847 is pushed to draft PR80; exact preview38952 remains open on Crimson Desert Appearance with collapsed hero visually checked. WinUI0warnings/errors, native Feeder panel, controller/HID52, motion/fade6328, settings, scope/order, overlay validator4, menu/package lifecycle fixtures and panel receipt checks pass. Physical Valve vendor reports arrive; mouse main-menu row navigation verified. Native full smoke246/247: long-list scroll remains intermittent despite focused native modal run passing (offset1578); all requested new glow/hover/layout/input checks pass. Preserve draft for remaining long-list context, physical right-stick feel and in-game Light/HDR acceptance; no runtime deployment/game writes performed.",
+      "next_action": "User explicitly authorized publishing this build as1.0Beta with installer/portable and website update. Prepare versioned source and opt-in Beta publication on current reviewed main, preserve Linux continuous release and retained rollback, verify packages and website downloads, then publish.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -16757,8 +16763,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-25T06:20:31.721Z",
-      "lease_until": "2026-10-25T18:20:31.721Z",
+      "updated_at": "2026-10-27T03:28:30.766Z",
+      "lease_until": "2026-10-27T15:28:30.766Z",
       "amendment_count": 11,
       "amendments": [
         {
