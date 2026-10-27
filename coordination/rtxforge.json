@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T23:50:49.677Z",
+  "updated_at": "2026-10-27T23:51:22.325Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17520,7 +17520,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "5092357a2c401b47f311b9fc87fadd6b32c13169",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-27T23:00:09.565Z",
       "objective_history": {
         "baseline": {
@@ -17537,8 +17537,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-27T23:00:09.565Z",
-      "lease_until": "2026-10-28T11:00:09.565Z"
+      "updated_at": "2026-10-27T23:51:22.325Z",
+      "lease_until": "2026-10-28T11:51:22.325Z",
+      "pr": 85,
+      "merged_head_sha": "18c8f13f0a7771187f264b208ebfc5bf21d9c4ca",
+      "merge_commit_sha": "4db9d0b0b36b4b380542058b1589dac708d1c421",
+      "evidence": "PR85 head 18c8f13 merged to main as 4db9d0b (local --no-ff merge as Lauren, on her instruction 'you merge as it makes sense') after all hosted checks passed: native/kde/wayland review, WinUI 3 x64 and ARM64, in-game panel candidate, attribution, coordination admission. Before pushing, test_dualboot_setup (9) and test_cross_os_adapt passed on the merge result. Read-only scan of Lauren's dual-boot library: Adopt offered on 14 games before, 1 after (Gears of War E-Day, no record, offline route). Not verified: running-app UI and a real Proton Set Up launch. Follow-ups: Windows Update DLSS should rewrite the record, Windows btrfs file permissions, Set Up for Linux for Feeder, add the test to linux-build.yml.",
+      "work_accounted": true,
+      "completed_at": "2026-10-27T23:51:22.325Z"
     },
     {
       "id": "rtxforge-linux-no-scroll-fades-20261027",
