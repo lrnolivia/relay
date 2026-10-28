@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T23:04:15.861Z",
+  "updated_at": "2026-10-28T23:20:47.771Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18331,7 +18331,7 @@
         "at": "2026-10-28T23:01:38.672Z"
       },
       "base_sha": "d00ebdc7170cac759f1aa176abae5b15705877f5",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-28T23:01:38.672Z",
       "objective_history": {
         "baseline": {
@@ -18348,8 +18348,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T23:04:15.861Z",
-      "lease_until": "2026-10-29T11:04:15.861Z"
+      "updated_at": "2026-10-28T23:20:47.771Z",
+      "lease_until": "2026-10-29T11:20:47.771Z",
+      "pr": 101,
+      "merged_head_sha": "b5dfb04fd45383fd06c8b7ff30b8d3b6120a63ce",
+      "merge_commit_sha": "978bfe60fddf77791439b3f37ba3e6e3075971e0",
+      "evidence": "PR #101 merged as 978bfe60fddf77791439b3f37ba3e6e3075971e0 at reviewed head b5dfb04f. Mixed Adapt narrows the selection scope per part (test_linux_adapt_mixed with the real scope check, fails without the fix); dry-run review on Lauren's library: 23 pending, 11 ready, 12 awaiting a first Proton launch. Library cards ring only when selected; hover/focus ring the artwork (capture reviewed). All PR checks green; main's Linux build (run 40786399092) installed locally with checksum match.",
+      "work_accounted": true,
+      "completed_at": "2026-10-28T23:20:47.771Z"
     }
   ]
 }
