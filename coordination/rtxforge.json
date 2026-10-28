@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T04:47:04.716Z",
+  "updated_at": "2026-10-28T04:58:59.170Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17724,7 +17724,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "45a07198d942ee8cf643af5346695b4c92e63692",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-27T23:58:14.949Z",
       "objective_history": {
         "baseline": {
@@ -17741,8 +17741,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T04:42:55.964Z",
-      "lease_until": "2026-10-28T16:42:55.964Z",
+      "updated_at": "2026-10-28T04:58:59.170Z",
+      "lease_until": "2026-10-28T16:58:59.170Z",
       "handoffs": [
         {
           "at": "2026-10-28T04:42:11.539Z",
@@ -17750,7 +17750,13 @@
           "to": "claude-code-3644d5f4-ddc6-439e-82d4-ce1a80724bfa",
           "next_action": "Handed off on 2026-10-28 because the owner session hit its usage limit and was archived after PR84 merged. Lauren told the parent session to keep going and authorized merging as it makes sense. PR91 (head 70a57d9) fails native-review in tests/test_game_mode_scope.py: the Available-filter fix narrows the Game Mode operation scope. Fix, rerun CI and merge."
         }
-      ]
+      ],
+      "pr": 91,
+      "merged_head_sha": "69facb7e540b2202d4b888ad93fc2369638b3918",
+      "merge_commit_sha": "dc49a7d8e68d2eb34b262978a81a206189308b23",
+      "evidence": "PR91 head 69facb7 merged to main as dc49a7d (local --no-ff merge as Lauren, on her instruction 'you merge as it makes sense') after all hosted checks passed: native/kde/wayland review, WinUI 3 x64 and ARM64, in-game panel candidate, attribution, coordination admission. The original owner session (claude-code-3c415da9) wrote the visual fixes and ran six capture suites locally. After the handoff, the only change was tests/test_game_mode_scope.py, updated to the Windows LibraryScope rule the PR adopts (Available = not installed and not blocked; operation targets follow the visible filter). test_game_mode_scope and test_app_update pass on the merge result. Known: tests/ui_library_resume.py fails identically on main (not run in CI) and needs updating to the new Available rule. Not verified: captures on real hardware.",
+      "work_accounted": true,
+      "completed_at": "2026-10-28T04:58:59.170Z"
     },
     {
       "id": "rtxforge-linux-proton-nr-mfg-runtime-20261027",
