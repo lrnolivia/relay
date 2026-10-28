@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T23:20:47.771Z",
+  "updated_at": "2026-10-28T23:26:27.330Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18356,6 +18356,48 @@
       "evidence": "PR #101 merged as 978bfe60fddf77791439b3f37ba3e6e3075971e0 at reviewed head b5dfb04f. Mixed Adapt narrows the selection scope per part (test_linux_adapt_mixed with the real scope check, fails without the fix); dry-run review on Lauren's library: 23 pending, 11 ready, 12 awaiting a first Proton launch. Library cards ring only when selected; hover/focus ring the artwork (capture reviewed). All PR checks green; main's Linux build (run 40786399092) installed locally with checksum match.",
       "work_accounted": true,
       "completed_at": "2026-10-28T23:20:47.771Z"
+    },
+    {
+      "id": "rtxforge-vulkan-cross-os-record-20261028",
+      "owner": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+      "branch": "rtxforge/linux-vulkan-cross-os-20261028",
+      "paths": [
+        "scripts/vulkan_app.py",
+        "scripts/engine_bridge.py",
+        "scripts/linux_runtime.py",
+        "scripts/desktop_service.py",
+        "gui/rtxforge_gtk.py",
+        "tests/linux_runtime/test_vulkan_cross_os.py"
+      ],
+      "resources": [],
+      "goal": "Vulkan NR + Universal MFG installs (Baldur's Gate 3, RDR2) never write the shared .rtxforge-install.json, so Linux lists Windows Vulkan installs as Available and cannot adapt them. Write the cross-OS record on Vulkan install/repair (remove on restore), recognise Windows Vulkan installs on Linux (including existing ones without a record, by their NativeMods/rtxForge-vulkan receipt and bink2w64 original backup), and adapt them via the Windows-install route (bink2w64 Proton override plus the Universal MFG CUDA setting, no Skynizz panel prefs). Windows installs being adapted skip Skynizz fresh-install checks. Also look at the two blank library cards.",
+      "acceptance": "Vulkan install writes and restore removes the record (tested); Linux marks Windows Vulkan installs installed_on windows with or without a record (tested); Adapt plans the bink2w64 override and CUDA only (tested); dry-run review on Lauren's library shows BG3/RDR2 in Adapt; PR CI incl. Linux and Windows builds green; merged; installed.",
+      "next_action": "Implement record write/remove, Linux recognition, Adapt route; tests; dry run; PR.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "978bfe60fddf77791439b3f37ba3e6e3075971e0",
+      "state": "active",
+      "created_at": "2026-10-28T23:26:27.330Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Vulkan NR + Universal MFG installs (Baldur's Gate 3, RDR2) never write the shared .rtxforge-install.json, so Linux lists Windows Vulkan installs as Available and cannot adapt them. Write the cross-OS record on Vulkan install/repair (remove on restore), recognise Windows Vulkan installs on Linux (including existing ones without a record, by their NativeMods/rtxForge-vulkan receipt and bink2w64 original backup), and adapt them via the Windows-install route (bink2w64 Proton override plus the Universal MFG CUDA setting, no Skynizz panel prefs). Windows installs being adapted skip Skynizz fresh-install checks. Also look at the two blank library cards.",
+          "acceptance": "Vulkan install writes and restore removes the record (tested); Linux marks Windows Vulkan installs installed_on windows with or without a record (tested); Adapt plans the bink2w64 override and CUDA only (tested); dry-run review on Lauren's library shows BG3/RDR2 in Adapt; PR CI incl. Linux and Windows builds green; merged; installed.",
+          "at": "2026-10-28T23:26:27.330Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-vulkan-cross-os-record-20261028:acceptance:0",
+            "text": "Vulkan install writes and restore removes the record (tested); Linux marks Windows Vulkan installs installed_on windows with or without a record (tested); Adapt plans the bink2w64 override and CUDA only (tested); dry-run review on Lauren's library shows BG3/RDR2 in Adapt; PR CI incl. Linux and Windows builds green; merged; installed.",
+            "at": "2026-10-28T23:26:27.330Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-28T23:26:27.330Z",
+      "lease_until": "2026-10-29T11:26:27.330Z"
     }
   ]
 }
