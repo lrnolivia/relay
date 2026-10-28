@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T20:30:54.884Z",
+  "updated_at": "2026-10-28T20:42:00.309Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18169,13 +18169,14 @@
         "tests/ui_settings_refinements.py",
         "tests/ui_joined_reviews.py",
         "tests/test_game_launch.py",
+        "tests/test_beta_release_workflows.py",
         "tests/linux_runtime/test_proton_overlay.py",
         "tests/linux_runtime/test_operation_step.py"
       ],
       "resources": [],
       "goal": "Linux Beta item 2d: the desktop pieces of Windows #80. Compact right-aligned card actions and the shorter game hero are already native on Linux (Adw suffix buttons, fixed 280 px hero). Port the dedicated Gaming Mode theme controls: desktop Settings > Gaming Mode gains a 'Theme' group with the Game Mode color theme, the shared-theme switch and card translucency (moved from Appearance), kept in sync with the desktop theme as on Windows.",
       "acceptance": "Gaming Mode page shows Theme group (color theme, link switch, translucency); linked changes sync both pickers, unlinked changes only Game Mode; settings saved; ui_library_resume checks it and passes; capture reviewed; PR CI and non-publishing Linux build green; merged.",
-      "next_action": "Run the full UI set and captures, update PR #98 (title/body), dispatch a non-publishing Linux build, merge on green.",
+      "next_action": "Push the workflow-test update, wait for PR #98 checks (now including the Linux AppImage build), merge, then build main and install it locally with the helper service.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18199,8 +18200,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T20:30:54.884Z",
-      "lease_until": "2026-10-29T08:30:54.884Z"
+      "updated_at": "2026-10-28T20:42:00.309Z",
+      "lease_until": "2026-10-29T08:42:00.309Z"
     }
   ]
 }
