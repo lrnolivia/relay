@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T22:09:50.958Z",
+  "updated_at": "2026-10-28T22:11:26.797Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18265,6 +18265,8 @@
         "scripts/engine_bridge.py",
         "scripts/desktop_service.py",
         "scripts/library_media.py",
+        "scripts/proton_mfg.py",
+        "gui/rtxforge_gtk.py",
         "tests/test_linux_skynizz_adoption.py",
         "tests/test_default_provider.py",
         "tests/linux_runtime/test_linux_adapt_mixed.py"
@@ -18272,7 +18274,7 @@
       "resources": [],
       "goal": "Lauren's Adapt to Linux (35) review skipped every game. Adapting checked each Windows install against the Linux toolbar's package (DLSS-Unlocked default) and mode (MFG Only): Skynizz NR+MFG installs were refused as a profile switch, and Feeder installs (Mass Effect) only reach Feeder's Linux setup when every game is Feeder and Feeder is selected, so they hit the generic DLSS-G check. Adapting must take each install as Windows made it, a mixed Skynizz+Feeder Adapt must route each game to its own route in one review, and Skynizz becomes the Linux default package (with Skynizz on Proton on) now that it works under Proton.",
       "acceptance": "Linux adoption ignores toolbar mode/package (unit-tested); an all-Windows-installs Adapt with Feeder and engine games yields one review whose Feeder part runs after the engine part (tested); Linux default package is Skynizz with skynizz_proton on (tested); existing suites pass; PR CI including the Linux build green; merged; installed locally.",
-      "next_action": "Drop mode/package checks for Linux adoption, combine Feeder companion reviews, change Linux defaults; tests; PR; merge; reinstall.",
+      "next_action": "Run the full Linux validation and UI tests, open the PR, merge on green, reinstall locally.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18296,8 +18298,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T22:09:50.958Z",
-      "lease_until": "2026-10-29T10:09:50.958Z"
+      "updated_at": "2026-10-28T22:11:26.797Z",
+      "lease_until": "2026-10-29T10:11:26.797Z"
     }
   ]
 }
