@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T04:41:31.482Z",
+  "updated_at": "2026-10-28T04:42:11.539Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17736,7 +17736,7 @@
     },
     {
       "id": "rtxforge-linux-visual-fixes-20261027",
-      "owner": "claude-code-3c415da9-ca6b-43a0-88ee-3227be7b9826",
+      "owner": "claude-code-3644d5f4-ddc6-439e-82d4-ce1a80724bfa",
       "branch": "rtxforge/linux-visual-fixes-20261027",
       "paths": [
         "gui/rtxforge_gtk.py",
@@ -17749,7 +17749,7 @@
       "resources": [],
       "goal": "Lauren (2026-10-27, \"Fix all in order\"): fix the Linux GTK visual bugs found in the capture review before the Linux 1.0 Beta: Game Mode never re-laying out on resize and pinning the window width, details hero gap/seam and collapse on scroll, focus hairlines on active Game Mode buttons, game titles wrapping and hero actions clipping in Game Details, invisible disabled buttons, chevron icons, missing-art placeholders, Available filter including installed games (Windows LibraryScope), NR diagnosis raw JSON, wording/plurals and related states.",
       "acceptance": "Each fixed item visible in fresh headless captures; native/package/app-completion/steamgrid/Game Mode/4K suites pass; hosted CI green; draft PR via Relay; merged as Lauren.",
-      "next_action": "Local branch rebased onto main 45a0719 (after #84-#87). Re-run all six capture suites, push, open draft PR via Relay, read CI.",
+      "next_action": "Handed off on 2026-10-28 because the owner session hit its usage limit and was archived after PR84 merged. Lauren told the parent session to keep going and authorized merging as it makes sense. PR91 (head 70a57d9) fails native-review in tests/test_game_mode_scope.py: the Available-filter fix narrows the Game Mode operation scope. Fix, rerun CI and merge.",
       "category": "implementation",
       "tags": [
         "linux",
@@ -17778,8 +17778,16 @@
           }
         ]
       },
-      "updated_at": "2026-10-27T23:58:14.949Z",
-      "lease_until": "2026-10-28T11:58:14.949Z"
+      "updated_at": "2026-10-28T04:42:11.539Z",
+      "lease_until": "2026-10-28T16:42:11.539Z",
+      "handoffs": [
+        {
+          "at": "2026-10-28T04:42:11.539Z",
+          "from": "claude-code-3c415da9-ca6b-43a0-88ee-3227be7b9826",
+          "to": "claude-code-3644d5f4-ddc6-439e-82d4-ce1a80724bfa",
+          "next_action": "Handed off on 2026-10-28 because the owner session hit its usage limit and was archived after PR84 merged. Lauren told the parent session to keep going and authorized merging as it makes sense. PR91 (head 70a57d9) fails native-review in tests/test_game_mode_scope.py: the Available-filter fix narrows the Game Mode operation scope. Fix, rerun CI and merge."
+        }
+      ]
     },
     {
       "id": "rtxforge-linux-proton-nr-mfg-runtime-20261027",
