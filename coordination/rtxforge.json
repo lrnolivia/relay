@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-27T23:59:20.466Z",
+  "updated_at": "2026-10-28T04:41:31.482Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17708,7 +17708,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "4db9d0b0b36b4b380542058b1589dac708d1c421",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-27T23:52:50.604Z",
       "objective_history": {
         "baseline": {
@@ -17725,8 +17725,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-27T23:52:50.604Z",
-      "lease_until": "2026-10-28T11:52:50.604Z"
+      "updated_at": "2026-10-28T04:41:31.482Z",
+      "lease_until": "2026-10-28T16:41:31.482Z",
+      "pr": 90,
+      "merged_head_sha": "3f1159730bd1a0841abdef2bae93cac46e001781",
+      "merge_commit_sha": "e511ccb59a9a91421f72e8073286d72cbf1c5b1a",
+      "evidence": "PR90 head 3f11597 merged to main as e511ccb (local --no-ff merge as Lauren, on her instruction 'you merge as it makes sense') after all hosted checks passed: native/kde/wayland review, WinUI 3 x64 and ARM64, in-game panel candidate, attribution, coordination admission. The first WinUI x64 run failed because the new install-based channel tests fsync a directory, which Windows refuses; they are now skipped on Windows (the updater is Linux-only). test_app_update (11) and test_beta_release_workflows pass on the merge result. Not verified: a real update from one Beta build to the next, which needs two published Beta builds.",
+      "work_accounted": true,
+      "completed_at": "2026-10-28T04:41:31.482Z"
     },
     {
       "id": "rtxforge-linux-visual-fixes-20261027",
