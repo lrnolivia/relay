@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-28T05:17:30.381Z",
+  "updated_at": "2026-10-28T05:20:07.583Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18231,16 +18231,19 @@
         "src/test-maintenance.test.js",
         "test/test-maintenance-contract.test.mjs",
         "scripts/relay-executor.mjs",
-        "scripts/relay-executor.test.mjs"
+        "scripts/relay-executor.test.mjs",
+        "src/relay-chat-ui.js",
+        "src/relay-chat-ui.test.js"
       ],
       "resources": [
         "relay-consumer-verification",
         "test-maintenance-guidance",
-        "claude-executor-startup"
+        "claude-executor-startup",
+        "relay-native-card-hydration"
       ],
       "goal": "Finish the remaining Relay verification for authenticated Claude, official Playwright Test Agents and native ChatGPT cards, as explicitly requested by Lauren in this chat on 2026-10-28.",
       "acceptance": "1. Exercise an existing authenticated Claude environment consuming Relay guidance and record actual session/provider/source/report evidence; absent authentication remains an explicit blocker, never a synthetic pass. 2. Verify official Playwright Test Agent setup against the actual installed version, then run planner/generator/healer on an isolated approved browser scenario through available authenticated tooling; preserve assertions and report any unsupported host/version without installing global tooling or granting permissions. 3. Verify mounted Relay cards and read-only refresh/navigation on actual available native ChatGPT surfaces with direct UI evidence; distinguish Codex MCP Apps, ChatGPT Work/web and unavailable full-native UI access. 4. Repair only demonstrated in-scope guidance defects, preserve all earlier evidence, record exact results in canonical docs, and finish admitted changes through required checks and release. Missing credentials or denied native access must remain unverified until supplied.",
-      "next_action": "Lauren explicitly resumed the new safety hold for one bounded retry. Relay autonomy revision82 unheld/global0unheld. Rebuild exact mergedPR257/3123e79 via existing guarded Workers Builds trigger; rerun mainCI40635765101 once unchanged; verify production and retained recovery. Preserve first timeout and rollback. Also reconcile old mounted card freshness discrepancy using new current card; no scope or assertion weakening.",
+      "next_action": "Complete approved bounded retry for PR257 unchanged. Native-card verification additionally reproduced a product regression: widget-state globals echo re-renders unchanged initial toolOutput after a successful Refresh. Extend this same incomplete assignment to src/relay-chat-ui.js and its browser regression test; preserve original goal/acceptance and native full-client limits. Fix only repeated globals hydration, keep all assertions, verify changed genuine host result still hydrates, publish reviewed follow-up after current release recovery succeeds.",
       "category": "qa-verification",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -18264,8 +18267,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T05:17:30.381Z",
-      "lease_until": "2026-10-28T17:17:30.381Z"
+      "updated_at": "2026-10-28T05:20:07.583Z",
+      "lease_until": "2026-10-28T17:20:07.583Z"
     }
   ],
   "migrated_from": "loew-inspector"
