@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { testMaintenanceGuidance, playwrightAgentSetup, TEST_MAINTENANCE_DOC, evaluateTestMaintenance, testMaintenanceSummary } from './test-maintenance.js';
+import { testMaintenanceGuidance, playwrightAgentSetup, TEST_MAINTENANCE_DOC, parseTestMaintenanceReport, evaluateTestMaintenance, testMaintenanceSummary } from './test-maintenance.js';
 
 test('one canonical workflow with minimal host adapters for Claude and Codex', () => {
   const claude = testMaintenanceGuidance({ host: 'claude' }), codex = testMaintenanceGuidance({ host: 'codex' });
@@ -19,6 +19,21 @@ test('one canonical workflow with minimal host adapters for Claude and Codex', (
 
 const head = 'a'.repeat(40);
 const observed = () => ({schema:1,tested_commit:head,run:{id:'local-review'},counts:{passed:1,failed:0,skipped:0,total:1},behaviors:[{id:'share',status:'unchanged'}],tests:[{id:'share works',behavior:'share',outcome:'passed'}]});
+
+test('delivered report template round-trips through the strict parser and evaluator', () => {
+  for (const host of ['claude', 'codex']) {
+    const guidance = testMaintenanceGuidance({host});
+    const report = structuredClone(guidance.report_template);
+    assert.ok(report, 'Consumers need the exact report schema in delivered guidance');
+    assert.deepEqual(report.counts, {passed:null,failed:null,skipped:null,total:null});
+    report.tested_commit = head;
+    report.run = {id:'actual-fixture-run',url:null};
+    report.counts = {passed:1,failed:0,skipped:0,total:1};
+    const message = guidance.report_prefix + JSON.stringify(report);
+    assert.equal(evaluateTestMaintenance(parseTestMaintenanceReport(message), {head_sha:head}).verdict, 'pass');
+    assert.equal(evaluateTestMaintenance(parseTestMaintenanceReport(message+'\nUnstructured notes'), {head_sha:head}).verdict, 'invalid');
+  }
+});
 
 test('failed runner counts cannot pass when affected-test details omit the failure', () => {
   const report = {...observed(),counts:{passed:0,failed:1,skipped:0,total:1},tests:[]};
@@ -66,13 +81,34 @@ test('Test Agent setup is decided from existing project facts and stays idempote
   const pkg = { devDependencies: { '@playwright/test': '1.60.0' } };
   assert.equal(playwrightAgentSetup({ host: 'claude', packageJson: { devDependencies: { vitest: '3' } }, browserUi: false }).state, 'not-applicable');
   assert.match(playwrightAgentSetup({ host: 'codex', packageJson: {}, files: [] }).action, /Do not install/);
-  const missing = playwrightAgentSetup({ host: 'claude', packageJson: pkg, files: ['playwright.config.ts'] });
+  const missing = playwrightAgentSetup({ host: 'claude', packageJson: pkg, files: ['playwright.config.ts'], supportedLoops: ['claude'] });
   assert.equal(missing.state, 'agents-missing');assert.equal(missing.action, 'npx playwright init-agents --loop=claude');
   const files = ['playwright.config.ts', '.claude/agents/playwright-test-planner.md', '.claude/agents/playwright-test-generator.md', '.claude/agents/playwright-test-healer.md'];
   const present = playwrightAgentSetup({ host: 'claude', packageJson: pkg, files, generatedFor: '1.60.0' });
   assert.equal(present.state, 'agents-present');assert.match(present.action, /no init needed/);
-  assert.equal(playwrightAgentSetup({ host: 'claude', packageJson: pkg, files, generatedFor: '1.59.0' }).state, 'agents-stale');
-  // Claude definitions do not satisfy Codex; each host initializes its own loop.
-  assert.equal(playwrightAgentSetup({ host: 'codex', packageJson: pkg, files }).action, 'npx playwright init-agents --loop=codex');
+  assert.equal(playwrightAgentSetup({ host: 'claude', packageJson: pkg, files, generatedFor: '1.59.0', supportedLoops: ['claude'] }).state, 'agents-stale');
+  // Claude definitions do not satisfy Codex; its installed loop support must be checked.
+  assert.equal(playwrightAgentSetup({ host: 'codex', packageJson: pkg, files }).state, 'loop-unverified');
   assert.throws(() => playwrightAgentSetup({ host: 'vscode', packageJson: pkg }), /claude or codex/);
+});
+
+test('Test Agent setup never recommends a loop the installed CLI does not support', () => {
+  const installed = { host: 'codex', packageJson: { devDependencies: { playwright: '1.60.0' } }, supportedLoops: ['claude', 'copilot', 'opencode', 'vscode', 'vscode-legacy'] };
+  const unsupported = playwrightAgentSetup(installed);
+  assert.equal(unsupported.state, 'loop-unsupported');
+  assert.doesNotMatch(unsupported.action, /init-agents --loop=codex/);
+  assert.match(unsupported.action, /Do not upgrade/);
+  const files = ['.codex/agents/playwright-test-planner.md', '.codex/agents/playwright-test-generator.md', '.codex/agents/playwright-test-healer.md'];
+  assert.equal(playwrightAgentSetup({...installed,files,generatedFor:'1.59.0'}).state, 'loop-unsupported');
+  assert.equal(playwrightAgentSetup({...installed,files,generatedFor:'1.60.0'}).state, 'agents-present');
+  assert.equal(playwrightAgentSetup({...installed,host:'claude'}).state, 'agents-missing');
+});
+
+test('unknown installed loop support requires inspection before initialization', () => {
+  const unknown = playwrightAgentSetup({ host: 'codex', packageJson: { devDependencies: { '@playwright/test': '1.60.0' } } });
+  assert.equal(unknown.state, 'loop-unverified');
+  assert.match(unknown.action, /--no-install playwright init-agents --help/);
+  const guidance = testMaintenanceGuidance({host:'codex'}).playwright_test_agents;
+  assert.match(guidance.run_init_only_when, /supports/);
+  assert.match(guidance.unsupported_loop, /Do not upgrade/);
 });

@@ -191,6 +191,11 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     let session=journal.session_id||null,turnCompleted=false,parseFailed=false;
     const childEnv={...process.env};delete childEnv.RELAY_MCP_TOKEN;
     child=spawnProcess(provider,executorArguments({provider,workspace,session_id:config.resume?session:null}),{cwd:workspace,env:childEnv,detached:process.platform!=='win32',stdio:['pipe','pipe','pipe'],shell:false});
+    child.stdin.on('error',()=>{void stop();});
+    // Claude abandons an empty stdin after three seconds. A whitespace byte
+    // keeps collection open while Relay acknowledges the real process; no
+    // work prompt or EOF is supplied until start succeeds below.
+    if(provider==='claude')child.stdin.write('\n');
     journal.pid=child.pid;journal.started_at=clock();await save();
     const exit=new Promise(resolve=>{child.once('error',error=>resolve({code:null,error:error.message}));child.once('exit',(code,signal)=>resolve({code,signal}));});
     const lines=createInterface({input:child.stdout});

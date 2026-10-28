@@ -44,12 +44,14 @@ All of it runs in the agent's project environment. Relay's server runs no browse
 
 Reference: <https://playwright.dev/docs/test-agents>. The planner explores the app and writes a Markdown plan in `specs/`. The generator turns plans into Playwright tests. The healer replays failing tests and patches them.
 
-1. **Check what's already there.** Look for `@playwright/test` in `package.json`/lockfile and its version, `playwright.config.*`, existing planner/generator/healer definitions for your host, `specs/` and `tests/seed.spec.*`.
-2. **Initialize only when needed**, from the project root on the assignment branch:
+1. **Check what's already there.** Look for `@playwright/test` or `playwright` in `package.json`/lockfile and its version, `playwright.config.*`, existing planner/generator/healer definitions for your host, `specs/` and `tests/seed.spec.*`. Run the installed CLI's `npx --no-install playwright init-agents --help` and inspect its `--loop` choices before recommending a command. Current website documentation is not proof that the installed version supports every host.
+2. **Initialize only when needed and supported**, from the project root on the assignment branch:
    - Claude Code: `npx playwright init-agents --loop=claude`
    - Codex: `npx playwright init-agents --loop=codex`
 
-   Run it only when your host's definitions are missing, or when `@playwright/test` changed version since they were generated (Playwright says to regenerate after updates). Otherwise reuse them. Don't reinstall or regenerate on every assignment. `playwrightAgentSetup()` in the source module encodes this decision.
+   Run it only when the installed CLI lists your host and its definitions are missing, or Playwright changed version since they were generated. Otherwise reuse them. Don't reinstall or regenerate on every assignment. `playwrightAgentSetup()` accepts the observed `supportedLoops`; missing facts produce `loop-unverified`, and an absent host produces `loop-unsupported`. Existing current definitions remain reusable without initialization.
+
+   Relay's pinned Playwright **1.60.0 supports Claude but rejects `--loop=codex`**. The current website advertises Codex support, but that does not establish support in this installed package. Report this version boundary; do not silently upgrade dependencies, install another package, or substitute a host to obtain a green setup result.
 3. **Keep existing configuration.** Review the generated diff, keep existing `playwright.config`, seed test, specs and customized agent files, and commit the definitions with the project.
 4. **Permissions.** Respect the host's permission prompts. Don't install browsers, global packages or MCP servers on Lauren's machines unless that's already authorized. If setup is missing and not authorized, report `playwright_agents: "missing"` with the specific blocker.
 5. **MCP isn't the same thing.** Adding the Playwright MCP server (<https://github.com/microsoft/playwright-mcp>) only gives browser tools. It doesn't configure the planner, generator and healer.
@@ -59,7 +61,7 @@ Projects without browser UI keep their own tooling, and `playwrightAgentSetup` r
 
 ## Report
 
-Emit one agent message that starts with the line `RELAY_TEST_MAINTENANCE`, followed by JSON:
+Emit one agent message that starts with the line `RELAY_TEST_MAINTENANCE`, followed by exactly one raw JSON object. Do not include Markdown fences, leading commentary or trailing prose; put explanations in the report's rationale fields. Delivered guidance includes `report_template` and `report_values`, so the host does not need to infer field names from its runner's output. Replace every placeholder/example outcome with actual observations. The fenced example below documents the shape; the emitted message itself must not contain fences:
 
 ```json
 {
@@ -99,4 +101,4 @@ Emit one agent message that starts with the line `RELAY_TEST_MAINTENANCE`, follo
 
 `scripts/relay-native-continuity.test.mjs` verifies the native Codex packet and report/recovery path, including a successful native return whose maintenance report fails. Five regression tests failed against the original WIP and pass after the verdict corrections: runner failures, stale/incomplete evidence, unexplained replacements, unchanged-test deletion and ambiguous intent bindings. Existing removal/regression/fixture/skip demonstrations remain intact.
 
-Not tested: a live `npx playwright init-agents` run in a real product checkout, and authenticated Claude Code or Codex model sessions consuming the guidance end to end. Those happen in the agents' own environments, which this change doesn't modify.
+The [2026-10-28 consumer verification](CONSUMER_VERIFICATION_20261028.md) records authenticated Claude execution (7 actual contract tests passed), same-session structured-output report evaluation/native handoff, the official planner/generator/healer workflow (4 browser tests passed after two observed fixture-drift failures, all 23 assertions preserved), and actual mounted MCP Apps card interactions. Initial host denials were resolved by explicit session-only user approval. Free-text reports with prose or wrong schema remain rejected; the default standalone broker is not claimed to capture the separate structured-output transport automatically. Isolated browser verification is not every product's E2E acceptance. Installed Playwright 1.60.0 does not support the Codex loop, and full native-window access was unavailable.
