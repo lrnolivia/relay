@@ -122,7 +122,7 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
     Object.assign(card, { title:safePresentationText(ciView.title), feature:'inspector', label:ciView.label, tone:ciView.tone, signal:ciSignal, summary:safePresentationText(ciView.summary,400), rows:ciView.rows.slice(0,6).map(row=>({label:safePresentationText(row.label,100),text:safePresentationText(row.text,160)})), blocker:ciView.blocker, next_step:ciView.next_step, metric:ciView.metric, metric_label:ciView.metric_label, percent:ciView.percent, has_metric:true, ci:{status:ci.status, conclusion:ci.conclusion, stale:Boolean(ci.stale), live:Boolean(ci.live), telemetry:ci.telemetry} });
     for (const [key,value] of [['ci_run_id',ci.run?.id],['ci_run_url',ci.run?.url],['ci_attempt',ci.run?.attempt],['head_sha',ci.head_sha],['ci_observed_at',ci.observed_at],['ci_telemetry_updated_at',ci.telemetry_updated_at]]) if (['string','number'].includes(typeof value)) card.evidence[key]=typeof value==='string'?safePresentationText(value,300):value;
   } else if (milestone?.label) {
-    card.rows = [{label:'Latest step',text:safePresentationText(milestone.label,100)}, ...card.rows].slice(0,4);
+    card.rows = [{label:'This step',text:safePresentationText(milestone.label,100)}, ...card.rows].slice(0,4);
   }
   const link = ci && [ci.run?.url, ci.failed_jobs?.[0]?.url].find(url => typeof url === 'string' && /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/actions\/runs\/\d+[\w/.-]*$/.test(url));
   if (link) card.ci_link = link;

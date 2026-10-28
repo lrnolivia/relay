@@ -84,3 +84,18 @@ test('distinct shards add up, stale telemetry is flagged and missing telemetry i
   assert.equal(summarizeCiChecks({ check_runs: [] }).status, 'queued');
   assert.equal(summarizeCiChecks({ check_runs: [job({ status: 'completed', conclusion: 'cancelled' })] }).conclusion, 'cancelled');
 });
+
+test('a runner nested inside a test cannot add failures or a summary to its parent suite', () => {
+  const event = (pid, body) => JSON.stringify({ ...body, pid });
+  const fold = foldSuiteEvents([
+    event(10, { type: 'start', at: T0 }),
+    event(10, { type: 'test', outcome: 'passed', name: 'outer' }),
+    event(22, { type: 'start', at: T0 + 5 }),
+    event(22, { type: 'test', outcome: 'failed', name: 'caller contract', message: '1 !== 0' }),
+    event(22, { type: 'summary', counts: { tests: 1, failed: 1 } }),
+    event(10, { type: 'summary', counts: { tests: 1, passed: 1 } })
+  ]);
+  assert.deepEqual(fold.failures, []);
+  assert.deepEqual(fold.counts, { passed: 1, failed: 0, skipped: 0, todo: 0, cancelled: 0 });
+  assert.equal(fold.total, 1);
+});
