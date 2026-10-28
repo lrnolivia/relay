@@ -21,7 +21,7 @@ const STEPS = [
   'Never restore an intentionally removed feature to satisfy an obsolete test. Never blanket-update snapshots, weaken assertions, add skip/only/quarantine or loosen timeouts to get green CI.',
   'Every deleted or replaced assertion, changed snapshot, skipped or quarantined test and coverage reduction needs a one-line rationale tied to the approved change. Unexplained failures stay regressions or unresolved requirements.',
   'Authorized changes need no extra user approval: classify, update and report. Only unresolved requirements go back to the coordinator.',
-  `Report with an agent message starting ${JSON.stringify(TEST_MAINTENANCE_REPORT_PREFIX)} followed by JSON (schema 1, see the canonical doc): tested_commit, run identity, actual counts (null when unknown, never estimated), behaviors, and per-test outcome/classification/rationale. Relay evaluates it and carries the verdict on the assignment card.`
+  `Report with an agent message starting ${JSON.stringify(TEST_MAINTENANCE_REPORT_PREFIX)} followed by exactly one raw JSON object matching report_template. Use no Markdown fences, leading commentary or trailing prose. Replace placeholders and example outcomes with actual observations; keep unknown counts null. Use counts.passed/failed/skipped/total, behaviors[].status and tests[].id/outcome/behavior exactly as shown, not runner-specific aliases. Put explanations inside rationale fields. Relay evaluates it and carries the verdict on the assignment card.`
 ];
 
 const SUITES = {
@@ -62,7 +62,17 @@ export function testMaintenanceGuidance({ host = null, category = null } = {}) {
     steps: STEPS,
     suites: SUITES,
     playwright_test_agents: playwrightAdapter(host),
-    report_prefix: TEST_MAINTENANCE_REPORT_PREFIX
+    report_prefix: TEST_MAINTENANCE_REPORT_PREFIX,
+    report_template: {
+      schema: 1,
+      tested_commit: '<actual 40-character commit SHA>',
+      run: { id: '<actual run identity>', url: null },
+      counts: { passed: null, failed: null, skipped: null, total: null },
+      playwright_agents: 'missing',
+      behaviors: [{ id: 'behavior-id', status: 'unchanged', source: '<approved goal or acceptance>' }],
+      tests: [{ id: '<actual test name>', outcome: 'passed', behavior: 'behavior-id', rationale: '<actual observation or change rationale>' }]
+    },
+    report_values: { behavior_status: BEHAVIOR_STATUSES, test_outcome: OUTCOMES, classification: CLASSIFICATIONS, playwright_agents: ['present', 'initialized', 'missing', 'not-applicable'] }
   };
 }
 

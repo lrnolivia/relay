@@ -61,7 +61,7 @@ Projects without browser UI keep their own tooling, and `playwrightAgentSetup` r
 
 ## Report
 
-Emit one agent message that starts with the line `RELAY_TEST_MAINTENANCE`, followed by JSON:
+Emit one agent message that starts with the line `RELAY_TEST_MAINTENANCE`, followed by exactly one raw JSON object. Do not include Markdown fences, leading commentary or trailing prose; put explanations in the report's rationale fields. Delivered guidance includes `report_template` and `report_values`, so the host does not need to infer field names from its runner's output. Replace every placeholder/example outcome with actual observations. The fenced example below documents the shape; the emitted message itself must not contain fences:
 
 ```json
 {

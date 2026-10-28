@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { testMaintenanceGuidance, playwrightAgentSetup, TEST_MAINTENANCE_DOC, evaluateTestMaintenance, testMaintenanceSummary } from './test-maintenance.js';
+import { testMaintenanceGuidance, playwrightAgentSetup, TEST_MAINTENANCE_DOC, parseTestMaintenanceReport, evaluateTestMaintenance, testMaintenanceSummary } from './test-maintenance.js';
 
 test('one canonical workflow with minimal host adapters for Claude and Codex', () => {
   const claude = testMaintenanceGuidance({ host: 'claude' }), codex = testMaintenanceGuidance({ host: 'codex' });
@@ -19,6 +19,21 @@ test('one canonical workflow with minimal host adapters for Claude and Codex', (
 
 const head = 'a'.repeat(40);
 const observed = () => ({schema:1,tested_commit:head,run:{id:'local-review'},counts:{passed:1,failed:0,skipped:0,total:1},behaviors:[{id:'share',status:'unchanged'}],tests:[{id:'share works',behavior:'share',outcome:'passed'}]});
+
+test('delivered report template round-trips through the strict parser and evaluator', () => {
+  for (const host of ['claude', 'codex']) {
+    const guidance = testMaintenanceGuidance({host});
+    const report = structuredClone(guidance.report_template);
+    assert.ok(report, 'Consumers need the exact report schema in delivered guidance');
+    assert.deepEqual(report.counts, {passed:null,failed:null,skipped:null,total:null});
+    report.tested_commit = head;
+    report.run = {id:'actual-fixture-run',url:null};
+    report.counts = {passed:1,failed:0,skipped:0,total:1};
+    const message = guidance.report_prefix + JSON.stringify(report);
+    assert.equal(evaluateTestMaintenance(parseTestMaintenanceReport(message), {head_sha:head}).verdict, 'pass');
+    assert.equal(evaluateTestMaintenance(parseTestMaintenanceReport(message+'\nUnstructured notes'), {head_sha:head}).verdict, 'invalid');
+  }
+});
 
 test('failed runner counts cannot pass when affected-test details omit the failure', () => {
   const report = {...observed(),counts:{passed:0,failed:1,skipped:0,total:1},tests:[]};
