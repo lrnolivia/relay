@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T22:02:34.685Z",
+  "updated_at": "2026-10-28T22:09:50.958Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18256,6 +18256,48 @@
       "evidence": "PR #99 merged as 6869500400103c2e6a31d7092b3d6ef81558a747 at reviewed head 32888095. Library Install shows 'Adapt to Linux (N)' for pending Windows installs and targets exactly those in desktop and Game Mode (ui_library_resume); label helper unit-tested; ui_game_mode and tests/linux_ui pass; all PR checks green including the Linux AppImage build. Local install from main follows.",
       "work_accounted": true,
       "completed_at": "2026-10-28T22:02:34.685Z"
+    },
+    {
+      "id": "rtxforge-linux-adapt-keeps-windows-mode-20261028",
+      "owner": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+      "branch": "rtxforge/linux-adapt-keeps-windows-mode-20261028",
+      "paths": [
+        "scripts/engine_bridge.py",
+        "scripts/desktop_service.py",
+        "scripts/library_media.py",
+        "tests/test_linux_skynizz_adoption.py",
+        "tests/test_default_provider.py",
+        "tests/linux_runtime/test_linux_adapt_mixed.py"
+      ],
+      "resources": [],
+      "goal": "Lauren's Adapt to Linux (35) review skipped every game. Adapting checked each Windows install against the Linux toolbar's package (DLSS-Unlocked default) and mode (MFG Only): Skynizz NR+MFG installs were refused as a profile switch, and Feeder installs (Mass Effect) only reach Feeder's Linux setup when every game is Feeder and Feeder is selected, so they hit the generic DLSS-G check. Adapting must take each install as Windows made it, a mixed Skynizz+Feeder Adapt must route each game to its own route in one review, and Skynizz becomes the Linux default package (with Skynizz on Proton on) now that it works under Proton.",
+      "acceptance": "Linux adoption ignores toolbar mode/package (unit-tested); an all-Windows-installs Adapt with Feeder and engine games yields one review whose Feeder part runs after the engine part (tested); Linux default package is Skynizz with skynizz_proton on (tested); existing suites pass; PR CI including the Linux build green; merged; installed locally.",
+      "next_action": "Drop mode/package checks for Linux adoption, combine Feeder companion reviews, change Linux defaults; tests; PR; merge; reinstall.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "6869500400103c2e6a31d7092b3d6ef81558a747",
+      "state": "active",
+      "created_at": "2026-10-28T22:09:50.958Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren's Adapt to Linux (35) review skipped every game. Adapting checked each Windows install against the Linux toolbar's package (DLSS-Unlocked default) and mode (MFG Only): Skynizz NR+MFG installs were refused as a profile switch, and Feeder installs (Mass Effect) only reach Feeder's Linux setup when every game is Feeder and Feeder is selected, so they hit the generic DLSS-G check. Adapting must take each install as Windows made it, a mixed Skynizz+Feeder Adapt must route each game to its own route in one review, and Skynizz becomes the Linux default package (with Skynizz on Proton on) now that it works under Proton.",
+          "acceptance": "Linux adoption ignores toolbar mode/package (unit-tested); an all-Windows-installs Adapt with Feeder and engine games yields one review whose Feeder part runs after the engine part (tested); Linux default package is Skynizz with skynizz_proton on (tested); existing suites pass; PR CI including the Linux build green; merged; installed locally.",
+          "at": "2026-10-28T22:09:50.958Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-adapt-keeps-windows-mode-20261028:acceptance:0",
+            "text": "Linux adoption ignores toolbar mode/package (unit-tested); an all-Windows-installs Adapt with Feeder and engine games yields one review whose Feeder part runs after the engine part (tested); Linux default package is Skynizz with skynizz_proton on (tested); existing suites pass; PR CI including the Linux build green; merged; installed locally.",
+            "at": "2026-10-28T22:09:50.958Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-28T22:09:50.958Z",
+      "lease_until": "2026-10-29T10:09:50.958Z"
     }
   ]
 }
