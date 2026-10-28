@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T22:11:26.797Z",
+  "updated_at": "2026-10-28T22:49:50.237Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18281,7 +18281,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "6869500400103c2e6a31d7092b3d6ef81558a747",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-28T22:09:50.958Z",
       "objective_history": {
         "baseline": {
@@ -18298,8 +18298,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T22:11:26.797Z",
-      "lease_until": "2026-10-29T10:11:26.797Z"
+      "updated_at": "2026-10-28T22:49:50.237Z",
+      "lease_until": "2026-10-29T10:49:50.237Z",
+      "pr": 100,
+      "merged_head_sha": "169e08623a4d687ff4419191bdda60c80385b378",
+      "merge_commit_sha": "d00ebdc7170cac759f1aa176abae5b15705877f5",
+      "evidence": "PR #100 merged as d00ebdc7170cac759f1aa176abae5b15705877f5 at reviewed head 169e0862. Linux adoption ignores toolbar mode/package (test_linux_skynizz_adoption); mixed Feeder+engine Adapt is one review with a Feeder companion run after the engine part, cancel stops it (test_linux_adapt_mixed); Linux default Skynizz with Skynizz on Proton on Linux only (test_default_provider); desktop smoke updated for the Skynizz default; full Linux validation local; all PR checks green including Linux AppImage build and both WinUI builds. Local install from main follows.",
+      "work_accounted": true,
+      "completed_at": "2026-10-28T22:49:50.237Z"
     }
   ]
 }
