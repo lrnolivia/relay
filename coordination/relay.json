@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-28T04:25:46.514Z",
+  "updated_at": "2026-10-28T04:28:49.753Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18231,19 +18231,16 @@
         "src/test-maintenance.test.js",
         "test/test-maintenance-contract.test.mjs",
         "scripts/relay-executor.mjs",
-        "scripts/relay-executor.test.mjs",
-        "src/relay-chat-ui.js",
-        "src/relay-chat-ui.test.js"
+        "scripts/relay-executor.test.mjs"
       ],
       "resources": [
         "relay-consumer-verification",
         "test-maintenance-guidance",
-        "claude-executor-startup",
-        "context-card-refresh-navigation"
+        "claude-executor-startup"
       ],
       "goal": "Finish the remaining Relay verification for authenticated Claude, official Playwright Test Agents and native ChatGPT cards, as explicitly requested by Lauren in this chat on 2026-10-28.",
       "acceptance": "1. Exercise an existing authenticated Claude environment consuming Relay guidance and record actual session/provider/source/report evidence; absent authentication remains an explicit blocker, never a synthetic pass. 2. Verify official Playwright Test Agent setup against the actual installed version, then run planner/generator/healer on an isolated approved browser scenario through available authenticated tooling; preserve assertions and report any unsupported host/version without installing global tooling or granting permissions. 3. Verify mounted Relay cards and read-only refresh/navigation on actual available native ChatGPT surfaces with direct UI evidence; distinguish Codex MCP Apps, ChatGPT Work/web and unavailable full-native UI access. 4. Repair only demonstrated in-scope guidance defects, preserve all earlier evidence, record exact results in canonical docs, and finish admitted changes through required checks and release. Missing credentials or denied native access must remain unverified until supplied.",
-      "next_action": "Repair two directly reproduced consumer-path defects needed for the requested verification: Claude stops reading empty stdin after3s while Relay start acknowledgement is pending; native-card Refresh loses assignment selection. Preserve original objectives, model permissions, receipts and evidence; validate each against its actual consumer.",
+      "next_action": "Native context-card Refresh restores assignment selection after its loading transition; direct settled-state evidence corrects the provisional suspicion, so no card code change is needed. Verify the confirmed Claude3s empty-stdin fix and Playwright1.60 loop guard, then run official agents in the isolated fixture.",
       "category": "qa-verification",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -18267,8 +18264,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T04:25:46.514Z",
-      "lease_until": "2026-10-28T16:25:46.514Z"
+      "updated_at": "2026-10-28T04:28:49.753Z",
+      "lease_until": "2026-10-28T16:28:49.753Z"
     }
   ],
   "migrated_from": "loew-inspector"
