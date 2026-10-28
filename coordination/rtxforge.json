@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T05:07:27.927Z",
+  "updated_at": "2026-10-28T05:07:51.355Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17861,6 +17861,44 @@
       },
       "updated_at": "2026-10-28T05:05:14.761Z",
       "lease_until": "2026-10-28T17:05:14.761Z"
+    },
+    {
+      "id": "rtxforge-linux-library-resume-test-20261028",
+      "owner": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+      "branch": "rtxforge/linux-library-resume-test-20261028",
+      "paths": [
+        "tests/ui_library_resume.py",
+        ".github/workflows/linux-build.yml"
+      ],
+      "resources": [],
+      "goal": "Make tests/ui_library_resume.py pass on main again and keep it running in CI: update it for Available = not installed and not blocked (#91), Game Mode's deferred desktop view, and the current Settings sections and labels.",
+      "acceptance": "tests/ui_library_resume.py passes headless once the Gaming Mode Steam row is reachable (fixed in gui/game_mode.py under rtxforge-linux-proton-nr-mfg-runtime-20261027); the test runs in linux-build.yml; draft PR, merged once CI is green after reviewing captures.",
+      "next_action": "Finish the test update, add it to linux-build.yml, and wait for the Steam-row fix in game_mode.py from the PR #88 claim.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "53c07e0d12de994bb61a02157fe8d7b29002c6a4",
+      "state": "active",
+      "created_at": "2026-10-28T05:07:51.355Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Make tests/ui_library_resume.py pass on main again and keep it running in CI: update it for Available = not installed and not blocked (#91), Game Mode's deferred desktop view, and the current Settings sections and labels.",
+          "acceptance": "tests/ui_library_resume.py passes headless once the Gaming Mode Steam row is reachable (fixed in gui/game_mode.py under rtxforge-linux-proton-nr-mfg-runtime-20261027); the test runs in linux-build.yml; draft PR, merged once CI is green after reviewing captures.",
+          "at": "2026-10-28T05:07:51.355Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-library-resume-test-20261028:acceptance:0",
+            "text": "tests/ui_library_resume.py passes headless once the Gaming Mode Steam row is reachable (fixed in gui/game_mode.py under rtxforge-linux-proton-nr-mfg-runtime-20261027); the test runs in linux-build.yml; draft PR, merged once CI is green after reviewing captures.",
+            "at": "2026-10-28T05:07:51.355Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-28T05:07:51.355Z",
+      "lease_until": "2026-10-28T17:07:51.355Z"
     }
   ]
 }
