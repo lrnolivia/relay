@@ -132,9 +132,7 @@ function render(result){const data=unwrap(result);lastData=data;const m=model(da
 function rpc(method,params){return new Promise((resolve,reject)=>{const id=++seq;const timer=setTimeout(()=>{pending.delete(id);reject(new Error('Relay host timed out'))},15000);pending.set(id,{resolve,reject,timer});window.parent.postMessage({jsonrpc:'2.0',id,method,params},'*')})}
 function acceptToolInput(value){if(value&&typeof value==='object')toolInput=value.arguments||value}
 function acceptToolResult(value){if(value==null)return false;render(value);return true}
-// Hosts can echo unchanged initial output when only widget state changes.
-let lastGlobalToolOutput=null;
-function hydrateOpenAiGlobals(globals=window.openai){if(!globals)return false;if(globals.toolInput!=null)acceptToolInput(globals.toolInput);if(globals.toolOutput==null)return false;const output=JSON.stringify(globals.toolOutput);if(output===lastGlobalToolOutput)return false;lastGlobalToolOutput=output;return acceptToolResult(globals.toolOutput)}
+function hydrateOpenAiGlobals(globals=window.openai){if(!globals)return false;if(globals.toolInput!=null)acceptToolInput(globals.toolInput);return globals.toolOutput!=null?acceptToolResult(globals.toolOutput):false}
 window.addEventListener('message',event=>{if(event.source!==window.parent||event.data?.jsonrpc!=='2.0')return;const msg=event.data;const waiter=pending.get(msg.id);if(waiter){pending.delete(msg.id);clearTimeout(waiter.timer);msg.error?waiter.reject(new Error(msg.error.message)):waiter.resolve(msg.result);return}if(msg.method==='ui/notifications/tool-input')acceptToolInput(msg.params?.arguments||msg.params);if(msg.method==='ui/notifications/tool-result')acceptToolResult(msg.params);if(msg.method==='ui/resource-teardown'&&msg.id)window.parent.postMessage({jsonrpc:'2.0',id:msg.id,result:{}},'*')});
 window.addEventListener('openai:set_globals',event=>{hydrateOpenAiGlobals(event.detail?.globals||window.openai)},{passive:true});
 async function callTool(name,args){await ready;return rpc('tools/call',{name,arguments:args})}
@@ -194,6 +192,9 @@ if(lastData)render(lastData)})();`;
 
 function resilientCardHtml() {
   let html = cardHtml(CONTEXT_CARD_BROWSER_MODEL);
+  // Hosts can echo unchanged initial output when only widget state changes.
+  // Keep the versioned legacy comparison shell unchanged.
+  html = replaceOnce(html, "function hydrateOpenAiGlobals(globals=window.openai){if(!globals)return false;if(globals.toolInput!=null)acceptToolInput(globals.toolInput);return globals.toolOutput!=null?acceptToolResult(globals.toolOutput):false}", "let lastGlobalToolOutput=null;\nfunction hydrateOpenAiGlobals(globals=window.openai){if(!globals)return false;if(globals.toolInput!=null)acceptToolInput(globals.toolInput);if(globals.toolOutput==null)return false;const output=JSON.stringify(globals.toolOutput);if(output===lastGlobalToolOutput)return false;lastGlobalToolOutput=output;return acceptToolResult(globals.toolOutput)}");
   html = replaceOnce(html, "function acceptToolInput(value){if(value&&typeof value==='object')toolInput=value.arguments||value}", "function acceptToolInput(value){if(value&&typeof value==='object'){toolInput=value.arguments||value;if(!lastData)queueMicrotask(()=>{void recoverCanonicalState()})}}");
   html = replaceOnce(html, "function acceptToolResult(value){if(value==null)return false;render(value);return true}", "function acceptToolResult(value){if(value==null)return false;const data=unwrap(value);if(!data||typeof data!=='object'||!Object.keys(data).length)return false;render(data);return true}");
   html = replaceOnce(html, "if(lastData||recoveryStarted)return;hydrateOpenAiGlobals();if(lastData)return;", "if(lastData||recoveryStarted)return;if(window.openai?.toolOutput!=null&&acceptToolResult(window.openai.toolOutput))return;");

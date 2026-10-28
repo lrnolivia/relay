@@ -28,6 +28,30 @@ test('context card embeds canonical artwork and Momo without external fonts', ()
   assert.match(html, /prefers-reduced-motion/);
   assert.match(html, /visibilitychange/);
 });
+test('Momo loads from bundled bytes when a host cannot load CSS font URLs', async () => {
+ const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
+ try {
+  const widths=[];
+  for(const restrictFontUrls of [false,true]){
+   const page=await browser.newPage();const requests=[];page.on('request',request=>requests.push(request.url()));
+   await page.route('https://relay-font.test/card',route=>route.fulfill({contentType:'text/html',headers:restrictFontUrls?{'Content-Security-Policy':"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src 'self'"}:{},body:relayContextCardResource().text}));
+   await page.goto('https://relay-font.test/card');
+   await page.waitForFunction(()=>['loaded-css','loaded-buffer'].includes(document.documentElement.dataset.momoFont),null,{timeout:3000});
+   const result=await page.evaluate(()=>{
+    const family=document.documentElement.dataset.momoFont==='loaded-buffer'?'Momo Trust Display Embedded':'Momo Trust Display';
+    const canvas=document.createElement('canvas'),context=canvas.getContext('2d');context.font='400 32px "'+family+'"';
+    return {mode:document.documentElement.dataset.momoFont,loaded:document.fonts.check('400 32px "'+family+'"'),family:getComputedStyle(document.querySelector('h1')).fontFamily,width:context.measureText('relay 123').width};
+   });
+   assert.equal(result.mode,restrictFontUrls?'loaded-buffer':'loaded-css');
+   assert.equal(result.loaded,true);
+   assert.match(result.family,new RegExp(restrictFontUrls?'Momo Trust Display Embedded':'Momo Trust Display'));
+   assert.deepEqual(requests,['https://relay-font.test/card'],'font fallback makes no network request');
+   widths.push(result.width);await page.close();
+  }
+  assert.equal(widths[0],widths[1],'fallback uses the same font metrics as the canonical embedded font');
+ } finally {await browser.close();}
+});
+
 test('no reported percentage is represented as unknown, never invented zero', () => {
   for (const value of [undefined,null,'',' ',false,true,{},'unknown',-1,101,Infinity]) {
     const model = contextCardModel({project:'relay', progress_percent:value});

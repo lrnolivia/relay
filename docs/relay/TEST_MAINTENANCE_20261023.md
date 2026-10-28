@@ -90,6 +90,8 @@ Emit one agent message that starts with the line `RELAY_TEST_MAINTENANCE`, follo
 
 Native card interaction and live data freshness are separate assertions. The consumer follow-up reproduced unchanged initial tool output overwriting a successful refresh during widget-state hydration. Its regression preserves navigation and proves genuinely changed host output still renders; existing card assertions remain intact. Native acceptance additionally requires a real post-deployment state change and observed refresh.
 
+For bundled fonts, a CSS family declaration is insufficient evidence. Verify an actually loaded face and matching rendered metrics. The card font regression covers both normal CSS loading and the same embedded bytes loaded through `FontFace` when CSS font URLs fail, without adding network requests or weakening the host policy.
+
 `test/test-maintenance-contract.test.mjs` runs a real fixture suite (`test/fixtures/test-maintenance/`) with `node --test` and evaluates reports built from the runner's actual TAP output:
 
 - The obsolete suite fails against the approved change, and leaving it unclassified is never a pass.
