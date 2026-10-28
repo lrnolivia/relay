@@ -105,6 +105,19 @@ test("checkpoint contract is compact canonical resume state", () => {
   assert.equal(got.resume.instruction, "Continue checkpoint implementation.");
   assert.equal(got.resume.reconstruct_chat_history, false);
   assert.equal(got.cadence.target_ms, 5 * 60 * 1000);
+  assert.equal(got.test_maintenance.canonical, "lrnolivia/relay@main/docs/relay/TEST_MAINTENANCE_20261023.md");
+  assert.deepEqual(got.test_maintenance.playwright_test_agents.init, { claude: "npx playwright init-agents --loop=claude", codex: "npx playwright init-agents --loop=codex" });
+});
+
+test("test-maintenance guidance rides every resume without changing checkpoint identity", () => {
+  const base = checkpoint();
+  const research = deriveResumeCheckpoint({ project: "relay", assignment: { ...assignment, category: "research", task_class: null }, progress: progress(), recordSha: "c".repeat(40), policySha: "d".repeat(40) });
+  assert.equal(research.test_maintenance, null);
+  const { test_maintenance, ...rest } = base;
+  assert.ok(test_maintenance.steps.some(step => /Intent first/.test(step)));
+  assert.equal(deriveResumeCheckpoint({ project: "relay", assignment, progress: progress(), changedPaths: ["src/resume-checkpoints.js"], recentCommits: base.source.recent_commits, recordSha: "c".repeat(40), policySha: "d".repeat(40) }, new Date("2026-10-01T00:01:00.000Z")).checkpoint_id, rest.checkpoint_id);
+  const retiredCheckpoint = deriveResumeCheckpoint({ project: "relay", assignment: { ...assignment, state: "cancelled", retirement: { at: "2026-10-01T00:00:00.000Z" } }, progress: progress() });
+  assert.equal(retiredCheckpoint.test_maintenance, null);
 });
 
 test('pending feedback and acknowledgement change checkpoint identity without becoming completion', () => {

@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 import { githubApiRequest } from "./source.js";
 import { callProgress } from "./progress-api.js";
 import { callRunnerControlCore } from "./runner-control-core.js";
+import { testMaintenanceGuidance } from "./test-maintenance.js";
 
 export const RESUME_CONTRACT_VERSION = "1.9.3";
 
@@ -157,6 +158,10 @@ export function deriveResumeCheckpoint(input, now = new Date()) {
       target_ms: target,
       next_refresh_at: target === null ? null : new Date(now.getTime() + target).toISOString()
     },
+    // Delivered on every resume so Claude and Codex receive the same canonical
+    // workflow without anyone copying it between chats. Kept out of the
+    // checkpoint hash: guidance is policy, not assignment evidence.
+    test_maintenance: retired(core) ? null : testMaintenanceGuidance({ category: input.assignment?.category || null }),
     resume: {
       instruction: retired(core) ? "Assignment retired. Preserve its evidence; do not renew or resume it. Any future work requires fresh admission." : core.next_action || "Reconcile current canonical evidence before choosing the next action.",
       reconstruct_chat_history: false

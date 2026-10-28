@@ -247,7 +247,11 @@ test('completion uses provider merged identity and denies unmerged or wrong bran
 test('preflight requires current owner, active lease and complete scoped paths', async () => {
   const args = { project: 'relay', id: 'task', owner: 'worker', paths: ['src/index.js'] };
   const f = fixture({ claims: [claim()], branches: [{ name: defaultRequest.branch }] });
-  assert.equal((await callRunnerControl('relay_runner_preflight', args, {}, f.api)).admitted, 'task');
+  const admitted = await callRunnerControl('relay_runner_preflight', args, {}, f.api);
+  assert.equal(admitted.admitted, 'task');
+  // Start-of-work admission carries the canonical test-maintenance workflow to any host.
+  assert.match(admitted.test_maintenance.canonical, /TEST_MAINTENANCE_20261023\.md$/);
+  assert.match(admitted.test_maintenance.playwright_test_agents.not_equivalent, /Playwright MCP/);
   await assert.rejects(callRunnerControl('relay_runner_preflight', { ...args, paths: ['other/file'] }, {}, f.api), /exceed/);
   const expired = fixture({ claims: [claim({ lease_until: '2000-01-01' })] });
   await assert.rejects(callRunnerControl('relay_runner_preflight', args, {}, expired.api), /live active/);
