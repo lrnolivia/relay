@@ -121,11 +121,10 @@ export async function openNativeChannel({directory,config,workspace,waitMs=30000
  };
  return {directory,rpc,nativeHost};
 }
-export async function pendingNativeRequest(directory){
- directory=await privateDirectory(directory);const pointer=await readJSON(path.join(directory,'current.json'));
- if(!/^[a-f0-9]{64}$/.test(pointer.id||''))throw Error('Invalid native request id');
- const request=await readJSON(path.join(directory,pointer.id+'.request.json'));
- const {id,...intent}=request;if(id!==pointer.id||digest(intent)!==id)throw Error('Native intent digest mismatch');
+async function readNativeRequest(directory,requestId){
+ if(!/^[a-f0-9]{64}$/.test(requestId||''))throw Error('Invalid native request id');
+ const request=await readJSON(path.join(directory,requestId+'.request.json'));
+ const {id,...intent}=request;if(id!==requestId||digest(intent)!==id)throw Error('Native intent digest mismatch');
  const manifest=await readJSON(path.join(directory,'manifest.json'));if(digest(manifest.binding)!==digest(request.binding))throw Error('Native request assignment changed');
  if(request.kind==='rpc')authorizeRpc(request.data.name,request.data.args,manifest.binding);
  else if(request.kind==='snapshot'){if(request.data.project!==manifest.binding.project||request.data.assignment!==manifest.binding.assignment)throw Error('Native snapshot binding changed');}
@@ -133,12 +132,26 @@ export async function pendingNativeRequest(directory){
  let state='pending';for(const [suffix,label] of [['started','started'],['response','answered']])try{await readJSON(path.join(directory,id+'.'+suffix+'.json'));state=label;}catch(e){if(e.code!=='ENOENT')throw e;}
  return {request,state};
 }
+export async function pendingNativeRequest(directory){
+ directory=await privateDirectory(directory);const pointer=await readJSON(path.join(directory,'current.json'));
+ return readNativeRequest(directory,pointer.id);
+}
 export async function beginNativeWork(directory,id){
  const p=await pendingNativeRequest(directory);if(p.request.id!==id||!requiresStart(p.request)||p.state!=='pending')throw Error('Native work is already started/answered or request changed; reconcile, do not execute again');
  await writeOnce(path.join(directory,id+'.started.json'),{request_digest:id,operation_id:p.request.data.pending?.operation_id||p.request.id,at:new Date().toISOString()},{exclusive:true});
 }
 export async function replyNativeRequest(directory,id,value){
- const p=await pendingNativeRequest(directory);if(p.request.id!==id)throw Error('Native reply target changed');validateReply(p.request,value);
+ let p=await pendingNativeRequest(directory);
+ if(p.request.id!==id){
+  // A bounded wait may finish and advance current.json before native work
+  // returns. Reconcile only an already-started, immutable execution intent;
+  // never move the pointer, start work again or answer a stale control read.
+  try{p=await readNativeRequest(directory,id);}catch(e){if(e.code==='ENOENT')throw Error('Native reply target changed');throw e;}
+  if(p.request.kind!=='execute')throw Error('Native reply target changed');
+  let started;try{started=await readJSON(path.join(directory,id+'.started.json'));}catch(e){if(e.code!=='ENOENT')throw e;}
+  if(started?.request_digest!==id||started.operation_id!==p.request.data.pending.operation_id)throw Error('Late native result requires its exact start receipt');
+ }
+ validateReply(p.request,value);
  if(requiresStart(p.request)&&p.state==='pending')throw Error('Persist native work start before reporting its result');
  await writeOnce(path.join(directory,id+'.response.json'),{request_digest:id,value});
 }
