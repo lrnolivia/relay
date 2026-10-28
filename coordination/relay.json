@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-28T03:26:03.192Z",
+  "updated_at": "2026-10-28T03:31:49.627Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -9593,7 +9593,7 @@
       "supporting_staff": [
         "roman"
       ],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-23T05:08:44.791Z",
       "objective_history": {
         "baseline": {
@@ -9624,7 +9624,8 @@
           "next_action": "Lauren explicitly confirmed both Claude sessions are stopped and instructed this chat to take over and finish PR254 and test maintenance (2026-10-27, chat 01a18087-d63e-7060-a601-8be52e311c63). Preserve branch and acceptance. Review exact PR254 head7548b3306cd4e15afe9896bbe7663df042593186, verify existing CI/runtime evidence, then release and production-readback through authorized gates."
         }
       ],
-      "updated_at": "2026-10-28T03:25:46.865Z"
+      "updated_at": "2026-10-28T03:31:49.627Z",
+      "completed_at": "2026-10-28T03:31:49.627Z"
     },
     {
       "id": "card-smoke-2026-10-23-iz1a",
@@ -17973,7 +17974,7 @@
         "roman"
       ],
       "base_sha": "a375ebb117a1c1255c1a056e4de91c5ac72a799b",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-23T05:16:52.405Z",
       "objective_history": {
         "baseline": {
@@ -17990,8 +17991,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T03:26:03.192Z",
-      "lease_until": "2026-10-28T15:26:03.192Z",
+      "updated_at": "2026-10-28T03:31:49.627Z",
+      "lease_until": "2026-10-28T15:31:49.627Z",
       "handoffs": [
         {
           "at": "2026-10-23T05:16:34.766Z",
@@ -18005,7 +18006,13 @@
           "to": "01a18087-d63e-7060-a601-8be52e311c63",
           "next_action": "Lauren explicitly confirmed both Claude sessions are stopped and instructed this chat to take over and finish PR254 and test maintenance (2026-10-27, chat 01a18087-d63e-7060-a601-8be52e311c63). Preserve branch and acceptance. Review exact PR254 head7548b3306cd4e15afe9896bbe7663df042593186, verify existing CI/runtime evidence, then release and production-readback through authorized gates."
         }
-      ]
+      ],
+      "pr": 254,
+      "merged_head_sha": "7548b3306cd4e15afe9896bbe7663df042593186",
+      "merge_commit_sha": "826cca2f82568e1615546c1f3d234f14316f7854",
+      "evidence": "https://github.com/lrnolivia/relay/pull/254 merged826cca2; canonical Relay context revision181 operationfinish-relay-pr254-complete-20261027 contains full code/acceptance disposition, exact production version, CI40626815968, assurance40627123783 and4Inspector Visuals readback IDs. Native ChatGPT host proof explicitly unverified (unsupported here), prior Claude recording preserved. No unpublished card source.",
+      "work_accounted": true,
+      "completed_at": "2026-10-28T03:31:49.627Z"
     },
     {
       "id": "card-smoke-2026-10-23-iz1a",
