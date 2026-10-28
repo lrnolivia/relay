@@ -66,13 +66,34 @@ test('Test Agent setup is decided from existing project facts and stays idempote
   const pkg = { devDependencies: { '@playwright/test': '1.60.0' } };
   assert.equal(playwrightAgentSetup({ host: 'claude', packageJson: { devDependencies: { vitest: '3' } }, browserUi: false }).state, 'not-applicable');
   assert.match(playwrightAgentSetup({ host: 'codex', packageJson: {}, files: [] }).action, /Do not install/);
-  const missing = playwrightAgentSetup({ host: 'claude', packageJson: pkg, files: ['playwright.config.ts'] });
+  const missing = playwrightAgentSetup({ host: 'claude', packageJson: pkg, files: ['playwright.config.ts'], supportedLoops: ['claude'] });
   assert.equal(missing.state, 'agents-missing');assert.equal(missing.action, 'npx playwright init-agents --loop=claude');
   const files = ['playwright.config.ts', '.claude/agents/playwright-test-planner.md', '.claude/agents/playwright-test-generator.md', '.claude/agents/playwright-test-healer.md'];
   const present = playwrightAgentSetup({ host: 'claude', packageJson: pkg, files, generatedFor: '1.60.0' });
   assert.equal(present.state, 'agents-present');assert.match(present.action, /no init needed/);
-  assert.equal(playwrightAgentSetup({ host: 'claude', packageJson: pkg, files, generatedFor: '1.59.0' }).state, 'agents-stale');
-  // Claude definitions do not satisfy Codex; each host initializes its own loop.
-  assert.equal(playwrightAgentSetup({ host: 'codex', packageJson: pkg, files }).action, 'npx playwright init-agents --loop=codex');
+  assert.equal(playwrightAgentSetup({ host: 'claude', packageJson: pkg, files, generatedFor: '1.59.0', supportedLoops: ['claude'] }).state, 'agents-stale');
+  // Claude definitions do not satisfy Codex; its installed loop support must be checked.
+  assert.equal(playwrightAgentSetup({ host: 'codex', packageJson: pkg, files }).state, 'loop-unverified');
   assert.throws(() => playwrightAgentSetup({ host: 'vscode', packageJson: pkg }), /claude or codex/);
+});
+
+test('Test Agent setup never recommends a loop the installed CLI does not support', () => {
+  const installed = { host: 'codex', packageJson: { devDependencies: { playwright: '1.60.0' } }, supportedLoops: ['claude', 'copilot', 'opencode', 'vscode', 'vscode-legacy'] };
+  const unsupported = playwrightAgentSetup(installed);
+  assert.equal(unsupported.state, 'loop-unsupported');
+  assert.doesNotMatch(unsupported.action, /init-agents --loop=codex/);
+  assert.match(unsupported.action, /Do not upgrade/);
+  const files = ['.codex/agents/playwright-test-planner.md', '.codex/agents/playwright-test-generator.md', '.codex/agents/playwright-test-healer.md'];
+  assert.equal(playwrightAgentSetup({...installed,files,generatedFor:'1.59.0'}).state, 'loop-unsupported');
+  assert.equal(playwrightAgentSetup({...installed,files,generatedFor:'1.60.0'}).state, 'agents-present');
+  assert.equal(playwrightAgentSetup({...installed,host:'claude'}).state, 'agents-missing');
+});
+
+test('unknown installed loop support requires inspection before initialization', () => {
+  const unknown = playwrightAgentSetup({ host: 'codex', packageJson: { devDependencies: { '@playwright/test': '1.60.0' } } });
+  assert.equal(unknown.state, 'loop-unverified');
+  assert.match(unknown.action, /--no-install playwright init-agents --help/);
+  const guidance = testMaintenanceGuidance({host:'codex'}).playwright_test_agents;
+  assert.match(guidance.run_init_only_when, /supports/);
+  assert.match(guidance.unsupported_loop, /Do not upgrade/);
 });

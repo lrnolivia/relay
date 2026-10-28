@@ -36,12 +36,14 @@ function playwrightAdapter(host) {
     applies_when: 'The project has browser UI or existing Playwright E2E tests. Skip for native-only and non-browser projects.',
     reference: 'https://playwright.dev/docs/test-agents',
     inspect_first: [
-      'package.json and lockfile for @playwright/test (version) and playwright.config.*',
+      'package.json and lockfile for @playwright/test or playwright (version) and playwright.config.*',
       'existing Test Agent definitions (planner/generator/healer files under .claude/, .codex/, .github/ or the host\'s agent directory) and specs/ plus tests/seed.spec.*',
-      'whether the definitions were generated for the Playwright version now in the lockfile'
+      'whether the definitions were generated for the Playwright version now in the lockfile',
+      'npx --no-install playwright init-agents --help: confirm the installed CLI lists this host in its --loop choices; current website documentation may describe a newer package'
     ],
     init: Object.fromEntries(hosts.map(h => [h, `npx playwright init-agents --loop=${h}`])),
-    run_init_only_when: 'Definitions for this host are missing, or @playwright/test changed version since they were generated. Otherwise reuse them; do not reinstall or regenerate per assignment.',
+    run_init_only_when: 'The installed CLI supports this host AND definitions for this host are missing or Playwright changed version since they were generated. Otherwise reuse them; do not reinstall or regenerate per assignment.',
+    unsupported_loop: 'Report unsupported when the installed CLI lacks this host, or unknown until its help is inspected. Do not upgrade Playwright or substitute another host merely to make the command work. Playwright 1.60.0 supports Claude but not the Codex loop advertised by the current website documentation.',
     preserve: 'Run from the project root on the assignment branch, review the generated diff, keep existing playwright.config, seed test, specs and customized agent files, and commit the definitions with the project. Respect host permission prompts; do not install browsers, global packages or MCP servers on the user\'s machine unless that is already authorized.',
     not_equivalent: 'Adding the Playwright MCP server (microsoft/playwright-mcp) only gives browser tools. It is not the planner/generator/healer setup.',
     healer_skips: 'The healer may mark a test skipped when it believes functionality is broken. Treat that as a regression report, not a fix: keep the skip visible with its reason or restore the behavior.',
@@ -66,20 +68,22 @@ export function testMaintenanceGuidance({ host = null, category = null } = {}) {
 
 // Decide what the worker should do about Test Agents from facts it read in
 // its own checkout. Pure: Relay never reads or writes the worker's machine.
-export function playwrightAgentSetup({ host, packageJson = null, files = [], browserUi = null, generatedFor = null } = {}) {
+export function playwrightAgentSetup({ host, packageJson = null, files = [], browserUi = null, generatedFor = null, supportedLoops = null } = {}) {
   if (!HOSTS.includes(host)) throw new Error('Test Agent setup needs an explicit claude or codex host');
   const deps = { ...(packageJson?.dependencies || {}), ...(packageJson?.devDependencies || {}) };
-  const version = deps['@playwright/test'] || null;
+  const version = deps['@playwright/test'] || deps.playwright || null;
   const config = files.some(f => /(^|\/)playwright\.config\.[cm]?[jt]s$/.test(f));
   if (browserUi === false && !version && !config) return { state: 'not-applicable', action: 'Keep the project\'s native/unit/integration tooling.' };
   if (!version) return { state: 'playwright-missing', action: 'Playwright Test is not a project dependency. Do not install it unless the assignment authorizes adding browser E2E coverage; report the gap instead.' };
   const roles = ['planner', 'generator', 'healer'];
   const dirs = { claude: /(^|\/)\.claude\//, codex: /(^|\/)\.(codex|agents)\/|(^|\/)\.github\// };
   const found = roles.filter(role => files.some(f => dirs[host].test(f) && f.toLowerCase().includes(role)));
+  if (found.length === roles.length && (!generatedFor || generatedFor === version)) return { state: 'agents-present', version, action: 'Reuse existing definitions; no init needed.' };
+  if (!Array.isArray(supportedLoops) || !supportedLoops.every(x => typeof x === 'string')) return { state: 'loop-unverified', version, action: 'Inspect npx --no-install playwright init-agents --help and record its supported loops before recommending initialization.' };
+  if (!supportedLoops.includes(host)) return { state: 'loop-unsupported', version, host, action: 'The installed Playwright CLI does not support this host. Do not upgrade or substitute another host without an authorized dependency change; report the limitation.' };
   const command = `npx playwright init-agents --loop=${host}`;
   if (found.length < roles.length) return { state: 'agents-missing', version, missing: roles.filter(r => !found.includes(r)), action: command };
   if (generatedFor && generatedFor !== version) return { state: 'agents-stale', version, generated_for: generatedFor, action: `${command} (Playwright changed; regenerate and review the diff)` };
-  return { state: 'agents-present', version, action: 'Reuse existing definitions; no init needed.' };
 }
 
 const int = v => v === null || (Number.isSafeInteger(v) && v >= 0);

@@ -44,12 +44,14 @@ All of it runs in the agent's project environment. Relay's server runs no browse
 
 Reference: <https://playwright.dev/docs/test-agents>. The planner explores the app and writes a Markdown plan in `specs/`. The generator turns plans into Playwright tests. The healer replays failing tests and patches them.
 
-1. **Check what's already there.** Look for `@playwright/test` in `package.json`/lockfile and its version, `playwright.config.*`, existing planner/generator/healer definitions for your host, `specs/` and `tests/seed.spec.*`.
-2. **Initialize only when needed**, from the project root on the assignment branch:
+1. **Check what's already there.** Look for `@playwright/test` or `playwright` in `package.json`/lockfile and its version, `playwright.config.*`, existing planner/generator/healer definitions for your host, `specs/` and `tests/seed.spec.*`. Run the installed CLI's `npx --no-install playwright init-agents --help` and inspect its `--loop` choices before recommending a command. Current website documentation is not proof that the installed version supports every host.
+2. **Initialize only when needed and supported**, from the project root on the assignment branch:
    - Claude Code: `npx playwright init-agents --loop=claude`
    - Codex: `npx playwright init-agents --loop=codex`
 
-   Run it only when your host's definitions are missing, or when `@playwright/test` changed version since they were generated (Playwright says to regenerate after updates). Otherwise reuse them. Don't reinstall or regenerate on every assignment. `playwrightAgentSetup()` in the source module encodes this decision.
+   Run it only when the installed CLI lists your host and its definitions are missing, or Playwright changed version since they were generated. Otherwise reuse them. Don't reinstall or regenerate on every assignment. `playwrightAgentSetup()` accepts the observed `supportedLoops`; missing facts produce `loop-unverified`, and an absent host produces `loop-unsupported`. Existing current definitions remain reusable without initialization.
+
+   Relay's pinned Playwright **1.60.0 supports Claude but rejects `--loop=codex`**. The current website advertises Codex support, but that does not establish support in this installed package. Report this version boundary; do not silently upgrade dependencies, install another package, or substitute a host to obtain a green setup result.
 3. **Keep existing configuration.** Review the generated diff, keep existing `playwright.config`, seed test, specs and customized agent files, and commit the definitions with the project.
 4. **Permissions.** Respect the host's permission prompts. Don't install browsers, global packages or MCP servers on Lauren's machines unless that's already authorized. If setup is missing and not authorized, report `playwright_agents: "missing"` with the specific blocker.
 5. **MCP isn't the same thing.** Adding the Playwright MCP server (<https://github.com/microsoft/playwright-mcp>) only gives browser tools. It doesn't configure the planner, generator and healer.
