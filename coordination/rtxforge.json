@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T23:31:22.021Z",
+  "updated_at": "2026-10-28T23:48:10.649Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18369,6 +18369,7 @@
         "scripts/proton_stack.py",
         "gui/rtxforge_gtk.py",
         "gui/game_mode.py",
+        "gui/game_mode_motion.py",
         "gui/overview_facts.py",
         "tests/linux_runtime/test_vulkan_cross_os.py",
         "tests/linux_ui/test_overview_facts.py"
@@ -18376,7 +18377,7 @@
       "resources": [],
       "goal": "Vulkan NR + Universal MFG installs (Baldur's Gate 3, RDR2) never write the shared .rtxforge-install.json, so Linux lists Windows Vulkan installs as Available and cannot adapt them. Write the cross-OS record on Vulkan install/repair (remove on restore), recognise Windows Vulkan installs on Linux (including existing ones without a record, by their NativeMods/rtxForge-vulkan receipt and bink2w64 original backup), and adapt them via the Windows-install route (bink2w64 Proton override plus the Universal MFG CUDA setting, no Skynizz panel prefs). Windows installs being adapted skip Skynizz fresh-install checks. Also look at the two blank library cards.",
       "acceptance": "Vulkan install writes and restore removes the record (tested); Linux marks Windows Vulkan installs installed_on windows with or without a record (tested); Adapt plans the bink2w64 override and CUDA only (tested); dry-run review on Lauren's library shows BG3/RDR2 in Adapt; PR CI incl. Linux and Windows builds green; merged; installed.",
-      "next_action": "Tests for installed OS marks, run suites and UI tests, PR, merge, install. BG3/RDR2 adapt is blocked only by Proton Experimental lacking nvcuda; refusal now says to switch the game to Proton-GE.",
+      "next_action": "Also: seam through Game Mode's active pills (GSK capsule outset-shadow slices); the selection draws a blurred-pill glow instead. Push to PR #102, wait CI, merge, install.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18400,8 +18401,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T23:31:22.021Z",
-      "lease_until": "2026-10-29T11:31:22.021Z"
+      "updated_at": "2026-10-28T23:48:10.649Z",
+      "lease_until": "2026-10-29T11:48:10.649Z"
     }
   ]
 }
