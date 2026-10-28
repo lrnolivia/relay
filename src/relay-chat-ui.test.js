@@ -712,11 +712,14 @@ test('an ordinary claim mounts a staff-attributed work card that follows the sam
     await frame.locator('#rows').filter({hasText:'Work started'}).waitFor();
     assert.equal(await frame.locator('#team').textContent(),'Rafael · The Integrator');
     assert.equal(await frame.locator('#staff').isHidden(),false);
-    assert.match(await frame.locator('#rows').textContent(),/Latest step\W*Work started/);
+    assert.match(await frame.locator('#rows').textContent(),/This step\W*Work started/);
     await page.clock.runFor(31000);
     await frame.locator('#state-label').filter({hasText:/hold/i}).waitFor();
     await page.clock.runFor(31000);
     await frame.locator('#state-label').filter({hasText:/complete/i}).waitFor();
+    // The card keeps the step it was mounted for after the live state moves on.
+    assert.match(await frame.locator('#rows').textContent(),/This step\W*Work started/);
+    assert.equal(await frame.locator('#team').textContent(),'Rafael · The Integrator');
     await page.clock.runFor(120000);
     assert.deepEqual(calls.map(call=>call.args),[{project:'relay'},{project:'relay',assignment:claim.id},{project:'relay',assignment:claim.id}]);
     assert.ok(calls.every(call=>call.name==='relay_runner_progress'));
