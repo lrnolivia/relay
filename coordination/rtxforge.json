@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T18:28:45.135Z",
+  "updated_at": "2026-10-28T18:29:56.711Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17959,6 +17959,49 @@
       "evidence": "PR #93 merged as ec7a56624b503f3fa5a3325e9b5cb4217476ade9 at reviewed head 6fc881d4. mfg_choice.dynamic_supported/dynamic_reason unit-tested (8 pass); MfgControl, desktop Presets, per-game editor and Game Mode presets wired; all CI green (WinUI 3 x64 flake test_companion_controls passed on rerun).",
       "work_accounted": true,
       "completed_at": "2026-10-28T18:28:45.135Z"
+    },
+    {
+      "id": "rtxforge-linux-gamemode-controller-20261028",
+      "owner": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+      "branch": "rtxforge/linux-gamemode-controller-20261028",
+      "paths": [
+        "scripts/controller_input.py",
+        "scripts/controller_prompt.py",
+        "gui/game_mode.py",
+        "gui/rtxforge_gtk.py",
+        "tests/linux_ui/test_controller_native.py",
+        "tests/linux_runtime/test_controller_prompt.py",
+        "tests/ui_game_mode.py"
+      ],
+      "resources": [],
+      "goal": "Linux Beta item 2a: Game Mode controller navigation matching Windows Beta 1. Right-stick scrolling of the active page or dialog (Windows ControllerNavigation.ScrollDelta, 0.18 deadzone, 1100 px/s), Steam Controller detection by vendor 0x28DE and a Steam Controller label choice, and drawn controller glyphs from the shared ControllerPrompt table in the footer and the Controller buttons guide (bumpers shown as LB/RB, L1/R1, L/R).",
+      "acceptance": "controller_prompt ports ControllerPrompt.For (unit-tested); right-stick scroll delta unit-tested and wired to the active scroller; Steam vendor detection; footer and guide draw the glyphs; GTK UI tests pass and captures reviewed; PR merged on green.",
+      "next_action": "Port ControllerPrompt and ScrollDelta, add SDL vendor/right-stick reads, draw glyphs in GTK, wire scroll; test; capture; draft PR.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "ec7a56624b503f3fa5a3325e9b5cb4217476ade9",
+      "state": "active",
+      "created_at": "2026-10-28T18:29:56.711Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Linux Beta item 2a: Game Mode controller navigation matching Windows Beta 1. Right-stick scrolling of the active page or dialog (Windows ControllerNavigation.ScrollDelta, 0.18 deadzone, 1100 px/s), Steam Controller detection by vendor 0x28DE and a Steam Controller label choice, and drawn controller glyphs from the shared ControllerPrompt table in the footer and the Controller buttons guide (bumpers shown as LB/RB, L1/R1, L/R).",
+          "acceptance": "controller_prompt ports ControllerPrompt.For (unit-tested); right-stick scroll delta unit-tested and wired to the active scroller; Steam vendor detection; footer and guide draw the glyphs; GTK UI tests pass and captures reviewed; PR merged on green.",
+          "at": "2026-10-28T18:29:56.711Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-gamemode-controller-20261028:acceptance:0",
+            "text": "controller_prompt ports ControllerPrompt.For (unit-tested); right-stick scroll delta unit-tested and wired to the active scroller; Steam vendor detection; footer and guide draw the glyphs; GTK UI tests pass and captures reviewed; PR merged on green.",
+            "at": "2026-10-28T18:29:56.711Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-28T18:29:56.711Z",
+      "lease_until": "2026-10-29T06:29:56.711Z"
     }
   ]
 }
