@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T05:08:59.402Z",
+  "updated_at": "2026-10-28T05:33:09.835Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17882,7 +17882,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "0320fe48f7dbce3864d7e494adb2d8286ac8d620",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-27T23:38:05.071Z",
       "objective_history": {
         "baseline": {
@@ -17899,8 +17899,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T05:08:59.402Z",
-      "lease_until": "2026-10-28T17:08:59.402Z"
+      "updated_at": "2026-10-28T05:33:09.835Z",
+      "lease_until": "2026-10-28T17:33:09.835Z",
+      "pr": 88,
+      "merged_head_sha": "a523072ea668c526bfc78d8eaee329623d14609b",
+      "merge_commit_sha": "88b76b7c5201ab616cdde001ab6e2602164a41a4",
+      "evidence": "PR #88 head a523072 merged to main as 88b76b7 by the rtxForge Linux compatibility session, on Lauren's instruction 'Merge #88', after all checks passed on a523072 (Package UI review native/wayland/kde, WinUI 3 x64/ARM64, panel candidate, attribution, coordination). Delivered: F6 toggles NR with the comparison key unbound (while auto); a Proton CUDA gate (cuda-missing/cuda-off) and gpuSelectionFailure hint; Adapt to Linux for Windows Skynizz installs, writing the prefix override, Proton CUDA via the build's user_settings.py (shared, removed with the last game), and panel preferences plus identity with the poster accent, with no game-folder changes and a byte-exact Remove Linux Setup; the same writes on fresh Linux installs; Adapt to Linux for Windows Feeder installs (dxgi override only); Adapt/Remove labels across the GUI; the Game Mode Steam row. Runtime: CONTROL Resonant under cachyos-rtxmg-test showed gpuFamily=Ada, route=local, 4x presented (Lauren); evidence recorded in proton-runtime-evidence.json. Not verified live: Feeder Adapt to Linux on a real game, or the GUI labels in the running app. Follow-ups: startup/logo-screen noise (bridge patch to hold NR until the meter has a reading), the FG fence stall after a hitch under Proton, the controls mailbox for preset replay (not in #89), and the docs/linux/proton-prerequisites.md text (in the shared notes).",
+      "work_accounted": true,
+      "completed_at": "2026-10-28T05:33:09.835Z"
     }
   ]
 }
