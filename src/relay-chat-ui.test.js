@@ -5,7 +5,7 @@ import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI,
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v18.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v19.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -579,6 +579,39 @@ test('overall status expands projects and assignments within one mounted card', 
   assert.equal(await page.locator('.status-navigation').count(),1);
   assert.deepEqual(await page.evaluate(()=>window.calls),[{name:'relay_runner_progress',args:{project:'field'}}]);
   assert.equal(await page.evaluate(()=>window.openai.widgetState.statusExplorer.level),'overview');
+ } finally {await browser.close();}
+});
+
+test('widget-state globals echoes cannot replace refreshed assignment evidence', async () => {
+ const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
+ try {
+  const page=await browser.newPage();
+  await page.addInitScript(()=>{
+   const initial={schema:'relay-status-explorer/v1',project:'relay',generated_at:'2026-10-28T04:00:00Z',progress:[{assignment:'refresh-proof',goal:'Refresh proof',state:'working',next_action:'Old action',identities:{head_sha:'1111111111111111111111111111111111111111'}}],queue:[]};
+   const current={...initial,generated_at:'2026-10-28T05:00:00Z',progress:[{...initial.progress[0],state:'waiting-for-human',next_action:'Current action',identities:{head_sha:'2222222222222222222222222222222222222222'}}]};
+   window.calls=[];window.echoes=0;
+   window.openai={toolInput:{project:'relay',assignment:'refresh-proof'},toolOutput:initial,widgetState:{},setWidgetState(state){
+    if(JSON.stringify(state)===JSON.stringify(this.widgetState))return;
+    this.widgetState=state;
+    setTimeout(()=>{window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:JSON.parse(JSON.stringify({toolInput:this.toolInput,toolOutput:this.toolOutput,widgetState:this.widgetState}))}}));window.echoes++;},0);
+   },callTool:async(name,args)=>{window.calls.push({name,args});await new Promise(resolve=>setTimeout(resolve,30));return {structuredContent:current};}};
+  });
+  await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
+  await page.locator('#title').filter({hasText:'Refresh proof'}).waitFor();
+  await page.waitForFunction(()=>window.echoes===1);
+  await page.getByRole('button',{name:'Refresh',exact:true}).click();
+  await page.waitForFunction(()=>window.echoes>=3);
+  assert.equal(JSON.parse(await page.locator('#evidence').textContent()).head_sha,'2222222222222222222222222222222222222222');
+  assert.equal(await page.locator('#next').textContent(),'Current action');
+  assert.equal(await page.locator('#state-label').textContent(),'Ready for review');
+  assert.equal(await page.evaluate(()=>window.openai.widgetState.statusExplorer.assignment),'refresh-proof');
+  assert.deepEqual(await page.evaluate(()=>window.calls),[{name:'relay_runner_progress',args:{project:'relay'}}]);
+  await page.evaluate(()=>{
+   window.openai.toolOutput={...window.openai.toolOutput,progress:[{assignment:'refresh-proof',goal:'Refresh proof',state:'working',next_action:'New host result',identities:{head_sha:'3333333333333333333333333333333333333333'}}]};
+   window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolOutput:window.openai.toolOutput}}}));
+  });
+  assert.equal(JSON.parse(await page.locator('#evidence').textContent()).head_sha,'3333333333333333333333333333333333333333');
+  assert.equal(await page.locator('#next').textContent(),'New host result');
  } finally {await browser.close();}
 });
 

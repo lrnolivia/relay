@@ -6,7 +6,7 @@ import { CONTEXT_CARD_BROWSER_MODEL } from './relay-context-card-browser.js';
 import { withHumanPresentation } from './communication-presentation.js';
 import { enrichWorkCard, isWorkCardTool, withWorkCardTemplate } from './work-card-delivery.js';
 export function contextCardModel(data = {}, directory = DIRECTORY, options = {}) { return sharedContextCardModel(data, directory, { roles: ROLE_DIRECTORY, ...options }); }
-export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v18.html';
+export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v19.html';
 export const RELAY_CONTEXT_CARD_TOOL = 'relay_render_context_card';
 export const RELAY_STATUS_CARD_URI = 'ui://relay/status-card/v5-legacy-bridge.html';
 export const RELAY_STATUS_CARD_TOOL = 'relay_show_legacy_bridge_card';
@@ -132,7 +132,9 @@ function render(result){const data=unwrap(result);lastData=data;const m=model(da
 function rpc(method,params){return new Promise((resolve,reject)=>{const id=++seq;const timer=setTimeout(()=>{pending.delete(id);reject(new Error('Relay host timed out'))},15000);pending.set(id,{resolve,reject,timer});window.parent.postMessage({jsonrpc:'2.0',id,method,params},'*')})}
 function acceptToolInput(value){if(value&&typeof value==='object')toolInput=value.arguments||value}
 function acceptToolResult(value){if(value==null)return false;render(value);return true}
-function hydrateOpenAiGlobals(globals=window.openai){if(!globals)return false;if(globals.toolInput!=null)acceptToolInput(globals.toolInput);return globals.toolOutput!=null?acceptToolResult(globals.toolOutput):false}
+// Hosts can echo unchanged initial output when only widget state changes.
+let lastGlobalToolOutput=null;
+function hydrateOpenAiGlobals(globals=window.openai){if(!globals)return false;if(globals.toolInput!=null)acceptToolInput(globals.toolInput);if(globals.toolOutput==null)return false;const output=JSON.stringify(globals.toolOutput);if(output===lastGlobalToolOutput)return false;lastGlobalToolOutput=output;return acceptToolResult(globals.toolOutput)}
 window.addEventListener('message',event=>{if(event.source!==window.parent||event.data?.jsonrpc!=='2.0')return;const msg=event.data;const waiter=pending.get(msg.id);if(waiter){pending.delete(msg.id);clearTimeout(waiter.timer);msg.error?waiter.reject(new Error(msg.error.message)):waiter.resolve(msg.result);return}if(msg.method==='ui/notifications/tool-input')acceptToolInput(msg.params?.arguments||msg.params);if(msg.method==='ui/notifications/tool-result')acceptToolResult(msg.params);if(msg.method==='ui/resource-teardown'&&msg.id)window.parent.postMessage({jsonrpc:'2.0',id:msg.id,result:{}},'*')});
 window.addEventListener('openai:set_globals',event=>{hydrateOpenAiGlobals(event.detail?.globals||window.openai)},{passive:true});
 async function callTool(name,args){await ready;return rpc('tools/call',{name,arguments:args})}

@@ -88,6 +88,8 @@ Emit one agent message that starts with the line `RELAY_TEST_MAINTENANCE`, follo
 
 ## Verification
 
+Native card interaction and live data freshness are separate assertions. The consumer follow-up reproduced unchanged initial tool output overwriting a successful refresh during widget-state hydration. Its regression preserves navigation and proves genuinely changed host output still renders; existing card assertions remain intact. Native acceptance additionally requires a real post-deployment state change and observed refresh.
+
 `test/test-maintenance-contract.test.mjs` runs a real fixture suite (`test/fixtures/test-maintenance/`) with `node --test` and evaluates reports built from the runner's actual TAP output:
 
 - The obsolete suite fails against the approved change, and leaving it unclassified is never a pass.

@@ -206,7 +206,7 @@ test("fresh inline status card is listed and readable through the authenticated 
   assert.equal(contents[0]._meta["openai/ui"].entrypoints, undefined);
   const oldResource = await rpc("resources/read", { uri: RELAY_CONTEXT_CARD_URI });
   assert.deepEqual(oldResource.contents[0], relayContextCardResource());
-  for(const [previousUri,current] of [['ui://relay/context-card/v16.html',relayContextCardResource()],['ui://relay/status-card/v4-legacy-bridge.html',relayStatusCardResource()]]){
+  for(const [previousUri,current] of [['ui://relay/context-card/v18.html',relayContextCardResource()],['ui://relay/context-card/v16.html',relayContextCardResource()],['ui://relay/status-card/v4-legacy-bridge.html',relayStatusCardResource()]]){
     const alias=await rpc('resources/read',{uri:previousUri});
     assert.equal(alias.contents[0].uri,previousUri);
     assert.equal(alias.contents[0].text,current.text);
