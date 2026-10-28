@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T20:14:39.210Z",
+  "updated_at": "2026-10-28T20:23:42.904Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18152,12 +18152,28 @@
       "branch": "rtxforge/linux-compact-card-actions-20261028",
       "paths": [
         "gui/rtxforge_gtk.py",
-        "tests/ui_library_resume.py"
+        "gui/game_mode.py",
+        "gui/game_mode_motion.py",
+        "scripts/proton_overlay.py",
+        "scripts/linux_overlay_host.py",
+        "providers/skynizz-bridge/ada-mfg.patch",
+        "providers/skynizz-bridge/source.json",
+        "providers/skynizz-bridge/placement-candidate.json",
+        ".github/workflows/linux-build.yml",
+        ".github/workflows/package-ui-review.yml",
+        "tests/ui_library_resume.py",
+        "tests/ui_game_mode.py",
+        "tests/ui_support_checks.py",
+        "tests/ui_settings_refinements.py",
+        "tests/ui_joined_reviews.py",
+        "tests/linux_runtime/test_proton_overlay.py",
+        "tests/linux_runtime/test_linux_overlay_host.py",
+        "tests/linux_runtime/test_operation_step.py"
       ],
       "resources": [],
       "goal": "Linux Beta item 2d: the desktop pieces of Windows #80. Compact right-aligned card actions and the shorter game hero are already native on Linux (Adw suffix buttons, fixed 280 px hero). Port the dedicated Gaming Mode theme controls: desktop Settings > Gaming Mode gains a 'Theme' group with the Game Mode color theme, the shared-theme switch and card translucency (moved from Appearance), kept in sync with the desktop theme as on Windows.",
       "acceptance": "Gaming Mode page shows Theme group (color theme, link switch, translucency); linked changes sync both pickers, unlinked changes only Game Mode; settings saved; ui_library_resume checks it and passes; capture reviewed; PR CI and non-publishing Linux build green; merged.",
-      "next_action": "Add the Gaming Mode Theme group with synced pickers; move link switch and translucency; extend ui_library_resume; capture; draft PR.",
+      "next_action": "One pass closing the remaining Windows 1.0 Beta gaps: overlay preferences parity (theme/welcome/live stats to the Proton panel + Appearance choice), steady progress (Beta 2 StepCount), Game Mode slide transitions, Linux validation on PRs, stale UI tests in CI, and the Wine-backed controls mailbox in ada-mfg.patch; test; capture; update PR #98.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18181,8 +18197,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T20:14:39.210Z",
-      "lease_until": "2026-10-29T08:14:39.210Z"
+      "updated_at": "2026-10-28T20:23:42.904Z",
+      "lease_until": "2026-10-29T08:23:42.904Z"
     }
   ]
 }
