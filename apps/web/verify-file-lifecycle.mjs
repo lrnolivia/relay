@@ -9,7 +9,9 @@ export async function verifyFileLifecycle(fetcher,{requestId,unauthenticatedFetc
  const receipt={kind:'synthetic-file-lifecycle',ok:false,checks:[],checksum,bytes:bytes.length};
  let id;
  const call=async(path,method='GET',body,extra={},status=200)=>{
-  const response=await fetcher('/api/files'+path,{method,headers:{Origin:'https://relay.loew.fi','X-Relay-File-Request':'1',...extra},...(body===undefined?{}:{body}),signal:AbortSignal.timeout(15000)});
+  let response;
+  try{response=await fetcher('/api/files'+path,{method,headers:{Origin:'https://relay.loew.fi','X-Relay-File-Request':'1',...extra},...(body===undefined?{}:{body}),signal:AbortSignal.timeout(15000)});}
+  catch(error){receipt.checks.push({path:id?path.replace(id,':fixture'):path,method,status:null,outcome:'transport-error',...(error.verification_transport?{transport:error.verification_transport}:{})});throw error;}
   receipt.checks.push({path:id?path.replace(id,':fixture'):path,method,status:response.status});
   if(response.status!==status){const value=await response.clone().json().catch(()=>null);receipt.checks.at(-1).error=typeof value?.error==='string'?value.error.slice(0,160):null;}
   assert.equal(response.status,status,'Synthetic Files '+method+' '+path);

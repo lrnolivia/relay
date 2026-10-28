@@ -1,9 +1,11 @@
 import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
+import { writeFileSync } from 'node:fs';
 import { chromium } from "playwright";
 import { webBuildId } from "./generated.js";
-import { readback } from "./readback.mjs";
+import { readback as retryableReadback } from "./readback.mjs";
+import {createVerificationFetch,navigateProductionPage} from './verification-transport.mjs';
 import { productionMcpRead } from './production-mcp-readback.mjs';
 import { verifyFileLifecycle } from './verify-file-lifecycle.mjs';
 
@@ -18,6 +20,9 @@ const headers = {
   "CF-Access-Client-Id": clientId, "CF-Access-Client-Secret": clientSecret
 };
 await mkdir("qa-evidence/production", { recursive: true });
+const transport=[];
+const fetch=createVerificationFetch({onEvent:event=>{transport.push(event);writeFileSync('qa-evidence/production/transport.json',JSON.stringify(transport,null,2));}});
+const readback=(url,options,policy)=>retryableReadback(url,options,{...policy,fetcher:fetch});
 const api = [];
 for (const path of ["/api/projects", "/api/workers"]) {
   const {response,value:body} = await readback(origin + path, { headers });
@@ -36,7 +41,7 @@ assert.ok(ready, "production must serve this exact source SHA and built website 
 if(!diagnoseOnly){
  // Exercise the explicit authenticated read tool using only this public repository.
  // Private project paths/content must never enter public CI artifacts.
- const mcpRead=(method,params)=>productionMcpRead(method,params,{headers,commitSha:expected});
+ const mcpRead=(method,params)=>productionMcpRead(method,params,{headers,commitSha:expected},{fetcher:fetch});
  const discovered=await mcpRead('tools/list',{}),tool=discovered.tools?.find(tool=>tool.name==='relay_source_tree');
  assert.ok(tool,'source manifest capability must be discoverable');assert.equal(tool.annotations.readOnlyHint,true);assert.equal(tool.annotations.destructiveHint,false);
  assert.deepEqual(tool.inputSchema.required,['repo','commit_sha']);assert.equal(tool.inputSchema.additionalProperties,false);
@@ -79,7 +84,7 @@ try {
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
     if (diagnoseOnly) {
-      await page.goto(origin + "/#/today");
+      await navigateProductionPage(page,origin + "/#/today");
       await page.waitForTimeout(12000);
       const requests = await page.evaluate(async () => Promise.all(["/api/projects", "/api/workers"].map(async path => {
         const response = await fetch(path);
@@ -93,7 +98,7 @@ try {
       await page.close();
       continue;
     }
-    await page.goto(origin + '/');
+    await navigateProductionPage(page,origin + '/');
     await page.getByRole('heading',{name:'relay',exact:true,level:1}).waitFor();
     await page.locator('.telemetry-card').first().waitFor();
     await page.waitForFunction(()=>document.querySelector('.live-telemetry')?.getAttribute('data-loading')==='false',null,{timeout:75000});
