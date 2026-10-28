@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T21:18:26.355Z",
+  "updated_at": "2026-10-28T21:44:17.341Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18208,6 +18208,48 @@
       "evidence": "PR #98 merged as b1db9eee84e89890c5ff4ca37bca8e4df14ad603 at reviewed head 4e8220e0. Gaming Mode Theme group, overlay preference parity (prefix + helper, Appearance choice, Overlay grouping fix), StepCount progress, Game Mode page slides, Linux build on PRs, repaired UI tests in CI, Wine-backed controls mailbox in ada-mfg.patch (panel candidate built in CI). All PR checks green including the Linux AppImage build and the in-game panel candidate; five UI tests pass locally; captures reviewed. Live in-game verification of the mailbox and overlay preferences still pending with the user.",
       "work_accounted": true,
       "completed_at": "2026-10-28T21:18:26.355Z"
+    },
+    {
+      "id": "rtxforge-linux-adapt-library-button-20261028",
+      "owner": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+      "branch": "rtxforge/linux-adapt-library-button-20261028",
+      "paths": [
+        "gui/rtxforge_gtk.py",
+        "gui/game_mode.py",
+        "gui/action_labels.py",
+        "tests/linux_ui/test_action_labels.py",
+        "tests/ui_game_mode.py",
+        "tests/ui_library_resume.py"
+      ],
+      "resources": [],
+      "goal": "Lauren asked where the library-wide Adapt to Linux button is. It never appears: the library Install acts on the current filter (Available by default, which hides Windows-installed games) and its label only switches when every game in the whole library was installed on Windows. Make the library Install button take over as 'Adapt to Linux (N)' whenever games installed with rtxForge on Windows still need Linux setup and nothing is selected, targeting exactly those games regardless of filter, in the desktop and Game Mode.",
+      "acceptance": "With pending Windows installs and no selection, both interfaces show 'Adapt to Linux (N)' and launch install for exactly those games; with none pending it is Install Features; selection keeps current behaviour; label helper unit-tested; UI tests pass; PR CI (including Linux build) green; merged and installed locally.",
+      "next_action": "Add pending-linux-setup targeting and labels to desktop and Game Mode; tests; PR; merge; reinstall.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "b1db9eee84e89890c5ff4ca37bca8e4df14ad603",
+      "state": "active",
+      "created_at": "2026-10-28T21:44:17.341Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren asked where the library-wide Adapt to Linux button is. It never appears: the library Install acts on the current filter (Available by default, which hides Windows-installed games) and its label only switches when every game in the whole library was installed on Windows. Make the library Install button take over as 'Adapt to Linux (N)' whenever games installed with rtxForge on Windows still need Linux setup and nothing is selected, targeting exactly those games regardless of filter, in the desktop and Game Mode.",
+          "acceptance": "With pending Windows installs and no selection, both interfaces show 'Adapt to Linux (N)' and launch install for exactly those games; with none pending it is Install Features; selection keeps current behaviour; label helper unit-tested; UI tests pass; PR CI (including Linux build) green; merged and installed locally.",
+          "at": "2026-10-28T21:44:17.341Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-adapt-library-button-20261028:acceptance:0",
+            "text": "With pending Windows installs and no selection, both interfaces show 'Adapt to Linux (N)' and launch install for exactly those games; with none pending it is Install Features; selection keeps current behaviour; label helper unit-tested; UI tests pass; PR CI (including Linux build) green; merged and installed locally.",
+            "at": "2026-10-28T21:44:17.341Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-28T21:44:17.341Z",
+      "lease_until": "2026-10-29T09:44:17.341Z"
     }
   ]
 }
