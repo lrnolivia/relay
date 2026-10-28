@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-28T05:28:17.928Z",
+  "updated_at": "2026-10-28T05:35:38.606Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18248,7 +18248,7 @@
       ],
       "goal": "Finish the remaining Relay verification for authenticated Claude, official Playwright Test Agents and native ChatGPT cards, as explicitly requested by Lauren in this chat on 2026-10-28.",
       "acceptance": "1. Exercise an existing authenticated Claude environment consuming Relay guidance and record actual session/provider/source/report evidence; absent authentication remains an explicit blocker, never a synthetic pass. 2. Verify official Playwright Test Agent setup against the actual installed version, then run planner/generator/healer on an isolated approved browser scenario through available authenticated tooling; preserve assertions and report any unsupported host/version without installing global tooling or granting permissions. 3. Verify mounted Relay cards and read-only refresh/navigation on actual available native ChatGPT surfaces with direct UI evidence; distinguish Codex MCP Apps, ChatGPT Work/web and unavailable full-native UI access. 4. Repair only demonstrated in-scope guidance defects, preserve all earlier evidence, record exact results in canonical docs, and finish admitted changes through required checks and release. Missing credentials or denied native access must remain unverified until supplied.",
-      "next_action": "Lauren reports Momo absent in ChatGPT but present in Claude. Extend existing card follow-up to font styling and font-loading regression. Actual current desktop card retains @font-face definitions and computed Momo family but document.fonts has no loaded faces. Diagnose with existing embedded licensed bytes and supported font loading; no external font CDN, new permissions or weaker CSP. Preserve old legacy comparison shell and current refresh regression.",
+      "next_action": "PR258 merged as fcdbcf439d00bc59a0762b48152f13b76d97ad66 after 1078 passed, 0 failed, 1 existing skip. Await the guarded build and merged-source production checks, then verify the deployed native card font and refresh against a real canonical state change.",
       "category": "qa-verification",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -18272,8 +18272,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T05:28:17.928Z",
-      "lease_until": "2026-10-28T17:28:17.928Z"
+      "updated_at": "2026-10-28T05:35:38.606Z",
+      "lease_until": "2026-10-28T17:35:38.606Z"
     }
   ],
   "migrated_from": "loew-inspector"
