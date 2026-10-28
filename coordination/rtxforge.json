@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T23:01:38.672Z",
+  "updated_at": "2026-10-28T23:04:15.861Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18313,12 +18313,13 @@
       "branch": "rtxforge/linux-adapt-scope-20261028",
       "paths": [
         "scripts/desktop_service.py",
-        "tests/linux_runtime/test_linux_adapt_mixed.py"
+        "tests/linux_runtime/test_linux_adapt_mixed.py",
+        "gui/rtxforge_gtk.py"
       ],
       "resources": [],
       "goal": "Applying Adapt to Linux over a mixed library stopped with 'no longer match your selection': each part (engine, Feeder) re-checked the full selection scope against only its own games. Give each part the scope narrowed to its own games after the whole set is checked.",
       "acceptance": "Mixed Adapt prepares with a real scope (tested, fails without the fix); a drifted selection still refuses; PR CI green; merged; installed locally.",
-      "next_action": "Rerun the admission check, wait for PR #101 CI, merge, reinstall.",
+      "next_action": "Also drop the accent ring around whole library cards on hover/focus (Lauren: not supposed to be there; Windows rings only selected cards). Wait for PR #101 CI, merge, reinstall.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18347,8 +18348,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T23:01:38.672Z",
-      "lease_until": "2026-10-29T11:01:38.672Z"
+      "updated_at": "2026-10-28T23:04:15.861Z",
+      "lease_until": "2026-10-29T11:04:15.861Z"
     }
   ]
 }
