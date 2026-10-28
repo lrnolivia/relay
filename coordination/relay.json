@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-28T03:32:45.434Z",
+  "updated_at": "2026-10-28T03:40:08.553Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18152,7 +18152,7 @@
       ],
       "goal": "Implement a shared, intent-aware test-maintenance workflow for Claude and Codex in Relay, integrating project-local official Playwright Test Agents where applicable without embedding browser agents in the Relay server.",
       "acceptance": "1. Before changing tests, workers compare the approved task/acceptance criteria and source diff, identifying affected behaviors as unchanged, intentionally changed, intentionally removed, or unresolved. Existing tests are evidence, not authority over explicit approved requirements. 2. Update affected test plans, unit/integration/E2E tests, fixtures and snapshots in the same change as the behavior; preserve coverage of unchanged behavior. Never restore intentionally removed functionality merely to satisfy obsolete assertions. Add replacement or absence assertions where meaningful. 3. Require a concise, reviewable rationale tied to the approved change for deleted/replaced assertions, changed snapshots, skipped/quarantined tests, or reduced coverage. No silent blanket snapshot updates, weakening assertions or skips to achieve green CI; unexplained failures remain regressions or unresolved requirements. Do not add redundant user approval gates for already authorized changes. 4. Use official Playwright planner/generator/healer in worker project environments when suitable; Relay supplies canonical requirements and captures structured progress/evidence. User handles installation on Claude and Codex. Do not install tools or alter user machines as part of this assignment. Do not force Playwright onto native GTK/Windows UI or non-browser suites; retain appropriate native/unit/integration tooling. 5. Keep one canonical shared workflow in Relay and minimal host adapters/references for Claude and Codex, without duplicate conflicting maintenance documents in product repos. Necessary runnable test code/configuration stays with its project. 6. Report actual test counts, skips with reasons, regression vs obsolete-expectation classification, run identity and exact tested commit through existing telemetry/cards. Unknown is unknown; do not fabricate totals. 7. Demonstrate intentional feature removal updates the obsolete test without resurrecting the feature; an unintended regression still fails; changed fixture/selector can be repaired without weakening behavior assertions; skip/coverage reduction is visible. Add regression coverage for the workflow and verify both agent adapters, explicitly marking untested hosts. 8. Reuse current coordination/verification paths, avoid active overlapping claims, deliver through non-default branch and draft PR with checks and production readback when released.",
-      "next_action": "Lauren confirmed both Claude sessions are stopped and explicitly authorized this chat to take over and finish both on 2026-10-27. PR254 is now released and accounted. Preserve WIP cfea33eb3cc19993b6c36170ba64ffc8b07ef638, the existing branch and full acceptance. Correct reproduced false-pass verdicts for failed counts, stale tested commit, unexplained replacement and unchanged-test deletion; complete native adapter/report coverage; validate, draft PR, review, release and verify production. Relay MCP returned internal errors and GitHub readback proved no handoff; use the existing verified local Git/gh coordination path.",
+      "next_action": "Candidate c06c4fc10fe634a6f261257cc2ee1784a328bf90 preserves prior WIP and current main, fixes five false-pass regression cases and adds native Codex report/recovery coverage. 181 focused tests and exact-source pinned build pass. Full five suites running locally; next publish the existing branch, open draft PR, verify CI, review and release with production guidance/readback. Native continuity full acceptance plan records implementation passed, release active. No native Claude or real Playwright Agent execution claimed.",
       "category": "implementation",
       "primary_team": "source",
       "supporting_teams": [
@@ -18179,8 +18179,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T03:32:45.434Z",
-      "lease_until": "2026-10-28T15:32:45.434Z",
+      "updated_at": "2026-10-28T03:40:08.553Z",
+      "lease_until": "2026-10-28T15:40:08.553Z",
       "amendments": [
         {
           "at": "2026-10-23T08:06:01.277Z",
