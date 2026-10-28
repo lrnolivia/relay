@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T22:49:50.237Z",
+  "updated_at": "2026-10-28T23:01:38.672Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18306,6 +18306,49 @@
       "evidence": "PR #100 merged as d00ebdc7170cac759f1aa176abae5b15705877f5 at reviewed head 169e0862. Linux adoption ignores toolbar mode/package (test_linux_skynizz_adoption); mixed Feeder+engine Adapt is one review with a Feeder companion run after the engine part, cancel stops it (test_linux_adapt_mixed); Linux default Skynizz with Skynizz on Proton on Linux only (test_default_provider); desktop smoke updated for the Skynizz default; full Linux validation local; all PR checks green including Linux AppImage build and both WinUI builds. Local install from main follows.",
       "work_accounted": true,
       "completed_at": "2026-10-28T22:49:50.237Z"
+    },
+    {
+      "id": "rtxforge-linux-adapt-scope-20261028",
+      "owner": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+      "branch": "rtxforge/linux-adapt-scope-20261028",
+      "paths": [
+        "scripts/desktop_service.py",
+        "tests/linux_runtime/test_linux_adapt_mixed.py"
+      ],
+      "resources": [],
+      "goal": "Applying Adapt to Linux over a mixed library stopped with 'no longer match your selection': each part (engine, Feeder) re-checked the full selection scope against only its own games. Give each part the scope narrowed to its own games after the whole set is checked.",
+      "acceptance": "Mixed Adapt prepares with a real scope (tested, fails without the fix); a drifted selection still refuses; PR CI green; merged; installed locally.",
+      "next_action": "Rerun the admission check, wait for PR #101 CI, merge, reinstall.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "adopted_branch": {
+        "head_sha": "50528745c7a2b4d1e9dfd6aa9235dc3f02a30c19",
+        "reason": "Follow-up fix to #100 written before claiming: applying a mixed Adapt failed the per-part scope check. Adopting the pushed branch (PR #101).",
+        "at": "2026-10-28T23:01:38.672Z"
+      },
+      "base_sha": "d00ebdc7170cac759f1aa176abae5b15705877f5",
+      "state": "active",
+      "created_at": "2026-10-28T23:01:38.672Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Applying Adapt to Linux over a mixed library stopped with 'no longer match your selection': each part (engine, Feeder) re-checked the full selection scope against only its own games. Give each part the scope narrowed to its own games after the whole set is checked.",
+          "acceptance": "Mixed Adapt prepares with a real scope (tested, fails without the fix); a drifted selection still refuses; PR CI green; merged; installed locally.",
+          "at": "2026-10-28T23:01:38.672Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-adapt-scope-20261028:acceptance:0",
+            "text": "Mixed Adapt prepares with a real scope (tested, fails without the fix); a drifted selection still refuses; PR CI green; merged; installed locally.",
+            "at": "2026-10-28T23:01:38.672Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-28T23:01:38.672Z",
+      "lease_until": "2026-10-29T11:01:38.672Z"
     }
   ]
 }
