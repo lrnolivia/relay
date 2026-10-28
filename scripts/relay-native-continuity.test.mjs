@@ -41,6 +41,23 @@ test('native Codex receives canonical maintenance guidance and preserves a faile
  const recovered=await f.channel.nativeHost.reconcile(work);
  assert.equal(recovered.summary,actual.summary);assert.deepEqual(recovered.test_maintenance,actual.test_maintenance);
 });
+test('a timed-out started execution accepts its late result after the current pointer advances without replay',async t=>{
+ const f=await fixture(t),channel=await openNativeChannel({config,directory:f.directory,workspace:f.workspace,waitMs:150}),work={operation_id:'late-result',stage:'release'};
+ const running=channel.nativeHost.execute(work,{id:'release'},{original_goal:'Ship once'}),timedOut=assert.rejects(running,/reply unavailable/),p=await pending(f.directory);
+ await beginNativeWork(f.directory,p.request.id);await timedOut;
+ const reading=f.channel.rpc('relay_autonomy',{action:'status',scope:'global'});let next;
+ for(let i=0;i<100;i++){next=await pending(f.directory);if(next.request.id!==p.request.id)break;await new Promise(r=>setTimeout(r,5));}
+ await replyNativeRequest(f.directory,next.request.id,{global:{ok:true},project:{ok:true},assignments:{ok:true}});await reading;
+ const result={state:'succeeded',summary:'Completed work verified after the host wait elapsed',head_sha:'a'.repeat(40)};
+ await replyNativeRequest(f.directory,p.request.id,result);
+ assert.deepEqual(await channel.nativeHost.reconcile(work),result);
+ assert.equal((await pending(f.directory)).request.id,next.request.id);
+ assert.equal((await fs.readdir(f.directory)).filter(x=>x.endsWith('.started.json')).length,1);
+ await replyNativeRequest(f.directory,p.request.id,result);
+ await assert.rejects(replyNativeRequest(f.directory,p.request.id,{...result,summary:'Overwrite'}),/identity changed/);
+ await fs.unlink(path.join(f.directory,p.request.id+'.started.json'));
+ await assert.rejects(replyNativeRequest(f.directory,p.request.id,result),/start receipt/);
+});
 test('native channel refuses another plan, public directory, symlink and invented native Claude adapter',async t=>{
  const f=await fixture(t);await assert.rejects(openNativeChannel({config:{...config,continuity:{changed:true}},directory:f.directory,workspace:f.workspace}),/identity changed/);
  const link=path.join(f.root,'link');await fs.symlink(f.directory,link);await assert.rejects(openNativeChannel({config,directory:link,workspace:f.workspace}),/symlink/);
