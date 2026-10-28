@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-28T05:50:11.316Z",
+  "updated_at": "2026-10-28T05:50:48.593Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18238,17 +18238,23 @@
         "src/relay-entry.test.js",
         ".impeccable/config.json",
         "src/relay-context-card-style.js",
-        "src/relay-context-card-style.test.js"
+        "src/relay-context-card-style.test.js",
+        "apps/web/verify-production.mjs",
+        "apps/web/verify-file-lifecycle.mjs",
+        "apps/web/verification-transport.mjs",
+        "apps/web/test/verification-transport.test.mjs",
+        "apps/web/test/verify-file-lifecycle.test.mjs"
       ],
       "resources": [
         "relay-consumer-verification",
         "test-maintenance-guidance",
         "claude-executor-startup",
-        "relay-native-card-hydration"
+        "relay-native-card-hydration",
+        "relay-production-verification-transport"
       ],
       "goal": "Finish the remaining Relay verification for authenticated Claude, official Playwright Test Agents and native ChatGPT cards, as explicitly requested by Lauren in this chat on 2026-10-28.",
       "acceptance": "1. Exercise an existing authenticated Claude environment consuming Relay guidance and record actual session/provider/source/report evidence; absent authentication remains an explicit blocker, never a synthetic pass. 2. Verify official Playwright Test Agent setup against the actual installed version, then run planner/generator/healer on an isolated approved browser scenario through available authenticated tooling; preserve assertions and report any unsupported host/version without installing global tooling or granting permissions. 3. Verify mounted Relay cards and read-only refresh/navigation on actual available native ChatGPT surfaces with direct UI evidence; distinguish Codex MCP Apps, ChatGPT Work/web and unavailable full-native UI access. 4. Repair only demonstrated in-scope guidance defects, preserve all earlier evidence, record exact results in canonical docs, and finish admitted changes through required checks and release. Missing credentials or denied native access must remain unverified until supplied.",
-      "next_action": "User resumed Relay and explicitly authorized diagnosing/fixing production verification failures, then deploying PR258 and verifying Momo across desktopcards. Preserve originalgoal/consumerproofs; diagnose transport and response lifecycle with regression evidence, admit supporting verification paths, retain assertions/timeouts, publish reviewed repair with PR258 before native all-card acceptance.",
+      "next_action": "User authorized production-verification repair. Preserve all current acceptance and add necessary transport verification: no mutation replay, fresh connections, fully consumed responses, bounded unchanged15/30s deadlines, redacted request failure diagnostics, UI DOM-ready plus original behavior assertions. Reproduce reused-socket reset and undrained-response failure locally; retain existing body/status/auth/source/storage assertions. Then review/deployrepair includingPR258 and finish desktopcardMomo/freshness.",
       "category": "qa-verification",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -18272,8 +18278,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T05:50:11.316Z",
-      "lease_until": "2026-10-28T17:50:11.316Z"
+      "updated_at": "2026-10-28T05:50:48.593Z",
+      "lease_until": "2026-10-28T17:50:48.593Z"
     }
   ],
   "migrated_from": "loew-inspector"
