@@ -82,6 +82,13 @@
     "relay_uses_same_registry": true
   },
   "migrated_from": "lrnolivia/loew-runner",
+  "test_maintenance": {
+    "workflow": "docs/relay/TEST_MAINTENANCE_20261023.md",
+    "shared_source": "src/test-maintenance.js",
+    "adapters": ["claude-cli", "codex-cli", "codex-native-tools"],
+    "reported_evidence_is_attributed": true,
+    "stale_or_incomplete_evidence_cannot_pass": true
+  },
   "continuity": {
     "original_goal_stable": true,
     "goal_preserving_supporting_features": true,

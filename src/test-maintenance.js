@@ -82,7 +82,7 @@ export function playwrightAgentSetup({ host, packageJson = null, files = [], bro
   return { state: 'agents-present', version, action: 'Reuse existing definitions; no init needed.' };
 }
 
-const int = v => v === null || (Number.isInteger(v) && v >= 0);
+const int = v => v === null || (Number.isSafeInteger(v) && v >= 0);
 const text = (v, max = 500) => typeof v === 'string' && v.trim().length > 0 && v.length <= max;
 
 export function parseTestMaintenanceReport(message) {
@@ -102,6 +102,7 @@ export function evaluateTestMaintenance(report, { head_sha = null } = {}) {
   const behaviors = new Map();
   for (const b of Array.isArray(report.behaviors) ? report.behaviors : []) {
     if (!text(b?.id, 120) || !BEHAVIOR_STATUSES.includes(b.status)) { add(violations, 'invalid-behavior', null, 'Each behavior needs an id and status unchanged|changed|removed|unresolved'); continue; }
+    if (behaviors.has(b.id)) { add(violations, 'duplicate-behavior', null, 'Each behavior id must have one unambiguous intent'); continue; }
     behaviors.set(b.id, b);
   }
   if (!behaviors.size) add(violations, 'intent-missing', null, 'Compare approved intent with the diff and list affected behaviors before changing tests');
@@ -115,6 +116,11 @@ export function evaluateTestMaintenance(report, { head_sha = null } = {}) {
     const reason = text(t.rationale) ? t.rationale : null;
     const before = t.assertions?.before, after = t.assertions?.after;
     const reduced = Number.isInteger(before) && Number.isInteger(after) && after < before;
+    if (['updated', 'deleted'].includes(t.outcome)) {
+      if (!reason) add(violations, 'rationale-missing', id, 'Deleted or replaced assertions need a rationale tied to the approved change');
+      if (!behavior) add(violations, 'behavior-missing', id, 'Modified assertions must identify their approved behavior');
+      if (t.outcome === 'deleted' && behavior?.status === 'unchanged') add(violations, 'unchanged-test-deleted', id, 'Preserve coverage of approved unchanged behavior');
+    }
     if (t.outcome === 'failed') {
       const cls = t.classification || 'unresolved';
       if (cls === 'regression') regressions.push({ test: id, behavior: t.behavior || null, detail: reason || 'Approved-unchanged behavior fails' });
@@ -123,7 +129,6 @@ export function evaluateTestMaintenance(report, { head_sha = null } = {}) {
     }
     if (t.classification === 'obsolete-expectation') {
       if (!behavior || !['changed', 'removed'].includes(behavior.status)) add(violations, 'obsolete-without-approved-change', id, 'Only a behavior the approved change removed or changed can make a test obsolete');
-      if (['updated', 'deleted'].includes(t.outcome) && !reason) add(violations, 'rationale-missing', id, 'Deleted or replaced assertions need a rationale tied to the approved change');
       if (behavior?.status === 'removed' && t.outcome === 'updated' && t.asserts !== 'absence') add(notes, 'absence-assertion-suggested', id, 'Consider asserting the removed behavior is absent');
     }
     if (behavior?.status === 'removed' && t.asserts === 'presence' && t.outcome === 'passed') add(violations, 'removed-behavior-restored', id, 'A test passes by asserting a behavior the approved change removed; do not resurrect it');
@@ -150,18 +155,24 @@ export function evaluateTestMaintenance(report, { head_sha = null } = {}) {
     }
     if (t.outcome === 'deleted' && t.classification !== 'obsolete-expectation') {
       coverage.push({ test: id, behavior: t.behavior || null, reason });
-      if (!reason) add(violations, 'rationale-missing', id, 'Deleted tests need a rationale');
     }
   }
   const c = report.counts && typeof report.counts === 'object' ? report.counts : {};
   const counts = Object.fromEntries(['passed', 'failed', 'skipped', 'total'].map(k => [k, c[k] === undefined ? null : c[k]]));
   if (!Object.values(counts).every(int)) add(violations, 'invalid-counts', null, 'Counts are non-negative integers or null when unknown');
   else if (counts.total !== null && ['passed', 'failed', 'skipped'].reduce((s, k) => s + (counts[k] || 0), 0) > counts.total) add(violations, 'inconsistent-counts', null, 'passed+failed+skipped exceeds total');
+  // A partial per-test list cannot erase an actual runner failure.
+  if (Number.isSafeInteger(counts.failed) && counts.failed > 0) add(violations, 'reported-test-failure', null, 'The runner reported failed tests; missing details do not establish a pass');
+  if (Object.values(counts).some(v => v === null)) add(notes, 'counts-incomplete', null, 'Runner counts are unknown; preserve them without claiming a pass');
+  if (!Array.isArray(report.tests) || !report.tests.length) add(notes, 'affected-tests-missing', null, 'No affected-test evidence was reported');
   const commit = /^[a-f0-9]{40}$/.test(report.tested_commit || '') ? report.tested_commit : null;
   if (!commit) add(notes, 'tested-commit-unknown', null, 'Exact tested commit was not reported');
   else if (head_sha && commit !== head_sha) add(notes, 'tested-commit-differs', null, `Tests ran on ${commit.slice(0, 12)}, head is ${head_sha.slice(0, 12)}`);
-  const verdict = violations.length || regressions.length || unresolved.length ? 'fail' : commit ? 'pass' : 'incomplete';
-  return { verdict, tested_commit: commit, run: report.run && typeof report.run === 'object' ? { id: report.run.id ?? null, url: report.run.url ?? null } : null, counts, playwright_agents: report.playwright_agents ?? null, violations, notes, skips, coverage_reductions: coverage, regressions, unresolved };
+  const run = report.run && typeof report.run === 'object' ? { id: report.run.id ?? null, url: report.run.url ?? null } : null;
+  if (!(text(run?.id, 300) || Number.isSafeInteger(run?.id) && run.id > 0)) add(notes, 'run-identity-unknown', null, 'An actual run identity was not reported');
+  const incomplete = notes.some(n => ['tested-commit-unknown', 'tested-commit-differs', 'counts-incomplete', 'affected-tests-missing', 'run-identity-unknown'].includes(n.code));
+  const verdict = violations.length || regressions.length || unresolved.length ? 'fail' : incomplete ? 'incomplete' : 'pass';
+  return { verdict, tested_commit: commit, run, counts, playwright_agents: report.playwright_agents ?? null, violations, notes, skips, coverage_reductions: coverage, regressions, unresolved };
 }
 
 const count = v => v === null ? 'unknown' : String(v);
@@ -170,6 +181,8 @@ export function testMaintenanceSummary(evaluation) {
   if (!evaluation) return null;
   const c = evaluation.counts || {};
   const parts = [`Test maintenance ${evaluation.verdict}`, `${count(c.passed ?? null)} passed, ${count(c.failed ?? null)} failed, ${count(c.skipped ?? null)} skipped of ${count(c.total ?? null)}`, `commit ${evaluation.tested_commit ? evaluation.tested_commit.slice(0, 12) : 'unknown'}`];
+  parts.push(`run ${evaluation.run?.id ?? 'unknown'}`);
+  if (evaluation.verdict === 'incomplete') parts.push(`incomplete: ${(evaluation.notes || []).map(n => n.code).join(', ')}`);
   if (evaluation.regressions?.length) parts.push(`${evaluation.regressions.length} regression(s)`);
   if (evaluation.unresolved?.length) parts.push(`${evaluation.unresolved.length} unresolved`);
   if (evaluation.skips?.length) parts.push(`skips: ${evaluation.skips.map(s => `${s.test} (${s.reason || 'no reason'})`).join('; ')}`);

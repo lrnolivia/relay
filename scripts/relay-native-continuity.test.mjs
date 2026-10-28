@@ -24,6 +24,23 @@ test('native work has a durable once-only start and exact immutable response; un
  const result={state:'succeeded',summary:'Native task actually performed fixture work',head_sha:'a'.repeat(40)};await replyNativeRequest(f.directory,p.request.id,result);const r=await running;assert.equal(r.adapter,'codex-native-tools');assert.equal(r.objective_completed,false);assert.equal(r.process_verified,false);assert.deepEqual(await f.channel.nativeHost.reconcile(pendingWork),result);
  await assert.rejects(replyNativeRequest(f.directory,p.request.id,{...result,summary:'Overwrite'}),/identity changed/);await assert.rejects(replyNativeRequest(f.directory,'b'.repeat(64),result),/target changed/);
 });
+test('native Codex receives canonical maintenance guidance and preserves a failed report through recovery',async t=>{
+ const f=await fixture(t),work={operation_id:'maintenance',stage:'a'},running=f.channel.nativeHost.execute(work,{id:'a'},{original_goal:'Preserve Share'}),p=await pending(f.directory);
+ assert.equal(p.request.data.context.test_maintenance.host,'codex');
+ assert.deepEqual(p.request.data.context.test_maintenance.playwright_test_agents.init,{codex:'npx playwright init-agents --loop=codex'});
+ await beginNativeWork(f.directory,p.request.id);
+ const report={schema:1,tested_commit:'a'.repeat(40),run:{id:'native-local'},counts:{passed:0,failed:1,skipped:0,total:1},behaviors:[{id:'share',status:'unchanged'}],tests:[]};
+ const result={state:'succeeded',summary:'Native work returned; acceptance still needs verification.',head_sha:'a'.repeat(40),test_maintenance_report:report};
+ await assert.rejects(replyNativeRequest(f.directory,p.request.id,{...result,test_maintenance_report:{padding:'x'.repeat(65536)}}),/bounded object/);
+ await replyNativeRequest(f.directory,p.request.id,result);
+ const actual=await running;
+ assert.equal(actual.state,'succeeded');assert.equal(actual.objective_completed,false);
+ assert.equal(actual.test_maintenance.verdict,'fail');
+ assert.match(actual.summary,/Test maintenance fail · 0 passed, 1 failed/);
+ assert.match(actual.summary,/run native-local/);
+ const recovered=await f.channel.nativeHost.reconcile(work);
+ assert.equal(recovered.summary,actual.summary);assert.deepEqual(recovered.test_maintenance,actual.test_maintenance);
+});
 test('native channel refuses another plan, public directory, symlink and invented native Claude adapter',async t=>{
  const f=await fixture(t);await assert.rejects(openNativeChannel({config:{...config,continuity:{changed:true}},directory:f.directory,workspace:f.workspace}),/identity changed/);
  const link=path.join(f.root,'link');await fs.symlink(f.directory,link);await assert.rejects(openNativeChannel({config,directory:link,workspace:f.workspace}),/symlink/);

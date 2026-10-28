@@ -13,6 +13,7 @@ Nobody copies these instructions between chats. Relay delivers the same `test_ma
 | `relay_runner_preflight` (start of work, after claim/rescope) | any host | `test_maintenance` |
 | `relay_runner_resume` (every resume checkpoint) | any host, incl. native Codex and Claude Code sessions | `latest.test_maintenance` |
 | `relay-executor` prompt | `claude-cli`, `codex-cli` | `context.test_maintenance`, with only that host's Test Agents loop |
+| native continuity execute packet | existing native Codex task | `data.context.test_maintenance`; no second model process |
 
 Design, research and coordination assignments, and retired assignments, receive `null`. The guidance sits outside the resume checkpoint hash, so it never changes a checkpoint identity. It adds no approval gate: authorized changes go ahead, and only unresolved requirements go back to the coordinator.
 
@@ -79,8 +80,9 @@ Emit one agent message that starts with the line `RELAY_TEST_MAINTENANCE`, follo
 
 - `outcome` is `passed | failed | skipped | updated | deleted`. `snapshot` can be `updated` (needs a rationale) or `blanket` (always a violation). `quarantined: true` counts as a skip.
 - Counts are what the runner printed. Use `null` for anything unknown and never estimate. `total` is tests, not jobs.
-- `evaluateTestMaintenance` returns `pass`, `fail` (any violation, regression or unresolved item), `incomplete` (no exact tested commit) or `invalid`. It also notes when the tested commit differs from the job head.
-- For `claude-cli`/`codex-cli` jobs the executor captures the report and appends `testMaintenanceSummary` (verdict, counts, commit, skips with reasons, coverage reductions, violation codes) to the job result summary, which existing cards already show. CI test counts stay with the existing CI telemetry check run. Native sessions put the same summary in their execution/checkpoint evidence.
+- `evaluateTestMaintenance` returns `pass`, `fail` (any violation, reported runner failure, regression or unresolved item), `incomplete` (missing run identity, affected-test evidence or counts; missing or stale tested commit) or `invalid`. A failed count cannot be hidden by omitting the failing test from the affected-test list. Counts stay unknown when absent.
+- Every updated/deleted assertion needs a rationale and a behavior binding. Deleting a test for approved unchanged behavior is rejected even with a rationale; duplicate behavior IDs are ambiguous and rejected. The evaluator checks an attributed report for consistency; it does not independently prove execution or validate the worker's interpretation of approved requirements.
+- For `claude-cli`/`codex-cli` jobs the executor captures the report and appends `testMaintenanceSummary` (verdict, counts, commit, run, skips with reasons, coverage reductions, violation codes) to the job result summary, which existing cards already show. CI test counts stay with the existing CI telemetry check run. Native sessions may include the same bounded object as `test_maintenance_report` in their execute reply; the adapter evaluates it against the reply's head, carries its summary and retains it through reconciliation. A successful process/native return remains distinct from a passing maintenance report and whole-objective acceptance.
 
 ## Verification
 
@@ -94,5 +96,7 @@ Emit one agent message that starts with the line `RELAY_TEST_MAINTENANCE`, follo
 - Skips without reasons, blanket snapshot updates and unknown counts are surfaced and never filled in.
 
 `scripts/relay-executor.test.mjs` runs both the `claude` and `codex` executor adapters as subprocesses. Each one gets only its own `init-agents --loop` command, and its report reaches the stored job result summary. Resume and preflight tests assert the delivered guidance.
+
+`scripts/relay-native-continuity.test.mjs` verifies the native Codex packet and report/recovery path, including a successful native return whose maintenance report fails. Five regression tests failed against the original WIP and pass after the verdict corrections: runner failures, stale/incomplete evidence, unexplained replacements, unchanged-test deletion and ambiguous intent bindings. Existing removal/regression/fixture/skip demonstrations remain intact.
 
 Not tested: a live `npx playwright init-agents` run in a real product checkout, and authenticated Claude Code or Codex model sessions consuming the guidance end to end. Those happen in the agents' own environments, which this change doesn't modify.

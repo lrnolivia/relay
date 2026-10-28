@@ -5,6 +5,7 @@ import {randomUUID} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
 import {runContinuityExecution} from './relay-continuity.mjs';
 import {expansionDigest,validateContinuityAdditions} from '../packages/runner/src/continuity-expansion.mjs';
+import {testMaintenanceGuidance,evaluateTestMaintenance,testMaintenanceSummary} from '../src/test-maintenance.js';
 
 const LIMIT=1024*1024;
 const terminal=new Set(['succeeded','failed','cancelled']);
@@ -56,12 +57,18 @@ function authorizeRpc(name,args,config){
 function validateReply(request,value){
  if(!value||typeof value!=='object'||Array.isArray(value)||Buffer.byteLength(JSON.stringify(value))>LIMIT)throw Error('Native reply must be a bounded object');
  if(request.kind==='execute'){
-  if(Object.keys(value).some(k=>!['state','summary','head_sha','continuity_additions'].includes(k))||!terminal.has(value.state)||typeof value.summary!=='string'||!value.summary.trim()||value.summary.length>2000||!/^[a-f0-9]{40}$/.test(value.head_sha||''))throw Error('Native work requires a terminal attributed report, never a process or objective claim');
+  if(Object.keys(value).some(k=>!['state','summary','head_sha','continuity_additions','test_maintenance_report'].includes(k))||!terminal.has(value.state)||typeof value.summary!=='string'||!value.summary.trim()||value.summary.length>2000||!/^[a-f0-9]{40}$/.test(value.head_sha||''))throw Error('Native work requires a terminal attributed report, never a process or objective claim');
+  if(value.test_maintenance_report!==undefined&&(!value.test_maintenance_report||typeof value.test_maintenance_report!=='object'||Array.isArray(value.test_maintenance_report)||Buffer.byteLength(JSON.stringify(value.test_maintenance_report))>65536))throw Error('Native test-maintenance report must be a bounded object');
   validateContinuityAdditions(value.continuity_additions||[]);
  }else if(request.kind==='review'){
   if(Object.keys(value).some(k=>!['verdict','preserves_goal','goal_digest','within_authority','sensitive_permissions','paid_services','canonical_key','reason'].includes(k))||!['admit','reject','authority-required'].includes(value.verdict))throw Error('Native coordinator review is a decision, not executable worker data');
  }
  return value;
+}
+function withTestMaintenance(value){
+ if(value.test_maintenance_report===undefined)return value;
+ const evaluation=evaluateTestMaintenance(value.test_maintenance_report,{head_sha:value.head_sha});
+ return {...value,test_maintenance:evaluation,summary:[value.summary.slice(0,1000),testMaintenanceSummary(evaluation)].join(' ').slice(0,2000)};
 }
 
 // This is a credential-free rendezvous with the ALREADY RUNNING native task.
@@ -101,13 +108,13 @@ export async function openNativeChannel({directory,config,workspace,waitMs=30000
  const nativeHost={
   review:(proposal,context)=>exchange('review',{proposal,context}),
   execute:async(pending,stage,context)=>{
-   const value=await exchange('execute',{pending,stage,context},{stable:true});
+   const value=withTestMaintenance(await exchange('execute',{pending,stage,context:{...context,test_maintenance:testMaintenanceGuidance({host:'codex'})}},{stable:true}));
    return {...value,adapter:'codex-native-tools',host:os.hostname(),objective_completed:false,process_verified:false,execution_evidence_source:'native-task-reported; acceptance checked by configured verifier'};
   },
   reconcile:async pending=>{
    const files=await fs.readdir(directory);
    for(const file of files.filter(x=>/^[a-f0-9]{64}\.request\.json$/.test(x))){const q=await readJSON(path.join(directory,file));if(q.kind!=='execute'||q.data.pending.operation_id!==pending.operation_id)continue;
-    try{const r=await readJSON(path.join(directory,q.id+'.response.json'));if(r.request_digest!==q.id||r.error)return null;return validateReply(q,r.value);}catch(e){if(e.code==='ENOENT')return null;throw e;}
+    try{const r=await readJSON(path.join(directory,q.id+'.response.json'));if(r.request_digest!==q.id||r.error)return null;return withTestMaintenance(validateReply(q,r.value));}catch(e){if(e.code==='ENOENT')return null;throw e;}
    }
    return null;
   }

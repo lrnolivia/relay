@@ -272,6 +272,6 @@ for (const provider of ['claude','codex']) test(`${provider} CLI receives its ow
   assert.deepEqual(data.context.test_maintenance.playwright_test_agents.init,{[provider]:`npx playwright init-agents --loop=${provider}`});
   assert.equal(data.context.test_maintenance.host,provider);
   const summary=JSON.parse(stored).jobs[0].result.summary;
-  assert.match(summary,/Test maintenance pass · 3 passed, 0 failed, 1 skipped of 4 · commit [a-f0-9]{12} · skips: print preview \(Covered by native suite\)/);
+  assert.match(summary,/Test maintenance pass · 3 passed, 0 failed, 1 skipped of 4 · commit [a-f0-9]{12} · run local-1 · skips: print preview \(Covered by native suite\)/);
  }finally{await fs.rm(root,{recursive:true,force:true});}
 });
