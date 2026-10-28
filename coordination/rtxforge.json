@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T18:30:17.229Z",
+  "updated_at": "2026-10-28T18:50:50.601Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -17983,7 +17983,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "ec7a56624b503f3fa5a3325e9b5cb4217476ade9",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-28T18:29:56.711Z",
       "objective_history": {
         "baseline": {
@@ -18000,8 +18000,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T18:30:17.229Z",
-      "lease_until": "2026-10-29T06:30:17.229Z"
+      "updated_at": "2026-10-28T18:50:50.601Z",
+      "lease_until": "2026-10-29T06:50:50.601Z",
+      "pr": 94,
+      "merged_head_sha": "d9958b63b06f1ebd618c4de180aa3a74630add11",
+      "merge_commit_sha": "80cddd555a377fb7d45e9196814b29ed8ec66574",
+      "evidence": "PR #94 merged as 80cddd555a377fb7d45e9196814b29ed8ec66574 at reviewed head d9958b63. controller_prompt (ControllerPrompt.For + ScrollDelta) and Steam vendor detection unit-tested; virtual SDL right-stick test; ui_game_mode passes with footer/guide glyph and right-stick checks; captures gm-controller-guide-{xbox,playstation,steam}.png and gm-footer-controller.png reviewed; all CI green.",
+      "work_accounted": true,
+      "completed_at": "2026-10-28T18:50:50.601Z"
     }
   ]
 }
