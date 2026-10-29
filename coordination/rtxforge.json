@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T03:27:48.270Z",
+  "updated_at": "2026-10-29T03:28:00.821Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6761,7 +6761,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-29T01:21:36.706Z",
       "objective_history": {
         "baseline": {
@@ -18836,6 +18836,51 @@
       "evidence": "https://github.com/lrnolivia/rtxForge/pull/109 merged via authorized local human Git route as354c9fc10c604f8562dd4b658bbad8ba86a604f9. Merge tree equals tested c34a3f70a03d887ac056279c9054270ca21308fb; all exact-head checks green, including AppImage, Flatpak, Windows x64/ARM64, overlay, attribution and admission.14 local release tests and13 website tests pass; build/syntax/dry-run/diff and actual selection/render state checks pass. READMEs, release source notes and publisher titles updated to Beta1. GitHub beta release title/intro read back; all asset IDs/names/digests/sizes, tag and per-OS provenance unchanged. Website versiona432955c-5c97-4b2d-971b-f05c20799281 deployed100%; prior healthy6f96387f-3ccf-4372-9a8c-bcdca0acf1ca retained. Relay VERIFY fetched five live source files byte-for-byte equal to candidate. Rendered snapshots: desktop defaultLinux vis_480919ca-76d3-41d9-b520-957cb839e2c2, explicitWindows vis_1d4c4fa5-aba0-428c-9cad-d5ebfe367f31,390pxLinux vis_ceaf9e3d-35e2-4dff-9b93-0f0bc3539c27; all200 and correct runtime titles. Linux shows explicit Flatpak/AppImage buttons; OS-aware guide below with book glyph; URL/saved choices preserved. Local browser permission service unavailable; no bypass attempted. No app packages republished. Relay context append failed capacity; full accounting retained in PR and this completion.",
       "work_accounted": true,
       "completed_at": "2026-10-29T03:04:30.317Z"
+    },
+    {
+      "id": "rtxforge-windows-linux-sync-20261029",
+      "owner": "01a185b0-7901-78a3-a702-6e77197cf28d",
+      "branch": "rtxforge/windows-linux-sync-20261029",
+      "paths": [
+        "windows/"
+      ],
+      "resources": [],
+      "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.",
+      "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.",
+      "next_action": "Implement Windows installed_oses support and audit review/native parity on fresh main in isolated checkout; build, focused tests, draft PR only.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "354c9fc10c604f8562dd4b658bbad8ba86a604f9",
+      "state": "active",
+      "created_at": "2026-10-29T03:28:00.821Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.",
+          "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.",
+          "at": "2026-10-29T01:21:36.706Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-windows-linux-sync-20261029:acceptance:0",
+            "text": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.",
+            "at": "2026-10-29T01:21:36.706Z"
+          }
+        ]
+      },
+      "handoffs": [
+        {
+          "at": "2026-10-29T03:27:48.270Z",
+          "from": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+          "to": "01a185b0-7901-78a3-a702-6e77197cf28d",
+          "next_action": "Lauren resumed Windows 1.0 Beta catch-up in this Windows chat. Latest published Windows beta.2 already installed at 5ad4bb4. Read G:/rtxForge-linux-to-windows-sync-brief.md; claim Windows-only sync scope, implement and verify in isolated checkout, draft PR. Preserve full acceptance and human attribution."
+        }
+      ],
+      "updated_at": "2026-10-29T03:28:00.821Z",
+      "lease_until": "2026-10-29T15:28:00.821Z"
     }
   ]
 }
