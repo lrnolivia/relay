@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T22:23:03.682Z",
+  "updated_at": "2026-10-29T22:30:46.754Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7700,10 +7700,10 @@
     },
     {
       "id": "rtxforge-report-turnstile-20261029",
-      "owner": "codex-open",
+      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
       "goal": "A Cloudflare Turnstile widget so the rtxForge website can send bug reports through the same report service as the app. Lauren asked 'will web use this too' on 2026-10-29. Website reports pass a Turnstile check; the app's don't. Pairs with rtxforge-report-github-app-20261029 and rtxforge-report-service-infra-20261029.",
       "acceptance": "(1) A Turnstile widget in Lauren's Cloudflare account (8df30cd302a4d4a4c01db9863c712166) named 'rtxForge reports', mode Managed (or Invisible), allowed hostnames loew.fi and rtxforge.loew.fi only. (2) Its secret key is stored only as the Worker secret TURNSTILE_SECRET on rtxforge-reports, never in git, Relay, chat or a file. (3) Its site key, which is public, is recorded in the completion evidence so the website worker can embed it. (4) The service verifies tokens at https://challenges.cloudflare.com/turnstile/v0/siteverify. Once the service is live, check that a website-style POST without a token answers 403, without filing an issue. Hand back non-secret evidence only.",
-      "next_action": "Create the Turnstile widget for loew.fi and rtxforge.loew.fi, store its secret as TURNSTILE_SECRET on rtxforge-reports, and record the public site key for the website worker.",
+      "next_action": "Lauren explicitly asked this website task to finish Turnstile now. Configure the production-only widget and Worker secret through Cloudflare, verify rejected unverified requests and hand off the public key; no app-source edits.",
       "paths": [
         "relay-only:cloudflare/turnstile/rtxforge-reports"
       ],
@@ -7731,7 +7731,16 @@
             "at": "2026-10-29T21:58:23.767Z"
           }
         ]
-      }
+      },
+      "handoffs": [
+        {
+          "at": "2026-10-29T22:30:46.754Z",
+          "from": "codex-open",
+          "to": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+          "next_action": "Lauren explicitly asked this website task to finish Turnstile now. Configure the production-only widget and Worker secret through Cloudflare, verify rejected unverified requests and hand off the public key; no app-source edits."
+        }
+      ],
+      "updated_at": "2026-10-29T22:30:46.754Z"
     },
     {
       "id": "rtxforge-website-report-send-20261029",
