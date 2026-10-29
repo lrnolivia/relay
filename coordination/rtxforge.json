@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T03:28:00.821Z",
+  "updated_at": "2026-10-29T03:36:21.446Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18847,7 +18847,7 @@
       "resources": [],
       "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.",
       "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.",
-      "next_action": "Implement Windows installed_oses support and audit review/native parity on fresh main in isolated checkout; build, focused tests, draft PR only.",
+      "next_action": "Draft PR110 b3787685f2386be7f2646415845bf76770abfc41 published. Debug+Release x64 0warnings/errors; OperationScope/Settings PASS; native WinUI14/14 incl Dark/Light and GameMode PASS; native channel26 PASS; Python16+11 PASS plus Vulkan install/repair writes Windows record and restore removes/exact originals (disposable fixtures). Final settings hash unchanged after test-harness isolation. Latest published Windows beta.2 source5ad4bb4 already installed. Wait exact-head CI40812923536/40812923524; native in-game rebuilt bridge preset QA unverified; draft-only/no release. Core-hardening cannot initialize natively(fcntl), Linux CI owns it. Context record write refused capacity; all evidence retained in PR110 and LOCALAPPDATA/rtxForge-previews/windows-linux-sync-20261029/native-review-final.json. Continue same assignment/branch; separate Presets adoption task remains queued.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18879,8 +18879,8 @@
           "next_action": "Lauren resumed Windows 1.0 Beta catch-up in this Windows chat. Latest published Windows beta.2 already installed at 5ad4bb4. Read G:/rtxForge-linux-to-windows-sync-brief.md; claim Windows-only sync scope, implement and verify in isolated checkout, draft PR. Preserve full acceptance and human attribution."
         }
       ],
-      "updated_at": "2026-10-29T03:28:00.821Z",
-      "lease_until": "2026-10-29T15:28:00.821Z"
+      "updated_at": "2026-10-29T03:36:21.446Z",
+      "lease_until": "2026-10-29T15:36:21.446Z"
     }
   ]
 }
