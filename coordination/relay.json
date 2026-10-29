@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T07:22:58.229Z",
+  "updated_at": "2026-10-29T07:24:37.204Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18222,7 +18222,7 @@
     },
     {
       "id": "relay-consumer-verification-20261028",
-      "owner": "dot-julian-card-fix-20261029",
+      "owner": "01a18087-d63e-7060-a601-8be52e311c63",
       "branch": "relay/consumer-verification-20261028",
       "paths": [
         "docs/relay/CONSUMER_VERIFICATION_20261028.md",
@@ -18251,7 +18251,7 @@
       ],
       "goal": "Finish the remaining Relay verification for authenticated Claude, official Playwright Test Agents and native ChatGPT cards, as explicitly requested by Lauren in this chat on 2026-10-28.",
       "acceptance": "1. Exercise an existing authenticated Claude environment consuming Relay guidance and record actual session/provider/source/report evidence; absent authentication remains an explicit blocker, never a synthetic pass. 2. Verify official Playwright Test Agent setup against the actual installed version, then run planner/generator/healer on an isolated approved browser scenario through available authenticated tooling; preserve assertions and report any unsupported host/version without installing global tooling or granting permissions. 3. Verify mounted Relay cards and read-only refresh/navigation on actual available native ChatGPT surfaces with direct UI evidence; distinguish Codex MCP Apps, ChatGPT Work/web and unavailable full-native UI access. 4. Repair only demonstrated in-scope guidance defects, preserve all earlier evidence, record exact results in canonical docs, and finish admitted changes through required checks and release. Missing credentials or denied native access must remain unverified until supplied.",
-      "next_action": "Held remainder preserved, including original branch/private checkpoints and unfinished native verification. Two-file card fixes continue separately as relay-card-intrinsic-inline-20261029. No deletion, completion, merge or deployment.",
+      "next_action": "Keep unrelated original remainder HELD; no dispatch or chat contact. Two card files and hydration resource carved out to relay-card-intrinsic-inline-20261029 under user-authorized October 29 takeover. Preserve original acceptance, source branch, private checkpoints and unfinished verification; do not resume.",
       "category": "qa-verification",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -18275,14 +18275,20 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T07:22:58.229Z",
-      "lease_until": "2026-10-29T19:22:58.229Z",
+      "updated_at": "2026-10-29T07:24:37.204Z",
+      "lease_until": "2026-10-29T19:24:37.204Z",
       "handoffs": [
         {
           "at": "2026-10-29T07:14:29.883Z",
           "from": "01a18087-d63e-7060-a601-8be52e311c63",
           "to": "dot-julian-card-fix-20261029",
           "next_action": "Lauren explicitly authorized takeover on October 29 (Sentinel_140ceec0d210819199e5909ea1e44bb1: just ake it over). Fix only collapsed-card intrinsic height and supported inline initial display in ChatGPT/Codex; preserve Claude inline behavior, existing branch, all local-only checkpoints and dirty QA/private journal untouched. Read-only resume confirms held/stale worker and no active external job. Use isolated cloud workspace, bounded tests and draft PR only; no merge/deploy or unrelated original acceptance completion."
+        },
+        {
+          "at": "2026-10-29T07:24:37.204Z",
+          "from": "dot-julian-card-fix-20261029",
+          "to": "01a18087-d63e-7060-a601-8be52e311c63",
+          "next_action": "Keep unrelated original remainder HELD; no dispatch or chat contact. Two card files and hydration resource carved out to relay-card-intrinsic-inline-20261029 under user-authorized October 29 takeover. Preserve original acceptance, source branch, private checkpoints and unfinished verification; do not resume."
         }
       ]
     }
