@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-28T23:48:10.649Z",
+  "updated_at": "2026-10-29T00:03:26.567Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18384,7 +18384,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "978bfe60fddf77791439b3f37ba3e6e3075971e0",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-28T23:26:27.330Z",
       "objective_history": {
         "baseline": {
@@ -18401,8 +18401,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-28T23:48:10.649Z",
-      "lease_until": "2026-10-29T11:48:10.649Z"
+      "updated_at": "2026-10-29T00:03:26.567Z",
+      "lease_until": "2026-10-29T12:03:26.567Z",
+      "pr": 102,
+      "merged_head_sha": "bf417590176a6eb8a92a379cdb6b632845d07562",
+      "merge_commit_sha": "a89012234f6c2fd4cea5e03903572fdc7f8d0ced",
+      "evidence": "PR #102 merged as a89012234f6c2fd4cea5e03903572fdc7f8d0ced at reviewed head bf417590. Vulkan record write/remove and Windows recognition (test_vulkan_cross_os); dry run on Lauren's library: BG3/RDR2 recognised as Windows installs and routed to Adapt, refused only for Proton Experimental lacking nvcuda (message now says switch to Proton-GE); 13 games show Windows+Linux marks (test_overview_facts); review ready rows keep five rows (measured 58px -> 280px); Game Mode dialogs 95%; active-pill seam removed (pixel check). All PR checks green; main's build (run 40791123257) installed locally with checksum match.",
+      "work_accounted": true,
+      "completed_at": "2026-10-29T00:03:26.567Z"
     }
   ]
 }
