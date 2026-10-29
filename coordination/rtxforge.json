@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T02:41:37.375Z",
+  "updated_at": "2026-10-29T02:42:24.244Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18757,14 +18757,15 @@
         "windows/README.md",
         "website/README.md",
         "docs/releases/1.0-beta.md",
-        "packaging/beta_release.py"
+        ".github/workflows/linux-build.yml",
+        ".github/workflows/windows-build.yml"
       ],
       "resources": [
         "beta-release-public-label"
       ],
       "goal": "Update READMEs for published Linux and Windows betas and relabel the shared public release rtxForge Beta 1 as directly requested in this chat.",
       "acceptance": "Public release and maintained release notes use Beta 1; READMEs document both published OS packages and Linux Flatpak/AppImage requirements. Preserve beta tag, artifact filenames, package versions and updater compatibility. Documentation-only checks plus relevant publisher tests pass; reviewed PR merged; release metadata read back.",
-      "next_action": "Read publisher title contract and relevant READMEs, then update labels and availability with proportionate verification.",
+      "next_action": "Update READMEs, release notes and the two publisher title literals so future OS publication preserves the Beta 1 label; leave package identity unchanged.",
       "category": "maintenance",
       "primary_team": "source",
       "supporting_teams": [],
@@ -18788,8 +18789,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T02:41:37.375Z",
-      "lease_until": "2026-10-29T14:41:37.375Z"
+      "updated_at": "2026-10-29T02:42:24.244Z",
+      "lease_until": "2026-10-29T14:42:24.244Z"
     }
   ]
 }
