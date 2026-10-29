@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T07:15:40.235Z",
+  "updated_at": "2026-10-29T07:16:21.360Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7061,10 +7061,10 @@
     },
     {
       "id": "rtxforge-linux-beta2-windows-parity-20261029",
-      "owner": "01a185b0-7901-78a3-a702-6e77197cf28d",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
       "goal": "Linux 1.0 Beta 3 parity with the final reviewed Windows catch-up in PR110, including overlays/toasts, actual MFG stats, scoped automatic inZOI handling, executable/provider discovery, legacy Feeder installation and overlay updates, shared-record correctness, removal of ghost locations, OS/adoption badges and build diagnostics. Resolve the final PR head beyond 1714d84 and its passing CI before porting. Other-game renderer/font-upload changes remain parked. Preserve original backups and Linux/shared ownership; queue only, no dispatch.",
       "acceptance": "Use the final reviewed PR110 as the Windows parity source; current pushed head 1714d84482508d75f7a1e6c8984793ecc31c3cdb includes shared-record reconciliation. Resolve the final head and CI, including pending legacy-overlay, ghost-entry and badge fixes. Reuse shared code and preserve active Linux work, ownership, original backups, settings, Steam launching and Wine-only channels.\n\nAssess native DLSS, Feeder and confirmed Vulkan routes independently of installed/global package. DX11 or leftover DLLs alone do not qualify Skynizz; explain Sims4 package switches without changing restore ownership. Add validated per-game Choose EXE/Use detected in GTK Desktop/Game Mode. Fresh scan and independent review must share automatic selection excluding prerequisites/helpers; stale/unsafe explicit choices refuse. Cover FarCry5/Gears/Sonic review and the exact verified stock DbgHelp exemption.\n\nPort reviewed DX9/DX10/x86 Feeder recipes through Proton/DXVK with correct architecture, public integrity pins, x64 helper where required, model provenance, scoped writes and exact restore. Update Overlays must also update these recipes in their actual runtime/helper folder, preserving dgVoodoo, helper, model, depth/tuning and backups. Support old inventories safely; reject foreign panels. Validate real rendering and keep unverified routes experimental; Feeder does not provide FG.\n\nFix shared provider writing to use the installed recipe, not the engine default. Reconcile metadata-only drift only when local/shared recipe, inventory and restore boundaries agree and actual files/backups verify. Correct labels and revisions transactionally; retain cross_os_extras, Linux/Windows setup history and rollback. Missing retired Feeder addons recorded as absent are valid; newly present foreign files refuse. Remove nonexistent old locations from the library and update review while retaining recovery records; no misleading duplicate different-MFG rows.\n\nOS badges must cover native, Feeder and Vulkan installs and preserve both OSes after adoption or updates. Verify the reported Mass Effect LE/Andromeda, Assassin's Creed, Witcher3, CONTROL Resonant and RDR2 cases. Recover missing history from retained records/prefix setup evidence; never manufacture successful Linux runtime verification. Feeder starts with blank import paths; clarify the stored stack and optional manual-adoption backups.\n\nKeep anti-cheat evidence visible. Compatible offline installation needs initially unchecked explicit consent bound to executable/anti-cheat hashes and review token; recheck files/processes. No blanket consent, protection bypass or generic automatic offline launcher.\n\nOVERLAY/TOAST ONLY: visible headings; charcoal Light primary .26, muted .34, panel opacity .86, toast .88; theme-correct welcome in Linux/Proton helper context. Preserve Dark and GTK app Light colors, hotkeys, controls and headless helper behavior. Native MFG stats use fresh successful actual Streamline presentation counts, reject stale/invalid data, preserve internal fallback and identify calculated FPS; test menu/off and gameplay/on.\n\nINZOI ONLY: every normal installer automatically gets the startup-safe late-frame panel above game UI, without manual INI/opt-in; retain fallback. Verify Proton startup, menu, Create-a-Zoi/gameplay, save controls, NR/MFG and supported resize/alt-tab/HDR/restore. Other-game renderer/font-upload changes remain parked.\n\nRun shared/GTK/Game Mode scope, review, settings, drift and restore tests; AppImage/Flatpak CI plus native Linux UI/game QA. Record hashes, SDR/HDR and visual evidence; Windows success does not prove Linux runtime acceptance.\n\nCoordinate PR110/shared ownership and separate Proton Vulkan-layer work; no takeover. Lauren explicitly selected Beta3. Keep existing 1.0.0-beta.3 metadata and coordinate its owner; do not downgrade. Preserve verified human identity and notices; omit voluntary AI/tool/model credits. QUEUED ONLY: no worker, branch, merge or release starts here.",
-      "next_action": "QUEUED ONLY; Beta3 is the explicit release target. Resolve final PR110 including ongoing legacy-overlay/ghost/badge/diagnostics fixes; coordinate shared ownership and VERSION owner, then claim scoped Linux parity. Preserve all existing acceptance and other-game renderer exclusions.",
+      "next_action": "Lauren 2026-10-29 in Claude Code: 'youre claiming the linux work' (after the queue author confirmed no work had started). Successor claims after its active rtxforge-app-beta-reports-20261029 PR is up (one active claim per owner), resolving PR110's final reviewed head and CI first. Overlap to respect: gui/rtxforge_gtk.py, scripts/compat_list.py, scripts/game_notes.py are held by the beta-reports claim until it merges. Release target is Linux 1.0 Beta 3.",
       "paths": [
         "gui/",
         "scripts/",
@@ -7175,7 +7175,15 @@
           }
         }
       ],
-      "updated_at": "2026-10-29T07:13:58.837Z"
+      "updated_at": "2026-10-29T07:16:21.360Z",
+      "handoffs": [
+        {
+          "at": "2026-10-29T07:16:21.360Z",
+          "from": "01a185b0-7901-78a3-a702-6e77197cf28d",
+          "to": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+          "next_action": "Lauren 2026-10-29 in Claude Code: 'youre claiming the linux work' (after the queue author confirmed no work had started). Successor claims after its active rtxforge-app-beta-reports-20261029 PR is up (one active claim per owner), resolving PR110's final reviewed head and CI first. Overlap to respect: gui/rtxforge_gtk.py, scripts/compat_list.py, scripts/game_notes.py are held by the beta-reports claim until it merges. Release target is Linux 1.0 Beta 3."
+        }
+      ]
     },
     {
       "id": "rtxforge-app-beta-reports-20261029",
