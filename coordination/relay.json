@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T18:37:38.515Z",
+  "updated_at": "2026-10-29T18:38:07.259Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -9819,7 +9819,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "superseded",
       "created_at": "2026-10-29T07:40:01.275Z",
       "objective_history": {
         "baseline": {
@@ -9835,7 +9835,21 @@
             "at": "2026-10-29T07:40:01.275Z"
           }
         ]
-      }
+      },
+      "retirement": {
+        "at": "2026-10-29T18:38:07.259Z",
+        "intent": {
+          "operation_id": "inbox-queue-consolidate-20261029",
+          "owner": "dot-inbox-lifecycle-20261029",
+          "disposition": "superseded",
+          "reason": "Duplicate queued lifecycle work was explicitly combined into the user-authorized preserved archive claim; acceptance and paths amended there before implementation. Preserve its held unfinished activation scope rather than creating duplicate branch work.",
+          "evidence": "PR261 merged04af92433e4c280f57bd359385d200f1363b2683, healthy runtime d320f93c-0583-4761-8cda-eb9cc0be9178, mainCI40931405443 and autonomy94. Superseding claim HELD with full capacity recovery still blocked on recovery-controller authorization/capability; no full completion, no live migration or deletion.",
+          "superseded_by": "relay-context-archive-20261029",
+          "branch": null,
+          "head_sha": null
+        }
+      },
+      "updated_at": "2026-10-29T18:38:07.259Z"
     }
   ],
   "claims": [
