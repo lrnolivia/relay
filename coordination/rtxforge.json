@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T04:21:41.737Z",
+  "updated_at": "2026-10-29T04:25:39.834Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6749,9 +6749,9 @@
     {
       "id": "rtxforge-windows-linux-sync-20261029",
       "owner": "01a185b0-7901-78a3-a702-6e77197cf28d",
-      "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.",
-      "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.",
-      "next_action": "Extend admission to isolated bridge renderer candidate files and Windows build/tests; inspect exact upstream source, prepare candidate and native harness before asking for an inZOI restart.",
+      "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.\nAdditional user direction: correct executable discovery that selects prerequisites, and let Windows users select/reset each game's executable and rescan its support.",
+      "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.\nAdditional acceptance: Far Cry 5 selects bin/FarCry5.exe instead of its .NET redistributable; Windows Desktop and Game Mode expose current EXE and Choose/Use detected actions; selections are scoped to a game's folder, validated and persisted, stale/unsafe choices cannot redirect install writes, and support is rescanned. Explain current x86/DX9 Feeder integration limits without claiming upstream lacks them.",
+      "next_action": "Implement validated Windows per-game executable selection and generic prerequisite exclusion; regress wrong-executable and Feeder routing with fixtures and read-only installed-library scans.",
       "paths": [
         "windows/"
       ],
@@ -6781,6 +6781,12 @@
             "text": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.",
             "at": "2026-10-29T04:10:28.445Z",
             "reason": "Lauren explicitly requested investigating and fixing inZOI panel layering in this Windows catch-up chat. Preserve original scope and all completed evidence; add isolated renderer candidate work, no running-game mutation."
+          },
+          {
+            "id": "rtxforge-windows-linux-sync-20261029:acceptance:2",
+            "text": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.\nAdditional acceptance: Far Cry 5 selects bin/FarCry5.exe instead of its .NET redistributable; Windows Desktop and Game Mode expose current EXE and Choose/Use detected actions; selections are scoped to a game's folder, validated and persisted, stale/unsafe choices cannot redirect install writes, and support is rescanned. Explain current x86/DX9 Feeder integration limits without claiming upstream lacks them.",
+            "at": "2026-10-29T04:25:39.834Z",
+            "reason": "Lauren reported Far Cry 5 and Sonic support misclassification, then explicitly requested a per-game EXE selector for mis-scanned executables. Preserve original Windows and inZOI acceptance."
           }
         ]
       },
@@ -6792,8 +6798,8 @@
           "next_action": "Lauren resumed Windows 1.0 Beta catch-up in this Windows chat. Latest published Windows beta.2 already installed at 5ad4bb4. Read G:/rtxForge-linux-to-windows-sync-brief.md; claim Windows-only sync scope, implement and verify in isolated checkout, draft PR. Preserve full acceptance and human attribution."
         }
       ],
-      "updated_at": "2026-10-29T04:10:28.445Z",
-      "amendment_count": 1,
+      "updated_at": "2026-10-29T04:25:39.834Z",
+      "amendment_count": 2,
       "amendments": [
         {
           "at": "2026-10-29T04:10:28.445Z",
@@ -6813,6 +6819,26 @@
             "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.",
             "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.",
             "next_action": "Extend admission to isolated bridge renderer candidate files and Windows build/tests; inspect exact upstream source, prepare candidate and native harness before asking for an inZOI restart."
+          }
+        },
+        {
+          "at": "2026-10-29T04:25:39.834Z",
+          "by": "01a185b0-7901-78a3-a702-6e77197cf28d",
+          "reason": "Lauren reported Far Cry 5 and Sonic support misclassification, then explicitly requested a per-game EXE selector for mis-scanned executables. Preserve original Windows and inZOI acceptance.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.",
+            "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.",
+            "next_action": "Draft PR110 d5ee000 contains Windows sync plus opt-in inZOI late-overlay candidate. Original b378 full WinUI x64/ARM64+Linux+panel CI green and native Control preset Save ack passed; six temporary Control files now restored with exact original hashes. Candidate builds locally, queue independence and package provenance/digests pass; source-qualified ZIP SHA b4f832853b6f6a448147f06ccd50693e0e8d634d9ed4e36dc2442dbe1f01c1fa. Current Linux/attribution/admission green; panel CI running. inZOI runtime unverified and not installed. Investigate Linux marker/local Skynizz baseline mismatch before guarded reversible test; preserve active PRAGMATA session and wait user capture cue. Website child owns separate PR111. No merge/release of PR110."
+          },
+          "after": {
+            "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.\nAdditional user direction: correct executable discovery that selects prerequisites, and let Windows users select/reset each game's executable and rescan its support.",
+            "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.\nAdditional acceptance: Far Cry 5 selects bin/FarCry5.exe instead of its .NET redistributable; Windows Desktop and Game Mode expose current EXE and Choose/Use detected actions; selections are scoped to a game's folder, validated and persisted, stale/unsafe choices cannot redirect install writes, and support is rescanned. Explain current x86/DX9 Feeder integration limits without claiming upstream lacks them.",
+            "next_action": "Implement validated Windows per-game executable selection and generic prerequisite exclusion; regress wrong-executable and Feeder routing with fixtures and read-only installed-library scans."
           }
         }
       ]
@@ -18917,9 +18943,9 @@
       "resources": [
         "rtxforge-native-panel-rendering"
       ],
-      "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.",
-      "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.",
-      "next_action": "Draft PR110 d5ee000 contains Windows sync plus opt-in inZOI late-overlay candidate. Original b378 full WinUI x64/ARM64+Linux+panel CI green and native Control preset Save ack passed; six temporary Control files now restored with exact original hashes. Candidate builds locally, queue independence and package provenance/digests pass; source-qualified ZIP SHA b4f832853b6f6a448147f06ccd50693e0e8d634d9ed4e36dc2442dbe1f01c1fa. Current Linux/attribution/admission green; panel CI running. inZOI runtime unverified and not installed. Investigate Linux marker/local Skynizz baseline mismatch before guarded reversible test; preserve active PRAGMATA session and wait user capture cue. Website child owns separate PR111. No merge/release of PR110.",
+      "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.\nAdditional user direction: correct executable discovery that selects prerequisites, and let Windows users select/reset each game's executable and rescan its support.",
+      "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.\nAdditional acceptance: Far Cry 5 selects bin/FarCry5.exe instead of its .NET redistributable; Windows Desktop and Game Mode expose current EXE and Choose/Use detected actions; selections are scoped to a game's folder, validated and persisted, stale/unsafe choices cannot redirect install writes, and support is rescanned. Explain current x86/DX9 Feeder integration limits without claiming upstream lacks them.",
+      "next_action": "Implement validated Windows per-game executable selection and generic prerequisite exclusion; regress wrong-executable and Feeder routing with fixtures and read-only installed-library scans.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18946,11 +18972,17 @@
             "text": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.",
             "at": "2026-10-29T04:10:28.445Z",
             "reason": "Lauren explicitly requested investigating and fixing inZOI panel layering in this Windows catch-up chat. Preserve original scope and all completed evidence; add isolated renderer candidate work, no running-game mutation."
+          },
+          {
+            "id": "rtxforge-windows-linux-sync-20261029:acceptance:2",
+            "text": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.\nAdditional acceptance: Far Cry 5 selects bin/FarCry5.exe instead of its .NET redistributable; Windows Desktop and Game Mode expose current EXE and Choose/Use detected actions; selections are scoped to a game's folder, validated and persisted, stale/unsafe choices cannot redirect install writes, and support is rescanned. Explain current x86/DX9 Feeder integration limits without claiming upstream lacks them.",
+            "at": "2026-10-29T04:25:39.834Z",
+            "reason": "Lauren reported Far Cry 5 and Sonic support misclassification, then explicitly requested a per-game EXE selector for mis-scanned executables. Preserve original Windows and inZOI acceptance."
           }
         ]
       },
-      "updated_at": "2026-10-29T04:21:41.737Z",
-      "lease_until": "2026-10-29T16:21:41.737Z",
+      "updated_at": "2026-10-29T04:25:39.834Z",
+      "lease_until": "2026-10-29T16:25:39.834Z",
       "handoffs": [
         {
           "at": "2026-10-29T03:27:48.270Z",
@@ -18959,7 +18991,7 @@
           "next_action": "Lauren resumed Windows 1.0 Beta catch-up in this Windows chat. Latest published Windows beta.2 already installed at 5ad4bb4. Read G:/rtxForge-linux-to-windows-sync-brief.md; claim Windows-only sync scope, implement and verify in isolated checkout, draft PR. Preserve full acceptance and human attribution."
         }
       ],
-      "amendment_count": 1,
+      "amendment_count": 2,
       "amendments": [
         {
           "at": "2026-10-29T04:10:28.445Z",
@@ -18979,6 +19011,26 @@
             "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.",
             "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.",
             "next_action": "Extend admission to isolated bridge renderer candidate files and Windows build/tests; inspect exact upstream source, prepare candidate and native harness before asking for an inZOI restart."
+          }
+        },
+        {
+          "at": "2026-10-29T04:25:39.834Z",
+          "by": "01a185b0-7901-78a3-a702-6e77197cf28d",
+          "reason": "Lauren reported Far Cry 5 and Sonic support misclassification, then explicitly requested a per-game EXE selector for mis-scanned executables. Preserve original Windows and inZOI acceptance.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.",
+            "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.",
+            "next_action": "Draft PR110 d5ee000 contains Windows sync plus opt-in inZOI late-overlay candidate. Original b378 full WinUI x64/ARM64+Linux+panel CI green and native Control preset Save ack passed; six temporary Control files now restored with exact original hashes. Candidate builds locally, queue independence and package provenance/digests pass; source-qualified ZIP SHA b4f832853b6f6a448147f06ccd50693e0e8d634d9ed4e36dc2442dbe1f01c1fa. Current Linux/attribution/admission green; panel CI running. inZOI runtime unverified and not installed. Investigate Linux marker/local Skynizz baseline mismatch before guarded reversible test; preserve active PRAGMATA session and wait user capture cue. Website child owns separate PR111. No merge/release of PR110."
+          },
+          "after": {
+            "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.\nAdditional user direction: correct executable discovery that selects prerequisites, and let Windows users select/reset each game's executable and rescan its support.",
+            "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.\nAdditional acceptance: Far Cry 5 selects bin/FarCry5.exe instead of its .NET redistributable; Windows Desktop and Game Mode expose current EXE and Choose/Use detected actions; selections are scoped to a game's folder, validated and persisted, stale/unsafe choices cannot redirect install writes, and support is rescanned. Explain current x86/DX9 Feeder integration limits without claiming upstream lacks them.",
+            "next_action": "Implement validated Windows per-game executable selection and generic prerequisite exclusion; regress wrong-executable and Feeder routing with fixtures and read-only installed-library scans."
           }
         }
       ]
