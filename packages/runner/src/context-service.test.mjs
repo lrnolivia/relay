@@ -94,12 +94,28 @@ test('page tokens bind revision, assignment, view and owner; legacy numeric rema
 test('recipient handoff during commit produces retained reconciliation receipt',async()=>{
  const f=lifecycleFixture();f.setAfterPut(()=>{f.claims[1].owner='successor';});const result=await f.message();assert.equal(result.ok,false);assert.equal(result.reconcile_required,true);assert.equal((await f.read('recipient',{view:'inbox'})).entries[0].reconciliation_required,true);
 });
-test('stage one refuses capacity migration without modifying full live records',async()=>{
- const f=lifecycleFixture();f.objects.set('context/v1/fixture.json',{etag:'seed',text:JSON.stringify({schema:1,revision:600,entries:[],operations:Array.from({length:600},(_,i)=>({id:'old'+i,intent:'old'}))})});
- await assert.rejects(f.message(),/rollback baseline/);await assert.rejects(f.write('sender','compact'),/rollback baseline/);assert.equal(JSON.parse(f.objects.get('context/v1/fixture.json').text).revision,600);
+test('activation automatically recovers both capacity limits and keeps reads non-mutating',async()=>{
+ for(const full of ['entries','operations']){
+  const f=lifecycleFixture(),first=await f.message(),legacy=JSON.parse(f.objects.get('context/v1/fixture.json').text);
+  if(full==='entries')for(let i=1;i<200;i++)legacy.entries.push({...first.entry,id:'ctx_'+i.toString(16).padStart(64,'0'),content:'pending '+i});
+  else for(let i=1;i<600;i++)legacy.operations.push({id:'old'+i,intent:'old',entry_id:first.entry.id});
+  legacy.revision=600;f.objects.set('context/v1/fixture.json',{etag:'seed',text:JSON.stringify(legacy)});
+  const before=f.objects.get('context/v1/fixture.json').text;
+  assert.equal((await f.read('recipient',{view:'inbox'})).storage_schema,1);assert.equal(f.objects.get('context/v1/fixture.json').text,before);
+  const created=await f.message();assert.equal(created.storage_schema,2);assert.equal(created.revision,601);
+  const {openContext}=await import('./context-storage.mjs');const store=await openContext(f.bucket,'fixture');
+  for(const entry of legacy.entries)assert.equal((await store.entry(entry.id)).content,entry.content);
+  for(const op of legacy.operations){const fresh=await openContext(f.bucket,'fixture');assert.equal((await fresh.operation(op.id)).intent,op.intent);}
+ }
 });
-test('activated storage supports legacy-runtime rollback reader, replay and lifecycle beyond old caps',async()=>{
- const {readFile}=await import('node:fs/promises');const code=await readFile(new URL('./context-storage.mjs',import.meta.url),'utf8');const active=await import('data:text/javascript;base64,'+Buffer.from(code.replace('CONTEXT_ROLLOVER_ENABLED = false','CONTEXT_ROLLOVER_ENABLED = true')).toString('base64'));
+test('explicit compact is idempotent, preserves pending entries and does not resolve them',async()=>{
+ const f=lifecycleFixture(),first=await f.message();
+ const args={project:'fixture',assignment:'sender',action:'compact',expected_owner:'sender',expected_branch:'fixture/sender',expected_revision:1,operation_id:'explicit-compact'};
+ const compacted=await f.call(args);assert.equal(compacted.storage_schema,2);assert.equal(compacted.revision,2);assert.equal((await f.call(args)).replayed,true);
+ const inbox=await f.read('recipient',{view:'inbox'});assert.equal(inbox.entries[0].id,first.entry.id);assert.equal(inbox.entries[0].inbox_state,'new');
+});
+test('activated storage preserves replay and lifecycle beyond old caps',async()=>{
+ const active=await import('./context-storage.mjs');
  const f=lifecycleFixture();const original={action:'record',project:'fixture',assignment:'sender',expected_owner:'sender',expected_branch:'fixture/sender',expected_revision:0,operation_id:'exact-replay',kind:'message',recipient_assignment:'recipient',content:'Original pending',commit_sha:'a'.repeat(40)};
  const first=await f.call(original),legacy=JSON.parse(f.objects.get('context/v1/fixture.json').text);
  for(let i=1;i<200;i++)legacy.entries.push({...first.entry,id:'ctx_'+i.toString(16).padStart(64,'0'),content:'pending '+i});
