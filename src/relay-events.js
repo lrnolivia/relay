@@ -6,7 +6,7 @@ const mutations=new Set(['relay_execution','relay_context','relay_runner_coordin
 export function mutationTopics(name,args={}){
  if(name==='relay_night_shift')return ['record','record_source','shift','oversight'].includes(args?.action)?['work','projects','evidence']:null;
  if(name==='relay_execution'&&!['submit','cancel','lease','start','checkpoint','finish','recover'].includes(args?.action))return null;
- if(name==='relay_context'&&!['record','ack','retract'].includes(args?.action))return null;
+ if(name==='relay_context'&&!['record','ack','retract','archive'].includes(args?.action))return null;
  return mutations.has(name)?['work','projects','evidence']:null;
 }
 export function operatorTopics(path,body){
