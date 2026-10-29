@@ -36,7 +36,7 @@ test('server build gate rejects missing, old or guardless candidate and admits c
  const f=fixture();let value=await publicAutonomyStatus(f.env,'relay',null,f.github);assert.equal(value.candidate_identity_required,true);
  value=await publicAutonomyStatus(f.env,'relay',old,f.github);assert.equal(value.candidate_blocked,true);
  value=await publicAutonomyStatus(f.env,'relay',sha,f.github);assert.equal(value.candidate_blocked,false);
- f.registration.cloud.rollback.minimum_context_schema='2';await assert.rejects(publicAutonomyStatus(f.env,'relay',sha,f.github),/Unsupported/);
+ f.registration.cloud.rollback.minimum_context_schema='2';value=await publicAutonomyStatus(f.env,'relay',sha,f.github);assert.equal(value.candidate_blocked,true);assert.equal(value.candidate_identity_required,true);assert.equal(value.schema_check_unavailable,true);
 });
 test('raw and project deployment reject unproven source before injected provider writes',async()=>{
  const f=fixture();f.state.last_healthy.source_sha=old;let writes=0;const before=globalThis.fetch;globalThis.fetch=async()=>{writes++;throw Error('Provider must not be reached');};

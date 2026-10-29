@@ -410,3 +410,16 @@ test('raw version publication cannot bypass a candidate quarantine without sourc
  await assert.rejects(deployCloudVersion({...env,CLOUDFLARE_ACCOUNT_ID:'fixture',CLOUDFLARE_API_TOKEN:'fixture',RELAY_CLOUDFLARE_WRITE_SCRIPTS:'relay'},'relay',version),/source proof/);
  await guardAutonomy(env,['relay']);
 });
+
+test('unavailable canonical schema check retains diagnostics but blocks every candidate without leaking upstream errors',async()=>{
+ const {env}=binding();
+ const unavailable=async()=>{throw Error('private-upstream-detail');};
+ for(const source of [null,'a'.repeat(40)]){
+  const state=await publicAutonomyStatus(env,'relay',source,unavailable);
+  assert.deepEqual(state,{schema:1,scope:'relay',revision:0,held:false,candidate_blocked:true,candidate_identity_required:true,schema_check_unavailable:true,enforced:true});
+  assert.doesNotMatch(JSON.stringify(state),/private-upstream-detail/);
+ }
+ await assert.rejects(publicAutonomyStatus(env,'relay','invalid',unavailable),/Exact candidate/);
+ await assert.rejects(publicAutonomyStatus({RELAY_AUTONOMY_GUARD:'enforced'},'relay',null,unavailable));
+ assert.deepEqual(await publicAutonomyStatus(env,'global',null,unavailable),{schema:1,scope:'global',revision:0,held:false,enforced:true});
+});

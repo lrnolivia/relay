@@ -38,7 +38,7 @@ function fetcher(overrides={}){return async(path)=>{
   if(overrides[path])return overrides[path]();
   if(path==='/health')return Response.json({ok:true,service:'relay'});
   if(path==='/')return new Response('<!doctype html>',{headers:{'content-type':'text/html','x-relay-source-sha':sha}});
-  if(path.startsWith('/autonomy-status?scope='))return Response.json({schema:1,scope:path.split('=')[1],revision:0,held:false,enforced:true});
+  if(path.startsWith('/autonomy-status?scope='))return Response.json({schema:1,scope:path.split('=')[1],revision:0,held:false,...(path.endsWith('=relay')?{candidate_blocked:true,candidate_identity_required:true,schema_check_unavailable:true}:{}),enforced:true});
   return Response.json({error:'invalid_token'},{status:401,headers:{'www-authenticate':'Bearer resource_metadata="https://example.invalid"'}});
 };}
 test('every required response is checked',async()=>assert.equal((await probeResponses(fetcher(),sha)).length,6));
@@ -61,4 +61,13 @@ test('CI runtime prerequisite precedes browser and retains failure accounting',a
   assert.match(workflow,/steps\.setup-runtime\.outcome != 'success'/);
   assert.match(workflow,/RELAY_SETUP_RUNTIME:/);
   assert.match(workflow,/Preserve Worker bundle and local runtime evidence\n\s+if: always\(\)/);
+});
+
+
+test('offline Relay schema diagnostics must block publication, not silently pass',async()=>{
+ const base={schema:1,scope:'relay',revision:0,held:false,enforced:true,candidate_blocked:true,candidate_identity_required:true,schema_check_unavailable:true};
+ for(const key of ['candidate_blocked','candidate_identity_required','schema_check_unavailable']){
+  const state={...base};delete state[key];
+  await assert.rejects(probeResponses(fetcher({'/autonomy-status?scope=relay':()=>Response.json(state)}),sha));
+ }
 });

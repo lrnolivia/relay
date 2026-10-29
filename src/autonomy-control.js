@@ -127,9 +127,9 @@ export function assertAutonomySubject(state,subject){
 }
 export async function publicAutonomyStatus(env,scope='global',source=null,github){
  if(source!==null&&!SHA.test(source))fail('Exact candidate source is required',400);
- let schemaRequired=false,schemaBlocked=false;
- if(scope==='relay'){const floor=await readContextSchemaFloor(env,github);schemaRequired=floor!==null;if(schemaRequired){if(!source)schemaBlocked=true;else try{await assertContextSource(env,source,floor,github);}catch{schemaBlocked=true;}}}
- const {state}=await autonomyRequest(env,{action:'status',scope});return {schema:1,scope:state.scope,revision:state.revision,held:state.held,...(source?{candidate_blocked:schemaBlocked||Boolean(state.blocks?.some(x=>x.subject.kind==='candidate'&&x.subject.id===source&&x.state==='quarantined'))}:{}),...((schemaRequired||state.blocks?.some(x=>x.subject.kind==='candidate'&&x.state==='quarantined'))?{candidate_identity_required:true}:{}),enforced:env.RELAY_AUTONOMY_GUARD==='enforced'};
+ let schemaRequired=false,schemaBlocked=false,schemaUnavailable=false;
+ if(scope==='relay'){let floor;try{floor=await readContextSchemaFloor(env,github);}catch{schemaUnavailable=true;schemaRequired=true;schemaBlocked=true;}if(!schemaUnavailable){schemaRequired=floor!==null;if(schemaRequired){if(!source)schemaBlocked=true;else try{await assertContextSource(env,source,floor,github);}catch{schemaBlocked=true;}}}}
+ const {state}=await autonomyRequest(env,{action:'status',scope});return {schema:1,scope:state.scope,revision:state.revision,held:state.held,...((source||schemaUnavailable)?{candidate_blocked:schemaBlocked||Boolean(state.blocks?.some(x=>x.subject.kind==='candidate'&&x.subject.id===source&&x.state==='quarantined'))}:{}),...((schemaRequired||state.blocks?.some(x=>x.subject.kind==='candidate'&&x.state==='quarantined'))?{candidate_identity_required:true}:{}),...(schemaUnavailable?{schema_check_unavailable:true}:{}),enforced:env.RELAY_AUTONOMY_GUARD==='enforced'};
 }
 
 export const autonomyTool={

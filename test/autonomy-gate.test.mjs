@@ -41,3 +41,13 @@ test('canonical publish gate rejects quarantined source and requires identity wh
  await assert.rejects(checkAutonomy('relay',async url=>reply(new URL(url).searchParams.get('scope'),{candidate_identity_required:true}),{env:{}}),/source missing/);
  assert.equal((await checkAutonomy('relay',async url=>reply(new URL(url).searchParams.get('scope'),{candidate_blocked:false,candidate_identity_required:true}),{env})).ok,true);
 });
+
+
+test('existing build client rejects unavailable schema diagnostics with or without exact candidate identity',async()=>{
+ for(const env of [{},{WORKERS_CI_COMMIT_SHA:'a'.repeat(40)}]){
+  await assert.rejects(checkAutonomy('relay',async url=>{
+   const scope=new URL(url).searchParams.get('scope');
+   return reply(scope,scope==='relay'?{candidate_blocked:true,candidate_identity_required:true,schema_check_unavailable:true}:{});
+  },{env}),/quarantined|source missing/);
+ }
+});
