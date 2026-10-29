@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T07:30:51.237Z",
+  "updated_at": "2026-10-29T07:34:31.172Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7290,6 +7290,43 @@
           "next_action": "Parked so Claude Code can take over PR110 at Lauren's request (Relay allows one active implementation per owner). Draft PR116, head d9550c0, is done and mergeable; it needs CI, a native Linux check of the GTK report dialog, and Lauren's review. Claude Code (claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd) takes it back after PR110."
         }
       ]
+    },
+    {
+      "id": "rtxforge-linux-helper-closed-window-qa-20261029",
+      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+      "goal": "Qualify Linux's existing standalone overlay helper with the manager closed in Desktop and Steam Game Mode, including PR117's AppImage startup/replay ownership fix, before the next app release.",
+      "acceptance": "Use the exact reviewed/merged PR117 source and matching game-side bridge. On actual Linux NVIDIA hardware, test installed Flatpak and installed AppImage on supported distro sessions (Desktop Wayland/X11 as available and Steam Gamescope/Game Mode). Confirm one channel owner; helper remains after manager closes, starts in current/new login, survives Desktop↔GameMode transition, and manager reopen/close doesn't duplicate preset writes. Test panel shortcut without focus loss, live controls, save/reset and next-launch preset replay; preserve recorded feature/package settings and backups. Capture user-service status/journal and exact package/source identity. Disabling/uninstall/update behavior should surface actionable errors. Coordinate with the active Linux publication/parity owners; do not bump or publish another owner's version. Apply existing reviewed release gates. Record actual hardware outcomes separately from fixture CI; no claim of Proton/Gamescope acceptance before running it.",
+      "next_action": "Queued follow-up only. After PR117 merges, include its helper fix in the next admitted Linux build and perform exact-build closed-window runtime qualification. Current website task delivers source and factual instructions without an app release.",
+      "paths": [
+        "scripts/linux_overlay_helper.py",
+        "scripts/linux_overlay_host.py",
+        "docs/linux/overlay-channel.md"
+      ],
+      "resources": [
+        "rtxforge-linux-helper-closed-window-qa"
+      ],
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-29T07:34:31.172Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Qualify Linux's existing standalone overlay helper with the manager closed in Desktop and Steam Game Mode, including PR117's AppImage startup/replay ownership fix, before the next app release.",
+          "acceptance": "Use the exact reviewed/merged PR117 source and matching game-side bridge. On actual Linux NVIDIA hardware, test installed Flatpak and installed AppImage on supported distro sessions (Desktop Wayland/X11 as available and Steam Gamescope/Game Mode). Confirm one channel owner; helper remains after manager closes, starts in current/new login, survives Desktop↔GameMode transition, and manager reopen/close doesn't duplicate preset writes. Test panel shortcut without focus loss, live controls, save/reset and next-launch preset replay; preserve recorded feature/package settings and backups. Capture user-service status/journal and exact package/source identity. Disabling/uninstall/update behavior should surface actionable errors. Coordinate with the active Linux publication/parity owners; do not bump or publish another owner's version. Apply existing reviewed release gates. Record actual hardware outcomes separately from fixture CI; no claim of Proton/Gamescope acceptance before running it.",
+          "at": "2026-10-29T07:34:31.172Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-helper-closed-window-qa-20261029:acceptance:0",
+            "text": "Use the exact reviewed/merged PR117 source and matching game-side bridge. On actual Linux NVIDIA hardware, test installed Flatpak and installed AppImage on supported distro sessions (Desktop Wayland/X11 as available and Steam Gamescope/Game Mode). Confirm one channel owner; helper remains after manager closes, starts in current/new login, survives Desktop↔GameMode transition, and manager reopen/close doesn't duplicate preset writes. Test panel shortcut without focus loss, live controls, save/reset and next-launch preset replay; preserve recorded feature/package settings and backups. Capture user-service status/journal and exact package/source identity. Disabling/uninstall/update behavior should surface actionable errors. Coordinate with the active Linux publication/parity owners; do not bump or publish another owner's version. Apply existing reviewed release gates. Record actual hardware outcomes separately from fixture CI; no claim of Proton/Gamescope acceptance before running it.",
+            "at": "2026-10-29T07:34:31.172Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
