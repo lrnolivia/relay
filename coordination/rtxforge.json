@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T06:12:39.731Z",
+  "updated_at": "2026-10-29T06:14:20.343Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -19510,6 +19510,46 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-website-beta-reports-20261029",
+      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+      "branch": "rtxforge/website-beta-reports-20261029",
+      "paths": [
+        "website/",
+        ".github/ISSUE_TEMPLATE/beta-report.yml"
+      ],
+      "resources": [
+        "rtxforge-website-beta-reports"
+      ],
+      "goal": "Build consistent beta compatibility reporting into the website per Lauren's supplied feedback.",
+      "acceptance": "Discoverable accessible report page and copyable template capture RTX series/model, distro/OS, app format/build, feature package/version, game, NR/MFG installed and observed outcome; AppImage host dependency guidance linked; GitHub issue form keeps reports searchable; site checks and browser verification pass. User instruction authorizes implementation and routine publication through existing site workflow.",
+      "next_action": "Create isolated checkout from fresh main, implement report page and issue form, validate and publish reviewed change.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "6b267bd593a2e0b7c18e824c880b718c53f338c3",
+      "state": "active",
+      "created_at": "2026-10-29T06:14:20.343Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Build consistent beta compatibility reporting into the website per Lauren's supplied feedback.",
+          "acceptance": "Discoverable accessible report page and copyable template capture RTX series/model, distro/OS, app format/build, feature package/version, game, NR/MFG installed and observed outcome; AppImage host dependency guidance linked; GitHub issue form keeps reports searchable; site checks and browser verification pass. User instruction authorizes implementation and routine publication through existing site workflow.",
+          "at": "2026-10-29T06:14:20.343Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-website-beta-reports-20261029:acceptance:0",
+            "text": "Discoverable accessible report page and copyable template capture RTX series/model, distro/OS, app format/build, feature package/version, game, NR/MFG installed and observed outcome; AppImage host dependency guidance linked; GitHub issue form keeps reports searchable; site checks and browser verification pass. User instruction authorizes implementation and routine publication through existing site workflow.",
+            "at": "2026-10-29T06:14:20.343Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T06:14:20.343Z",
+      "lease_until": "2026-10-29T18:14:20.343Z"
     }
   ]
 }
