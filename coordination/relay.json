@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T19:25:36.097Z",
+  "updated_at": "2026-10-29T19:44:15.692Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18418,7 +18418,8 @@
         "src/recovery-controller-runtime.test.js",
         "projects/relay.json",
         "src/autonomy-control.js",
-        "src/autonomy-control.test.js"
+        "src/autonomy-control.test.js",
+        "src/compiled-recovery-runtime.test.js"
       ],
       "resources": [
         "relay-context-store",
@@ -18428,7 +18429,7 @@
       ],
       "goal": "Add a supported relay_context archive step so a full project context log (200 entries / 600 operations) can move eligible older entries into durable, readable archive segments and accept new records, without deleting history.",
       "acceptance": "Preserve original durable readable archive/capacity recovery acceptance. Add explicit new, acknowledged, resolved, archived and reopen message lifecycle; ack/delivery/task completion never imply resolution. Recipient-bound semantic transitions; pending blockers/decisions survive physical rollover and closed assignments. Stable paging, exact idempotent replay across storage segments, original evidence and audit retained. Legacy schema reads and rollback-compatible runtime baseline before activation/new-format writes. Bounded executor active inbox; tests at200entries/600operations, authorization/concurrency/CAS/replay/migration. User authorized tests, review, publication, human-authenticated merge and deployment on October29; no permanent deletion or live-message cleanup.",
-      "next_action": "Implement reviewer-advised server-side context schema floor in public autonomy candidate status (old build scripts failclosed), shared exact-source guard, rollback/raw deploy and recovery reader. Preserve gated-off baseline/controller config; floor activation only after verified controller and healthy compatible source.",
+      "next_action": "PR262 broader CI exposed synthetic recovery transport missing newly required canonical floor registration read. Update focused runtime fixture without weakening recovery assertions; rerun CI before guarded baseline/controller release. Floor absent and migration off.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18458,8 +18459,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T19:25:36.097Z",
-      "lease_until": "2026-10-30T07:25:36.097Z",
+      "updated_at": "2026-10-29T19:44:15.692Z",
+      "lease_until": "2026-10-30T07:44:15.692Z",
       "handoffs": [
         {
           "at": "2026-10-29T18:00:24.394Z",
