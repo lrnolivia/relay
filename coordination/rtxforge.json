@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T07:29:42.812Z",
+  "updated_at": "2026-10-29T07:30:11.396Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7187,10 +7187,10 @@
     },
     {
       "id": "rtxforge-app-beta-reports-20261029",
-      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "owner": "claude-open",
       "goal": "Plan and later implement consistent, partly automated beta reports with optional logs in both Windows and Linux rtxForge apps. Lauren explicitly requested: finish the website, plan the app side, and create this Relay assignment for both OSes. Planning/queue only in the current task; do not start an executor or change app code.",
       "acceptance": "1. Implement for both native Windows and Linux apps. Website link opens the installed app's log-scanner UI through a registered, validated app URI (proposed rtxforge://support/logs); register Windows installer and Linux desktop/Flatpak/AppImage routes, with clear unsupported/portable/not-installed fallback. Ship the website action with working handlers. URI data is untrusted: no arbitrary paths, commands, automatic collection or upload.\n2. Base scanner on existing modal review/progress/result screens. Let users choose ALL games, ONE game, or a selected FEW; show exact selection before scanning, support cancellation and partial/missing-log results, Desktop/Game Mode, keyboard and controller. No game writes or launches.\n3. Reuse scripts/game_notes.py, compat_list.py and native report flows with one shared toolkit-free schema matching website/public/report.html and .github/ISSUE_TEMPLATE/beta-report.yml. Auto-fill verified host OS/distro, RTX model/series/driver, app format/build/channel, selected game/version, installed provider/version and attempted NR/MFG mode. Keep corrections and Unknown; distinguish selected versus installed provenance. Detect host distro outside Flatpak; infer installer/portable only from verified metadata.\n4. Separate user-observed NR and MFG results from saved settings, installed files and log execution evidence. Logs must never automatically declare visual correctness or FPS gains. Preserve notes/test-result/Try anyway behavior; allow failed-install and untested reports.\n5. User opts into logs/notes; collect only bounded, known adjacent game logs (OptiScaler.log, sl.log, sl.dlss_g.log, sl.interposer.log) and known app engine/crash-log locations. No recursive home/library/prefix/save collection. Reject links/reparse escapes, FIFOs, unsafe executable paths and file swaps. Reuse safe regular-file helpers; remove shared POSIX-only assumptions for Windows. Preserve timestamps, latest-session association, stale-run warnings, limits and truncation manifest.\n6. Preview EXACT best-effort-redacted metadata/log bytes (paths, email, Steam IDs, secrets) before export/upload. Freeze that preview; do not reread changed files during export. Compress into .zip with report identity, metadata and manifest. Target <=20 MiB compressed, below GitHub's documented 25 MB attachment limit; recheck at implementation. Make truncation/splitting/oversize handling visible. Test incompressible logs and compression errors.\n7. Save ZIPs in an easy-to-find user Reports folder with Open folder, Copy path, and Save as actions. Show filename, size, included/skipped files and reason; preserve local bundle after cancellation/offline/upload failure.\n8. Support ADDING LOGS LATER to an EXISTING bug report, not requiring another issue: validate the issue URL/repository, open the issue/comment with attachment instructions, and retain its link. New reports use prefilled GitHub review/final submission. Existing GitHub upload accepts ZIP; attach in browser for MVP. Do not claim URLs can attach local files or an unauthenticated create-issue API can upload binaries. No embedded tokens/new auth service, raw logs in URLs/web storage, silent background uploads, or automatic posting. Warn that attaching uploads immediately and public-repo files are public.\n9. Verify shared fixtures for redaction, installed provenance, size bounds, stale/missing/hostile logs and immutable preview export; native Windows build/host and Linux GTK/runtime checks; one/few/all selection and existing-issue/new-issue/URI/clipboard/offline flows on both OSes.\n10. PLANNED/QUEUED ONLY now. Respect active rtxforge-windows-linux-sync-20261029 ownership; reconcile/handoff and admit precise paths before implementation. No executor, app code changes or app release in this website task.",
-      "next_action": "Handoff of queued-only work at Lauren's explicit request in Claude Code on 2026-10-29 ('lets build that out'; Linux+shared first, Windows after PR110; 'Yes, add the list'). Successor claims shared+Linux paths plus the compatibility list; Windows UI/URI waits for PR110 and the website compatibility page waits for rtxforge-website-simplify-20261029.",
+      "next_action": "Parked so Claude Code can take over PR110 at Lauren's request (Relay allows one active implementation per owner). Draft PR116, head d9550c0, is done and mergeable; it needs CI, a native Linux check of the GTK report dialog, and Lauren's review. Claude Code (claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd) takes it back after PR110.",
       "paths": [
         "scripts/game_notes.py",
         "scripts/compat_list.py",
@@ -7269,13 +7269,19 @@
           }
         }
       ],
-      "updated_at": "2026-10-29T07:08:00.693Z",
+      "updated_at": "2026-10-29T07:30:11.396Z",
       "handoffs": [
         {
           "at": "2026-10-29T07:08:00.693Z",
           "from": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
           "to": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
           "next_action": "Handoff of queued-only work at Lauren's explicit request in Claude Code on 2026-10-29 ('lets build that out'; Linux+shared first, Windows after PR110; 'Yes, add the list'). Successor claims shared+Linux paths plus the compatibility list; Windows UI/URI waits for PR110 and the website compatibility page waits for rtxforge-website-simplify-20261029."
+        },
+        {
+          "at": "2026-10-29T07:30:11.396Z",
+          "from": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+          "to": "claude-open",
+          "next_action": "Parked so Claude Code can take over PR110 at Lauren's request (Relay allows one active implementation per owner). Draft PR116, head d9550c0, is done and mergeable; it needs CI, a native Linux check of the GTK report dialog, and Lauren's review. Claude Code (claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd) takes it back after PR110."
         }
       ]
     }
@@ -19558,7 +19564,7 @@
     },
     {
       "id": "rtxforge-app-beta-reports-20261029",
-      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "owner": "claude-open",
       "branch": "rtxforge/app-beta-reports-20261029",
       "paths": [
         "scripts/beta_report.py",
@@ -19580,7 +19586,7 @@
       ],
       "goal": "Shared + Linux half of in-app beta reports and the compatibility list. Lauren 2026-10-29 in Claude Code: 'lets build that out', approved Linux+shared first with Windows after PR110, and 'Yes, add the list' (public compatibility list fed by reviewed reports).",
       "acceptance": "Shared toolkit-free scripts/beta_report.py: one schema matching website report.html and beta-report.yml (12 fields); auto-filled verified host facts with Unknown fallbacks and editable corrections; Flatpak host distro not runtime; selected vs installed package provenance; user-observed NR/MFG separate from installed files and log evidence. Opt-in bounded allowlisted log collection (OptiScaler.log, sl.log, sl.dlss_g.log, sl.interposer.log + known app logs) with safe regular-file reads that also work on Windows (no POSIX-only O_NOFOLLOW), timestamps, stale warnings, truncation manifest. Exact redacted preview frozen and exported as ZIP <=20 MiB with report identity, metadata and manifest into a visible Reports folder; oversize visible. New report -> prefilled GitHub beta-report issue; add logs later to an existing issue with validated URL. No uploads, tokens, raw logs in URLs. Compatibility list: compatibility.json schema 2 with per-report OS/GPU series/package+version/NR/MFG results and backward-compatible verdicts; app share uses beta-report format; documented curation from reviewed issues. Linux GTK: Prepare beta report from Game Details and Library Reports, one/few/all game selection on existing modal review screens, rtxforge://support/logs URI validated (untrusted, no paths/commands) and registered for Flatpak and AppImage desktop entries. Tests for schema, redaction, provenance, size bounds, hostile/stale/missing logs, frozen export, URI parsing, list matching. Follow-ups (not this claim): Windows UI/URI after PR110; website compatibility page + open-in-app button after rtxforge-website-simplify-20261029.",
-      "next_action": "Implementation done in draft PR116 (head d9550c0, synced with the simplified website form, mergeable). Held so the owner can take over PR110 at Lauren's request. Remaining: CI result, native Linux Desktop/Game Mode check of the GTK report dialog, Lauren's review and merge. Windows UI follows PR110; the website compatibility page follows the site claims.",
+      "next_action": "Parked so Claude Code can take over PR110 at Lauren's request (Relay allows one active implementation per owner). Draft PR116, head d9550c0, is done and mergeable; it needs CI, a native Linux check of the GTK report dialog, and Lauren's review. Claude Code (claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd) takes it back after PR110.",
       "category": "implementation",
       "labels": [
         {
@@ -19646,10 +19652,16 @@
           "from": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
           "to": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
           "next_action": "Handoff of queued-only work at Lauren's explicit request in Claude Code on 2026-10-29 ('lets build that out'; Linux+shared first, Windows after PR110; 'Yes, add the list'). Successor claims shared+Linux paths plus the compatibility list; Windows UI/URI waits for PR110 and the website compatibility page waits for rtxforge-website-simplify-20261029."
+        },
+        {
+          "at": "2026-10-29T07:30:11.396Z",
+          "from": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+          "to": "claude-open",
+          "next_action": "Parked so Claude Code can take over PR110 at Lauren's request (Relay allows one active implementation per owner). Draft PR116, head d9550c0, is done and mergeable; it needs CI, a native Linux check of the GTK report dialog, and Lauren's review. Claude Code (claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd) takes it back after PR110."
         }
       ],
-      "updated_at": "2026-10-29T07:29:42.812Z",
-      "lease_until": "2026-10-29T19:29:42.812Z"
+      "updated_at": "2026-10-29T07:30:11.396Z",
+      "lease_until": "2026-10-29T19:30:11.396Z"
     },
     {
       "id": "rtxforge-windows-linux-sync-20261029",
