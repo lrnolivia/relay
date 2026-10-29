@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T07:18:54.905Z",
+  "updated_at": "2026-10-29T07:20:00.217Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -20007,15 +20007,24 @@
         "docs/linux/overlay-channel.md",
         "docs/INSTALLATION.md",
         "website/public/install.html",
-        "website/README.md"
+        "website/README.md",
+        "website/public/index.html",
+        "website/public/report.html",
+        "website/public/app.js",
+        "website/public/install.js",
+        "website/public/report.js",
+        "website/public/site-controls.mjs",
+        "website/public/styles.css",
+        "website/test/site-controls.test.mjs"
       ],
       "resources": [
         "rtxforge-linux-helper-lifecycle",
-        "rtxforge-website-guide-helper"
+        "rtxforge-website-guide-helper",
+        "rtxforge-website-navigation"
       ],
       "goal": "Make the existing standalone Linux overlay helper available with the app window closed in Desktop and Steam Game Mode; close the installed AppImage immediate-start gap and correct guide instructions that incorrectly require keeping the manager open.",
-      "acceptance": "Reuse the existing toolkit-free helper and per-user singleton, with no new overlay renderer or GUI changes. Installed AppImage enables and starts the user service immediately, retries start on repeat registration, refreshes a changed unit without restarting unchanged services, and reports systemctl failures. Flatpak host helper remains independent and unchanged. Correct website and product docs to describe setup, closed-window behavior and existing bridge prerequisites without claiming unverified native Proton/Gamescope acceptance. Cover install/current-login, repeated install, upgrade and failure behavior; run Linux-focused tests through Linux CI/native environment, preserve active source owners and public release gates. Publish corrected website after reviewed merge; app fix is source delivery unless separately released.",
-      "next_action": "Implement focused helper service lifecycle fix and factual guide corrections; validate, review, merge and publish website. Preserve all active app/report/native-panel ownership.",
+      "acceptance": "Reuse the existing toolkit-free helper and per-user singleton, with no new overlay renderer or GUI changes. Installed AppImage enables and starts the user service immediately, retries start on repeat registration, refreshes a changed unit without restarting unchanged services, and reports systemctl failures. Flatpak host helper remains independent and unchanged. Correct website and product docs to describe setup, closed-window behavior and existing bridge prerequisites without claiming unverified native Proton/Gamescope acceptance. Cover install/current-login, repeated install, upgrade and failure behavior; run Linux-focused tests through Linux CI/native environment, preserve active source owners and public release gates. Publish corrected website after reviewed merge; app fix is source delivery unless separately released. Also use the same header structure, navigation order, OS switch and theme positions on home/setup/report across desktop and mobile. Preserve current-page indication, keyboard OS switching, OS-aware links and report-specific fields; direct report entry still asks OS first, and a chosen OS carries through navigation. Keep a working no-JS report and prevent duplicated conflicting OS controls. Verify equivalent control geometry at common breakpoints and accessibility.",
+      "next_action": "Fix helper start-on-install; unify site header/navigation and OS selection with shared behavior, then verify Linux tests and page layouts before review/publication.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -20036,11 +20045,72 @@
             "id": "rtxforge-linux-helper-lifecycle-20261029:acceptance:0",
             "text": "Reuse the existing toolkit-free helper and per-user singleton, with no new overlay renderer or GUI changes. Installed AppImage enables and starts the user service immediately, retries start on repeat registration, refreshes a changed unit without restarting unchanged services, and reports systemctl failures. Flatpak host helper remains independent and unchanged. Correct website and product docs to describe setup, closed-window behavior and existing bridge prerequisites without claiming unverified native Proton/Gamescope acceptance. Cover install/current-login, repeated install, upgrade and failure behavior; run Linux-focused tests through Linux CI/native environment, preserve active source owners and public release gates. Publish corrected website after reviewed merge; app fix is source delivery unless separately released.",
             "at": "2026-10-29T07:18:54.905Z"
+          },
+          {
+            "id": "rtxforge-linux-helper-lifecycle-20261029:acceptance:1",
+            "text": "Reuse the existing toolkit-free helper and per-user singleton, with no new overlay renderer or GUI changes. Installed AppImage enables and starts the user service immediately, retries start on repeat registration, refreshes a changed unit without restarting unchanged services, and reports systemctl failures. Flatpak host helper remains independent and unchanged. Correct website and product docs to describe setup, closed-window behavior and existing bridge prerequisites without claiming unverified native Proton/Gamescope acceptance. Cover install/current-login, repeated install, upgrade and failure behavior; run Linux-focused tests through Linux CI/native environment, preserve active source owners and public release gates. Publish corrected website after reviewed merge; app fix is source delivery unless separately released. Also use the same header structure, navigation order, OS switch and theme positions on home/setup/report across desktop and mobile. Preserve current-page indication, keyboard OS switching, OS-aware links and report-specific fields; direct report entry still asks OS first, and a chosen OS carries through navigation. Keep a working no-JS report and prevent duplicated conflicting OS controls. Verify equivalent control geometry at common breakpoints and accessibility.",
+            "at": "2026-10-29T07:20:00.217Z",
+            "reason": "Lauren added website-wide consistency: OS controls, all navigation and headers must occupy consistent places. Keep the existing helper correction and deliver this related website batch together."
           }
         ]
       },
-      "updated_at": "2026-10-29T07:18:54.905Z",
-      "lease_until": "2026-10-29T19:18:54.905Z"
+      "updated_at": "2026-10-29T07:20:00.217Z",
+      "lease_until": "2026-10-29T19:20:00.217Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-29T07:20:00.217Z",
+          "by": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+          "reason": "Lauren added website-wide consistency: OS controls, all navigation and headers must occupy consistent places. Keep the existing helper correction and deliver this related website batch together.",
+          "fields": [
+            "acceptance",
+            "next_action",
+            "paths",
+            "resources"
+          ],
+          "before": {
+            "acceptance": "Reuse the existing toolkit-free helper and per-user singleton, with no new overlay renderer or GUI changes. Installed AppImage enables and starts the user service immediately, retries start on repeat registration, refreshes a changed unit without restarting unchanged services, and reports systemctl failures. Flatpak host helper remains independent and unchanged. Correct website and product docs to describe setup, closed-window behavior and existing bridge prerequisites without claiming unverified native Proton/Gamescope acceptance. Cover install/current-login, repeated install, upgrade and failure behavior; run Linux-focused tests through Linux CI/native environment, preserve active source owners and public release gates. Publish corrected website after reviewed merge; app fix is source delivery unless separately released.",
+            "next_action": "Implement focused helper service lifecycle fix and factual guide corrections; validate, review, merge and publish website. Preserve all active app/report/native-panel ownership.",
+            "paths": [
+              "scripts/linux_overlay_helper.py",
+              "tests/linux_runtime/test_linux_overlay_helper.py",
+              "docs/linux/overlay-channel.md",
+              "docs/INSTALLATION.md",
+              "website/public/install.html",
+              "website/README.md"
+            ],
+            "resources": [
+              "rtxforge-linux-helper-lifecycle",
+              "rtxforge-website-guide-helper"
+            ]
+          },
+          "after": {
+            "acceptance": "Reuse the existing toolkit-free helper and per-user singleton, with no new overlay renderer or GUI changes. Installed AppImage enables and starts the user service immediately, retries start on repeat registration, refreshes a changed unit without restarting unchanged services, and reports systemctl failures. Flatpak host helper remains independent and unchanged. Correct website and product docs to describe setup, closed-window behavior and existing bridge prerequisites without claiming unverified native Proton/Gamescope acceptance. Cover install/current-login, repeated install, upgrade and failure behavior; run Linux-focused tests through Linux CI/native environment, preserve active source owners and public release gates. Publish corrected website after reviewed merge; app fix is source delivery unless separately released. Also use the same header structure, navigation order, OS switch and theme positions on home/setup/report across desktop and mobile. Preserve current-page indication, keyboard OS switching, OS-aware links and report-specific fields; direct report entry still asks OS first, and a chosen OS carries through navigation. Keep a working no-JS report and prevent duplicated conflicting OS controls. Verify equivalent control geometry at common breakpoints and accessibility.",
+            "next_action": "Fix helper start-on-install; unify site header/navigation and OS selection with shared behavior, then verify Linux tests and page layouts before review/publication.",
+            "paths": [
+              "scripts/linux_overlay_helper.py",
+              "tests/linux_runtime/test_linux_overlay_helper.py",
+              "docs/linux/overlay-channel.md",
+              "docs/INSTALLATION.md",
+              "website/public/install.html",
+              "website/README.md",
+              "website/public/index.html",
+              "website/public/report.html",
+              "website/public/app.js",
+              "website/public/install.js",
+              "website/public/report.js",
+              "website/public/site-controls.mjs",
+              "website/public/styles.css",
+              "website/test/site-controls.test.mjs"
+            ],
+            "resources": [
+              "rtxforge-linux-helper-lifecycle",
+              "rtxforge-website-guide-helper",
+              "rtxforge-website-navigation"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
