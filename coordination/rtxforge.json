@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T01:26:38.860Z",
+  "updated_at": "2026-10-29T01:42:09.668Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6726,7 +6726,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-29T01:21:20.790Z",
       "objective_history": {
         "baseline": {
@@ -6742,7 +6742,9 @@
             "at": "2026-10-29T01:21:20.790Z"
           }
         ]
-      }
+      },
+      "completed_at": "2026-10-29T01:42:09.668Z",
+      "updated_at": "2026-10-29T01:42:09.668Z"
     },
     {
       "id": "rtxforge-windows-linux-sync-20261029",
@@ -18682,7 +18684,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "d998c6dd63dc00d59d1cdb6faa1cd35454d023e0",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-29T01:26:38.860Z",
       "objective_history": {
         "baseline": {
@@ -18699,8 +18701,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T01:26:38.860Z",
-      "lease_until": "2026-10-29T13:26:38.860Z"
+      "updated_at": "2026-10-29T01:42:09.668Z",
+      "lease_until": "2026-10-29T13:42:09.668Z",
+      "pr": 107,
+      "merged_head_sha": "6910bc6ff1f383dfc907030b2881996d30abcc75",
+      "merge_commit_sha": "cf8d16637871262c457226c3f6cbc976663701e5",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/107 merged by Lauren at 2026-10-29T01:41Z. All checks green on the head before merge: Flatpak x86_64 bundle (build + installed-bundle verification), Bazzite x86_64 AppImage, native/wayland/kde review, In-game panel candidate, WinUI 3 x64/ARM64, Runner coordination admission, Commit attribution. Not published; publish_beta not dispatched. Real SteamOS/Bazzite/CachyOS hardware testing still pending with Lauren. Superseded draft #106 closed.",
+      "work_accounted": true,
+      "completed_at": "2026-10-29T01:42:09.668Z"
     }
   ]
 }
