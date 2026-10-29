@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T22:34:53.773Z",
+  "updated_at": "2026-10-29T22:35:23.763Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21291,7 +21291,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "a07e3f747b747187533453313207893ff952e2b8",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-29T21:44:31.355Z",
       "objective_history": {
         "baseline": {
@@ -21308,8 +21308,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T22:15:36.313Z",
-      "lease_until": "2026-10-30T10:15:36.313Z"
+      "updated_at": "2026-10-29T22:35:23.763Z",
+      "lease_until": "2026-10-30T10:35:23.763Z",
+      "pr": 121,
+      "merged_head_sha": "236d62d74e0d4e405281d0e1e2c2d88c511149db",
+      "merge_commit_sha": "8e099da7b39704ab5295c882f5a8d7bbdf9e6201",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/121 merged to main as 8e099da7b39704ab5295c882f5a8d7bbdf9e6201: a local no-ff merge as Lauren whose tree equals CI-tested head 236d62d. Every check passed on that head, including the new Report service workflow (13 node tests), WinUI x64/ARM64, AppImage, Flatpak and native/KDE/Wayland reviews. native-review ran tests/ui_game_mode.py through the new one-game report in preview mode: send disabled, What's sent and Back. Service live: Codex connected Workers Builds (rtxforge-report-service-infra-20261029); the exact-source build of 8e099da deployed version cf7b104b; the route loew.fi/rtxforge/api/report answers 400 to an empty POST and the website is unchanged. Live round trip from this PC through beta_report.submit with a tiny ZIP filed https://github.com/lrnolivia/rtxForge/issues/122 as rtxforge-reports[bot], labels beta-report and from-app, with the form-style body and the private-logs line; marked TEST for Lauren to close. Published 1.0.0-beta.7 for both OSes from 8e099da: Linux run 40964530542 and Windows run 40964572049 succeeded. Release assets are at beta.7 and Beta 6 is kept as .previous-a07e3f747b74; the manifest is 1.0.0-beta.7 @ 8e099da and its AppImage sum matches; the x64 installer SHA-256 (2331b436...) matches. Installed on Lauren's PC (only the helper was running): 1.0.0+8e099da, engine 1.0.0-beta.7, helper restarted. Not verified: the new report screens rendered in the installed apps (Windows desktop and Game Mode, Linux desktop); a send from the app UI itself, as opposed to the shared submit path; that the private ZIP landed in R2 (it wasn't read back); and website sending, which waits on Turnstile (rtxforge-report-turnstile-20261029) and the website worker (rtxforge-website-report-send-20261029).",
+      "work_accounted": true,
+      "completed_at": "2026-10-29T22:35:23.763Z"
     }
   ]
 }
