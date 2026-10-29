@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T01:02:48.964Z",
+  "updated_at": "2026-10-29T01:07:03.320Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18505,14 +18505,18 @@
       "paths": [
         "scripts/proton_stack.py",
         "scripts/proton_cuda.py",
+        "scripts/linux_runtime.py",
+        "scripts/user_messages.py",
         "gui/rtxforge_gtk.py",
         "tests/linux_runtime/test_proton_stale_run.py",
-        "tests/ui_joined_reviews.py"
+        "tests/test_user_messages.py",
+        "tests/ui_joined_reviews.py",
+        ".github/workflows/linux-build.yml"
       ],
       "resources": [],
       "goal": "RDR2 is mapped to Proton-GE in Steam but its prefix last ran with Proton Experimental, so the CUDA check refuses it and tells Lauren to set Proton-GE, which she already did. When Steam's compat tool mapping (config.vdf CompatToolMapping) names a tool that has nvcuda while the last run used one without, say to launch the game once with that tool and try again. Also: expanding a skipped row in the review dialog shrinks the dialog; keep its size stable.",
       "acceptance": "Refusal names the mapped tool and asks for one launch when the mapping already has CUDA (tested); unchanged message otherwise; review dialog keeps its height when a Needs attention row expands (UI test); Linux validation green; PR CI green; merged; installed.",
-      "next_action": "Implement mapping-aware CUDA refusal and review dialog size fix; open draft PR.",
+      "next_action": "Run Linux validation, open draft PR.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18536,8 +18540,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T01:02:48.964Z",
-      "lease_until": "2026-10-29T13:02:48.964Z"
+      "updated_at": "2026-10-29T01:07:03.320Z",
+      "lease_until": "2026-10-29T13:07:03.320Z"
     }
   ]
 }
