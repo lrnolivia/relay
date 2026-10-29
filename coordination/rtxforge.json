@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T04:16:49.570Z",
+  "updated_at": "2026-10-29T04:21:41.737Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18919,7 +18919,7 @@
       ],
       "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.",
       "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.",
-      "next_action": "Preserve green PR110 source evidence. Implement an opt-in inZOI late-frame renderer candidate with separate provenance; build and exercise native harness before any requested game restart. Existing startup fallback stays default until runtime verified.",
+      "next_action": "Draft PR110 d5ee000 contains Windows sync plus opt-in inZOI late-overlay candidate. Original b378 full WinUI x64/ARM64+Linux+panel CI green and native Control preset Save ack passed; six temporary Control files now restored with exact original hashes. Candidate builds locally, queue independence and package provenance/digests pass; source-qualified ZIP SHA b4f832853b6f6a448147f06ccd50693e0e8d634d9ed4e36dc2442dbe1f01c1fa. Current Linux/attribution/admission green; panel CI running. inZOI runtime unverified and not installed. Investigate Linux marker/local Skynizz baseline mismatch before guarded reversible test; preserve active PRAGMATA session and wait user capture cue. Website child owns separate PR111. No merge/release of PR110.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18949,8 +18949,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T04:10:53.930Z",
-      "lease_until": "2026-10-29T16:10:53.930Z",
+      "updated_at": "2026-10-29T04:21:41.737Z",
+      "lease_until": "2026-10-29T16:21:41.737Z",
       "handoffs": [
         {
           "at": "2026-10-29T03:27:48.270Z",
