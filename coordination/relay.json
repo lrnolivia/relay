@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T07:52:12.153Z",
+  "updated_at": "2026-10-29T18:00:24.394Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18381,7 +18381,7 @@
     },
     {
       "id": "relay-context-archive-20261029",
-      "owner": "claude-context-archive-20261029",
+      "owner": "dot-inbox-lifecycle-20261029",
       "branch": "relay/context-archive-20261029",
       "paths": [
         "packages/runner/src/context-service.mjs",
@@ -18394,7 +18394,7 @@
       ],
       "goal": "Add a supported relay_context archive step so a full project context log (200 entries / 600 operations) can move eligible older entries into durable, readable archive segments and accept new records, without deleting history.",
       "acceptance": "relay_context gains a CAS-gated archive action (operation_id, expected_revision, expected_owner, expected_branch) that writes immutable R2 archive segments before the live record, frees entry and operation capacity, never deletes history, keeps idempotent replay across archived operations, and lets read page archived segments. Tests show a full log accepts a new record after archiving and archived entries remain readable. Draft PR with green CI; no merge or deploy without Lauren's approval.",
-      "next_action": "Draft PR261 exact head 33b309fba6f3843de64a0516245e0d30dde5465a; CI quality success, 1088 passed/0 failed/1 existing runner skip. Awaiting Lauren's review; no merge/deploy. After deploy, a worker with a current rtxforge assignment runs relay_context archive (e.g. older_than_days 7) to free the rtxforge log.",
+      "next_action": "User explicitly authorized takeover on October29. Preserve PR261/head33b309f and all checkpoints; no registered execution job or external activity. Finish safe inbox lifecycle and capacity rollover, fix unresolved/cross-inbox/rollback blockers, independent tests/review and user-authenticated merge/deploy. No production deletion or unrelated protected-file edits.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18418,8 +18418,16 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T07:52:12.153Z",
-      "lease_until": "2026-10-29T19:52:12.153Z"
+      "updated_at": "2026-10-29T18:00:24.394Z",
+      "lease_until": "2026-10-30T06:00:24.394Z",
+      "handoffs": [
+        {
+          "at": "2026-10-29T18:00:24.394Z",
+          "from": "claude-context-archive-20261029",
+          "to": "dot-inbox-lifecycle-20261029",
+          "next_action": "User explicitly authorized takeover on October29. Preserve PR261/head33b309f and all checkpoints; no registered execution job or external activity. Finish safe inbox lifecycle and capacity rollover, fix unresolved/cross-inbox/rollback blockers, independent tests/review and user-authenticated merge/deploy. No production deletion or unrelated protected-file edits."
+        }
+      ]
     }
   ],
   "migrated_from": "loew-inspector"
