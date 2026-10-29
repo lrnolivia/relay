@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T05:00:10.501Z",
+  "updated_at": "2026-10-29T05:08:29.418Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -19209,6 +19209,45 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-website-overlay-light-20261029",
+      "owner": "root:website_overlay_sdr",
+      "branch": "rtxforge/website-overlay-light-20261029",
+      "paths": [
+        "website/"
+      ],
+      "resources": [
+        "rtxforge-website-overlay-media"
+      ],
+      "goal": "Publish Lauren's authentic inZOI Light gameplay overlay capture for website Light mode while preserving Control SDR for Dark mode.",
+      "acceptance": "Use exact approved 1920x1080 inZOI source pixels without edits and losslessly encode; preserve numbers, headings, framing and all other screenshots. Both OS tabs select inZOI in Light and Control SDR in Dark, including live theme changes on the Overlay section. Accurate image dimensions, alt and provenance. Existing website checks, exact-head CI, normal human-attributed merge, existing Worker deployment, live asset hash/selection verification and retained rollback. User explicitly authorizes subagent /root/website_overlay_sdr; owner root:website_overlay_sdr is its schema-compatible canonical executor encoding.",
+      "next_action": "Restore isolated website worktree, create admitted branch from fresh main, add authentic Light asset and metadata, verify theme switching and publish through existing authorized path.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "687440169e2dcad9fe88c9c94ea7315c0b8283fc",
+      "state": "active",
+      "created_at": "2026-10-29T05:08:29.418Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish Lauren's authentic inZOI Light gameplay overlay capture for website Light mode while preserving Control SDR for Dark mode.",
+          "acceptance": "Use exact approved 1920x1080 inZOI source pixels without edits and losslessly encode; preserve numbers, headings, framing and all other screenshots. Both OS tabs select inZOI in Light and Control SDR in Dark, including live theme changes on the Overlay section. Accurate image dimensions, alt and provenance. Existing website checks, exact-head CI, normal human-attributed merge, existing Worker deployment, live asset hash/selection verification and retained rollback. User explicitly authorizes subagent /root/website_overlay_sdr; owner root:website_overlay_sdr is its schema-compatible canonical executor encoding.",
+          "at": "2026-10-29T05:08:29.418Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-website-overlay-light-20261029:acceptance:0",
+            "text": "Use exact approved 1920x1080 inZOI source pixels without edits and losslessly encode; preserve numbers, headings, framing and all other screenshots. Both OS tabs select inZOI in Light and Control SDR in Dark, including live theme changes on the Overlay section. Accurate image dimensions, alt and provenance. Existing website checks, exact-head CI, normal human-attributed merge, existing Worker deployment, live asset hash/selection verification and retained rollback. User explicitly authorizes subagent /root/website_overlay_sdr; owner root:website_overlay_sdr is its schema-compatible canonical executor encoding.",
+            "at": "2026-10-29T05:08:29.418Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T05:08:29.418Z",
+      "lease_until": "2026-10-29T17:08:29.418Z"
     }
   ]
 }
