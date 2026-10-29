@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T06:51:32.984Z",
+  "updated_at": "2026-10-29T06:55:40.724Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -19787,6 +19787,46 @@
       "evidence": "https://github.com/lrnolivia/rtxForge/pull/114 merged as 6d6d11853f051146fa4156949347dc1d5545cf8d; reviewed head 0289e073af6546ee80648b8e5b87f734429f975f. Cloudflare version 312b90f1-b159-4d18-868b-3dab084dccf8 activated 100% by deployment 21dc5e64-bce0-4b93-b838-2f457e9f2772; previous version 5273d4fa-c42b-44a2-a06e-267b01123553 retained. Website trees match. Live https://loew.fi/rtxforge/install verified with actual browser: overlay/menu/Game Mode/Global anchors, OS-specific paragraphs, keyboard platform switching, zero console errors, zero axe WCAG A/AA violations, no overflow in 16 OS/theme/width combinations (320,768,1024,1440). All 13 website tests and Wrangler dry run passed; exact-head AppImage/Flatpak/attribution/admission CI green. Copy checked against native GTK/Windows settings, shared overlay shortcut/defaults and Beta 1 release notes. Only install.html and website product README changed. No application build/release publication. App log automation remains separate queued work.",
       "work_accounted": true,
       "completed_at": "2026-10-29T06:51:32.984Z"
+    },
+    {
+      "id": "rtxforge-website-simplify-20261029",
+      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+      "branch": "rtxforge/website-simplify-20261029",
+      "paths": [
+        "website/",
+        ".github/ISSUE_TEMPLATE/beta-report.yml"
+      ],
+      "resources": [
+        "rtxforge-website-copy-and-flow"
+      ],
+      "goal": "Simplify the entire website experience with human copy, clear task flows and restrained Apple-inspired hierarchy while preserving rtxForge branding and real app imagery.",
+      "acceptance": "Homepage reduces repeated explanations and secondary download choices; setup guide has a short first-game path with overlays and optional details; report flow asks OS first and uses clear labels, fewer demands and the same useful compatibility facts. All OS-specific behavior, real release selection, screenshots, bug-report access, issue drafts/attachments, help anchors and restore/security caveats remain available. Preserve factual compatibility limits without repeating them. No generic frontend cliches or new decorative assets. Validate desktop/mobile/light/dark, accessibility and actual report/download flows; review, merge and deploy through existing site mechanism. App log-scanner task remains queued separately.",
+      "next_action": "Rewrite and simplify the three site pages and supporting copy/flows, run a bounded desktop/mobile verification pass, fix evidenced issues, then publish.",
+      "category": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "base_sha": "6d6d11853f051146fa4156949347dc1d5545cf8d",
+      "state": "active",
+      "created_at": "2026-10-29T06:55:40.724Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Simplify the entire website experience with human copy, clear task flows and restrained Apple-inspired hierarchy while preserving rtxForge branding and real app imagery.",
+          "acceptance": "Homepage reduces repeated explanations and secondary download choices; setup guide has a short first-game path with overlays and optional details; report flow asks OS first and uses clear labels, fewer demands and the same useful compatibility facts. All OS-specific behavior, real release selection, screenshots, bug-report access, issue drafts/attachments, help anchors and restore/security caveats remain available. Preserve factual compatibility limits without repeating them. No generic frontend cliches or new decorative assets. Validate desktop/mobile/light/dark, accessibility and actual report/download flows; review, merge and deploy through existing site mechanism. App log-scanner task remains queued separately.",
+          "at": "2026-10-29T06:55:40.724Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-website-simplify-20261029:acceptance:0",
+            "text": "Homepage reduces repeated explanations and secondary download choices; setup guide has a short first-game path with overlays and optional details; report flow asks OS first and uses clear labels, fewer demands and the same useful compatibility facts. All OS-specific behavior, real release selection, screenshots, bug-report access, issue drafts/attachments, help anchors and restore/security caveats remain available. Preserve factual compatibility limits without repeating them. No generic frontend cliches or new decorative assets. Validate desktop/mobile/light/dark, accessibility and actual report/download flows; review, merge and deploy through existing site mechanism. App log-scanner task remains queued separately.",
+            "at": "2026-10-29T06:55:40.724Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T06:55:40.724Z",
+      "lease_until": "2026-10-29T18:55:40.724Z"
     }
   ]
 }
