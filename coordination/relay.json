@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T07:43:05.712Z",
+  "updated_at": "2026-10-29T07:43:53.364Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18378,6 +18378,48 @@
       "evidence": "PR260 merged as verified lrnolivia account through existing user connector; exact final d14a025c0ba260651b8cf73fab860c8d509f07dd. Main CI40836707954 quality success:1087 passed/0 failed/1 existing runner skip, all5 suites, full asset browser repeated shrink+long-short. Worker build9e3e8ed3 success, deployment18fa87ca version0bf2f54f-cf63-4af4-9d07-3656304142f5 at100%; health200. Autonomy rev93 records exact healthy source/version and retained recovery artifact12880389091. Actual native host placement remains explicitly unverified per acceptance. Necessary cached-v19 URI alias follow-up recorded and will receive separate bounded claim; current v20 fresh-resource code delivered. Original held remainder/private journals preserved.",
       "work_accounted": true,
       "completed_at": "2026-10-29T07:43:05.712Z"
+    },
+    {
+      "id": "relay-context-archive-20261029",
+      "owner": "claude-context-archive-20261029",
+      "branch": "relay/context-archive-20261029",
+      "paths": [
+        "packages/runner/src/context-service.mjs",
+        "packages/runner/src/context-service.test.mjs",
+        "src/relay-events.js",
+        "src/relay-events.test.js"
+      ],
+      "resources": [
+        "relay-context-store"
+      ],
+      "goal": "Add a supported relay_context archive step so a full project context log (200 entries / 600 operations) can move eligible older entries into durable, readable archive segments and accept new records, without deleting history.",
+      "acceptance": "relay_context gains a CAS-gated archive action (operation_id, expected_revision, expected_owner, expected_branch) that writes immutable R2 archive segments before the live record, frees entry and operation capacity, never deletes history, keeps idempotent replay across archived operations, and lets read page archived segments. Tests show a full log accepts a new record after archiving and archived entries remain readable. Draft PR with green CI; no merge or deploy without Lauren's approval.",
+      "next_action": "Commit archive action and tests on relay/context-archive-20261029, open a draft PR and get CI green.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "7f8185d662485516fbcce446d829970b54818d9f",
+      "state": "active",
+      "created_at": "2026-10-29T07:43:53.364Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Add a supported relay_context archive step so a full project context log (200 entries / 600 operations) can move eligible older entries into durable, readable archive segments and accept new records, without deleting history.",
+          "acceptance": "relay_context gains a CAS-gated archive action (operation_id, expected_revision, expected_owner, expected_branch) that writes immutable R2 archive segments before the live record, frees entry and operation capacity, never deletes history, keeps idempotent replay across archived operations, and lets read page archived segments. Tests show a full log accepts a new record after archiving and archived entries remain readable. Draft PR with green CI; no merge or deploy without Lauren's approval.",
+          "at": "2026-10-29T07:43:53.364Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-context-archive-20261029:acceptance:0",
+            "text": "relay_context gains a CAS-gated archive action (operation_id, expected_revision, expected_owner, expected_branch) that writes immutable R2 archive segments before the live record, frees entry and operation capacity, never deletes history, keeps idempotent replay across archived operations, and lets read page archived segments. Tests show a full log accepts a new record after archiving and archived entries remain readable. Draft PR with green CI; no merge or deploy without Lauren's approval.",
+            "at": "2026-10-29T07:43:53.364Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T07:43:53.364Z",
+      "lease_until": "2026-10-29T19:43:53.364Z"
     }
   ],
   "migrated_from": "loew-inspector"
