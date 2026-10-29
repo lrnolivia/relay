@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T07:49:01.788Z",
+  "updated_at": "2026-10-29T07:49:16.859Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7311,7 +7311,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-29T06:22:40.481Z",
       "objective_history": {
         "baseline": {
@@ -7354,7 +7354,7 @@
           }
         }
       ],
-      "updated_at": "2026-10-29T07:30:11.396Z",
+      "updated_at": "2026-10-29T07:49:16.859Z",
       "handoffs": [
         {
           "at": "2026-10-29T07:08:00.693Z",
@@ -7368,7 +7368,8 @@
           "to": "claude-open",
           "next_action": "Parked so Claude Code can take over PR110 at Lauren's request (Relay allows one active implementation per owner). Draft PR116, head d9550c0, is done and mergeable; it needs CI, a native Linux check of the GTK report dialog, and Lauren's review. Claude Code (claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd) takes it back after PR110."
         }
-      ]
+      ],
+      "completed_at": "2026-10-29T07:49:16.859Z"
     },
     {
       "id": "rtxforge-linux-helper-closed-window-qa-20261029",
@@ -19739,7 +19740,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "6d6d11853f051146fa4156949347dc1d5545cf8d",
-      "state": "held",
+      "state": "completed",
       "created_at": "2026-10-29T07:08:14.928Z",
       "objective_history": {
         "baseline": {
@@ -19796,8 +19797,14 @@
           "next_action": "Parked so Claude Code can take over PR110 at Lauren's request (Relay allows one active implementation per owner). Draft PR116, head d9550c0, is done and mergeable; it needs CI, a native Linux check of the GTK report dialog, and Lauren's review. Claude Code (claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd) takes it back after PR110."
         }
       ],
-      "updated_at": "2026-10-29T07:30:11.396Z",
-      "lease_until": "2026-10-29T19:30:11.396Z"
+      "updated_at": "2026-10-29T07:49:16.859Z",
+      "lease_until": "2026-10-29T19:49:16.859Z",
+      "pr": 116,
+      "merged_head_sha": "d9550c0a6f8653d68c2d72b970617be23ac84eec",
+      "merge_commit_sha": "aec8b6beb4f31c9ff3b6ffaa024d10d814d09c07",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/116 merged by lrnolivia as aec8b6beb4f31c9ff3b6ffaa024d10d814d09c07 (reviewed head d9550c0, on top of #110's merge d3c0fee). All exact-head checks green, including WinUI, AppImage, Flatpak, native/KDE/Wayland review and admission. tests/test_beta_report.py (25) and tests/test_compat_list.py (13) pass locally on the combined tree, as does the Windows host suite (136). Parked under claude-open so the owner could take #110; completed by Claude Code under Lauren's overnight authorization. Follow-ups continue in rtxforge-linux-beta2-windows-parity-20261029: Windows reports on the shared beta_report, Windows rtxforge://, wiring both test files into CI, and route-specific log names. Not verified: the GTK report dialog on a real Linux desktop and in Game Mode.",
+      "work_accounted": true,
+      "completed_at": "2026-10-29T07:49:16.859Z"
     },
     {
       "id": "rtxforge-windows-linux-sync-20261029",
