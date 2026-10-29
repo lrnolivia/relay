@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T22:30:46.754Z",
+  "updated_at": "2026-10-29T22:34:53.773Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7747,7 +7747,7 @@
       "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
       "goal": "Website only: the report page sends reports straight to GitHub Issues through the rtxForge report service, as the app now does, instead of opening a prefilled GitHub link. On 2026-10-29 Lauren asked for in-app reports to 'submit the report to github issues on its own… as seamless as possible' and then asked 'will web use this too'. Supersedes the link-only part of rtxforge-website-in-app-report-links-20261029; its in-app wording and rtxforge:// link still apply.",
       "acceptance": "Service contract (lrnolivia/rtxForge services/reports/README.md; Claude's claim rtxforge-report-send-20261029): POST https://loew.fi/rtxforge/api/report with JSON. Body: schema 1; report_id matching r<YYYYMMDD>T<HHMMSS>-<6 hex>, generated in the page; source 'web'; turnstile, the Cloudflare Turnstile token; fields, the same 12 ids and choices as report.html and beta-report.yml (only platform and observations required); details as an optional list of short strings; logs as an optional base64 ZIP up to 20 MB, kept private. Answers: 201 {number, url}, or {error} with 400, 403, 413, 429, 502 or 503. Show the error sentence as-is. CORS allows https://loew.fi and https://rtxforge.loew.fi. Done when: (1) the form's main button is 'Send report'. It renders a Turnstile widget with the public site key from rtxforge-report-turnstile-20261029's completion evidence, sends, and then shows 'Thanks, it's issue #N' with a link. (2) The page says plainly that the report becomes a public GitHub issue and that attached logs stay private. (3) A no-JavaScript fallback and the prefilled GitHub link remain as a secondary 'or open it on GitHub' path, which is also used while the service answers 503. (4) Desktop, mobile, light/dark and accessibility checks pass, plus a real end-to-end send once the service and Turnstile are live: mark the test issue clearly and tell Lauren its number so she can close it. Deploy through the standalone site mechanism.",
-      "next_action": "Wait for Claude's merge of services/reports and for Codex's Turnstile site key, then switch report.html and report.js to POST to the service with Turnstile, keep the GitHub link as fallback, verify and deploy.",
+      "next_action": "Implement direct submission with the new public sitekey, action report, private optional ZIPs and GitHub fallback; verify mocked browser flows and one real production roundtrip, then deploy. Service-host/action validation requested through its existing owner's inbox; no app/service source edits here.",
       "paths": [
         "website/public/report.html",
         "website/public/report.js",
@@ -7777,7 +7777,25 @@
             "at": "2026-10-29T21:58:39.378Z"
           }
         ]
-      }
+      },
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-29T22:34:53.773Z",
+          "by": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+          "reason": "Lauren explicitly asked to finish Turnstile and enable account-free website reports now. Work remains in the standalone website and outside app Git history.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Wait for Claude's merge of services/reports and for Codex's Turnstile site key, then switch report.html and report.js to POST to the service with Turnstile, keep the GitHub link as fallback, verify and deploy."
+          },
+          "after": {
+            "next_action": "Implement direct submission with the new public sitekey, action report, private optional ZIPs and GitHub fallback; verify mocked browser flows and one real production roundtrip, then deploy. Service-host/action validation requested through its existing owner's inbox; no app/service source edits here."
+          }
+        }
+      ],
+      "updated_at": "2026-10-29T22:34:53.773Z"
     },
     {
       "id": "rtxforge-functional-test-20261029",
