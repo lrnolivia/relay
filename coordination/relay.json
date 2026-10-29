@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T07:24:59.024Z",
+  "updated_at": "2026-10-29T07:29:56.933Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18305,7 +18305,7 @@
       ],
       "goal": "Fix collapsed Technical evidence card height and prefer inline tool-mounted Relay cards in supporting ChatGPT/Codex hosts while preserving Claude MCP Apps behavior.",
       "acceptance": "Measure content independent of iframe viewport; expand and shrink repeatedly, handle updated content and width changes; publish explicit inline initial preference while retaining fullscreen screenshot capability; preserve standard MCP Apps and OpenAI bridge metadata. Add regression tests and verify draft PR/CI; explicitly distinguish host-native placement unverified until deployed. No merge/deploy. Provenance: authorized takeover and two-file carve-out from held relay-consumer-verification-20261028; original branch/private checkpoints and remaining acceptance preserved.",
-      "next_action": "Finish scoped source/tests in isolated cloud workspace; publish draft PR and verify exact source checks; no merge/deploy.",
+      "next_action": "Draft PR260 exact head 28ff4a289284181976d55c15ec8d6ac8934c26c7; VM regression red before/green after and 5 focused tests pass. CI quality running (40835651360); independent review no blocking source defect, browser test timing/long-short strengthening in progress. Local browser blocked by environment; full asset browser result pending CI. No merge/deploy.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18329,8 +18329,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T07:24:59.024Z",
-      "lease_until": "2026-10-29T19:24:59.024Z"
+      "updated_at": "2026-10-29T07:29:56.933Z",
+      "lease_until": "2026-10-29T19:29:56.933Z"
     }
   ],
   "migrated_from": "loew-inspector"
