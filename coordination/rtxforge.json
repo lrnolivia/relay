@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T06:43:05.981Z",
+  "updated_at": "2026-10-29T06:43:31.773Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -19707,6 +19707,46 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-website-overlay-guide-20261029",
+      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+      "branch": "rtxforge/website-overlay-guide-20261029",
+      "paths": [
+        "website/public/install.html",
+        "website/README.md"
+      ],
+      "resources": [
+        "rtxforge-website-install-guide"
+      ],
+      "goal": "Expand and publish the website installation guide to cover using overlays and related app workflows for Linux and Windows.",
+      "acceptance": "Guide explains primary overlay choice, shortcut selection, background-helper behavior, per-game controls, OptiScaler/ReShade menus and intro choices, Update Overlays review/restart, Game Mode, global settings and Adapt to Linux using current source/release truth. OS-specific instructions stay relevant. No hard-coded universal shortcut where defaults/builds differ. Links, responsive guide, theme and platform switching verified; existing website checks green; reviewed source merged and deployed without application asset publication.",
+      "next_action": "Use fresh main in this chat's isolated checkout; edit guide and product README, verify source and browser behavior, publish reviewed website change.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "04efeae2140b47cc98e6d9f99db11b8d0e9a8053",
+      "state": "active",
+      "created_at": "2026-10-29T06:43:31.773Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Expand and publish the website installation guide to cover using overlays and related app workflows for Linux and Windows.",
+          "acceptance": "Guide explains primary overlay choice, shortcut selection, background-helper behavior, per-game controls, OptiScaler/ReShade menus and intro choices, Update Overlays review/restart, Game Mode, global settings and Adapt to Linux using current source/release truth. OS-specific instructions stay relevant. No hard-coded universal shortcut where defaults/builds differ. Links, responsive guide, theme and platform switching verified; existing website checks green; reviewed source merged and deployed without application asset publication.",
+          "at": "2026-10-29T06:43:31.773Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-website-overlay-guide-20261029:acceptance:0",
+            "text": "Guide explains primary overlay choice, shortcut selection, background-helper behavior, per-game controls, OptiScaler/ReShade menus and intro choices, Update Overlays review/restart, Game Mode, global settings and Adapt to Linux using current source/release truth. OS-specific instructions stay relevant. No hard-coded universal shortcut where defaults/builds differ. Links, responsive guide, theme and platform switching verified; existing website checks green; reviewed source merged and deployed without application asset publication.",
+            "at": "2026-10-29T06:43:31.773Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T06:43:31.773Z",
+      "lease_until": "2026-10-29T18:43:31.773Z"
     }
   ]
 }
