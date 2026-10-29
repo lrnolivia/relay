@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T07:27:02.994Z",
+  "updated_at": "2026-10-29T07:29:42.812Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -19580,7 +19580,7 @@
       ],
       "goal": "Shared + Linux half of in-app beta reports and the compatibility list. Lauren 2026-10-29 in Claude Code: 'lets build that out', approved Linux+shared first with Windows after PR110, and 'Yes, add the list' (public compatibility list fed by reviewed reports).",
       "acceptance": "Shared toolkit-free scripts/beta_report.py: one schema matching website report.html and beta-report.yml (12 fields); auto-filled verified host facts with Unknown fallbacks and editable corrections; Flatpak host distro not runtime; selected vs installed package provenance; user-observed NR/MFG separate from installed files and log evidence. Opt-in bounded allowlisted log collection (OptiScaler.log, sl.log, sl.dlss_g.log, sl.interposer.log + known app logs) with safe regular-file reads that also work on Windows (no POSIX-only O_NOFOLLOW), timestamps, stale warnings, truncation manifest. Exact redacted preview frozen and exported as ZIP <=20 MiB with report identity, metadata and manifest into a visible Reports folder; oversize visible. New report -> prefilled GitHub beta-report issue; add logs later to an existing issue with validated URL. No uploads, tokens, raw logs in URLs. Compatibility list: compatibility.json schema 2 with per-report OS/GPU series/package+version/NR/MFG results and backward-compatible verdicts; app share uses beta-report format; documented curation from reviewed issues. Linux GTK: Prepare beta report from Game Details and Library Reports, one/few/all game selection on existing modal review screens, rtxforge://support/logs URI validated (untrusted, no paths/commands) and registered for Flatpak and AppImage desktop entries. Tests for schema, redaction, provenance, size bounds, hostile/stale/missing logs, frozen export, URI parsing, list matching. Follow-ups (not this claim): Windows UI/URI after PR110; website compatibility page + open-in-app button after rtxforge-website-simplify-20261029.",
-      "next_action": "Branch from main 6d6d118, build shared beta_report.py and compat list schema, then GTK UI and URI, tests, draft PR.",
+      "next_action": "Implementation done in draft PR116 (head d9550c0, synced with the simplified website form, mergeable). Held so the owner can take over PR110 at Lauren's request. Remaining: CI result, native Linux Desktop/Game Mode check of the GTK report dialog, Lauren's review and merge. Windows UI follows PR110; the website compatibility page follows the site claims.",
       "category": "implementation",
       "labels": [
         {
@@ -19597,7 +19597,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "6d6d11853f051146fa4156949347dc1d5545cf8d",
-      "state": "active",
+      "state": "held",
       "created_at": "2026-10-29T07:08:14.928Z",
       "objective_history": {
         "baseline": {
@@ -19648,8 +19648,8 @@
           "next_action": "Handoff of queued-only work at Lauren's explicit request in Claude Code on 2026-10-29 ('lets build that out'; Linux+shared first, Windows after PR110; 'Yes, add the list'). Successor claims shared+Linux paths plus the compatibility list; Windows UI/URI waits for PR110 and the website compatibility page waits for rtxforge-website-simplify-20261029."
         }
       ],
-      "updated_at": "2026-10-29T07:08:14.928Z",
-      "lease_until": "2026-10-29T19:08:14.928Z"
+      "updated_at": "2026-10-29T07:29:42.812Z",
+      "lease_until": "2026-10-29T19:29:42.812Z"
     },
     {
       "id": "rtxforge-windows-linux-sync-20261029",
