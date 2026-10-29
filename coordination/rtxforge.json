@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T12:02:01.046Z",
+  "updated_at": "2026-10-29T18:00:08.602Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7422,6 +7422,44 @@
         }
       },
       "updated_at": "2026-10-29T07:47:19.912Z"
+    },
+    {
+      "id": "rtxforge-website-in-app-report-links-20261029",
+      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+      "goal": "Website only: tell visitors that rtxForge 1.0.0-beta.4 (Windows and Linux, main 1e2b8f4, published on the beta release) has in-app bug reports, and add 'open in rtxForge' links to the report page and setup guide. Lauren asked for this on 2026-10-29 in Claude Code: 'tell the website worker we have in app bug reports and to add the links to the website'.",
+      "acceptance": "App facts (source: scripts/beta_report.py at 1e2b8f4): (1) The app drafts the same report as website/public/report.html and .github/ISSUE_TEMPLATE/beta-report.yml, with the same field ids, labels and choices, then opens the prefilled GitHub issue form (template=beta-report.yml). It can also save a redacted log ZIP to Documents/rtxForge Reports for attaching, or draft a comment for an existing issue. Only the OS and 'What happened?' are required. (2) Where to find it: Windows, a game's page, Settings and Game Mode; Linux, Library > Reports and Notes > Prepare Beta Report. (3) The only accepted link is rtxforge://support/logs, optionally with ?issue=N (N is 1-7 digits and not zero, and the link is at most 200 characters). Anything else is refused. The link opens the app's beta reports and never scans, sends or uploads anything by itself. (4) Who has the link: the Windows Beta 4 installer registers it per user (verified on Lauren's PC). The Linux desktop install step registers it through xdg-mime. Registration under Flatpak and opening the link from a browser have not been verified on either OS, and builds older than Beta 4 don't register it. The website must therefore treat it as optional: show it next to the existing web form, never instead of it, and say plainly that it needs rtxForge Beta 4 or later installed. Done when: the report page and guide say in-app reports exist and how to reach them on each OS; an 'Open in rtxForge' link uses exactly rtxforge://support/logs (plus ?issue=N wherever an issue number is known, for example after filing, to attach logs); the no-JavaScript form and every current flow still work; nothing claims behavior that hasn't been verified. Run the existing site checks plus a desktop/mobile/light/dark and accessibility pass, then deploy through the standalone website mechanism. No app-repository changes.",
+      "next_action": "In the standalone site (C:/Users/lrnol/Sites/rtxForge), add in-app report copy and rtxforge://support/logs links to report.html and install.html per the acceptance, verify, then deploy and report back. Questions about the app's behavior go to Claude (claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd).",
+      "paths": [
+        "website/public/report.html",
+        "website/public/report.js",
+        "website/public/install.html",
+        "website/public/styles.css"
+      ],
+      "resources": [
+        "rtxforge-website-report-links"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-29T18:00:08.602Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Website only: tell visitors that rtxForge 1.0.0-beta.4 (Windows and Linux, main 1e2b8f4, published on the beta release) has in-app bug reports, and add 'open in rtxForge' links to the report page and setup guide. Lauren asked for this on 2026-10-29 in Claude Code: 'tell the website worker we have in app bug reports and to add the links to the website'.",
+          "acceptance": "App facts (source: scripts/beta_report.py at 1e2b8f4): (1) The app drafts the same report as website/public/report.html and .github/ISSUE_TEMPLATE/beta-report.yml, with the same field ids, labels and choices, then opens the prefilled GitHub issue form (template=beta-report.yml). It can also save a redacted log ZIP to Documents/rtxForge Reports for attaching, or draft a comment for an existing issue. Only the OS and 'What happened?' are required. (2) Where to find it: Windows, a game's page, Settings and Game Mode; Linux, Library > Reports and Notes > Prepare Beta Report. (3) The only accepted link is rtxforge://support/logs, optionally with ?issue=N (N is 1-7 digits and not zero, and the link is at most 200 characters). Anything else is refused. The link opens the app's beta reports and never scans, sends or uploads anything by itself. (4) Who has the link: the Windows Beta 4 installer registers it per user (verified on Lauren's PC). The Linux desktop install step registers it through xdg-mime. Registration under Flatpak and opening the link from a browser have not been verified on either OS, and builds older than Beta 4 don't register it. The website must therefore treat it as optional: show it next to the existing web form, never instead of it, and say plainly that it needs rtxForge Beta 4 or later installed. Done when: the report page and guide say in-app reports exist and how to reach them on each OS; an 'Open in rtxForge' link uses exactly rtxforge://support/logs (plus ?issue=N wherever an issue number is known, for example after filing, to attach logs); the no-JavaScript form and every current flow still work; nothing claims behavior that hasn't been verified. Run the existing site checks plus a desktop/mobile/light/dark and accessibility pass, then deploy through the standalone website mechanism. No app-repository changes.",
+          "at": "2026-10-29T18:00:08.602Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-website-in-app-report-links-20261029:acceptance:0",
+            "text": "App facts (source: scripts/beta_report.py at 1e2b8f4): (1) The app drafts the same report as website/public/report.html and .github/ISSUE_TEMPLATE/beta-report.yml, with the same field ids, labels and choices, then opens the prefilled GitHub issue form (template=beta-report.yml). It can also save a redacted log ZIP to Documents/rtxForge Reports for attaching, or draft a comment for an existing issue. Only the OS and 'What happened?' are required. (2) Where to find it: Windows, a game's page, Settings and Game Mode; Linux, Library > Reports and Notes > Prepare Beta Report. (3) The only accepted link is rtxforge://support/logs, optionally with ?issue=N (N is 1-7 digits and not zero, and the link is at most 200 characters). Anything else is refused. The link opens the app's beta reports and never scans, sends or uploads anything by itself. (4) Who has the link: the Windows Beta 4 installer registers it per user (verified on Lauren's PC). The Linux desktop install step registers it through xdg-mime. Registration under Flatpak and opening the link from a browser have not been verified on either OS, and builds older than Beta 4 don't register it. The website must therefore treat it as optional: show it next to the existing web form, never instead of it, and say plainly that it needs rtxForge Beta 4 or later installed. Done when: the report page and guide say in-app reports exist and how to reach them on each OS; an 'Open in rtxForge' link uses exactly rtxforge://support/logs (plus ?issue=N wherever an issue number is known, for example after filing, to attach logs); the no-JavaScript form and every current flow still work; nothing claims behavior that hasn't been verified. Run the existing site checks plus a desktop/mobile/light/dark and accessibility pass, then deploy through the standalone website mechanism. No app-repository changes.",
+            "at": "2026-10-29T18:00:08.602Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
