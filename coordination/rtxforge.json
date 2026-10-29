@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T08:02:02.455Z",
+  "updated_at": "2026-10-29T08:02:15.534Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -20482,16 +20482,18 @@
         "docs/",
         ".github/workflows/linux-build.yml",
         ".github/workflows/windows-build.yml",
-        "README.md"
+        "README.md",
+        "VERSION"
       ],
       "resources": [
         "rtxforge-beta4-both-os",
         "rtxforge-app-beta-reporting",
-        "rtxforge-linux-helper-lifecycle"
+        "rtxforge-linux-helper-lifecycle",
+        "rtxforge-beta-version"
       ],
       "goal": "Finish Beta 4 (1.0.0-beta.4) for Windows and Linux on main after #110 and #116: one shared bug-reporting flow on both OSes, the latest engine fixes, the Linux helper start fix, and RTX 50 MFG under Proton marked unverified. Lauren 2026-10-29: 'replace Windows' with 116's (with 115s form) and make it work for Windows', 'Allow it, marked' (RTX 50 MFG on Linux), 'going to bed you have my permission to do whatever to finish'.",
       "acceptance": "Windows host and WinUI app use scripts/beta_report.py (context/draft/correct/bundle/export/issue_url/existing_issue/parse_link) with the #115 form contract in Desktop and Game Mode: one/few/all selection, editable fields with provenance, opt-in logs including the route and app logs the old scaffold scanned, frozen redacted preview, ZIP under 20 MiB in Documents/rtxForge Reports, Open folder/Copy path/Save as, prefilled new issue or an existing issue. support_reports.py removed, with no divergent report.json. Windows installer registers rtxforge://support/logs with validated parsing and no automatic scanning or upload. test_beta_report and test_compat_list run in both CI lanes. Linux: installed AppImage starts the panel helper now and at login, with no replay before the user lock and an install that still succeeds with a warning when systemd can't start it. RTX 50 MFG under Proton uses the GPU's own MFG with no unlock or CUDA setup and is labelled not yet verified; RTX 20/30 stay refused. App and README copy distinguish install eligibility from tested support. WinUI build passes locally and in CI; exact-head CI is green. Gameplay, Proton runtime and GTK/Game Mode visual QA are reported honestly as not performed where they are not. Later in this assignment: VERSION/metainfo/release notes to 1.0.0-beta.4, then publish both OSes from one reviewed main SHA with rollback copies retained.",
-      "next_action": "Branch from main aec8b6b, apply the prepared Linux helper/RTX 50/copy changes, convert Windows reports to beta_report with WinUI UI and URI registration, wire tests into CI, build WinUI locally, draft PR, CI, merge, then version bump and publish.",
+      "next_action": "PR118 CI running. Add VERSION 1.0.0-beta.4, README build-version line and Beta 4 release notes to PR118 (the Flatpak build stamps metainfo from VERSION). Merge on green, then publish both OSes from that one main SHA with publish_beta and expected_sha, and verify assets, manifests and rollback copies.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -20545,6 +20547,8 @@
           }
         ]
       },
+      "updated_at": "2026-10-29T08:02:15.534Z",
+      "lease_until": "2026-10-29T20:02:15.534Z",
       "amendments": [
         {
           "at": "2026-10-29T06:39:34.221Z",
@@ -20649,9 +20653,7 @@
           "to": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
           "next_action": "Lauren 2026-10-29 in Claude Code: 'youre claiming the linux work' (after the queue author confirmed no work had started). Successor claims after its active rtxforge-app-beta-reports-20261029 PR is up (one active claim per owner), resolving PR110's final reviewed head and CI first. Overlap to respect: gui/rtxforge_gtk.py, scripts/compat_list.py, scripts/game_notes.py are held by the beta-reports claim until it merges. Release target is Linux 1.0 Beta 3."
         }
-      ],
-      "updated_at": "2026-10-29T07:49:43.548Z",
-      "lease_until": "2026-10-29T19:49:43.548Z"
+      ]
     }
   ]
 }
