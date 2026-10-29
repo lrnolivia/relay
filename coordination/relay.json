@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T07:22:39.010Z",
+  "updated_at": "2026-10-29T07:22:58.229Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18251,14 +18251,14 @@
       ],
       "goal": "Finish the remaining Relay verification for authenticated Claude, official Playwright Test Agents and native ChatGPT cards, as explicitly requested by Lauren in this chat on 2026-10-28.",
       "acceptance": "1. Exercise an existing authenticated Claude environment consuming Relay guidance and record actual session/provider/source/report evidence; absent authentication remains an explicit blocker, never a synthetic pass. 2. Verify official Playwright Test Agent setup against the actual installed version, then run planner/generator/healer on an isolated approved browser scenario through available authenticated tooling; preserve assertions and report any unsupported host/version without installing global tooling or granting permissions. 3. Verify mounted Relay cards and read-only refresh/navigation on actual available native ChatGPT surfaces with direct UI evidence; distinguish Codex MCP Apps, ChatGPT Work/web and unavailable full-native UI access. 4. Repair only demonstrated in-scope guidance defects, preserve all earlier evidence, record exact results in canonical docs, and finish admitted changes through required checks and release. Missing credentials or denied native access must remain unverified until supplied.",
-      "next_action": "Preserve original remaining consumer verification, branch and private checkpoints; two card files and hydration resource carved out to relay-card-intrinsic-inline-20261029 for explicitly authorized October 29 takeover fixes only. No remaining acceptance is claimed complete.",
+      "next_action": "Held remainder preserved, including original branch/private checkpoints and unfinished native verification. Two-file card fixes continue separately as relay-card-intrinsic-inline-20261029. No deletion, completion, merge or deployment.",
       "category": "qa-verification",
       "primary_team": "inspector",
       "supporting_teams": [],
       "primary_staff": "roman",
       "supporting_staff": [],
       "base_sha": "ceb3fa0270348185a416d9b0f04c4d3d272729a5",
-      "state": "active",
+      "state": "held",
       "created_at": "2026-10-28T04:11:28.015Z",
       "objective_history": {
         "baseline": {
@@ -18275,8 +18275,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T07:22:39.010Z",
-      "lease_until": "2026-10-29T19:22:39.010Z",
+      "updated_at": "2026-10-29T07:22:58.229Z",
+      "lease_until": "2026-10-29T19:22:58.229Z",
       "handoffs": [
         {
           "at": "2026-10-29T07:14:29.883Z",
