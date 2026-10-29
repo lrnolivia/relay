@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T06:55:40.724Z",
+  "updated_at": "2026-10-29T07:00:43.578Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -19400,6 +19400,92 @@
       "completed_at": "2026-10-29T06:34:19.141Z"
     },
     {
+      "id": "rtxforge-website-overlay-guide-20261029",
+      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+      "branch": "rtxforge/website-overlay-guide-20261029",
+      "paths": [
+        "website/public/install.html",
+        "website/README.md"
+      ],
+      "resources": [
+        "rtxforge-website-install-guide"
+      ],
+      "goal": "Expand and publish the website installation guide to cover using overlays and related app workflows for Linux and Windows.",
+      "acceptance": "Guide explains primary overlay choice, shortcut selection, background-helper behavior, per-game controls, OptiScaler/ReShade menus and intro choices, Update Overlays review/restart, Game Mode, global settings and Adapt to Linux using current source/release truth. OS-specific instructions stay relevant. No hard-coded universal shortcut where defaults/builds differ. Links, responsive guide, theme and platform switching verified; existing website checks green; reviewed source merged and deployed without application asset publication.",
+      "next_action": "Use fresh main in this chat's isolated checkout; edit guide and product README, verify source and browser behavior, publish reviewed website change.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "04efeae2140b47cc98e6d9f99db11b8d0e9a8053",
+      "state": "completed",
+      "created_at": "2026-10-29T06:43:31.773Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Expand and publish the website installation guide to cover using overlays and related app workflows for Linux and Windows.",
+          "acceptance": "Guide explains primary overlay choice, shortcut selection, background-helper behavior, per-game controls, OptiScaler/ReShade menus and intro choices, Update Overlays review/restart, Game Mode, global settings and Adapt to Linux using current source/release truth. OS-specific instructions stay relevant. No hard-coded universal shortcut where defaults/builds differ. Links, responsive guide, theme and platform switching verified; existing website checks green; reviewed source merged and deployed without application asset publication.",
+          "at": "2026-10-29T06:43:31.773Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-website-overlay-guide-20261029:acceptance:0",
+            "text": "Guide explains primary overlay choice, shortcut selection, background-helper behavior, per-game controls, OptiScaler/ReShade menus and intro choices, Update Overlays review/restart, Game Mode, global settings and Adapt to Linux using current source/release truth. OS-specific instructions stay relevant. No hard-coded universal shortcut where defaults/builds differ. Links, responsive guide, theme and platform switching verified; existing website checks green; reviewed source merged and deployed without application asset publication.",
+            "at": "2026-10-29T06:43:31.773Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T06:51:32.984Z",
+      "lease_until": "2026-10-29T18:51:32.984Z",
+      "pr": 114,
+      "merged_head_sha": "0289e073af6546ee80648b8e5b87f734429f975f",
+      "merge_commit_sha": "6d6d11853f051146fa4156949347dc1d5545cf8d",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/114 merged as 6d6d11853f051146fa4156949347dc1d5545cf8d; reviewed head 0289e073af6546ee80648b8e5b87f734429f975f. Cloudflare version 312b90f1-b159-4d18-868b-3dab084dccf8 activated 100% by deployment 21dc5e64-bce0-4b93-b838-2f457e9f2772; previous version 5273d4fa-c42b-44a2-a06e-267b01123553 retained. Website trees match. Live https://loew.fi/rtxforge/install verified with actual browser: overlay/menu/Game Mode/Global anchors, OS-specific paragraphs, keyboard platform switching, zero console errors, zero axe WCAG A/AA violations, no overflow in 16 OS/theme/width combinations (320,768,1024,1440). All 13 website tests and Wrangler dry run passed; exact-head AppImage/Flatpak/attribution/admission CI green. Copy checked against native GTK/Windows settings, shared overlay shortcut/defaults and Beta 1 release notes. Only install.html and website product README changed. No application build/release publication. App log automation remains separate queued work.",
+      "work_accounted": true,
+      "completed_at": "2026-10-29T06:51:32.984Z"
+    },
+    {
+      "id": "rtxforge-website-simplify-20261029",
+      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+      "branch": "rtxforge/website-simplify-20261029",
+      "paths": [
+        "website/",
+        ".github/ISSUE_TEMPLATE/beta-report.yml"
+      ],
+      "resources": [
+        "rtxforge-website-copy-and-flow"
+      ],
+      "goal": "Simplify the entire website experience with human copy, clear task flows and restrained Apple-inspired hierarchy while preserving rtxForge branding and real app imagery.",
+      "acceptance": "Homepage reduces repeated explanations and secondary download choices; setup guide has a short first-game path with overlays and optional details; report flow asks OS first and uses clear labels, fewer demands and the same useful compatibility facts. All OS-specific behavior, real release selection, screenshots, bug-report access, issue drafts/attachments, help anchors and restore/security caveats remain available. Preserve factual compatibility limits without repeating them. No generic frontend cliches or new decorative assets. Validate desktop/mobile/light/dark, accessibility and actual report/download flows; review, merge and deploy through existing site mechanism. App log-scanner task remains queued separately.",
+      "next_action": "Rewrite and simplify the three site pages and supporting copy/flows, run a bounded desktop/mobile verification pass, fix evidenced issues, then publish.",
+      "category": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "base_sha": "6d6d11853f051146fa4156949347dc1d5545cf8d",
+      "state": "active",
+      "created_at": "2026-10-29T06:55:40.724Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Simplify the entire website experience with human copy, clear task flows and restrained Apple-inspired hierarchy while preserving rtxForge branding and real app imagery.",
+          "acceptance": "Homepage reduces repeated explanations and secondary download choices; setup guide has a short first-game path with overlays and optional details; report flow asks OS first and uses clear labels, fewer demands and the same useful compatibility facts. All OS-specific behavior, real release selection, screenshots, bug-report access, issue drafts/attachments, help anchors and restore/security caveats remain available. Preserve factual compatibility limits without repeating them. No generic frontend cliches or new decorative assets. Validate desktop/mobile/light/dark, accessibility and actual report/download flows; review, merge and deploy through existing site mechanism. App log-scanner task remains queued separately.",
+          "at": "2026-10-29T06:55:40.724Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-website-simplify-20261029:acceptance:0",
+            "text": "Homepage reduces repeated explanations and secondary download choices; setup guide has a short first-game path with overlays and optional details; report flow asks OS first and uses clear labels, fewer demands and the same useful compatibility facts. All OS-specific behavior, real release selection, screenshots, bug-report access, issue drafts/attachments, help anchors and restore/security caveats remain available. Preserve factual compatibility limits without repeating them. No generic frontend cliches or new decorative assets. Validate desktop/mobile/light/dark, accessibility and actual report/download flows; review, merge and deploy through existing site mechanism. App log-scanner task remains queued separately.",
+            "at": "2026-10-29T06:55:40.724Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T06:55:40.724Z",
+      "lease_until": "2026-10-29T18:55:40.724Z"
+    },
+    {
       "id": "rtxforge-windows-linux-sync-20261029",
       "owner": "01a185b0-7901-78a3-a702-6e77197cf28d",
       "branch": "rtxforge/windows-linux-sync-20261029",
@@ -19426,7 +19512,9 @@
         "providers/skynizz-bridge/ForgeInzoiOverlay.h",
         "scripts/skynizz_provider.py",
         "tests/test_skynizz_provider.py",
-        ".gitattributes"
+        ".gitattributes",
+        "scripts/vulkan_app.py",
+        "tests/test_vulkan_app_routes.py"
       ],
       "resources": [
         "rtxforge-native-panel-rendering",
@@ -19436,7 +19524,7 @@
       ],
       "goal": "Complete Windows catch-up from Linux #93-#105 under draft PR110: dual-OS installed ownership and Vulkan records; review sizing/skipped explanations; Wine-only channel isolation; consistent automatic EXE discovery and per-game selection; independent provider assessment and Sims4 package-switch guidance; verified experimental DX9/DX10/x86 Feeder recipes with exact restore; explicit token-bound offline-only anti-cheat installation; visible Light headings, charcoal overlay/toast text and translucency; actual native MFG presentation statistics. Ship automatic startup-safe inZOI late-frame overlay in normal packages with compatibility fallback; keep other-game renderer and queue paths unchanged. Correct overlay-update handling of metadata-only cross-OS ownership drift, stale missing-location records and absent retired Feeder files. Correct shared provider writing and explicitly repair verified local/shared records transactionally without changing installed Skynizz/Universal selection, tuning or original backups. Clarify Feeder import paths versus blank defaults. Preserve ongoing source ownership and release gates; no merge or public release.",
       "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.\nAdditional acceptance: Far Cry 5 selects bin/FarCry5.exe instead of its .NET redistributable; Windows Desktop and Game Mode expose current EXE and Choose/Use detected actions; selections are scoped to a game's folder, validated and persisted, stale/unsafe choices cannot redirect install writes, and support is rescanned. Explain current x86/DX9 Feeder integration limits without claiming upstream lacks them.\nDX9/DX10 support uses integrity-verified architecture-correct files, separate 64-bit helper where needed, reviewed file deployment and exact restore; existing x64 Feeder installs remain compatible. Validate native game behavior before declaring runtime compatibility.\nShared native panel feature and Settings headings use contrasting theme-aware colors in both themes, verified in the rebuilt candidate.\nNative MFG stats use successful fresh raw Streamline actually-presented counts, independently of requested ratio, with invalid/stale data rejected. Preserve internal FG statistics and explain calculated output-rate provenance.\nAnti-cheat evidence stays visible; install-compatible offline games including Gears E-Day can be reviewed after explicit offline-only acknowledgement. Consent and file identity are bound to the reviewed operation; incompatible routes remain explained and no protected process is altered.\nSims 4 correct TS4_x64 discovery is retained; installed incompatible native package is shown as needing a package switch, not an unsupported game. Restoring it allows compatible DX11 Feeder detection even when a retained SR DLL exists.\nWindows exposes independent Skynizz, y4my, DLSS-Unlocked, Feeder and confirmed Vulkan route assessments. DX11 plus leftover SR DLL does not qualify native DLSS packages; compatible Feeder is automatically offered for fresh games; Feeder-owned runtime DLLs do not fabricate native game DLSS support. Keep installed ownership separate from route capability.\nLight in-game overlay and welcome toast use charcoal grey primary/heading text and slightly lower background opacity, retaining readable secondary text and theme-aware title accents. Keep Windows app Light theme unchanged. Build and integrity-validate the updated native candidate.",
-      "next_action": "Implement and test narrow shared-record reconciliation, correct provider writer, skip obsolete locations before package assessment, handle expected absent Feeder files, verify actual library and deploy the local fix with rollback.",
+      "next_action": "User additionally reports missing Vulkan OS badges, Linux adoption badge history, legacy DX9/DX10 overlay exclusions and ghost locations in reviews. Add exact legacy-runtime panel update with retained architecture/helper/restore boundaries; suppress obsolete locations from selectable review; resolve OS badges from verified local/shared/Linux setup evidence. Preserve other active ownership and original scope.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -19514,8 +19602,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T06:50:27.537Z",
-      "lease_until": "2026-10-29T18:50:27.537Z",
+      "updated_at": "2026-10-29T07:00:43.578Z",
+      "lease_until": "2026-10-29T19:00:43.578Z",
       "handoffs": [
         {
           "at": "2026-10-29T03:27:48.270Z",
@@ -19741,92 +19829,6 @@
           }
         }
       ]
-    },
-    {
-      "id": "rtxforge-website-overlay-guide-20261029",
-      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
-      "branch": "rtxforge/website-overlay-guide-20261029",
-      "paths": [
-        "website/public/install.html",
-        "website/README.md"
-      ],
-      "resources": [
-        "rtxforge-website-install-guide"
-      ],
-      "goal": "Expand and publish the website installation guide to cover using overlays and related app workflows for Linux and Windows.",
-      "acceptance": "Guide explains primary overlay choice, shortcut selection, background-helper behavior, per-game controls, OptiScaler/ReShade menus and intro choices, Update Overlays review/restart, Game Mode, global settings and Adapt to Linux using current source/release truth. OS-specific instructions stay relevant. No hard-coded universal shortcut where defaults/builds differ. Links, responsive guide, theme and platform switching verified; existing website checks green; reviewed source merged and deployed without application asset publication.",
-      "next_action": "Use fresh main in this chat's isolated checkout; edit guide and product README, verify source and browser behavior, publish reviewed website change.",
-      "category": "implementation",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "04efeae2140b47cc98e6d9f99db11b8d0e9a8053",
-      "state": "completed",
-      "created_at": "2026-10-29T06:43:31.773Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Expand and publish the website installation guide to cover using overlays and related app workflows for Linux and Windows.",
-          "acceptance": "Guide explains primary overlay choice, shortcut selection, background-helper behavior, per-game controls, OptiScaler/ReShade menus and intro choices, Update Overlays review/restart, Game Mode, global settings and Adapt to Linux using current source/release truth. OS-specific instructions stay relevant. No hard-coded universal shortcut where defaults/builds differ. Links, responsive guide, theme and platform switching verified; existing website checks green; reviewed source merged and deployed without application asset publication.",
-          "at": "2026-10-29T06:43:31.773Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-website-overlay-guide-20261029:acceptance:0",
-            "text": "Guide explains primary overlay choice, shortcut selection, background-helper behavior, per-game controls, OptiScaler/ReShade menus and intro choices, Update Overlays review/restart, Game Mode, global settings and Adapt to Linux using current source/release truth. OS-specific instructions stay relevant. No hard-coded universal shortcut where defaults/builds differ. Links, responsive guide, theme and platform switching verified; existing website checks green; reviewed source merged and deployed without application asset publication.",
-            "at": "2026-10-29T06:43:31.773Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-29T06:51:32.984Z",
-      "lease_until": "2026-10-29T18:51:32.984Z",
-      "pr": 114,
-      "merged_head_sha": "0289e073af6546ee80648b8e5b87f734429f975f",
-      "merge_commit_sha": "6d6d11853f051146fa4156949347dc1d5545cf8d",
-      "evidence": "https://github.com/lrnolivia/rtxForge/pull/114 merged as 6d6d11853f051146fa4156949347dc1d5545cf8d; reviewed head 0289e073af6546ee80648b8e5b87f734429f975f. Cloudflare version 312b90f1-b159-4d18-868b-3dab084dccf8 activated 100% by deployment 21dc5e64-bce0-4b93-b838-2f457e9f2772; previous version 5273d4fa-c42b-44a2-a06e-267b01123553 retained. Website trees match. Live https://loew.fi/rtxforge/install verified with actual browser: overlay/menu/Game Mode/Global anchors, OS-specific paragraphs, keyboard platform switching, zero console errors, zero axe WCAG A/AA violations, no overflow in 16 OS/theme/width combinations (320,768,1024,1440). All 13 website tests and Wrangler dry run passed; exact-head AppImage/Flatpak/attribution/admission CI green. Copy checked against native GTK/Windows settings, shared overlay shortcut/defaults and Beta 1 release notes. Only install.html and website product README changed. No application build/release publication. App log automation remains separate queued work.",
-      "work_accounted": true,
-      "completed_at": "2026-10-29T06:51:32.984Z"
-    },
-    {
-      "id": "rtxforge-website-simplify-20261029",
-      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
-      "branch": "rtxforge/website-simplify-20261029",
-      "paths": [
-        "website/",
-        ".github/ISSUE_TEMPLATE/beta-report.yml"
-      ],
-      "resources": [
-        "rtxforge-website-copy-and-flow"
-      ],
-      "goal": "Simplify the entire website experience with human copy, clear task flows and restrained Apple-inspired hierarchy while preserving rtxForge branding and real app imagery.",
-      "acceptance": "Homepage reduces repeated explanations and secondary download choices; setup guide has a short first-game path with overlays and optional details; report flow asks OS first and uses clear labels, fewer demands and the same useful compatibility facts. All OS-specific behavior, real release selection, screenshots, bug-report access, issue drafts/attachments, help anchors and restore/security caveats remain available. Preserve factual compatibility limits without repeating them. No generic frontend cliches or new decorative assets. Validate desktop/mobile/light/dark, accessibility and actual report/download flows; review, merge and deploy through existing site mechanism. App log-scanner task remains queued separately.",
-      "next_action": "Rewrite and simplify the three site pages and supporting copy/flows, run a bounded desktop/mobile verification pass, fix evidenced issues, then publish.",
-      "category": "design",
-      "primary_team": "inspector",
-      "supporting_teams": [],
-      "primary_staff": "valentina",
-      "supporting_staff": [],
-      "base_sha": "6d6d11853f051146fa4156949347dc1d5545cf8d",
-      "state": "active",
-      "created_at": "2026-10-29T06:55:40.724Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Simplify the entire website experience with human copy, clear task flows and restrained Apple-inspired hierarchy while preserving rtxForge branding and real app imagery.",
-          "acceptance": "Homepage reduces repeated explanations and secondary download choices; setup guide has a short first-game path with overlays and optional details; report flow asks OS first and uses clear labels, fewer demands and the same useful compatibility facts. All OS-specific behavior, real release selection, screenshots, bug-report access, issue drafts/attachments, help anchors and restore/security caveats remain available. Preserve factual compatibility limits without repeating them. No generic frontend cliches or new decorative assets. Validate desktop/mobile/light/dark, accessibility and actual report/download flows; review, merge and deploy through existing site mechanism. App log-scanner task remains queued separately.",
-          "at": "2026-10-29T06:55:40.724Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-website-simplify-20261029:acceptance:0",
-            "text": "Homepage reduces repeated explanations and secondary download choices; setup guide has a short first-game path with overlays and optional details; report flow asks OS first and uses clear labels, fewer demands and the same useful compatibility facts. All OS-specific behavior, real release selection, screenshots, bug-report access, issue drafts/attachments, help anchors and restore/security caveats remain available. Preserve factual compatibility limits without repeating them. No generic frontend cliches or new decorative assets. Validate desktop/mobile/light/dark, accessibility and actual report/download flows; review, merge and deploy through existing site mechanism. App log-scanner task remains queued separately.",
-            "at": "2026-10-29T06:55:40.724Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-29T06:55:40.724Z",
-      "lease_until": "2026-10-29T18:55:40.724Z"
     }
   ]
 }
