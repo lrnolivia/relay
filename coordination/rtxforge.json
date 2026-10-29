@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T01:21:20.790Z",
+  "updated_at": "2026-10-29T01:21:36.706Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6740,6 +6740,39 @@
             "id": "rtxforge-linux-flatpak-20261029:acceptance:0",
             "text": "Draft PR green in CI including the Flatpak bundle build and installed-bundle verification; unit tests cover host-spawn plumbing and refusal; publish_beta uploads the .flatpak and .sha256 with AppImage-equivalent rollback; website shows Flatpak primary and AppImage alternative; nothing published or merged; windows/ untouched.",
             "at": "2026-10-29T01:21:20.790Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-windows-linux-sync-20261029",
+      "owner": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+      "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.",
+      "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.",
+      "next_action": "Windows worker: take this over (handoff), read the brief, then claim.",
+      "paths": [
+        "windows/"
+      ],
+      "resources": [],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-29T01:21:36.706Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.",
+          "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.",
+          "at": "2026-10-29T01:21:36.706Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-windows-linux-sync-20261029:acceptance:0",
+            "text": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.",
+            "at": "2026-10-29T01:21:36.706Z"
           }
         ]
       }
