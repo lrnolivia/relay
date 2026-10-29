@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { callContext } from './context-service.mjs';
+import { callContext, contextTool } from './context-service.mjs';
 test('durable project context verifies source, preserves messages and requires explicit recipient acknowledgement',async()=>{
  let stored=null,etag=0;
  const bucket={get:async()=>stored?{etag:String(etag),json:async()=>JSON.parse(stored)}:null,put:async(k,text,{onlyIf})=>{if(onlyIf instanceof Headers?Boolean(stored):onlyIf.etagMatches!==String(etag))return null;stored=text;return {etag:String(++etag)};}};
@@ -111,4 +111,10 @@ test('activated storage supports legacy-runtime rollback reader, replay and life
  await assert.rejects(f.read('recipient',{cursor:20}),/migrated/);
  // No caller can smuggle an uncommitted root through a token.
  const page=await f.read('recipient',{view:'inbox',limit:1}),tampered=JSON.parse(Buffer.from(page.next_page_token,'base64url'));tampered.after='../other';await assert.rejects(f.read('recipient',{view:'inbox',page_token:Buffer.from(JSON.stringify(tampered)).toString('base64url')}),/page changed/);
+});
+
+test('context discovery explicitly discloses commands and bounded non-read-only semantics',()=>{
+ assert.match(contextTool.description,/QUERY \/ COMMAND/);
+ assert.equal(contextTool.annotations.readOnlyHint,false);
+ assert.equal(contextTool.inputSchema.additionalProperties,false);
 });
