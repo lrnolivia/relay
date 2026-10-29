@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T19:50:17.734Z",
+  "updated_at": "2026-10-29T20:22:06.924Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18439,7 +18439,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "7f8185d662485516fbcce446d829970b54818d9f",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-29T07:43:53.364Z",
       "objective_history": {
         "baseline": {
@@ -18462,8 +18462,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T19:50:17.734Z",
-      "lease_until": "2026-10-30T07:50:17.734Z",
+      "updated_at": "2026-10-29T20:22:06.924Z",
+      "lease_until": "2026-10-30T08:22:06.924Z",
       "handoffs": [
         {
           "at": "2026-10-29T18:00:24.394Z",
@@ -18491,7 +18491,13 @@
             "next_action": "Implement safe lifecycle/storage and executor view in preserved PR261, independently review exact tests and staged deployment; preserve original draft history and unrelated reservations."
           }
         }
-      ]
+      ],
+      "pr": 264,
+      "merged_head_sha": "3ac172fb62cee5133b37f8bceeb2fb78e9ff4f83",
+      "merge_commit_sha": "57eaed4c0ee48b1e965643565bcbfe3c09e37860",
+      "evidence": "Completed combined lifecycle and rollover via preserved PR261 plus guard PR262, floor PR263 and activation PR264. Human-authenticated merge57eaed4c0ee48b1e965643565bcbfe3c09e37860; mainCI40947668670 passed1115/failed0/existing skip1. Healthy runtime2a75bbbf-5903-42d9-a0fd-8aee9daa86da, autonomy97, retained recovery artifact12929883072 archivefb4d8138f9c152aded180a4e2420d5cf791d1c0c7ce3e250805a24f8ac59010c. Independent source/runtime reviews passed. Recovery controllerf7df2139 code-only deployed, bindings/settings/routes unchanged; schema floor2 verified. Read-only context revision194 unchanged, inbox_lifecycle=true, rollover_enabled=true; no live migration/archive/delete. Prior draft and approved targets preserved; duplicate lifecycle queue superseded. Preexisting expired-version archive upload limitation documented; compatible retained rollback verified. Client UI acceptance not claimed.",
+      "work_accounted": true,
+      "completed_at": "2026-10-29T20:22:06.924Z"
     }
   ],
   "migrated_from": "loew-inspector"
