@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T02:47:31.380Z",
+  "updated_at": "2026-10-29T02:48:42.105Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18768,8 +18768,8 @@
         "rtxforge-public-website"
       ],
       "goal": "Update READMEs for published Linux and Windows betas and relabel the shared public release rtxForge Beta 1 as directly requested in this chat.",
-      "acceptance": "Public release and maintained release notes use Beta 1; READMEs document both published OS packages and Linux Flatpak/AppImage requirements. Preserve beta tag, artifact filenames, package versions and updater compatibility. Documentation-only checks plus relevant publisher tests pass; reviewed PR merged; release metadata read back.",
-      "next_action": "User requests an obvious installation-guide link beside downloads. Move existing OS-aware link directly below primary download, add book glyph and outlined control styling; preserve both Linux formats.",
+      "acceptance": "Public release and maintained release notes use Beta 1; READMEs document both published OS packages and Linux Flatpak/AppImage requirements. Preserve beta tag, artifact filenames, package versions and updater compatibility. Documentation-only checks plus relevant publisher tests pass; reviewed PR merged; release metadata read back. Current user additions in this chat: default landing page to Linux while preserving explicit OS URLs and saved choices; show separate, obvious Download Flatpak and Download AppImage buttons when published; place the OS-aware Installation guide immediately below downloads with a book glyph; deploy the website and verify live source and rendered Linux/Windows states.",
+      "next_action": "Review final candidate c34a3f70a03d887ac056279c9054270ca21308fb, await exact-head CI, merge with verified human attribution, deploy through the registered manual website path and verify through Relay.",
       "category": "maintenance",
       "primary_team": "source",
       "supporting_teams": [],
@@ -18790,11 +18790,37 @@
             "id": "rtxforge-beta1-docs-20261029:acceptance:0",
             "text": "Public release and maintained release notes use Beta 1; READMEs document both published OS packages and Linux Flatpak/AppImage requirements. Preserve beta tag, artifact filenames, package versions and updater compatibility. Documentation-only checks plus relevant publisher tests pass; reviewed PR merged; release metadata read back.",
             "at": "2026-10-29T02:41:37.375Z"
+          },
+          {
+            "id": "rtxforge-beta1-docs-20261029:acceptance:1",
+            "text": "Public release and maintained release notes use Beta 1; READMEs document both published OS packages and Linux Flatpak/AppImage requirements. Preserve beta tag, artifact filenames, package versions and updater compatibility. Documentation-only checks plus relevant publisher tests pass; reviewed PR merged; release metadata read back. Current user additions in this chat: default landing page to Linux while preserving explicit OS URLs and saved choices; show separate, obvious Download Flatpak and Download AppImage buttons when published; place the OS-aware Installation guide immediately below downloads with a book glyph; deploy the website and verify live source and rendered Linux/Windows states.",
+            "at": "2026-10-29T02:48:42.105Z",
+            "reason": "Record the user's additional Linux default, guide placement/glyph and explicit dual-format download requirements from this chat."
           }
         ]
       },
-      "updated_at": "2026-10-29T02:47:31.380Z",
-      "lease_until": "2026-10-29T14:47:31.380Z"
+      "updated_at": "2026-10-29T02:48:42.105Z",
+      "lease_until": "2026-10-29T14:48:42.105Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-29T02:48:42.105Z",
+          "by": "01a18584-c235-7bc1-80b4-7d6fed42d892",
+          "reason": "Record the user's additional Linux default, guide placement/glyph and explicit dual-format download requirements from this chat.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Public release and maintained release notes use Beta 1; READMEs document both published OS packages and Linux Flatpak/AppImage requirements. Preserve beta tag, artifact filenames, package versions and updater compatibility. Documentation-only checks plus relevant publisher tests pass; reviewed PR merged; release metadata read back.",
+            "next_action": "User requests an obvious installation-guide link beside downloads. Move existing OS-aware link directly below primary download, add book glyph and outlined control styling; preserve both Linux formats."
+          },
+          "after": {
+            "acceptance": "Public release and maintained release notes use Beta 1; READMEs document both published OS packages and Linux Flatpak/AppImage requirements. Preserve beta tag, artifact filenames, package versions and updater compatibility. Documentation-only checks plus relevant publisher tests pass; reviewed PR merged; release metadata read back. Current user additions in this chat: default landing page to Linux while preserving explicit OS URLs and saved choices; show separate, obvious Download Flatpak and Download AppImage buttons when published; place the OS-aware Installation guide immediately below downloads with a book glyph; deploy the website and verify live source and rendered Linux/Windows states.",
+            "next_action": "Review final candidate c34a3f70a03d887ac056279c9054270ca21308fb, await exact-head CI, merge with verified human attribution, deploy through the registered manual website path and verify through Relay."
+          }
+        }
+      ]
     }
   ]
 }
