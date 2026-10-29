@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T19:06:11.983Z",
+  "updated_at": "2026-10-29T19:18:51.942Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -20761,6 +20761,52 @@
       "evidence": "https://github.com/lrnolivia/rtxForge/pull/119 merged to main as 182d6686d611c04508c74043d13a74dcbfc32fbc (no-ff merge as Lauren; merge tree equals the CI-tested head 000e64a). Every check passed on that head: WinUI x64/ARM64, AppImage, Flatpak, native/KDE/Wayland reviews, panel candidate and coordination admission. Relay's app-authenticated merge refused (Lauren attribution needs a verified human connection), hence the local merge. Published 1.0.0-beta.5 for both OSes from 182d668: Windows run 40934013044 and Linux run 40933898094 both succeeded. The beta release has x64/ARM64 installers, the x64 ZIP, the AppImage, the Flatpak and the Linux manifest at beta.5 (commit 182d668); Beta 4 files are kept as .previous-1e2b8f43f216. The x64 installer's SHA-256 (bf1650ee...) matches its .sha256, and the AppImage .sha256 matches the manifest (034658f2...). Installed on Lauren's PC outside the agent tree with only the helper running: ProductVersion 1.0.0+182d668, engine VERSION 1.0.0-beta.5, overlay helper restarted in session 1. Scope: Bug Report naming with header buttons (Windows desktop, Windows Game Mode, Linux desktop) and Settings > About; test result and session moved from Notes to an Overview Testing group (Notes is notes only, Tools duplicate removed); Play from Steam first in the Gaming Mode tab of desktop Settings and Game Mode on both OSes, with an accent button until rtxForge is in Steam; Install route shows the used route plus 'Also compatible'. Not verified: the new layout in the running apps on either OS, and Linux Game Mode, which still has no bug report entry. Issue titles still say [Beta report] because the template is shared with the website.",
       "work_accounted": true,
       "completed_at": "2026-10-29T19:06:11.983Z"
+    },
+    {
+      "id": "rtxforge-linux-gamemode-bug-report-20261029",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/linux-gamemode-bug-report-20261029",
+      "paths": [
+        "gui/game_mode.py",
+        "gui/game_mode_reports.py",
+        "gui/rtxforge_gtk.py",
+        "tests/ui_game_mode_reports.py",
+        ".github/workflows/linux-build.yml",
+        "VERSION",
+        "README.md",
+        "docs/releases/1.0-beta.md"
+      ],
+      "resources": [
+        "rtxforge-beta6-release"
+      ],
+      "goal": "Lauren (2026-10-29, Claude Code, 'Yes, add it'): Linux Game Mode gets Bug Report as Windows Game Mode has it. That means a Bug Report button in the game header, test result and session on Overview instead of Notes, Settings > About 'Report a bug', and a controller-sized report flow (choose games, correct fields, redacted preview, save ZIP, open the prefilled form) on the shared scripts/beta_report.py.",
+      "acceptance": "Linux Game Mode: header Bug Report beside Restore; Overview Testing group (test result cycles and saves, Start/Finish Test, Bug Report); Notes holds only notes and Save; Settings > About has a 'Report a bug' row. The flow runs as Game Mode modals that a controller can drive: game picker with logs and notes toggles, a field editor (choices cycle with A and Left/Right, text uses Steam's keyboard), the redacted preview from beta_report.bundle, a frozen export, and a saved screen with Open form per report, Copy Path and Open Folder. It reuses the desktop draft and bundle code so both interfaces build identical reports. Linux CI is green; merged and published as 1.0.0-beta.6 for both OSes under Lauren's standing authorization.",
+      "next_action": "Branch from main 182d668, add game_mode_reports.py mixin and wire it into game_mode.py, share draft/bundle helpers in rtxforge_gtk.py, test, PR, merge, publish Beta 6.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "182d6686d611c04508c74043d13a74dcbfc32fbc",
+      "state": "active",
+      "created_at": "2026-10-29T19:18:51.942Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-29, Claude Code, 'Yes, add it'): Linux Game Mode gets Bug Report as Windows Game Mode has it. That means a Bug Report button in the game header, test result and session on Overview instead of Notes, Settings > About 'Report a bug', and a controller-sized report flow (choose games, correct fields, redacted preview, save ZIP, open the prefilled form) on the shared scripts/beta_report.py.",
+          "acceptance": "Linux Game Mode: header Bug Report beside Restore; Overview Testing group (test result cycles and saves, Start/Finish Test, Bug Report); Notes holds only notes and Save; Settings > About has a 'Report a bug' row. The flow runs as Game Mode modals that a controller can drive: game picker with logs and notes toggles, a field editor (choices cycle with A and Left/Right, text uses Steam's keyboard), the redacted preview from beta_report.bundle, a frozen export, and a saved screen with Open form per report, Copy Path and Open Folder. It reuses the desktop draft and bundle code so both interfaces build identical reports. Linux CI is green; merged and published as 1.0.0-beta.6 for both OSes under Lauren's standing authorization.",
+          "at": "2026-10-29T19:18:51.942Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-gamemode-bug-report-20261029:acceptance:0",
+            "text": "Linux Game Mode: header Bug Report beside Restore; Overview Testing group (test result cycles and saves, Start/Finish Test, Bug Report); Notes holds only notes and Save; Settings > About has a 'Report a bug' row. The flow runs as Game Mode modals that a controller can drive: game picker with logs and notes toggles, a field editor (choices cycle with A and Left/Right, text uses Steam's keyboard), the redacted preview from beta_report.bundle, a frozen export, and a saved screen with Open form per report, Copy Path and Open Folder. It reuses the desktop draft and bundle code so both interfaces build identical reports. Linux CI is green; merged and published as 1.0.0-beta.6 for both OSes under Lauren's standing authorization.",
+            "at": "2026-10-29T19:18:51.942Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T19:18:51.942Z",
+      "lease_until": "2026-10-30T07:18:51.942Z"
     }
   ]
 }
