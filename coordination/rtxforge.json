@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T21:46:31.097Z",
+  "updated_at": "2026-10-29T21:49:07.265Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7466,7 +7466,7 @@
       "owner": "01a1899e-8bb0-7b50-b90a-57b3c8c395b8",
       "goal": "Set up the GitHub identity that will file in-app bug reports as issues on lrnolivia/rtxForge, and store its credentials as Cloudflare secrets for the loew.fi report service. Lauren asked for this on 2026-10-29 in Claude Code: 'make a relay assignment for the github app and secret, i think codex can do that'. The app is meant to submit reports to GitHub Issues on its own, so testers need no GitHub account and there is no 'open GitHub' step. Claude builds the report service and the app side separately; this assignment covers only the identity and the secrets.",
       "acceptance": "(1) A GitHub App, for example 'rtxForge Reports', owned by lrnolivia, installed ONLY on lrnolivia/rtxForge. Repository permissions: Issues read and write, Metadata read; nothing else. No webhook (or webhook inactive). Not installable by other accounts. (2) The labels the service will apply exist on rtxForge: 'beta-report' (and 'from-app' if absent), created through the app or by Lauren. (3) Credentials go only into Cloudflare secrets, never into git, Relay records, logs, chat or any file: the App ID, the installation ID and the private key (PEM). They are stored as Worker secrets RTXFORGE_REPORTS_APP_ID, RTXFORGE_REPORTS_INSTALLATION_ID and RTXFORGE_REPORTS_PRIVATE_KEY on a Worker named rtxforge-reports in Lauren's Cloudflare account. Create that Worker as an empty placeholder if it doesn't exist yet; Claude deploys the service code into it. If Cloudflare Secrets Store is preferred, record the store and secret names instead. (4) Verify without filing a public issue: mint an installation token from the stored credentials inside Cloudflare (or with a one-off local check that never prints or saves the key or token), call GET /repos/lrnolivia/rtxForge/installation and GET /repos/lrnolivia/rtxForge/labels, and confirm the token's permissions are exactly issues:write and metadata:read. (5) Hand back, in the Relay completion evidence, only non-secret facts: App name, slug, App ID, installation ID, permissions, Worker name, secret names (never values) and the verification results. Any step that needs Lauren's own sign-in, a GitHub 2FA confirmation or accepting terms is done by Lauren; say exactly which click she needs to make. The private key file is deleted locally once stored.",
-      "next_action": "Lauren authorized setup in this chat. Inspecting private GitHub App creation and Cloudflare rtxforge-reports secrets only; no app/service source changes. GitHub sudo confirmation is pending Lauren; Cloudflare preparation continues.",
+      "next_action": "WAITING FOR LAUREN: Edge GitHub tab https://github.com/settings/apps/new requires 'Use passkey' sudo confirmation; Cloudflare dashboard tab requires 'Continue as lrnoliv@gmail.com using Google' sign-in. Verified empty rtxforge-reports Worker created in loew.fi account, returns 503 placeholder; no domains/routes or workers.dev/previews enabled, no secret bindings. Relay lacks Worker secret mutation capability; connected Cloudflare tooling used for placeholder and readback. After authentication: register private lrnolivia-owned rtxForge Reports App, Issues write + Metadata read only, no webhook, install only rtxForge; transfer PEM directly to Worker secrets, verify via short-lived token and required labels without public issue, delete downloaded PEM. No product/service source edits.",
       "paths": [
         "relay-only:github-app/rtxforge-reports",
         "relay-only:cloudflare/workers/rtxforge-reports/secrets"
@@ -7505,7 +7505,24 @@
           "next_action": "Lauren authorized setup in this chat. Inspecting private GitHub App creation and Cloudflare rtxforge-reports secrets only; no app/service source changes. GitHub sudo confirmation is pending Lauren; Cloudflare preparation continues."
         }
       ],
-      "updated_at": "2026-10-29T21:46:31.097Z"
+      "updated_at": "2026-10-29T21:49:07.265Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-29T21:49:07.265Z",
+          "by": "01a1899e-8bb0-7b50-b90a-57b3c8c395b8",
+          "reason": "Persist verified infrastructure preparation and exact user authentication steps. No source changes, credentials or issues created.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Lauren authorized setup in this chat. Inspecting private GitHub App creation and Cloudflare rtxforge-reports secrets only; no app/service source changes. GitHub sudo confirmation is pending Lauren; Cloudflare preparation continues."
+          },
+          "after": {
+            "next_action": "WAITING FOR LAUREN: Edge GitHub tab https://github.com/settings/apps/new requires 'Use passkey' sudo confirmation; Cloudflare dashboard tab requires 'Continue as lrnoliv@gmail.com using Google' sign-in. Verified empty rtxforge-reports Worker created in loew.fi account, returns 503 placeholder; no domains/routes or workers.dev/previews enabled, no secret bindings. Relay lacks Worker secret mutation capability; connected Cloudflare tooling used for placeholder and readback. After authentication: register private lrnolivia-owned rtxForge Reports App, Issues write + Metadata read only, no webhook, install only rtxForge; transfer PEM directly to Worker secrets, verify via short-lived token and required labels without public issue, delete downloaded PEM. No product/service source edits."
+          }
+        }
+      ]
     },
     {
       "id": "rtxforge-report-service-infra-20261029",
