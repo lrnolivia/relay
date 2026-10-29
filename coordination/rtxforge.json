@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T23:11:25.754Z",
+  "updated_at": "2026-10-29T23:25:51.468Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21414,14 +21414,15 @@
         "README.md",
         "docs/releases/1.0-beta.md",
         "windows/engine-host/rtxforge_win_host.py",
-        "windows/RtxForge.Windows/Services/EngineForgeService.cs"
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+        "tests/ui_app_completion.py"
       ],
       "resources": [
         "rtxforge-functional-test"
       ],
       "goal": "Make every rtxForge package use the same comprehensive, actionable functional testing across Windows and Linux, with real runtime evidence, per-component results and fixes, and editable bug-report prefills.",
       "acceptance": "(1) Before launch: package files present and rtxForge-managed, sane saved settings, overlay helper running, panel shortcut set, and on Linux a Proton build with CUDA. (2) While playing: sample the in-game panel's live snapshot about once a second through companion_controls: nr_running, nr_ms, NR placement, rendered fps, native presented/generated frames and MFG mode, fg_successes, Dynamic MFG support, failure text and stalls. (3) At Finish: collect the route's logs, including Feeder (ReShade, dlss5-feed) and Vulkan (fgvk), and record a result per part with its evidence: hook loaded; NR model created, running, GPU time and placement; MFG achieved multiplier vs. requested; panel connected; helper running and attached. (4) Each result that isn't 'working' gets a likely fix from known failure patterns, for example: MFG set but no generated frames (enable frame generation in the game); NR created but no GPU time (NR disabled or intensity 0); no snapshot (bridge not loaded or a hook conflict); Proton without CUDA. (5) It suggests Working or Problem (the user decides), and its summary pre-fills Bug Report's NR and MFG answers and details. (6) Visual correctness is never claimed. Routes that don't report a value say 'not reported by this package'. (7) Lauren's 2026-10-29 instruction in this chat: every package must have the same comprehensive testing that is actionable, helpful and real. Deliver one shared test contract across all supported packages and Windows/Linux interfaces. Use real route-specific telemetry/log evidence; unsupported metrics are explicitly not reported and never converted to passes. Include package/configuration/shortcut/Proton preflight, hook, NR, MFG, overlay and helper results with specific next actions and editable report prefills. Preserve the planned nudge automation as a later stage after diagnostic parity. Ship through exact-source CI, merge and beta with honest runtime verification.",
-      "next_action": "Implement shared preflight/session/evidence contract; connect existing Windows and Proton mailboxes and real Feeder/Vulkan log parsers, then the four interfaces and route-parity tests.",
+      "next_action": "PR 124 is in CI. Add native GTK desktop/Game Mode result-render coverage to the existing write-disabled review, inspect the Windows build, repair any test failures, then verify exact-source release.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21451,8 +21452,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T23:11:25.754Z",
-      "lease_until": "2026-10-30T11:11:25.754Z",
+      "updated_at": "2026-10-29T23:25:51.468Z",
+      "lease_until": "2026-10-30T11:25:51.468Z",
       "handoffs": [
         {
           "at": "2026-10-29T23:07:32.477Z",
