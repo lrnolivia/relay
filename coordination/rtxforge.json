@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T23:07:32.477Z",
+  "updated_at": "2026-10-29T23:08:11.280Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21383,14 +21383,16 @@
         ".github/workflows/linux-build.yml",
         "VERSION",
         "README.md",
-        "docs/releases/1.0-beta.md"
+        "docs/releases/1.0-beta.md",
+        "windows/engine-host/rtxforge_win_host.py",
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs"
       ],
       "resources": [
         "rtxforge-functional-test"
       ],
       "goal": "Lauren (2026-10-29, Claude Code): 'can we make it a functional test we can use to fix games' and 'for all parts of rtxForge? NR, MFG, Overlay, helper, all that.' Turn Start/Finish Test into a functional test that checks each part and suggests fixes, feeding Bug Report. She said 'Start it'; this claim covers step 1, the Windows Skynizz route.",
       "acceptance": "(1) Before launch: package files present and rtxForge-managed, sane saved settings, overlay helper running, panel shortcut set, and on Linux a Proton build with CUDA. (2) While playing: sample the in-game panel's live snapshot about once a second through companion_controls: nr_running, nr_ms, NR placement, rendered fps, native presented/generated frames and MFG mode, fg_successes, Dynamic MFG support, failure text and stalls. (3) At Finish: collect the route's logs, including Feeder (ReShade, dlss5-feed) and Vulkan (fgvk), and record a result per part with its evidence: hook loaded; NR model created, running, GPU time and placement; MFG achieved multiplier vs. requested; panel connected; helper running and attached. (4) Each result that isn't 'working' gets a likely fix from known failure patterns, for example: MFG set but no generated frames (enable frame generation in the game); NR created but no GPU time (NR disabled or intensity 0); no snapshot (bridge not loaded or a hook conflict); Proton without CUDA. (5) It suggests Working or Problem (the user decides), and its summary pre-fills Bug Report's NR and MFG answers and details. (6) Visual correctness is never claimed. Routes that don't report a value say 'not reported by this package'. (7) Order: the Windows Skynizz route first, then Feeder and Vulkan, then Linux/Proton, then a nudge-driven version Claude can run to fix games end to end. Each step ships through CI, a merge and a beta release with honest verification notes.",
-      "next_action": "Lauren explicitly requested takeover in this chat. Preserve unfinished local files in C:/Users/lrnol/Repos/rtxForge-parity; verify writer quiescence, finish Windows Skynizz functional test with fixture/host/UI validation, then CI, merge and beta publication per acceptance.",
+      "next_action": "Complete the preserved Windows Skynizz work, including host entry-point sampler binding and initial-scan result hydration, validate evidence logic/lifecycle and both Windows result screens, then ship the tested stage.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21414,8 +21416,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T23:07:32.477Z",
-      "lease_until": "2026-10-30T11:07:32.477Z",
+      "updated_at": "2026-10-29T23:08:11.280Z",
+      "lease_until": "2026-10-30T11:08:11.280Z",
       "handoffs": [
         {
           "at": "2026-10-29T23:07:32.477Z",
