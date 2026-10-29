@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T00:51:17.444Z",
+  "updated_at": "2026-10-29T00:51:36.518Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18454,6 +18454,43 @@
       "evidence": "PR #103 merged as 566d6ecf4566a6724c11614cfec6f9ea5944c10a at reviewed head 841a53f3. Empty Non-Steam folders not listed (test_discovery_ghost_folders fails without the fix); scan of Lauren's library drops the ghost Outer Worlds 2 and keeps Sonic Unleashed and the Steam copy; dual OS badge padding/spacing checked in a capture. All PR checks green; main's build (run 40796259815) installed locally with checksum match.",
       "work_accounted": true,
       "completed_at": "2026-10-29T00:51:17.444Z"
+    },
+    {
+      "id": "rtxforge-linux-beta-publish-20261029",
+      "owner": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+      "branch": "rtxforge/linux-beta-release-notes-20261029",
+      "paths": [
+        "docs/releases/1.0-beta.md"
+      ],
+      "resources": [],
+      "goal": "Lauren asked to publish the Linux build as rtxForge 1.0 Beta (targets Bazzite, SteamOS, CachyOS) and add it to the website. Update the Beta release notes with a Linux section (AppImage requirements per platform, what Linux gets, Proton-GE/CUDA and first-launch requirements, known limits, Flatpak to follow), merge, then dispatch linux-build.yml with publish_beta=true pinned to that main commit. The website already selects the Linux AppImage from the Beta release.",
+      "acceptance": "Notes PR merged on green; Beta release carries rtxForge-1.0.0-beta.2-x86_64.AppImage, its .sha256 and rtxforge-beta-linux.json for the merged commit alongside the Windows assets; release notes list both OSes; the website shows the Linux Beta download.",
+      "next_action": "Open the notes PR, merge on green, dispatch the Beta publish, verify release and website.",
+      "category": "release",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": "luca",
+      "supporting_staff": [],
+      "base_sha": "566d6ecf4566a6724c11614cfec6f9ea5944c10a",
+      "state": "active",
+      "created_at": "2026-10-29T00:51:36.518Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren asked to publish the Linux build as rtxForge 1.0 Beta (targets Bazzite, SteamOS, CachyOS) and add it to the website. Update the Beta release notes with a Linux section (AppImage requirements per platform, what Linux gets, Proton-GE/CUDA and first-launch requirements, known limits, Flatpak to follow), merge, then dispatch linux-build.yml with publish_beta=true pinned to that main commit. The website already selects the Linux AppImage from the Beta release.",
+          "acceptance": "Notes PR merged on green; Beta release carries rtxForge-1.0.0-beta.2-x86_64.AppImage, its .sha256 and rtxforge-beta-linux.json for the merged commit alongside the Windows assets; release notes list both OSes; the website shows the Linux Beta download.",
+          "at": "2026-10-29T00:51:36.518Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-beta-publish-20261029:acceptance:0",
+            "text": "Notes PR merged on green; Beta release carries rtxForge-1.0.0-beta.2-x86_64.AppImage, its .sha256 and rtxforge-beta-linux.json for the merged commit alongside the Windows assets; release notes list both OSes; the website shows the Linux Beta download.",
+            "at": "2026-10-29T00:51:36.518Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T00:51:36.518Z",
+      "lease_until": "2026-10-29T12:51:36.518Z"
     }
   ]
 }
