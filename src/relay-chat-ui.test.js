@@ -839,12 +839,21 @@ test('mounted card shrinks an oversized iframe and follows repeated evidence tog
     await frame.locator('#title').filter({hasText:'Content sized card'}).waitFor();
     await page.waitForFunction(()=>window.sizes.at(-1)?.height<1000);
     const assertFits = async () => {
-      await page.waitForFunction(()=>{
-        const sizes=window.sizes;return sizes.length>0&&parseFloat(document.getElementById('widget').style.height)===sizes.at(-1).height;
-      });
-      const height=await frame.locator('#card').evaluate(node=>Math.ceil(node.getBoundingClientRect().bottom+window.scrollY));
-      const reported=await page.evaluate(()=>window.sizes.at(-1).height);
+      const deadline=Date.now()+5000;
+      let height,reported,iframeHeight,confirmedHeight;
+      do {
+        height=await frame.locator('#card').evaluate(node=>Math.ceil(node.getBoundingClientRect().bottom+window.scrollY));
+        ({reported,iframeHeight}=await page.evaluate(()=>({
+          reported:window.sizes.at(-1)?.height,
+          iframeHeight:parseFloat(document.getElementById('widget').style.height)
+        })));
+        confirmedHeight=await frame.locator('#card').evaluate(node=>Math.ceil(node.getBoundingClientRect().bottom+window.scrollY));
+        if(height===confirmedHeight&&Math.abs(reported-height)<=1&&iframeHeight===reported)break;
+        await page.waitForTimeout(25);
+      } while(Date.now()<deadline);
+      assert.equal(height,confirmedHeight,'card geometry settled while sampled');
       assert.ok(Math.abs(reported-height)<=1, 'reported height fits visible content');
+      assert.equal(iframeHeight,reported,'host applied the matching content height');
       return height;
     };
     await frame.locator('#card').evaluate(async () => { await document.fonts.ready; await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))); });
@@ -860,6 +869,23 @@ test('mounted card shrinks an oversized iframe and follows repeated evidence tog
     }
     await page.locator('#widget').evaluate(node=>node.style.width='320px');
     await page.waitForFunction(()=>window.sizes.at(-1)?.width===320);
-    await assertFits();
+    const narrowCollapsed=await assertFits();
+    const sendResult=async claim=>page.evaluate(claim=>{
+      document.getElementById('widget').contentWindow.postMessage({
+        jsonrpc:'2.0',method:'ui/notifications/tool-result',
+        params:{structuredContent:{project:'relay',claim}}
+      },'*');
+    },claim);
+    const waitingReason='Waiting for the requested verification result before continuing. '.repeat(18);
+    await sendResult({primary_staff:'julian',goal:'Long result card',state:'blocked',waiting_reason:waitingReason});
+    await frame.locator('#title').filter({hasText:'Long result card'}).waitFor();
+    await frame.locator('#blocker').filter({hasText:'Waiting for the requested verification result'}).waitFor();
+    await page.waitForFunction(h=>window.sizes.at(-1)?.height>h,narrowCollapsed);
+    const longHeight=await assertFits();
+    assert.ok(longHeight>narrowCollapsed,'long tool result grows the mounted card');
+    await sendResult({primary_staff:'julian',goal:'Content sized card',state:'active'});
+    await frame.locator('#title').filter({hasText:'Content sized card'}).waitFor();
+    await page.waitForFunction(h=>window.sizes.at(-1)?.height===h,narrowCollapsed);
+    assert.equal(await assertFits(),narrowCollapsed,'shorter tool result shrinks back without reopening evidence');
   } finally { await browser.close(); }
 });
