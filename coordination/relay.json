@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T18:38:07.259Z",
+  "updated_at": "2026-10-29T19:24:30.714Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18414,14 +18414,14 @@
       ],
       "goal": "Add a supported relay_context archive step so a full project context log (200 entries / 600 operations) can move eligible older entries into durable, readable archive segments and accept new records, without deleting history.",
       "acceptance": "Preserve original durable readable archive/capacity recovery acceptance. Add explicit new, acknowledged, resolved, archived and reopen message lifecycle; ack/delivery/task completion never imply resolution. Recipient-bound semantic transitions; pending blockers/decisions survive physical rollover and closed assignments. Stable paging, exact idempotent replay across storage segments, original evidence and audit retained. Legacy schema reads and rollback-compatible runtime baseline before activation/new-format writes. Bounded executor active inbox; tests at200entries/600operations, authorization/concurrency/CAS/replay/migration. User authorized tests, review, publication, human-authenticated merge and deployment on October29; no permanent deletion or live-message cleanup.",
-      "next_action": "Safe lifecycle baseline PR261 merged04af924 and deployed healthy version d320f93c-0583-4761-8cda-eb9cc0be9178; mainCI40931405443 success1100pass0fail1existing skip, retention verified artifact12922776921, autonomyrev94. Live lifecycle=true/schema1/rollover=false, revision194 unchanged. Full capacity recovery NOT complete:200entry/600op caps remain. HELD pending exact code-only recovery-controller deployment approval AND supported authorized route, then reviewed minimum-schema guard across recovery/direct deploy/build paths before activation. Preserve old approved target/history, no live archive/migration/deletion. Resume same branch/claim only after blocker resolved.",
+      "next_action": "Resume under Lauren's explicit October29 code-only existing relay-recovery deployment approval. Existing authorized Cloudflare connection readbacks confirm canonical account/current controller/config. Implement reviewed schema-floor guard, preserve routes/bindings/secrets/permissions and old artifacts; controller deploy first with strict inherited bindings, verify guard/baseline, then floor and activation. Stop on auth/permission denial; no allowlist expansion.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "7f8185d662485516fbcce446d829970b54818d9f",
-      "state": "held",
+      "state": "active",
       "created_at": "2026-10-29T07:43:53.364Z",
       "objective_history": {
         "baseline": {
@@ -18444,8 +18444,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T18:37:38.515Z",
-      "lease_until": "2026-10-30T06:37:38.515Z",
+      "updated_at": "2026-10-29T19:24:30.714Z",
+      "lease_until": "2026-10-30T07:24:30.714Z",
       "handoffs": [
         {
           "at": "2026-10-29T18:00:24.394Z",
