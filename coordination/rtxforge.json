@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T19:28:20.788Z",
+  "updated_at": "2026-10-29T20:15:21.722Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -20787,7 +20787,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "182d6686d611c04508c74043d13a74dcbfc32fbc",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-29T19:18:51.942Z",
       "objective_history": {
         "baseline": {
@@ -20804,8 +20804,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T19:21:44.744Z",
-      "lease_until": "2026-10-30T07:21:44.744Z"
+      "updated_at": "2026-10-29T20:15:21.722Z",
+      "lease_until": "2026-10-30T08:15:21.722Z",
+      "pr": 120,
+      "merged_head_sha": "705ab8a6c4abb18f1a04a1139c3d69d8eb358492",
+      "merge_commit_sha": "a07e3f747b747187533453313207893ff952e2b8",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/120 merged to main as a07e3f747b747187533453313207893ff952e2b8 (local no-ff merge as Lauren; merge tree equals the CI-tested head 705ab8a). Every check on that head passed, including native-review running tests/ui_game_mode.py with the new steps: the header, Overview and Notes entry points, a preview-mode draft filled in through to the redacted preview with Save disabled, and the Settings > About picker. The first run failed only because the new test looked in the outgoing scene; the test now looks in body.current. Published 1.0.0-beta.6 for both OSes from a07e3f7: Linux run 40944481342 and Windows run 40944529339 succeeded. The release has the beta.6 installers, ZIP, AppImage and Flatpak, with Beta 5 kept as .previous-182d6686d611. The manifest is 1.0.0-beta.6 @ a07e3f7 and its AppImage sum matches the .sha256; the x64 installer SHA-256 (a6c5f9f6...) matches. Installed on Lauren's PC with only the helper running: ProductVersion 1.0.0+a07e3f7, engine 1.0.0-beta.6, helper restarted. Not verified: the flow on real Steam Deck or Gamescope hardware with a physical controller and Steam's keyboard, and a real (non-preview) save and form open from Game Mode.",
+      "work_accounted": true,
+      "completed_at": "2026-10-29T20:15:21.722Z"
     },
     {
       "id": "rtxforge-mobile-header-20261029",
