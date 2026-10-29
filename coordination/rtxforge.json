@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T04:38:12.191Z",
+  "updated_at": "2026-10-29T04:38:29.972Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -19002,7 +19002,10 @@
         "scripts/feeder_provider.py",
         "scripts/feeder_legacy.py",
         "providers/feeder-legacy.json",
-        "tests/test_feeder_legacy.py"
+        "tests/test_feeder_legacy.py",
+        "providers/skynizz-bridge/ForgePanel.h",
+        "providers/skynizz-bridge/panel-candidate.patch",
+        "providers/skynizz-bridge/panel-candidate.json"
       ],
       "resources": [
         "rtxforge-native-panel-rendering",
@@ -19011,7 +19014,7 @@
       ],
       "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.\nAdditional user direction: correct executable discovery that selects prerequisites, and let Windows users select/reset each game's executable and rescan its support.\nAdd Windows Feeder NR support for DirectX 9 and 10, including 32-bit helper and DX9-to-DX11 translation recipes.\nFix Light-mode native overlay headings that disappear against the light surface.",
       "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.\nAdditional acceptance: Far Cry 5 selects bin/FarCry5.exe instead of its .NET redistributable; Windows Desktop and Game Mode expose current EXE and Choose/Use detected actions; selections are scoped to a game's folder, validated and persisted, stale/unsafe choices cannot redirect install writes, and support is rescanned. Explain current x86/DX9 Feeder integration limits without claiming upstream lacks them.\nDX9/DX10 support uses integrity-verified architecture-correct files, separate 64-bit helper where needed, reviewed file deployment and exact restore; existing x64 Feeder installs remain compatible. Validate native game behavior before declaring runtime compatibility.\nShared native panel feature and Settings headings use contrasting theme-aware colors in both themes, verified in the rebuilt candidate.",
-      "next_action": "Fix the shared heading color, finish Feeder legacy transaction tests, and reconcile inZOI via supported cross-OS adaptation before installing the reversible candidate. User is ready to test inZOI; do not claim it is installed until verified.",
+      "next_action": "Prioritize Light overlay heading fix in shared ForgePanel; update integrity pins and rebuild candidate for inZOI. DX9/DX10 and executable selection source stays isolated in this worktree, no game files changed.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -19059,8 +19062,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T04:38:12.191Z",
-      "lease_until": "2026-10-29T16:38:12.191Z",
+      "updated_at": "2026-10-29T04:38:29.972Z",
+      "lease_until": "2026-10-29T16:38:29.972Z",
       "handoffs": [
         {
           "at": "2026-10-29T03:27:48.270Z",
