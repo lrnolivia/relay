@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T04:42:20.388Z",
+  "updated_at": "2026-10-29T05:00:10.501Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -19031,7 +19031,9 @@
         "tests/test_feeder_legacy.py",
         "providers/skynizz-bridge/ForgePanel.h",
         "providers/skynizz-bridge/panel-candidate.patch",
-        "providers/skynizz-bridge/panel-candidate.json"
+        "providers/skynizz-bridge/panel-candidate.json",
+        ".github/workflows/windows-build.yml",
+        ".github/workflows/linux-build.yml"
       ],
       "resources": [
         "rtxforge-native-panel-rendering",
@@ -19040,7 +19042,7 @@
       ],
       "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.\nAdditional user direction: correct executable discovery that selects prerequisites, and let Windows users select/reset each game's executable and rescan its support.\nAdd Windows Feeder NR support for DirectX 9 and 10, including 32-bit helper and DX9-to-DX11 translation recipes.\nFix Light-mode native overlay headings that disappear against the light surface.\nFix shared native-MFG output statistics in the overlay.",
       "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.\nAdditional acceptance: Far Cry 5 selects bin/FarCry5.exe instead of its .NET redistributable; Windows Desktop and Game Mode expose current EXE and Choose/Use detected actions; selections are scoped to a game's folder, validated and persisted, stale/unsafe choices cannot redirect install writes, and support is rescanned. Explain current x86/DX9 Feeder integration limits without claiming upstream lacks them.\nDX9/DX10 support uses integrity-verified architecture-correct files, separate 64-bit helper where needed, reviewed file deployment and exact restore; existing x64 Feeder installs remain compatible. Validate native game behavior before declaring runtime compatibility.\nShared native panel feature and Settings headings use contrasting theme-aware colors in both themes, verified in the rebuilt candidate.\nNative MFG stats use successful fresh raw Streamline actually-presented counts, independently of requested ratio, with invalid/stale data rejected. Preserve internal FG statistics and explain calculated output-rate provenance.",
-      "next_action": "Rebuild shared Light heading and native-MFG stats corrections, then supported inZOI adaptation/candidate staging and native verification. Keep pending legacy/EXE work isolated and complete afterward.",
+      "next_action": "Native inZOI startup/CAZ layering and Light headings now verified, gameplay mailbox reports native mode on, 4 presented, NR active; screenshot3 shows21→85FPS4x. Candidate7304969 installed only in inZOI via guarded overlay review, Steam launch with backed-up Menu.OverlayMenu=true. Originals under LOCALAPPDATA/rtxForge-previews/windows-linux-sync-20261029/inzoi-live-7304969. Add regression CI for EXE picker and new DX9/DX10 routes; source Debug0warnings/errors and49tests pass; actual pinned8 support downloads verified, FarCry5/SonicDX/SA2 now unblocked feeder rows. Finish docs/tests/push draft110; welcome startup theme tweak pending qualification. Keep running game untouched.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -19094,8 +19096,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T04:42:20.388Z",
-      "lease_until": "2026-10-29T16:42:20.388Z",
+      "updated_at": "2026-10-29T05:00:10.501Z",
+      "lease_until": "2026-10-29T17:00:10.501Z",
       "handoffs": [
         {
           "at": "2026-10-29T03:27:48.270Z",
