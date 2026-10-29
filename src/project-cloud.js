@@ -1,3 +1,4 @@
+import {contextSchemaFloor,assertContextTarget,assertContextVersion} from './context-schema-guard.js';
 import { githubApiRequest } from "./source.js";
 import { cloudWriteScripts, deployCloudVersion, cloudWorkerSummary, recoverCloudVersion, activeCloudVersion, retainedCloudVersion, cloudBuilds, cloudflareApiRequest } from "./cloud.js";
 import { guardAutonomy, autonomyRequest, validateAutonomyInput } from './autonomy-control.js';
@@ -18,6 +19,8 @@ function validateRegistration(value, project) {
   if (cloud.production_branch !== undefined && (typeof cloud.production_branch !== "string" || !cloud.production_branch)) throw new Error("Invalid project production branch");
   if (cloud.build_command !== undefined && typeof cloud.build_command !== "string") throw new Error("Invalid project build command");
   if (cloud.deploy_command !== undefined && typeof cloud.deploy_command !== "string") throw new Error("Invalid project deploy command");
+  if(project==='relay')contextSchemaFloor(cloud.rollback);
+  else if(cloud.rollback&&Object.hasOwn(cloud.rollback,'minimum_context_schema'))throw Error('Context schema floor is Relay-only');
   return cloud;
 }
 
@@ -63,6 +66,7 @@ function rollbackProfile(status){
 
 export async function verifyReleaseTarget(env,status,target,deps={}){
   const profile=rollbackProfile(status);
+  await assertContextTarget(env,status.worker,target,{floor:contextSchemaFloor(status.rollback),github:deps.github});
   if(target.worker!==status.worker||target.compatibility_id!==profile.compatibility_id)throw Error('Release target does not match registered Worker compatibility');
   const snapshot=await (deps.snapshot||((worker)=>cloudWorkerSummary(env,worker)))(status.worker);
   const active=(Array.isArray(snapshot.deployments)?snapshot.deployments:snapshot.deployments?.deployments)?.[0];
@@ -109,6 +113,7 @@ export async function resolveRecoveryTarget(env,status,source,deps={}){
 }
 export async function verifyApprovedTarget(env,status,target,deps={}){
   const profile=rollbackProfile(status);
+  await assertContextTarget(env,status.worker,target,{floor:contextSchemaFloor(status.rollback),github:deps.github});
   if(target.worker!==status.worker||target.compatibility_id!==profile.compatibility_id)throw Error('Release target does not match registered Worker compatibility');
   const snapshot=await (deps.snapshot||((worker)=>cloudWorkerSummary(env,worker)))(status.worker);
   const active=(Array.isArray(snapshot.deployments)?snapshot.deployments:snapshot.deployments?.deployments)?.[0];
@@ -278,6 +283,7 @@ export async function callAutonomyControl(env,input,deps={}){
   }
   const profile=rollbackProfile(status);
   if(!rollback){
+    await assertContextTarget(env,status.worker,input.target,{floor:contextSchemaFloor(status.rollback),github:deps.github});
     if(input.target.recovery){
       if(input.action==='healthy')await guardAutonomy(env,[input.scope]);
       await verifyRetainedReleaseArchive(env,input.target);
@@ -295,8 +301,9 @@ export async function callAutonomyControl(env,input,deps={}){
   const target=state.rollback?.operation_id===input.operation_id?state.rollback.target:input.kind==='healthy'?state.last_healthy:state.last_user_approved;
   if(!target)throw Error('Requested rollback target is missing; no substitute is allowed');
   if(target.compatibility_id!==profile.compatibility_id||state.last_healthy?.compatibility_id!==profile.compatibility_id)throw Error('Rollback data/configuration compatibility is not established');
+  await assertContextTarget(env,status.worker,target,{floor:contextSchemaFloor(status.rollback),github:deps.github});
   await autonomyRequest(env,prepared);
-  const recover=deps.recover||((scope,operation)=>recoverCloudVersion(env,scope,operation));
+  const recover=deps.recover||((scope,operation)=>recoverCloudVersion(env,scope,operation,{github:deps.github}));
   const receipt=await recover(input.scope,input.operation_id);
   // An uncertain provider response deliberately leaves the pending operation held.
   const effectiveTarget=receipt.effective_target||target;
@@ -313,6 +320,7 @@ export async function deployProjectCloudVersion(env, project, versionId, message
   if (!status.worker) throw new Error(`Project ${project} has no Cloudflare Worker registration`);
   if (!status.project_write) throw new Error(`Project ${project} does not authorize Cloud writes`);
   if (!status.runtime_allowlisted) throw new Error(`Project ${project} Worker is not in Relay's runtime write allowlist`);
+  if(status.worker==='relay'&&contextSchemaFloor(status.rollback)!==null){const {state}=await autonomyRequest(env,{action:'status',scope:'relay'});await assertContextVersion(env,status.worker,versionId,state,{floor:contextSchemaFloor(status.rollback),github:deps.github});}
   const deploy = deps.deploy || ((worker, version, note) => deployCloudVersion(env, worker, version, note));
   const result = await deploy(status.worker, versionId, message);
   return { ...result, project, authorization: status.authorization };

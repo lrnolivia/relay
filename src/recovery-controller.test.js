@@ -86,3 +86,13 @@ test('controller passes its bounded snapshot into rollback verification',async()
  const response=await recoveryControllerResponse(request({action:'rollback',scope:'relay'}),runtime,{verify,snapshot,control:async(actual,input,deps)=>{assert.equal(deps.accessJwt,'synthetic-verified-identity');return deps.snapshot('relay');}});
  assert.equal(response.status,200);assert.equal(observed,true);
 });
+
+test('schema capability reads remain fixed to two exact immutable source paths',async()=>{
+ const calls=[],reader=recoveryRegistrationReader('synthetic_registration_read_token',async(_env,path)=>{calls.push(path);return {type:'file'};});
+ for(const path of ['packages/runner/src/context-storage.mjs','src/context-schema-guard.js']){
+  const exact='/repos/lrnolivia/relay/contents/'+path+'?ref='+'a'.repeat(40);await reader(exact);
+  for(const invalid of [exact.replace('a'.repeat(40),'main'),exact.replace('lrnolivia/relay','other/relay'),exact+'&extra=1',exact.replace(path,'src/index.js')])assert.throws(()=>reader(invalid),/fixed/);
+  assert.throws(()=>reader(exact,{method:'GET'}),/fixed/);
+ }assert.equal(calls.length,2);
+ const response=await recoveryControllerResponse(new Request('https://relay.loew.fi/recovery-control'),env);assert.equal(response.status,405);assert.equal((await response.json()).recovery_build,'20261029.context-floor-v1');
+});
