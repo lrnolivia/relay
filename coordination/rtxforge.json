@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T21:42:29.202Z",
+  "updated_at": "2026-10-29T21:44:31.355Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -20901,6 +20901,74 @@
           "head_sha": null
         }
       }
+    },
+    {
+      "id": "rtxforge-report-send-20261029",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/report-send-20261029",
+      "paths": [
+        "services/reports/wrangler.jsonc",
+        "services/reports/package.json",
+        "services/reports/README.md",
+        "services/reports/src/index.mjs",
+        "services/reports/src/report.mjs",
+        "services/reports/src/github.mjs",
+        "services/reports/src/fields.json",
+        "services/reports/test/report.test.mjs",
+        "services/reports/test/index.test.mjs",
+        ".github/workflows/report-service.yml",
+        "scripts/beta_report.py",
+        "tests/test_beta_report.py",
+        "gui/rtxforge_gtk.py",
+        "gui/game_mode_reports.py",
+        "gui/game_mode.py",
+        "tests/ui_game_mode.py",
+        "windows/RtxForge.Windows/MainWindow.Features.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Features.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Pages.cs",
+        "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+        "windows/RtxForge.Windows/Services/ForgeService.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.Features.cs",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/engine-host/win_features.py",
+        "windows/tests/test_beta_reports_host.py",
+        "VERSION",
+        "README.md",
+        "docs/releases/1.0-beta.md",
+        "docs/COMPATIBILITY.md"
+      ],
+      "resources": [
+        "rtxforge-report-service",
+        "rtxforge-beta7-release"
+      ],
+      "goal": "Lauren (2026-10-29, Claude Code): in-app bug reports must submit to GitHub Issues on their own, as seamlessly as possible, with no GitHub link step. Logs stay private. A loew.fi report service and a bot account file the issues ('logs should be private and i'm okay with a report service and bot account filing issues'). She also called the report form layout weird, so the report screen is redesigned on Windows and Linux, desktop and Game Mode.",
+      "acceptance": "(1) services/reports: a Cloudflare Worker 'rtxforge-reports' at loew.fi/rtxforge/api/report. It accepts one report (the shared beta_report fields, detected details, an optional redacted log ZIP of up to 20 MiB) and validates it against the shared field definitions; a Python test enforces parity with scripts/beta_report.py. It redacts again server-side, neutralizes @mentions, rate-limits per client IP, and stores the ZIP in a private R2 bucket. It files the issue on lrnolivia/rtxForge as the rtxForge Reports GitHub App, with the form-style body and labels beta-report and from-app, and returns the issue number and URL. Missing secrets return 503, never a crash. Unit tests run in CI with node --test. (2) scripts/beta_report.submit sends one report plus its frozen redacted ZIP and returns the issue. Errors are plain sentences, and nothing is sent without the user pressing Send. (3) The report screen, on all four interfaces, is one game per report: 'What happened?' first, NR and MFG as Worked / Didn't work / Didn't test, a private-logs toggle, the detected details collapsed under 'Details we'll include' (still correctable), 'See exactly what's sent', and Send Report, followed by a confirmation with the issue number. Settings > About picks one game. (4) CI is green, merged, published as 1.0.0-beta.7 for both OSes. The service deploys from main through Workers Builds, which the Codex infra assignment wires up; its live round trip is verified once the GitHub App secrets exist. Until then the app says reports can't be sent yet and saves the ZIP locally.",
+      "next_action": "Branch from main a07e3f7: write services/reports with tests and CI, add beta_report.submit, redesign the four report screens, then PR, CI, merge and publish Beta 7.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "a07e3f747b747187533453313207893ff952e2b8",
+      "state": "active",
+      "created_at": "2026-10-29T21:44:31.355Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-29, Claude Code): in-app bug reports must submit to GitHub Issues on their own, as seamlessly as possible, with no GitHub link step. Logs stay private. A loew.fi report service and a bot account file the issues ('logs should be private and i'm okay with a report service and bot account filing issues'). She also called the report form layout weird, so the report screen is redesigned on Windows and Linux, desktop and Game Mode.",
+          "acceptance": "(1) services/reports: a Cloudflare Worker 'rtxforge-reports' at loew.fi/rtxforge/api/report. It accepts one report (the shared beta_report fields, detected details, an optional redacted log ZIP of up to 20 MiB) and validates it against the shared field definitions; a Python test enforces parity with scripts/beta_report.py. It redacts again server-side, neutralizes @mentions, rate-limits per client IP, and stores the ZIP in a private R2 bucket. It files the issue on lrnolivia/rtxForge as the rtxForge Reports GitHub App, with the form-style body and labels beta-report and from-app, and returns the issue number and URL. Missing secrets return 503, never a crash. Unit tests run in CI with node --test. (2) scripts/beta_report.submit sends one report plus its frozen redacted ZIP and returns the issue. Errors are plain sentences, and nothing is sent without the user pressing Send. (3) The report screen, on all four interfaces, is one game per report: 'What happened?' first, NR and MFG as Worked / Didn't work / Didn't test, a private-logs toggle, the detected details collapsed under 'Details we'll include' (still correctable), 'See exactly what's sent', and Send Report, followed by a confirmation with the issue number. Settings > About picks one game. (4) CI is green, merged, published as 1.0.0-beta.7 for both OSes. The service deploys from main through Workers Builds, which the Codex infra assignment wires up; its live round trip is verified once the GitHub App secrets exist. Until then the app says reports can't be sent yet and saves the ZIP locally.",
+          "at": "2026-10-29T21:44:31.355Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-report-send-20261029:acceptance:0",
+            "text": "(1) services/reports: a Cloudflare Worker 'rtxforge-reports' at loew.fi/rtxforge/api/report. It accepts one report (the shared beta_report fields, detected details, an optional redacted log ZIP of up to 20 MiB) and validates it against the shared field definitions; a Python test enforces parity with scripts/beta_report.py. It redacts again server-side, neutralizes @mentions, rate-limits per client IP, and stores the ZIP in a private R2 bucket. It files the issue on lrnolivia/rtxForge as the rtxForge Reports GitHub App, with the form-style body and labels beta-report and from-app, and returns the issue number and URL. Missing secrets return 503, never a crash. Unit tests run in CI with node --test. (2) scripts/beta_report.submit sends one report plus its frozen redacted ZIP and returns the issue. Errors are plain sentences, and nothing is sent without the user pressing Send. (3) The report screen, on all four interfaces, is one game per report: 'What happened?' first, NR and MFG as Worked / Didn't work / Didn't test, a private-logs toggle, the detected details collapsed under 'Details we'll include' (still correctable), 'See exactly what's sent', and Send Report, followed by a confirmation with the issue number. Settings > About picks one game. (4) CI is green, merged, published as 1.0.0-beta.7 for both OSes. The service deploys from main through Workers Builds, which the Codex infra assignment wires up; its live round trip is verified once the GitHub App secrets exist. Until then the app says reports can't be sent yet and saves the ZIP locally.",
+            "at": "2026-10-29T21:44:31.355Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T21:44:31.355Z",
+      "lease_until": "2026-10-30T09:44:31.355Z"
     }
   ]
 }
