@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T21:59:53.238Z",
+  "updated_at": "2026-10-29T22:00:43.626Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7654,6 +7654,49 @@
             "id": "rtxforge-website-report-send-20261029:acceptance:0",
             "text": "Service contract (lrnolivia/rtxForge services/reports/README.md; Claude's claim rtxforge-report-send-20261029): POST https://loew.fi/rtxforge/api/report with JSON. Body: schema 1; report_id matching r<YYYYMMDD>T<HHMMSS>-<6 hex>, generated in the page; source 'web'; turnstile, the Cloudflare Turnstile token; fields, the same 12 ids and choices as report.html and beta-report.yml (only platform and observations required); details as an optional list of short strings; logs as an optional base64 ZIP up to 20 MB, kept private. Answers: 201 {number, url}, or {error} with 400, 403, 413, 429, 502 or 503. Show the error sentence as-is. CORS allows https://loew.fi and https://rtxforge.loew.fi. Done when: (1) the form's main button is 'Send report'. It renders a Turnstile widget with the public site key from rtxforge-report-turnstile-20261029's completion evidence, sends, and then shows 'Thanks, it's issue #N' with a link. (2) The page says plainly that the report becomes a public GitHub issue and that attached logs stay private. (3) A no-JavaScript fallback and the prefilled GitHub link remain as a secondary 'or open it on GitHub' path, which is also used while the service answers 503. (4) Desktop, mobile, light/dark and accessibility checks pass, plus a real end-to-end send once the service and Turnstile are live: mark the test issue clearly and tell Lauren its number so she can close it. Deploy through the standalone site mechanism.",
             "at": "2026-10-29T21:58:39.378Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-functional-test-20261029",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "goal": "Lauren (2026-10-29, Claude Code): 'can we make it a functional test we can use to fix games' and 'for all parts of rtxForge? NR, MFG, Overlay, helper, all that.' Turn Start/Finish Test into a functional test that checks each part and suggests fixes, feeding Bug Report.",
+      "acceptance": "(1) Before launch: package files present and rtxForge-managed, sane saved settings, overlay helper running, panel shortcut set, and on Linux a Proton build with CUDA. (2) While playing: sample the in-game panel's live snapshot about once a second through companion_controls: nr_running, nr_ms, NR placement, rendered fps, native presented/generated frames and MFG mode, fg_successes, Dynamic MFG support, failure text and stalls. (3) At Finish: collect the route's logs, including Feeder (ReShade, dlss5-feed) and Vulkan (fgvk), and record a result per part with its evidence: hook loaded; NR model created, running, GPU time and placement; MFG achieved multiplier vs. requested; panel connected; helper running and attached. (4) Each result that isn't 'working' gets a likely fix from known failure patterns, for example: MFG set but no generated frames (enable frame generation in the game); NR created but no GPU time (NR disabled or intensity 0); no snapshot (bridge not loaded or a hook conflict); Proton without CUDA. (5) It suggests Working or Problem (the user decides), and its summary pre-fills Bug Report's NR and MFG answers and details. (6) Visual correctness is never claimed. Routes that don't report a value say 'not reported by this package'. (7) Order: the Windows Skynizz route first, then Feeder and Vulkan, then Linux/Proton, then a nudge-driven version Claude can run to fix games end to end. Each step ships through CI, a merge and a beta release with honest verification notes.",
+      "next_action": "Start after rtxforge-report-send-20261029 completes: design the test record and the live sampler on the Windows Skynizz route.",
+      "paths": [
+        "scripts/game_notes.py",
+        "scripts/runtime_diagnostics.py",
+        "windows/engine-host/companion_controls.py",
+        "windows/engine-host/win_features.py",
+        "gui/rtxforge_gtk.py",
+        "gui/game_mode.py",
+        "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Details.cs",
+        "windows/RtxForge.Windows/MainWindow.Features.cs"
+      ],
+      "resources": [
+        "rtxforge-functional-test"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-29T22:00:43.626Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren (2026-10-29, Claude Code): 'can we make it a functional test we can use to fix games' and 'for all parts of rtxForge? NR, MFG, Overlay, helper, all that.' Turn Start/Finish Test into a functional test that checks each part and suggests fixes, feeding Bug Report.",
+          "acceptance": "(1) Before launch: package files present and rtxForge-managed, sane saved settings, overlay helper running, panel shortcut set, and on Linux a Proton build with CUDA. (2) While playing: sample the in-game panel's live snapshot about once a second through companion_controls: nr_running, nr_ms, NR placement, rendered fps, native presented/generated frames and MFG mode, fg_successes, Dynamic MFG support, failure text and stalls. (3) At Finish: collect the route's logs, including Feeder (ReShade, dlss5-feed) and Vulkan (fgvk), and record a result per part with its evidence: hook loaded; NR model created, running, GPU time and placement; MFG achieved multiplier vs. requested; panel connected; helper running and attached. (4) Each result that isn't 'working' gets a likely fix from known failure patterns, for example: MFG set but no generated frames (enable frame generation in the game); NR created but no GPU time (NR disabled or intensity 0); no snapshot (bridge not loaded or a hook conflict); Proton without CUDA. (5) It suggests Working or Problem (the user decides), and its summary pre-fills Bug Report's NR and MFG answers and details. (6) Visual correctness is never claimed. Routes that don't report a value say 'not reported by this package'. (7) Order: the Windows Skynizz route first, then Feeder and Vulkan, then Linux/Proton, then a nudge-driven version Claude can run to fix games end to end. Each step ships through CI, a merge and a beta release with honest verification notes.",
+          "at": "2026-10-29T22:00:43.626Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-functional-test-20261029:acceptance:0",
+            "text": "(1) Before launch: package files present and rtxForge-managed, sane saved settings, overlay helper running, panel shortcut set, and on Linux a Proton build with CUDA. (2) While playing: sample the in-game panel's live snapshot about once a second through companion_controls: nr_running, nr_ms, NR placement, rendered fps, native presented/generated frames and MFG mode, fg_successes, Dynamic MFG support, failure text and stalls. (3) At Finish: collect the route's logs, including Feeder (ReShade, dlss5-feed) and Vulkan (fgvk), and record a result per part with its evidence: hook loaded; NR model created, running, GPU time and placement; MFG achieved multiplier vs. requested; panel connected; helper running and attached. (4) Each result that isn't 'working' gets a likely fix from known failure patterns, for example: MFG set but no generated frames (enable frame generation in the game); NR created but no GPU time (NR disabled or intensity 0); no snapshot (bridge not loaded or a hook conflict); Proton without CUDA. (5) It suggests Working or Problem (the user decides), and its summary pre-fills Bug Report's NR and MFG answers and details. (6) Visual correctness is never claimed. Routes that don't report a value say 'not reported by this package'. (7) Order: the Windows Skynizz route first, then Feeder and Vulkan, then Linux/Proton, then a nudge-driven version Claude can run to fix games end to end. Each step ships through CI, a merge and a beta release with honest verification notes.",
+            "at": "2026-10-29T22:00:43.626Z"
           }
         ]
       }
