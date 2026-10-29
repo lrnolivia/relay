@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T07:37:24.875Z",
+  "updated_at": "2026-10-29T07:40:01.275Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -9795,6 +9795,47 @@
         }
       ],
       "completed_at": "2026-10-28T03:58:08.142Z"
+    },
+    {
+      "id": "relay-assignment-inbox-lifecycle-20261029",
+      "owner": "dot-inbox-lifecycle-20261029",
+      "goal": "Implement durable assignment inbox lifecycle and safe capacity rollover without losing unresolved work or audit history.",
+      "acceptance": "Explicit new, acknowledged, resolved and archived message lifecycle; acknowledgment is not resolution; pending inbox separate from project context; duplicate retries idempotent; resolved/archive evidence preserved and reversible reopen; stable revision-bound pagination; immutable history rollover removes 200-entry/600-operation dead end while preserving original entries and operation receipts; backward-compatible legacy reads; executor consumes bounded active inbox without declaring delivery or resolution; tests cover conflicts, replay after rollover, unresolved protections, migration and capacity. No production cleanup, merge or deploy without specific authorization.",
+      "next_action": "Implement isolated source/tests from exact main; preserve held consumer verification and active card fix paths; read-only baseline reports Relay194/148 visible and rtxForge201/177 visible, not exact total.",
+      "paths": [
+        "packages/runner/src/context-service.mjs",
+        "packages/runner/src/context-service.test.mjs",
+        "packages/runner/src/context-storage.mjs",
+        "packages/runner/src/context-storage.test.mjs",
+        "scripts/relay-executor-inbox.mjs",
+        "scripts/relay-executor-inbox.test.mjs",
+        "docs/relay/INBOX_LIFECYCLE_20261029.md"
+      ],
+      "resources": [
+        "relay-assignment-inbox-lifecycle"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-29T07:40:01.275Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Implement durable assignment inbox lifecycle and safe capacity rollover without losing unresolved work or audit history.",
+          "acceptance": "Explicit new, acknowledged, resolved and archived message lifecycle; acknowledgment is not resolution; pending inbox separate from project context; duplicate retries idempotent; resolved/archive evidence preserved and reversible reopen; stable revision-bound pagination; immutable history rollover removes 200-entry/600-operation dead end while preserving original entries and operation receipts; backward-compatible legacy reads; executor consumes bounded active inbox without declaring delivery or resolution; tests cover conflicts, replay after rollover, unresolved protections, migration and capacity. No production cleanup, merge or deploy without specific authorization.",
+          "at": "2026-10-29T07:40:01.275Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-assignment-inbox-lifecycle-20261029:acceptance:0",
+            "text": "Explicit new, acknowledged, resolved and archived message lifecycle; acknowledgment is not resolution; pending inbox separate from project context; duplicate retries idempotent; resolved/archive evidence preserved and reversible reopen; stable revision-bound pagination; immutable history rollover removes 200-entry/600-operation dead end while preserving original entries and operation receipts; backward-compatible legacy reads; executor consumes bounded active inbox without declaring delivery or resolution; tests cover conflicts, replay after rollover, unresolved protections, migration and capacity. No production cleanup, merge or deploy without specific authorization.",
+            "at": "2026-10-29T07:40:01.275Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
