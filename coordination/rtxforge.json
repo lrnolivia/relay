@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T04:25:39.834Z",
+  "updated_at": "2026-10-29T04:25:51.615Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18938,14 +18938,17 @@
       "paths": [
         "windows/",
         "providers/skynizz-bridge/inzoi-overlay-candidate.patch",
-        "providers/skynizz-bridge/inzoi-overlay-candidate.json"
+        "providers/skynizz-bridge/inzoi-overlay-candidate.json",
+        "scripts/discovery.py",
+        "tests/test_discovery_candidates.py"
       ],
       "resources": [
-        "rtxforge-native-panel-rendering"
+        "rtxforge-native-panel-rendering",
+        "rtxforge-windows-executable-selection"
       ],
       "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.\nAdditional user direction: correct executable discovery that selects prerequisites, and let Windows users select/reset each game's executable and rescan its support.",
       "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.\nAdditional acceptance: Far Cry 5 selects bin/FarCry5.exe instead of its .NET redistributable; Windows Desktop and Game Mode expose current EXE and Choose/Use detected actions; selections are scoped to a game's folder, validated and persisted, stale/unsafe choices cannot redirect install writes, and support is rescanned. Explain current x86/DX9 Feeder integration limits without claiming upstream lacks them.",
-      "next_action": "Implement validated Windows per-game executable selection and generic prerequisite exclusion; regress wrong-executable and Feeder routing with fixtures and read-only installed-library scans.",
+      "next_action": "Add game EXE Choose/Use detected in both Windows details views with safe read-only validation, deterministic scoped selection before scan, and install ownership guard. Fix redistributable executable selection, test and recheck actual Far Cry 5/Feeder diagnosis. Do not touch active PRAGMATA session.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18981,8 +18984,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T04:25:39.834Z",
-      "lease_until": "2026-10-29T16:25:39.834Z",
+      "updated_at": "2026-10-29T04:25:51.615Z",
+      "lease_until": "2026-10-29T16:25:51.615Z",
       "handoffs": [
         {
           "at": "2026-10-29T03:27:48.270Z",
