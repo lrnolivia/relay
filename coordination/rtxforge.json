@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T18:02:13.313Z",
+  "updated_at": "2026-10-29T18:26:33.016Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -20714,10 +20714,14 @@
         "windows/RtxForge.Windows/GameMode/GameModeView.Steam.cs",
         "windows/RtxForge.Windows/MainWindow.Features.cs",
         "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/Services/ForgeService.cs",
         "windows/engine-host/win_features.py",
         "gui/rtxforge_gtk.py",
         "gui/game_mode.py",
+        "tests/ui_library_resume.py",
         "VERSION",
+        "README.md",
+        "docs/COMPATIBILITY.md",
         "docs/releases/1.0-beta.md"
       ],
       "resources": [
@@ -20725,7 +20729,7 @@
       ],
       "goal": "Lauren's Beta 4 feedback (2026-10-29, Claude Code): (1) Add to Steam belongs at the top of the Gaming Mode settings tab, in the accent color. Beta 4 only featured it in Game Mode's own Graphics settings, and desktop Settings kept it under Library on Windows and last in Gaming Mode on Linux. (2) The report button should say 'Bug Report', not 'Beta report', and be reachable from more than the game's Notes tab. (3) A game's Overview lists every package route ('why are all these install routes listed?'); show the route in use and only the other compatible ones.",
       "acceptance": "Windows and Linux desktop Settings plus Windows and Linux Game Mode settings: a Steam group is first in the Gaming Mode tab, with an accent button until rtxForge is in Steam and Manage/Remove after. User-facing 'Beta report' wording in both apps becomes 'Bug Report'; GitHub issue titles and the issue-form template stay as they are, because they're shared with the website. A Bug Report button sits in the game header beside Restore on Windows desktop, Windows Game Mode and Linux desktop; Notes, Tools and Settings keep their entries and gain a Settings > About 'Report a bug'. The Overview 'Install routes' shows only the route in use or recommended, plus a single 'Also compatible' line; incompatible routes are hidden. CI is green on WinUI x64/ARM64 and Linux, merged to main and published as 1.0.0-beta.5 for both OSes under Lauren's standing publish authorization.",
-      "next_action": "Implement on a fresh branch from main 1e2b8f4, open a draft PR, run CI, merge and publish Beta 5.",
+      "next_action": "Draft PR 119 (head d26aa3d) is green on every build and test. Re-run coordination admission against these paths, then mark ready, merge and publish Beta 5.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -20749,8 +20753,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T18:02:13.313Z",
-      "lease_until": "2026-10-30T06:02:13.313Z"
+      "updated_at": "2026-10-29T18:26:33.016Z",
+      "lease_until": "2026-10-30T06:26:33.016Z"
     }
   ]
 }
