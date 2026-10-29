@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T19:24:30.714Z",
+  "updated_at": "2026-10-29T19:25:13.265Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18406,15 +18406,29 @@
         "scripts/relay-executor-inbox.test.mjs",
         "src/relay-events.js",
         "src/relay-events.test.js",
-        "docs/relay/INBOX_LIFECYCLE_20261029.md"
+        "docs/relay/INBOX_LIFECYCLE_20261029.md",
+        "src/context-schema-guard.js",
+        "src/context-schema-guard.test.js",
+        "src/project-cloud.js",
+        "src/project-cloud.test.js",
+        "src/cloud.js",
+        "src/cloud.test.js",
+        "src/recovery-controller.js",
+        "src/recovery-controller.test.js",
+        "src/recovery-controller-runtime.test.js",
+        "scripts/autonomy-gate.mjs",
+        "test/autonomy-gate.test.mjs",
+        "projects/relay.json"
       ],
       "resources": [
         "relay-context-store",
-        "relay-assignment-inbox-lifecycle"
+        "relay-assignment-inbox-lifecycle",
+        "relay-context-schema-floor",
+        "relay-recovery-code-only-release"
       ],
       "goal": "Add a supported relay_context archive step so a full project context log (200 entries / 600 operations) can move eligible older entries into durable, readable archive segments and accept new records, without deleting history.",
       "acceptance": "Preserve original durable readable archive/capacity recovery acceptance. Add explicit new, acknowledged, resolved, archived and reopen message lifecycle; ack/delivery/task completion never imply resolution. Recipient-bound semantic transitions; pending blockers/decisions survive physical rollover and closed assignments. Stable paging, exact idempotent replay across storage segments, original evidence and audit retained. Legacy schema reads and rollback-compatible runtime baseline before activation/new-format writes. Bounded executor active inbox; tests at200entries/600operations, authorization/concurrency/CAS/replay/migration. User authorized tests, review, publication, human-authenticated merge and deployment on October29; no permanent deletion or live-message cleanup.",
-      "next_action": "Resume under Lauren's explicit October29 code-only existing relay-recovery deployment approval. Existing authorized Cloudflare connection readbacks confirm canonical account/current controller/config. Implement reviewed schema-floor guard, preserve routes/bindings/secrets/permissions and old artifacts; controller deploy first with strict inherited bindings, verify guard/baseline, then floor and activation. Stop on auth/permission denial; no allowlist expansion.",
+      "next_action": "Implement minimum-context-schema floor in rollback/direct deploy/build admission and recovery controller exact-source reader, test failclosed old targets, preserve controller configuration, deploy reviewed controller code via existing authorized Cloudflare route before registry floor and rollover activation. Existing lifecycle/source history preserved.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18444,8 +18458,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T19:24:30.714Z",
-      "lease_until": "2026-10-30T07:24:30.714Z",
+      "updated_at": "2026-10-29T19:25:13.265Z",
+      "lease_until": "2026-10-30T07:25:13.265Z",
       "handoffs": [
         {
           "at": "2026-10-29T18:00:24.394Z",
