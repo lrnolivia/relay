@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T02:48:42.105Z",
+  "updated_at": "2026-10-29T03:04:30.317Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18776,7 +18776,7 @@
       "primary_staff": "rafael",
       "supporting_staff": [],
       "base_sha": "db8371c33d7d61957d991203a75220d67ea55960",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-29T02:41:37.375Z",
       "objective_history": {
         "baseline": {
@@ -18799,8 +18799,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T02:48:42.105Z",
-      "lease_until": "2026-10-29T14:48:42.105Z",
+      "updated_at": "2026-10-29T03:04:30.317Z",
+      "lease_until": "2026-10-29T15:04:30.317Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -18820,7 +18820,13 @@
             "next_action": "Review final candidate c34a3f70a03d887ac056279c9054270ca21308fb, await exact-head CI, merge with verified human attribution, deploy through the registered manual website path and verify through Relay."
           }
         }
-      ]
+      ],
+      "pr": 109,
+      "merged_head_sha": "c34a3f70a03d887ac056279c9054270ca21308fb",
+      "merge_commit_sha": "354c9fc10c604f8562dd4b658bbad8ba86a604f9",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/109 merged via authorized local human Git route as354c9fc10c604f8562dd4b658bbad8ba86a604f9. Merge tree equals tested c34a3f70a03d887ac056279c9054270ca21308fb; all exact-head checks green, including AppImage, Flatpak, Windows x64/ARM64, overlay, attribution and admission.14 local release tests and13 website tests pass; build/syntax/dry-run/diff and actual selection/render state checks pass. READMEs, release source notes and publisher titles updated to Beta1. GitHub beta release title/intro read back; all asset IDs/names/digests/sizes, tag and per-OS provenance unchanged. Website versiona432955c-5c97-4b2d-971b-f05c20799281 deployed100%; prior healthy6f96387f-3ccf-4372-9a8c-bcdca0acf1ca retained. Relay VERIFY fetched five live source files byte-for-byte equal to candidate. Rendered snapshots: desktop defaultLinux vis_480919ca-76d3-41d9-b520-957cb839e2c2, explicitWindows vis_1d4c4fa5-aba0-428c-9cad-d5ebfe367f31,390pxLinux vis_ceaf9e3d-35e2-4dff-9b93-0f0bc3539c27; all200 and correct runtime titles. Linux shows explicit Flatpak/AppImage buttons; OS-aware guide below with book glyph; URL/saved choices preserved. Local browser permission service unavailable; no bypass attempted. No app packages republished. Relay context append failed capacity; full accounting retained in PR and this completion.",
+      "work_accounted": true,
+      "completed_at": "2026-10-29T03:04:30.317Z"
     }
   ]
 }
