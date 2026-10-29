@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T06:17:38.640Z",
+  "updated_at": "2026-10-29T06:17:45.329Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -19224,6 +19224,46 @@
       "completed_at": "2026-10-29T05:19:45.762Z"
     },
     {
+      "id": "rtxforge-website-beta-reports-20261029",
+      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+      "branch": "rtxforge/website-beta-reports-20261029",
+      "paths": [
+        "website/",
+        ".github/ISSUE_TEMPLATE/beta-report.yml"
+      ],
+      "resources": [
+        "rtxforge-website-beta-reports"
+      ],
+      "goal": "Build consistent beta compatibility reporting into the website per Lauren's supplied feedback.",
+      "acceptance": "Discoverable accessible report page and copyable template capture RTX series/model, distro/OS, app format/build, feature package/version, game, NR/MFG installed and observed outcome; AppImage host dependency guidance linked; GitHub issue form keeps reports searchable; site checks and browser verification pass. User instruction authorizes implementation and routine publication through existing site workflow.",
+      "next_action": "Create isolated checkout from fresh main, implement report page and issue form, validate and publish reviewed change.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "6b267bd593a2e0b7c18e824c880b718c53f338c3",
+      "state": "active",
+      "created_at": "2026-10-29T06:14:20.343Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Build consistent beta compatibility reporting into the website per Lauren's supplied feedback.",
+          "acceptance": "Discoverable accessible report page and copyable template capture RTX series/model, distro/OS, app format/build, feature package/version, game, NR/MFG installed and observed outcome; AppImage host dependency guidance linked; GitHub issue form keeps reports searchable; site checks and browser verification pass. User instruction authorizes implementation and routine publication through existing site workflow.",
+          "at": "2026-10-29T06:14:20.343Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-website-beta-reports-20261029:acceptance:0",
+            "text": "Discoverable accessible report page and copyable template capture RTX series/model, distro/OS, app format/build, feature package/version, game, NR/MFG installed and observed outcome; AppImage host dependency guidance linked; GitHub issue form keeps reports searchable; site checks and browser verification pass. User instruction authorizes implementation and routine publication through existing site workflow.",
+            "at": "2026-10-29T06:14:20.343Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T06:14:20.343Z",
+      "lease_until": "2026-10-29T18:14:20.343Z"
+    },
+    {
       "id": "rtxforge-windows-linux-sync-20261029",
       "owner": "01a185b0-7901-78a3-a702-6e77197cf28d",
       "branch": "rtxforge/windows-linux-sync-20261029",
@@ -19246,7 +19286,10 @@
         "scripts/engine_bridge.py",
         "scripts/desktop_service.py",
         "scripts/package_adoption.py",
-        "tests/test_offline_routes.py"
+        "tests/test_offline_routes.py",
+        "providers/skynizz-bridge/ForgeInzoiOverlay.h",
+        "scripts/skynizz_provider.py",
+        "tests/test_skynizz_provider.py"
       ],
       "resources": [
         "rtxforge-native-panel-rendering",
@@ -19256,7 +19299,7 @@
       ],
       "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.\nAdditional user direction: correct executable discovery that selects prerequisites, and let Windows users select/reset each game's executable and rescan its support.\nAdd Windows Feeder NR support for DirectX 9 and 10, including 32-bit helper and DX9-to-DX11 translation recipes.\nFix Light-mode native overlay headings that disappear against the light surface.\nFix shared native-MFG output statistics in the overlay.\nReplace blanket anti-cheat install blocking with a reviewed offline-only route and forced acknowledgement where installation is supported.\nCorrect Sims 4 and comparable legacy-renderer routing without overwriting an installed package's restore ownership.\nAssess each built-in provider against the actual executable rather than classifying the game only against the installed or globally selected package.\nSoften Light overlay/toast text to charcoal grey and increase Light background translucency.\nFix automatic executable scan/review divergence. Deliver the tested inZOI startup/rendering fix automatically in the normal build for every inZOI installer, with compatibility fallback. Other games' renderer/queue paths must remain unchanged per Lauren's latest direction.",
       "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.\nAdditional acceptance: Far Cry 5 selects bin/FarCry5.exe instead of its .NET redistributable; Windows Desktop and Game Mode expose current EXE and Choose/Use detected actions; selections are scoped to a game's folder, validated and persisted, stale/unsafe choices cannot redirect install writes, and support is rescanned. Explain current x86/DX9 Feeder integration limits without claiming upstream lacks them.\nDX9/DX10 support uses integrity-verified architecture-correct files, separate 64-bit helper where needed, reviewed file deployment and exact restore; existing x64 Feeder installs remain compatible. Validate native game behavior before declaring runtime compatibility.\nShared native panel feature and Settings headings use contrasting theme-aware colors in both themes, verified in the rebuilt candidate.\nNative MFG stats use successful fresh raw Streamline actually-presented counts, independently of requested ratio, with invalid/stale data rejected. Preserve internal FG statistics and explain calculated output-rate provenance.\nAnti-cheat evidence stays visible; install-compatible offline games including Gears E-Day can be reviewed after explicit offline-only acknowledgement. Consent and file identity are bound to the reviewed operation; incompatible routes remain explained and no protected process is altered.\nSims 4 correct TS4_x64 discovery is retained; installed incompatible native package is shown as needing a package switch, not an unsupported game. Restoring it allows compatible DX11 Feeder detection even when a retained SR DLL exists.\nWindows exposes independent Skynizz, y4my, DLSS-Unlocked, Feeder and confirmed Vulkan route assessments. DX11 plus leftover SR DLL does not qualify native DLSS packages; compatible Feeder is automatically offered for fresh games; Feeder-owned runtime DLLs do not fabricate native game DLSS support. Keep installed ownership separate from route capability.\nLight in-game overlay and welcome toast use charcoal grey primary/heading text and slightly lower background opacity, retaining readable secondary text and theme-aware title accents. Keep Windows app Light theme unchanged. Build and integrity-validate the updated native candidate.",
-      "next_action": "Linux Beta2 parity assignment queued/verified with overlay tweaks and inZOI-only scope.13focused/native regressions pass for chooser correction. Scope normal-build inZOI policy/header, negative-other-game tests and payload validation; preserve existing game recovery records.",
+      "next_action": "Integrate automatic inZOI-only default with explicit compatibility fallback; normal build includes the fix and all other games retain original queues/rendering. Qualify automatic EXE regression, startup scope, native upload queue, packaging and restore.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -19334,8 +19377,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T06:17:38.640Z",
-      "lease_until": "2026-10-29T18:17:38.640Z",
+      "updated_at": "2026-10-29T06:17:45.329Z",
+      "lease_until": "2026-10-29T18:17:45.329Z",
       "handoffs": [
         {
           "at": "2026-10-29T03:27:48.270Z",
@@ -19544,46 +19587,6 @@
           }
         }
       ]
-    },
-    {
-      "id": "rtxforge-website-beta-reports-20261029",
-      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
-      "branch": "rtxforge/website-beta-reports-20261029",
-      "paths": [
-        "website/",
-        ".github/ISSUE_TEMPLATE/beta-report.yml"
-      ],
-      "resources": [
-        "rtxforge-website-beta-reports"
-      ],
-      "goal": "Build consistent beta compatibility reporting into the website per Lauren's supplied feedback.",
-      "acceptance": "Discoverable accessible report page and copyable template capture RTX series/model, distro/OS, app format/build, feature package/version, game, NR/MFG installed and observed outcome; AppImage host dependency guidance linked; GitHub issue form keeps reports searchable; site checks and browser verification pass. User instruction authorizes implementation and routine publication through existing site workflow.",
-      "next_action": "Create isolated checkout from fresh main, implement report page and issue form, validate and publish reviewed change.",
-      "category": "implementation",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "6b267bd593a2e0b7c18e824c880b718c53f338c3",
-      "state": "active",
-      "created_at": "2026-10-29T06:14:20.343Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Build consistent beta compatibility reporting into the website per Lauren's supplied feedback.",
-          "acceptance": "Discoverable accessible report page and copyable template capture RTX series/model, distro/OS, app format/build, feature package/version, game, NR/MFG installed and observed outcome; AppImage host dependency guidance linked; GitHub issue form keeps reports searchable; site checks and browser verification pass. User instruction authorizes implementation and routine publication through existing site workflow.",
-          "at": "2026-10-29T06:14:20.343Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-website-beta-reports-20261029:acceptance:0",
-            "text": "Discoverable accessible report page and copyable template capture RTX series/model, distro/OS, app format/build, feature package/version, game, NR/MFG installed and observed outcome; AppImage host dependency guidance linked; GitHub issue form keeps reports searchable; site checks and browser verification pass. User instruction authorizes implementation and routine publication through existing site workflow.",
-            "at": "2026-10-29T06:14:20.343Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-29T06:14:20.343Z",
-      "lease_until": "2026-10-29T18:14:20.343Z"
     }
   ]
 }
