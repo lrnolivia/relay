@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T02:44:16.734Z",
+  "updated_at": "2026-10-29T02:47:31.380Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18760,7 +18760,8 @@
         ".github/workflows/linux-build.yml",
         ".github/workflows/windows-build.yml",
         "website/public/app.js",
-        "website/public/index.html"
+        "website/public/index.html",
+        "website/public/styles.css"
       ],
       "resources": [
         "beta-release-public-label",
@@ -18768,7 +18769,7 @@
       ],
       "goal": "Update READMEs for published Linux and Windows betas and relabel the shared public release rtxForge Beta 1 as directly requested in this chat.",
       "acceptance": "Public release and maintained release notes use Beta 1; READMEs document both published OS packages and Linux Flatpak/AppImage requirements. Preserve beta tag, artifact filenames, package versions and updater compatibility. Documentation-only checks plus relevant publisher tests pass; reviewed PR merged; release metadata read back.",
-      "next_action": "User additionally requests Linux as the page default. Update initial HTML and fallback selection, preserve explicit/saved choices, validate and deploy via existing website route.",
+      "next_action": "User requests an obvious installation-guide link beside downloads. Move existing OS-aware link directly below primary download, add book glyph and outlined control styling; preserve both Linux formats.",
       "category": "maintenance",
       "primary_team": "source",
       "supporting_teams": [],
@@ -18792,8 +18793,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T02:44:16.734Z",
-      "lease_until": "2026-10-29T14:44:16.734Z"
+      "updated_at": "2026-10-29T02:47:31.380Z",
+      "lease_until": "2026-10-29T14:47:31.380Z"
     }
   ]
 }
