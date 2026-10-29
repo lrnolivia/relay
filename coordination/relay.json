@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T19:44:15.692Z",
+  "updated_at": "2026-10-29T19:50:17.734Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18419,7 +18419,10 @@
         "projects/relay.json",
         "src/autonomy-control.js",
         "src/autonomy-control.test.js",
-        "src/compiled-recovery-runtime.test.js"
+        "src/compiled-recovery-runtime.test.js",
+        "scripts/verify-worker-runtime.mjs",
+        "test/worker-runtime-contract.test.mjs",
+        "test/autonomy-gate.test.mjs"
       ],
       "resources": [
         "relay-context-store",
@@ -18429,7 +18432,7 @@
       ],
       "goal": "Add a supported relay_context archive step so a full project context log (200 entries / 600 operations) can move eligible older entries into durable, readable archive segments and accept new records, without deleting history.",
       "acceptance": "Preserve original durable readable archive/capacity recovery acceptance. Add explicit new, acknowledged, resolved, archived and reopen message lifecycle; ack/delivery/task completion never imply resolution. Recipient-bound semantic transitions; pending blockers/decisions survive physical rollover and closed assignments. Stable paging, exact idempotent replay across storage segments, original evidence and audit retained. Legacy schema reads and rollback-compatible runtime baseline before activation/new-format writes. Bounded executor active inbox; tests at200entries/600operations, authorization/concurrency/CAS/replay/migration. User authorized tests, review, publication, human-authenticated merge and deployment on October29; no permanent deletion or live-message cleanup.",
-      "next_action": "PR262 broader CI exposed synthetic recovery transport missing newly required canonical floor registration read. Update focused runtime fixture without weakening recovery assertions; rerun CI before guarded baseline/controller release. Floor absent and migration off.",
+      "next_action": "Preserve readable durable autonomy diagnostics when canonical registry unavailable while failclosing publication via existing blocked/identity-required flags; update isolated runtime assertions and old-client deny coverage, rerun PR262 full CI. No floor/migration/provider write yet.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18459,8 +18462,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T19:44:15.692Z",
-      "lease_until": "2026-10-30T07:44:15.692Z",
+      "updated_at": "2026-10-29T19:50:17.734Z",
+      "lease_until": "2026-10-30T07:50:17.734Z",
       "handoffs": [
         {
           "at": "2026-10-29T18:00:24.394Z",
