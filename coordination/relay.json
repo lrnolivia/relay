@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T20:22:06.924Z",
+  "updated_at": "2026-10-29T23:15:50.074Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18498,6 +18498,46 @@
       "evidence": "Completed combined lifecycle and rollover via preserved PR261 plus guard PR262, floor PR263 and activation PR264. Human-authenticated merge57eaed4c0ee48b1e965643565bcbfe3c09e37860; mainCI40947668670 passed1115/failed0/existing skip1. Healthy runtime2a75bbbf-5903-42d9-a0fd-8aee9daa86da, autonomy97, retained recovery artifact12929883072 archivefb4d8138f9c152aded180a4e2420d5cf791d1c0c7ce3e250805a24f8ac59010c. Independent source/runtime reviews passed. Recovery controllerf7df2139 code-only deployed, bindings/settings/routes unchanged; schema floor2 verified. Read-only context revision194 unchanged, inbox_lifecycle=true, rollover_enabled=true; no live migration/archive/delete. Prior draft and approved targets preserved; duplicate lifecycle queue superseded. Preexisting expired-version archive upload limitation documented; compatible retained rollback verified. Client UI acceptance not claimed.",
       "work_accounted": true,
       "completed_at": "2026-10-29T20:22:06.924Z"
+    },
+    {
+      "id": "puck-registration-startup-20261029",
+      "owner": "01a189ef-3d25-7400-b918-ab574f6b7412",
+      "branch": "relay/puck-registration-startup-20261029",
+      "paths": [
+        "projects/puck-and-play.json",
+        "coordination/puck-and-play.json",
+        "docs/puck-and-play/WINDOWS_STARTUP_20261029.md"
+      ],
+      "resources": [
+        "puck-and-play-project-registration"
+      ],
+      "goal": "Register Puck & Play in Relay and record the requested hidden startup repairs on Lauren's Windows PC.",
+      "acceptance": "Relay resolves Puck & Play to lrnolivia/puck-and-play with valid coordination; Windows startup runs the installed tray helper in desktop and Xbox modes without a visible window; identified console startup launchers are repaired and verification limits recorded.",
+      "next_action": "Inspect registration schema and add the missing Puck & Play project and empty coordination record; repair and verify installed Windows launchers.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "220f5441dc6ca7cb1386534ea6659e5f3ca4d651",
+      "state": "active",
+      "created_at": "2026-10-29T23:15:50.074Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Register Puck & Play in Relay and record the requested hidden startup repairs on Lauren's Windows PC.",
+          "acceptance": "Relay resolves Puck & Play to lrnolivia/puck-and-play with valid coordination; Windows startup runs the installed tray helper in desktop and Xbox modes without a visible window; identified console startup launchers are repaired and verification limits recorded.",
+          "at": "2026-10-29T23:15:50.074Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "puck-registration-startup-20261029:acceptance:0",
+            "text": "Relay resolves Puck & Play to lrnolivia/puck-and-play with valid coordination; Windows startup runs the installed tray helper in desktop and Xbox modes without a visible window; identified console startup launchers are repaired and verification limits recorded.",
+            "at": "2026-10-29T23:15:50.074Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T23:15:50.074Z",
+      "lease_until": "2026-10-30T11:15:50.074Z"
     }
   ],
   "migrated_from": "loew-inspector"
