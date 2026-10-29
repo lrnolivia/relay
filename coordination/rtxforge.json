@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T21:58:23.767Z",
+  "updated_at": "2026-10-29T21:58:39.378Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7591,6 +7591,43 @@
             "id": "rtxforge-report-turnstile-20261029:acceptance:0",
             "text": "(1) A Turnstile widget in Lauren's Cloudflare account (8df30cd302a4d4a4c01db9863c712166) named 'rtxForge reports', mode Managed (or Invisible), allowed hostnames loew.fi and rtxforge.loew.fi only. (2) Its secret key is stored only as the Worker secret TURNSTILE_SECRET on rtxforge-reports, never in git, Relay, chat or a file. (3) Its site key, which is public, is recorded in the completion evidence so the website worker can embed it. (4) The service verifies tokens at https://challenges.cloudflare.com/turnstile/v0/siteverify. Once the service is live, check that a website-style POST without a token answers 403, without filing an issue. Hand back non-secret evidence only.",
             "at": "2026-10-29T21:58:23.767Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-website-report-send-20261029",
+      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+      "goal": "Website only: the report page sends reports straight to GitHub Issues through the rtxForge report service, as the app now does, instead of opening a prefilled GitHub link. On 2026-10-29 Lauren asked for in-app reports to 'submit the report to github issues on its own… as seamless as possible' and then asked 'will web use this too'. Supersedes the link-only part of rtxforge-website-in-app-report-links-20261029; its in-app wording and rtxforge:// link still apply.",
+      "acceptance": "Service contract (lrnolivia/rtxForge services/reports/README.md; Claude's claim rtxforge-report-send-20261029): POST https://loew.fi/rtxforge/api/report with JSON. Body: schema 1; report_id matching r<YYYYMMDD>T<HHMMSS>-<6 hex>, generated in the page; source 'web'; turnstile, the Cloudflare Turnstile token; fields, the same 12 ids and choices as report.html and beta-report.yml (only platform and observations required); details as an optional list of short strings; logs as an optional base64 ZIP up to 20 MB, kept private. Answers: 201 {number, url}, or {error} with 400, 403, 413, 429, 502 or 503. Show the error sentence as-is. CORS allows https://loew.fi and https://rtxforge.loew.fi. Done when: (1) the form's main button is 'Send report'. It renders a Turnstile widget with the public site key from rtxforge-report-turnstile-20261029's completion evidence, sends, and then shows 'Thanks, it's issue #N' with a link. (2) The page says plainly that the report becomes a public GitHub issue and that attached logs stay private. (3) A no-JavaScript fallback and the prefilled GitHub link remain as a secondary 'or open it on GitHub' path, which is also used while the service answers 503. (4) Desktop, mobile, light/dark and accessibility checks pass, plus a real end-to-end send once the service and Turnstile are live: mark the test issue clearly and tell Lauren its number so she can close it. Deploy through the standalone site mechanism.",
+      "next_action": "Wait for Claude's merge of services/reports and for Codex's Turnstile site key, then switch report.html and report.js to POST to the service with Turnstile, keep the GitHub link as fallback, verify and deploy.",
+      "paths": [
+        "website/public/report.html",
+        "website/public/report.js",
+        "website/public/styles.css"
+      ],
+      "resources": [
+        "rtxforge-website-report-send"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-29T21:58:39.378Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Website only: the report page sends reports straight to GitHub Issues through the rtxForge report service, as the app now does, instead of opening a prefilled GitHub link. On 2026-10-29 Lauren asked for in-app reports to 'submit the report to github issues on its own… as seamless as possible' and then asked 'will web use this too'. Supersedes the link-only part of rtxforge-website-in-app-report-links-20261029; its in-app wording and rtxforge:// link still apply.",
+          "acceptance": "Service contract (lrnolivia/rtxForge services/reports/README.md; Claude's claim rtxforge-report-send-20261029): POST https://loew.fi/rtxforge/api/report with JSON. Body: schema 1; report_id matching r<YYYYMMDD>T<HHMMSS>-<6 hex>, generated in the page; source 'web'; turnstile, the Cloudflare Turnstile token; fields, the same 12 ids and choices as report.html and beta-report.yml (only platform and observations required); details as an optional list of short strings; logs as an optional base64 ZIP up to 20 MB, kept private. Answers: 201 {number, url}, or {error} with 400, 403, 413, 429, 502 or 503. Show the error sentence as-is. CORS allows https://loew.fi and https://rtxforge.loew.fi. Done when: (1) the form's main button is 'Send report'. It renders a Turnstile widget with the public site key from rtxforge-report-turnstile-20261029's completion evidence, sends, and then shows 'Thanks, it's issue #N' with a link. (2) The page says plainly that the report becomes a public GitHub issue and that attached logs stay private. (3) A no-JavaScript fallback and the prefilled GitHub link remain as a secondary 'or open it on GitHub' path, which is also used while the service answers 503. (4) Desktop, mobile, light/dark and accessibility checks pass, plus a real end-to-end send once the service and Turnstile are live: mark the test issue clearly and tell Lauren its number so she can close it. Deploy through the standalone site mechanism.",
+          "at": "2026-10-29T21:58:39.378Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-website-report-send-20261029:acceptance:0",
+            "text": "Service contract (lrnolivia/rtxForge services/reports/README.md; Claude's claim rtxforge-report-send-20261029): POST https://loew.fi/rtxforge/api/report with JSON. Body: schema 1; report_id matching r<YYYYMMDD>T<HHMMSS>-<6 hex>, generated in the page; source 'web'; turnstile, the Cloudflare Turnstile token; fields, the same 12 ids and choices as report.html and beta-report.yml (only platform and observations required); details as an optional list of short strings; logs as an optional base64 ZIP up to 20 MB, kept private. Answers: 201 {number, url}, or {error} with 400, 403, 413, 429, 502 or 503. Show the error sentence as-is. CORS allows https://loew.fi and https://rtxforge.loew.fi. Done when: (1) the form's main button is 'Send report'. It renders a Turnstile widget with the public site key from rtxforge-report-turnstile-20261029's completion evidence, sends, and then shows 'Thanks, it's issue #N' with a link. (2) The page says plainly that the report becomes a public GitHub issue and that attached logs stay private. (3) A no-JavaScript fallback and the prefilled GitHub link remain as a secondary 'or open it on GitHub' path, which is also used while the service answers 503. (4) Desktop, mobile, light/dark and accessibility checks pass, plus a real end-to-end send once the service and Turnstile are live: mark the test issue clearly and tell Lauren its number so she can close it. Deploy through the standalone site mechanism.",
+            "at": "2026-10-29T21:58:39.378Z"
           }
         ]
       }
