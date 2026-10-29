@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T18:01:09.776Z",
+  "updated_at": "2026-10-29T18:01:58.872Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18399,8 +18399,8 @@
         "relay-assignment-inbox-lifecycle"
       ],
       "goal": "Add a supported relay_context archive step so a full project context log (200 entries / 600 operations) can move eligible older entries into durable, readable archive segments and accept new records, without deleting history.",
-      "acceptance": "relay_context gains a CAS-gated archive action (operation_id, expected_revision, expected_owner, expected_branch) that writes immutable R2 archive segments before the live record, frees entry and operation capacity, never deletes history, keeps idempotent replay across archived operations, and lets read page archived segments. Tests show a full log accepts a new record after archiving and archived entries remain readable. Draft PR with green CI; no merge or deploy without Lauren's approval.",
-      "next_action": "Implement user-approved inbox lifecycle together with safe capacity rollover in preserved PR261; explicit resolution/recipient authority, stable pages, legacy compatibility and rollback-safe activation; tests/review then user-authenticated merge/deploy.",
+      "acceptance": "Preserve original durable readable archive/capacity recovery acceptance. Add explicit new, acknowledged, resolved, archived and reopen message lifecycle; ack/delivery/task completion never imply resolution. Recipient-bound semantic transitions; pending blockers/decisions survive physical rollover and closed assignments. Stable paging, exact idempotent replay across storage segments, original evidence and audit retained. Legacy schema reads and rollback-compatible runtime baseline before activation/new-format writes. Bounded executor active inbox; tests at200entries/600operations, authorization/concurrency/CAS/replay/migration. User authorized tests, review, publication, human-authenticated merge and deployment on October29; no permanent deletion or live-message cleanup.",
+      "next_action": "Implement safe lifecycle/storage and executor view in preserved PR261, independently review exact tests and staged deployment; preserve original draft history and unrelated reservations.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -18421,17 +18421,43 @@
             "id": "relay-context-archive-20261029:acceptance:0",
             "text": "relay_context gains a CAS-gated archive action (operation_id, expected_revision, expected_owner, expected_branch) that writes immutable R2 archive segments before the live record, frees entry and operation capacity, never deletes history, keeps idempotent replay across archived operations, and lets read page archived segments. Tests show a full log accepts a new record after archiving and archived entries remain readable. Draft PR with green CI; no merge or deploy without Lauren's approval.",
             "at": "2026-10-29T07:43:53.364Z"
+          },
+          {
+            "id": "relay-context-archive-20261029:acceptance:1",
+            "text": "Preserve original durable readable archive/capacity recovery acceptance. Add explicit new, acknowledged, resolved, archived and reopen message lifecycle; ack/delivery/task completion never imply resolution. Recipient-bound semantic transitions; pending blockers/decisions survive physical rollover and closed assignments. Stable paging, exact idempotent replay across storage segments, original evidence and audit retained. Legacy schema reads and rollback-compatible runtime baseline before activation/new-format writes. Bounded executor active inbox; tests at200entries/600operations, authorization/concurrency/CAS/replay/migration. User authorized tests, review, publication, human-authenticated merge and deployment on October29; no permanent deletion or live-message cleanup.",
+            "at": "2026-10-29T18:01:58.872Z",
+            "reason": "Lauren explicitly requested inbox lifecycle and takeover/completion; combine queued lifecycle work with original archive capacity goal, preserve original objective and draft."
           }
         ]
       },
-      "updated_at": "2026-10-29T18:01:09.776Z",
-      "lease_until": "2026-10-30T06:01:09.776Z",
+      "updated_at": "2026-10-29T18:01:58.872Z",
+      "lease_until": "2026-10-30T06:01:58.872Z",
       "handoffs": [
         {
           "at": "2026-10-29T18:00:24.394Z",
           "from": "claude-context-archive-20261029",
           "to": "dot-inbox-lifecycle-20261029",
           "next_action": "User explicitly authorized takeover on October29. Preserve PR261/head33b309f and all checkpoints; no registered execution job or external activity. Finish safe inbox lifecycle and capacity rollover, fix unresolved/cross-inbox/rollback blockers, independent tests/review and user-authenticated merge/deploy. No production deletion or unrelated protected-file edits."
+        }
+      ],
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-29T18:01:58.872Z",
+          "by": "dot-inbox-lifecycle-20261029",
+          "reason": "Lauren explicitly requested inbox lifecycle and takeover/completion; combine queued lifecycle work with original archive capacity goal, preserve original objective and draft.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "relay_context gains a CAS-gated archive action (operation_id, expected_revision, expected_owner, expected_branch) that writes immutable R2 archive segments before the live record, frees entry and operation capacity, never deletes history, keeps idempotent replay across archived operations, and lets read page archived segments. Tests show a full log accepts a new record after archiving and archived entries remain readable. Draft PR with green CI; no merge or deploy without Lauren's approval.",
+            "next_action": "Implement user-approved inbox lifecycle together with safe capacity rollover in preserved PR261; explicit resolution/recipient authority, stable pages, legacy compatibility and rollback-safe activation; tests/review then user-authenticated merge/deploy."
+          },
+          "after": {
+            "acceptance": "Preserve original durable readable archive/capacity recovery acceptance. Add explicit new, acknowledged, resolved, archived and reopen message lifecycle; ack/delivery/task completion never imply resolution. Recipient-bound semantic transitions; pending blockers/decisions survive physical rollover and closed assignments. Stable paging, exact idempotent replay across storage segments, original evidence and audit retained. Legacy schema reads and rollback-compatible runtime baseline before activation/new-format writes. Bounded executor active inbox; tests at200entries/600operations, authorization/concurrency/CAS/replay/migration. User authorized tests, review, publication, human-authenticated merge and deployment on October29; no permanent deletion or live-message cleanup.",
+            "next_action": "Implement safe lifecycle/storage and executor view in preserved PR261, independently review exact tests and staged deployment; preserve original draft history and unrelated reservations."
+          }
         }
       ]
     }
