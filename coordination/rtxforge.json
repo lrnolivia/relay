@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T07:16:21.360Z",
+  "updated_at": "2026-10-29T07:18:54.905Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -19996,6 +19996,51 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-linux-helper-lifecycle-20261029",
+      "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+      "branch": "rtxforge/linux-helper-lifecycle-20261029",
+      "paths": [
+        "scripts/linux_overlay_helper.py",
+        "tests/linux_runtime/test_linux_overlay_helper.py",
+        "docs/linux/overlay-channel.md",
+        "docs/INSTALLATION.md",
+        "website/public/install.html",
+        "website/README.md"
+      ],
+      "resources": [
+        "rtxforge-linux-helper-lifecycle",
+        "rtxforge-website-guide-helper"
+      ],
+      "goal": "Make the existing standalone Linux overlay helper available with the app window closed in Desktop and Steam Game Mode; close the installed AppImage immediate-start gap and correct guide instructions that incorrectly require keeping the manager open.",
+      "acceptance": "Reuse the existing toolkit-free helper and per-user singleton, with no new overlay renderer or GUI changes. Installed AppImage enables and starts the user service immediately, retries start on repeat registration, refreshes a changed unit without restarting unchanged services, and reports systemctl failures. Flatpak host helper remains independent and unchanged. Correct website and product docs to describe setup, closed-window behavior and existing bridge prerequisites without claiming unverified native Proton/Gamescope acceptance. Cover install/current-login, repeated install, upgrade and failure behavior; run Linux-focused tests through Linux CI/native environment, preserve active source owners and public release gates. Publish corrected website after reviewed merge; app fix is source delivery unless separately released.",
+      "next_action": "Implement focused helper service lifecycle fix and factual guide corrections; validate, review, merge and publish website. Preserve all active app/report/native-panel ownership.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "ba5ff06827ca96d93cbc03de842b1d2a8a8efe03",
+      "state": "active",
+      "created_at": "2026-10-29T07:18:54.905Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Make the existing standalone Linux overlay helper available with the app window closed in Desktop and Steam Game Mode; close the installed AppImage immediate-start gap and correct guide instructions that incorrectly require keeping the manager open.",
+          "acceptance": "Reuse the existing toolkit-free helper and per-user singleton, with no new overlay renderer or GUI changes. Installed AppImage enables and starts the user service immediately, retries start on repeat registration, refreshes a changed unit without restarting unchanged services, and reports systemctl failures. Flatpak host helper remains independent and unchanged. Correct website and product docs to describe setup, closed-window behavior and existing bridge prerequisites without claiming unverified native Proton/Gamescope acceptance. Cover install/current-login, repeated install, upgrade and failure behavior; run Linux-focused tests through Linux CI/native environment, preserve active source owners and public release gates. Publish corrected website after reviewed merge; app fix is source delivery unless separately released.",
+          "at": "2026-10-29T07:18:54.905Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-helper-lifecycle-20261029:acceptance:0",
+            "text": "Reuse the existing toolkit-free helper and per-user singleton, with no new overlay renderer or GUI changes. Installed AppImage enables and starts the user service immediately, retries start on repeat registration, refreshes a changed unit without restarting unchanged services, and reports systemctl failures. Flatpak host helper remains independent and unchanged. Correct website and product docs to describe setup, closed-window behavior and existing bridge prerequisites without claiming unverified native Proton/Gamescope acceptance. Cover install/current-login, repeated install, upgrade and failure behavior; run Linux-focused tests through Linux CI/native environment, preserve active source owners and public release gates. Publish corrected website after reviewed merge; app fix is source delivery unless separately released.",
+            "at": "2026-10-29T07:18:54.905Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T07:18:54.905Z",
+      "lease_until": "2026-10-29T19:18:54.905Z"
     }
   ]
 }
