@@ -7,6 +7,8 @@ import { deployProjectCloudVersion, callAutonomyControl, verifyReleaseTarget, re
 import { handleApi } from '../packages/runner/src/cloudflare-worker.mjs';
 import { callUiApi } from '../apps/web/api.js';
 
+// Existing tests exercise absent-floor legacy behavior with an explicit canonical read fixture.
+const noFloorGithub=async path=>{assert.equal(path,'/repos/lrnolivia/relay/contents/projects/relay.json?ref=main');return {type:'file',encoding:'base64',content:Buffer.from(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{worker:'relay'}})).toString('base64')};};
 const version='11111111-2222-3333-4444-555555555555';
 const target={worker:'relay',version_id:version,source_sha:'a'.repeat(40),compatibility_id:'relay-v1',evidence:'Exact candidate and production receipt'};
 const input=(action,revision=0,extra={})=>({action,scope:'relay',expected_revision:revision,operation_id:'operation-'+action+'-'+revision,reason:'Direct operator instruction',...extra});
@@ -103,7 +105,7 @@ test('missing or malformed safety state fails closed; public status reveals no a
  const env={RELAY_AUTONOMY_GUARD:'enforced',RELAY_EVENTS:{idFromName:x=>x,get:()=>({fetch:async()=>Response.json({ok:true,state:{scope:'global'}})})}};
  await assert.rejects(guardAutonomy(env),/invalid/);
  const good=binding({'autonomy:relay':{...autonomyState('relay'),last_user_approved:target}}).env;
- assert.deepEqual(await publicAutonomyStatus(good,'relay'),{schema:1,scope:'relay',revision:0,held:false,enforced:true});
+ assert.deepEqual(await publicAutonomyStatus(good,'relay',null,noFloorGithub),{schema:1,scope:'relay',revision:0,held:false,enforced:true});
 });
 
 const profile={identity_url:'https://relay.loew.fi/',health_url:'https://relay.loew.fi/health',source_header:'X-Relay-Source-Sha',compatibility_header:'X-Relay-Release-Compatibility',compatibility_id:'relay-v1'};
@@ -339,11 +341,11 @@ test('actual recovery transport never replays a successful but uncertain provide
   return Response.json({success:true,result:{deployments:[{id:'deployment',versions:[{version_id:active,percentage:100}]}]}});
  };
  try{
-  await assert.rejects(recoverCloudVersion(env,'relay',pending.rollback.operation_id),/response lost/);
-  const result=await recoverCloudVersion(env,'relay',pending.rollback.operation_id);
+  await assert.rejects(recoverCloudVersion(env,'relay',pending.rollback.operation_id,{github:noFloorGithub}),/response lost/);
+  const result=await recoverCloudVersion(env,'relay',pending.rollback.operation_id,{github:noFloorGithub});
   assert.equal(result.reconciled,true);assert.equal(writes,1);
   active='bbbbbbbb-cccc-dddd-eeee-ffffffffffff';
-  await assert.rejects(recoverCloudVersion(env,'relay',pending.rollback.operation_id),/Deployment changed/);
+  await assert.rejects(recoverCloudVersion(env,'relay',pending.rollback.operation_id,{github:noFloorGithub}),/Deployment changed/);
   assert.equal(writes,1);
  }finally{globalThis.fetch=original;}
 });
@@ -355,10 +357,10 @@ test('authorization/provider failures cannot trigger compiled fallback and a new
  try{
   for(const status of [403,429,503]){
    calls=0;globalThis.fetch=async()=>{calls++;return Response.json({success:false,errors:[{message:'Synthetic provider rejection'}]},{status});};
-   await assert.rejects(recoverCloudVersion(env,'relay',pending.rollback.operation_id),error=>error.status===status);assert.equal(calls,1);
+   await assert.rejects(recoverCloudVersion(env,'relay',pending.rollback.operation_id,{github:noFloorGithub}),error=>error.status===status);assert.equal(calls,1);
   }
   values.set('autonomy:relay',transitionAutonomy(pending,input('hold',2,{operation_id:'later-human-stop-fixture'})).state);
-  calls=0;await assert.rejects(recoverCloudVersion(env,'relay',pending.rollback.operation_id),/Safety changed after rollback reservation/);assert.equal(calls,0);
+  calls=0;await assert.rejects(recoverCloudVersion(env,'relay',pending.rollback.operation_id,{github:noFloorGithub}),/Safety changed after rollback reservation/);assert.equal(calls,0);
  }finally{globalThis.fetch=original;}
 });
 
@@ -385,8 +387,8 @@ test('candidate quarantine blocks only its publication and leaves independent wo
  await guardAutonomy(env,['relay']);
  await assert.rejects(guardAutonomy(env,['relay'],q.subject),/quarantined/);
  await guardAutonomy(env,['relay'],{kind:'candidate',id:'d'.repeat(40)});
- assert.equal((await publicAutonomyStatus(env,'relay',q.subject.id)).candidate_blocked,true);
- assert.equal((await publicAutonomyStatus(env,'relay','d'.repeat(40))).candidate_blocked,false);
+ assert.equal((await publicAutonomyStatus(env,'relay',q.subject.id,noFloorGithub)).candidate_blocked,true);
+ assert.equal((await publicAutonomyStatus(env,'relay','d'.repeat(40),noFloorGithub)).candidate_blocked,false);
  const again=await callAutonomyControl(env,q);assert.equal(again.duplicate,true);assert.equal(again.state.revision,1);
 });
 test('automatic operation waits have a bounded revision-checked recovery and cannot override a later user/global stop',async()=>{
@@ -407,4 +409,17 @@ test('raw version publication cannot bypass a candidate quarantine without sourc
  const {env}=binding({'autonomy:relay':state});
  await assert.rejects(deployCloudVersion({...env,CLOUDFLARE_ACCOUNT_ID:'fixture',CLOUDFLARE_API_TOKEN:'fixture',RELAY_CLOUDFLARE_WRITE_SCRIPTS:'relay'},'relay',version),/source proof/);
  await guardAutonomy(env,['relay']);
+});
+
+test('unavailable canonical schema check retains diagnostics but blocks every candidate without leaking upstream errors',async()=>{
+ const {env}=binding();
+ const unavailable=async()=>{throw Error('private-upstream-detail');};
+ for(const source of [null,'a'.repeat(40)]){
+  const state=await publicAutonomyStatus(env,'relay',source,unavailable);
+  assert.deepEqual(state,{schema:1,scope:'relay',revision:0,held:false,candidate_blocked:true,candidate_identity_required:true,schema_check_unavailable:true,enforced:true});
+  assert.doesNotMatch(JSON.stringify(state),/private-upstream-detail/);
+ }
+ await assert.rejects(publicAutonomyStatus(env,'relay','invalid',unavailable),/Exact candidate/);
+ await assert.rejects(publicAutonomyStatus({RELAY_AUTONOMY_GUARD:'enforced'},'relay',null,unavailable));
+ assert.deepEqual(await publicAutonomyStatus(env,'global',null,unavailable),{schema:1,scope:'global',revision:0,held:false,enforced:true});
 });

@@ -1,3 +1,4 @@
+import {readContextSchemaFloor,assertContextTarget,assertContextVersion} from './context-schema-guard.js';
 import { guardRepository, autonomyRequest } from './autonomy-control.js';
 import {restoreExpiredCloudVersion} from './recovery-upload.js';
 const CLOUDFLARE_API = "https://api.cloudflare.com/client/v4";
@@ -133,7 +134,7 @@ export async function cloudBuilds(env, scriptName) {
   );
 }
 
-export async function deployCloudVersion(env, scriptName, versionId, message) {
+export async function deployCloudVersion(env, scriptName, versionId, message, deps={}) {
   const script = validateScriptName(scriptName);
   const version = validateVersionId(versionId);
   assertWritable(env, script);
@@ -145,6 +146,7 @@ export async function deployCloudVersion(env, scriptName, versionId, message) {
       if(!target||state.blocks.some(x=>x.subject.kind==='candidate'&&x.subject.id===target.source_sha&&x.state==='quarantined'))throw Error('Candidate source proof is required for raw version publication; use the canonical source-guarded release path');
     }
   }
+  if(script==='relay'){const floor=await readContextSchemaFloor(env,deps.github);if(floor!==null){const {state}=await autonomyRequest(env,{action:'status',scope:'relay'});await assertContextVersion(env,script,version,state,{floor,github:deps.github});}}
   const id = String(env.CLOUDFLARE_ACCOUNT_ID);
   const body = {
     strategy: "percentage",
@@ -176,7 +178,7 @@ export async function retainedCloudVersion(env,scriptName,versionId){
 
 // This narrow recovery path has no caller-selected artifact or guard bypass flag.
 // Its target comes only from the pending, durable, exact rollback operation.
-export async function recoverCloudVersion(env,scope,operationId) {
+export async function recoverCloudVersion(env,scope,operationId,deps={}) {
   const read=async()=>{
     const [{state},{state:global}]=await Promise.all([autonomyRequest(env,{action:'status',scope}),autonomyRequest(env,{action:'status',scope:'global'})]);
     if(!state.held||state.rollback?.state!=='pending'||state.rollback.operation_id!==operationId)throw Error('Exact held rollback operation is required');
@@ -189,6 +191,7 @@ export async function recoverCloudVersion(env,scope,operationId) {
   let snapshot=await read(),pending=snapshot.state.rollback;
   const script=validateScriptName(pending.target.worker);
   assertWritable(env,script);
+  await assertContextTarget(env,script,pending.target,{github:deps.github});
   const root='/accounts/'+env.CLOUDFLARE_ACCOUNT_ID+'/workers/scripts/'+encodeURIComponent(script);
   const api=suffix=>cloudflareApiRequest(env,root+suffix);
   let version=validateVersionId(pending.target.version_id),retained;
@@ -196,11 +199,13 @@ export async function recoverCloudVersion(env,scope,operationId) {
   catch(error){
     if(error.status!==404||pending.restoration?.state==='uploaded')throw error;
     await restoreExpiredCloudVersion(env,scope,operationId,{api,read,active:()=>activeCloudVersion(env,script),upload:async(metadata,module)=>{
+      const latest=await read();await assertContextTarget(env,script,latest.state.rollback.target,{github:deps.github});
       const form=new FormData();form.set('metadata',new Blob([JSON.stringify(metadata)],{type:'application/json'}),'metadata.json');form.set('index.js',new Blob([module],{type:'application/javascript+module'}),'index.js');
       const response=await fetch(CLOUDFLARE_API+root+'/versions?bindings_inherit=strict',{method:'POST',redirect:'manual',headers:{Authorization:'Bearer '+env.CLOUDFLARE_API_TOKEN,Accept:'application/json'},body:form,signal:AbortSignal.timeout(20000)});
       const body=await response.json();if(!response.ok||body?.success!==true)throw Error('Compiled recovery upload failed');return body.result;
     }});
     snapshot=await read();pending=snapshot.state.rollback;version=validateVersionId(pending.target.version_id);
+    await assertContextTarget(env,script,pending.target,{github:deps.github});
     retained=await retainedCloudVersion(env,script,version);
   }
   if(retained?.id!==version)throw Error('Retained rollback artifact identity changed');
@@ -209,6 +214,7 @@ export async function recoverCloudVersion(env,scope,operationId) {
   if(active.version_id!==pending.expected_current_version)throw Error('Deployment changed; recovery must be reconciled before another write');
   const current=await read();
   if(JSON.stringify(current)!==JSON.stringify(snapshot))throw Error('Rollback intent changed before provider write');
+  await assertContextTarget(env,script,current.state.rollback.target,{github:deps.github});
   const deployment=await cloudflareApiRequest(env,'/accounts/'+env.CLOUDFLARE_ACCOUNT_ID+'/workers/scripts/'+encodeURIComponent(script)+'/deployments',{
     method:'POST',body:{strategy:'percentage',versions:[{version_id:version,percentage:100}],annotations:{'workers/message':'Relay bounded recovery '+operationId}}
   });

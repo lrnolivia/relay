@@ -1,3 +1,4 @@
+import {readContextSchemaFloor,assertContextSource} from './context-schema-guard.js';
 // Safety atoms share the existing durable binding, separate from event replay.
 const SCOPE=/^(?:global|[a-z0-9-]{1,80})$/,SHA=/^[a-f0-9]{40}$/;
 const VERSION=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
@@ -124,9 +125,11 @@ export function assertAutonomySubject(state,subject){
  const block=state.blocks?.find(x=>x.subject.kind===subject.kind&&x.subject.id===subject.id&&x.state!=='ready');
  if(block)fail('Autonomous '+subject.kind+' is '+block.state+': '+block.reason);
 }
-export async function publicAutonomyStatus(env,scope='global',source=null){
+export async function publicAutonomyStatus(env,scope='global',source=null,github){
  if(source!==null&&!SHA.test(source))fail('Exact candidate source is required',400);
- const {state}=await autonomyRequest(env,{action:'status',scope});return {schema:1,scope:state.scope,revision:state.revision,held:state.held,...(source?{candidate_blocked:Boolean(state.blocks?.some(x=>x.subject.kind==='candidate'&&x.subject.id===source&&x.state==='quarantined'))}:{}),...(state.blocks?.some(x=>x.subject.kind==='candidate'&&x.state==='quarantined')?{candidate_identity_required:true}:{}),enforced:env.RELAY_AUTONOMY_GUARD==='enforced'};
+ let schemaRequired=false,schemaBlocked=false,schemaUnavailable=false;
+ if(scope==='relay'){let floor;try{floor=await readContextSchemaFloor(env,github);}catch{schemaUnavailable=true;schemaRequired=true;schemaBlocked=true;}if(!schemaUnavailable){schemaRequired=floor!==null;if(schemaRequired){if(!source)schemaBlocked=true;else try{await assertContextSource(env,source,floor,github);}catch{schemaBlocked=true;}}}}
+ const {state}=await autonomyRequest(env,{action:'status',scope});return {schema:1,scope:state.scope,revision:state.revision,held:state.held,...((source||schemaUnavailable)?{candidate_blocked:schemaBlocked||Boolean(state.blocks?.some(x=>x.subject.kind==='candidate'&&x.subject.id===source&&x.state==='quarantined'))}:{}),...((schemaRequired||state.blocks?.some(x=>x.subject.kind==='candidate'&&x.state==='quarantined'))?{candidate_identity_required:true}:{}),...(schemaUnavailable?{schema_check_unavailable:true}:{}),enforced:env.RELAY_AUTONOMY_GUARD==='enforced'};
 }
 
 export const autonomyTool={

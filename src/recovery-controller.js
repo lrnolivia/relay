@@ -8,7 +8,7 @@ import {githubApiRequest} from './source.js';
 export function recoveryRegistrationReader(token,api=githubApiRequest){
  if(!/^[A-Za-z0-9._~+\/-]{20,4096}={0,2}$/.test(token||''))throw Error('Invalid bounded registration read identity');
  return (path,options)=>{
-  if(path!=='/repos/lrnolivia/relay/contents/projects/relay.json?ref=main'||options!==undefined)throw Error('Recovery registration read is fixed');
+  if((path!=='/repos/lrnolivia/relay/contents/projects/relay.json?ref=main'&&!/^\/repos\/lrnolivia\/relay\/contents\/(?:packages\/runner\/src\/context-storage\.mjs|src\/context-schema-guard\.js)\?ref=[a-f0-9]{40}$/.test(path))||options!==undefined)throw Error('Recovery registration read is fixed');
   return api({RELAY_GITHUB_TOKEN:token},path);
  };
 }
@@ -33,9 +33,9 @@ export async function recoveryBuildHistory(env,worker,api=cloudflareApiRequest){
 }
 const recoveryProviderSource=(env,target,profile)=>verifyProviderBuildVersion(env,target,profile,{builds:worker=>recoveryBuildHistory(env,worker)});
 
-export const RECOVERY_CONTROLLER_BUILD='20261008.1';
+export const RECOVERY_CONTROLLER_BUILD='20261029.context-floor-v1';
 const headers={'Cache-Control':'no-store','Content-Type':'application/json; charset=utf-8','X-Content-Type-Options':'nosniff','X-Relay-Recovery-Build':RECOVERY_CONTROLLER_BUILD};
-const json=(body,status=200)=>new Response(JSON.stringify(body),{status,headers});
+const json=(body,status=200)=>new Response(JSON.stringify({...body,recovery_build:RECOVERY_CONTROLLER_BUILD}),{status,headers});
 async function boundedInput(request){
  const reader=request.body?.getReader();if(!reader)throw Error('Missing request');let size=0;const chunks=[];
  try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>8192){await reader.cancel();throw Error('Request too large');}chunks.push(value);}}

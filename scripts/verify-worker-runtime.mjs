@@ -59,7 +59,7 @@ export async function probeResponses(fetcher,source){
     const response=await fetcher('/autonomy-status?scope='+scope);
     assert.equal(response.status,200,'Durable safety state must be readable');
     const state=await response.json();
-    assert.deepEqual(state,{schema:1,scope,revision:0,held:false,enforced:true},'Fresh local durable safety state');
+    assert.deepEqual(state,{schema:1,scope,revision:0,held:false,...(scope==='relay'?{candidate_blocked:true,candidate_identity_required:true,schema_check_unavailable:true}:{}),enforced:true},'Fresh local durable safety state with unavailable canonical schema check failing closed');
     checks.push({criterion:'durable-safety-status',scope,revision:state.revision,held:state.held});
   }
   return checks;
@@ -142,3 +142,4 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   const task=process.argv.length===3&&process.argv[2]==='--probe'?childProbe():process.argv.length===2?verifyWorkerRuntime({signal:controller.signal}):Promise.reject(Error('Unsupported runtime verification command'));
   task.then(()=>process.stdout.write('Worker runtime verification passed\n')).catch(error=>{process.stderr.write((error.code||'runtime_verification_failed')+': '+error.message+'\n');process.exitCode=1;});
 }
+

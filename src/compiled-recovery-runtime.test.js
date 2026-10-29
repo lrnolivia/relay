@@ -30,9 +30,12 @@ test('expired-version rollback uses actual edge Durable Object/R2 storage and re
   await autonomyRequest(env,{action:'healthy',scope:'relay',expected_revision:0,operation_id:'runtime-register-healthy',reason:'Synthetic fixture',target:fixture.target});
   await autonomyRequest(env,{action:'approve',scope:'relay',expected_revision:1,operation_id:'runtime-register-approval',reason:'Synthetic fixture',target:fixture.target,approval:{text:'Synthetic approval',source:'Runtime fixture'}});
   await autonomyRequest(env,{action:'prepare_rollback',scope:'relay',expected_revision:2,operation_id:operation,reason:'Synthetic expired provider UUID',kind:'healthy',expected_current_version:from});
-  let active=from,uploaded,uploads=0,deploys=0,strict=false,bytesMatch=false,firstError;
+  let active=from,uploaded,uploads=0,deploys=0,strict=false,bytesMatch=false,firstError,registrationReads=0;
   globalThis.fetch=async(url,options={})=>{
-   const path=new URL(url).pathname;
+   const parsed=new URL(url),path=parsed.pathname;
+   if(parsed.origin==='https://api.github.com'&&path==='/repos/lrnolivia/relay/contents/projects/relay.json'&&parsed.search==='?ref=main'&&(!options.method||options.method==='GET')){
+    registrationReads++;return Response.json({type:'file',encoding:'base64',content:btoa(JSON.stringify({id:'relay',managed:true,repository:'lrnolivia/relay',cloud:{worker:'relay',rollback:{}}}))});
+   }
    if(path.endsWith('/versions/'+fixtureVersion))return Response.json({success:false,errors:[{message:'Synthetic provider history expiry'}]},{status:404});
    if(path.endsWith('/versions/'+from))return Response.json({success:true,result:recoveryVersionFixture(from)});
    if(path.endsWith('/versions/'+restored))return Response.json({success:true,result:recoveryVersionFixture(restored)});
@@ -52,10 +55,11 @@ test('expired-version rollback uses actual edge Durable Object/R2 storage and re
   try{await recoverCloudVersion(env,'relay',operation);}catch(error){firstError=error.message;}
   const result=await recoverCloudVersion(env,'relay',operation),state=(await autonomyRequest(env,{action:'status',scope:'relay'})).state;
   const reconciled=await recoverCloudVersion(env,'relay',operation);
-  return Response.json({result,state,reconciled,uploads,deploys,strict,bytesMatch,firstError,provider:'synthetic',storage:'actual-workerd-DO-R2'});
+  return Response.json({result,state,reconciled,uploads,deploys,strict,bytesMatch,firstError,registrationReads,provider:'synthetic',storage:'actual-workerd-DO-R2'});
  }catch(error){return Response.json({error:error.message,stack:error.stack},{status:500});}}};`;
  await writeFile(main,source);
  const harness=createTestHarness({root:directory,workers:[{config:{name:'relay-recovery-orchestration',main,compatibility_date:config.compatibility_date,compatibility_flags:config.compatibility_flags,vars:{CLOUDFLARE_ACCOUNT_ID:'synthetic-account',CLOUDFLARE_API_TOKEN:'synthetic-token',RELAY_CLOUDFLARE_WRITE_SCRIPTS:'relay'},r2_buckets:[{binding:'EVIDENCE',bucket_name:'fixture'}],durable_objects:{bindings:[{name:'RELAY_EVENTS',class_name:'RelayEvents'}]},migrations:[{tag:'test-v1',new_sqlite_classes:['RelayEvents']}]}}]});
- try{await harness.listen();const response=await harness.fetch('/'),result=await response.json();assert.equal(response.status,200,JSON.stringify(result));assert.equal(result.uploads,1);assert.equal(result.deploys,1);assert.equal(result.strict,true);assert.equal(result.bytesMatch,true);assert.match(result.firstError,/uncertain/);assert.equal(result.reconciled.reconciled,true);assert.equal(result.state.held,true);assert.equal(result.state.rollback.restoration.state,'uploaded');assert.deepEqual(result.state.last_healthy,result.state.rollback.original_target);assert.equal(result.state.last_user_approved.version_id,fixtureVersion);
+ try{await harness.listen();const response=await harness.fetch('/'),result=await response.json();assert.equal(response.status,200,JSON.stringify(result));assert.ok(result.registrationReads>0,'canonical context schema floor registration lookup exercised');assert.equal(result.uploads,1);assert.equal(result.deploys,1);assert.equal(result.strict,true);assert.equal(result.bytesMatch,true);assert.match(result.firstError,/uncertain/);assert.equal(result.reconciled.reconciled,true);assert.equal(result.state.held,true);assert.equal(result.state.rollback.restoration.state,'uploaded');assert.deepEqual(result.state.last_healthy,result.state.rollback.original_target);assert.equal(result.state.last_user_approved.version_id,fixtureVersion);
  }finally{await harness.close();await rm(directory,{recursive:true,force:true});}
 });
+
