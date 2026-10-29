@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T07:20:00.217Z",
+  "updated_at": "2026-10-29T07:21:05.810Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -20015,7 +20015,9 @@
         "website/public/report.js",
         "website/public/site-controls.mjs",
         "website/public/styles.css",
-        "website/test/site-controls.test.mjs"
+        "website/test/site-controls.test.mjs",
+        "website/public/assets/sun.svg",
+        "website/public/assets/moon.svg"
       ],
       "resources": [
         "rtxforge-linux-helper-lifecycle",
@@ -20023,8 +20025,8 @@
         "rtxforge-website-navigation"
       ],
       "goal": "Make the existing standalone Linux overlay helper available with the app window closed in Desktop and Steam Game Mode; close the installed AppImage immediate-start gap and correct guide instructions that incorrectly require keeping the manager open.",
-      "acceptance": "Reuse the existing toolkit-free helper and per-user singleton, with no new overlay renderer or GUI changes. Installed AppImage enables and starts the user service immediately, retries start on repeat registration, refreshes a changed unit without restarting unchanged services, and reports systemctl failures. Flatpak host helper remains independent and unchanged. Correct website and product docs to describe setup, closed-window behavior and existing bridge prerequisites without claiming unverified native Proton/Gamescope acceptance. Cover install/current-login, repeated install, upgrade and failure behavior; run Linux-focused tests through Linux CI/native environment, preserve active source owners and public release gates. Publish corrected website after reviewed merge; app fix is source delivery unless separately released. Also use the same header structure, navigation order, OS switch and theme positions on home/setup/report across desktop and mobile. Preserve current-page indication, keyboard OS switching, OS-aware links and report-specific fields; direct report entry still asks OS first, and a chosen OS carries through navigation. Keep a working no-JS report and prevent duplicated conflicting OS controls. Verify equivalent control geometry at common breakpoints and accessibility.",
-      "next_action": "Fix helper start-on-install; unify site header/navigation and OS selection with shared behavior, then verify Linux tests and page layouts before review/publication.",
+      "acceptance": "Keep all admitted helper lifecycle and site consistency criteria. Header branding is rtxForge only on every page; Beta remains in download/release context. Report navigation and theme controls visibly follow light/dark page colors, and use colored sun/moon SVGs without monochrome filters. Preserve accessible labels, contrast, focus and shared placement.",
+      "next_action": "Implement admitted helper fix, shared navigation and OS switch, plain branding and theme-reactive colored controls; validate exact source before publication.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -20051,12 +20053,18 @@
             "text": "Reuse the existing toolkit-free helper and per-user singleton, with no new overlay renderer or GUI changes. Installed AppImage enables and starts the user service immediately, retries start on repeat registration, refreshes a changed unit without restarting unchanged services, and reports systemctl failures. Flatpak host helper remains independent and unchanged. Correct website and product docs to describe setup, closed-window behavior and existing bridge prerequisites without claiming unverified native Proton/Gamescope acceptance. Cover install/current-login, repeated install, upgrade and failure behavior; run Linux-focused tests through Linux CI/native environment, preserve active source owners and public release gates. Publish corrected website after reviewed merge; app fix is source delivery unless separately released. Also use the same header structure, navigation order, OS switch and theme positions on home/setup/report across desktop and mobile. Preserve current-page indication, keyboard OS switching, OS-aware links and report-specific fields; direct report entry still asks OS first, and a chosen OS carries through navigation. Keep a working no-JS report and prevent duplicated conflicting OS controls. Verify equivalent control geometry at common breakpoints and accessibility.",
             "at": "2026-10-29T07:20:00.217Z",
             "reason": "Lauren added website-wide consistency: OS controls, all navigation and headers must occupy consistent places. Keep the existing helper correction and deliver this related website batch together."
+          },
+          {
+            "id": "rtxforge-linux-helper-lifecycle-20261029:acceptance:2",
+            "text": "Keep all admitted helper lifecycle and site consistency criteria. Header branding is rtxForge only on every page; Beta remains in download/release context. Report navigation and theme controls visibly follow light/dark page colors, and use colored sun/moon SVGs without monochrome filters. Preserve accessible labels, contrast, focus and shared placement.",
+            "at": "2026-10-29T07:21:05.810Z",
+            "reason": "Lauren requested plain rtxForge logo/header without Beta1; theme-reactive Report a bug and light/dark control surfaces with colored sun/moon icons."
           }
         ]
       },
-      "updated_at": "2026-10-29T07:20:00.217Z",
-      "lease_until": "2026-10-29T19:20:00.217Z",
-      "amendment_count": 1,
+      "updated_at": "2026-10-29T07:21:05.810Z",
+      "lease_until": "2026-10-29T19:21:05.810Z",
+      "amendment_count": 2,
       "amendments": [
         {
           "at": "2026-10-29T07:20:00.217Z",
@@ -20107,6 +20115,58 @@
               "rtxforge-linux-helper-lifecycle",
               "rtxforge-website-guide-helper",
               "rtxforge-website-navigation"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-29T07:21:05.810Z",
+          "by": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+          "reason": "Lauren requested plain rtxForge logo/header without Beta1; theme-reactive Report a bug and light/dark control surfaces with colored sun/moon icons.",
+          "fields": [
+            "acceptance",
+            "next_action",
+            "paths"
+          ],
+          "before": {
+            "acceptance": "Reuse the existing toolkit-free helper and per-user singleton, with no new overlay renderer or GUI changes. Installed AppImage enables and starts the user service immediately, retries start on repeat registration, refreshes a changed unit without restarting unchanged services, and reports systemctl failures. Flatpak host helper remains independent and unchanged. Correct website and product docs to describe setup, closed-window behavior and existing bridge prerequisites without claiming unverified native Proton/Gamescope acceptance. Cover install/current-login, repeated install, upgrade and failure behavior; run Linux-focused tests through Linux CI/native environment, preserve active source owners and public release gates. Publish corrected website after reviewed merge; app fix is source delivery unless separately released. Also use the same header structure, navigation order, OS switch and theme positions on home/setup/report across desktop and mobile. Preserve current-page indication, keyboard OS switching, OS-aware links and report-specific fields; direct report entry still asks OS first, and a chosen OS carries through navigation. Keep a working no-JS report and prevent duplicated conflicting OS controls. Verify equivalent control geometry at common breakpoints and accessibility.",
+            "next_action": "Fix helper start-on-install; unify site header/navigation and OS selection with shared behavior, then verify Linux tests and page layouts before review/publication.",
+            "paths": [
+              "scripts/linux_overlay_helper.py",
+              "tests/linux_runtime/test_linux_overlay_helper.py",
+              "docs/linux/overlay-channel.md",
+              "docs/INSTALLATION.md",
+              "website/public/install.html",
+              "website/README.md",
+              "website/public/index.html",
+              "website/public/report.html",
+              "website/public/app.js",
+              "website/public/install.js",
+              "website/public/report.js",
+              "website/public/site-controls.mjs",
+              "website/public/styles.css",
+              "website/test/site-controls.test.mjs"
+            ]
+          },
+          "after": {
+            "acceptance": "Keep all admitted helper lifecycle and site consistency criteria. Header branding is rtxForge only on every page; Beta remains in download/release context. Report navigation and theme controls visibly follow light/dark page colors, and use colored sun/moon SVGs without monochrome filters. Preserve accessible labels, contrast, focus and shared placement.",
+            "next_action": "Implement admitted helper fix, shared navigation and OS switch, plain branding and theme-reactive colored controls; validate exact source before publication.",
+            "paths": [
+              "scripts/linux_overlay_helper.py",
+              "tests/linux_runtime/test_linux_overlay_helper.py",
+              "docs/linux/overlay-channel.md",
+              "docs/INSTALLATION.md",
+              "website/public/install.html",
+              "website/README.md",
+              "website/public/index.html",
+              "website/public/report.html",
+              "website/public/app.js",
+              "website/public/install.js",
+              "website/public/report.js",
+              "website/public/site-controls.mjs",
+              "website/public/styles.css",
+              "website/test/site-controls.test.mjs",
+              "website/public/assets/sun.svg",
+              "website/public/assets/moon.svg"
             ]
           }
         }
