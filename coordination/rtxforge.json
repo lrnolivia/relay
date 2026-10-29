@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T07:49:43.548Z",
+  "updated_at": "2026-10-29T07:53:24.845Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -20220,7 +20220,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "ba5ff06827ca96d93cbc03de842b1d2a8a8efe03",
-      "state": "active",
+      "state": "cancelled",
       "created_at": "2026-10-29T07:18:54.905Z",
       "objective_history": {
         "baseline": {
@@ -20261,7 +20261,7 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T07:40:31.202Z",
+      "updated_at": "2026-10-29T07:53:24.845Z",
       "lease_until": "2026-10-29T19:40:31.202Z",
       "amendment_count": 4,
       "amendments": [
@@ -20449,7 +20449,20 @@
             ]
           }
         }
-      ]
+      ],
+      "retirement": {
+        "at": "2026-10-29T07:53:24.845Z",
+        "intent": {
+          "operation_id": "website-standalone-no-app-merge-20261029",
+          "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+          "disposition": "cancelled",
+          "reason": "Lauren explicitly replaced app-repository integration with standalone website publication outside Git and directed all application work to Claude. Retire this app-repository claim without merging PR117; the website deliverable is published separately.",
+          "evidence": "PR117 closed unmerged at f29e06b; no app source changes relative to main. No active writer to this branch. Website source preserved outside app checkout at C:/Users/lrnol/Sites/rtxForge with source identity c62be8ae68888a668de4485dc18802869a924b45e47ca0987905dcd336299bf6 and archive C:/Users/lrnol/Sites/rtxForge-backups/website-20261029-c62be8ae6888.tar.gz. Live https://loew.fi/rtxforge/ version9a9d2776-18c7-4bb1-9fa4-3ed51c9104e2 deploymenta978fdac-7d96-460c-9ac7-5bf12c922abf at100%. Production48 layout/OS/theme cases,0 axe WCAG A/AA violations,0 console errors;13 website tests and deploy dry-run passed. Transparent header restored, soft green report button with bug glyph, smaller round colored theme control, consistent nav/OS controls, plain branding and RTX50 guidance. Visual evidence vis_cb6aa1ab-9fde-4c38-80d5-69656d6aa736. Standalone deployment.json/browser-qa.json contain receipts. This task's duplicate app QA queue was cancelled; Claude's app assignments unchanged. Initial app candidate0b6131f retained only as history, not integrated. No further website commits/PRs to app repository.",
+          "superseded_by": null,
+          "branch": "rtxforge/linux-helper-lifecycle-20261029",
+          "head_sha": "f29e06b4f7f5e4a02a7aeaf261b64a598cc0d971"
+        }
+      }
     },
     {
       "id": "rtxforge-linux-beta2-windows-parity-20261029",
