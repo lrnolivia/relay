@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T07:36:08.805Z",
+  "updated_at": "2026-10-29T07:37:24.875Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18305,14 +18305,14 @@
       ],
       "goal": "Fix collapsed Technical evidence card height and prefer inline tool-mounted Relay cards in supporting ChatGPT/Codex hosts while preserving Claude MCP Apps behavior.",
       "acceptance": "Measure content independent of iframe viewport; expand and shrink repeatedly, handle updated content and width changes; publish explicit inline initial preference while retaining fullscreen screenshot capability; preserve standard MCP Apps and OpenAI bridge metadata. Add regression tests and verify draft PR/CI; explicitly distinguish host-native placement unverified until deployed. No merge/deploy. Provenance: authorized takeover and two-file carve-out from held relay-consumer-verification-20261028; original branch/private checkpoints and remaining acceptance preserved.",
-      "next_action": "PR260 draft exact ee3a7fd80bd90e71a9aa12cdd89d740c0d9edac4 ready: CI40835878531 quality success, 1087 passed/0 failed/1 existing runner skip, all 5 suites including real browser card regression. No source review blocker. Hold pending explicit merge/deploy authority and verified human Git merge route (Relay App merge unsupported); no deployment. Native host placement remains unverified. Retained healthy rollback version778ea179-cc8a-4012-9394-e3ed5d2701ba/sourcea638eece; refresh before promotion.",
+      "next_action": "Lauren explicitly approved PR260 merge/deploy and requested merge as her. Resume bounded release using existing verified human GitHub connector account lrnolivia/id311277794, exact reviewed headee3a7fd80bd90e71a9aa12cdd89d740c0d9edac4. Preserve required green checks and verify actual final attribution, Workers Build/deployment/health and card behavior; no credentials or unrelated inbox writes.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "21c1400c18660b8e3be160e3fe38eff412d41b9c",
-      "state": "held",
+      "state": "active",
       "created_at": "2026-10-29T07:24:59.024Z",
       "objective_history": {
         "baseline": {
@@ -18329,8 +18329,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T07:36:08.805Z",
-      "lease_until": "2026-10-29T19:36:08.805Z"
+      "updated_at": "2026-10-29T07:37:24.875Z",
+      "lease_until": "2026-10-29T19:37:24.875Z"
     }
   ],
   "migrated_from": "loew-inspector"
