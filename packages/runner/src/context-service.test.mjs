@@ -131,6 +131,9 @@ test('activated storage preserves replay and lifecycle beyond old caps',async()=
 
 test('context discovery explicitly discloses commands and bounded non-read-only semantics',()=>{
  assert.match(contextTool.description,/QUERY \/ COMMAND/);
+ assert.match(contextTool.description,/compact physically indexes history without removing pending work/);
+ assert.match(contextTool.description,/verified compatible rollback baseline and enforced schema floor/);
+ assert.doesNotMatch(contextTool.description,/is disabled until/);
  assert.equal(contextTool.annotations.readOnlyHint,false);
  assert.equal(contextTool.inputSchema.additionalProperties,false);
 });
