@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T00:03:26.567Z",
+  "updated_at": "2026-10-29T00:33:31.973Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18409,6 +18409,44 @@
       "evidence": "PR #102 merged as a89012234f6c2fd4cea5e03903572fdc7f8d0ced at reviewed head bf417590. Vulkan record write/remove and Windows recognition (test_vulkan_cross_os); dry run on Lauren's library: BG3/RDR2 recognised as Windows installs and routed to Adapt, refused only for Proton Experimental lacking nvcuda (message now says switch to Proton-GE); 13 games show Windows+Linux marks (test_overview_facts); review ready rows keep five rows (measured 58px -> 280px); Game Mode dialogs 95%; active-pill seam removed (pixel check). All PR checks green; main's build (run 40791123257) installed locally with checksum match.",
       "work_accounted": true,
       "completed_at": "2026-10-29T00:03:26.567Z"
+    },
+    {
+      "id": "rtxforge-library-ghost-folders-20261029",
+      "owner": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+      "branch": "rtxforge/linux-library-ghost-folders-20261029",
+      "paths": [
+        "scripts/discovery.py",
+        "tests/test_discovery_ghost_folders.py"
+      ],
+      "resources": [],
+      "goal": "An empty leftover folder 'Non-Steam Games/The Outer Worlds 2' (two zero-byte files, no executable) is listed as an Unsupported game with the real game's artwork ('no Windows launch file'), shadowing Lauren's working Steam install. With include_unavailable, discovery lists every Non-Steam subfolder. Non-Steam folders with no game executable are not games: skip them; Steam games without an executable still show.",
+      "acceptance": "Empty Non-Steam folders are not listed (tested); real Non-Steam games and Steam games without an executable still are; dry scan of Lauren's library drops the ghost and keeps Sonic Unleashed and the Steam Outer Worlds 2; PR CI green; merged; installed.",
+      "next_action": "Skip exe-less Non-Steam folders in discover_games; test; PR.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "a89012234f6c2fd4cea5e03903572fdc7f8d0ced",
+      "state": "active",
+      "created_at": "2026-10-29T00:33:31.973Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "An empty leftover folder 'Non-Steam Games/The Outer Worlds 2' (two zero-byte files, no executable) is listed as an Unsupported game with the real game's artwork ('no Windows launch file'), shadowing Lauren's working Steam install. With include_unavailable, discovery lists every Non-Steam subfolder. Non-Steam folders with no game executable are not games: skip them; Steam games without an executable still show.",
+          "acceptance": "Empty Non-Steam folders are not listed (tested); real Non-Steam games and Steam games without an executable still are; dry scan of Lauren's library drops the ghost and keeps Sonic Unleashed and the Steam Outer Worlds 2; PR CI green; merged; installed.",
+          "at": "2026-10-29T00:33:31.973Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-library-ghost-folders-20261029:acceptance:0",
+            "text": "Empty Non-Steam folders are not listed (tested); real Non-Steam games and Steam games without an executable still are; dry scan of Lauren's library drops the ghost and keeps Sonic Unleashed and the Steam Outer Worlds 2; PR CI green; merged; installed.",
+            "at": "2026-10-29T00:33:31.973Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T00:33:31.973Z",
+      "lease_until": "2026-10-29T12:33:31.973Z"
     }
   ]
 }
