@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T07:34:31.172Z",
+  "updated_at": "2026-10-29T07:40:31.202Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -20063,32 +20063,25 @@
       "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
       "branch": "rtxforge/linux-helper-lifecycle-20261029",
       "paths": [
-        "scripts/linux_overlay_helper.py",
-        "tests/linux_runtime/test_linux_overlay_helper.py",
-        "docs/linux/overlay-channel.md",
-        "docs/INSTALLATION.md",
-        "website/public/install.html",
         "website/README.md",
-        "website/public/index.html",
-        "website/public/report.html",
         "website/public/app.js",
+        "website/public/assets/moon.svg",
+        "website/public/assets/sun.svg",
+        "website/public/index.html",
+        "website/public/install.html",
         "website/public/install.js",
+        "website/public/report.html",
         "website/public/report.js",
         "website/public/site-controls.mjs",
-        "website/public/styles.css",
-        "website/test/site-controls.test.mjs",
-        "website/public/assets/sun.svg",
-        "website/public/assets/moon.svg",
-        "scripts/linux_overlay_host.py"
+        "website/public/styles.css"
       ],
       "resources": [
-        "rtxforge-linux-helper-lifecycle",
         "rtxforge-website-guide-helper",
         "rtxforge-website-navigation"
       ],
-      "goal": "Make the existing standalone Linux overlay helper available with the app window closed in Desktop and Steam Game Mode; close the installed AppImage immediate-start gap and correct guide instructions that incorrectly require keeping the manager open.",
-      "acceptance": "Preserve the existing helper lifecycle baseline, navigation/OS/header consistency, no Beta in header and theme/color criteria recorded in this assignment's baseline and amendments. Also describe RTX20/30/40/50 install support accurately: compatible card/game/package requirements remain, RTX50 uses native MFG and rtxForge does not install an MFG unlock for it. Change website copy only; no installer/provider behavior change.",
-      "next_action": "Prevent preset replay before acquiring the existing host singleton when AppImage service starts beside the app, then complete helper/UI verification and publication.",
+      "goal": "Website only: consistent navigation, OS switch and headers, plain rtxForge branding, theme-reactive controls with colored sun/moon icons, RTX50 card guidance and accurate Linux standalone-helper setup.",
+      "acceptance": "Only website files change relative to main. Home, Setup guide and Report a bug use the same header, navigation order, OS switch and theme placement at desktop/mobile breakpoints. Logo/header says rtxForge without Beta. Report a bug and theme surfaces respond to light/dark; colored sun/moon icons retain accessible labels and contrast. Chosen OS carries through navigation; direct report entry asks OS first, only relevant setup fields are shown, keyboard switching and no-JavaScript form remain functional. Card copy includes RTX20/30/40/50 and explains RTX50 uses native MFG without an unlock package, matching source. Correct the guide's open-manager advice using existing standalone-helper behavior and published AppImage login workaround; no app implementation or release. Validate browser geometry, accessibility, actual report/download flows and source checks; review, merge and deploy the website.",
+      "next_action": "Publish the website-only source revision after exact-head checks. All app investigation, fixes and runtime qualification stay with the existing app owners.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -20127,12 +20120,18 @@
             "text": "Preserve the existing helper lifecycle baseline, navigation/OS/header consistency, no Beta in header and theme/color criteria recorded in this assignment's baseline and amendments. Also describe RTX20/30/40/50 install support accurately: compatible card/game/package requirements remain, RTX50 uses native MFG and rtxForge does not install an MFG unlock for it. Change website copy only; no installer/provider behavior change.",
             "at": "2026-10-29T07:23:13.521Z",
             "reason": "Lauren requested RTX50-series in supported-card copy. Verified scripts/hardware.py admits RTX20-50 and engine_bridge.py routes Blackwell to native MFG without an unlock package."
+          },
+          {
+            "id": "rtxforge-linux-helper-lifecycle-20261029:acceptance:4",
+            "text": "Only website files change relative to main. Home, Setup guide and Report a bug use the same header, navigation order, OS switch and theme placement at desktop/mobile breakpoints. Logo/header says rtxForge without Beta. Report a bug and theme surfaces respond to light/dark; colored sun/moon icons retain accessible labels and contrast. Chosen OS carries through navigation; direct report entry asks OS first, only relevant setup fields are shown, keyboard switching and no-JavaScript form remain functional. Card copy includes RTX20/30/40/50 and explains RTX50 uses native MFG without an unlock package, matching source. Correct the guide's open-manager advice using existing standalone-helper behavior and published AppImage login workaround; no app implementation or release. Validate browser geometry, accessibility, actual report/download flows and source checks; review, merge and deploy the website.",
+            "at": "2026-10-29T07:40:31.202Z",
+            "reason": "Lauren explicitly directed: 'just focus on the website', after noting another worker may have fixed AppImage startup. Remove app source/tests and app documentation from this PR. Preserve their original committed candidate0b6131f for the app owner to reconcile; do not merge or release that app patch."
           }
         ]
       },
-      "updated_at": "2026-10-29T07:27:02.994Z",
-      "lease_until": "2026-10-29T19:27:02.994Z",
-      "amendment_count": 3,
+      "updated_at": "2026-10-29T07:40:31.202Z",
+      "lease_until": "2026-10-29T19:40:31.202Z",
+      "amendment_count": 4,
       "amendments": [
         {
           "at": "2026-10-29T07:20:00.217Z",
@@ -20253,6 +20252,69 @@
           "after": {
             "acceptance": "Preserve the existing helper lifecycle baseline, navigation/OS/header consistency, no Beta in header and theme/color criteria recorded in this assignment's baseline and amendments. Also describe RTX20/30/40/50 install support accurately: compatible card/game/package requirements remain, RTX50 uses native MFG and rtxForge does not install an MFG unlock for it. Change website copy only; no installer/provider behavior change.",
             "next_action": "Finish implementation and test helper lifecycle, shared responsive header/OS behavior, theme colors and source-backed RTX50 copy, then review/publish."
+          }
+        },
+        {
+          "at": "2026-10-29T07:40:31.202Z",
+          "by": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+          "reason": "Lauren explicitly directed: 'just focus on the website', after noting another worker may have fixed AppImage startup. Remove app source/tests and app documentation from this PR. Preserve their original committed candidate0b6131f for the app owner to reconcile; do not merge or release that app patch.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action",
+            "paths",
+            "resources"
+          ],
+          "before": {
+            "goal": "Make the existing standalone Linux overlay helper available with the app window closed in Desktop and Steam Game Mode; close the installed AppImage immediate-start gap and correct guide instructions that incorrectly require keeping the manager open.",
+            "acceptance": "Preserve the existing helper lifecycle baseline, navigation/OS/header consistency, no Beta in header and theme/color criteria recorded in this assignment's baseline and amendments. Also describe RTX20/30/40/50 install support accurately: compatible card/game/package requirements remain, RTX50 uses native MFG and rtxForge does not install an MFG unlock for it. Change website copy only; no installer/provider behavior change.",
+            "next_action": "Prevent preset replay before acquiring the existing host singleton when AppImage service starts beside the app, then complete helper/UI verification and publication.",
+            "paths": [
+              "scripts/linux_overlay_helper.py",
+              "tests/linux_runtime/test_linux_overlay_helper.py",
+              "docs/linux/overlay-channel.md",
+              "docs/INSTALLATION.md",
+              "website/public/install.html",
+              "website/README.md",
+              "website/public/index.html",
+              "website/public/report.html",
+              "website/public/app.js",
+              "website/public/install.js",
+              "website/public/report.js",
+              "website/public/site-controls.mjs",
+              "website/public/styles.css",
+              "website/test/site-controls.test.mjs",
+              "website/public/assets/sun.svg",
+              "website/public/assets/moon.svg",
+              "scripts/linux_overlay_host.py"
+            ],
+            "resources": [
+              "rtxforge-linux-helper-lifecycle",
+              "rtxforge-website-guide-helper",
+              "rtxforge-website-navigation"
+            ]
+          },
+          "after": {
+            "goal": "Website only: consistent navigation, OS switch and headers, plain rtxForge branding, theme-reactive controls with colored sun/moon icons, RTX50 card guidance and accurate Linux standalone-helper setup.",
+            "acceptance": "Only website files change relative to main. Home, Setup guide and Report a bug use the same header, navigation order, OS switch and theme placement at desktop/mobile breakpoints. Logo/header says rtxForge without Beta. Report a bug and theme surfaces respond to light/dark; colored sun/moon icons retain accessible labels and contrast. Chosen OS carries through navigation; direct report entry asks OS first, only relevant setup fields are shown, keyboard switching and no-JavaScript form remain functional. Card copy includes RTX20/30/40/50 and explains RTX50 uses native MFG without an unlock package, matching source. Correct the guide's open-manager advice using existing standalone-helper behavior and published AppImage login workaround; no app implementation or release. Validate browser geometry, accessibility, actual report/download flows and source checks; review, merge and deploy the website.",
+            "next_action": "Publish the website-only source revision after exact-head checks. All app investigation, fixes and runtime qualification stay with the existing app owners.",
+            "paths": [
+              "website/README.md",
+              "website/public/app.js",
+              "website/public/assets/moon.svg",
+              "website/public/assets/sun.svg",
+              "website/public/index.html",
+              "website/public/install.html",
+              "website/public/install.js",
+              "website/public/report.html",
+              "website/public/report.js",
+              "website/public/site-controls.mjs",
+              "website/public/styles.css"
+            ],
+            "resources": [
+              "rtxforge-website-guide-helper",
+              "rtxforge-website-navigation"
+            ]
           }
         }
       ]
