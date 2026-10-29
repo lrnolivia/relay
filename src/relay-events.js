@@ -6,7 +6,7 @@ const mutations=new Set(['relay_execution','relay_context','relay_runner_coordin
 export function mutationTopics(name,args={}){
  if(name==='relay_night_shift')return ['record','record_source','shift','oversight'].includes(args?.action)?['work','projects','evidence']:null;
  if(name==='relay_execution'&&!['submit','cancel','lease','start','checkpoint','finish','recover'].includes(args?.action))return null;
- if(name==='relay_context'&&!['record','ack','retract'].includes(args?.action))return null;
+ if(name==='relay_context'&&!['record','ack','retract','curate','resolve','archive','reopen','compact'].includes(args?.action))return null;
  return mutations.has(name)?['work','projects','evidence']:null;
 }
 export function operatorTopics(path,body){
@@ -81,3 +81,4 @@ export class RelayEvents {
  webSocketError(socket){try{socket.close(1011,'Reconnect');}catch{}}
  async alarm(){let next=Infinity;for(const socket of this.ctx.getWebSockets()){const expires=socket.deserializeAttachment()?.expires||0;if(expires<=Date.now()){try{socket.close(4001,'Reauthenticate');}catch{}}else next=Math.min(next,expires);}if(Number.isFinite(next))await this.ctx.storage.setAlarm(next);}
 }
+

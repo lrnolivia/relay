@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {appendEvent,replayFor,streamExpiry,mutationTopics,successfulRpc,operatorTopics,eventStream,publishInvalidation} from './relay-events.js';
 test('execution and context queries never invalidate live snapshots',()=>{
- for(const [name,read,writes] of [['relay_execution','status',['submit','cancel','lease','start','checkpoint','finish','recover']],['relay_context','read',['record','ack','retract']],['relay_night_shift','read',['record','record_source','shift','oversight']]]){
+ for(const [name,read,writes] of [['relay_execution','status',['submit','cancel','lease','start','checkpoint','finish','recover']],['relay_context','read',['record','ack','retract','curate','resolve','archive','reopen','compact']],['relay_night_shift','read',['record','record_source','shift','oversight']]]){
   for(const args of [undefined,null,{}, {action:read},{action:'unknown'}])assert.equal(mutationTopics(name,args),null);
   for(const action of writes)assert.deepEqual(mutationTopics(name,{action}),['work','projects','evidence']);
  }
@@ -15,3 +15,4 @@ test('event publication failure does not turn a committed canonical write into a
 test('snapshot review reads cannot cause event refresh loops',()=>{assert.equal(operatorTopics('/api/work-review',{action:'get'}),null);assert.equal(operatorTopics('/api/work-review',{action:'read'}),null);assert.deepEqual(operatorTopics('/api/work-review',{action:'set'}),['reviews']);assert.equal(operatorTopics('/api/projects',{}),null);});
 
 test('actual worker control actions invalidate worker snapshots',()=>{for(const action of ['toggle','settings','run','doctor','repair'])assert.deepEqual(operatorTopics('/api/workers/field/'+action,{}),['workers']);assert.equal(operatorTopics('/api/workers/field/delete',{}),null);});
+
