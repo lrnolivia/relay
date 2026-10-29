@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T22:53:22.325Z",
+  "updated_at": "2026-10-29T22:54:22.174Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7764,7 +7764,7 @@
       "owner": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
       "goal": "Website only: the report page sends reports straight to GitHub Issues through the rtxForge report service, as the app now does, instead of opening a prefilled GitHub link. On 2026-10-29 Lauren asked for in-app reports to 'submit the report to github issues on its own… as seamless as possible' and then asked 'will web use this too'. Supersedes the link-only part of rtxforge-website-in-app-report-links-20261029; its in-app wording and rtxforge:// link still apply.",
       "acceptance": "Service contract (lrnolivia/rtxForge services/reports/README.md; Claude's claim rtxforge-report-send-20261029): POST https://loew.fi/rtxforge/api/report with JSON. Body: schema 1; report_id matching r<YYYYMMDD>T<HHMMSS>-<6 hex>, generated in the page; source 'web'; turnstile, the Cloudflare Turnstile token; fields, the same 12 ids and choices as report.html and beta-report.yml (only platform and observations required); details as an optional list of short strings; logs as an optional base64 ZIP up to 20 MB, kept private. Answers: 201 {number, url}, or {error} with 400, 403, 413, 429, 502 or 503. Show the error sentence as-is. CORS allows https://loew.fi and https://rtxforge.loew.fi. Done when: (1) the form's main button is 'Send report'. It renders a Turnstile widget with the public site key from rtxforge-report-turnstile-20261029's completion evidence, sends, and then shows 'Thanks, it's issue #N' with a link. (2) The page says plainly that the report becomes a public GitHub issue and that attached logs stay private. (3) A no-JavaScript fallback and the prefilled GitHub link remain as a secondary 'or open it on GitHub' path, which is also used while the service answers 503. (4) Desktop, mobile, light/dark and accessibility checks pass, plus a real end-to-end send once the service and Turnstile are live: mark the test issue clearly and tell Lauren its number so she can close it. Deploy through the standalone site mechanism.",
-      "next_action": "Implement direct submission with the new public sitekey, action report, private optional ZIPs and GitHub fallback; verify mocked browser flows and one real production roundtrip, then deploy. Service-host/action validation requested through its existing owner's inbox; no app/service source edits here.",
+      "next_action": "DELIVERED 2026-10-29: https://loew.fi/rtxforge/report sends account-free reports via live Turnstile. Synthetic issue https://github.com/lrnolivia/rtxForge/issues/123 by rtxforge-reports[bot], report ID r20261029T224750-399918, independently verified. Optional private ZIP, preserved inputs, service errors, copy and no-JS/GitHub fallback implemented. 19 unit tests, 16 mocked browser cases (0 axe violations), build/dry-run passed; live JS/CSS match standalone source. Source 6ba7528855980d98456c5397de2e424f79629872ceb8aa42c4ba103a4b81dbb2; version 3ede1aec-a18b-45f0-8f7e-a2b690a01525; deployment eb6e0033-3bdc-4cfe-955a-a82cfdc45461 at 100%. Receipt C:/Users/lrnol/Sites/rtxForge/deployment.json. Real test had no logs; production ZIP storage not independently checked. Heartbeat paused to prevent duplicate work. No app source edits, commits or merges. No further website work required.",
       "paths": [
         "website/public/report.html",
         "website/public/report.js",
@@ -7795,7 +7795,7 @@
           }
         ]
       },
-      "amendment_count": 1,
+      "amendment_count": 2,
       "amendments": [
         {
           "at": "2026-10-29T22:34:53.773Z",
@@ -7810,9 +7810,23 @@
           "after": {
             "next_action": "Implement direct submission with the new public sitekey, action report, private optional ZIPs and GitHub fallback; verify mocked browser flows and one real production roundtrip, then deploy. Service-host/action validation requested through its existing owner's inbox; no app/service source edits here."
           }
+        },
+        {
+          "at": "2026-10-29T22:54:22.174Z",
+          "by": "01a1864a-8ed6-7e31-ad87-80a1bbb7e087",
+          "reason": "Standalone website delivery verified in production. User required no app repository integration, so there is intentionally no source PR for merged-PR completion.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Implement direct submission with the new public sitekey, action report, private optional ZIPs and GitHub fallback; verify mocked browser flows and one real production roundtrip, then deploy. Service-host/action validation requested through its existing owner's inbox; no app/service source edits here."
+          },
+          "after": {
+            "next_action": "DELIVERED 2026-10-29: https://loew.fi/rtxforge/report sends account-free reports via live Turnstile. Synthetic issue https://github.com/lrnolivia/rtxForge/issues/123 by rtxforge-reports[bot], report ID r20261029T224750-399918, independently verified. Optional private ZIP, preserved inputs, service errors, copy and no-JS/GitHub fallback implemented. 19 unit tests, 16 mocked browser cases (0 axe violations), build/dry-run passed; live JS/CSS match standalone source. Source 6ba7528855980d98456c5397de2e424f79629872ceb8aa42c4ba103a4b81dbb2; version 3ede1aec-a18b-45f0-8f7e-a2b690a01525; deployment eb6e0033-3bdc-4cfe-955a-a82cfdc45461 at 100%. Receipt C:/Users/lrnol/Sites/rtxForge/deployment.json. Real test had no logs; production ZIP storage not independently checked. Heartbeat paused to prevent duplicate work. No app source edits, commits or merges. No further website work required."
+          }
         }
       ],
-      "updated_at": "2026-10-29T22:34:53.773Z"
+      "updated_at": "2026-10-29T22:54:22.174Z"
     },
     {
       "id": "rtxforge-functional-test-20261029",
