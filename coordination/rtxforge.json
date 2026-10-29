@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T00:34:20.352Z",
+  "updated_at": "2026-10-29T00:51:17.444Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -18429,7 +18429,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "a89012234f6c2fd4cea5e03903572fdc7f8d0ced",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-29T00:33:31.973Z",
       "objective_history": {
         "baseline": {
@@ -18446,8 +18446,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T00:34:20.352Z",
-      "lease_until": "2026-10-29T12:34:20.352Z"
+      "updated_at": "2026-10-29T00:51:17.444Z",
+      "lease_until": "2026-10-29T12:51:17.444Z",
+      "pr": 103,
+      "merged_head_sha": "841a53f39269ac3c3b2affc26e9b5bb8fdbf0a33",
+      "merge_commit_sha": "566d6ecf4566a6724c11614cfec6f9ea5944c10a",
+      "evidence": "PR #103 merged as 566d6ecf4566a6724c11614cfec6f9ea5944c10a at reviewed head 841a53f3. Empty Non-Steam folders not listed (test_discovery_ghost_folders fails without the fix); scan of Lauren's library drops the ghost Outer Worlds 2 and keeps Sonic Unleashed and the Steam copy; dual OS badge padding/spacing checked in a capture. All PR checks green; main's build (run 40796259815) installed locally with checksum match.",
+      "work_accounted": true,
+      "completed_at": "2026-10-29T00:51:17.444Z"
     }
   ]
 }
