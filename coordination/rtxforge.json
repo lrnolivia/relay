@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T03:04:30.317Z",
+  "updated_at": "2026-10-29T03:27:48.270Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6748,10 +6748,10 @@
     },
     {
       "id": "rtxforge-windows-linux-sync-20261029",
-      "owner": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+      "owner": "01a185b0-7901-78a3-a702-6e77197cf28d",
       "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.",
       "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.",
-      "next_action": "Windows worker: take this over (handoff), read the brief, then claim.",
+      "next_action": "Lauren resumed Windows 1.0 Beta catch-up in this Windows chat. Latest published Windows beta.2 already installed at 5ad4bb4. Read G:/rtxForge-linux-to-windows-sync-brief.md; claim Windows-only sync scope, implement and verify in isolated checkout, draft PR. Preserve full acceptance and human attribution.",
       "paths": [
         "windows/"
       ],
@@ -6777,7 +6777,16 @@
             "at": "2026-10-29T01:21:36.706Z"
           }
         ]
-      }
+      },
+      "handoffs": [
+        {
+          "at": "2026-10-29T03:27:48.270Z",
+          "from": "claude-code-63b51790-1763-48a0-8618-319844ec9169",
+          "to": "01a185b0-7901-78a3-a702-6e77197cf28d",
+          "next_action": "Lauren resumed Windows 1.0 Beta catch-up in this Windows chat. Latest published Windows beta.2 already installed at 5ad4bb4. Read G:/rtxForge-linux-to-windows-sync-brief.md; claim Windows-only sync scope, implement and verify in isolated checkout, draft PR. Preserve full acceptance and human attribution."
+        }
+      ],
+      "updated_at": "2026-10-29T03:27:48.270Z"
     }
   ],
   "claims": [
