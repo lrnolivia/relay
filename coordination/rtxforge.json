@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T07:47:19.912Z",
+  "updated_at": "2026-10-29T07:49:01.788Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6761,7 +6761,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-29T01:21:36.706Z",
       "objective_history": {
         "baseline": {
@@ -6852,7 +6852,7 @@
           "next_action": "Handed over at about 07:30Z on 2026-10-29: Lauren told Claude Code 'take over 110 and that' (PR110 plus the newer Linux parity work). Previous owner: stop editing; push any unpushed work to this branch without force-pushing and the new owner will merge it. New owner continues from pushed head 1714d84: fix the failing Bazzite AppImage check, finish the pending items (shared-record reconciliation, overlay update refusals, legacy DX9/DX10 overlay exclusions, ghost locations in reviews, Vulkan OS badges, Linux adoption badge history, Feeder Linux setup history/rollback regression), then hand PR110 to Lauren for review. Linux parity (rtxforge-linux-beta2-windows-parity-20261029) follows."
         }
       ],
-      "updated_at": "2026-10-29T07:43:39.756Z",
+      "updated_at": "2026-10-29T07:49:01.788Z",
       "amendment_count": 12,
       "amendments": [
         {
@@ -7089,7 +7089,8 @@
             "next_action": "Lauren explicitly confirmed Claude takes over both, then authorized finishing/testing/merging/publishing Beta4 on Windows+Linux while asleep. Full source pushed1a6b7aa (6750fdf+1a6b7aa supersede1714d84). Complete handoff fbr_a0c5e16ecf2138bde0234ee6ea6e4eb754e5e816e8445683343ce602791798de and original fbr_99fec6c208273d97ab754ddc81ad2b705acc300da8bf9a57e92e5573a2cc3e6a; retrieve ready private evidence transfer tr_05e058893920b368ab05fb0e7c09d416 (72h). Finish shared PR116 d9550c0 reporting integration and four genuine library drifts, qualify/deploy latest Windows, then Linux parity in sequence. Linux3 already live, use Beta4 both OSes and coordinate VERSION owner. Required CI/recovery/ownership checks remain; routine user reconfirmation is unnecessary."
           }
         }
-      ]
+      ],
+      "completed_at": "2026-10-29T07:49:01.788Z"
     },
     {
       "id": "rtxforge-linux-beta2-windows-parity-20261029",
@@ -19845,7 +19846,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "354c9fc10c604f8562dd4b658bbad8ba86a604f9",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-29T03:28:00.821Z",
       "objective_history": {
         "baseline": {
@@ -19922,8 +19923,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T07:43:39.756Z",
-      "lease_until": "2026-10-29T19:43:39.756Z",
+      "updated_at": "2026-10-29T07:49:01.788Z",
+      "lease_until": "2026-10-29T19:49:01.788Z",
       "handoffs": [
         {
           "at": "2026-10-29T03:27:48.270Z",
@@ -20174,7 +20175,13 @@
             "next_action": "Lauren explicitly confirmed Claude takes over both, then authorized finishing/testing/merging/publishing Beta4 on Windows+Linux while asleep. Full source pushed1a6b7aa (6750fdf+1a6b7aa supersede1714d84). Complete handoff fbr_a0c5e16ecf2138bde0234ee6ea6e4eb754e5e816e8445683343ce602791798de and original fbr_99fec6c208273d97ab754ddc81ad2b705acc300da8bf9a57e92e5573a2cc3e6a; retrieve ready private evidence transfer tr_05e058893920b368ab05fb0e7c09d416 (72h). Finish shared PR116 d9550c0 reporting integration and four genuine library drifts, qualify/deploy latest Windows, then Linux parity in sequence. Linux3 already live, use Beta4 both OSes and coordinate VERSION owner. Required CI/recovery/ownership checks remain; routine user reconfirmation is unnecessary."
           }
         }
-      ]
+      ],
+      "pr": 110,
+      "merged_head_sha": "1a6b7aa7f105c13e0297de2a77e43fa6f6dd909a",
+      "merge_commit_sha": "d3c0feea5cf80b3f6cc7d3e69f615fdbe8480588",
+      "evidence": "https://github.com/lrnolivia/rtxForge/pull/110 merged by lrnolivia as d3c0feea5cf80b3f6cc7d3e69f615fdbe8480588 (reviewed head 1a6b7aa; merge tree 69997739 equals GitHub's tested merge fa963b9). All exact-head checks green, including WinUI x64/ARM64, AppImage, Flatpak, panel candidate, native/KDE/Wayland review, admission and attribution. On the combined tree with #116, the Windows engine-host suite (136 tests) passes locally. Merged at Lauren's overnight authorization ('going to bed you have my permission to do whatever to finish'). Remaining Beta 4 work continues under rtxforge-linux-beta2-windows-parity-20261029: Windows reports moved onto the shared beta_report, rtxforge:// on Windows, the report tests in both CI lanes, the Linux helper start and RTX 50 MFG, then VERSION 1.0.0-beta.4 and publishing both OSes. Not done here: native gameplay of the legacy routes, a live all-library review after deployment, and the four package drifts (BG3/RDR2 Streamline DLL, 1666 Amsterdam, PRAGMATA), which are recorded in the handoff fbr_99fec6c2.",
+      "work_accounted": true,
+      "completed_at": "2026-10-29T07:49:01.788Z"
     },
     {
       "id": "rtxforge-linux-helper-lifecycle-20261029",
