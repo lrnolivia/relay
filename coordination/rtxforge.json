@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T01:07:03.320Z",
+  "updated_at": "2026-10-29T01:21:20.790Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -6685,6 +6685,64 @@
       },
       "completed_at": "2026-10-27T23:48:08.722Z",
       "updated_at": "2026-10-27T23:48:08.722Z"
+    },
+    {
+      "id": "rtxforge-linux-flatpak-20261029",
+      "owner": "claude-code-session_01W32zV7dfxVzA6nfz8CgCFh",
+      "goal": "Ship the Linux 1.0 Beta as a Flatpak (io.github.lrnolivia.RTXForge) alongside the AppImage for SteamOS, Bazzite and CachyOS: GNOME 51 manifest, process checks run on the host via flatpak-spawn --host (refuse when unavailable), host-side overlay helper unit, CI bundle build and beta publish, website dual Linux downloads, release-note line. Implementation is done in commit 5886d2783f5d38434640197919e3d98907edcd3d (draft lrnolivia/rtxForge#106 on an unadmitted branch); Lauren approved moving it to rtxforge/linux-flatpak-20261029.",
+      "acceptance": "Draft PR green in CI including the Flatpak bundle build and installed-bundle verification; unit tests cover host-spawn plumbing and refusal; publish_beta uploads the .flatpak and .sha256 with AppImage-equivalent rollback; website shows Flatpak primary and AppImage alternative; nothing published or merged; windows/ untouched.",
+      "next_action": "After rtxforge-linux-cuda-stale-run-20261029 completes: claim on rtxforge/linux-flatpak-20261029, merge main into commit 5886d27, open a draft PR, drive CI green, close #106, hand to Lauren for Linux testing.",
+      "paths": [
+        ".github/workflows/linux-build.yml",
+        "docs/linux/BETA-RELEASE.md",
+        "docs/releases/1.0-beta.md",
+        "gui/rtxforge_gtk.py",
+        "packaging/beta_release.py",
+        "packaging/build_appimage.py",
+        "packaging/build_flatpak.py",
+        "packaging/flatpak/",
+        "scripts/desktop_frontend.py",
+        "scripts/desktop_install.py",
+        "scripts/engine_bridge.py",
+        "scripts/flatpak_host.py",
+        "scripts/hardware.py",
+        "scripts/host_probe.py",
+        "scripts/linux_overlay_host.py",
+        "scripts/offline_routes.py",
+        "scripts/proton_prefix.py",
+        "scripts/steam_self_install.py",
+        "tests/linux_runtime/test_flatpak_host.py",
+        "tests/test_beta_release_workflows.py",
+        "website/public/app.js",
+        "website/public/install.html",
+        "website/public/releases.mjs",
+        "website/test/releases.test.mjs"
+      ],
+      "resources": [
+        "linux-flatpak-packaging"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-29T01:21:20.790Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Ship the Linux 1.0 Beta as a Flatpak (io.github.lrnolivia.RTXForge) alongside the AppImage for SteamOS, Bazzite and CachyOS: GNOME 51 manifest, process checks run on the host via flatpak-spawn --host (refuse when unavailable), host-side overlay helper unit, CI bundle build and beta publish, website dual Linux downloads, release-note line. Implementation is done in commit 5886d2783f5d38434640197919e3d98907edcd3d (draft lrnolivia/rtxForge#106 on an unadmitted branch); Lauren approved moving it to rtxforge/linux-flatpak-20261029.",
+          "acceptance": "Draft PR green in CI including the Flatpak bundle build and installed-bundle verification; unit tests cover host-spawn plumbing and refusal; publish_beta uploads the .flatpak and .sha256 with AppImage-equivalent rollback; website shows Flatpak primary and AppImage alternative; nothing published or merged; windows/ untouched.",
+          "at": "2026-10-29T01:21:20.790Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-flatpak-20261029:acceptance:0",
+            "text": "Draft PR green in CI including the Flatpak bundle build and installed-bundle verification; unit tests cover host-spawn plumbing and refusal; publish_beta uploads the .flatpak and .sha256 with AppImage-equivalent rollback; website shows Flatpak primary and AppImage alternative; nothing published or merged; windows/ untouched.",
+            "at": "2026-10-29T01:21:20.790Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
