@@ -6,7 +6,7 @@ import { CONTEXT_CARD_BROWSER_MODEL } from './relay-context-card-browser.js';
 import { withHumanPresentation } from './communication-presentation.js';
 import { enrichWorkCard, isWorkCardTool, withWorkCardTemplate } from './work-card-delivery.js';
 export function contextCardModel(data = {}, directory = DIRECTORY, options = {}) { return sharedContextCardModel(data, directory, { roles: ROLE_DIRECTORY, ...options }); }
-export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v19.html';
+export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v20.html';
 export const RELAY_CONTEXT_CARD_TOOL = 'relay_render_context_card';
 export const RELAY_STATUS_CARD_URI = 'ui://relay/status-card/v5-legacy-bridge.html';
 export const RELAY_STATUS_CARD_TOOL = 'relay_show_legacy_bridge_card';
@@ -169,7 +169,9 @@ function legacyBridgeCardHtml() {
 
 // v9: non-blocking host bootstrap + size reporting. Patches the v8 HTML at serve time so the
 // both maintained bridges use the same generated presentation model.
-const BOOTSTRAP_V9 = `const diag={t0:Date.now(),globals:Boolean(window.openai),init:'pending',h:0};function showDiag(){const d=document.getElementById('diag');if(d)d.textContent='host check: globals '+(diag.globals?'yes':'no')+' · handshake '+diag.init+' · height '+diag.h}function reportSize(){try{const height=Math.ceil(document.documentElement.scrollHeight);if(height===diag.h)return;diag.h=height;window.parent.postMessage({jsonrpc:'2.0',method:'ui/notifications/size-changed',params:{width:Math.ceil(document.documentElement.scrollWidth),height}},'*');if(window.openai&&typeof window.openai.notifyIntrinsicHeight==='function')window.openai.notifyIntrinsicHeight(height);showDiag()}catch{}}if(typeof ResizeObserver==='function')new ResizeObserver(reportSize).observe(document.body);const ready=rpc('ui/initialize',{appInfo:{name:'relay-context-card',version:'1.9.9'},appCapabilities:{},protocolVersion:'2026-01-26'},4000).then(()=>{diag.init='ok '+(Date.now()-diag.t0)+'ms';window.parent.postMessage({jsonrpc:'2.0',method:'ui/notifications/initialized',params:{}},'*');hydrateOpenAiGlobals();diag.h=0;reportSize();setTimeout(()=>{void recoverCanonicalState()},350)});hydrateOpenAiGlobals();showDiag();reportSize();`;
+// Measure the content card, not document.scrollHeight: the latter is at least the
+// host iframe height and cannot shrink after Technical evidence is collapsed.
+const BOOTSTRAP_V9 = `const diag={t0:Date.now(),globals:Boolean(window.openai),init:'pending',h:0,w:0};function showDiag(){const d=document.getElementById('diag');if(d)d.textContent='host check: globals '+(diag.globals?'yes':'no')+' · handshake '+diag.init+' · height '+diag.h}function reportSize(){try{const card=document.getElementById('card');if(!card)return;const bounds=card.getBoundingClientRect();const height=Math.ceil(bounds.bottom+window.scrollY);const width=Math.ceil(bounds.width);if(height===diag.h&&width===diag.w)return;diag.h=height;diag.w=width;window.parent.postMessage({jsonrpc:'2.0',method:'ui/notifications/size-changed',params:{width,height}},'*');if(window.openai&&typeof window.openai.notifyIntrinsicHeight==='function')window.openai.notifyIntrinsicHeight(height);showDiag()}catch{}}if(typeof ResizeObserver==='function')new ResizeObserver(reportSize).observe(document.getElementById('card'));const ready=rpc('ui/initialize',{appInfo:{name:'relay-context-card',version:'1.9.9'},appCapabilities:{},protocolVersion:'2026-01-26'},4000).then(()=>{diag.init='ok '+(Date.now()-diag.t0)+'ms';window.parent.postMessage({jsonrpc:'2.0',method:'ui/notifications/initialized',params:{}},'*');hydrateOpenAiGlobals();diag.h=0;reportSize();setTimeout(()=>{void recoverCanonicalState()},350)});hydrateOpenAiGlobals();showDiag();reportSize();`;
 function replaceOnce(html, from, to) {
   if (!html.includes(from)) throw new Error('Relay card v9 patch target missing: ' + from.slice(0, 60));
   return html.replace(from, () => to);
@@ -234,7 +236,7 @@ function compactCardBrandAssets(html) {
   return html.replace(marker,'const CARD_BRAND_ASSETS={"relay":document.querySelector("#feature-mark img").getAttribute("src")');
 }
 export function relayContextCardResource() {
-  return { uri:RELAY_CONTEXT_CARD_URI, mimeType:'text/html;profile=mcp-app', text:compactCardBrandAssets(styleContextCard(resilientCardHtml(), contextCardBrandAssets)), _meta:{ui:{prefersBorder:false,csp:{connectDomains:['https://relay.loew.fi'],resourceDomains:['https://relay.loew.fi']}},'openai/widgetDescription':'Compact staff-aware Relay context. Can reuse existing Inspector QA screenshots when requested. Open Relay for connection status and files; workspace controls are in CTRL.','openai/widgetCSP':{connect_domains:['https://relay.loew.fi'],resource_domains:['https://relay.loew.fi'],redirect_domains:['https://relay.loew.fi','https://ctrl.loew.fi']},'openai/ui':{availableDisplayModes:['inline','fullscreen']}} };
+  return { uri:RELAY_CONTEXT_CARD_URI, mimeType:'text/html;profile=mcp-app', text:compactCardBrandAssets(styleContextCard(resilientCardHtml(), contextCardBrandAssets)), _meta:{ui:{prefersBorder:false,csp:{connectDomains:['https://relay.loew.fi'],resourceDomains:['https://relay.loew.fi']}},'openai/widgetDescription':'Compact staff-aware Relay context. Can reuse existing Inspector QA screenshots when requested. Open Relay for connection status and files; workspace controls are in CTRL.','openai/widgetCSP':{connect_domains:['https://relay.loew.fi'],resource_domains:['https://relay.loew.fi'],redirect_domains:['https://relay.loew.fi','https://ctrl.loew.fi']},'openai/ui':{availableDisplayModes:['inline','fullscreen'],preferredDisplayMode:'inline'}} };
 }
 
 // Fresh cache identities: rotate whenever card HTML, JS, or CSS changes.
@@ -254,3 +256,4 @@ export function relayStatusCardResource() {
   const resource = relayContextCardResource();
   return { ...resource, uri: RELAY_STATUS_CARD_URI, text: legacyBridgeCardHtml(), _meta: { ...resource._meta, 'openai/ui':{availableDisplayModes:['inline']}, 'openai/widgetDescription':'Temporary Relay consumer bisect: current card UI with the known-good v3 ChatGPT host bridge.' } };
 }
+

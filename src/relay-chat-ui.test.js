@@ -5,7 +5,7 @@ import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI,
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v19.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v20.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -136,6 +136,7 @@ test("context card opens Relay through supported external navigation", () => {
   assert.match(resource.text, /openExternal/);
   assert.match(resource.text, /ui\/open-link/);
   assert.deepEqual(resource._meta['openai/ui'].availableDisplayModes,['inline','fullscreen']);
+  assert.equal(resource._meta['openai/ui'].preferredDisplayMode,'inline');
   assert.doesNotMatch(resource.text, /ui:\/\/relay\/control-center\/v1\.html/);
 });
 
@@ -782,4 +783,83 @@ test('a CI read mounts a live card with real test counts and stops once the run 
     await page.clock.runFor(120000);
     assert.deepEqual(calls,[{name:'relay_source_checks',args:{repo:'relay',ref:sha}}]);
   } finally {await browser.close()}
+});
+
+
+test('intrinsic sizing ignores the host viewport and reports shrinking content and width-only changes', async () => {
+  const { runInNewContext } = await import('node:vm');
+  // Execute the actual emitted sizing function, not a second implementation.
+  const html = relayContextCardResource().text;
+  const sizing = html.match(/function reportSize\(\)\{[\s\S]*?\}\}if\(typeof ResizeObserver/)[0]
+    .replace(/if\(typeof ResizeObserver$/, '');
+  let bounds = { bottom: 220.2, width: 640 };
+  const sizes = [], intrinsic = [];
+  const card = { getBoundingClientRect: () => bounds };
+  const context = {
+    Math, diag: { h: 0, w: 0 }, showDiag() {},
+    document: { documentElement: { scrollHeight: 1600, scrollWidth: 640 }, getElementById: () => card },
+    window: { scrollY: 0, parent: { postMessage: message => sizes.push(message.params) },
+      openai: { notifyIntrinsicHeight: height => intrinsic.push(height) } }
+  };
+  runInNewContext(sizing + ';globalThis.measure=reportSize', context);
+  for (const [bottom,width] of [[220.2,640],[810.1,640],[220.2,640],[810.1,640],[220.2,640],[220.2,320],[140,320]]) {
+    bounds = {bottom,width}; context.measure();
+  }
+  assert.deepEqual(sizes.map(size => size.height), [221,811,221,811,221,221,140]);
+  assert.deepEqual(sizes.map(size => size.width), [640,640,640,640,640,320,320]);
+  assert.deepEqual(intrinsic, [221,811,221,811,221,221,140]);
+  context.measure();
+  assert.equal(sizes.length, 7, 'unchanged bounds do not cause resize feedback');
+  assert.match(html, /new ResizeObserver\(reportSize\)\.observe\(document.getElementById\('card'\)\)/);
+});
+
+test('mounted card shrinks an oversized iframe and follows repeated evidence toggles', async () => {
+  const { chromium } = await import('playwright');
+  const browser = await chromium.launch({headless:true});
+  try {
+    const page = await browser.newPage();
+    const widgetUrl = 'data:text/html,' + encodeURIComponent(relayContextCardResource().text);
+    await page.setContent(`<!doctype html><script>
+      window.sizes=[];
+      addEventListener('message',event=>{
+        const frame=document.getElementById('widget'),m=event.data;
+        if(event.source!==frame?.contentWindow||m?.jsonrpc!=='2.0')return;
+        if(m.method==='ui/notifications/size-changed'){
+          window.sizes.push(m.params);
+          frame.style.height=m.params.height+'px';
+        }
+        if(m.method==='ui/initialize')frame.contentWindow.postMessage({jsonrpc:'2.0',id:m.id,result:{}},'*');
+        if(m.method==='ui/notifications/initialized')frame.contentWindow.postMessage({
+          jsonrpc:'2.0',method:'ui/notifications/tool-result',
+          params:{structuredContent:{project:'relay',claim:{primary_staff:'julian',goal:'Content sized card',state:'active'}}}
+        },'*');
+      });
+    <\/script><iframe id="widget" style="width:640px;height:1600px;border:0" src="${widgetUrl}"></iframe>`);
+    const frame = page.frameLocator('#widget');
+    await frame.locator('#title').filter({hasText:'Content sized card'}).waitFor();
+    await page.waitForFunction(()=>window.sizes.at(-1)?.height<1000);
+    const assertFits = async () => {
+      await page.waitForFunction(()=>{
+        const sizes=window.sizes;return sizes.length>0&&parseFloat(document.getElementById('widget').style.height)===sizes.at(-1).height;
+      });
+      const height=await frame.locator('#card').evaluate(node=>Math.ceil(node.getBoundingClientRect().bottom+window.scrollY));
+      const reported=await page.evaluate(()=>window.sizes.at(-1).height);
+      assert.ok(Math.abs(reported-height)<=1, 'reported height fits visible content');
+      return height;
+    };
+    await frame.locator('#card').evaluate(async () => { await document.fonts.ready; await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))); });
+    const collapsed=await assertFits();
+    for(let cycle=0;cycle<3;cycle++){
+      await frame.locator('#details > summary').click();
+      await page.waitForFunction(h=>window.sizes.at(-1)?.height>h,collapsed);
+      const expanded=await assertFits();
+      assert.ok(expanded>collapsed);
+      await frame.locator('#details > summary').click();
+      await page.waitForFunction(h=>window.sizes.at(-1)?.height===h,collapsed);
+      assert.equal(await assertFits(),collapsed);
+    }
+    await page.locator('#widget').evaluate(node=>node.style.width='320px');
+    await page.waitForFunction(()=>window.sizes.at(-1)?.width===320);
+    await assertFits();
+  } finally { await browser.close(); }
 });
