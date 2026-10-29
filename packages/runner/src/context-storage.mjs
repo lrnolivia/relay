@@ -1,7 +1,7 @@
 import {createHash} from 'node:crypto';
-// Stage one deliberately cannot create the new format. Enable only after this
-// reader/writer is the independently verified healthy rollback baseline.
-export const CONTEXT_ROLLOVER_ENABLED = false;
+// Activation requires the verified schema2-compatible rollback baseline and
+// the enforced minimum_context_schema recovery floor; see the rollout receipt.
+export const CONTEXT_ROLLOVER_ENABLED = true;
 export const CONTEXT_STORAGE_SCHEMA_CAPABILITY = 2;
 export const contextHash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const digest = text => createHash('sha256').update(text).digest('hex');
