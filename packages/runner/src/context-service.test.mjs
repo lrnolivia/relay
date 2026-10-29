@@ -18,54 +18,6 @@ test('durable project context verifies source, preserves messages and requires e
  await assert.rejects(callContext({...input,operation_id:'stale'},{EVIDENCE:bucket},api),/revision changed/);
 });
 
-test('a full context log archives eligible history into a readable immutable segment and accepts new records',async()=>{
- const objects=new Map();let etag=0,failNextLive=false;
- const bucket={get:async k=>objects.has(k)?{etag:objects.get(k).etag,json:async()=>JSON.parse(objects.get(k).text),text:async()=>objects.get(k).text}:null,put:async(k,text,{onlyIf})=>{
-  const prior=objects.get(k);if(onlyIf instanceof Headers?Boolean(prior):onlyIf.etagMatches!==prior?.etag)return null;
-  if(failNextLive&&k==='context/v1/fixture.json'){failNextLive=false;return null;}
-  objects.set(k,{text,etag:String(++etag)});return {etag:String(etag)};}};
- const file=value=>({type:'file',sha:'b'.repeat(40),encoding:'base64',content:Buffer.from(JSON.stringify(value)).toString('base64')});
- const record={project:'fixture',queue:[],legacy_branches:[],claims:[...['sender','recipient'].map(id=>({id,owner:id,branch:'fixture/'+id,state:'active',lease_until:'2099-01-01T00:00:00Z'})),{id:'finished',owner:'finished',branch:'fixture/finished',state:'completed',lease_until:'2026-01-01T00:00:00Z'}]};
- const api=async path=>path.includes('projects/fixture.json')?file({id:'fixture',managed:true,repository:'lrnolivia/fixture',default_branch:'main',coordination:{status:'enabled',record:'coordination/fixture.json',max_active_branches:4,lease_hours:12},implementation:{branch_prefixes:['fixture/'],excluded_branches:['main']}}):path.includes('coordination/fixture.json')?file(record):{sha:'a'.repeat(40)};
- const old=new Date(Date.now()-30*86400000).toISOString(),recent=new Date().toISOString();
- const entries=[],operations=[];
- for(let i=0;i<200;i++){
-  // 0-49 acknowledged messages, 50-99 messages to a finished assignment, 100-149 decisions by a finished assignment, 150-159 recent acknowledged messages, 160-199 decisions by a current assignment.
-  const kind=i<100||(i>=150&&i<160)?'message':'decision',assignment=i>=100&&i<150?'finished':'sender',recipient=i>=50&&i<100?'finished':'recipient';
-  const entry={id:'ctx_'+i.toString(16).padStart(64,'0'),kind,project:'fixture',assignment,owner:assignment,branch:'fixture/'+assignment,content:'Synthetic fixture entry '+i,repository:'lrnolivia/fixture',commit_sha:'a'.repeat(40),source_exists:true,conclusion_verified:false,created_at:i>=150&&i<160?recent:old,
-   ...(kind==='message'?{recipient_assignment:recipient,recipient_owner:recipient,recipient_branch:'fixture/'+recipient}:{}),acknowledgements:i<50||(i>=150&&i<160)?[{at:old,owner:'recipient',operation_id:'ack-'+i,kind:'explicit-caller-acknowledgement'}]:[]};
-  entries.push(entry);operations.push({id:'op-'+i,intent:'0'.repeat(64),entry_id:entry.id});
-  if(entry.acknowledgements.length)operations.push({id:'ack-'+i,intent:'0'.repeat(64),entry_id:entry.id});
- }
- objects.set('context/v1/fixture.json',{text:JSON.stringify({schema:1,revision:260,entries,operations}),etag:String(++etag)});
- const common={project:'fixture',assignment:'sender',expected_owner:'sender',expected_branch:'fixture/sender'};
- const note={...common,action:'record',kind:'decision',content:'Synthetic fixture: new decision after archival.',commit_sha:'a'.repeat(40)};
- await assert.rejects(callContext({...note,expected_revision:260,operation_id:'blocked'},{EVIDENCE:bucket},api),/preserve history before archival/);
- const archive={...common,action:'archive',expected_revision:260,operation_id:'archive-1',older_than_days:7};
- await assert.rejects(callContext({...common,action:'archive',expected_revision:260,operation_id:'archive-0'},{EVIDENCE:bucket},api),/older_than_days/);
- failNextLive=true;await assert.rejects(callContext(archive,{EVIDENCE:bucket},api),/storage changed/);
- assert.equal(JSON.parse(objects.get('context/v1/fixture.json').text).entries.length,200);
- const archived=await callContext(archive,{EVIDENCE:bucket},api);
- assert.equal(archived.ok,true);assert.equal(archived.revision,261);assert.equal(archived.archive.segment,1);assert.equal(archived.archive.entry_count,150);assert.equal(archived.archive.operation_count,200);
- assert.equal([...objects.keys()].filter(k=>k.startsWith('context/v1/archive/fixture/')).length,1);
- assert.equal((await callContext(archive,{EVIDENCE:bucket},api)).replayed,true);
- const live=JSON.parse(objects.get('context/v1/fixture.json').text);assert.equal(live.entries.length,50);assert.equal(live.operations.length,61);
- assert.deepEqual(live.entries.map(x=>x.content),entries.slice(150).map(x=>x.content));
- const segment=JSON.parse(objects.get(archived.archive.key).text);assert.deepEqual(segment.entries,entries.slice(0,150));
- const recorded=await callContext({...note,expected_revision:261,operation_id:'after-archive'},{EVIDENCE:bucket},api);assert.equal(recorded.ok,true);assert.equal(recorded.revision,262);
- const read=await callContext({action:'read',project:'fixture',assignment:'sender'},{EVIDENCE:bucket},api);
- assert.deepEqual(read.archives,[{segment:1,entry_count:150,first_created_at:old,last_created_at:old,archived_at:archived.archive.archived_at}]);
- let cursor=0,pages=0;const history=[];
- do{const page=await callContext({action:'read',project:'fixture',assignment:'sender',archive_segment:1,cursor,limit:20},{EVIDENCE:bucket},api);history.push(...page.entries);cursor=page.next_cursor;pages++;}while(cursor!==null);
- assert.equal(pages,8);assert.deepEqual(history,entries.slice(0,150));
- assert.equal((await callContext({action:'read',project:'fixture',assignment:'finished',archive_segment:1,limit:20},{EVIDENCE:bucket},api)).entries[0].content,'Synthetic fixture entry 50');
- await assert.rejects(callContext({action:'read',project:'fixture',assignment:'sender',archive_segment:2},{EVIDENCE:bucket},api),/segment not found/);
- const replay=await callContext({...common,action:'ack',expected_revision:0,operation_id:'ack-0',entry_id:entries[0].id},{EVIDENCE:bucket},api).catch(error=>error);assert.match(replay.message,/different context intent/);
- await assert.rejects(callContext({...archive,expected_revision:262,operation_id:'archive-2'},{EVIDENCE:bucket},api),/No context entries are eligible/);
- objects.set(archived.archive.key,{text:objects.get(archived.archive.key).text.replace('entry 0','entry X'),etag:String(++etag)});
- await assert.rejects(callContext({action:'read',project:'fixture',assignment:'sender',archive_segment:1},{EVIDENCE:bucket},api),/integrity/);
-});
-
 test('relationship proposals remain provisional until a verified bound lead curates; staff loading and retraction preserve provenance',async()=>{
  let stored=null,etag=0;
  const bucket={get:async()=>stored?{etag:String(etag),json:async()=>JSON.parse(stored)}:null,put:async(k,text,{onlyIf})=>{if(onlyIf instanceof Headers?Boolean(stored):onlyIf.etagMatches!==String(etag))return null;stored=text;return {etag:String(++etag)};}};
@@ -95,4 +47,68 @@ test('relationship proposals remain provisional until a verified bound lead cura
  assert.deepEqual((await read()).staff_relationship.notes,[]);
  await assert.rejects(callContext({...curate,expected_revision:3,operation_id:'recurate'},env,api,identity),/current attributed/);
  record.claims[1].owner='successor';await assert.rejects(callContext(curate,env,api,identity),/verified lead/);
+});
+
+
+function lifecycleFixture(){
+ const objects=new Map();let serial=0,afterPut=null;
+ const bucket={get:async k=>{const x=objects.get(k);return x?{etag:x.etag,json:async()=>JSON.parse(x.text),text:async()=>x.text}:null;},put:async(k,text,{onlyIf})=>{const old=objects.get(k);if(onlyIf instanceof Headers?!!old:old?.etag!==onlyIf.etagMatches)return null;const value={text,etag:String(++serial)};objects.set(k,value);if(k==='context/v1/fixture.json'&&afterPut)afterPut();return value;}};
+ const file=value=>({type:'file',sha:'b'.repeat(40),encoding:'base64',content:Buffer.from(JSON.stringify(value)).toString('base64')});
+ const claims=['sender','recipient','other'].map(id=>({id,owner:id,branch:'fixture/'+id,state:'active',lease_until:'2099-01-01T00:00:00Z'}));
+ const coordination={project:'fixture',queue:[],legacy_branches:[],claims};
+ const api=async path=>path.includes('projects/fixture.json')?file({id:'fixture',managed:true,repository:'lrnolivia/fixture',default_branch:'main',coordination:{status:'enabled',record:'coordination/fixture.json',max_active_branches:4,lease_hours:12},implementation:{branch_prefixes:['fixture/'],excluded_branches:['main']}}):path.includes('coordination/fixture.json')?file(coordination):{sha:'a'.repeat(40)};
+ let n=0;
+ const call=args=>callContext(args,{EVIDENCE:bucket},api);
+ const read=(assignment='recipient',extras={})=>call({action:'read',project:'fixture',assignment,...extras});
+ const write=async(assignment,action,extras={})=>{const claim=claims.find(x=>x.id===assignment),revision=JSON.parse(objects.get('context/v1/fixture.json')?.text||'{"revision":0}').revision;return call({project:'fixture',assignment,action,expected_owner:claim.owner,expected_branch:claim.branch,expected_revision:revision,operation_id:'operation-'+(++n),...extras});};
+ const message=(extras={})=>write('sender','record',{kind:'message',recipient_assignment:'recipient',content:'Unresolved blocker',commit_sha:'a'.repeat(40),...extras});
+ return {objects,bucket,claims,call,read,write,message,setAfterPut(fn){afterPut=fn;}};
+}
+test('explicit inbox lifecycle preserves unresolved ack, evidence, audit and reversible archive',async()=>{
+ const f=lifecycleFixture(),created=await f.message(),id=created.entry.id;
+ assert.equal((await f.read('recipient',{view:'inbox'})).entries[0].inbox_state,'new');
+ await f.write('recipient','ack',{entry_id:id});assert.equal((await f.read('recipient',{view:'inbox'})).entries[0].inbox_state,'acknowledged');
+ await assert.rejects(f.write('recipient','archive',{entry_id:id,reason:'clear'}),/explicitly resolved/);
+ await assert.rejects(f.write('other','resolve',{entry_id:id,reason:'clear',commit_sha:'a'.repeat(40)}),/recipient changed/);
+ await assert.rejects(f.write('recipient','resolve',{entry_id:id,reason:'fixed'}),/exact source evidence/);
+ await f.write('recipient','resolve',{entry_id:id,reason:'Verified fix',commit_sha:'a'.repeat(40)});assert.equal((await f.read('recipient',{view:'inbox'})).entries.length,0);
+ await f.write('recipient','archive',{entry_id:id,reason:'Completed'});assert.equal((await f.read()).entries.length,0);assert.equal((await f.read('recipient',{view:'history'})).entries[0].content,'Unresolved blocker');
+ await f.write('recipient','reopen',{entry_id:id,reason:'Regression'});assert.equal((await f.read('recipient',{view:'inbox'})).entries[0].inbox_state,'new');
+ const audit=await f.read('recipient',{view:'audit',entry_id:id});assert.deepEqual(audit.entries.map(x=>x.action),['record','ack','resolve','archive','reopen']);assert.equal(audit.entries[2].event.commit_sha,'a'.repeat(40));
+ await assert.rejects(f.read('other',{view:'audit',entry_id:id}),/unavailable/);
+});
+test('completed recipient blockers remain history and handoff conflicts stay visible but not actionable',async()=>{
+ const f=lifecycleFixture(),id=(await f.message()).entry.id;f.claims[1].state='completed';assert.equal((await f.read('recipient',{view:'inbox'})).entries[0].id,id);
+ f.claims[1].state='active';f.claims[1].owner='successor';const entry=(await f.read('recipient',{view:'inbox'})).entries[0];assert.equal(entry.id,id);assert.equal(entry.reconciliation_required,true);
+ await assert.rejects(f.write('recipient','ack',{entry_id:id}),/recipient changed/);
+});
+test('page tokens bind revision, assignment, view and owner; legacy numeric remains compatible',async()=>{
+ const f=lifecycleFixture();for(let i=0;i<4;i++)await f.message();const first=await f.read('recipient',{view:'inbox',limit:2});assert.ok(first.next_page_token);const second=await f.read('recipient',{view:'inbox',limit:2,page_token:first.next_page_token});assert.equal(new Set([...first.entries,...second.entries].map(x=>x.id)).size,4);
+ await assert.rejects(f.read('other',{view:'inbox',page_token:first.next_page_token}),/page changed/);
+ await assert.rejects(f.read('recipient',{view:'history',page_token:first.next_page_token}),/page changed/);
+ f.claims[1].owner='successor';await assert.rejects(f.read('recipient',{view:'inbox',page_token:first.next_page_token}),/page changed/);f.claims[1].owner='recipient';
+ await f.write('recipient','ack',{entry_id:first.entries[0].id});await assert.rejects(f.read('recipient',{view:'inbox',page_token:first.next_page_token}),/page changed/);
+ assert.equal((await f.read('recipient',{cursor:2,limit:2})).entries.length,2);
+ await assert.rejects(f.read('recipient',{page_token:'not-json'}),/page changed/);
+});
+test('recipient handoff during commit produces retained reconciliation receipt',async()=>{
+ const f=lifecycleFixture();f.setAfterPut(()=>{f.claims[1].owner='successor';});const result=await f.message();assert.equal(result.ok,false);assert.equal(result.reconcile_required,true);assert.equal((await f.read('recipient',{view:'inbox'})).entries[0].reconciliation_required,true);
+});
+test('stage one refuses capacity migration without modifying full live records',async()=>{
+ const f=lifecycleFixture();f.objects.set('context/v1/fixture.json',{etag:'seed',text:JSON.stringify({schema:1,revision:600,entries:[],operations:Array.from({length:600},(_,i)=>({id:'old'+i,intent:'old'}))})});
+ await assert.rejects(f.message(),/rollback baseline/);await assert.rejects(f.write('sender','compact'),/rollback baseline/);assert.equal(JSON.parse(f.objects.get('context/v1/fixture.json').text).revision,600);
+});
+test('activated storage supports legacy-runtime rollback reader, replay and lifecycle beyond old caps',async()=>{
+ const {readFile}=await import('node:fs/promises');const code=await readFile(new URL('./context-storage.mjs',import.meta.url),'utf8');const active=await import('data:text/javascript;base64,'+Buffer.from(code.replace('CONTEXT_ROLLOVER_ENABLED = false','CONTEXT_ROLLOVER_ENABLED = true')).toString('base64'));
+ const f=lifecycleFixture();const original={action:'record',project:'fixture',assignment:'sender',expected_owner:'sender',expected_branch:'fixture/sender',expected_revision:0,operation_id:'exact-replay',kind:'message',recipient_assignment:'recipient',content:'Original pending',commit_sha:'a'.repeat(40)};
+ const first=await f.call(original),legacy=JSON.parse(f.objects.get('context/v1/fixture.json').text);
+ for(let i=1;i<200;i++)legacy.entries.push({...first.entry,id:'ctx_'+i.toString(16).padStart(64,'0'),content:'pending '+i});
+ for(let i=1;i<600;i++)legacy.operations.push({id:'old-'+i,intent:'old-'+i,entry_id:first.entry.id});legacy.revision=600;f.objects.set('context/v1/fixture.json',{etag:'seed',text:JSON.stringify(legacy)});
+ const store=await active.openContext(f.bucket,'fixture');await store.migrate();store.record.revision++;await store.commit();
+ assert.equal((await f.call(original)).replayed,true);await assert.rejects(f.call({...original,content:'Changed'}),/different context intent/);
+ await f.message();await f.write('recipient','ack',{entry_id:first.entry.id});let token=null,total=0;do{const page=await f.read('recipient',{view:'inbox',...(token?{page_token:token}:{})});total+=page.entries.length;token=page.next_page_token;}while(token);assert.equal(total,201);
+ await f.write('recipient','resolve',{entry_id:first.entry.id,reason:'fixed',commit_sha:'a'.repeat(40)});await f.write('recipient','archive',{entry_id:first.entry.id,reason:'done'});await f.write('recipient','reopen',{entry_id:first.entry.id,reason:'still blocked'});assert.equal((await f.read('recipient',{view:'history'})).storage_schema,2);
+ await assert.rejects(f.read('recipient',{cursor:20}),/migrated/);
+ // No caller can smuggle an uncommitted root through a token.
+ const page=await f.read('recipient',{view:'inbox',limit:1}),tampered=JSON.parse(Buffer.from(page.next_page_token,'base64url'));tampered.after='../other';await assert.rejects(f.read('recipient',{view:'inbox',page_token:Buffer.from(JSON.stringify(tampered)).toString('base64url')}),/page changed/);
 });

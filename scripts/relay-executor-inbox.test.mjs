@@ -146,7 +146,7 @@ test('assignment-bound context reads keep staff notes and directed messages isol
   const entries = ['ellis', 'julian'].flatMap(staff_id => [
     { id: 'signal-' + staff_id, kind: 'relationship-signal' },
     { id: 'note-' + staff_id, kind: 'relationship-note', source_entry_id: 'signal-' + staff_id, relationship: { staff_id, durable: true, topic: 'workflow', note: staff_id + ' curated note', source: 'explicit-feedback', evidence_refs: ['synthetic:user-feedback'] } },
-    { id: 'message-' + staff_id, kind: 'message', assignment: staff_id + '-work', recipient_assignment: staff_id + '-work', content: staff_id + ' directed message' }
+    { id: 'message-' + staff_id, kind: 'message', assignment: staff_id + '-work', recipient_assignment: staff_id + '-work', recipient_owner: staff_id === 'ellis' ? 'owner-0' : 'owner-1', recipient_branch: 'fixture/' + staff_id + '-work', content: staff_id + ' directed message' }
   ]);
   const file = value => ({ type: 'file', sha: 'b'.repeat(40), encoding: 'base64', content: Buffer.from(JSON.stringify(value)).toString('base64') });
   const api = async route => route.includes('projects/fixture.json') ? file({ id: 'fixture', managed: true, repository: 'lrnolivia/fixture', default_branch: 'main', coordination: { status: 'enabled', record: 'coordination/fixture.json', max_active_branches: 4, lease_hours: 12 }, implementation: { branch_prefixes: ['fixture/'], excluded_branches: ['main'] } }) : route.includes('coordination/fixture.json') ? file({ project: 'fixture', queue: [], legacy_branches: [], claims }) : { sha: 'a'.repeat(40) };
@@ -172,13 +172,26 @@ test('assignment-bound context reads keep staff notes and directed messages isol
     assert.equal(saved.assignment, claims[i].id);
     assert.equal(saved.context.staff_relationship.staff_id, staff);
     assert.deepEqual(saved.context.staff_relationship.notes.map(note => note.note), staff ? [staff + ' curated note'] : []);
-    assert.deepEqual(saved.context.entries.filter(entry => entry.kind === 'message').map(entry => entry.content), staff ? [staff + ' directed message'] : []);
+    // Approved lifecycle separation moves directed work out of general context;
+    // preserve the original cross-assignment isolation assertion in the inbox.
+    assert.deepEqual(saved.context.entries.filter(entry => entry.kind === 'message'), []);
+    assert.equal(saved.inbox_supported, true);
+    assert.deepEqual(saved.inbox.entries.map(entry => entry.content), staff ? [staff + ' directed message'] : []);
   }
   // Reassigning one assignment's staff must replace its notes without touching another inbox.
   const julianBefore = await fs.readFile(inboxes[1].filename, 'utf8');
   claims[0].primary_staff = 'julian';
   await inboxes[0].refresh();
   assert.deepEqual((await readInbox(inboxes[0])).context.staff_relationship.notes.map(note => note.note), ['julian curated note']);
+  assert.equal(await fs.readFile(inboxes[1].filename, 'utf8'), julianBefore);
+  // A successor must still see old-binding blockers, but cannot treat them as
+  // addressed/actionable until canonical reconciliation resolves ownership.
+  claims[0].owner = 'successor';
+  assert.equal((await inboxes[0].refresh()).available, true);
+  const successor = await readInbox(inboxes[0]);
+  assert.equal(successor.inbox.entries[0].content, 'ellis directed message');
+  assert.equal(successor.inbox.entries[0].reconciliation_required, true);
+  assert.equal(successor.acknowledged, false);
   assert.equal(await fs.readFile(inboxes[1].filename, 'utf8'), julianBefore);
   assert.ok(calls.every(({ name, args }) => ['relay_context', 'relay_runner_feedback_peek'].includes(name) && args.project === 'fixture' && claims.some(claim => claim.id === args.assignment)));
 });
@@ -343,4 +356,124 @@ test('report applicability race is retained as a conflict and oversized refresh 
     oversized = true; assert.equal((await inbox.refresh()).available, false);
     snapshot = JSON.parse(await fs.readFile(inbox.filename)); assert.equal(snapshot.context.entries[0].content, 'safe');
   } finally { await fs.rm(directory, { recursive: true, force: true }); }
+});
+
+
+test('lifecycle pending pages stay separate, retain acknowledged work, and use opaque tokens without mutations', async t => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'relay-inbox-lifecycle-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const calls = [];
+  const rpc = async (name, args) => {
+    calls.push({ name, args });
+    if (name !== 'relay_context') { assert.equal(name, 'relay_runner_feedback_peek'); return emptyFeedback(); }
+    assert.equal(args.action, 'read');
+    if (args.view === 'inbox') return { ok: true, inbox_lifecycle: true, revision: 8,
+      entries: [{ id: args.page_token ? 'next' : 'pending', kind: 'message', content: 'Still unresolved', inbox_state: 'acknowledged' }],
+      next_page_token: args.page_token ? null : 'opaque-page-2' };
+    return { ok: true, inbox_lifecycle: true, revision: 8, entries: [{ kind: 'decision', content: 'Project context' }, { kind: 'message', content: 'Not general context' }] };
+  };
+  const inbox = createExecutionInbox({ directory, rpc, project: 'fixture', assignment: 'one' });
+  assert.equal((await inbox.refresh()).backlog, true);
+  const first = await readInbox(inbox);
+  assert.equal(first.inbox_supported, true);
+  assert.equal(first.inbox.entries[0].inbox_state, 'acknowledged');
+  assert.deepEqual(first.context.entries, [{ kind: 'decision', content: 'Project context' }]);
+  assert.equal(first.acknowledged, false); assert.equal(first.consumption_verified, false);
+  assert.equal(first.inbox.page_token, null);
+  assert.equal((await inbox.refresh()).backlog, false);
+  assert.equal((await readInbox(inbox)).inbox.entries[0].id, 'next');
+  assert.equal(calls.filter(x => x.args.view === 'inbox')[1].args.page_token, 'opaque-page-2');
+  assert.ok(calls.filter(x => x.name === 'relay_context').every(x => x.args.action === 'read'));
+});
+
+test('older context runtime is explicitly unsupported rather than an empty pending inbox', async t => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'relay-inbox-legacy-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const calls = [];
+  const rpc = async (name, args) => {
+    calls.push({ name, args });
+    if (name === 'relay_context') { assert.equal('view' in args, false); assert.equal('page_token' in args, false); return { ok: true, revision: 1, entries: [{ kind: 'message', content: 'Legacy retained message' }] }; }
+    return emptyFeedback();
+  };
+  const inbox = createExecutionInbox({ directory, rpc, project: 'fixture', assignment: 'one' });
+  assert.equal((await inbox.refresh()).available, true);
+  const saved = await readInbox(inbox);
+  assert.equal(saved.inbox_supported, false); assert.equal(saved.inbox, null);
+  assert.equal(saved.context.entries[0].content, 'Legacy retained message');
+  assert.equal(calls.filter(x => x.name === 'relay_context').length, 1);
+});
+
+test('failed pending page preserves complete prior snapshot and restarts token without legacy downgrade', async t => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'relay-inbox-token-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  let fail = false; const tokens = [];
+  const rpc = async (name, args) => {
+    if (name !== 'relay_context') return emptyFeedback();
+    if (!args.view) return { ok: true, inbox_lifecycle: true, revision: 9, entries: [] };
+    tokens.push(args.page_token ?? null);
+    if (fail) throw Error('private token binding failure');
+    return { ok: true, inbox_lifecycle: true, revision: 9, entries: [{ kind: 'message', content: 'Pending blocker' }], next_page_token: 'bound-token' };
+  };
+  const inbox = createExecutionInbox({ directory, rpc, project: 'fixture', assignment: 'one' });
+  await inbox.refresh(); const good = await readInbox(inbox);
+  fail = true; assert.equal((await inbox.refresh()).available, false);
+  const stale = await readInbox(inbox);
+  assert.deepEqual(stale.inbox, good.inbox); assert.equal(stale.inbox_supported, true);
+  assert.doesNotMatch(JSON.stringify(stale), /private token binding failure/);
+  fail = false; assert.equal((await inbox.refresh()).available, true);
+  assert.deepEqual(tokens, [null, 'bound-token', null]);
+});
+
+test('oversized lifecycle page preserves previous pending evidence within the 96KiB publication limit', async t => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'relay-inbox-pending-size-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  let oversized = false;
+  const rpc = async (name, args) => name !== 'relay_context' ? emptyFeedback() : !args.view
+    ? { ok: true, inbox_lifecycle: true, revision: 1, entries: [] }
+    : { ok: true, inbox_lifecycle: true, revision: 1, entries: [{ kind: 'message', content: oversized ? 'x'.repeat(100000) : 'Do not lose this blocker' }], next_page_token: null };
+  const inbox = createExecutionInbox({ directory, rpc, project: 'fixture', assignment: 'one' });
+  await inbox.refresh(); oversized = true;
+  assert.equal((await inbox.refresh()).available, false);
+  const saved = await fs.readFile(inbox.filename);
+  assert.ok(saved.length <= 98304);
+  assert.equal(JSON.parse(saved).inbox.entries[0].content, 'Do not lose this blocker');
+});
+
+test('context and pending tokens advance independently, including empty scanned pages', async t => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'relay-inbox-two-tokens-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const calls = [];
+  const rpc = async (name, args) => {
+    if (name !== 'relay_context') return emptyFeedback();
+    calls.push(args);
+    return { ok: true, inbox_lifecycle: true, revision: 1, entries: [], next_page_token: args.page_token ? null : args.view === 'inbox' ? 'pending-next' : 'context-next' };
+  };
+  const inbox = createExecutionInbox({ directory, rpc, project: 'fixture', assignment: 'one' });
+  assert.equal((await inbox.refresh()).backlog, true);
+  assert.equal((await inbox.refresh()).backlog, false);
+  assert.equal(calls[2].page_token, 'context-next');
+  assert.equal(calls[3].page_token, 'pending-next');
+  assert.ok(calls.every(args => !('cursor' in args)));
+});
+
+test('rollback to a legacy runtime retains the last page on token rejection then reports unsupported', async t => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'relay-inbox-rollback-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  let legacy = false;
+  const rpc = async (name, args) => {
+    if (name !== 'relay_context') return emptyFeedback();
+    if (legacy) {
+      if ('page_token' in args || 'view' in args) throw Error('unsupported argument');
+      return { ok: true, revision: 1, entries: [] };
+    }
+    return { ok: true, inbox_lifecycle: true, revision: 1, entries: [], next_page_token: 'next' };
+  };
+  const inbox = createExecutionInbox({ directory, rpc, project: 'fixture', assignment: 'one' });
+  await inbox.refresh(); legacy = true;
+  assert.equal((await inbox.refresh()).available, false);
+  assert.equal((await readInbox(inbox)).inbox_supported, true);
+  assert.equal((await inbox.refresh()).available, true);
+  const saved = await readInbox(inbox);
+  assert.equal(saved.inbox_supported, false); assert.equal(saved.inbox, null);
+  assert.equal(saved.context.page_token, null);
 });
