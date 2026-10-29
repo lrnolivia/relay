@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T07:23:13.521Z",
+  "updated_at": "2026-10-29T07:27:02.994Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -20017,7 +20017,8 @@
         "website/public/styles.css",
         "website/test/site-controls.test.mjs",
         "website/public/assets/sun.svg",
-        "website/public/assets/moon.svg"
+        "website/public/assets/moon.svg",
+        "scripts/linux_overlay_host.py"
       ],
       "resources": [
         "rtxforge-linux-helper-lifecycle",
@@ -20026,7 +20027,7 @@
       ],
       "goal": "Make the existing standalone Linux overlay helper available with the app window closed in Desktop and Steam Game Mode; close the installed AppImage immediate-start gap and correct guide instructions that incorrectly require keeping the manager open.",
       "acceptance": "Preserve the existing helper lifecycle baseline, navigation/OS/header consistency, no Beta in header and theme/color criteria recorded in this assignment's baseline and amendments. Also describe RTX20/30/40/50 install support accurately: compatible card/game/package requirements remain, RTX50 uses native MFG and rtxForge does not install an MFG unlock for it. Change website copy only; no installer/provider behavior change.",
-      "next_action": "Finish implementation and test helper lifecycle, shared responsive header/OS behavior, theme colors and source-backed RTX50 copy, then review/publish.",
+      "next_action": "Prevent preset replay before acquiring the existing host singleton when AppImage service starts beside the app, then complete helper/UI verification and publication.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -20068,8 +20069,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T07:23:13.521Z",
-      "lease_until": "2026-10-29T19:23:13.521Z",
+      "updated_at": "2026-10-29T07:27:02.994Z",
+      "lease_until": "2026-10-29T19:27:02.994Z",
       "amendment_count": 3,
       "amendments": [
         {
