@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T20:15:21.722Z",
+  "updated_at": "2026-10-29T21:42:29.202Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7457,6 +7457,43 @@
             "id": "rtxforge-website-in-app-report-links-20261029:acceptance:0",
             "text": "App facts (source: scripts/beta_report.py at 1e2b8f4): (1) The app drafts the same report as website/public/report.html and .github/ISSUE_TEMPLATE/beta-report.yml, with the same field ids, labels and choices, then opens the prefilled GitHub issue form (template=beta-report.yml). It can also save a redacted log ZIP to Documents/rtxForge Reports for attaching, or draft a comment for an existing issue. Only the OS and 'What happened?' are required. (2) Where to find it: Windows, a game's page, Settings and Game Mode; Linux, Library > Reports and Notes > Prepare Beta Report. (3) The only accepted link is rtxforge://support/logs, optionally with ?issue=N (N is 1-7 digits and not zero, and the link is at most 200 characters). Anything else is refused. The link opens the app's beta reports and never scans, sends or uploads anything by itself. (4) Who has the link: the Windows Beta 4 installer registers it per user (verified on Lauren's PC). The Linux desktop install step registers it through xdg-mime. Registration under Flatpak and opening the link from a browser have not been verified on either OS, and builds older than Beta 4 don't register it. The website must therefore treat it as optional: show it next to the existing web form, never instead of it, and say plainly that it needs rtxForge Beta 4 or later installed. Done when: the report page and guide say in-app reports exist and how to reach them on each OS; an 'Open in rtxForge' link uses exactly rtxforge://support/logs (plus ?issue=N wherever an issue number is known, for example after filing, to attach logs); the no-JavaScript form and every current flow still work; nothing claims behavior that hasn't been verified. Run the existing site checks plus a desktop/mobile/light/dark and accessibility pass, then deploy through the standalone website mechanism. No app-repository changes.",
             "at": "2026-10-29T18:00:08.602Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-report-github-app-20261029",
+      "owner": "codex-open",
+      "goal": "Set up the GitHub identity that will file in-app bug reports as issues on lrnolivia/rtxForge, and store its credentials as Cloudflare secrets for the loew.fi report service. Lauren asked for this on 2026-10-29 in Claude Code: 'make a relay assignment for the github app and secret, i think codex can do that'. The app is meant to submit reports to GitHub Issues on its own, so testers need no GitHub account and there is no 'open GitHub' step. Claude builds the report service and the app side separately; this assignment covers only the identity and the secrets.",
+      "acceptance": "(1) A GitHub App, for example 'rtxForge Reports', owned by lrnolivia, installed ONLY on lrnolivia/rtxForge. Repository permissions: Issues read and write, Metadata read; nothing else. No webhook (or webhook inactive). Not installable by other accounts. (2) The labels the service will apply exist on rtxForge: 'beta-report' (and 'from-app' if absent), created through the app or by Lauren. (3) Credentials go only into Cloudflare secrets, never into git, Relay records, logs, chat or any file: the App ID, the installation ID and the private key (PEM). They are stored as Worker secrets RTXFORGE_REPORTS_APP_ID, RTXFORGE_REPORTS_INSTALLATION_ID and RTXFORGE_REPORTS_PRIVATE_KEY on a Worker named rtxforge-reports in Lauren's Cloudflare account. Create that Worker as an empty placeholder if it doesn't exist yet; Claude deploys the service code into it. If Cloudflare Secrets Store is preferred, record the store and secret names instead. (4) Verify without filing a public issue: mint an installation token from the stored credentials inside Cloudflare (or with a one-off local check that never prints or saves the key or token), call GET /repos/lrnolivia/rtxForge/installation and GET /repos/lrnolivia/rtxForge/labels, and confirm the token's permissions are exactly issues:write and metadata:read. (5) Hand back, in the Relay completion evidence, only non-secret facts: App name, slug, App ID, installation ID, permissions, Worker name, secret names (never values) and the verification results. Any step that needs Lauren's own sign-in, a GitHub 2FA confirmation or accepting terms is done by Lauren; say exactly which click she needs to make. The private key file is deleted locally once stored.",
+      "next_action": "Create and install the GitHub App with minimal permissions, put its credentials into the rtxforge-reports Worker secrets, verify the installation token's scope without filing an issue, then complete with non-secret evidence. The service and app integration belong to Claude (claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd).",
+      "paths": [
+        "relay-only:github-app/rtxforge-reports",
+        "relay-only:cloudflare/workers/rtxforge-reports/secrets"
+      ],
+      "resources": [
+        "rtxforge-report-github-app",
+        "rtxforge-report-service-secrets"
+      ],
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-29T21:42:29.202Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Set up the GitHub identity that will file in-app bug reports as issues on lrnolivia/rtxForge, and store its credentials as Cloudflare secrets for the loew.fi report service. Lauren asked for this on 2026-10-29 in Claude Code: 'make a relay assignment for the github app and secret, i think codex can do that'. The app is meant to submit reports to GitHub Issues on its own, so testers need no GitHub account and there is no 'open GitHub' step. Claude builds the report service and the app side separately; this assignment covers only the identity and the secrets.",
+          "acceptance": "(1) A GitHub App, for example 'rtxForge Reports', owned by lrnolivia, installed ONLY on lrnolivia/rtxForge. Repository permissions: Issues read and write, Metadata read; nothing else. No webhook (or webhook inactive). Not installable by other accounts. (2) The labels the service will apply exist on rtxForge: 'beta-report' (and 'from-app' if absent), created through the app or by Lauren. (3) Credentials go only into Cloudflare secrets, never into git, Relay records, logs, chat or any file: the App ID, the installation ID and the private key (PEM). They are stored as Worker secrets RTXFORGE_REPORTS_APP_ID, RTXFORGE_REPORTS_INSTALLATION_ID and RTXFORGE_REPORTS_PRIVATE_KEY on a Worker named rtxforge-reports in Lauren's Cloudflare account. Create that Worker as an empty placeholder if it doesn't exist yet; Claude deploys the service code into it. If Cloudflare Secrets Store is preferred, record the store and secret names instead. (4) Verify without filing a public issue: mint an installation token from the stored credentials inside Cloudflare (or with a one-off local check that never prints or saves the key or token), call GET /repos/lrnolivia/rtxForge/installation and GET /repos/lrnolivia/rtxForge/labels, and confirm the token's permissions are exactly issues:write and metadata:read. (5) Hand back, in the Relay completion evidence, only non-secret facts: App name, slug, App ID, installation ID, permissions, Worker name, secret names (never values) and the verification results. Any step that needs Lauren's own sign-in, a GitHub 2FA confirmation or accepting terms is done by Lauren; say exactly which click she needs to make. The private key file is deleted locally once stored.",
+          "at": "2026-10-29T21:42:29.202Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-report-github-app-20261029:acceptance:0",
+            "text": "(1) A GitHub App, for example 'rtxForge Reports', owned by lrnolivia, installed ONLY on lrnolivia/rtxForge. Repository permissions: Issues read and write, Metadata read; nothing else. No webhook (or webhook inactive). Not installable by other accounts. (2) The labels the service will apply exist on rtxForge: 'beta-report' (and 'from-app' if absent), created through the app or by Lauren. (3) Credentials go only into Cloudflare secrets, never into git, Relay records, logs, chat or any file: the App ID, the installation ID and the private key (PEM). They are stored as Worker secrets RTXFORGE_REPORTS_APP_ID, RTXFORGE_REPORTS_INSTALLATION_ID and RTXFORGE_REPORTS_PRIVATE_KEY on a Worker named rtxforge-reports in Lauren's Cloudflare account. Create that Worker as an empty placeholder if it doesn't exist yet; Claude deploys the service code into it. If Cloudflare Secrets Store is preferred, record the store and secret names instead. (4) Verify without filing a public issue: mint an installation token from the stored credentials inside Cloudflare (or with a one-off local check that never prints or saves the key or token), call GET /repos/lrnolivia/rtxForge/installation and GET /repos/lrnolivia/rtxForge/labels, and confirm the token's permissions are exactly issues:write and metadata:read. (5) Hand back, in the Relay completion evidence, only non-secret facts: App name, slug, App ID, installation ID, permissions, Worker name, secret names (never values) and the verification results. Any step that needs Lauren's own sign-in, a GitHub 2FA confirmation or accepting terms is done by Lauren; say exactly which click she needs to make. The private key file is deleted locally once stored.",
+            "at": "2026-10-29T21:42:29.202Z"
           }
         ]
       }
