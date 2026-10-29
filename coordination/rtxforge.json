@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T05:16:53.013Z",
+  "updated_at": "2026-10-29T05:17:09.042Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -19042,6 +19042,45 @@
       "completed_at": "2026-10-29T04:26:28.607Z"
     },
     {
+      "id": "rtxforge-website-overlay-light-20261029",
+      "owner": "root:website_overlay_sdr",
+      "branch": "rtxforge/website-overlay-light-20261029",
+      "paths": [
+        "website/"
+      ],
+      "resources": [
+        "rtxforge-website-overlay-media"
+      ],
+      "goal": "Publish Lauren's authentic inZOI Light gameplay overlay capture for website Light mode while preserving Control SDR for Dark mode.",
+      "acceptance": "Use exact approved 1920x1080 inZOI source pixels without edits and losslessly encode; preserve numbers, headings, framing and all other screenshots. Both OS tabs select inZOI in Light and Control SDR in Dark, including live theme changes on the Overlay section. Accurate image dimensions, alt and provenance. Existing website checks, exact-head CI, normal human-attributed merge, existing Worker deployment, live asset hash/selection verification and retained rollback. User explicitly authorizes subagent /root/website_overlay_sdr; owner root:website_overlay_sdr is its schema-compatible canonical executor encoding.",
+      "next_action": "PR112 f2acd6aa73e39f10835708028d4e90bbaf9912de: 13 website tests, 8 theme/OS checks and exact lossless pixels pass. Candidate cc783c26 uploaded, no traffic; exact CI running. Preserve rollback a82fd4d1. Bind canonical Visuals captures after integration; no authenticated local-media ingestion route available.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "687440169e2dcad9fe88c9c94ea7315c0b8283fc",
+      "state": "active",
+      "created_at": "2026-10-29T05:08:29.418Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish Lauren's authentic inZOI Light gameplay overlay capture for website Light mode while preserving Control SDR for Dark mode.",
+          "acceptance": "Use exact approved 1920x1080 inZOI source pixels without edits and losslessly encode; preserve numbers, headings, framing and all other screenshots. Both OS tabs select inZOI in Light and Control SDR in Dark, including live theme changes on the Overlay section. Accurate image dimensions, alt and provenance. Existing website checks, exact-head CI, normal human-attributed merge, existing Worker deployment, live asset hash/selection verification and retained rollback. User explicitly authorizes subagent /root/website_overlay_sdr; owner root:website_overlay_sdr is its schema-compatible canonical executor encoding.",
+          "at": "2026-10-29T05:08:29.418Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-website-overlay-light-20261029:acceptance:0",
+            "text": "Use exact approved 1920x1080 inZOI source pixels without edits and losslessly encode; preserve numbers, headings, framing and all other screenshots. Both OS tabs select inZOI in Light and Control SDR in Dark, including live theme changes on the Overlay section. Accurate image dimensions, alt and provenance. Existing website checks, exact-head CI, normal human-attributed merge, existing Worker deployment, live asset hash/selection verification and retained rollback. User explicitly authorizes subagent /root/website_overlay_sdr; owner root:website_overlay_sdr is its schema-compatible canonical executor encoding.",
+            "at": "2026-10-29T05:08:29.418Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-29T05:13:57.083Z",
+      "lease_until": "2026-10-29T17:13:57.083Z"
+    },
+    {
       "id": "rtxforge-windows-linux-sync-20261029",
       "owner": "01a185b0-7901-78a3-a702-6e77197cf28d",
       "branch": "rtxforge/windows-linux-sync-20261029",
@@ -19059,16 +19098,22 @@
         "providers/skynizz-bridge/panel-candidate.patch",
         "providers/skynizz-bridge/panel-candidate.json",
         ".github/workflows/windows-build.yml",
-        ".github/workflows/linux-build.yml"
+        ".github/workflows/linux-build.yml",
+        "scripts/offline_routes.py",
+        "scripts/engine_bridge.py",
+        "scripts/desktop_service.py",
+        "scripts/package_adoption.py",
+        "tests/test_offline_routes.py"
       ],
       "resources": [
         "rtxforge-native-panel-rendering",
         "rtxforge-windows-executable-selection",
-        "rtxforge-feeder-legacy-recipes"
+        "rtxforge-feeder-legacy-recipes",
+        "rtxforge-offline-install-consent"
       ],
       "goal": "Mirror the Linux install UI and engine changes (#93-#105) on Windows. Brief: G:\\rtxForge-linux-to-windows-sync-brief.md (/var/mnt/Games on Linux). Main item: read installed_oses and show both Windows and Linux marks; adapted games currently read installed_on=linux and would show as Installed on Linux on Windows. Also verify the Vulkan install record on Windows, review dialog sizing (ready rows not squeezed; expanding a skipped row grows the dialog), friendly skipped reasons, and that the Wine-only bridge mailbox leaves native Windows unchanged.\nAdditional user direction: diagnose and fix inZOI panel drawing behind game UI without restoring its startup hang.\nAdditional user direction: correct executable discovery that selects prerequisites, and let Windows users select/reset each game's executable and rescan its support.\nAdd Windows Feeder NR support for DirectX 9 and 10, including 32-bit helper and DX9-to-DX11 translation recipes.\nFix Light-mode native overlay headings that disappear against the light surface.\nFix shared native-MFG output statistics in the overlay.\nReplace blanket anti-cheat install blocking with a reviewed offline-only route and forced acknowledgement where installation is supported.",
       "acceptance": "Windows shows one mark per OS from installed_oses (installed_on fallback); Installed on Linux only for Linux-only installs; Vulkan install/repair writes and restore removes .rtxforge-install.json on Windows; review dialog checks pass; panel preset changes work natively with the rebuilt bridge; WinUI CI green; draft PR.\nAdditional acceptance: explain the startup/render-order cause; build an isolated late-frame panel candidate with integrity-bound provenance; verify native startup, correct panel/UI ordering, working controls and preserved NR/MFG on inZOI before promotion. Keep current installed game/session and original backups intact until a deliberate reversible test.\nAdditional acceptance: Far Cry 5 selects bin/FarCry5.exe instead of its .NET redistributable; Windows Desktop and Game Mode expose current EXE and Choose/Use detected actions; selections are scoped to a game's folder, validated and persisted, stale/unsafe choices cannot redirect install writes, and support is rescanned. Explain current x86/DX9 Feeder integration limits without claiming upstream lacks them.\nDX9/DX10 support uses integrity-verified architecture-correct files, separate 64-bit helper where needed, reviewed file deployment and exact restore; existing x64 Feeder installs remain compatible. Validate native game behavior before declaring runtime compatibility.\nShared native panel feature and Settings headings use contrasting theme-aware colors in both themes, verified in the rebuilt candidate.\nNative MFG stats use successful fresh raw Streamline actually-presented counts, independently of requested ratio, with invalid/stale data rejected. Preserve internal FG statistics and explain calculated output-rate provenance.\nAnti-cheat evidence stays visible; install-compatible offline games including Gears E-Day can be reviewed after explicit offline-only acknowledgement. Consent and file identity are bound to the reviewed operation; incompatible routes remain explained and no protected process is altered.",
-      "next_action": "Trace existing offline profile and review trust path, extend fresh install and Feeder admission consistently, add regression coverage. Preserve live inZOI session.",
+      "next_action": "Extend offline-only install consent across native and Feeder supported routes, preserve evidence and rollback, verify exact review binding and changed-executable refusal.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -19128,8 +19173,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-29T05:16:53.013Z",
-      "lease_until": "2026-10-29T17:16:53.013Z",
+      "updated_at": "2026-10-29T05:17:09.042Z",
+      "lease_until": "2026-10-29T17:17:09.042Z",
       "handoffs": [
         {
           "at": "2026-10-29T03:27:48.270Z",
@@ -19261,45 +19306,6 @@
           }
         }
       ]
-    },
-    {
-      "id": "rtxforge-website-overlay-light-20261029",
-      "owner": "root:website_overlay_sdr",
-      "branch": "rtxforge/website-overlay-light-20261029",
-      "paths": [
-        "website/"
-      ],
-      "resources": [
-        "rtxforge-website-overlay-media"
-      ],
-      "goal": "Publish Lauren's authentic inZOI Light gameplay overlay capture for website Light mode while preserving Control SDR for Dark mode.",
-      "acceptance": "Use exact approved 1920x1080 inZOI source pixels without edits and losslessly encode; preserve numbers, headings, framing and all other screenshots. Both OS tabs select inZOI in Light and Control SDR in Dark, including live theme changes on the Overlay section. Accurate image dimensions, alt and provenance. Existing website checks, exact-head CI, normal human-attributed merge, existing Worker deployment, live asset hash/selection verification and retained rollback. User explicitly authorizes subagent /root/website_overlay_sdr; owner root:website_overlay_sdr is its schema-compatible canonical executor encoding.",
-      "next_action": "PR112 f2acd6aa73e39f10835708028d4e90bbaf9912de: 13 website tests, 8 theme/OS checks and exact lossless pixels pass. Candidate cc783c26 uploaded, no traffic; exact CI running. Preserve rollback a82fd4d1. Bind canonical Visuals captures after integration; no authenticated local-media ingestion route available.",
-      "category": "maintenance",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "adrian",
-      "supporting_staff": [],
-      "base_sha": "687440169e2dcad9fe88c9c94ea7315c0b8283fc",
-      "state": "active",
-      "created_at": "2026-10-29T05:08:29.418Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Publish Lauren's authentic inZOI Light gameplay overlay capture for website Light mode while preserving Control SDR for Dark mode.",
-          "acceptance": "Use exact approved 1920x1080 inZOI source pixels without edits and losslessly encode; preserve numbers, headings, framing and all other screenshots. Both OS tabs select inZOI in Light and Control SDR in Dark, including live theme changes on the Overlay section. Accurate image dimensions, alt and provenance. Existing website checks, exact-head CI, normal human-attributed merge, existing Worker deployment, live asset hash/selection verification and retained rollback. User explicitly authorizes subagent /root/website_overlay_sdr; owner root:website_overlay_sdr is its schema-compatible canonical executor encoding.",
-          "at": "2026-10-29T05:08:29.418Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-website-overlay-light-20261029:acceptance:0",
-            "text": "Use exact approved 1920x1080 inZOI source pixels without edits and losslessly encode; preserve numbers, headings, framing and all other screenshots. Both OS tabs select inZOI in Light and Control SDR in Dark, including live theme changes on the Overlay section. Accurate image dimensions, alt and provenance. Existing website checks, exact-head CI, normal human-attributed merge, existing Worker deployment, live asset hash/selection verification and retained rollback. User explicitly authorizes subagent /root/website_overlay_sdr; owner root:website_overlay_sdr is its schema-compatible canonical executor encoding.",
-            "at": "2026-10-29T05:08:29.418Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-29T05:13:57.083Z",
-      "lease_until": "2026-10-29T17:13:57.083Z"
     }
   ]
 }
