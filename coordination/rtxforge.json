@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-29T22:04:55.774Z",
+  "updated_at": "2026-10-29T22:05:54.430Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7557,7 +7557,7 @@
       "owner": "01a1899e-8bb0-7b50-b90a-57b3c8c395b8",
       "goal": "Cloudflare infrastructure for the rtxForge report service that Claude is writing in lrnolivia/rtxForge under services/reports (claim rtxforge-report-send-20261029). Lauren approved it on 2026-10-29: 'logs should be private and i'm okay with a report service and bot account filing issues'. This pairs with rtxforge-report-github-app-20261029 (GitHub App and secrets) and can be done by the same Codex worker.",
       "acceptance": "In Lauren's Cloudflare account (8df30cd302a4d4a4c01db9863c712166), all of the following. (1) A private R2 bucket 'rtxforge-report-logs' with no public access and no r2.dev URL; optionally a lifecycle rule that deletes objects after 180 days. (2) The Worker 'rtxforge-reports' (the same one that holds the GitHub App secrets) deploys from GitHub through Workers Builds: repository lrnolivia/rtxForge, root directory services/reports, production branch main, deploy command 'npx wrangler deploy', no preview deployments. services/reports/wrangler.jsonc in the repo is the source of truth for the route loew.fi/rtxforge/api/report*, the LOGS R2 binding and the rate-limit bindings. Don't change the existing 'rtxforge' website Worker: the more specific route wins for /rtxforge/api/report. (3) Do this once Claude's PR adding services/reports is merged to main; Claude records the merge on its claim. Then check that the first build deploys, that POST https://loew.fi/rtxforge/api/report with an empty JSON body returns 400 {error} (not the website's 404), and that GET /rtxforge/ still serves the site. Don't file a real issue: Claude runs the live round trip. (4) Hand back non-secret evidence only: bucket name and settings, Workers Builds configuration, the deployment version ID, and the two route checks. Any dashboard step that needs Lauren's own sign-in or approval is described exactly for her.",
-      "next_action": "WAITING FOR PR121 MERGE: current main a07e3f747b747187533453313207893ff952e2b8, PR121 draft head236d62d74e0d4e405281d0e1e2c2d88c511149db still open. Reverified R2 rtxforge-report-logs private(r2.dev disabled;custom domains=[]), existing Worker tagfad18461b8b24d3bb64a19077ce89146 and no build triggers. Merged wrangler.jsonc is authority; candidate uses LOGS, LIMITER4101,GLOBAL_LIMITER4102 and loew.fi/rtxforge/api/report*. Active thread heartbeat deploy-report-service-after-merge checks every5minutes, quiet until actionable, only connects existing Worker after verified merge: GitHub lrnolivia/rtxForge,main,rootservices/reports,npx wrangler deploy,no previews. Preserve3productionsecrets and website rtxforge Worker. Verify exact-source build/deployment, empty JSON POST report ->400 {error}, siteGET ->200; no valid issue. Notify UI Relay inbox and website updater; pause heartbeat after verification. App merge/Beta7 publication/end-to-end real report remain Lauren/Claude-owned.",
+      "next_action": "WAITING FOR PR121 MERGE: current main a07e3f747b747187533453313207893ff952e2b8, PR121 draft head236d62d74e0d4e405281d0e1e2c2d88c511149db still open. Reverified R2 rtxforge-report-logs private(r2.dev disabled;custom domains=[]), existing Worker tagfad18461b8b24d3bb64a19077ce89146 and no build triggers. Merged wrangler.jsonc is authority; candidate uses LOGS, LIMITER4101,GLOBAL_LIMITER4102 and loew.fi/rtxforge/api/report*. Active thread heartbeat deploy-report-service-after-merge checks every5minutes, quiet until actionable, only connects existing Worker after verified merge: GitHub lrnolivia/rtxForge,main,rootservices/reports,npx wrangler deploy,no previews. Preserve3productionsecrets and website rtxforge Worker. Verify exact-source build/deployment, empty JSON POST report ->400 {error}, siteGET ->200; no valid issue. Notify UI Relay inbox and website updater; pause heartbeat after verification. App merge/Beta7 publication/end-to-end real report remain Lauren/Claude-owned.\nRETENTION VERIFIED 2026-10-29: R2 rtxforge-report-logs lifecycle 'Expire report ZIPs after 180 days' enabled; prefix reports/ matches service ZIP keys; delete age15552000seconds(180days). Default7-day multipart abort rule preserved. Public access remains disabled. Preserve this policy during subsequent setup.",
       "paths": [
         "relay-only:cloudflare/r2/rtxforge-report-logs",
         "relay-only:cloudflare/workers/rtxforge-reports/builds"
@@ -7595,8 +7595,8 @@
           "next_action": "Prepare the paired private log bucket while finishing identity/secrets setup. No source changes or service deployment before Claude merges services/reports. Current service branch is active and unpushed; exact main a07e3f747b747187533453313207893ff952e2b8 lacks services/reports."
         }
       ],
-      "updated_at": "2026-10-29T22:04:55.774Z",
-      "amendment_count": 3,
+      "updated_at": "2026-10-29T22:05:54.430Z",
+      "amendment_count": 4,
       "amendments": [
         {
           "at": "2026-10-29T21:59:39.502Z",
@@ -7638,6 +7638,20 @@
           },
           "after": {
             "next_action": "WAITING FOR PR121 MERGE: current main a07e3f747b747187533453313207893ff952e2b8, PR121 draft head236d62d74e0d4e405281d0e1e2c2d88c511149db still open. Reverified R2 rtxforge-report-logs private(r2.dev disabled;custom domains=[]), existing Worker tagfad18461b8b24d3bb64a19077ce89146 and no build triggers. Merged wrangler.jsonc is authority; candidate uses LOGS, LIMITER4101,GLOBAL_LIMITER4102 and loew.fi/rtxforge/api/report*. Active thread heartbeat deploy-report-service-after-merge checks every5minutes, quiet until actionable, only connects existing Worker after verified merge: GitHub lrnolivia/rtxForge,main,rootservices/reports,npx wrangler deploy,no previews. Preserve3productionsecrets and website rtxforge Worker. Verify exact-source build/deployment, empty JSON POST report ->400 {error}, siteGET ->200; no valid issue. Notify UI Relay inbox and website updater; pause heartbeat after verification. App merge/Beta7 publication/end-to-end real report remain Lauren/Claude-owned."
+          }
+        },
+        {
+          "at": "2026-10-29T22:05:54.430Z",
+          "by": "01a1899e-8bb0-7b50-b90a-57b3c8c395b8",
+          "reason": "Lauren suggested the optional180-day private-log retention. Added and read back a scoped R2 lifecycle rule without changing existing rules.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "WAITING FOR PR121 MERGE: current main a07e3f747b747187533453313207893ff952e2b8, PR121 draft head236d62d74e0d4e405281d0e1e2c2d88c511149db still open. Reverified R2 rtxforge-report-logs private(r2.dev disabled;custom domains=[]), existing Worker tagfad18461b8b24d3bb64a19077ce89146 and no build triggers. Merged wrangler.jsonc is authority; candidate uses LOGS, LIMITER4101,GLOBAL_LIMITER4102 and loew.fi/rtxforge/api/report*. Active thread heartbeat deploy-report-service-after-merge checks every5minutes, quiet until actionable, only connects existing Worker after verified merge: GitHub lrnolivia/rtxForge,main,rootservices/reports,npx wrangler deploy,no previews. Preserve3productionsecrets and website rtxforge Worker. Verify exact-source build/deployment, empty JSON POST report ->400 {error}, siteGET ->200; no valid issue. Notify UI Relay inbox and website updater; pause heartbeat after verification. App merge/Beta7 publication/end-to-end real report remain Lauren/Claude-owned."
+          },
+          "after": {
+            "next_action": "WAITING FOR PR121 MERGE: current main a07e3f747b747187533453313207893ff952e2b8, PR121 draft head236d62d74e0d4e405281d0e1e2c2d88c511149db still open. Reverified R2 rtxforge-report-logs private(r2.dev disabled;custom domains=[]), existing Worker tagfad18461b8b24d3bb64a19077ce89146 and no build triggers. Merged wrangler.jsonc is authority; candidate uses LOGS, LIMITER4101,GLOBAL_LIMITER4102 and loew.fi/rtxforge/api/report*. Active thread heartbeat deploy-report-service-after-merge checks every5minutes, quiet until actionable, only connects existing Worker after verified merge: GitHub lrnolivia/rtxForge,main,rootservices/reports,npx wrangler deploy,no previews. Preserve3productionsecrets and website rtxforge Worker. Verify exact-source build/deployment, empty JSON POST report ->400 {error}, siteGET ->200; no valid issue. Notify UI Relay inbox and website updater; pause heartbeat after verification. App merge/Beta7 publication/end-to-end real report remain Lauren/Claude-owned.\nRETENTION VERIFIED 2026-10-29: R2 rtxforge-report-logs lifecycle 'Expire report ZIPs after 180 days' enabled; prefix reports/ matches service ZIP keys; delete age15552000seconds(180days). Default7-day multipart abort rule preserved. Public access remains disabled. Preserve this policy during subsequent setup."
           }
         }
       ]
