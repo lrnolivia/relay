@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-30T00:37:07.570Z",
+  "updated_at": "2026-10-30T01:30:26.140Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18564,7 +18564,17 @@
         "src/progress-observation.js",
         "src/progress-observation.test.js",
         "src/progress-api.js",
-        "src/progress-api.test.js"
+        "src/progress-api.test.js",
+        "scripts/relay-continuity.mjs",
+        "scripts/relay-continuity.test.mjs",
+        "scripts/relay-native-continuity.mjs",
+        "scripts/relay-native-continuity.test.mjs",
+        "src/runner-control.js",
+        "src/runner-control-core.js",
+        "src/runner-control.test.js",
+        "src/coordination-transport.test.js",
+        "src/coordination-engine.js",
+        "test/coordination.test.mjs"
       ],
       "resources": [
         "relay-staff-led-cards",
@@ -18573,7 +18583,7 @@
       ],
       "goal": "Implement compact staff-led Relay cards with canonical ordered step evidence, full fictional staff assets, exact Terra Prime gray and accent tokens, accessible responsive layout and meaningful motion.",
       "acceptance": "Preserve inline rendering and content-sized collapse; show evidence-backed team and step ownership; use approved team icons and fictional portrait assets with stroke-token background; verify real UI, accessibility and full tests; open draft PR only, no merge or deployment.",
-      "next_action": "Carry canonical assignment identity, routing roles and structured acceptance/step evidence through the existing progress and queue adapters; add compatibility tests so real refreshes retain the shared checklist without inventing completed work. Continue approved staff-led UI, focused/full tests and draft PR only. No index, executor or unrelated held scopes.",
+      "next_action": "Implement verified live checklist updates through the continuity publisher and existing task-control and coordination owner/CAS transactions, with tests and readback. Publish bounded stable plan/step IDs, digests and verifier evidence only; raw journals remain private and unknown work stays unknown. Complete staff-led UI and portraits through tested draft PR266 only, no merge or deployment.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [
@@ -18599,8 +18609,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T00:37:07.570Z",
-      "lease_until": "2026-10-30T12:37:07.570Z"
+      "updated_at": "2026-10-30T01:30:26.140Z",
+      "lease_until": "2026-10-30T13:30:26.140Z"
     }
   ],
   "migrated_from": "loew-inspector"
