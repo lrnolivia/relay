@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T00:41:37.361Z",
+  "updated_at": "2026-10-30T00:42:09.043Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7950,7 +7950,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-30T00:41:23.182Z",
       "objective_history": {
         "baseline": {
@@ -21557,6 +21557,56 @@
           "head_sha": "83c1ddbf20e205c273431bcf98e3bc36687d870f"
         }
       }
+    },
+    {
+      "id": "rtxforge-auto-update-20261029",
+      "owner": "01a189e9-9316-7db2-97e3-597d29d40dbd",
+      "branch": "rtxforge/auto-update-20261029",
+      "paths": [
+        "scripts/app_update.py",
+        "scripts/auto_update.py",
+        "scripts/app_settings.py",
+        "tests/test_app_update.py",
+        "tests/test_auto_update.py",
+        "windows/",
+        "gui/rtxforge_gtk.py",
+        "gui/game_mode.py",
+        ".github/workflows/",
+        "VERSION",
+        "README.md",
+        "docs/releases/1.0-beta.md"
+      ],
+      "resources": [
+        "rtxforge-auto-update"
+      ],
+      "goal": "Make application updates seamless and automatic on Windows and Linux.",
+      "acceptance": "Background checks and verified staging enabled by default with an opt-out; simple restart/apply action shared by desktop and Game Mode; safe behavior during game operations, offline/failure recovery, correct installed-format behavior including Flatpak/portable guidance, no game-file changes. Validate update integrity and lifecycle with meaningful tests and native builds, exact-source CI, merge and beta release. Retain previous task's pending native-media registration evidence (run 40974336657, artifact 12942266963) honestly; no invented Visuals receipt.",
+      "next_action": "Inspect updater and implement staged background updates with safe restart and shared settings.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "00c13e71594065c93d814d0bd86c06c17d314dba",
+      "state": "active",
+      "created_at": "2026-10-30T00:42:09.043Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Make application updates seamless and automatic on Windows and Linux.",
+          "acceptance": "Background checks and verified staging enabled by default with an opt-out; simple restart/apply action shared by desktop and Game Mode; safe behavior during game operations, offline/failure recovery, correct installed-format behavior including Flatpak/portable guidance, no game-file changes. Validate update integrity and lifecycle with meaningful tests and native builds, exact-source CI, merge and beta release. Retain previous task's pending native-media registration evidence (run 40974336657, artifact 12942266963) honestly; no invented Visuals receipt.",
+          "at": "2026-10-30T00:41:23.182Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-auto-update-20261029:acceptance:0",
+            "text": "Background checks and verified staging enabled by default with an opt-out; simple restart/apply action shared by desktop and Game Mode; safe behavior during game operations, offline/failure recovery, correct installed-format behavior including Flatpak/portable guidance, no game-file changes. Validate update integrity and lifecycle with meaningful tests and native builds, exact-source CI, merge and beta release. Retain previous task's pending native-media registration evidence (run 40974336657, artifact 12942266963) honestly; no invented Visuals receipt.",
+            "at": "2026-10-30T00:41:23.182Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-30T00:42:09.043Z",
+      "lease_until": "2026-10-30T12:42:09.043Z"
     }
   ]
 }
