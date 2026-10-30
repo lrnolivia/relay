@@ -17,11 +17,11 @@ test('approved portrait manifest follows the canonical roster and binds every em
  assert.equal(manifest.fictional_ai_staff,true);assert.equal(manifest.identity_is_authority,false);
  assert.deepEqual(manifest.staff.map(p=>p.id).sort(),STAFF.filter(p=>p.status!=='retired').map(p=>p.id).sort());
  const {STAFF_PORTRAITS}=await import('../assets/staff/card-assets.js');
- assert.equal(Object.keys(STAFF_PORTRAITS).length,17);assert.equal(manifest.version,3);assert.equal(manifest.final,true);
+ assert.equal(Object.keys(STAFF_PORTRAITS).length,17);assert.equal(manifest.version,3);assert.equal(manifest.final,false);
  assert.equal(manifest.source_archive_sha256,'3ed80350ba3c4b5e294a00d8fa0fcd99608eae95e1fd3986876590a313a61b63');
  for(const person of manifest.staff){
   const canonical=STAFF.find(p=>p.id===person.id);assert.equal(person.status,canonical.status);assert.equal(person.home_team,canonical.home_team);
-  assert.equal(person.portrait_status,'approved-v3');
+  assert.equal(person.portrait_status,['nico','julian','rafael','dominique','valentina'].includes(person.id)?'revision-pending':'approved-v3');
   assert.equal(person.face_identity_locked,['nico','julian','rafael','dominique'].includes(person.id));
   assert.equal(person.files.webp512.sha256,person.source_files.webp512.sha256);
   assert.equal(person.files.card128.source_sha256,person.files.webp512.sha256);

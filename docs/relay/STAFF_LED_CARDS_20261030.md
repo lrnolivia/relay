@@ -45,9 +45,9 @@ At widths up to 480px, card padding/radius become 16px/20px, portraits become 48
 
 Avatars are authored fictional AI staff, not real employees. Names, roles, home teams and active/reserve/retired status come from `staff-registry.js`. Identity conveys neither execution authority nor proof of contribution.
 
-The final **v3** roster is approved: fourteen active and three reserve fictional staff. Nico, Julian, Rafael and Dominique preserve their facial identities with approved new wardrobe and poses; Valentina has the approved new portrait. The other twelve portraits are byte-identical to v2. The face locks do not require retaining the original photographs. Retired Felix has no asset.
+The **v3** roster is integrated, with five subsequent user refinements pending: fourteen active and three reserve fictional staff. Nico, Julian, Rafael and Dominique preserve their facial identities with approved new wardrobe and poses; Valentina has the approved new portrait. The other twelve portraits are byte-identical to v2. The face locks do not require retaining the original photographs. Retired Felix has no asset.
 
-The authoritative bundle is Library `libfile_ceaa943f4d648191901d06957d3b4737`, archive SHA-256 `3ed80350ba3c4b5e294a00d8fa0fcd99608eae95e1fd3986876590a313a61b63`, 28,403,590 bytes. The complete contact sheet was inspected before integration. All 34 PNG1024/WebP512 source hashes and all 24 retained-v2 source-file comparisons passed. `assets/staff/manifest.json` binds all seventeen canonical IDs, approved-v3 status, facial-identity locks, source hashes, and card derivative hashes. `final:true` applies to portrait approval only, not whole-assignment completion.
+The authoritative bundle is Library `libfile_ceaa943f4d648191901d06957d3b4737`, archive SHA-256 `3ed80350ba3c4b5e294a00d8fa0fcd99608eae95e1fd3986876590a313a61b63`, 28,403,590 bytes. The complete contact sheet was inspected before integration. All 34 PNG1024/WebP512 source hashes and all 24 retained-v2 source-file comparisons passed. `assets/staff/manifest.json` binds all seventeen canonical IDs, approved-v3 status, facial-identity locks, source hashes, and card derivative hashes. `final:false` records the new pending refinements: stronger body poses for Nico, Julian, Rafael and Dominique while preserving faces/v3 clothing, and a user-selected blonde/cream Valentina recast. The other twelve remain approved.
 
 Card derivatives are 128px JPEG quality80 made with `sips`, with unchanged composition and sticky identity. Exact source and derivative hashes are recorded per file. Compact derivatives retain the existing self-contained card size budget. Portrait backgrounds retain the authored studio variation around `#3d3935`; the CSS container uses that exact token.
 
@@ -77,6 +77,6 @@ The finish reviewer returned **ship** for the sole final correction: Nico's head
 
 ## Remaining draft gates
 
-1. The v3 portrait family is approved and integrated; rerender final production DOM evidence and verify the exact source after this asset update.
+1. Resolve the five newly pending portrait refinements; retain the twelve approved portraits. Rerender production DOM evidence and verify the exact source after the asset update.
 2. Freeze and commit final source, run exact-head build and required checks, open and verify a draft PR. The bounded heading correction has cleared finish review; final-head validation remains pending.
 3. Keep producer publication and the held v20 entrypoint cache alias explicit as separate integration gaps. The producer requires the additional scope and end-to-end verification described above; neither gap is closed by this UI draft or its synthetic evidence.
