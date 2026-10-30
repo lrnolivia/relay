@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T02:03:50.948Z",
+  "updated_at": "2026-10-30T02:30:51.239Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21596,6 +21596,60 @@
       },
       "updated_at": "2026-10-30T02:03:50.948Z",
       "lease_until": "2026-10-30T14:03:50.948Z"
+    },
+    {
+      "id": "rtxforge-overlay-workbench-20261029",
+      "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+      "branch": "rtxforge/overlay-workbench-20261029",
+      "paths": [
+        "providers/skynizz-bridge/",
+        "windows/feeder-panel/",
+        "windows/build/Build-FeederPanel.ps1",
+        "windows/engine-host/companion_controls.py",
+        "windows/RtxForge.Windows/Services/NativePanelCoordinator.cs",
+        "scripts/proton_overlay.py",
+        "scripts/linux_overlay_host.py",
+        "tests/test_overlay_workbench.py",
+        "tests/test_skynizz_bridge.py",
+        "tests/linux_runtime/test_proton_overlay.py",
+        "windows/tests/test_companion_controls.py",
+        "windows/tests/PanelWorkbench/",
+        "PRODUCT.md",
+        "docs/overlay.md"
+      ],
+      "resources": [
+        "rtxforge-overlay-tuning",
+        "rtxforge-panel-presets",
+        "rtxforge-nr-pass-controls"
+      ],
+      "goal": "Improve the in-game overlay from Lauren's supplied reference: compact layout, reset/undo, named presets, A/B tuning, honest runtime history, then independent NR pass tuning. Capture and Studio are excluded.",
+      "acceptance": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified.",
+      "next_action": "Create isolated checkout from current main; inspect shared panel and preset host, then implement and verify the compact tuning workflow.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "3907a1aba00160a7f5926b2349c1778c035138e5",
+      "state": "active",
+      "created_at": "2026-10-30T02:30:51.239Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Improve the in-game overlay from Lauren's supplied reference: compact layout, reset/undo, named presets, A/B tuning, honest runtime history, then independent NR pass tuning. Capture and Studio are excluded.",
+          "acceptance": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified.",
+          "at": "2026-10-30T02:30:51.239Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-overlay-workbench-20261029:acceptance:0",
+            "text": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified.",
+            "at": "2026-10-30T02:30:51.239Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-30T02:30:51.239Z",
+      "lease_until": "2026-10-30T14:30:51.239Z"
     }
   ]
 }
