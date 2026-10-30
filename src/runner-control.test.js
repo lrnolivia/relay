@@ -650,4 +650,6 @@ test('new canonical acceptance immediately removes the old full denominator befo
  const live=await callProgress({project:'relay',assignment:'task'},{},f.api),card=contextCardModel(live);
  assert.equal(card.plan.total,null);assert.equal(card.plan.passed,1);assert.equal(card.plan.availability,'partial');assert.equal(card.percent,null);
  assert.ok(f.record.claims[0].amendments.at(-1).fields.includes('card_steps'),'derived invalidation is in canonical amendment history');
+ await assert.rejects(coordinate(f,'amend',{id:'task',owner:'worker',card_steps:{...p,sequence:2},reason:'Attempt to restore old full coverage'},newSha));
+ assert.equal(f.writes.length,1,'a complete projection cannot omit known canonical additions');
 });

@@ -41,6 +41,7 @@ export function validateCardStepsPublication(value,record,objectiveDigest,now=ne
  }
  // An old journal cannot erase subsequently admitted priorities or dependencies.
  if(previous?.steps.some(old=>!ids.has(old.id)||ids.get(old.id).label!==old.label||old.depends_on.some(id=>!ids.get(old.id).depends_on.includes(id))))fail();
+ if(value.complete&&(record.acceptance_additions||[]).some(addition=>!ids.has('add-'+addition.proposal.id)))fail();
  return structuredClone(value);
 }
 
