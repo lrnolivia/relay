@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T00:41:23.182Z",
+  "updated_at": "2026-10-30T00:41:37.361Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7853,7 +7853,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "superseded",
       "created_at": "2026-10-29T22:00:43.626Z",
       "objective_history": {
         "baseline": {
@@ -7884,7 +7884,7 @@
           "next_action": "Lauren explicitly requested takeover in this chat. Preserve unfinished local files in C:/Users/lrnol/Repos/rtxForge-parity; verify writer quiescence, finish Windows Skynizz functional test with fixture/host/UI validation, then CI, merge and beta publication per acceptance."
         }
       ],
-      "updated_at": "2026-10-29T23:11:25.754Z",
+      "updated_at": "2026-10-30T00:41:37.361Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -7907,7 +7907,20 @@
             "next_action": "Implement shared preflight/session/evidence contract; connect existing Windows and Proton mailboxes and real Feeder/Vulkan log parsers, then the four interfaces and route-parity tests."
           }
         }
-      ]
+      ],
+      "retirement": {
+        "at": "2026-10-30T00:41:37.361Z",
+        "intent": {
+          "operation_id": "functional-to-auto-update-20261029",
+          "owner": "01a189e9-9316-7db2-97e3-597d29d40dbd",
+          "disposition": "superseded",
+          "reason": "Lauren moved this chat to seamless automatic updates after Beta 8 delivery. Release/source work finished, writer stopped, branch merged; transfer only pending media registration accounting into new task acceptance.",
+          "evidence": "PR 124 merged at 00c13e71594065c93d814d0bd86c06c17d314dba; Beta 8 Windows+Linux runs 40976124379 / 40976120569 succeeded; hashes and Beta 7 recovery verified. Local tree clean. Native media indexing remains unfulfilled (run40974336657/artifact12942266963); retained in successor acceptance, not represented as completion or Visuals receipt.",
+          "superseded_by": "rtxforge-auto-update-20261029",
+          "branch": "rtxforge/functional-test-20261029",
+          "head_sha": "83c1ddbf20e205c273431bcf98e3bc36687d870f"
+        }
+      }
     },
     {
       "id": "rtxforge-auto-update-20261029",
@@ -21475,7 +21488,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "8e099da7b39704ab5295c882f5a8d7bbdf9e6201",
-      "state": "held",
+      "state": "superseded",
       "created_at": "2026-10-29T22:54:43.213Z",
       "objective_history": {
         "baseline": {
@@ -21498,7 +21511,7 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T00:12:51.888Z",
+      "updated_at": "2026-10-30T00:41:37.361Z",
       "lease_until": "2026-10-30T12:12:51.888Z",
       "handoffs": [
         {
@@ -21530,7 +21543,20 @@
             "next_action": "Implement shared preflight/session/evidence contract; connect existing Windows and Proton mailboxes and real Feeder/Vulkan log parsers, then the four interfaces and route-parity tests."
           }
         }
-      ]
+      ],
+      "retirement": {
+        "at": "2026-10-30T00:41:37.361Z",
+        "intent": {
+          "operation_id": "functional-to-auto-update-20261029",
+          "owner": "01a189e9-9316-7db2-97e3-597d29d40dbd",
+          "disposition": "superseded",
+          "reason": "Lauren moved this chat to seamless automatic updates after Beta 8 delivery. Release/source work finished, writer stopped, branch merged; transfer only pending media registration accounting into new task acceptance.",
+          "evidence": "PR 124 merged at 00c13e71594065c93d814d0bd86c06c17d314dba; Beta 8 Windows+Linux runs 40976124379 / 40976120569 succeeded; hashes and Beta 7 recovery verified. Local tree clean. Native media indexing remains unfulfilled (run40974336657/artifact12942266963); retained in successor acceptance, not represented as completion or Visuals receipt.",
+          "superseded_by": "rtxforge-auto-update-20261029",
+          "branch": "rtxforge/functional-test-20261029",
+          "head_sha": "83c1ddbf20e205c273431bcf98e3bc36687d870f"
+        }
+      }
     }
   ]
 }
