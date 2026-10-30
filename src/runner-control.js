@@ -1,3 +1,4 @@
+import {cardStepsPublicationSchema} from './relay-card-steps.js';
 import {canonicalAdditionSchema} from '../packages/runner/src/continuity-expansion.mjs';
 import {
   callRunnerControlCore,
@@ -47,6 +48,7 @@ const requestProperties = {
   resources: resourcesSchema,
   goal: text(2000),
   acceptance: text(4000),
+  card_steps: cardStepsPublicationSchema,
   acceptance_additions: {type:'array',maxItems:8,items:canonicalAdditionSchema},
   next_action: text(2000),
   reason: { ...text(1000), description: 'Why: required by amend and retire; with expected_head_sha, why a claim adopts an existing branch.' },

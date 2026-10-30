@@ -1,3 +1,4 @@
+import {validateCardStepsPublication} from './relay-card-steps.js';
 import {appendCanonicalAdditions,insideExpansionScope,continuityObjectiveDigest} from '../packages/runner/src/continuity-expansion.mjs';
 import { normalizeAssignmentStaff } from "./staff-registry.js";
 // Deterministic admission rules; expired leases retain ownership until reconciliation.
@@ -47,7 +48,7 @@ const CATEGORIES = new Set(['architecture', 'design', 'implementation', 'researc
 const ROLE_ID = /^[a-z][a-z0-9-]{0,63}$/;
 const TAG_ID = /^[a-z0-9][a-z0-9._-]{0,63}$/;
 const LABEL_KEY = /^[a-z][a-z0-9.-]{0,63}$/;
-const AMENDABLE_FIELDS = ['goal', 'acceptance', 'acceptance_additions', 'next_action', 'paths', 'resources', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams'];
+const AMENDABLE_FIELDS = ['card_steps', 'goal', 'acceptance', 'acceptance_additions', 'next_action', 'paths', 'resources', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams'];
 
 function normalizeResources(values) {
   if (!Array.isArray(values) || values.some((value) => typeof value !== 'string' || !value)) throw new Error('Resources must be a valid string array.');
@@ -225,6 +226,10 @@ export function transition(record, request, policy, now = new Date()) {
     const supplied = AMENDABLE_FIELDS.filter((field) => Object.prototype.hasOwnProperty.call(request, field));
     if (!supplied.length) throw new Error('Amendment requires at least one mutable assignment field.');
     const patch = {};
+    if ('card_steps' in request) {
+      if (supplied.some(key=>key!=='card_steps')) throw Error('Checklist publication cannot amend scope, routing or objective');
+      patch.card_steps=validateCardStepsPublication(request.card_steps,target,continuityObjectiveDigest(target.goal,target.acceptance),now);
+    }
     if ('goal' in request) { if (typeof request.goal !== 'string' || !request.goal.trim()) throw new Error('Goal cannot be empty.'); patch.goal = request.goal; }
     if ('acceptance' in request) { if (typeof request.acceptance !== 'string' || !request.acceptance.trim()) throw new Error('Acceptance cannot be empty.'); patch.acceptance = request.acceptance; }
     if ('acceptance_additions' in request) {
@@ -267,6 +272,7 @@ export function transition(record, request, policy, now = new Date()) {
     }
     preserveObjective(target,now);
     if(queued && current)preserveObjective(queued,now);
+    if ((patch.goal !== undefined && patch.goal !== target.goal) || (patch.acceptance !== undefined && patch.acceptance !== target.acceptance)) {delete target.card_steps;if(queued)delete queued.card_steps;}
     Object.assign(target, patch);
     appendAmendment(target, request, changed, before, now);
     target.updated_at = now.toISOString();

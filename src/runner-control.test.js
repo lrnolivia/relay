@@ -29,7 +29,7 @@ function fixture(options = {}) {
         if (options.conflict) { revision = newSha; throw Object.assign(new Error('Conflict'), { status: 409 }); }
         if (options.writeError) throw options.writeError;
         record = JSON.parse(Buffer.from(request.body.content, 'base64').toString('utf8'));
-        revision = newSha;
+        revision = options.dynamicRevision ? createHash('sha1').update(JSON.stringify(record)).digest('hex') : newSha;
         if (options.timeout) throw Object.assign(new Error('Timed out'), { name: 'TimeoutError' });
         return { commit: { sha: 'c'.repeat(40) } };
       }
@@ -43,7 +43,9 @@ function fixture(options = {}) {
       return { object: { sha: options.head || sha } };
     }
     if (path.includes('/git/ref/heads/main')) return { object: { sha } };
-    if (path.includes('/pulls?state=open')) return [];
+    if (path.includes('/pulls?state=open') || path.includes('/pulls?state=all')) return [];
+    if (path.includes('/check-runs?')) return {check_runs:[]};
+    if (path.includes('/commits/')) return {sha,commit:{committer:{date:new Date().toISOString()}}};
     if (path.endsWith('/pulls/9')) return options.pr || { merged: false };
     throw new Error(`Unexpected path ${path}`);
   };
@@ -594,4 +596,48 @@ test('supporting acceptance is append-only, bound to the goal/acceptance, owner,
  await assert.rejects(coordinate(f,'amend',{id:'task',owner:'another',acceptance_additions:[receipt],reason:'Take ownership'},newSha),/another owner/);
  await assert.rejects(coordinate(f,'amend',{id:'task',owner:'worker',next_action:'Stale write',reason:'Stale'},sha),/changed|revision|stale/i);
  assert.equal(f.writes.length,1);
+});
+
+const publishedSteps = (extra={}) => ({schema:'relay-card-steps/v1',assignment:'task',revision:'d'.repeat(64),objective_digest:createHash('sha256').update(JSON.stringify({goal:defaultRequest.goal,acceptance:defaultRequest.acceptance})).digest('hex'),publisher:{owner:'worker',branch:'relay/task'},sequence:1,complete:true,steps:[{id:'verify',label:'verify',depends_on:[],state:'passed',receipt:{id:'verify:receipt',assignment:'task',step_id:'verify',plan_revision:'d'.repeat(64),input_digest:'e'.repeat(64),evidence:'sha256:'+'f'.repeat(64),source_sha:sha,observed_at:new Date().toISOString()}}],...extra});
+test('checklist publication retains owner/CAS guards and refuses forged or private receipt fields',async()=>{
+ const valid=fixture({claims:[claim()]});await coordinate(valid,'amend',{id:'task',owner:'worker',card_steps:publishedSteps(),reason:'Verified milestone'});assert.equal(valid.record.claims[0].card_steps.steps[0].state,'passed');
+ const changes=[p=>p.steps[0].receipt=null,p=>p.steps[0].receipt.evidence='javascript:alert(1)',p=>p.steps[0].receipt.stdout='private output',p=>p.steps[0].receipt.owner={staff:'nico'},p=>p.steps[0].receipt.plan_revision='a'.repeat(64),p=>p.objective_digest='0'.repeat(64),p=>p.publisher.owner='another',p=>p.steps[0].depends_on=['missing'],p=>p.steps[0].receipt.observed_at='2099-01-01T00:00:00Z'];
+ for(const change of changes){const f=fixture({claims:[claim()]}),p=publishedSteps();change(p);await assert.rejects(coordinate(f,'amend',{id:'task',owner:'worker',card_steps:p,reason:'Invalid fixture'}));assert.equal(f.writes.length,0);}
+ for(const c of [claim({state:'held'}),claim({lease_until:'2000-01-01T00:00:00Z'}),claim({owner:'successor'})]){const f=fixture({claims:[c]});await assert.rejects(coordinate(f,'amend',{id:'task',owner:'worker',card_steps:publishedSteps(),reason:'Invalid owner'}));assert.equal(f.writes.length,0);}
+ const stale=fixture({claims:[claim()]});await assert.rejects(coordinate(stale,'amend',{id:'task',owner:'worker',card_steps:publishedSteps(),reason:'Stale'},newSha),/Record changed/);assert.equal(stale.writes.length,0);
+});
+test('checklist cannot erase priorities or replay an old plan and survives an owner handoff',async()=>{
+ const p=publishedSteps(),f=fixture({claims:[claim({card_steps:p})]});
+ await assert.rejects(coordinate(f,'amend',{id:'task',owner:'worker',card_steps:{...p,sequence:2,revision:'a'.repeat(64)},reason:'Old plan'}));
+ await assert.rejects(coordinate(f,'amend',{id:'task',owner:'worker',card_steps:{...p,sequence:2,steps:[{id:'replacement',label:'replacement',state:'pending',depends_on:[],receipt:null}]},reason:'Omit old priority'}));
+ await coordinate(f,'handoff',{id:'task',owner:'worker',successor:'next-worker',next_action:'Continue same checklist'});
+ assert.deepEqual(f.record.claims[0].card_steps,p);
+ await coordinate(f,'amend',{id:'task',owner:'next-worker',card_steps:{...p,sequence:2,publisher:{owner:'next-worker',branch:'relay/task'}},reason:'New owner observed same verifier evidence'},newSha);
+ assert.deepEqual(f.record.claims[0].card_steps.steps,p.steps);
+});
+
+test('real continuity verifier publishes through canonical control, live progress and the rendered card',async t=>{
+ const fs=await import('node:fs/promises'),os=await import('node:os'),path=await import('node:path'),{execFileSync}=await import('node:child_process');
+ const {runContinuityExecution}=await import('../scripts/relay-continuity.mjs'),{callProgress}=await import('./progress-api.js'),{relayContextCardResource}=await import('./relay-chat-ui.js'),{chromium}=await import('playwright');
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-live-checklist-')),workspace=path.join(root,'checkout');await fs.mkdir(workspace);t.after(()=>fs.rm(root,{recursive:true,force:true}));
+ const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim();git(['init','-b','relay/task']);git(['config','user.name','Fixture']);git(['config','user.email','fixture@example.invalid']);await fs.writeFile(path.join(workspace,'input.txt'),'real verifier input');git(['add','.']);git(['commit','-m','fixture']);
+ const source=git(['rev-parse','HEAD']),f=fixture({claims:[claim({primary_staff:'nico',primary_team:'runner'})],dynamicRevision:true,branches:[{name:'relay/task',commit:{sha:source}}]});
+ const plan={schema:1,authorization:'Synthetic test only',objective_digest:publishedSteps().objective_digest,criteria:['A','B'],environment:{node:process.version},stages:['build','verify'].map((id,i)=>({id,kind:i?'test':'implementation',criteria:[i?'B':'A'],depends_on:i?['build']:[],prompt:'PRIVATE prompt is never published',inputs:['input.txt'],verify:[process.execPath,'-e',"if(require('node:fs').readFileSync('input.txt','utf8')!=='real verifier input')process.exit(1);console.log('PRIVATE stdout')"]}))};
+ const browser=await chromium.launch({headless:true});t.after(()=>browser.close());const page=await browser.newPage({viewport:{width:360,height:900},reducedMotion:'reduce'});await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));const states=[];
+ const rpc=async(name,args)=>{
+  if(name==='relay_autonomy')return {ok:true,state:{held:false,revision:0}};
+  const result=await callRunnerControl(name,args,{},f.api);
+  if(name==='relay_runner_coordinate'){
+   const progress=await callProgress({project:'relay',assignment:'task'},{},f.api);await page.evaluate(data=>render(data),progress);
+   const rows=await page.locator('[data-step]').evaluateAll(nodes=>nodes.map(n=>({id:n.dataset.step,state:n.dataset.state})));states.push(rows);
+   assert.deepEqual(rows.map(r=>r.id),['build','verify']);assert.equal(await page.locator('#feature-title').textContent(),'Nico');
+   assert.doesNotMatch(JSON.stringify(progress),/PRIVATE|process\.exit|console\.log/);
+  }
+  return result;
+ };
+ const config={project:'relay',assignment:'task',owner:'worker',branch:'relay/task',continuity:plan};
+ const run=()=>runContinuityExecution({config,workspace,stateDir:path.join(root,'private'),rpc,runExecution:()=>{throw Error('Actual verifier already passes; no coding job');}});
+ const result=await run();assert.equal(result.objective_completed,true);assert.deepEqual(states.map(rows=>rows.map(r=>r.state)),[['pending','pending'],['passed','pending'],['passed','passed']]);
+ assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');assert.match(await page.locator('#team').textContent(),/Assignment lead/);assert.equal(f.record.claims[0].card_steps.steps[0].receipt.source_sha,source);
+ const writes=f.writes.length;await run();assert.equal(f.writes.length,writes,'identical refresh does not publish another amendment');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 });

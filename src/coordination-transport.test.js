@@ -272,3 +272,10 @@ test('only rtxForge opts into one additional website-scoped branch', async () =>
   const relay = JSON.parse(await readFile(new URL('../projects/relay.json', import.meta.url), 'utf8'));
   assert.equal(relay.coordination.branch_budget_exception, undefined);
 });
+
+test('legacy CLI does not silently publish checklist amendments through an unsupported action',async t=>{
+ // The actual continuity publisher uses the existing RPC adapter. This CLI has
+ // never admitted amend; adding an unrelated CLI command is outside this change.
+ const f=await fixture(t);const result=await f.run({disposition:undefined,operation_id:undefined,evidence:undefined,expected_head_sha:undefined,reason:'Checklist milestone',card_steps:{}},'amend');
+ assert.notEqual(result.status,0);assert.match(result.stderr,/Usage: node scripts\/coordinate/);assert.equal((await f.read()).writes,0);
+});

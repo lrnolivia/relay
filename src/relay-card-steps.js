@@ -10,6 +10,40 @@ const object = x => x && typeof x === 'object' && !Array.isArray(x);
 const text = (x, n = 2000) => typeof x === 'string' ? safePresentationText(x, n) : null;
 const absent = (reason = 'No ordered plan has been recorded.') => ({schema:CARD_STEPS_SCHEMA,availability:'unknown',reason,steps:[],total:null,passed:null,current:null});
 
+// The write contract is deliberately narrower than the tolerant display reader.
+// It carries owner-recorded verifier digests, never private journal contents or
+// a claim that a routed staff member actually contributed.
+const digestSchema={type:'string',pattern:'^[a-f0-9]{64}$'};
+const stableSchema={type:'string',pattern:'^[a-z][a-z0-9-]{0,63}$'};
+export const cardStepsPublicationSchema={type:'object',additionalProperties:false,required:['schema','assignment','revision','objective_digest','publisher','sequence','complete','steps'],properties:{
+ schema:{const:CARD_STEPS_SCHEMA},assignment:{type:'string',pattern:ID.source},revision:digestSchema,objective_digest:digestSchema,
+ publisher:{type:'object',additionalProperties:false,required:['owner','branch'],properties:{owner:{type:'string',minLength:1,maxLength:100},branch:{type:'string',minLength:1,maxLength:200}}},
+ sequence:{type:'integer',minimum:1,maximum:1000000},complete:{type:'boolean'},
+ steps:{type:'array',minItems:1,maxItems:32,items:{type:'object',additionalProperties:false,required:['id','label','depends_on','state','receipt'],properties:{
+  id:stableSchema,label:{type:'string',minLength:1,maxLength:160},depends_on:{type:'array',maxItems:32,uniqueItems:true,items:stableSchema},state:{enum:['pending','unknown','passed']},
+  receipt:{anyOf:[{type:'null'},{type:'object',additionalProperties:false,required:['id','assignment','step_id','plan_revision','input_digest','evidence','source_sha','observed_at'],properties:{id:{type:'string',pattern:ID.source},assignment:{type:'string',pattern:ID.source},step_id:stableSchema,plan_revision:digestSchema,input_digest:digestSchema,evidence:{type:'string',pattern:'^sha256:[a-f0-9]{64}$'},source_sha:{type:'string',pattern:'^[a-f0-9]{40}$'},observed_at:{type:'string',maxLength:40}}}]}
+ }}}
+}};
+const exactKeys=(value,keys)=>object(value)&&Object.keys(value).sort().join(',')===[...keys].sort().join(',');
+export function validateCardStepsPublication(value,record,objectiveDigest,now=new Date()) {
+ const fail=()=>{throw Error('Checklist publication requires bounded matching plan, owner and verifier evidence');};
+ if(!exactKeys(value,cardStepsPublicationSchema.required)||JSON.stringify(value).length>32768||value.schema!==CARD_STEPS_SCHEMA||value.assignment!==record.id||!ID.test(value.assignment)||!/^[a-f0-9]{64}$/.test(value.revision)||value.objective_digest!==objectiveDigest||!exactKeys(value.publisher,['owner','branch'])||value.publisher.owner!==record.owner||value.publisher.branch!==record.branch||record.state!=='active'||!(Date.parse(record.lease_until)>+now)||typeof value.complete!=='boolean'||!Number.isSafeInteger(value.sequence)||value.sequence<1||value.sequence>1000000||!Array.isArray(value.steps)||!value.steps.length||value.steps.length>32)fail();
+ const previous=record.card_steps;
+ if(value.sequence!==(previous?.sequence||0)+1||previous&&(previous.revision!==value.revision||previous.objective_digest!==value.objective_digest))fail();
+ const ids=new Map();
+ for(const step of value.steps){
+  if(!exactKeys(step,['id','label','depends_on','state','receipt'])||! /^[a-z][a-z0-9-]{0,63}$/.test(step.id)||ids.has(step.id)||typeof step.label!=='string'||!step.label.trim()||step.label.length>160||/[\x00-\x1f<>]/.test(step.label)||!Array.isArray(step.depends_on)||new Set(step.depends_on).size!==step.depends_on.length||step.depends_on.some(id=>!ids.has(id))||!['pending','unknown','passed'].includes(step.state))fail();
+  const r=step.receipt;
+  if(step.state==='passed'){
+   if(!exactKeys(r,['id','assignment','step_id','plan_revision','input_digest','evidence','source_sha','observed_at'])||!ID.test(r.id)||r.assignment!==record.id||r.step_id!==step.id||r.plan_revision!==value.revision||!/^[a-f0-9]{64}$/.test(r.input_digest)||!/^sha256:[a-f0-9]{64}$/.test(r.evidence)||!/^[a-f0-9]{40}$/.test(r.source_sha)||typeof r.observed_at!=='string'||r.observed_at.length>40||!Number.isFinite(Date.parse(r.observed_at))||Date.parse(r.observed_at)>+now+60000||step.depends_on.some(id=>ids.get(id).state!=='passed'))fail();
+  }else if(r!==null)fail();
+  ids.set(step.id,step);
+ }
+ // An old journal cannot erase subsequently admitted priorities or dependencies.
+ if(previous?.steps.some(old=>!ids.has(old.id)||ids.get(old.id).label!==old.label||old.depends_on.some(id=>!ids.get(old.id).depends_on.includes(id))))fail();
+ return structuredClone(value);
+}
+
 export function normalizeCardSteps(input, assignment) {
   if (!input) return absent();
   if (!object(input) || input.schema !== CARD_STEPS_SCHEMA || !ID.test(assignment || '') || input.assignment !== assignment || !ID.test(input.revision || '') || !Array.isArray(input.steps) || !input.steps.length || input.steps.length > 32) return absent('The ordered plan could not be verified.');

@@ -94,6 +94,11 @@ test('staff cards preserve step evidence, keyboard focus and routing distinction
   assert.match(await page.locator('#team').textContent(),/Current step owner/);
   assert.match(await page.locator('#card-roles').textContent(),/Assignment lead: Nico/);
   assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),'rafael');
+  assert.equal(await page.locator('#card').getAttribute('data-identity-team'),'source');
+  const {TEAM_EMBLEMS}=await import('../assets/teams/card-assets.js');
+  assert.equal(await page.locator('.team-emblem .team-icon-dark').innerHTML(),await page.evaluate(svg=>{const node=document.createElement('div');node.innerHTML=svg;return node.innerHTML},TEAM_EMBLEMS['source-dark']));
+  assert.equal(await page.locator('#feature-title').evaluate(node=>getComputedStyle(node).color),'rgb(28, 140, 147)');
+  assert.match(await page.locator('#card-roles').textContent(),/Step team: Design & QA/);
   const details=page.locator('[data-step=build] details');await details.locator('summary').focus();await page.keyboard.press('Enter');
   await page.evaluate(data=>render(data),card);
   assert.equal(await details.getAttribute('open'),'');
@@ -102,6 +107,8 @@ test('staff cards preserve step evidence, keyboard focus and routing distinction
   await page.evaluate(data=>render(data),changed);
   assert.equal(await details.getAttribute('open'),'');
   assert.equal(await page.locator('#feature-title').textContent(),'Julian');
+  assert.equal(await page.locator('#card').getAttribute('data-identity-team'),'night-shift');
+  assert.match(await page.locator('#card-roles').textContent(),/Assignment team: Engineering/);
   assert.match(await page.locator('#team').textContent(),/Assignment lead/);
   assert.equal(await page.locator('[data-step=build]').getAttribute('data-state'),'passed');
   assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');

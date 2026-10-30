@@ -1,3 +1,4 @@
+import {transition} from '../src/coordination-engine.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -94,8 +95,9 @@ test('actual canonical assignment shape rejects held/expired ownership, and nati
  const f=await fixture(t),git=args=>execFileSync('git',args,{cwd:f.workspace,encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim();
  git(['init','-b','relay/native']);git(['config','user.name','Fixture']);git(['config','user.email','fixture@example.invalid']);await fs.writeFile(path.join(f.workspace,'outside.txt'),'preserved');git(['add','.']);git(['commit','-m','fixture']);const head=git(['rev-parse','HEAD']);
  const objective={goal:'Native scope enforcement',acceptance:'Actual ownership and scope guard'},plan={schema:1,authorization:'Fixture only',objective_digest:continuityObjectiveDigest(objective.goal,objective.acceptance),environment:{fixture:1},criteria:['A'],stages:[{id:'a',kind:'implementation',criteria:['A'],depends_on:[],prompt:'Work inside allowed/',inputs:['allowed/'],verify:[process.execPath,'-e','process.exit(1)']}]};
- let claim={...objective,id:config.assignment,owner:config.owner,branch:config.branch,state:'active',paths:['allowed/'],lease_until:new Date(Date.now()+3600000).toISOString()},starts=0;
- const rpc=async(name,args)=>{if(name==='relay_autonomy')return {ok:true,state:{held:false,revision:0}};if(name==='relay_runner_assignments')return {ok:true,record_sha:'a'.repeat(40),claims:[claim]};if(name==='relay_execution')return {ok:true,job:null};throw Error('Must read canonical assignments, not resume projection');};
+ let claim={...objective,id:config.assignment,owner:config.owner,branch:config.branch,state:'active',paths:['allowed/'],resources:[],lease_until:new Date(Date.now()+3600000).toISOString()},starts=0;
+ let revision='a'.repeat(40),writes=0;
+ const rpc=async(name,args)=>{if(name==='relay_runner_coordinate'){assert.equal(args.expected_record_sha,revision);claim=transition({claims:[claim],queue:[]},{...args.request,action:args.action},{max_active_branches:4,lease_hours:12}).claims[0];revision=String(++writes).padStart(40,'0');return {ok:true};}if(name==='relay_autonomy')return {ok:true,state:{held:false,revision:0}};if(name==='relay_runner_assignments')return {ok:true,record_sha:revision,claims:[structuredClone(claim)]};if(name==='relay_execution')return {ok:true,job:null};throw Error('Must read canonical assignments, not resume projection');};
  const nativeHost={reconcile:async()=>null,execute:async()=>{starts++;await fs.writeFile(path.join(f.workspace,'outside.txt'),'out of scope');return {state:'succeeded',head_sha:head,summary:'Unsafe fixture adapter report'};}};
  const run=stage=>runContinuityExecution({config:{...config,continuity:plan},workspace:f.workspace,stateDir:path.join(f.root,stage),rpc,nativeHost});
  claim={...claim,state:'held'};await assert.rejects(run('held'),/authority stops/);claim={...claim,state:'active',lease_until:'2000-01-01T00:00:00Z'};await assert.rejects(run('expired'),/authority stops/);assert.equal(starts,0);
@@ -109,4 +111,12 @@ test('native mutation persists one start and an uncertain/rejected reply cannot 
  await assert.rejects(replyNativeRequest(f.directory,p.request.id,uncertain),/Persist/);await beginNativeWork(f.directory,p.request.id);await replyNativeRequest(f.directory,p.request.id,uncertain);assert.deepEqual(await result,uncertain);
  assert.deepEqual(await f.channel.rpc('relay_runner_coordinate',args),uncertain);assert.equal((await fs.readdir(f.directory)).filter(x=>x.endsWith('.started.json')).length,1);assert.equal((await fs.readdir(f.directory)).filter(x=>x.endsWith('.request.json')).length,1);
  await assert.rejects(f.channel.rpc('relay_runner_coordinate',{...args,request:{...args.request,goal:'Changed goal'}}),/exceeds/);
+});
+
+test('native checklist publication uses the existing exact bound mutation start protocol',async t=>{
+ const f=await fixture(t),card_steps={schema:'relay-card-steps/v1',assignment:'native',revision:'d'.repeat(64),objective_digest:'e'.repeat(64),publisher:{owner:config.owner,branch:config.branch},sequence:1,complete:false,steps:[{id:'verify',label:'verify',depends_on:[],state:'pending',receipt:null}]};
+ const args={action:'amend',project:'relay',expected_record_sha:'a'.repeat(40),request:{id:'native',owner:config.owner,card_steps,reason:'Observed priority milestone'}};
+ const result=f.channel.rpc('relay_runner_coordinate',args),p=await pending(f.directory);assert.deepEqual(p.request.data.args,args);
+ await assert.rejects(replyNativeRequest(f.directory,p.request.id,{ok:true}),/Persist/);await beginNativeWork(f.directory,p.request.id);await replyNativeRequest(f.directory,p.request.id,{ok:true});assert.deepEqual(await result,{ok:true});
+ await assert.rejects(f.channel.rpc('relay_runner_coordinate',{...args,request:{...args.request,id:'other'}}),/exceeds/);
 });

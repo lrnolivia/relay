@@ -1,6 +1,6 @@
-# Staff-led Relay cards — draft implementation
+# Staff-led Relay cards
 
-Assignment `relay-staff-led-cards-20261030`, branch `relay/staff-led-cards-20261030`. Draft review only; merge and deployment are outside this assignment.
+Assignment `relay-staff-led-cards-20261030`, branch `relay/staff-led-cards-20261030`. Initially draft-only; the user authorized merge and production release on2026-10-30 at01:50UTC after final checks. Release still requires exact reviewed-source verification and canonical deployment health/readback.
 
 ## Direction contract
 
@@ -8,7 +8,7 @@ The approved direction makes the staff member who owns the current recorded step
 
 This extends the existing Terra Prime telemetry family: Momo Trust Display, Inter, graphite layered surfaces, recessed real-record rings, neutral explanatory text and accessible accent headings. It preserves intrinsic inline sizing and explicit fullscreen screenshot inspection. Desktop and narrow cards share the same evidence and actions, with responsive composition. First observation settles; observed numeric changes use 680ms cubic-out interpolation. Calm, reduced-motion and hidden-document states settle ongoing motion.
 
-The finish condition is a reviewed, tested draft with every shipped portrait tied to approved canonical identity and provenance. Pending asset approval and unverified production integration remain explicit.
+The finish condition is a reviewed, tested draft with every shipped portrait tied to approved canonical identity and provenance. Production activation remains separate from implementation verification.
 
 ## Exact design sources
 
@@ -33,9 +33,10 @@ The card's reused CSS tokens are exact, with light/dark mode values below. The b
 | Engineering, Reliability, passed / `--good` | `#16794e` | `#3bcb8d` |
 | Release, failed / `--bad` | `#b3283e` | `#ff6f78` |
 | Planning & Research, Knowledge, waiting / `--wait` | `#8d6900` | `#ffca28` |
-| Design & QA, Integrations, information / `--info` | `#087a88` | `#18afc0` |
+| Design & QA, information / `--info` | `#087a88` | `#18afc0` |
+| Integrations heading / `--source` (exact exported emblem accent) | `#1c8c93` | `#1c8c93` |
 
-**Identity color follows identity.** The staff heading follows the selected identity's team, independently of the card feature accent. Nico therefore keeps the Engineering green heading when the card displays CI. A valid current-step receipt naming a staff owner takes priority; otherwise the routing lead is labeled Assignment lead, or the card presents a team update. A portrait or routing label never supplies execution evidence.
+**Identity color follows identity.** The staff heading follows the selected identity's team, independently of the card feature accent. Nico therefore keeps the Engineering green heading when the card displays CI. A named staff member always retains their canonical home-team emblem and heading, including Rafael’s Integrations emblem and source teal. A different step team or assignment team is explicit in Technical evidence. Integrations headings stay 24px at narrow widths: source teal has contrast 3.85:1 on the light surface and 4.28:1 on the dark surface, meeting large-text AA. A valid current-step receipt naming a staff owner takes priority; otherwise the routing lead is labeled Assignment lead, or the card presents a team update. A portrait or routing label never supplies execution evidence.
 
 Momo Trust Display sets the staff heading (400, 24px/1.15) and main metric (400, 34px/1.05). Inter sets the explanatory body (13px/1.5), task headline (600, 16px/1.35), labels and actions. The card has a 24px radius and 20px padding; the sculpted telemetry recess has an 18px radius, 14px padding and inset shadows (`inset 0 2px 5px #00000012,inset 0 -1px 0 #ffffff07`). The portrait is 56px; its small exact team SVG is 20px inside a 25px emblem. Team-only marks use 40px SVGs.
 
@@ -45,11 +46,11 @@ At widths up to 480px, card padding/radius become 16px/20px, portraits become 48
 
 Avatars are authored fictional AI staff, not real employees. Names, roles, home teams and active/reserve/retired status come from `staff-registry.js`. Identity conveys neither execution authority nor proof of contribution.
 
-The **v3** roster is integrated, with five subsequent user refinements pending: fourteen active and three reserve fictional staff. Nico, Julian, Rafael and Dominique preserve their facial identities with approved new wardrobe and poses; Valentina has the approved new portrait. The other twelve portraits are byte-identical to v2. The face locks do not require retaining the original photographs. Retired Felix has no asset.
+The **final v4** roster is integrated: fourteen active and three reserve fictional staff. The final user choices are Nico’s front-facing blue jacket, Julian/Rafael/Dominique’s revised poses with preserved faces, and Valentina’s blonde/cream option C. The other twelve identities remain unchanged. Retired Felix has no asset. No portrait approval is pending.
 
-The authoritative bundle is Library `libfile_ceaa943f4d648191901d06957d3b4737`, archive SHA-256 `3ed80350ba3c4b5e294a00d8fa0fcd99608eae95e1fd3986876590a313a61b63`, 28,403,590 bytes. The complete contact sheet was inspected before integration. All 34 PNG1024/WebP512 source hashes and all 24 retained-v2 source-file comparisons passed. `assets/staff/manifest.json` binds all seventeen canonical IDs, approved-v3 status, facial-identity locks, source hashes, and card derivative hashes. `final:false` records the new pending refinements: stronger body poses for Nico, Julian, Rafael and Dominique while preserving faces/v3 clothing, and a user-selected blonde/cream Valentina recast. The other twelve remain approved.
+The authoritative bundle is Library `libfile_5f9a32a653388191a095a1a6989b0db2`, archive SHA-256 `4b6177a003d7155db796a9a06723f031aaae78d3309422d93468f69200ea3016`, 28,747,825 bytes. The contact sheet was inspected and all 51 PNG1024/WebP512/avatar512 manifest hashes verified. `assets/staff/manifest.json` binds every canonical ID, status, source hashes, normalized crop box and card derivative. It records `final:true` and `approved-v4` for all17.
 
-Card derivatives are 128px JPEG quality80 made with `sips`, with unchanged composition and sticky identity. Exact source and derivative hashes are recorded per file. Compact derivatives retain the existing self-contained card size budget. Portrait backgrounds retain the authored studio variation around `#3d3935`; the CSS container uses that exact token.
+Small cards use the supplied `avatar-crop512/{id}.webp` composition, including dedicated face crops for the wider Julian/Rafael portraits. Self-contained 128px JPEG quality80 derivatives preserve those approved crops; they are not resized full-body portraits. Exact source and derivative hashes are recorded. Portrait backgrounds retain the authored studio variation around `#3d3935`; the CSS container uses the exact token.
 
 ## Evidence model and compatibility
 
@@ -59,24 +60,38 @@ Card derivatives are 128px JPEG quality80 made with `sips`, with unchanged compo
 
 Canonical admitted acceptance additions can appear as partial, unconfirmed checklist records. Their admission never implies completion. Older records without a structured plan remain valid and say no ordered plan is recorded. Ordinary progress and queue adapters now preserve staff routing and bounded structured step evidence, without changing machine ownership, execution or coordination authority.
 
-**Current integration limit:** the live assignment-card refresh calls `relay_runner_progress`; `src/progress-api.js` → `callProgress` reads canonical claims and GitHub branch, commit, PR and check evidence. It does not read a private local continuity journal. `scripts/relay-continuity.mjs` persists `continuity.json` locally, while `scripts/relay-native-continuity.mjs` restricts the RPC requests it will service. The request schema in `src/runner-control.js`, action allowlists in `src/runner-control-core.js`, and mutation fields in `src/coordination-engine.js` do not admit `card_steps`. There is no producer publication path from the local journal into the canonical record consumed by live refresh.
+### Live publication path
 
-The validated adapter and preservation of explicit projections are therefore not evidence of live automatic step completion. Producer integration requires additional admitted scope for those five files (`scripts/relay-continuity.mjs`, `scripts/relay-native-continuity.mjs`, `src/runner-control.js`, `src/runner-control-core.js`, `src/coordination-engine.js`) and their relevant tests. The exact ten-path rescope (those five files and five relevant test files) was rejected before execution by automatic approval review for missing trusted exact-scope authorization in the delegated transcript. No producer file was edited, no canonical mutation occurred, and the request was not retried unchanged. Admission remains pending with the parent coordinator. A future implementation must publish bounded, validated receipts under canonical ownership and verify the full producer-to-live-refresh path; local fixtures and routing records cannot substitute for that evidence.
+`runContinuityExecution` publishes meaningful observations through `publishContinuityCard`, the existing `relay_runner_coordinate` amendment transport, and the canonical coordination record. Both standalone and native continuity adapters use this path. The native adapter retains its exact request/start/reply protocol. `relay_runner_progress` reads the canonical projection through `src/progress-api.js`; card refresh consumes it through the same existing progress call.
+
+The strict publication contract permits at most32 ordered stable step IDs, a plan revision, objective digest, monotonic sequence, current machine owner/branch, and bounded verifier receipts. Stable plan identity covers original ordered stages and criteria, surviving provider handoff and local verifier environment changes. Journal-to-plan digest matching remains mandatory before projection. Supporting priorities cannot disappear on an old journal replay. Original plan coverage is distinct from whole-objective completion; partial/subobjective plans have no full denominator.
+
+Only actual passing local verifiers produce pass receipts, with input digest, output digest, source SHA and observation time. Dispatch intent stays unknown. Before a resumed checkpoint is published, changed inputs/environment invalidate old pass receipts and dependent observations. Routing staff never become contributors or receipt owners automatically. Published evidence is an authenticated owner’s recorded verifier evidence, not independent server execution or proof that a named human contributed. The server validates the bound structure and ownership; raw private verifier output is deliberately unavailable to it.
+
+Publication requires an active unexpired current owner and matching branch/objective, then an exact canonical record CAS. The server refuses scope/routing/objective changes bundled with a checklist update. A changed objective removes its old projection. After mutation the producer independently reads back the exact projection, owner and new record revision. Lost responses can reconcile to that readback; a stale/mismatched result leaves a private pending intent and stops further writes without replay. Unchanged observations preserve timestamps and generate no redundant amendments. Raw journals, prompts, commands, environment data, stdout and stderr stay outside the repository and canonical card record.
+
+`src/coordination.mjs` is canonical; `scripts/sync-coordination-engine.mjs --local` generates the byte-exact `src/coordination-engine.js` copy and its pin in `runner-control-core.js`. The live canonical-main drift guard is preserved. Admission expanded to these bounded producer/transport tests and the canonical counterpart before edits. Existing owners and unrelated held paths remain untouched.
+
+The real integration test creates a temporary Git checkout, executes actual verifier subprocesses, uses the real control/schema/CAS/readback code with a mocked GitHub network boundary, calls actual progress projection and renders the production HTML in Chromium. It observes pending→passed per priority, retained ordering, correct routing labels, privacy and duplicate-refresh suppression. It is implementation evidence, not a deployed production run.
+
+**Activation boundary:** this candidate has not yet been merged or deployed. The currently deployed tool schema does not yet admit this new publication field. No live checklist publication was attempted against that old schema. The authorized release must update the canonical engine and runtime together, then observe a real post-release milestone and card refresh. This replaces the prior missing-producer limitation with a tested implementation and an explicit deployment boundary.
 
 CI remains the existing `relay-ci-card/v1` model. Test passed/failed/skipped counts are separate from suites finished. A known suite denominator can drive the ring when total tests remain unknown. Only actual suite records are marked; a bounded visible subset is labeled against its total. Failure explanations remain expandable in full. Refreshes preserve open step evidence and keyboard focus, and unchanged snapshots do not replay progress animations.
 
 The legacy bridge's byte-exact host/style shell is preserved. v20 intrinsic sizing logic remains unchanged. The v20 resource cache alias remains an explicit held integration gap under the separately owned entrypoint alias policy. This draft does not edit `src/index.js` or retry the previously denied alias work; the heading review does not clear that hold.
 
-## Validation checkpoint
+## Validation and review
 
-Current focused working-tree verification after the heading fix: 74 tests passed, 0 failures, 0 skips. The prior full run of five required suites recorded 1128 passes, 2 existing skips and 0 failures; `npm run check` and the web build also passed at that earlier checkpoint. The final exact-head suite is still pending. No final source head or release receipt is established by this document.
+Focused checks cover the producer, schema, native RPC transport, progress adapters, staff identity, portrait bytes, rendered DOM and legacy inline sizing. Negative cases reject malformed/private/malicious receipts, unsupported completion claims, wrong owners, expired/held claims, stale CAS, stale readback, obsolete plan digests and lost priority IDs. An unresolved write cannot be replayed automatically. Existing source/generated provenance assertions remain intact. The legacy coordinate CLI still does not support amend; a regression asserts that unsupported path performs no write. Publication uses the existing RPC adapter, not a new CLI fallback.
 
-Actual production card HTML was rendered in 32 synthetic QA states: desktop 720px and narrow 360px, light/dark, across CI, shared plan, unknown, team-only, failed, stale, long blocker and empty fixtures. The second capture batch had no script errors or horizontal overflow. Synthetic counts and receipts are test inputs, never production contribution claims. Browser tests cover bridge compatibility, host intrinsic sizing and repeated expand/collapse, live refresh, observed motion, reduced-motion changes, keyboard focus, long blockers and contrast. Screenshots and computed-style results are retained outside source at `/Users/lrnolivia/Codex/2026-10-29/task/card-rendered/` (`results.json` and 32 PNGs); test logs remain in this task's artifact directory.
+Actual production HTML was rendered in32 synthetic QA states: desktop720px and narrow360px, light/dark, across CI, shared plan, unknown, team-only, failure, stale, long blocker and empty inputs. All17 final staff cards were also rendered. The v4 review batch had zero script errors and no horizontal overflow. The synthetic counts/receipts are labeled test inputs. Browser tests cover keyboard focus, collapsed/expanded details, repeated refresh, motion, reduced-motion changes, intrinsic host sizing and loaded font metrics. Exact-head build/full-suite results and final Library capture versions belong in the draft PR report.
 
-The finish reviewer returned **ship** for the sole final correction: Nico's heading stays Engineering green in the CI fixture at 720px and 360px in both light and dark modes, with no observed regression in that review. The result clears that bounded visual correction, not portrait approval, producer integration, cache alias work, final exact-head verification, merge or deployment.
+The independent finish reviewer inspected the compact Inspector, mobile, shared checklist, light theme and revised portrait cards and returned **ship** for the final asset integration and identity correction. No material visual regression was found. This visual verdict does not authorize deployment.
 
-## Remaining draft gates
+Installed Playwright1.60.0 runs the browser tests but does not support `init-agents --loop=codex`; no host substitution, dependency upgrade or added skip was used. The existing two Linux-only process tests retain their platform skips on macOS.
 
-1. Resolve the five newly pending portrait refinements; retain the twelve approved portraits. Rerender production DOM evidence and verify the exact source after the asset update.
-2. Freeze and commit final source, run exact-head build and required checks, open and verify a draft PR. The bounded heading correction has cleared finish review; final-head validation remains pending.
-3. Keep producer publication and the held v20 entrypoint cache alias explicit as separate integration gaps. The producer requires the additional scope and end-to-end verification described above; neither gap is closed by this UI draft or its synthetic evidence.
+## Remaining release boundaries
+
+- Final report supplies exact tested head, commands/counts, checks, rendered evidence, human-attributed merge and production readback. Release authorization does not bypass checks or ownership.
+- A real production milestone/refresh is verified only after the authorized release of the new schema and canonical engine.
+- The separately held v20 entrypoint cache-alias work remains outside this reservation. No edits to `src/index.js` or previously denied alias scope were made.

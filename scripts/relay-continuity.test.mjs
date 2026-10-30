@@ -1,3 +1,4 @@
+import {transition} from '../src/coordination-engine.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {reconcileContinuity,validateContinuityPlan} from './relay-continuity.mjs';
@@ -8,7 +9,7 @@ function fixture(){
  f.run=(extra={})=>reconcileContinuity({...f.options,...extra});return f;
 }
 test('coordinator proceeds from completed A to B through authorized shipping and complete acceptance',async()=>{
- const f=fixture(),s=await f.run();assert.deepEqual(f.calls,['a','b','c']);assert.equal(s.objective_completed,true);assert.equal(f.saved[0].stages.a.state,'dispatching');assert.ok(s.stages.c.receipt.evidence);
+ const f=fixture(),s=await f.run();assert.deepEqual(f.calls,['a','b','c']);assert.equal(s.objective_completed,true);assert.equal(f.saved[0].stages.a.state,'repair-required');assert.ok(f.saved.some(s=>s.stages.a.state==='dispatching'&&s.stages.a.pending),'dispatch intent remains durable before execution');assert.ok(s.stages.c.receipt.evidence);
 });
 test('a successful process with failing tests is repaired and cannot complete the objective',async()=>{
  const f=fixture();let tests=0;f.options.execute=async p=>{f.calls.push(p.stage);if(p.stage!=='b'||++tests===2)f.passed[p.stage]=true;return {state:'succeeded'};};
@@ -44,9 +45,11 @@ test('native coordinator journals and resumes trusted publication commands witho
   const objective={goal:'Complete the finite objective',acceptance:'A then B and shipping C'};
   const p=plan();p.objective_digest=createHash('sha256').update(JSON.stringify(objective)).digest('hex');
   for(const stage of p.stages){stage.inputs=['README.md'];stage.command=[process.execPath,'-e',`require('node:fs').appendFileSync('${stage.id}.txt','once\\n')`];stage.verify=[process.execPath,'-e',`if(!require('node:fs').existsSync('${stage.id}.txt'))process.exit(1)`];}
+  let canonical={...objective,id:'fixture',owner:'fixture',branch:'relay/fixture',state:'active',paths:['README.md'],resources:[],lease_until:new Date(Date.now()+3600000).toISOString()},revision='a'.repeat(40),writes=0;
   const rpc=async(name,args)=>{
+   if(name==='relay_runner_coordinate'){assert.equal(args.expected_record_sha,revision);canonical=transition({claims:[canonical],queue:[]},{...args.request,action:args.action},{max_active_branches:4,lease_hours:12}).claims[0];revision=String(++writes).padStart(40,'0');return {ok:true};}
    if(name==='relay_autonomy')return {ok:true,state:{revision:0,held:false}};
-   if(name==='relay_runner_assignments')return {ok:true,record_sha:'a'.repeat(40),claims:[{...objective,id:'fixture',owner:'fixture',branch:'relay/fixture',state:'active',lease_until:new Date(Date.now()+3600000).toISOString()}]};throw Error('Command stages must not create coding jobs');
+   if(name==='relay_runner_assignments')return {ok:true,record_sha:revision,claims:[structuredClone(canonical)]};throw Error('Command stages must not create coding jobs');
   };
   const run=()=>runContinuityExecution({config:{project:'fixture',assignment:'fixture',owner:'fixture',branch:'relay/fixture',continuity:p},workspace,stateDir,rpc,runExecution:()=>{throw Error('Unexpected coding process');}});
   assert.equal((await run()).objective_completed,true);assert.equal((await run()).objective_completed,true);
@@ -59,4 +62,36 @@ test('native coordinator journals and resumes trusted publication commands witho
 test('a reconciled queued submission starts its original job exactly once',async()=>{
  const f=fixture();f.options.execute=async p=>{f.calls.push(p.stage);throw Error('lost submit reply');};const s=await f.run();
  f.options.reconcile=async()=>({state:'queued',job_id:'original'});f.options.execute=async p=>{f.calls.push(p.stage);f.passed[p.stage]=true;return {state:'succeeded',job_id:'original'};};assert.equal((await f.run({journal:s})).objective_completed,true);assert.deepEqual(f.calls,['a','a','b','c']);
+});
+
+test('publisher reconciles a lost reply, deduplicates milestones and leaves uncertain writes pending without replay',async()=>{
+ const {publishContinuityCard,continuityCardProjection}=await import('./relay-continuity.mjs'),{createHash}=await import('node:crypto');
+ const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
+ const objective={goal:'Fixture publication',acceptance:'Verified priority'};
+ const p=plan();p.objective_digest=hash(objective);const journal={schema:1,plan_digest:hash(p),stages:{}};
+ function publisherFixture(mode){
+  let claim={...objective,id:'fixture',owner:'worker',branch:'relay/fixture',state:'active',lease_until:new Date(Date.now()+3600000).toISOString(),paths:['src/'],resources:[]},revision='a'.repeat(40),writes=0,intent=null;
+  const config={project:'relay',assignment:'fixture',owner:'worker',branch:'relay/fixture'};
+  const readControl=async()=>({held:false,global_held:false,assignment_active:true,objective_digest:p.objective_digest,canonical_record_sha:revision});
+  const rpc=async(name,args)=>{
+   if(name==='relay_runner_assignments')return {ok:true,record_sha:revision,claims:[structuredClone(claim)]};
+   assert.equal(name,'relay_runner_coordinate');writes++;assert.equal(args.expected_record_sha,revision);
+   if(mode==='stale')return {ok:true};
+   claim=transition({claims:[claim],queue:[]},{...args.request,action:args.action},{lease_hours:12,max_active_branches:4}).claims[0];revision=String(writes).padStart(40,'0');throw Error('Lost committed response');
+  };
+  return {run:()=>publishContinuityCard({config,plan:p,journal,rpc,readControl,readIntent:async()=>intent,saveIntent:async value=>{intent=structuredClone(value);}}),get writes(){return writes},get intent(){return intent},get claim(){return claim}};
+ }
+ const lost=publisherFixture('lost');assert.equal((await lost.run()).reconciled,true);assert.equal(lost.writes,1);assert.equal(lost.intent,null);assert.equal((await lost.run()).unchanged,true);assert.equal(lost.writes,1);
+ const stale=publisherFixture('stale');await assert.rejects(stale.run(),/readback is stale/);assert.ok(stale.intent);await assert.rejects(stale.run(),/unresolved/);assert.equal(stale.writes,1);
+ const bad=structuredClone(journal);bad.plan_digest='0'.repeat(64);assert.throws(()=>continuityCardProjection({plan:p,journal:bad,assignment:lost.claim}),/different plan/);
+ const forged=structuredClone(journal);forged.stages.a={state:'passed',receipt:{evidence:'javascript:alert(1)'}};assert.throws(()=>continuityCardProjection({plan:p,journal:forged,assignment:lost.claim}),/lacks matching verifier/);
+ const sub=structuredClone(p);sub.completion_scope='subobjective';assert.equal(continuityCardProjection({plan:sub,journal:{...journal,plan_digest:hash(sub)},assignment:lost.claim}).complete,false);
+});
+
+test('resuming changed inputs invalidates saved pass receipts before any card observation',async()=>{
+ const f=fixture(),journal=await f.run();f.versions.a++;f.passed.a=false;const seen=[];
+ await f.run({journal,observe:async state=>seen.push(structuredClone(state))});
+ assert.equal(seen[0].stages.a.state,'ready');assert.equal(seen[0].stages.a.receipt,null);
+ assert.equal(seen[0].stages.b.state,'ready');assert.equal(seen[0].stages.c.state,'ready');
+ assert.equal(seen.at(-1).objective_completed,true);
 });
