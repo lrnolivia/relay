@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-29T23:24:58.038Z",
+  "updated_at": "2026-10-30T00:28:37.216Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18544,6 +18544,59 @@
       "evidence": "Merged PR265 exact head9dfb2b7002c2a27374fea997397a3078798eaab0 as Lauren-authored/committed merge8d21f31dca19f4bd0a53d1ae4c1821df39cff426 via authenticated local Git. CI quality and coordination admission passed:1115 passed,1 existing skip,0 failures.44 local Runner control tests and actual new-project resolver passed; initial CRLF-only harness hash mismatch resolved by test-checkout LF normalization without a source diff. Live relay_runner_projects and relay_runner_project now resolve managed puck-and-play to lrnolivia/puck-and-play with enabled empty coordination. Local Puck & Play logon task uses interactive limited user, direct installed executable --tray, battery allowed and no time limit; started and running, native inventory no visible Puck window. SteamGridDB and UWD2 shortcuts use tested GUI launcher with CreateNoWindow; console probe passed and live SteamGridDB watcher has MainWindowHandle0 and status present. Decky already uses GUI no-console build. Cold desktop/Xbox boot was not performed and remains explicitly unverified, not a claimed pass. No source product update/hardware recovery/reboot required. Machine rollback backups and task XML retained under LocalAppData/loew.fi/Startup; canonical repair/limits at docs/puck-and-play/WINDOWS_STARTUP_20261029.md.",
       "work_accounted": true,
       "completed_at": "2026-10-29T23:24:58.038Z"
+    },
+    {
+      "id": "relay-staff-led-cards-20261030",
+      "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+      "branch": "relay/staff-led-cards-20261030",
+      "paths": [
+        "src/relay-context-card-model.js",
+        "src/relay-context-card-browser.js",
+        "src/relay-chat-ui.js",
+        "src/relay-chat-ui.test.js",
+        "src/relay-card-steps.js",
+        "src/relay-card-steps.test.js",
+        "src/relay-card-identity.js",
+        "src/relay-card-identity.test.js",
+        "assets/staff/",
+        "assets/teams/",
+        "docs/relay/STAFF_LED_CARDS_20261030.md"
+      ],
+      "resources": [
+        "relay-staff-led-cards",
+        "relay-card-ordered-step-model",
+        "relay-inline-card-intrinsic-sizing"
+      ],
+      "goal": "Implement compact staff-led Relay cards with canonical ordered step evidence, full fictional staff assets, exact Terra Prime gray and accent tokens, accessible responsive layout and meaningful motion.",
+      "acceptance": "Preserve inline rendering and content-sized collapse; show evidence-backed team and step ownership; use approved team icons and fictional portrait assets with stroke-token background; verify real UI, accessibility and full tests; open draft PR only, no merge or deployment.",
+      "next_action": "Implement and verify approved staff-led card overhaul on isolated branch; protected shared stylesheet and test await separate exact scoped transfer.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "f18b46604b8ec9be4dcf205a02add11bb2ae08ee",
+      "state": "active",
+      "created_at": "2026-10-30T00:28:37.216Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Implement compact staff-led Relay cards with canonical ordered step evidence, full fictional staff assets, exact Terra Prime gray and accent tokens, accessible responsive layout and meaningful motion.",
+          "acceptance": "Preserve inline rendering and content-sized collapse; show evidence-backed team and step ownership; use approved team icons and fictional portrait assets with stroke-token background; verify real UI, accessibility and full tests; open draft PR only, no merge or deployment.",
+          "at": "2026-10-30T00:28:37.216Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-staff-led-cards-20261030:acceptance:0",
+            "text": "Preserve inline rendering and content-sized collapse; show evidence-backed team and step ownership; use approved team icons and fictional portrait assets with stroke-token background; verify real UI, accessibility and full tests; open draft PR only, no merge or deployment.",
+            "at": "2026-10-30T00:28:37.216Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-30T00:28:37.216Z",
+      "lease_until": "2026-10-30T12:28:37.216Z"
     }
   ],
   "migrated_from": "loew-inspector"
