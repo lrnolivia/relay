@@ -11,15 +11,22 @@ test('retired and unknown IDs never inherit an arbitrary portrait identity',()=>
  assert.equal(cardStaff('felix'),null);assert.equal(cardStaff('unknown'),null);assert.equal(cardIdentity({primary_team:'inspector'}).speaker,null);assert.equal(cardStaff('dominique').status,'reserve');assert.equal(Object.keys(CARD_TEAMS).length,7);
 });
 
-test('portrait manifest follows the canonical roster and preserves the four locked identities',async()=>{
+test('approved portrait manifest follows the canonical roster and binds every embedded portrait to its source',async()=>{
  const {readFile}=await import('node:fs/promises');const {createHash}=await import('node:crypto');const {STAFF}=await import('./staff-registry.js');
  const manifest=JSON.parse(await readFile(new URL('../assets/staff/manifest.json',import.meta.url),'utf8'));
  assert.equal(manifest.fictional_ai_staff,true);assert.equal(manifest.identity_is_authority,false);
  assert.deepEqual(manifest.staff.map(p=>p.id).sort(),STAFF.filter(p=>p.status!=='retired').map(p=>p.id).sort());
- const locked={nico:'0a338ce958ab480f78c01c815d468b3497b55500c9011c9a82d66584421ed293',julian:'3d2e2035753dcf4e674d6a3372319bcbbfe3d797b1d5b1c30430651c4e568719',rafael:'094ffb7b53daa4246291ccdf78fa210cd395c9d8651b97e2a24bda0e4ddeb81c',dominique:'cb6ef1c47408e04e55d2fee152d491281dcdf60cb2a8efd19821d45178ac2664'};
+ const {STAFF_PORTRAITS}=await import('../assets/staff/card-assets.js');
+ assert.equal(Object.keys(STAFF_PORTRAITS).length,17);assert.equal(manifest.version,3);assert.equal(manifest.final,true);
+ assert.equal(manifest.source_archive_sha256,'3ed80350ba3c4b5e294a00d8fa0fcd99608eae95e1fd3986876590a313a61b63');
  for(const person of manifest.staff){
   const canonical=STAFF.find(p=>p.id===person.id);assert.equal(person.status,canonical.status);assert.equal(person.home_team,canonical.home_team);
-  if(locked[person.id])assert.equal(person.files.webp512.sha256,locked[person.id]);
+  assert.equal(person.portrait_status,'approved-v3');
+  assert.equal(person.face_identity_locked,['nico','julian','rafael','dominique'].includes(person.id));
+  assert.equal(person.files.webp512.sha256,person.source_files.webp512.sha256);
+  assert.equal(person.files.card128.source_sha256,person.files.webp512.sha256);
+  const embedded=Buffer.from(STAFF_PORTRAITS[person.id].split(',')[1],'base64');
+  assert.equal(createHash('sha256').update(embedded).digest('hex'),person.files.card128.sha256);
   for(const file of Object.values(person.files)){const bytes=await readFile(new URL('../assets/staff/'+file.path,import.meta.url));assert.equal(bytes.length,file.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),file.sha256);}
  }
 });

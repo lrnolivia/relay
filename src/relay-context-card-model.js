@@ -137,7 +137,7 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
     card.ci.elapsed=Number.isFinite(ci.elapsed_ms)?Math.max(0,ci.elapsed_ms):null;
     card.ci.failures=records(ci.failures).slice(0,20).map(f=>({suite:safePresentationText(f.suite,200),name:safePresentationText(f.name,2000),message:safePresentationText(f.message,12000)}));
     card.ci.failed_jobs=records(ci.failed_jobs).slice(0,20).map(j=>({name:safePresentationText(j.name,2000),messages:records(j.annotations).map(a=>safePresentationText(a.message,12000))}));
-    card.metric=card.ci.suites_total!==null?String(card.ci.suites_done??0):ciView.metric;
+    card.metric=card.ci.suites_total!==null?(card.ci.suites_done===null?'—':String(card.ci.suites_done)):ciView.metric;
     card.metric_label=card.ci.suites_total!==null?'of '+card.ci.suites_total+' suites finished':ciView.metric_label;
     card.title=ci.conclusion==='success'?'The checks passed':ci.conclusion==='failure'?'A check needs attention':ci.conclusion==='cancelled'?'The run was cancelled':ci.status==='queued'?'Checks are queued':'Checking the build';
     card.summary=ci.stale?'The last update is more than two minutes old.':ci.conclusion==='failure'?'A check needs attention. The reported results are below.':ci.conclusion==='success'?'The reported checks passed.':ci.conclusion==='cancelled'?'This run was cancelled. Reported results are preserved.':ci.status==='queued'?'Waiting for the run to start.':'Checks are running. Results update as suites report.';

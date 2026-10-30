@@ -60,6 +60,8 @@ test('no reported percentage is represented as unknown, never invented zero', ()
   }
   assert.equal(contextCardModel({project:'relay',progress_percent:0}).percent,null);
   assert.equal(contextCardModel({project:'relay',progress_percent:'42'}).percent,null);
+  const partial=contextCardModel({project:'relay',ci:{schema:'relay-ci-card/v1',status:'running',telemetry:'reported',tests:{},jobs:{},suites_total:4,suites_done:null}});
+  assert.equal(partial.metric,'—');assert.equal(partial.percent,null);assert.equal(partial.ci.tests.passed,null);
 });
 test('asset omissions fail the build instead of shipping broken brand images', () => {
   assert.throws(() => styleContextCard('',{}), /Missing bundled card brand/);
