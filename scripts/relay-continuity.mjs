@@ -200,10 +200,18 @@ export async function publishContinuityCard({config,plan,journal,rpc,readControl
  await saveIntent({request});
  // Even a failed/lost response is reconciled by an independent exact readback.
  // Never replay a mutation merely because the transport did not answer.
- let outcome;try{outcome=await rpc('relay_runner_coordinate',request);}catch{}
+ let outcome;try{outcome=await rpc('relay_runner_coordinate',request);}catch(error){if(['conflict','validation','ownership','policy','policy_drift'].includes(error.code))outcome={ok:false,error:{class:error.code}};}
  const readback=await rpc('relay_runner_assignments',{project:config.project,assignment:config.assignment});
  const latest=readback.ok===true?readback.claims?.find(a=>a.id===config.assignment):null;
- if(!latest||latest.owner!==config.owner||latest.branch!==config.branch||latest.state!=='active'||!(Date.parse(latest.lease_until)>Date.now())||!/^[a-f0-9]{40}$/.test(readback.record_sha||'')||readback.record_sha===snapshot.record_sha||JSON.stringify(latest.card_steps)!==JSON.stringify(projection))throw Error('Checklist publication readback is stale or mismatched; preserve its pending intent');
+ const confirmed=latest&&latest.owner===config.owner&&latest.branch===config.branch&&latest.state==='active'&&Date.parse(latest.lease_until)>Date.now()&&/^[a-f0-9]{40}$/.test(readback.record_sha||'')&&readback.record_sha!==snapshot.record_sha&&JSON.stringify(latest.card_steps)===JSON.stringify(projection);
+ if(!confirmed){
+  // A structured authoritative rejection before application is not an unknown
+  // write. Stop this run, but let a later fresh control/CAS attempt proceed.
+  if(outcome?.ok===false&&['conflict','validation','ownership','policy','policy_drift'].includes(outcome.error?.class)&&readback.ok===true&&/^[a-f0-9]{40}$/.test(readback.record_sha||'')&&JSON.stringify(latest?.card_steps)!==JSON.stringify(projection)){
+   await saveIntent(null);throw Error('Checklist publication rejected without application: '+outcome.error.class+'; refresh before another attempt');
+  }
+  throw Error('Checklist publication readback is stale or mismatched; preserve its pending intent');
+ }
  await saveIntent(null);
  return {published:true,record_sha:readback.record_sha,reconciled:outcome?.ok!==true};
 }

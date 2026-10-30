@@ -95,3 +95,18 @@ test('resuming changed inputs invalidates saved pass receipts before any card ob
  assert.equal(seen[0].stages.b.state,'ready');assert.equal(seen[0].stages.c.state,'ready');
  assert.equal(seen.at(-1).objective_completed,true);
 });
+
+test('authoritative CAS rejection stops once and permits a fresh later attempt without treating rejection as uncertainty',async()=>{
+ const {publishContinuityCard}=await import('./relay-continuity.mjs'),{createHash}=await import('node:crypto');const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
+ const objective={goal:'Fixture conflict',acceptance:'Verified priority'},p=plan();p.objective_digest=hash(objective);const journal={schema:1,plan_digest:hash(p),stages:{}};
+ let claim={...objective,id:'fixture',owner:'worker',branch:'relay/fixture',state:'active',lease_until:new Date(Date.now()+3600000).toISOString(),paths:['src/'],resources:[]},revision='a'.repeat(40),writes=0,intent=null;
+ const rpc=async(name,args)=>{
+  if(name==='relay_runner_assignments')return {ok:true,record_sha:revision,claims:[structuredClone(claim)]};
+  writes++;assert.equal(args.expected_record_sha,revision);revision=String(writes).padStart(40,'0');
+  if(writes===1)return {ok:false,error:{class:'conflict'}};
+  claim=transition({claims:[claim],queue:[]},{...args.request,action:args.action},{lease_hours:12,max_active_branches:4}).claims[0];return {ok:true};
+ };
+ const run=()=>publishContinuityCard({config:{project:'relay',assignment:'fixture',owner:'worker',branch:'relay/fixture'},plan:p,journal,rpc,readControl:async()=>({held:false,assignment_active:true,objective_digest:p.objective_digest,canonical_record_sha:revision}),readIntent:async()=>intent,saveIntent:async value=>{intent=value}});
+ await assert.rejects(run(),/rejected without application: conflict/);assert.equal(writes,1);assert.equal(intent,null);
+ assert.equal((await run()).published,true);assert.equal(writes,2);assert.equal(intent,null);
+});

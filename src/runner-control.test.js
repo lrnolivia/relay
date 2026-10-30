@@ -641,3 +641,13 @@ test('real continuity verifier publishes through canonical control, live progres
  assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');assert.match(await page.locator('#team').textContent(),/Assignment lead/);assert.equal(f.record.claims[0].card_steps.steps[0].receipt.source_sha,source);
  const writes=f.writes.length;await run();assert.equal(f.writes.length,writes,'identical refresh does not publish another amendment');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 });
+
+test('new canonical acceptance immediately removes the old full denominator before the publisher runs',async()=>{
+ const p=publishedSteps(),f=fixture({claims:[claim({card_steps:p})]});
+ await coordinate(f,'amend',{id:'task',owner:'worker',acceptance_additions:[supportingReceipt()],reason:'Admit a required supporting priority'});
+ assert.equal(f.record.claims[0].card_steps.complete,false);assert.deepEqual(f.record.claims[0].card_steps.steps,p.steps);
+ const {callProgress}=await import('./progress-api.js'),{contextCardModel}=await import('./relay-chat-ui.js');
+ const live=await callProgress({project:'relay',assignment:'task'},{},f.api),card=contextCardModel(live);
+ assert.equal(card.plan.total,null);assert.equal(card.plan.passed,1);assert.equal(card.plan.availability,'partial');assert.equal(card.percent,null);
+ assert.ok(f.record.claims[0].amendments.at(-1).fields.includes('card_steps'),'derived invalidation is in canonical amendment history');
+});

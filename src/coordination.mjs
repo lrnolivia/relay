@@ -245,6 +245,12 @@ export function transition(record, request, policy, now = new Date()) {
     if ('task_class' in request) patch.task_class = normalizeTaskClass(request.task_class);
     if ('ledger_refs' in request) patch.ledger_refs = normalizeLedgerRefs(request.ledger_refs);
     Object.assign(patch, metadataFields(request));
+    const objectiveChanged=(patch.goal!==undefined&&patch.goal!==target.goal)||(patch.acceptance!==undefined&&patch.acceptance!==target.acceptance);
+    if(objectiveChanged&&target.card_steps)patch.card_steps=undefined;
+    else if(target.card_steps&&patch.acceptance_additions?.length>(target.acceptance_additions?.length||0))patch.card_steps={...target.card_steps,complete:false};
+    // Acceptance grows atomically with loss of the old complete denominator.
+    // Retain verified steps until the publisher incorporates the new priorities.
+    if('card_steps' in patch&&!supplied.includes('card_steps'))supplied.push('card_steps');
     const before = Object.fromEntries(supplied.map((field) => [field, target[field]]));
     const staffPatch = Object.fromEntries(["primary_staff", "supporting_staff", "primary_team", "supporting_teams"].filter(key => key in request).map(key => [key, request[key]]));
     const preview = { ...target, ...patch, ...staffPatch };
@@ -272,7 +278,6 @@ export function transition(record, request, policy, now = new Date()) {
     }
     preserveObjective(target,now);
     if(queued && current)preserveObjective(queued,now);
-    if ((patch.goal !== undefined && patch.goal !== target.goal) || (patch.acceptance !== undefined && patch.acceptance !== target.acceptance)) {delete target.card_steps;if(queued)delete queued.card_steps;}
     Object.assign(target, patch);
     appendAmendment(target, request, changed, before, now);
     target.updated_at = now.toISOString();
