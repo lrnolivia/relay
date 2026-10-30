@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-30T02:22:18.700Z",
+  "updated_at": "2026-10-30T02:22:46.194Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18474,76 +18474,6 @@
       "completed_at": "2026-10-29T23:24:58.038Z"
     },
     {
-      "id": "relay-staff-led-cards-20261030",
-      "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
-      "branch": "relay/staff-led-cards-20261030",
-      "paths": [
-        "src/relay-context-card-model.js",
-        "src/relay-context-card-browser.js",
-        "src/relay-chat-ui.js",
-        "src/relay-chat-ui.test.js",
-        "src/relay-card-steps.js",
-        "src/relay-card-steps.test.js",
-        "src/relay-card-identity.js",
-        "src/relay-card-identity.test.js",
-        "assets/staff/",
-        "assets/teams/",
-        "docs/relay/STAFF_LED_CARDS_20261030.md",
-        "src/relay-context-card-style.js",
-        "src/relay-context-card-style.test.js",
-        "src/progress-observation.js",
-        "src/progress-observation.test.js",
-        "src/progress-api.js",
-        "src/progress-api.test.js",
-        "scripts/relay-continuity.mjs",
-        "scripts/relay-continuity.test.mjs",
-        "scripts/relay-native-continuity.mjs",
-        "scripts/relay-native-continuity.test.mjs",
-        "src/runner-control.js",
-        "src/runner-control-core.js",
-        "src/runner-control.test.js",
-        "src/coordination-transport.test.js",
-        "src/coordination-engine.js",
-        "test/coordination.test.mjs",
-        "src/coordination.mjs"
-      ],
-      "resources": [
-        "relay-staff-led-cards",
-        "relay-card-ordered-step-model",
-        "relay-inline-card-intrinsic-sizing"
-      ],
-      "goal": "Implement compact staff-led Relay cards with canonical ordered step evidence, full fictional staff assets, exact Terra Prime gray and accent tokens, accessible responsive layout and meaningful motion.",
-      "acceptance": "Preserve inline rendering and content-sized collapse; show evidence-backed team and step ownership; use approved team icons and fictional portrait assets with stroke-token background; verify real UI, accessibility and full tests; open draft PR only, no merge or deployment.",
-      "next_action": "Implement verified live checklist updates through the continuity publisher and existing task-control and coordination owner/CAS transactions, with tests and readback. Publish bounded stable plan/step IDs, digests and verifier evidence only; raw journals remain private and unknown work stays unknown. Complete staff-led UI and portraits through tested draft PR266 only, no merge or deployment.",
-      "category": "implementation",
-      "primary_team": "runner",
-      "supporting_teams": [
-        "inspector"
-      ],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "f18b46604b8ec9be4dcf205a02add11bb2ae08ee",
-      "state": "active",
-      "created_at": "2026-10-30T00:28:37.216Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Implement compact staff-led Relay cards with canonical ordered step evidence, full fictional staff assets, exact Terra Prime gray and accent tokens, accessible responsive layout and meaningful motion.",
-          "acceptance": "Preserve inline rendering and content-sized collapse; show evidence-backed team and step ownership; use approved team icons and fictional portrait assets with stroke-token background; verify real UI, accessibility and full tests; open draft PR only, no merge or deployment.",
-          "at": "2026-10-30T00:28:37.216Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "relay-staff-led-cards-20261030:acceptance:0",
-            "text": "Preserve inline rendering and content-sized collapse; show evidence-backed team and step ownership; use approved team icons and fictional portrait assets with stroke-token background; verify real UI, accessibility and full tests; open draft PR only, no merge or deployment.",
-            "at": "2026-10-30T00:28:37.216Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-30T01:47:41.393Z",
-      "lease_until": "2026-10-30T13:47:41.393Z"
-    },
-    {
       "id": "relay-consumer-verification-20261028",
       "owner": "01a18087-d63e-7060-a601-8be52e311c63",
       "branch": "relay/consumer-verification-20261028",
@@ -18610,6 +18540,78 @@
           "next_action": "Keep unrelated original remainder HELD; no dispatch or chat contact. Two card files and hydration resource carved out to relay-card-intrinsic-inline-20261029 under user-authorized October 29 takeover. Preserve original acceptance, source branch, private checkpoints and unfinished verification; do not resume."
         }
       ]
+    },
+    {
+      "id": "relay-staff-led-cards-20261030",
+      "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+      "branch": "relay/staff-led-cards-20261030",
+      "paths": [
+        "src/relay-context-card-model.js",
+        "src/relay-context-card-browser.js",
+        "src/relay-chat-ui.js",
+        "src/relay-chat-ui.test.js",
+        "src/relay-card-steps.js",
+        "src/relay-card-steps.test.js",
+        "src/relay-card-identity.js",
+        "src/relay-card-identity.test.js",
+        "assets/staff/",
+        "assets/teams/",
+        "docs/relay/STAFF_LED_CARDS_20261030.md",
+        "src/relay-context-card-style.js",
+        "src/relay-context-card-style.test.js",
+        "src/progress-observation.js",
+        "src/progress-observation.test.js",
+        "src/progress-api.js",
+        "src/progress-api.test.js",
+        "scripts/relay-continuity.mjs",
+        "scripts/relay-continuity.test.mjs",
+        "scripts/relay-native-continuity.mjs",
+        "scripts/relay-native-continuity.test.mjs",
+        "src/runner-control.js",
+        "src/runner-control-core.js",
+        "src/runner-control.test.js",
+        "src/coordination-transport.test.js",
+        "src/coordination-engine.js",
+        "test/coordination.test.mjs",
+        "src/coordination.mjs",
+        "src/index.js",
+        "src/relay-entry.test.js"
+      ],
+      "resources": [
+        "relay-staff-led-cards",
+        "relay-card-ordered-step-model",
+        "relay-inline-card-intrinsic-sizing"
+      ],
+      "goal": "Implement compact staff-led Relay cards with canonical ordered step evidence, full fictional staff assets, exact Terra Prime gray and accent tokens, accessible responsive layout and meaningful motion.",
+      "acceptance": "Preserve inline rendering and content-sized collapse; show evidence-backed team and step ownership; use approved team icons and fictional portrait assets with stroke-token background; verify real UI, accessibility and full tests; open draft PR only, no merge or deployment.",
+      "next_action": "Finish exact user-approved v19/v20 compatibility aliases and advertise v21 with legacy-resource tests; src/index.js and src/relay-entry.test.js only for that purpose. Preserve all existing admitted UI/live publisher scope. Complete exact-head build/full suites, independent review and required CI before user-authorized human merge and Workers Builds release; verify deployed identity, health and live steps without fabricated completion.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "f18b46604b8ec9be4dcf205a02add11bb2ae08ee",
+      "state": "active",
+      "created_at": "2026-10-30T00:28:37.216Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Implement compact staff-led Relay cards with canonical ordered step evidence, full fictional staff assets, exact Terra Prime gray and accent tokens, accessible responsive layout and meaningful motion.",
+          "acceptance": "Preserve inline rendering and content-sized collapse; show evidence-backed team and step ownership; use approved team icons and fictional portrait assets with stroke-token background; verify real UI, accessibility and full tests; open draft PR only, no merge or deployment.",
+          "at": "2026-10-30T00:28:37.216Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-staff-led-cards-20261030:acceptance:0",
+            "text": "Preserve inline rendering and content-sized collapse; show evidence-backed team and step ownership; use approved team icons and fictional portrait assets with stroke-token background; verify real UI, accessibility and full tests; open draft PR only, no merge or deployment.",
+            "at": "2026-10-30T00:28:37.216Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-30T02:22:46.194Z",
+      "lease_until": "2026-10-30T14:22:46.194Z"
     }
   ],
   "migrated_from": "loew-inspector"
