@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T04:03:20.813Z",
+  "updated_at": "2026-10-30T16:57:37.020Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21628,9 +21628,9 @@
         "rtxforge-nr-pass-controls",
         "rtxforge-overlay-renderer-prototype"
       ],
-      "goal": "Improve the in-game overlay with the requested tuning workflow; prototype RmlUi first with airy Apple-inspired blur and translucency before choosing the presentation toolkit.",
-      "acceptance": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified. Prototype-first visual acceptance: real per-panel backdrop blur, translucent textured layered surfaces, raw existing logo without platter, matching welcome toast, glowing honest sample status indicators and reduced-motion support. Automatic, Light and Dark adapt to the scene locally; Light stays light, Dark stays neutral dark with constrained chroma; all share accent hue with suitable contrast variants. Smooth rounded edges, subtle light/dark rim, fuller softer text. Validate actual native renders and interactions; no game integration or GPU/HDR/Proton performance claim from standalone CPU timings.",
-      "next_action": "Refine the native prototype with raw logo, welcome toast, neutral dark materials and antialiased geometry; render Light/Dark/Auto and review bounded visual fixes.",
+      "goal": "Integrate the approved RmlUi glass overlay and tuning workflow into rtxForge; validate the prototype and game routes, prepare beta delivery with managed overlay refresh.",
+      "acceptance": "Preserve actual runtime tuning, named game presets, undo/redo, explicit On/Off or preset comparisons, per-pass controls and honest capabilities/telemetry. Use the approved spacious glass UI, Roboto main type, Bakbak One neutral wordmark and accent headings, raw logo, draggable stacking panels, kinetic motion and reduced-motion support. Layout labels Sidebar, Advanced, Bottom Bar. Full Settings screen includes Appearance popout, layout, shortcuts, welcome/notifications and existing overlay options. Built-in defaults from Oct30 screenshots: Dark 80% tint/48px blur/4% grain/Overlay15%; Light 100% tint/44px blur/4% grain/Overlay35%; Clear default 20% light tint/48px blur/4% grain/SoftLight50%, adaptive light-preferred text depth. Themes reset built-ins, fine editing remains unlocked and marks Custom. 120% old scale is100%; simple Smaller/Default/Larger type and scale controls. Metadata expanded on Advanced Overview and expandable compact card on Sidebar/BottomBar. Slim real-key welcome toast, Rounded/Pill option; real hotkey/preset notifications. Test actual game API routes before claiming acceptance; standalone native tests do not establish gameplay, GPU/HDR/Proton correctness. Prepare requested beta only from exact reviewed revision with passing checks and rollback; update all managed installed overlays safely preserving game originals and user settings.",
+      "next_action": "Apply final theme defaults and layout names, implement full Settings, validate native interactions, then integrate approved renderer into runtime packaging and managed overlay update path. Keep prototype available for styling.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21657,12 +21657,18 @@
             "text": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified. Prototype-first visual acceptance: real per-panel backdrop blur, translucent textured layered surfaces, raw existing logo without platter, matching welcome toast, glowing honest sample status indicators and reduced-motion support. Automatic, Light and Dark adapt to the scene locally; Light stays light, Dark stays neutral dark with constrained chroma; all share accent hue with suitable contrast variants. Smooth rounded edges, subtle light/dark rim, fuller softer text. Validate actual native renders and interactions; no game integration or GPU/HDR/Proton performance claim from standalone CPU timings.",
             "at": "2026-10-30T04:03:20.813Z",
             "reason": "User expanded prototype styling: raw logo without platter, matching welcome toast, neutral dark surfaces, smoother edges and softer fuller type; all three appearances adapt locally and preserve accent hue. Texture, material rim, blur, glowing sample statuses and adaptive shadows are required."
+          },
+          {
+            "id": "rtxforge-overlay-workbench-20261029:acceptance:3",
+            "text": "Preserve actual runtime tuning, named game presets, undo/redo, explicit On/Off or preset comparisons, per-pass controls and honest capabilities/telemetry. Use the approved spacious glass UI, Roboto main type, Bakbak One neutral wordmark and accent headings, raw logo, draggable stacking panels, kinetic motion and reduced-motion support. Layout labels Sidebar, Advanced, Bottom Bar. Full Settings screen includes Appearance popout, layout, shortcuts, welcome/notifications and existing overlay options. Built-in defaults from Oct30 screenshots: Dark 80% tint/48px blur/4% grain/Overlay15%; Light 100% tint/44px blur/4% grain/Overlay35%; Clear default 20% light tint/48px blur/4% grain/SoftLight50%, adaptive light-preferred text depth. Themes reset built-ins, fine editing remains unlocked and marks Custom. 120% old scale is100%; simple Smaller/Default/Larger type and scale controls. Metadata expanded on Advanced Overview and expandable compact card on Sidebar/BottomBar. Slim real-key welcome toast, Rounded/Pill option; real hotkey/preset notifications. Test actual game API routes before claiming acceptance; standalone native tests do not establish gameplay, GPU/HDR/Proton correctness. Prepare requested beta only from exact reviewed revision with passing checks and rollback; update all managed installed overlays safely preserving game originals and user settings.",
+            "at": "2026-10-30T16:57:37.020Z",
+            "reason": "Lauren approved integrating the glass overlay, starting new betas and refreshing all installed managed overlays. Latest screenshots finalize per-theme defaults; full Settings screen requested and layout names clarified."
           }
         ]
       },
-      "updated_at": "2026-10-30T04:03:20.813Z",
-      "lease_until": "2026-10-30T16:03:20.813Z",
-      "amendment_count": 2,
+      "updated_at": "2026-10-30T16:57:37.020Z",
+      "lease_until": "2026-10-31T04:57:37.020Z",
+      "amendment_count": 3,
       "amendments": [
         {
           "at": "2026-10-30T03:07:01.657Z",
@@ -21696,6 +21702,26 @@
           "after": {
             "acceptance": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified. Prototype-first visual acceptance: real per-panel backdrop blur, translucent textured layered surfaces, raw existing logo without platter, matching welcome toast, glowing honest sample status indicators and reduced-motion support. Automatic, Light and Dark adapt to the scene locally; Light stays light, Dark stays neutral dark with constrained chroma; all share accent hue with suitable contrast variants. Smooth rounded edges, subtle light/dark rim, fuller softer text. Validate actual native renders and interactions; no game integration or GPU/HDR/Proton performance claim from standalone CPU timings.",
             "next_action": "Refine the native prototype with raw logo, welcome toast, neutral dark materials and antialiased geometry; render Light/Dark/Auto and review bounded visual fixes."
+          }
+        },
+        {
+          "at": "2026-10-30T16:57:37.020Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "Lauren approved integrating the glass overlay, starting new betas and refreshing all installed managed overlays. Latest screenshots finalize per-theme defaults; full Settings screen requested and layout names clarified.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Improve the in-game overlay with the requested tuning workflow; prototype RmlUi first with airy Apple-inspired blur and translucency before choosing the presentation toolkit.",
+            "acceptance": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified. Prototype-first visual acceptance: real per-panel backdrop blur, translucent textured layered surfaces, raw existing logo without platter, matching welcome toast, glowing honest sample status indicators and reduced-motion support. Automatic, Light and Dark adapt to the scene locally; Light stays light, Dark stays neutral dark with constrained chroma; all share accent hue with suitable contrast variants. Smooth rounded edges, subtle light/dark rim, fuller softer text. Validate actual native renders and interactions; no game integration or GPU/HDR/Proton performance claim from standalone CPU timings.",
+            "next_action": "Refine the native prototype with raw logo, welcome toast, neutral dark materials and antialiased geometry; render Light/Dark/Auto and review bounded visual fixes."
+          },
+          "after": {
+            "goal": "Integrate the approved RmlUi glass overlay and tuning workflow into rtxForge; validate the prototype and game routes, prepare beta delivery with managed overlay refresh.",
+            "acceptance": "Preserve actual runtime tuning, named game presets, undo/redo, explicit On/Off or preset comparisons, per-pass controls and honest capabilities/telemetry. Use the approved spacious glass UI, Roboto main type, Bakbak One neutral wordmark and accent headings, raw logo, draggable stacking panels, kinetic motion and reduced-motion support. Layout labels Sidebar, Advanced, Bottom Bar. Full Settings screen includes Appearance popout, layout, shortcuts, welcome/notifications and existing overlay options. Built-in defaults from Oct30 screenshots: Dark 80% tint/48px blur/4% grain/Overlay15%; Light 100% tint/44px blur/4% grain/Overlay35%; Clear default 20% light tint/48px blur/4% grain/SoftLight50%, adaptive light-preferred text depth. Themes reset built-ins, fine editing remains unlocked and marks Custom. 120% old scale is100%; simple Smaller/Default/Larger type and scale controls. Metadata expanded on Advanced Overview and expandable compact card on Sidebar/BottomBar. Slim real-key welcome toast, Rounded/Pill option; real hotkey/preset notifications. Test actual game API routes before claiming acceptance; standalone native tests do not establish gameplay, GPU/HDR/Proton correctness. Prepare requested beta only from exact reviewed revision with passing checks and rollback; update all managed installed overlays safely preserving game originals and user settings.",
+            "next_action": "Apply final theme defaults and layout names, implement full Settings, validate native interactions, then integrate approved renderer into runtime packaging and managed overlay update path. Keep prototype available for styling."
           }
         }
       ]
