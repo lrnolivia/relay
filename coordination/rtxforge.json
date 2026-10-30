@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T00:59:54.402Z",
+  "updated_at": "2026-10-30T01:24:32.584Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21582,7 +21582,7 @@
       ],
       "goal": "Make application updates seamless and automatic on Windows and Linux.",
       "acceptance": "Background checks and verified staging enabled by default with an opt-out; simple restart/apply action shared by desktop and Game Mode; safe behavior during game operations, offline/failure recovery, correct installed-format behavior including Flatpak/portable guidance, no game-file changes. Validate update integrity and lifecycle with meaningful tests and native builds, exact-source CI, merge and beta release. Retain previous task's pending native-media registration evidence (run 40974336657, artifact 12942266963) honestly; no invented Visuals receipt.",
-      "next_action": "Add native GTK desktop/Game Mode update-settings captures and validate the finalized update flow, including real Windows handoff and recovery, before Beta9 release.",
+      "next_action": "Quarantine 2bd84c4: Windows real installed-update smoke timed out (job123831646958). Reproduced DETACHED_PROCESS+CREATE_NO_WINDOW causing powershell.exe immediate exit0 before runner receipt. Correct hidden-child launch with independent stdio and Windows PowerShell module path; add real Windows failure-handoff regression, then rerun exact upgrade criterion. Earlier direct-run recovery proof remains direct runner only, not proof of original detached launch. Linux/native and ARM64 checks passed.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21606,8 +21606,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T00:59:54.402Z",
-      "lease_until": "2026-10-30T12:59:54.402Z"
+      "updated_at": "2026-10-30T01:24:32.584Z",
+      "lease_until": "2026-10-30T13:24:32.584Z"
     }
   ]
 }
