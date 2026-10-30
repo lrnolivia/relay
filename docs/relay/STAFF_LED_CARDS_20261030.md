@@ -8,7 +8,7 @@ The approved direction makes the staff member who owns the current recorded step
 
 This extends the existing Terra Prime telemetry family: Momo Trust Display, Inter, graphite layered surfaces, recessed real-record rings, neutral explanatory text and accessible accent headings. It preserves intrinsic inline sizing and explicit fullscreen screenshot inspection. Desktop and narrow cards share the same evidence and actions, with responsive composition. First observation settles; observed numeric changes use 680ms cubic-out interpolation. Calm, reduced-motion and hidden-document states settle ongoing motion.
 
-The finish condition is a reviewed, tested draft with every shipped portrait tied to approved canonical identity and provenance. Production activation remains separate from implementation verification.
+The finish condition includes reviewed exact-source checks and the authorized production release, with every shipped portrait tied to approved canonical identity and provenance. Implementation verification and production activation are reported separately.
 
 ## Exact design sources
 
@@ -78,7 +78,7 @@ The real integration test creates a temporary Git checkout, executes actual veri
 
 CI remains the existing `relay-ci-card/v1` model. Test passed/failed/skipped counts are separate from suites finished. A known suite denominator can drive the ring when total tests remain unknown. Only actual suite records are marked; a bounded visible subset is labeled against its total. Failure explanations remain expandable in full. Refreshes preserve open step evidence and keyboard focus, and unchanged snapshots do not replay progress animations.
 
-The legacy bridge's byte-exact host/style shell is preserved. v20 intrinsic sizing logic remains unchanged. The v20 resource cache alias remains an explicit held integration gap under the separately owned entrypoint alias policy. This draft does not edit `src/index.js` or retry the previously denied alias work; the heading review does not clear that hold.
+The legacy bridge's byte-exact host/style shell and v20 intrinsic sizing logic are preserved. New tool metadata advertises v21; clients retaining v19 or v20 resource URIs receive the current card HTML and metadata under their requested URI. All existing older aliases remain available. The user explicitly approved the exact `src/index.js` / `src/relay-entry.test.js` carve-out at2026-10-30 02:16UTC; canonical admission was independently verified before these bounded alias edits. Other consumer-verification work remains held and untouched.
 
 ## Validation and review
 
