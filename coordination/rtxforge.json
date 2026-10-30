@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T19:00:17.055Z",
+  "updated_at": "2026-10-30T19:58:29.916Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21640,7 +21640,8 @@
         "tests/test_skynizz_provider.py",
         "windows/tests/test_skynizz_provider.py",
         "tests/test_feeder_legacy.py",
-        "tests/linux_runtime/test_integration_contracts.py"
+        "tests/linux_runtime/test_integration_contracts.py",
+        "windows/tests/Settings/Program.cs"
       ],
       "resources": [
         "rtxforge-overlay-tuning",
@@ -21652,7 +21653,7 @@
       ],
       "goal": "Integrate the approved RmlUi glass overlay and tuning workflow into rtxForge; validate the prototype and game routes, prepare beta delivery with managed overlay refresh.",
       "acceptance": "Preserve actual runtime tuning, named game presets, undo/redo, explicit On/Off or preset comparisons, per-pass controls and honest capabilities/telemetry. Use the approved spacious glass UI, Roboto main type, Bakbak One neutral wordmark and accent headings, raw logo, draggable stacking panels, kinetic motion and reduced-motion support. Layout labels Sidebar, Advanced, Bottom Bar. Full Settings screen includes Appearance popout, layout, shortcuts, welcome/notifications and existing overlay options. Built-in defaults from Oct30 screenshots: Dark 80% tint/48px blur/4% grain/Overlay15%; Light 100% tint/44px blur/4% grain/Overlay35%; Clear default 20% light tint/48px blur/4% grain/SoftLight50%, adaptive light-preferred text depth. Themes reset built-ins, fine editing remains unlocked and marks Custom. 120% old scale is100%; simple Smaller/Default/Larger type and scale controls. Metadata expanded on Advanced Overview and expandable compact card on Sidebar/BottomBar. Slim real-key welcome toast, Rounded/Pill option; real hotkey/preset notifications. Test actual game API routes before claiming acceptance; standalone native tests do not establish gameplay, GPU/HDR/Proton correctness. Prepare requested beta only from exact reviewed revision with passing checks and rollback; update all managed installed overlays safely preserving game originals and user settings.",
-      "next_action": "Approved preview is frozen and visible. PR127 head1ead886 is draft. Native DX11/DX12 hardware checks and 169 Python/legacy checks passed, one package skip. Linux AppImage/Flatpak passed at630721d; paced-frame Windows CI pending. Control DX12 HDR10 and ME2 DX11 FP16 HDR used fallback; test packages restored and verified. Implement correct HDR glass composition and validate new renderer, helper and remaining API routes before exact reviewed beta and managed refresh.",
+      "next_action": "Finish color-managed HDR glass for Control/ME2, native format/transfer fixtures and game validation; correct unchanged Settings round-trip coverage for newly added pass controls, then exact-source release checks.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21688,8 +21689,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T19:00:17.055Z",
-      "lease_until": "2026-10-31T07:00:17.055Z",
+      "updated_at": "2026-10-30T19:58:29.916Z",
+      "lease_until": "2026-10-31T07:58:29.916Z",
       "amendment_count": 3,
       "amendments": [
         {
