@@ -93,3 +93,11 @@ test('retirement dominates stale leases, failed checks and branch drift without 
     assert.equal(p.events.some(event => event.type === 'runner-heartbeat'), false);
   }
 });
+
+test('observed progress retains routed staff and evidence-bound checklist across a machine handoff',()=>{
+ const plan={schema:'relay-card-steps/v1',assignment:'x',revision:'r1',complete:true,steps:[{id:'build',label:'Build cards',state:'passed',depends_on:[],receipt:{id:'r-build',assignment:'x',step_id:'build',plan_revision:'r1',observed_at:'2026-10-30T00:00:00Z',evidence:'Recorded verifier receipt',owner:{staff:'nico',team:'runner'}}}]};
+ const record={...claim,id:'x',primary_staff:'julian',primary_team:'night-shift',supporting_staff:['nico'],supporting_teams:['runner'],card_steps:plan};
+ const before=deriveObservedProgress({project:'relay',claim:record,now});
+ const after=deriveObservedProgress({project:'relay',claim:{...record,owner:'successor'},now});
+ assert.equal(after.primary_staff,'julian');assert.deepEqual(after.supporting_staff,['nico']);assert.deepEqual(after.card_steps,before.card_steps);assert.equal(after.card_steps.steps[0].receipt.owner.staff,'nico');
+});
