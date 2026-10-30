@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T03:07:40.368Z",
+  "updated_at": "2026-10-30T04:03:20.813Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21629,8 +21629,8 @@
         "rtxforge-overlay-renderer-prototype"
       ],
       "goal": "Improve the in-game overlay with the requested tuning workflow; prototype RmlUi first with airy Apple-inspired blur and translucency before choosing the presentation toolkit.",
-      "acceptance": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified.",
-      "next_action": "Build an isolated RmlUi DirectX 11 prototype with actual blur/translucency, generous spacing and separate pass-inspector space; preserve existing functional work and measure the renderer before choosing migration.",
+      "acceptance": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified. Prototype-first visual acceptance: real per-panel backdrop blur, translucent textured layered surfaces, raw existing logo without platter, matching welcome toast, glowing honest sample status indicators and reduced-motion support. Automatic, Light and Dark adapt to the scene locally; Light stays light, Dark stays neutral dark with constrained chroma; all share accent hue with suitable contrast variants. Smooth rounded edges, subtle light/dark rim, fuller softer text. Validate actual native renders and interactions; no game integration or GPU/HDR/Proton performance claim from standalone CPU timings.",
+      "next_action": "Refine the native prototype with raw logo, welcome toast, neutral dark materials and antialiased geometry; render Light/Dark/Auto and review bounded visual fixes.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21651,12 +21651,18 @@
             "id": "rtxforge-overlay-workbench-20261029:acceptance:0",
             "text": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified.",
             "at": "2026-10-30T02:30:51.239Z"
+          },
+          {
+            "id": "rtxforge-overlay-workbench-20261029:acceptance:2",
+            "text": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified. Prototype-first visual acceptance: real per-panel backdrop blur, translucent textured layered surfaces, raw existing logo without platter, matching welcome toast, glowing honest sample status indicators and reduced-motion support. Automatic, Light and Dark adapt to the scene locally; Light stays light, Dark stays neutral dark with constrained chroma; all share accent hue with suitable contrast variants. Smooth rounded edges, subtle light/dark rim, fuller softer text. Validate actual native renders and interactions; no game integration or GPU/HDR/Proton performance claim from standalone CPU timings.",
+            "at": "2026-10-30T04:03:20.813Z",
+            "reason": "User expanded prototype styling: raw logo without platter, matching welcome toast, neutral dark surfaces, smoother edges and softer fuller type; all three appearances adapt locally and preserve accent hue. Texture, material rim, blur, glowing sample statuses and adaptive shadows are required."
           }
         ]
       },
-      "updated_at": "2026-10-30T03:07:40.368Z",
-      "lease_until": "2026-10-30T15:07:40.368Z",
-      "amendment_count": 1,
+      "updated_at": "2026-10-30T04:03:20.813Z",
+      "lease_until": "2026-10-30T16:03:20.813Z",
+      "amendment_count": 2,
       "amendments": [
         {
           "at": "2026-10-30T03:07:01.657Z",
@@ -21673,6 +21679,23 @@
           "after": {
             "goal": "Improve the in-game overlay with the requested tuning workflow; prototype RmlUi first with airy Apple-inspired blur and translucency before choosing the presentation toolkit.",
             "next_action": "Prototype RmlUi against native DirectX 11 rendering with real backdrop blur, translucent surfaces, spacious type and secondary tuning space. Preserve the completed tuning/runtime work; rejected ImGui styling must not be shipped."
+          }
+        },
+        {
+          "at": "2026-10-30T04:03:20.813Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "User expanded prototype styling: raw logo without platter, matching welcome toast, neutral dark surfaces, smoother edges and softer fuller type; all three appearances adapt locally and preserve accent hue. Texture, material rim, blur, glowing sample statuses and adaptive shadows are required.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified.",
+            "next_action": "Build an isolated RmlUi DirectX 11 prototype with actual blur/translucency, generous spacing and separate pass-inspector space; preserve existing functional work and measure the renderer before choosing migration."
+          },
+          "after": {
+            "acceptance": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified. Prototype-first visual acceptance: real per-panel backdrop blur, translucent textured layered surfaces, raw existing logo without platter, matching welcome toast, glowing honest sample status indicators and reduced-motion support. Automatic, Light and Dark adapt to the scene locally; Light stays light, Dark stays neutral dark with constrained chroma; all share accent hue with suitable contrast variants. Smooth rounded edges, subtle light/dark rim, fuller softer text. Validate actual native renders and interactions; no game integration or GPU/HDR/Proton performance claim from standalone CPU timings.",
+            "next_action": "Refine the native prototype with raw logo, welcome toast, neutral dark materials and antialiased geometry; render Light/Dark/Auto and review bounded visual fixes."
           }
         }
       ]
