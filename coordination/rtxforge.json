@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T00:42:09.043Z",
+  "updated_at": "2026-10-30T00:56:05.921Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21581,7 +21581,7 @@
       ],
       "goal": "Make application updates seamless and automatic on Windows and Linux.",
       "acceptance": "Background checks and verified staging enabled by default with an opt-out; simple restart/apply action shared by desktop and Game Mode; safe behavior during game operations, offline/failure recovery, correct installed-format behavior including Flatpak/portable guidance, no game-file changes. Validate update integrity and lifecycle with meaningful tests and native builds, exact-source CI, merge and beta release. Retain previous task's pending native-media registration evidence (run 40974336657, artifact 12942266963) honestly; no invented Visuals receipt.",
-      "next_action": "Inspect updater and implement staged background updates with safe restart and shared settings.",
+      "next_action": "PR125 head f454271372cfc5d01195595c029599e007292867 implements staged default-on updates, opt-out, restart/safe-exit apply across native interfaces, Windows quiet installer with recovery, standard Flatpak install scope and portable guidance. 12 focused lifecycle/integrity tests, 6 Windows discovery tests and WinUI/settings build pass locally. Await exact-source CI including real detached installed-copy upgrade smoke; inspect native UI and publish Beta9 only after green exact head.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21605,8 +21605,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T00:42:09.043Z",
-      "lease_until": "2026-10-30T12:42:09.043Z"
+      "updated_at": "2026-10-30T00:56:05.921Z",
+      "lease_until": "2026-10-30T12:56:05.921Z"
     }
   ]
 }
