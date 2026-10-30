@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T17:38:06.360Z",
+  "updated_at": "2026-10-30T18:41:30.327Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21638,7 +21638,8 @@
         "tests/test_feeder_provider.py",
         "windows/tests/test_feeder_provider.py",
         "tests/test_skynizz_provider.py",
-        "windows/tests/test_skynizz_provider.py"
+        "windows/tests/test_skynizz_provider.py",
+        "tests/test_feeder_legacy.py"
       ],
       "resources": [
         "rtxforge-overlay-tuning",
@@ -21650,7 +21651,7 @@
       ],
       "goal": "Integrate the approved RmlUi glass overlay and tuning workflow into rtxForge; validate the prototype and game routes, prepare beta delivery with managed overlay refresh.",
       "acceptance": "Preserve actual runtime tuning, named game presets, undo/redo, explicit On/Off or preset comparisons, per-pass controls and honest capabilities/telemetry. Use the approved spacious glass UI, Roboto main type, Bakbak One neutral wordmark and accent headings, raw logo, draggable stacking panels, kinetic motion and reduced-motion support. Layout labels Sidebar, Advanced, Bottom Bar. Full Settings screen includes Appearance popout, layout, shortcuts, welcome/notifications and existing overlay options. Built-in defaults from Oct30 screenshots: Dark 80% tint/48px blur/4% grain/Overlay15%; Light 100% tint/44px blur/4% grain/Overlay35%; Clear default 20% light tint/48px blur/4% grain/SoftLight50%, adaptive light-preferred text depth. Themes reset built-ins, fine editing remains unlocked and marks Custom. 120% old scale is100%; simple Smaller/Default/Larger type and scale controls. Metadata expanded on Advanced Overview and expandable compact card on Sidebar/BottomBar. Slim real-key welcome toast, Rounded/Pill option; real hotkey/preset notifications. Test actual game API routes before claiming acceptance; standalone native tests do not establish gameplay, GPU/HDR/Proton correctness. Prepare requested beta only from exact reviewed revision with passing checks and rollback; update all managed installed overlays safely preserving game originals and user settings.",
-      "next_action": "Package shared glass DLL for Feeder and OptiScaler, add hash-guarded mandatory managed-overlay refresh, validate actual game routes before beta promotion.",
+      "next_action": "Fix clean-host build configuration and extend legacy Feeder fixtures for the optional glass DLL; test selected games and retain draft PR127 until acceptance.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21686,8 +21687,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T17:38:06.360Z",
-      "lease_until": "2026-10-31T05:38:06.360Z",
+      "updated_at": "2026-10-30T18:41:30.327Z",
+      "lease_until": "2026-10-31T06:41:30.327Z",
       "amendment_count": 3,
       "amendments": [
         {
