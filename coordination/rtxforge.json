@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T02:47:44.156Z",
+  "updated_at": "2026-10-30T03:02:26.774Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21616,7 +21616,9 @@
         "windows/tests/PanelWorkbench/",
         "PRODUCT.md",
         "docs/overlay.md",
-        "windows/build/Build-SkynizzBridge.ps1"
+        "windows/build/Build-SkynizzBridge.ps1",
+        ".github/workflows/windows-build.yml",
+        ".github/workflows/linux-build.yml"
       ],
       "resources": [
         "rtxforge-overlay-tuning",
@@ -21625,7 +21627,7 @@
       ],
       "goal": "Improve the in-game overlay from Lauren's supplied reference: compact layout, reset/undo, named presets, A/B tuning, honest runtime history, then independent NR pass tuning. Capture and Studio are excluded.",
       "acceptance": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified.",
-      "next_action": "Complete per-pass protocol 8 and runtime patch, include the new shared header in packaged sources, then validate native build, preset isolation and panel interactions.",
+      "next_action": "Finish native visual confirmation and protocol regression tests; wire new tests and native panel fixtures into exact-source CI, publish a draft PR, and retain explicit gameplay acceptance limits.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21649,8 +21651,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T02:47:44.156Z",
-      "lease_until": "2026-10-30T14:47:44.156Z"
+      "updated_at": "2026-10-30T03:02:26.774Z",
+      "lease_until": "2026-10-30T15:02:26.774Z"
     }
   ]
 }
