@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T03:02:26.774Z",
+  "updated_at": "2026-10-30T03:07:01.657Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21625,9 +21625,9 @@
         "rtxforge-panel-presets",
         "rtxforge-nr-pass-controls"
       ],
-      "goal": "Improve the in-game overlay from Lauren's supplied reference: compact layout, reset/undo, named presets, A/B tuning, honest runtime history, then independent NR pass tuning. Capture and Studio are excluded.",
+      "goal": "Improve the in-game overlay with the requested tuning workflow; prototype RmlUi first with airy Apple-inspired blur and translucency before choosing the presentation toolkit.",
       "acceptance": "User authorized implementation ('get to work') after prioritizing compact layout, reset/undo, better per-game presets, live A/B comparison, actual runtime status/history and independent pass tuning in that order. Preserve existing MFG behavior, native menus, keyboard/controller use and route capability gating; saved-vs-live states must remain honest, no fake telemetry. Named presets isolate games and package compatibility. Undo and A/B preserve settings without silently saving comparisons. Per-pass parameters require actual runtime integration and supported routes only. Verify focused state/host tests, native panel build and reviewable exact-source output; report any gameplay acceptance still unverified.",
-      "next_action": "Finish native visual confirmation and protocol regression tests; wire new tests and native panel fixtures into exact-source CI, publish a draft PR, and retain explicit gameplay acceptance limits.",
+      "next_action": "Prototype RmlUi against native DirectX 11 rendering with real backdrop blur, translucent surfaces, spacious type and secondary tuning space. Preserve the completed tuning/runtime work; rejected ImGui styling must not be shipped.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21651,8 +21651,28 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T03:02:26.774Z",
-      "lease_until": "2026-10-30T15:02:26.774Z"
+      "updated_at": "2026-10-30T03:07:01.657Z",
+      "lease_until": "2026-10-30T15:07:01.657Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-30T03:07:01.657Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "Lauren rejected the compact ImGui presentation as claustrophobic, ugly and dated, chose 'Prototype RmlUi first', and explicitly requested blur, translucency, an airy layout and Apple inspiration. This user direction supersedes the prior no-blur visual constraint; toolkit adoption and performance remain unverified until the prototype is evaluated.",
+          "fields": [
+            "goal",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Improve the in-game overlay from Lauren's supplied reference: compact layout, reset/undo, named presets, A/B tuning, honest runtime history, then independent NR pass tuning. Capture and Studio are excluded.",
+            "next_action": "Finish native visual confirmation and protocol regression tests; wire new tests and native panel fixtures into exact-source CI, publish a draft PR, and retain explicit gameplay acceptance limits."
+          },
+          "after": {
+            "goal": "Improve the in-game overlay with the requested tuning workflow; prototype RmlUi first with airy Apple-inspired blur and translucency before choosing the presentation toolkit.",
+            "next_action": "Prototype RmlUi against native DirectX 11 rendering with real backdrop blur, translucent surfaces, spacious type and secondary tuning space. Preserve the completed tuning/runtime work; rejected ImGui styling must not be shipped."
+          }
+        }
+      ]
     }
   ]
 }
