@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-30T02:23:40.247Z",
+  "updated_at": "2026-10-30T02:44:30.718Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18616,9 +18616,9 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T02:23:40.247Z",
-      "lease_until": "2026-10-30T14:23:40.247Z",
-      "amendment_count": 1,
+      "updated_at": "2026-10-30T02:44:30.718Z",
+      "lease_until": "2026-10-30T14:44:30.718Z",
+      "amendment_count": 2,
       "amendments": [
         {
           "at": "2026-10-30T02:23:40.247Z",
@@ -18633,8 +18633,133 @@
           "after": {
             "acceptance": "Preserve inline rendering and content-sized collapse; show evidence-backed team and step ownership; use approved team icons and final fictional portrait assets with stroke-token background; verify real UI, accessibility, live canonical ordered checklist transport and full tests. Preserve v19/v20 and legacy resource compatibility while advertising v21. After final exact-head tests, required CI and independent review, merge PR266 using verified human lrnolivia identity and release through canonical Workers Builds; verify deployed source/version, health, assets and safe live step updates. Distinguish local DOM evidence from actual host acceptance; never fabricate completion or staff contributions."
           }
+        },
+        {
+          "at": "2026-10-30T02:44:30.718Z",
+          "by": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "reason": "Publish verified continuity checklist milestone",
+          "fields": [
+            "card_steps"
+          ],
+          "before": {
+            "card_steps": null
+          },
+          "after": {
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "relay-staff-led-cards-20261030",
+              "revision": "d322cfd508c1c01ff89780e8154094a3551dee2d5e052d7914c668346241a0d3",
+              "objective_digest": "8e8308ec352d809d6690ba154a1c11d6f5d1b4d5122b13adc3d904ba95e88794",
+              "publisher": {
+                "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+                "branch": "relay/staff-led-cards-20261030"
+              },
+              "sequence": 1,
+              "complete": true,
+              "steps": [
+                {
+                  "id": "verify-card-source",
+                  "label": "verify card source",
+                  "depends_on": [],
+                  "state": "pending",
+                  "receipt": null
+                },
+                {
+                  "id": "verify-approved-roster",
+                  "label": "verify approved roster",
+                  "depends_on": [],
+                  "state": "pending",
+                  "receipt": null
+                },
+                {
+                  "id": "verify-production-release",
+                  "label": "verify production release",
+                  "depends_on": [
+                    "verify-card-source",
+                    "verify-approved-roster"
+                  ],
+                  "state": "pending",
+                  "receipt": null
+                },
+                {
+                  "id": "verify-live-checklist",
+                  "label": "verify live checklist",
+                  "depends_on": [
+                    "verify-production-release"
+                  ],
+                  "state": "pending",
+                  "receipt": null
+                },
+                {
+                  "id": "verify-native-host",
+                  "label": "verify native host",
+                  "depends_on": [
+                    "verify-live-checklist"
+                  ],
+                  "state": "pending",
+                  "receipt": null
+                }
+              ]
+            }
+          }
         }
-      ]
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "relay-staff-led-cards-20261030",
+        "revision": "d322cfd508c1c01ff89780e8154094a3551dee2d5e052d7914c668346241a0d3",
+        "objective_digest": "8e8308ec352d809d6690ba154a1c11d6f5d1b4d5122b13adc3d904ba95e88794",
+        "publisher": {
+          "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "branch": "relay/staff-led-cards-20261030"
+        },
+        "sequence": 1,
+        "complete": true,
+        "steps": [
+          {
+            "id": "verify-card-source",
+            "label": "verify card source",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          },
+          {
+            "id": "verify-approved-roster",
+            "label": "verify approved roster",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          },
+          {
+            "id": "verify-production-release",
+            "label": "verify production release",
+            "depends_on": [
+              "verify-card-source",
+              "verify-approved-roster"
+            ],
+            "state": "pending",
+            "receipt": null
+          },
+          {
+            "id": "verify-live-checklist",
+            "label": "verify live checklist",
+            "depends_on": [
+              "verify-production-release"
+            ],
+            "state": "pending",
+            "receipt": null
+          },
+          {
+            "id": "verify-native-host",
+            "label": "verify native host",
+            "depends_on": [
+              "verify-live-checklist"
+            ],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      }
     }
   ],
   "migrated_from": "loew-inspector"
