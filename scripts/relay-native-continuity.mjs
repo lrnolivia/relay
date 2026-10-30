@@ -51,7 +51,7 @@ function authorizeRpc(name,args,config){
  const same=()=>args.project===config.project&&args.assignment===config.assignment;
  if(name==='relay_autonomy'&&args.action==='status'&&['global',config.project].includes(args.scope))return;
  if(['relay_runner_assignments','relay_execution'].includes(name)&&same()&&(name!=='relay_execution'||args.action==='status'))return;
- if(name==='relay_runner_coordinate'&&args.action==='amend'&&args.project===config.project&&args.request?.id===config.assignment&&args.request.owner===config.owner&&args.expected_record_sha&&Object.keys(args.request).every(k=>['id','owner','paths','acceptance_additions','reason','next_action'].includes(k)))return;
+ if(name==='relay_runner_coordinate'&&args.action==='amend'&&args.project===config.project&&args.request?.id===config.assignment&&args.request.owner===config.owner&&args.expected_record_sha&&Object.keys(args.request).every(k=>['id','owner','paths','acceptance_additions','card_steps','reason','next_action'].includes(k)))return;
  throw Error('Native transport request exceeds its bound continuation tools');
 }
 function validateReply(request,value){

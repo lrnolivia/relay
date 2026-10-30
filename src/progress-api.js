@@ -2,6 +2,7 @@ import { githubApiRequest } from "./source.js";
 import { readRunnerFile } from "./runner-control-core.js";
 import { cloudWorkerSummary } from "./cloud.js";
 import { deriveObservedProgress } from "./progress-observation.js";
+import { assignmentCardContext } from './relay-card-steps.js';
 
 export const PROGRESS_CONTRACT_VERSION = "1.7.5";
 export const PROGRESS_READ_CONCURRENCY = 8;
@@ -31,6 +32,7 @@ async function pages(api, path) {
 
 export function queuedProgress(item) {
   return {
+    ...assignmentCardContext(item),
     assignment: item.id,
     state: "queued",
     stage: "queued",

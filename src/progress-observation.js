@@ -3,6 +3,7 @@ import { PROGRESS_POLICY, freshness } from "./operations.js";
 import { progressEvent, dedupeProgressEvents } from "./operation-events.js";
 import { progressReceipt } from "./operation-receipts.js";
 import { reconcileExecution } from "./progress-reconciliation.js";
+import { assignmentCardContext } from './relay-card-steps.js';
 
 const ts = value => { const ms = Date.parse(value || ""); return Number.isFinite(ms) ? new Date(ms).toISOString() : null; };
 const deployments = cloud => Array.isArray(cloud?.deployments) ? cloud.deployments : Array.isArray(cloud?.deployments?.deployments) ? cloud.deployments.deployments : [];
@@ -75,6 +76,7 @@ export function deriveObservedProgress({ project, claim, branch, commit, pullReq
   };
   const receipt = progressReceipt({ project, assignment: claim?.id, stage, state, last_meaningful_progress_at: latest?.at || null, identities, latest_event: latest });
   return {
+    ...assignmentCardContext(claim),
     assignment: claim?.id, observed: true, state, stage,
     worker: { heartbeat_at: ts(claim?.updated_at || claim?.created_at), freshness: workerFreshness.state, age_ms: workerFreshness.age_ms },
     external: { active: Boolean(runningCheck), system: runningCheck ? "github" : null, detail: waiting_reason },

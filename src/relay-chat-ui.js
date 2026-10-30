@@ -5,8 +5,9 @@ import { contextCardModel as sharedContextCardModel } from './relay-context-card
 import { CONTEXT_CARD_BROWSER_MODEL } from './relay-context-card-browser.js';
 import { withHumanPresentation } from './communication-presentation.js';
 import { enrichWorkCard, isWorkCardTool, withWorkCardTemplate } from './work-card-delivery.js';
+import { assignmentCardContext } from './relay-card-steps.js';
 export function contextCardModel(data = {}, directory = DIRECTORY, options = {}) { return sharedContextCardModel(data, directory, { roles: ROLE_DIRECTORY, ...options }); }
-export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v20.html';
+export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v21.html';
 export const RELAY_CONTEXT_CARD_TOOL = 'relay_render_context_card';
 export const RELAY_STATUS_CARD_URI = 'ui://relay/status-card/v5-legacy-bridge.html';
 export const RELAY_STATUS_CARD_TOOL = 'relay_show_legacy_bridge_card';
@@ -76,16 +77,7 @@ export function contextualizeRelayTool(tool) {
 // UI responses must not repeat the full historical coordination ledger.
 export function compactContextCardResult(result = {}) {
   const text = (value, limit = 420) => typeof value === 'string' ? value.slice(0, limit) : undefined;
-  const fields = ['id','assignment','owner','state','primary_staff','primary_team','branch','updated_at','created_at','completed_at','last_meaningful_progress_at'];
-  const projectItem = item => {
-    const out = {};
-    for (const key of fields) if (typeof item?.[key] === 'string') out[key] = text(item[key], 180);
-    for (const key of ['goal','next_action','waiting_reason','recovery_action']) if (item?.[key]) out[key] = text(item[key]);
-    if (Array.isArray(item?.supporting_staff)) out.supporting_staff = item.supporting_staff.slice(0, 4).map(x => text(x, 80)).filter(Boolean);
-    if (typeof item?.progress_percent === 'number' && Number.isFinite(item.progress_percent)) out.progress_percent = item.progress_percent;
-    if (item?.lease_expired === true) out.lease_expired = true;
-    return out;
-  };
+  const projectItem = item => assignmentCardContext(item);
   const claims = Array.isArray(result.claims) ? result.claims : [];
   const queue = Array.isArray(result.queue) ? result.queue : [];
   const rank = item => ['waiting-for-human','active','working','held','queued','completed'].indexOf(item.state);

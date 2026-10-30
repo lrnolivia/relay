@@ -15,7 +15,7 @@ test('versioned legacy bridge preserves the byte-exact host and style shell', ()
 });
 test('context card embeds canonical artwork and Momo without external fonts', () => {
   const html = relayContextCardResource().text;
-  for (const name of ['relay','runner','inspector','night-shift']) assert.ok(html.includes(contextCardBrandAssets[name]));
+  assert.ok(html.includes(contextCardBrandAssets.relay));
   assert.match(html, /data:font\/woff;base64,/);
   assert.match(html, /SIL OPEN FONT LICENSE Version 1.1/);
   assert.match(html, /font-family:"Momo Trust Display"/);
@@ -58,8 +58,10 @@ test('no reported percentage is represented as unknown, never invented zero', ()
     assert.equal(model.percent,null,JSON.stringify(value));
     assert.notEqual(model.metric,'0%');
   }
-  assert.equal(contextCardModel({project:'relay',progress_percent:0}).percent,0);
-  assert.equal(contextCardModel({project:'relay',progress_percent:'42'}).percent,42);
+  assert.equal(contextCardModel({project:'relay',progress_percent:0}).percent,null);
+  assert.equal(contextCardModel({project:'relay',progress_percent:'42'}).percent,null);
+  const partial=contextCardModel({project:'relay',ci:{schema:'relay-ci-card/v1',status:'running',telemetry:'reported',tests:{},jobs:{},suites_total:4,suites_done:null}});
+  assert.equal(partial.metric,'—');assert.equal(partial.percent,null);assert.equal(partial.ci.tests.passed,null);
 });
 test('asset omissions fail the build instead of shipping broken brand images', () => {
   assert.throws(() => styleContextCard('',{}), /Missing bundled card brand/);
@@ -68,13 +70,105 @@ test('asset omissions fail the build instead of shipping broken brand images', (
 
 test('material explanations and actionable next steps remain visible without duplicated status metrics',()=>{
   const html=relayContextCardResource().text;
-  assert.match(html,/data-signal="danger".*summary[\s\S]*?-webkit-line-clamp:unset!important/);
-  assert.match(html,/#next:not\(\[hidden\]\)\{display:block!important\}/);
-  assert.match(html,/m\.has_metric===false\?'none':''/);
+  assert.match(html,/\.summary\{display:block!important;-webkit-line-clamp:unset!important/);
+  assert.match(html,/longCardCopy\('next','Read the full next step'/);
+  assert.match(html,/stat\.hidden=m\.has_metric===false/);
   const failure=contextCardModel({ok:false,error:{class:'uncertain_write'}});
   assert.equal(failure.blocker,null);assert.equal(failure.has_metric,false);
   assert.match(failure.summary,/whether or not/);assert.match(failure.next_step,/status before/);
   const assigned=contextCardModel({claim:{state:'active'}});
   assert.equal(assigned.has_metric,false);
   assert.equal(contextCardModel({claims:[{state:'active'}]}).has_metric,true);
+});
+
+test('staff cards preserve step evidence, keyboard focus and routing distinctions through refresh and handoff',async()=>{
+ const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
+ const receipt=(id,staff,team)=>({id:'receipt-'+id,assignment:'cards',step_id:id,plan_revision:'r1',observed_at:'2026-10-30T00:00:00Z',evidence:'Synthetic receipt '+id,owner:{staff,team}});
+ const card={project:'relay',claim:{id:'cards',primary_staff:'nico',primary_team:'runner',state:'active',goal:'Shared cards',card_steps:{schema:'relay-card-steps/v1',assignment:'cards',revision:'r1',complete:true,steps:[{id:'build',label:'Build cards',state:'passed',depends_on:[],receipt:receipt('build','nico','runner')},{id:'verify',label:'Verify cards',state:'running',depends_on:['build'],receipt:receipt('verify','rafael','inspector')}]}}};
+ try{
+  const page=await browser.newPage({viewport:{width:360,height:900},reducedMotion:'reduce'});
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.addInitScript(data=>{window.openai={toolInput:{project:'relay'},toolOutput:data}},card);
+  await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
+  await page.locator('#feature-title').filter({hasText:'Rafael'}).waitFor();
+  assert.match(await page.locator('#team').textContent(),/Current step owner/);
+  assert.match(await page.locator('#card-roles').textContent(),/Assignment lead: Nico/);
+  assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),'rafael');
+  assert.equal(await page.locator('#card').getAttribute('data-identity-team'),'source');
+  const {TEAM_EMBLEMS}=await import('../assets/teams/card-assets.js');
+  assert.equal(await page.locator('.team-emblem .team-icon-dark').innerHTML(),await page.evaluate(svg=>{const node=document.createElement('div');node.innerHTML=svg;return node.innerHTML},TEAM_EMBLEMS['source-dark']));
+  assert.equal(await page.locator('#feature-title').evaluate(node=>getComputedStyle(node).color),'rgb(28, 140, 147)');
+  assert.match(await page.locator('#card-roles').textContent(),/Step team: Design & QA/);
+  const details=page.locator('[data-step=build] details');await details.locator('summary').focus();await page.keyboard.press('Enter');
+  await page.evaluate(data=>render(data),card);
+  assert.equal(await details.getAttribute('open'),'');
+  assert.equal(await page.evaluate(()=>document.activeElement.closest('[data-step]')?.dataset.step),'build');
+  const changed=structuredClone(card);changed.claim.primary_staff='julian';changed.claim.card_steps.steps[1].state='passed';
+  await page.evaluate(data=>render(data),changed);
+  assert.equal(await details.getAttribute('open'),'');
+  assert.equal(await page.locator('#feature-title').textContent(),'Julian');
+  assert.equal(await page.locator('#card').getAttribute('data-identity-team'),'night-shift');
+  assert.match(await page.locator('#card-roles').textContent(),/Assignment team: Engineering/);
+  assert.match(await page.locator('#team').textContent(),/Assignment lead/);
+  assert.equal(await page.locator('[data-step=build]').getAttribute('data-state'),'passed');
+  assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');
+  assert.deepEqual(errors,[]);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+ }finally{await browser.close()}
+});
+
+test('suite rings use the suite denominator, settle first observation, and honor reduced motion changes',async()=>{
+ const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
+ const data={project:'relay',ci:{schema:'relay-ci-card/v1',status:'running',telemetry:'reported',run:{id:'77',attempt:1},tests:{passed:12,failed:0,skipped:2,reported:14,totals_known:false},suites_done:1,suites_total:4,suites:[{id:'one',key:'one',status:'passed'},{id:'two',key:'two',status:'running'}],jobs:{total:1}}};
+ try{
+  const page=await browser.newPage({viewport:{width:720,height:900}});await page.clock.install();
+  await page.addInitScript(data=>{window.openai={toolOutput:data}},data);
+  await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
+  await page.locator('#feature-title').filter({hasText:'Design & QA'}).waitFor();
+  assert.equal(await page.locator('#telemetry-ring').isVisible(),true);
+  assert.equal(await page.locator('#telemetry-value').getAttribute('stroke-dasharray'),'25 100');
+  assert.equal(await page.locator('#metric-label').textContent(),'of 4 suites finished');
+  assert.equal(await page.locator('#test-counts [data-state=passed] dd').textContent(),'12');
+  const update={...data,ci:{...data.ci,suites_done:3,tests:{...data.ci.tests,passed:30}}};
+  await page.evaluate(data=>render(data),update);await page.clock.runFor(340);
+  const midway=Number((await page.locator('#telemetry-value').getAttribute('stroke-dasharray')).split(' ')[0]);
+  assert.ok(midway>25&&midway<75,'update interpolates from the last displayed observation');
+  await page.emulateMedia({reducedMotion:'reduce'});await page.clock.runFor(20);
+  assert.equal(await page.locator('#telemetry-value').getAttribute('stroke-dasharray'),'75 100');
+  assert.equal(await page.locator('#test-counts [data-state=passed] dd').textContent(),'30');
+  await page.evaluate(data=>render(data),{...data,ci:{...data.ci,suites_total:null}});
+  assert.equal(await page.locator('#telemetry-ring').isVisible(),false);
+ }finally{await browser.close()}
+});
+
+test('all suite states have explicit accessible words and headings meet contrast in both themes',async()=>{
+ const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
+ try{for(const colorScheme of ['light','dark']){
+  const page=await browser.newPage({colorScheme,viewport:{width:360,height:1000}});
+  const statuses=['not_run','running','passed','failed','skipped','blocked','cancelled','unknown'];
+  await page.addInitScript(statuses=>{window.openai={toolOutput:{project:'relay',ci:{schema:'relay-ci-card/v1',status:'running',telemetry:'reported',tests:{},jobs:{},suites:statuses.map(status=>({id:status,key:status,status})),suites_total:8,suites_done:3}}}},statuses);
+  await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
+  await page.locator('#suite-list li').first().waitFor();
+  assert.equal(await page.locator('#suite-list li').count(),8);
+  for(const label of ['Pending','Running','Passed','Failed','Skipped','Blocked','Cancelled','Unconfirmed'])assert.ok((await page.locator('#suite-list').textContent()).includes(label));
+  const contrast=await page.evaluate(()=>{
+   const lum=value=>{const c=value.match(/[\d.]+/g).slice(0,3).map(Number).map(n=>{n/=255;return n<=.04045?n/12.92:((n+.055)/1.055)**2.4});return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+   const bg=lum(getComputedStyle(document.querySelector('#card')).backgroundColor);
+   const ratio=n=>{const a=lum(getComputedStyle(document.querySelector(n)).color);return (Math.max(a,bg)+.05)/(Math.min(a,bg)+.05)};
+   return {heading:ratio('h1'),body:ratio('#summary'),stroke:getComputedStyle(document.querySelector('#card')).borderColor};
+  });assert.ok(contrast.heading>=3);assert.ok(contrast.body>=4.5);assert.equal(contrast.stroke,'rgb(61, 57, 53)');
+  await page.close();
+ }}finally{await browser.close()}
+});
+
+test('staff heading keeps its identity-team accent when Inspector telemetry is present',async()=>{
+ const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
+ const claim={id:'cards',goal:'Build cards',state:'active',primary_staff:'nico',primary_team:'runner'};
+ try{for(const theme of ['light','dark']){
+  const page=await browser.newPage({colorScheme:theme});await page.addInitScript(claim=>{window.openai={toolOutput:{project:'relay',claim}}},claim);
+  await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.locator('#feature-title').filter({hasText:'Nico'}).waitFor();
+  const before=await page.locator('h1').evaluate(n=>getComputedStyle(n).color);
+  await page.evaluate(claim=>render({project:'relay',claim,ci:{schema:'relay-ci-card/v1',status:'running',telemetry:'reported',tests:{},suites:[],suites_done:1,suites_total:2,jobs:{}}}),claim);
+  const after=await page.locator('h1').evaluate(n=>getComputedStyle(n).color);assert.equal(after,before);assert.equal(after,theme==='dark'?'rgb(59, 203, 141)':'rgb(22, 121, 78)');
+  assert.equal(await page.locator('#telemetry-value').evaluate(n=>getComputedStyle(n).stroke),theme==='dark'?'rgb(24, 175, 192)':'rgb(8, 122, 136)');await page.close();
+ }}finally{await browser.close()}
 });

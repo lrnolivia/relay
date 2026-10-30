@@ -5,7 +5,7 @@ import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI,
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v20.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v21.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -191,7 +191,7 @@ test('card initializes the standard MCP Apps bridge even when window.openai exis
     const frame=page.frameLocator('#widget');
     await frame.locator('#title').filter({hasText:'Staff routing is ready'}).waitFor();
     assert.equal(await page.evaluate(()=>window.seenInitialize),true);
-    assert.equal(await frame.locator('#team').textContent(),'Julian · The Coordinator');
+    assert.equal(await frame.locator('#team').textContent(),'Coordinator · Assignment lead');
     assert.equal(await frame.locator('#staff').getAttribute('title'),'Julian with Roman');
   } finally {await browser.close()}
 });
@@ -242,15 +242,16 @@ test('finished work does not repeat stale next actions or redundant single statu
 });
 
 
-test('feature identity drives the giant-notification header and pertinent metric', async () => {
+test('feature identity keeps a truthful metric without accepting an unbound percentage', async () => {
   const {contextCardModel}=await import('./relay-chat-ui.js');
   const runner=contextCardModel({
     project:'relay',
     claim:{primary_team:'runner',primary_staff:'nico',state:'working',goal:'Build the card',progress_percent:50}
   });
   assert.equal(runner.feature,'runner');
-  assert.equal(runner.metric,'50%');
-  assert.equal(runner.metric_label,'completion');
+  assert.equal(runner.percent,null);
+  assert.notEqual(runner.metric,'50%');
+  assert.equal(runner.metric_label,'current state');
   assert.equal(runner.signal,'working');
 
   const verification=contextCardModel({checks:{check_runs:[
@@ -744,7 +745,7 @@ test('an ordinary claim mounts a staff-attributed work card that follows the sam
     // Mount-time recovery reads canonical progress once; the tool result still drives the card.
     await page.waitForFunction(()=>true);
     await frame.locator('#rows').filter({hasText:'Work started'}).waitFor();
-    assert.equal(await frame.locator('#team').textContent(),'Rafael · The Integrator');
+    assert.equal(await frame.locator('#team').textContent(),'Integrator · Assignment lead');
     assert.equal(await frame.locator('#staff').isHidden(),false);
     assert.match(await frame.locator('#rows').textContent(),/This step\W*Work started/);
     await page.clock.runFor(31000);
@@ -753,7 +754,7 @@ test('an ordinary claim mounts a staff-attributed work card that follows the sam
     await frame.locator('#state-label').filter({hasText:/complete/i}).waitFor();
     // The card keeps the step it was mounted for after the live state moves on.
     assert.match(await frame.locator('#rows').textContent(),/This step\W*Work started/);
-    assert.equal(await frame.locator('#team').textContent(),'Rafael · The Integrator');
+    assert.equal(await frame.locator('#team').textContent(),'Integrator · Assignment lead');
     await page.clock.runFor(120000);
     assert.deepEqual(calls.map(call=>call.args),[{project:'relay'},{project:'relay',assignment:claim.id},{project:'relay',assignment:claim.id}]);
     assert.ok(calls.every(call=>call.name==='relay_runner_progress'));
@@ -768,16 +769,18 @@ test('a CI read mounts a live card with real test counts and stops once the run 
   const finished=checks('completed',[{id:'inspector',status:'passed',counts:{passed:300,skipped:4},total:304},{id:'runner',status:'failed',counts:{passed:40,failed:1},total:41,failures:[{name:'lease renews',message:'expected 2'}]}],{status:'completed',conclusion:'failure',completed_at:'2026-10-23T05:04:00Z'});
   const {browser,page,frame,calls}=await mountWorkCard({toolName:'relay_source_checks',args:{repo:'relay',ref:sha},result:{ok:true,checks:running},answers:[{ok:true,checks:finished}]});
   try {
-    await frame.locator('#title').filter({hasText:'CI · bbbbbbb'}).waitFor();
-    const rows=await frame.locator('#rows').textContent();
-    assert.match(rows,/312 passed · 1 failed · 4 skipped/);
-    assert.match(rows,/0 of 1 finished/);
-    assert.match(rows,/total tests unknown/);
-    assert.match(rows,/runner: lease renews — expected 2/);
-    assert.equal(await frame.locator('#metric-label').textContent(),'tests reported so far');
+    await frame.locator('#title').filter({hasText:'Checking the build'}).waitFor();
+    assert.equal(await frame.locator('[data-state=passed] dd').textContent(),'312');
+    assert.equal(await frame.locator('[data-state=failed] dd').textContent(),'1');
+    assert.equal(await frame.locator('[data-state=skipped] dd').textContent(),'4');
+    assert.match(await frame.locator('#telemetry-note').textContent(),/Total test count is not yet known/);
+    assert.match(await frame.locator('#ci-failure-details').textContent(),/lease renews[\s\S]*expected 2/);
+    assert.equal(await frame.locator('#metric-label').textContent(),'of 2 suites finished');
     await page.clock.runFor(16000);
     await frame.locator('#state-label').filter({hasText:'Failed'}).waitFor();
-    assert.equal(await frame.locator('#metric').textContent(),'340/345');
+    await page.clock.runFor(700);
+    assert.equal(await frame.locator('#metric').textContent(),'2');
+    assert.equal(await frame.locator('[data-state=passed] dd').textContent(),'340');
     assert.match(await frame.locator('#blocker').textContent(),/1 test failed/);
     assert.ok(await frame.getByText('Open CI run ›').isVisible());
     await page.clock.runFor(120000);
@@ -879,7 +882,9 @@ test('mounted card shrinks an oversized iframe and follows repeated evidence tog
     const waitingReason='Waiting for the requested verification result before continuing. '.repeat(18);
     await sendResult({primary_staff:'julian',goal:'Long result card',state:'blocked',waiting_reason:waitingReason});
     await frame.locator('#title').filter({hasText:'Long result card'}).waitFor();
-    await frame.locator('#blocker').filter({hasText:'Waiting for the requested verification result'}).waitFor();
+    await frame.locator('#blocker-full > summary').click();
+    await frame.locator('#blocker-full p').filter({hasText:'Waiting for the requested verification result'}).waitFor();
+    assert.equal(await frame.locator('#blocker-full p').textContent(),waitingReason.trim());
     await page.waitForFunction(h=>window.sizes.at(-1)?.height>h,narrowCollapsed);
     const longHeight=await assertFits();
     assert.ok(longHeight>narrowCollapsed,'long tool result grows the mounted card');

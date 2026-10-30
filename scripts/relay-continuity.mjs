@@ -3,6 +3,7 @@ import {validateContinuityAdditions,validateExpansionPolicy,expandedContinuityPl
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {execFileSync,spawnSync} from 'node:child_process';
+import {CARD_STEPS_SCHEMA,validateCardStepsPublication} from '../src/relay-card-steps.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const terminal=new Set(['succeeded','failed','cancelled']);
 
@@ -79,7 +80,7 @@ const unresolvedAdditions=state=>Boolean(state.expansion_overflow)||state.additi
 
 // The immutable base binds the original goal. Accepted additions are an
 // append-only ledger and become part of the actual execution/verification DAG.
-export async function reconcileContinuity({plan,journal,persist,readControl,inputs,verify,execute,reconcile,maxActions=16,discover=async()=>[],reviewAddition,admitScope}){
+export async function reconcileContinuity({plan,journal,persist,readControl,inputs,verify,execute,reconcile,maxActions=16,discover=async()=>[],reviewAddition,admitScope,observe=async()=>{}}){
  validateContinuityPlan(plan);
  const state=journal||{schema:1,plan_digest:hash(plan),stages:{},objective_completed:false};
  if(state.schema!==1)throw Error('Invalid continuity journal');
@@ -99,6 +100,10 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
  for(let pass=0;pass<64;pass++){
   await gate();await intake(await discover(state));let effective=expandedContinuityPlan(plan,state.additions||[]),restart=false;
   validateContinuityPlan(effective);
+  // Revalidate saved input identities before displaying resumed checkpoints.
+  // A source/environment change must never briefly republish an old pass.
+  for(const stage of effective.stages){const row=state.stages[stage.id];if(row?.state==='passed'&&row.receipt?.input_digest!==await identity(stage)){row.state='ready';row.receipt=null;}}
+  await observe(state);
   for(const stage of effective.stages){
    if(stage.depends_on.some(id=>state.stages[id]?.state!=='passed'))continue;
    if(unresolvedAdditions(state)&&(['review','ship','runtime'].includes(stage.kind)||state.additions?.some(x=>x.status!=='admitted'&&x.status!=='rejected'&&x.status!=='duplicate'&&x.proposal.kind==='necessary'&&x.proposal.target_stage===stage.id)))continue;
@@ -118,8 +123,9 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
    if(row.receipt?.input_digest===input&&row.state==='passed'&&['implementation','test'].includes(stage.kind))continue;
    while(true){
     control=await gate();const proof=await verify(stage),after=await identity(stage);
-    if(proof?.passed===true&&typeof proof.evidence==='string'&&proof.evidence&&after===input){row.state='passed';row.receipt={input_digest:after,evidence:proof.evidence,source_sha:control.source_sha};await persist(state);break;}
+    if(proof?.passed===true&&typeof proof.evidence==='string'&&proof.evidence&&after===input){row.state='passed';row.receipt={input_digest:after,evidence:proof.evidence,source_sha:control.source_sha};await persist(state);await observe(state);break;}
     row.state='repair-required';row.receipt=null;
+    await persist(state);await observe(state);
     const fingerprint=hash({input:after,diagnostic:proof?.fingerprint||'verification-failed'});
     if(row.failure!==fingerprint){row.failure=fingerprint;row.attempts=0;}
     if(row.attempts>=2||actions>=maxActions){row.state='parked';await persist(state);break;}
@@ -146,7 +152,68 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
  const missing=(finalControl.acceptance_additions||[]).filter(x=>!state.additions?.some(row=>row.status==='admitted'&&row.digest===expansionDigest(x.proposal)));
  if(missing.length){state.acceptance_completed=false;state.pending_canonical_additions=missing.map(x=>x.proposal.id);}
  state.completion_scope=plan.completion_scope||'objective';state.objective_completed=state.completion_scope==='objective'&&state.acceptance_completed;state.subobjective_completed=state.completion_scope==='subobjective'&&state.acceptance_completed;
- await persist(state);return state;
+ await persist(state);await observe(state);return state;
+}
+
+// Only digests and stable public stage IDs cross this boundary. The execution
+// journal, verifier argv/output, prompts and routing roster remain private.
+export function continuityCardProjection({plan,journal,assignment,observed_at=new Date().toISOString()}) {
+ validateContinuityPlan(plan);
+ if(journal?.schema!==1||journal.plan_digest!==hash(plan))throw Error('Checklist journal belongs to a different plan');
+ const effective=expandedContinuityPlan(plan,journal.additions||[]),previous=assignment.card_steps;
+ const revision=hash({objective_digest:plan.objective_digest,criteria:plan.criteria,stages:plan.stages.map(({id,kind,criteria,depends_on})=>({id,kind,criteria,depends_on}))});
+ const steps=effective.stages.map(stage=>{
+  const row=journal.stages?.[stage.id],proof=row?.receipt;
+  const passed=row?.state==='passed'&&/^[a-f0-9]{64}$/.test(proof?.input_digest||'')&&/^sha256:[a-f0-9]{64}$/.test(proof?.evidence||'')&&/^[a-f0-9]{40}$/.test(proof?.source_sha||'');
+  if(row?.state==='passed'&&!passed)throw Error('Checklist pass lacks matching verifier evidence');
+  const old=previous?.steps.find(s=>s.id===stage.id)?.receipt;
+  return {id:stage.id,label:stage.id.replaceAll('-',' '),depends_on:stage.depends_on,state:passed?'passed':!row||row.state==='ready'?'pending':'unknown',receipt:passed?{
+   id:stage.id+':'+proof.input_digest.slice(0,32),assignment:assignment.id,step_id:stage.id,plan_revision:revision,input_digest:proof.input_digest,evidence:proof.evidence,source_sha:proof.source_sha,
+   observed_at:old?.input_digest===proof.input_digest&&old?.evidence===proof.evidence&&old?.source_sha===proof.source_sha?old.observed_at:observed_at
+  }:null};
+ });
+ // Invalidated prerequisites also invalidate dependent display receipts until
+ // their own verifiers run again. A previous pass is not current completion.
+ for(const step of steps)if(step.state==='passed'&&step.depends_on.some(id=>steps.find(s=>s.id===id)?.state!=='passed')){step.state='unknown';step.receipt=null;}
+ const accounted=(assignment.acceptance_additions||[]).every(a=>journal.additions?.some(row=>row.status==='admitted'&&row.digest===expansionDigest(a.proposal)));
+ return {schema:CARD_STEPS_SCHEMA,assignment:assignment.id,revision,objective_digest:plan.objective_digest,publisher:{owner:assignment.owner,branch:assignment.branch},sequence:(previous?.sequence||0)+1,complete:plan.completion_scope!=='subobjective'&&!unresolvedAdditions(journal)&&accounted,steps};
+}
+const milestone=value=>{if(!value)return null;const copy=structuredClone(value);delete copy.sequence;return hash(copy);};
+
+export async function publishContinuityCard({config,plan,journal,rpc,readControl,readIntent,saveIntent}) {
+ const control=await readControl();
+ if(control.held||control.global_held||control.security_stop||!control.assignment_active||control.objective_digest!==plan.objective_digest)throw Error('Current authority stops checklist publication');
+ const snapshot=await rpc('relay_runner_assignments',{project:config.project,assignment:config.assignment});
+ const claim=snapshot.ok===true?snapshot.claims?.find(a=>a.id===config.assignment):null;
+ if(!claim||claim.owner!==config.owner||claim.branch!==config.branch||claim.state!=='active'||!(Date.parse(claim.lease_until)>Date.now())||!/^[a-f0-9]{40}$/.test(snapshot.record_sha||'')||snapshot.record_sha!==control.canonical_record_sha)throw Error('Checklist ownership or revision changed before publication');
+ const pending=await readIntent();
+ if(pending){
+  if(snapshot.record_sha===pending.request.expected_record_sha||JSON.stringify(claim.card_steps)!==JSON.stringify(pending.request.request.card_steps))throw Error('Checklist publication is unresolved; inspect the original transaction before another write');
+  await saveIntent(null);
+ }
+ const projection=continuityCardProjection({plan,journal,assignment:claim});
+ if(milestone(projection)===milestone(claim.card_steps))return {published:false,unchanged:true,record_sha:snapshot.record_sha};
+ validateCardStepsPublication(projection,claim,control.objective_digest);
+ const fresh=await readControl();
+ if(fresh.held||fresh.global_held||fresh.security_stop||!fresh.assignment_active||fresh.objective_digest!==control.objective_digest||fresh.canonical_record_sha!==snapshot.record_sha||fresh.revision!==control.revision||fresh.global_revision!==control.global_revision||fresh.source_sha!==control.source_sha)throw Error('Control changed before checklist publication');
+ const request={action:'amend',project:config.project,expected_record_sha:snapshot.record_sha,request:{id:config.assignment,owner:config.owner,card_steps:projection,reason:'Publish verified continuity checklist milestone'}};
+ await saveIntent({request});
+ // Even a failed/lost response is reconciled by an independent exact readback.
+ // Never replay a mutation merely because the transport did not answer.
+ let outcome;try{outcome=await rpc('relay_runner_coordinate',request);}catch(error){if(['conflict','validation','ownership','policy','policy_drift'].includes(error.code))outcome={ok:false,error:{class:error.code}};}
+ const readback=await rpc('relay_runner_assignments',{project:config.project,assignment:config.assignment});
+ const latest=readback.ok===true?readback.claims?.find(a=>a.id===config.assignment):null;
+ const confirmed=latest&&latest.owner===config.owner&&latest.branch===config.branch&&latest.state==='active'&&Date.parse(latest.lease_until)>Date.now()&&/^[a-f0-9]{40}$/.test(readback.record_sha||'')&&readback.record_sha!==snapshot.record_sha&&JSON.stringify(latest.card_steps)===JSON.stringify(projection);
+ if(!confirmed){
+  // A structured authoritative rejection before application is not an unknown
+  // write. Stop this run, but let a later fresh control/CAS attempt proceed.
+  if(outcome?.ok===false&&['conflict','validation','ownership','policy','policy_drift'].includes(outcome.error?.class)&&readback.ok===true&&/^[a-f0-9]{40}$/.test(readback.record_sha||'')&&JSON.stringify(latest?.card_steps)!==JSON.stringify(projection)){
+   await saveIntent(null);throw Error('Checklist publication rejected without application: '+outcome.error.class+'; refresh before another attempt');
+  }
+  throw Error('Checklist publication readback is stale or mismatched; preserve its pending intent');
+ }
+ await saveIntent(null);
+ return {published:true,record_sha:readback.record_sha,reconciled:outcome?.ok!==true};
 }
 
 export async function runContinuityExecution({config,workspace,stateDir,rpc,runExecution,nativeHost}){
@@ -156,6 +223,9 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
  await fs.mkdir(directory,{recursive:true,mode:0o700});
  const lock=path.join(directory,'continuity.lock');await fs.mkdir(lock,{mode:0o700});
  const filename=path.join(directory,'continuity.json');let journal;
+ const publicationFile=path.join(directory,'card-publication.json');
+ const readIntent=async()=>{try{return JSON.parse(await fs.readFile(publicationFile,'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;return null;}};
+ const saveIntent=async value=>{await fs.writeFile(publicationFile+'.tmp',JSON.stringify(value)+'\n',{mode:0o600});await fs.rename(publicationFile+'.tmp',publicationFile);};
  const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8',maxBuffer:16*1024*1024,stdio:['pipe','pipe','pipe']}).trim();
  const persist=async value=>{await fs.writeFile(filename+'.tmp',JSON.stringify(value)+'\n',{mode:0o600});await fs.rename(filename+'.tmp',filename);};
  let assignmentRecord=null;
@@ -185,6 +255,7 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
  try{
   try{journal=JSON.parse(await fs.readFile(filename,'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;}
   return await reconcileContinuity({plan,journal,persist,readControl,
+   observe:journal=>publishContinuityCard({config,plan,journal,rpc,readControl,readIntent,saveIntent}),
    discover:async()=>{const a=await assignment();return [...(config.continuity_additions||[]),...(a.acceptance_additions||[]).map(x=>x.proposal)];},
    reviewAddition:async(proposal,context)=>{
     const a=await assignment(),recorded=a.acceptance_additions?.find(x=>x.base_objective_digest===plan.objective_digest&&expansionDigest(x.proposal)===expansionDigest(proposal)&&x.goal_digest===hash(plan.expansion.original_goal)&&x.profile_digest===hash(plan.expansion.profiles[proposal.profile]));

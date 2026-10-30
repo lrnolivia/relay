@@ -1,5 +1,7 @@
 import { normalizeCommunicationResult, formatRelay, safePresentationText } from './human-presentation.js';
 import { legacyContextCardModel } from './relay-context-card-legacy-model.js';
+import { assignmentCardSteps } from './relay-card-steps.js';
+import { cardIdentity } from './relay-card-identity.js';
 
 export function contextCardModel(data = {}, directory = {}, options = {}) {
   if(data?.presentation_mode==='legacy')return legacyContextCardModel(data,directory);
@@ -66,7 +68,7 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
     const tests = ci.tests || {}, jobs = ci.jobs || {};
     const elapsed = Number.isFinite(ci.elapsed_ms) ? (ci.elapsed_ms >= 60000 ? Math.floor(ci.elapsed_ms/60000)+'m '+Math.round(ci.elapsed_ms%60000/1000)+'s' : Math.round(ci.elapsed_ms/1000)+'s') : null;
     const state = ci.stale ? 'stale' : ci.status === 'completed' ? (ci.conclusion || 'completed') : ci.status;
-    const stateLabel = { queued:'Queued', running:'Running', success:'Passed', failure:'Failed', cancelled:'Cancelled', completed:'Finished', stale:'Updates stalled' }[state] || 'Unconfirmed';
+    const stateLabel = { queued:'Queued', pending:'Pending', running:'Running', success:'Passed', passed:'Passed', failure:'Failed', failed:'Failed', skipped:'Skipped', blocked:'Blocked', cancelled:'Cancelled', completed:'Finished', stale:'Updates stalled' }[state] || 'Unconfirmed';
     const reported = ci.telemetry === 'reported';
     const testLine = reported ? n(tests.passed)+' passed · '+n(tests.failed)+' failed · '+n(tests.skipped)+' skipped'+(n(tests.todo)?' · '+n(tests.todo)+' todo':'')+(n(tests.cancelled)?' · '+n(tests.cancelled)+' cancelled':'') : 'Not reported by this run';
     const jobLine = n(jobs.passed)+n(jobs.failed)+n(jobs.cancelled)+' of '+n(jobs.total)+' finished'+(n(jobs.failed)?' · '+n(jobs.failed)+' failed':'')+(Array.isArray(jobs.current)&&jobs.current.length?' · now: '+jobs.current.slice(0,2).join(', '):'');
@@ -80,14 +82,14 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
     if (!failures.length && failedJob) ciRows.push({label:'Failed job',text:failedJob.name+(failedJob.annotations?.[0]?.message?' — '+failedJob.annotations[0].message:'')});
     const metric = reported ? (tests.totals_known ? n(tests.passed)+'/'+n(tests.total) : String(n(tests.reported))) : n(jobs.passed)+n(jobs.failed)+n(jobs.cancelled)+'/'+n(jobs.total);
     const metricLabel = reported ? (tests.totals_known ? 'tests passed' : 'tests reported so far') : 'jobs finished';
-    const percentDone = reported && n(ci.suites_total) ? Math.round(n(ci.suites_done)/n(ci.suites_total)*100) : null;
+    const percentDone = reported && Number.isSafeInteger(ci.suites_total) && ci.suites_total>0 && Number.isSafeInteger(ci.suites_done) && ci.suites_done>=0 && ci.suites_done<=ci.suites_total ? Math.round(ci.suites_done/ci.suites_total*100) : null;
     const summaryText = [stateLabel, reported ? testLine : 'test counts not reported', elapsed].filter(Boolean).join(' · ')+(ci.stale?'. The last telemetry update is more than two minutes old.':'');
     ciView = { title:'CI'+(ci.head_sha?' · '+ci.head_sha.slice(0,7):''), label:stateLabel, tone: state==='failure'?'bad':state==='stale'||state==='cancelled'?'wait':state==='success'?'good':'info', rows:ciRows, metric, metric_label:metricLabel, percent:percentDone, summary:summaryText,
       blocker: state==='failure' ? (n(tests.failed) ? n(tests.failed)+' test'+(n(tests.failed)===1?'':'s')+' failed.' : 'A CI job failed.') : null,
       next_step: state==='failure' && (ci.run?.url || failedJob?.url) ? 'Open the failing run for full logs.' : null };
   }
   if (pr) { title=safePresentationText(pr.title)||'Source change'; }
-  const blocker = error ? null : (status==='blocked' ? safePresentationText(first.waiting_reason) || null : null);
+  const blocker = error ? null : (first.waiting_reason ? safePresentationText(first.waiting_reason,12000) : null);
   const rawQa = human.qa || checkpoint.qa_context || data.qa || null;
   const qa = rawQa&&typeof rawQa==='object'?{intended_result:safePresentationText(rawQa.intended_result),reason:safePresentationText(rawQa.reason),...(Array.isArray(rawQa.checks)?{checks:rawQa.checks.slice(0,5).map(x=>safePresentationText(x))}:{})}:null;
   const handoff = data.action === 'handoff' ? 'The assignment was transferred.' : safePresentationText(data.handoff?.summary)||null;
@@ -104,9 +106,11 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   const primaryTeam = first.primary_team || data.primary_team || (checks ? 'inspector' : pr ? 'source' : 'relay');
   const feature = ['relay','runner','inspector','night-shift','source','cloud','release','skills'].includes(primaryTeam) ? primaryTeam : 'relay';
   const signal = tone === 'bad' ? 'danger' : tone === 'wait' ? 'external' : tone === 'info' ? 'working' : tone === 'good' ? 'steady' : 'quiet';
-  const rawPercent = first.progress_percent ?? first.percent ?? first.completion?.percent ?? data.progress_percent ?? null;
-  const hasPercent = typeof rawPercent === 'number' || typeof rawPercent === 'string' && rawPercent.trim() !== '';
-  const percent = hasPercent && Number.isFinite(Number(rawPercent)) && Number(rawPercent) >= 0 && Number(rawPercent) <= 100 ? Math.round(Number(rawPercent)) : null;
+  const plan = assignmentCardSteps(first);
+  const identity = cardIdentity({...first,staff_attribution:attribution},plan,ci?'inspector':feature);
+  // Only an explicit complete plan has a denominator. A routing assignment or
+  // arbitrary progress_percent is not evidence of completed work.
+  const percent = plan.total ? Math.round(plan.passed/plan.total*100) : null;
   let metric = percent != null ? percent+'%' : label;
   let metric_label = percent != null ? 'completion' : 'current state';
   if (!checks && !pr && jobs.length && percent == null) { metric=String(data.coverage?.active ?? activeJobs.length); metric_label='active jobs'; }
@@ -117,10 +121,27 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   const has_metric=percent!==null||Boolean(checks?.length)||Boolean(pr?.number)||(!checks&&!pr&&jobs.length>0);
   const card = { title:safePresentationText(title), feature, primary_staff:safePresentationText(primary), primary_role:primaryRole?safePresentationText(primaryRole,60):null, staff_unresolved:unresolvedStaff, staff_note:staffNote?safePresentationText(staffNote,200):null, team:safePresentationText(team), label, tone, signal, summary, rows:rows.map(row=>({label:safePresentationText(row.label,100),text:safePresentationText(row.text,100)})), blocker, qa, handoff, next_step:nextStep, metric, metric_label, has_metric, percent, evidence:Object.fromEntries(Object.entries(evidence).filter(([,v])=>['string','number','boolean'].includes(typeof v)).map(([key,value])=>[key,typeof value==='string'?safePresentationText(value,2000):value])), refresh:Boolean(data.project), human_v1:presentation };
   const milestone = data.work_card?.milestone && typeof data.work_card.milestone === 'object' ? data.work_card.milestone : null;
+  Object.assign(card,{plan,identity,project:typeof data.project==='string'?safePresentationText(data.project,80):null});
+  if(identity.speaker){card.primary_staff=identity.speaker.name;card.primary_role=identity.speaker.role;card.staff_unresolved=false;card.staff_note=null;}
+  if(identity.team!=='relay')card.feature=identity.team;
+  if(plan.steps.length){card.metric=plan.passed+'/'+(plan.total??'?');card.metric_label='steps verified';card.has_metric=plan.total!==null;card.rows=[];}
   if (ciView) {
     const ciSignal = ciView.tone==='bad'?'danger':ciView.tone==='wait'?'external':ciView.tone==='good'?'steady':'working';
     Object.assign(card, { title:safePresentationText(ciView.title), feature:'inspector', label:ciView.label, tone:ciView.tone, signal:ciSignal, summary:safePresentationText(ciView.summary,400), rows:ciView.rows.slice(0,6).map(row=>({label:safePresentationText(row.label,100),text:safePresentationText(row.text,160)})), blocker:ciView.blocker, next_step:ciView.next_step, metric:ciView.metric, metric_label:ciView.metric_label, percent:ciView.percent, has_metric:true, ci:{status:ci.status, conclusion:ci.conclusion, stale:Boolean(ci.stale), live:Boolean(ci.live), telemetry:ci.telemetry} });
     for (const [key,value] of [['ci_run_id',ci.run?.id],['ci_run_url',ci.run?.url],['ci_attempt',ci.run?.attempt],['head_sha',ci.head_sha],['ci_observed_at',ci.observed_at],['ci_telemetry_updated_at',ci.telemetry_updated_at]]) if (['string','number'].includes(typeof value)) card.evidence[key]=typeof value==='string'?safePresentationText(value,300):value;
+    const count=v=>Number.isSafeInteger(v)&&v>=0?v:null;
+    const states={not_run:'pending',running:'running',passed:'passed',failed:'failed',cancelled:'cancelled',timed_out:'failed',blocked:'blocked',start_failed:'failed',signalled:'failed',skipped:'skipped'};
+    card.ci.tests={passed:count(ci.tests?.passed),failed:count(ci.tests?.failed),skipped:count(ci.tests?.skipped),reported:count(ci.tests?.reported),total:ci.tests?.totals_known?count(ci.tests?.total):null,totals_known:ci.tests?.totals_known===true};
+    card.ci.suites_done=count(ci.suites_done);card.ci.suites_total=count(ci.suites_total);
+    card.ci.suites=records(ci.suites).slice(0,12).map(s=>({id:s.key||s.id,label:s.id,state:states[s.status]||'unknown',status:s.status}));
+    card.ci.elapsed=Number.isFinite(ci.elapsed_ms)?Math.max(0,ci.elapsed_ms):null;
+    card.ci.failures=records(ci.failures).slice(0,20).map(f=>({suite:safePresentationText(f.suite,200),name:safePresentationText(f.name,2000),message:safePresentationText(f.message,12000)}));
+    card.ci.failed_jobs=records(ci.failed_jobs).slice(0,20).map(j=>({name:safePresentationText(j.name,2000),messages:records(j.annotations).map(a=>safePresentationText(a.message,12000))}));
+    card.metric=card.ci.suites_total!==null?(card.ci.suites_done===null?'—':String(card.ci.suites_done)):ciView.metric;
+    card.metric_label=card.ci.suites_total!==null?'of '+card.ci.suites_total+' suites finished':ciView.metric_label;
+    card.title=ci.conclusion==='success'?'The checks passed':ci.conclusion==='failure'?'A check needs attention':ci.conclusion==='cancelled'?'The run was cancelled':ci.status==='queued'?'Checks are queued':'Checking the build';
+    card.summary=ci.stale?'The last update is more than two minutes old.':ci.conclusion==='failure'?'A check needs attention. The reported results are below.':ci.conclusion==='success'?'The reported checks passed.':ci.conclusion==='cancelled'?'This run was cancelled. Reported results are preserved.':ci.status==='queued'?'Waiting for the run to start.':'Checks are running. Results update as suites report.';
+    card.rows=[];
   } else if (milestone?.label) {
     card.rows = [{label:'This step',text:safePresentationText(milestone.label,100)}, ...card.rows].slice(0,4);
   }

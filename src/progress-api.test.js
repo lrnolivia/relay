@@ -10,6 +10,11 @@ test("1.8 consumer contract keeps queued intent separate from observed progress"
   assert.equal(response.queue[0].observed, false);
 });
 
+test('queued cards retain assignment routing without claiming contribution or progress',()=>{
+ const q=queuedProgress({id:'queued-design',goal:'Review the layout',primary_staff:'margot',primary_team:'inspector',supporting_staff:['roman'],supporting_teams:['runner'],progress_percent:80});
+ assert.equal(q.primary_staff,'margot');assert.equal(q.primary_team,'inspector');assert.deepEqual(q.supporting_staff,['roman']);assert.equal(q.observed,false);assert.equal(q.progress_percent,undefined);assert.equal(q.card_steps,undefined);
+});
+
 import { createHash } from "node:crypto";
 import { callProgress } from "./progress-api.js";
 import {githubApiRequest} from './source.js';

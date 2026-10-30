@@ -1,3 +1,4 @@
+import {validateCardStepsPublication} from './relay-card-steps.js';
 import {appendCanonicalAdditions,insideExpansionScope,continuityObjectiveDigest} from '../packages/runner/src/continuity-expansion.mjs';
 import { normalizeAssignmentStaff } from "./staff-registry.js";
 // Deterministic admission rules; expired leases retain ownership until reconciliation.
@@ -47,7 +48,7 @@ const CATEGORIES = new Set(['architecture', 'design', 'implementation', 'researc
 const ROLE_ID = /^[a-z][a-z0-9-]{0,63}$/;
 const TAG_ID = /^[a-z0-9][a-z0-9._-]{0,63}$/;
 const LABEL_KEY = /^[a-z][a-z0-9.-]{0,63}$/;
-const AMENDABLE_FIELDS = ['goal', 'acceptance', 'acceptance_additions', 'next_action', 'paths', 'resources', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams'];
+const AMENDABLE_FIELDS = ['card_steps', 'goal', 'acceptance', 'acceptance_additions', 'next_action', 'paths', 'resources', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams'];
 
 function normalizeResources(values) {
   if (!Array.isArray(values) || values.some((value) => typeof value !== 'string' || !value)) throw new Error('Resources must be a valid string array.');
@@ -225,6 +226,10 @@ export function transition(record, request, policy, now = new Date()) {
     const supplied = AMENDABLE_FIELDS.filter((field) => Object.prototype.hasOwnProperty.call(request, field));
     if (!supplied.length) throw new Error('Amendment requires at least one mutable assignment field.');
     const patch = {};
+    if ('card_steps' in request) {
+      if (supplied.some(key=>key!=='card_steps')) throw Error('Checklist publication cannot amend scope, routing or objective');
+      patch.card_steps=validateCardStepsPublication(request.card_steps,target,continuityObjectiveDigest(target.goal,target.acceptance),now);
+    }
     if ('goal' in request) { if (typeof request.goal !== 'string' || !request.goal.trim()) throw new Error('Goal cannot be empty.'); patch.goal = request.goal; }
     if ('acceptance' in request) { if (typeof request.acceptance !== 'string' || !request.acceptance.trim()) throw new Error('Acceptance cannot be empty.'); patch.acceptance = request.acceptance; }
     if ('acceptance_additions' in request) {
@@ -240,6 +245,12 @@ export function transition(record, request, policy, now = new Date()) {
     if ('task_class' in request) patch.task_class = normalizeTaskClass(request.task_class);
     if ('ledger_refs' in request) patch.ledger_refs = normalizeLedgerRefs(request.ledger_refs);
     Object.assign(patch, metadataFields(request));
+    const objectiveChanged=(patch.goal!==undefined&&patch.goal!==target.goal)||(patch.acceptance!==undefined&&patch.acceptance!==target.acceptance);
+    if(objectiveChanged&&target.card_steps)patch.card_steps=undefined;
+    else if(target.card_steps&&patch.acceptance_additions?.length>(target.acceptance_additions?.length||0))patch.card_steps={...target.card_steps,complete:false};
+    // Acceptance grows atomically with loss of the old complete denominator.
+    // Retain verified steps until the publisher incorporates the new priorities.
+    if('card_steps' in patch&&!supplied.includes('card_steps'))supplied.push('card_steps');
     const before = Object.fromEntries(supplied.map((field) => [field, target[field]]));
     const staffPatch = Object.fromEntries(["primary_staff", "supporting_staff", "primary_team", "supporting_teams"].filter(key => key in request).map(key => [key, request[key]]));
     const preview = { ...target, ...patch, ...staffPatch };
