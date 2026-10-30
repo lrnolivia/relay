@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T22:01:30.132Z",
+  "updated_at": "2026-10-30T23:44:41.659Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21661,7 +21661,7 @@
       ],
       "goal": "Integrate the approved RmlUi glass overlay and tuning workflow into rtxForge; validate the prototype and game routes, prepare beta delivery with managed overlay refresh.",
       "acceptance": "Preserve actual runtime tuning, named game presets, undo/redo, explicit On/Off or preset comparisons, per-pass controls and honest capabilities/telemetry. Use the approved spacious glass UI, Roboto main type, Bakbak One neutral wordmark and accent headings, raw logo, draggable stacking panels, kinetic motion and reduced-motion support. Layout labels Sidebar, Advanced, Bottom Bar. Full Settings screen includes Appearance popout, layout, shortcuts, welcome/notifications and existing overlay options. Built-in defaults from Oct30 screenshots: Dark 80% tint/48px blur/4% grain/Overlay15%; Light 100% tint/44px blur/4% grain/Overlay35%; Clear default 20% light tint/48px blur/4% grain/SoftLight50%, adaptive light-preferred text depth. Themes reset built-ins, fine editing remains unlocked and marks Custom. 120% old scale is100%; simple Smaller/Default/Larger type and scale controls. Metadata expanded on Advanced Overview and expandable compact card on Sidebar/BottomBar. Slim real-key welcome toast, Rounded/Pill option; real hotkey/preset notifications. Test actual game API routes before claiming acceptance; standalone native tests do not establish gameplay, GPU/HDR/Proton correctness. Prepare requested beta only from exact reviewed revision with passing checks and rollback; update all managed installed overlays safely preserving game originals and user settings.",
-      "next_action": "Fix the real Windows updater fixture's teardown race by waiting for its own child to exit before deleting the disposable log, preserving all recovery assertions. CI reproduced the WinError32 cleanup race twice. Fix the live telemetry inline-display override that crowds Bottom Bar metadata; verify both in one final bounded pass, then exact-source CI and beta dispatch.",
+      "next_action": "PR127 merged by verified owner lrnolivia as f9b1b10dea05d47afd1a60e9f75cfaf8621629e2; merged tree equals green reviewed head3f4936259f64c7238217ebba6c1ae675335e5d12. Explicit Beta10 Windows41145908801 and Linux41145913578 publication running. Verify both asset sets/source lines plus retained Beta9 rollback assets before completion. Test maintenance: added 4K HDR outside-column pixel preservation, close/reopen and single-thread fixtures; BottomBar live stats regression failed before fix and passed after. Updater fixture failed twice with WinError32 on its own child log after the failure receipt; waits for that exact child before temp teardown, all recovery assertions retained, 13 local tests and full CI pass. Native1440p frame input passes, matched bundle hello isolated passes, Linux native receipt/hash staging passes. ME2 DX11 scRGB Settings/shortcut/layouts rendered; Backtick console conflict isolated with F10; original shortcut restored. Control DX12 HDR glass/live data rendered earlier; final main-menu HDR/NR ran, final automated input recheck not confirmed before game ended. SonicDX9 intro/attract NR feature18 active through5400frames; glass controls unconfirmed. DX10/nativeVulkan/Proton gameplay not claimed.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21697,8 +21697,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T22:01:30.132Z",
-      "lease_until": "2026-10-31T10:01:30.132Z",
+      "updated_at": "2026-10-30T23:44:41.659Z",
+      "lease_until": "2026-10-31T11:44:41.659Z",
       "amendment_count": 3,
       "amendments": [
         {
