@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T01:24:32.584Z",
+  "updated_at": "2026-10-30T02:03:44.552Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21563,26 +21563,14 @@
       "owner": "01a189e9-9316-7db2-97e3-597d29d40dbd",
       "branch": "rtxforge/auto-update-20261029",
       "paths": [
-        "scripts/app_update.py",
-        "scripts/auto_update.py",
-        "scripts/app_settings.py",
-        "tests/test_app_update.py",
-        "tests/test_auto_update.py",
-        "windows/",
-        "gui/rtxforge_gtk.py",
-        "gui/game_mode.py",
-        ".github/workflows/",
-        "VERSION",
-        "README.md",
-        "docs/releases/1.0-beta.md",
         "tests/ui_app_completion.py"
       ],
       "resources": [
-        "rtxforge-auto-update"
+        "rtxforge-native-visuals-registration"
       ],
       "goal": "Make application updates seamless and automatic on Windows and Linux.",
       "acceptance": "Background checks and verified staging enabled by default with an opt-out; simple restart/apply action shared by desktop and Game Mode; safe behavior during game operations, offline/failure recovery, correct installed-format behavior including Flatpak/portable guidance, no game-file changes. Validate update integrity and lifecycle with meaningful tests and native builds, exact-source CI, merge and beta release. Retain previous task's pending native-media registration evidence (run 40974336657, artifact 12942266963) honestly; no invented Visuals receipt.",
-      "next_action": "Quarantine 2bd84c4: Windows real installed-update smoke timed out (job123831646958). Reproduced DETACHED_PROCESS+CREATE_NO_WINDOW causing powershell.exe immediate exit0 before runner receipt. Correct hidden-child launch with independent stdio and Windows PowerShell module path; add real Windows failure-handoff regression, then rerun exact upgrade criterion. Earlier direct-run recovery proof remains direct runner only, not proof of original detached launch. Linux/native and ARM64 checks passed.",
+      "next_action": "Beta9 implementation, release and verification finished: PR125/main3907a1aba00160a7f5926b2349c1778c035138e5, publication40987573787/40987576601, checksums/discovery/all69recoveryassetsverified. No source work remains. Connector requires one path, so retain only native capture harness as evidence reference; release all app/update/package paths. Pending accounting only: supported native Visuals receipt for artifact12947750538/run40986002589 and priorPR124media; no supported ingest capability exposed. FullreceiptTEMP/rtxforge-auto-update-final-release-receipt.json. No commits to mergedbranch.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21606,8 +21594,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T01:24:32.584Z",
-      "lease_until": "2026-10-30T13:24:32.584Z"
+      "updated_at": "2026-10-30T02:03:44.552Z",
+      "lease_until": "2026-10-30T14:03:44.552Z"
     }
   ]
 }
