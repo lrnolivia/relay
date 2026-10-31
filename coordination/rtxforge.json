@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T22:33:26.533Z",
+  "updated_at": "2026-10-31T22:54:01.692Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22367,7 +22367,23 @@
         "windows/overlay-rmlui/tests/",
         "providers/glass-overlay/HdrControls.h",
         "windows/overlay-rmlui/GlassRuntime.cpp",
-        "docs/overlay.md"
+        "docs/overlay.md",
+        "scripts/reshade_import.py",
+        "tests/test_reshade_import.py",
+        "scripts/extra_tools.py",
+        "gui/game_mode.py",
+        "gui/game_mode_tools.py",
+        "gui/rtxforge_gtk.py",
+        "gui/package_browser.py",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Tools.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Details.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Overlay.cs",
+        "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
+        "windows/RtxForge.Windows/Services/ForgeService.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/engine-host/rtxforge_win_host.py",
+        "windows/overlay-rmlui/SmokeTest.cpp"
       ],
       "resources": [
         "rtxforge-overlay-layout",
@@ -22375,7 +22391,7 @@
       ],
       "goal": "Repair shared overlay layout, alignment, clipping and stacking defects reported in Side Panel, Advanced and Bar without changing approved glass identity. Rebuild live prototype and verify rendered states across normal/larger text and scale.",
       "acceptance": "Advanced sidebar/content and scroll bounds align; Bar header, controls, footer and attached popovers stay reachable and padded; glyphs/labels center on their surfaces; prototype scene toolbar never obscures welcome toast; all3 layouts preserve controls and approved Clear materials; focused native regression checks and bounded screenshot review pass.",
-      "next_action": "Validate latest shared chrome, NR hold preview and Bar modal behavior; update in-game tuning documentation for removed comparison UI and production Blur/Motion controls; refresh exact PR134 head and live prototype.",
+      "next_action": "Finish the requested overlay preview refinements, carry desktop package/HDR/settings changes into Game Mode, and implement per-game ReShade ZIP/file import in Game Details > Tools with reflected effect controls.",
       "category": "design",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -22399,8 +22415,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T22:33:26.533Z",
-      "lease_until": "2026-11-01T10:33:26.533Z"
+      "updated_at": "2026-10-31T22:54:01.692Z",
+      "lease_until": "2026-11-01T10:54:01.692Z"
     }
   ]
 }
