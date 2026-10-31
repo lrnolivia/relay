@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T20:46:52.903Z",
+  "updated_at": "2026-10-31T21:04:05.596Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8122,7 +8122,7 @@
       "supporting_teams": [],
       "primary_staff": "luca",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-31T20:11:56.093Z",
       "objective_history": {
         "baseline": {
@@ -8138,7 +8138,9 @@
             "at": "2026-10-31T20:11:56.093Z"
           }
         ]
-      }
+      },
+      "completed_at": "2026-10-31T21:04:05.596Z",
+      "updated_at": "2026-10-31T21:04:05.596Z"
     }
   ],
   "claims": [
@@ -22327,7 +22329,7 @@
       "primary_staff": "luca",
       "supporting_staff": [],
       "base_sha": "cec409d6ed8900a476cbadff16b289e0e8e7cb9b",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-31T20:12:25.373Z",
       "objective_history": {
         "baseline": {
@@ -22344,8 +22346,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T20:46:52.903Z",
-      "lease_until": "2026-11-01T08:46:52.903Z"
+      "updated_at": "2026-10-31T21:04:05.596Z",
+      "lease_until": "2026-11-01T09:04:05.596Z",
+      "pr": 133,
+      "merged_head_sha": "3baeff9e742607d7527adc3dfc6e68e2aeace74d",
+      "merge_commit_sha": "0ed4eebc374d6fe65765abc3d7d60092e8b1f5f9",
+      "evidence": "PR133 squash merged as verified human owner at 0ed4eebc374d6fe65765abc3d7d60092e8b1f5f9; tree exactly matches reviewed3baeff9e742607d7527adc3dfc6e68e2aeace74d. Review Windows41238092957/Linux41238092937/UI41238092901 green. Explicit publication Windows41239587006 and Linux41239590868 succeeded at exact merge. Public Beta13 all5 binaries verified against SHA256 sidecars, GitHub digests, expected sizes and both OS source/version provenance; Linux metadata matches; all113 old assets retained,124 total. Verified x64 installer exit0, installed VERSION13,10 app/engine/renderer files match portable, revision2 required receipt exact merge. Existing3 preference files byte-identical;172 original recovery backups hashes unchanged. App opened and in-app overlay update report verified; durable revision2 bundle469ec64a409b518617d70b93dc65fc315001ef02572074bc6cbf4fd8dc14c171 complete,49 current,0 blocked. Initial app/helper simultaneous refresh collided with transient file access/stale review; stopped duplicate helper, normal fresh retry completed, helper restarted successfully; concurrency is an observation for future refresh hardening, not a source fix claimed in this release. Prototype remains open. Evidence C:/Users/lrnol/.codex/tmp/beta13-release/downloads/verification.json, installed-verification.json, recovery-verification.json, source.json, publication-runs.json; Beta12 recovery saved under LOCALAPPDATA/rtxForge/recovery/install-beta13-20261031. Release worktree clean. No new gameplay qualification claimed.",
+      "work_accounted": true,
+      "completed_at": "2026-10-31T21:04:05.596Z"
     }
   ]
 }
