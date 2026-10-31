@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T00:38:26.137Z",
+  "updated_at": "2026-10-31T00:45:34.868Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21806,7 +21806,14 @@
         "tests/test_cross_os.py",
         "tests/test_engine_bridge.py",
         "tests/test_overlay_settings.py",
-        "providers/feeder-legacy.json"
+        "providers/feeder-legacy.json",
+        "windows/RtxForge.Windows/MainWindow.xaml.cs",
+        "windows/tests/Settings/Settings.csproj",
+        "providers/glass-overlay/OverlayController.h",
+        "windows/overlay-rmlui/GlassRuntime.cpp",
+        "providers/feeder-panel/previous.json",
+        "scripts/vulkan_dlssg_provider.py",
+        "tests/test_vulkan_dlssg_provider.py"
       ],
       "resources": [
         "rtxforge-managed-provider-downloads",
@@ -21816,7 +21823,7 @@
       ],
       "goal": "Resolve supported Feeder/Vulkan packages automatically; align desktop overlay settings with the shipped glass overlay; make managed overlay refresh results visible.",
       "acceptance": "No normal installation requires users to supply Feeder or Vulkan stacks. Resolve pinned verified packages automatically, retain optional advanced local overrides and original-file recovery, and fail with actionable download errors rather than import instructions. Desktop and Game Mode settings reflect real Sidebar/Advanced/Bottom Bar, Clear/Light/Dark/custom appearance, typography/scale and other current overlay preferences with consistent persistence. Show a visible truthful managed-overlay refresh result, including updated/current/blocked games; preserve result counts across retries and avoid repeated notifications. Verify cold-cache and integrity failure paths, settings roundtrip/native builds and refresh lifecycle. Preserve human attribution and notices. Prepare reviewable exact-source delivery and follow-on beta through normal green checks.",
-      "next_action": "Trace five actual refresh blocks against local/shared records and managed file provenance; reconcile current cross-OS revisions without bypassing hash/backup guards. Implement auto package resolution, shared desktop/native appearance settings and visible cumulative refresh summary.",
+      "next_action": "Cold-cache Feeder download verified with all14 files. Implement shared glass INI desktop controls/live reload; cumulative visible refresh result. Reconcile pinned production Vulkan runtime overrides and explicit preserved migration of unrecorded old panels, recover absent owned bridge files, then cross-OS revision handling and production repair of five blocked targets.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21840,8 +21847,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T00:38:26.137Z",
-      "lease_until": "2026-10-31T12:38:26.137Z"
+      "updated_at": "2026-10-31T00:45:34.868Z",
+      "lease_until": "2026-10-31T12:45:34.868Z"
     }
   ]
 }
