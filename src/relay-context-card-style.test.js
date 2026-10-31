@@ -99,7 +99,7 @@ test('staff cards preserve step evidence, keyboard focus and routing distinction
   assert.equal(await page.locator('#card').getAttribute('data-identity-team'),'source');
   const {TEAM_EMBLEMS}=await import('../assets/teams/card-assets.js');
   assert.equal(await page.locator('.team-emblem .team-icon-dark').innerHTML(),await page.evaluate(svg=>{const node=document.createElement('div');node.innerHTML=svg;return node.innerHTML},TEAM_EMBLEMS['source-dark']));
-  assert.equal(await page.locator('#feature-title').evaluate(node=>getComputedStyle(node).color),'rgb(28, 140, 147)');
+  assert.match(await page.locator('#feature-title').evaluate(node=>getComputedStyle(node).color),/^color\(srgb /,'canonical source-family contrast variant');
   assert.match(await page.locator('#card-roles').textContent(),/Step team: Design & QA/);
   const details=page.locator('[data-step=build] details');await details.locator('summary').focus();await page.keyboard.press('Enter');
   await page.evaluate(data=>render(data),card);
@@ -170,7 +170,7 @@ test('staff heading keeps its identity-team accent when Inspector telemetry is p
   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.locator('#feature-title').filter({hasText:'Nico'}).waitFor();
   const before=await page.locator('h1').evaluate(n=>getComputedStyle(n).color);
   await page.evaluate(claim=>render({project:'relay',claim,ci:{schema:'relay-ci-card/v1',status:'running',telemetry:'reported',tests:{},suites:[],suites_done:1,suites_total:2,jobs:{}}}),claim);
-  const after=await page.locator('h1').evaluate(n=>getComputedStyle(n).color);assert.equal(after,before);assert.equal(after,theme==='dark'?'rgb(59, 203, 141)':'rgb(22, 121, 78)');
+  const after=await page.locator('h1').evaluate(n=>getComputedStyle(n).color);assert.equal(after,before);assert.match(after,/^color\(srgb /,'canonical turquoise is mixed only with the theme ink for readable headings');
   assert.equal(await page.locator('#telemetry-value').evaluate(n=>getComputedStyle(n).stroke),theme==='dark'?'rgb(24, 175, 192)':'rgb(8, 122, 136)');await page.close();
  }}finally{await browser.close()}
 });
@@ -215,5 +215,28 @@ test('successful native result renders awaiting verification through refresh wit
   await page.evaluate(data=>render(data),data);assert.match(await page.locator('.state').textContent(),/Awaiting verification/);assert.equal(await page.locator('.step-state').textContent(),'Awaiting verification');assert.equal(await page.locator('[data-step=review]').getAttribute('data-state'),'blocked');assert.equal(contextCardModel(data).plan.passed,0);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  }
  delete claim.card_steps.steps[0].receipt.phase;await page.evaluate(claim=>render({project:'relay',claim}),claim);assert.equal(await page.locator('.step-state').textContent(),'Blocked');
+ }finally{await browser.close();}
+});
+
+test('all 17 approved portraits preserve bytes and settle inside clipped small frames; team headings retain readable home-team families',async()=>{
+ const {chromium}=await import('playwright');const {STAFF_PORTRAITS}=await import('../assets/staff/card-assets.js');const browser=await chromium.launch({headless:true});
+ try{
+  for(const theme of ['light','dark']){
+   const page=await browser.newPage({viewport:{width:360,height:800},colorScheme:theme});
+   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
+   for(const [id,bytes] of Object.entries(STAFF_PORTRAITS)){
+    await page.evaluate(id=>render({project:'relay',claim:{primary_staff:id,state:'active',goal:'Inspect approved avatar'}}),id);
+    assert.equal(await page.locator('.portrait-frame img').getAttribute('src'),bytes,'approved source remains byte-identical for '+id);
+    for(const size of [32,48]){
+     const geometry=await page.locator('#feature-mark').evaluate((mark,size)=>{mark.style.width=size+'px';mark.style.height=size+'px';const box=mark.getBoundingClientRect(),crop=mark.querySelector('.portrait-frame'),img=crop.querySelector('img'),r=img.getBoundingClientRect();return {overflow:getComputedStyle(crop).overflow,box:{x:box.x,y:box.y,w:box.width,h:box.height},image:{x:r.x,y:r.y,w:r.width,h:r.height}}},size);
+     assert.equal(geometry.overflow,'hidden');const {box,image}=geometry;assert.ok(image.x<=box.x+.5&&image.y<=box.y+.5&&image.x+image.w>=box.x+box.w-.5&&image.y+image.h>=box.y+box.h-.5,'crop fills box without blank edges');
+     if(['julian','rafael'].includes(id)){const focalX=image.x+image.w*(id==='julian'?.40:.35);assert.ok((focalX-box.x)/box.w>=.44&&(focalX-box.x)/box.w<=.56,'visually measured face center stays near the middle for '+id);}
+    }
+    const colors=await page.evaluate(()=>{const c=getComputedStyle(document.querySelector('#card')),h=getComputedStyle(document.querySelector('h1'));const rgb=s=>{const ctx=document.createElement('canvas').getContext('2d');ctx.fillStyle=s;ctx.fillRect(0,0,1,1);return Array.from(ctx.getImageData(0,0,1,1).data).slice(0,3)};const lum=s=>rgb(s).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((s,v,i)=>s+v*[.2126,.7152,.0722][i],0);const a=lum(h.color),b=lum(c.backgroundColor);return {color:h.color,ratio:(Math.max(a,b)+.05)/(Math.min(a,b)+.05)}});
+    assert.ok(colors.ratio>=4.5,'staff heading normal-text contrast for '+id+' '+theme);
+    if(id==='valentina')assert.equal(colors.color,theme==='dark'?'rgb(240, 100, 59)':'rgb(181, 71, 31)');
+   }
+   await page.close();
+  }
  }finally{await browser.close();}
 });

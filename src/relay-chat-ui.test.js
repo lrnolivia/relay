@@ -5,7 +5,7 @@ import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI,
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v24.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v25.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -537,7 +537,7 @@ test('context card actions validate native and browser results, preserve failed 
     const before=await frame.locator('body').evaluate(()=>window.calls.filter(call=>call.name==='relay_runner_progress').length);
     await frame.locator('#refresh').click();await frame.locator('#refresh').filter({hasText:'Try refresh again'}).waitFor({timeout:5000});
     assert.equal(await frame.locator('#title').textContent(),'Refreshed canonical work');
-    assert.equal(await frame.locator('#blocker').isVisible(),true);
+    assert.match(await frame.locator('#card-freshness').textContent(),/Connection unavailable.*retrying automatically/);
     assert.equal(await frame.locator('body').evaluate(()=>window.calls.filter(call=>call.name==='relay_runner_progress').length),before+1,'a provider failure is not replayed through another host');
    }
    await frame.locator('#open-relay').click();
@@ -579,7 +579,7 @@ test('overall status expands projects and assignments within one mounted card', 
   await page.getByRole('button',{name:'‹ Overall',exact:true}).click();
   await page.locator('#title').filter({hasText:'Your projects'}).waitFor();
   assert.equal(await page.locator('.status-navigation').count(),1);
-  assert.deepEqual(await page.evaluate(()=>window.calls),[{name:'relay_runner_progress',args:{project:'field'}}]);
+  assert.deepEqual(await page.evaluate(()=>window.calls),[{name:'relay_runner_progress',args:{project:'field'}},{name:'relay_runner_progress',args:{project:'field',assignment:'field-editor'}}]);
   assert.equal(await page.evaluate(()=>window.openai.widgetState.statusExplorer.level),'overview');
  } finally {await browser.close();}
 });
@@ -602,14 +602,14 @@ test('widget-state globals echoes cannot replace refreshed assignment evidence',
   await page.locator('#title').filter({hasText:'Refresh proof'}).waitFor();
   await page.waitForFunction(()=>window.echoes===1);
   await page.getByRole('button',{name:'Refresh',exact:true}).click();
-  await page.waitForFunction(()=>window.echoes>=3);
+  await page.waitForFunction(()=>JSON.parse(document.querySelector('#evidence').textContent).head_sha==='2222222222222222222222222222222222222222');
   assert.equal(JSON.parse(await page.locator('#evidence').textContent()).head_sha,'2222222222222222222222222222222222222222');
   assert.equal(await page.locator('#next').textContent(),'Current action');
   assert.equal(await page.locator('#state-label').textContent(),'Ready for review');
   assert.equal(await page.evaluate(()=>window.openai.widgetState.statusExplorer.assignment),'refresh-proof');
-  assert.deepEqual(await page.evaluate(()=>window.calls),[{name:'relay_runner_progress',args:{project:'relay'}}]);
+  assert.deepEqual(await page.evaluate(()=>window.calls),[{name:'relay_runner_progress',args:{project:'relay',assignment:'refresh-proof'}}]);
   await page.evaluate(()=>{
-   window.openai.toolOutput={...window.openai.toolOutput,progress:[{assignment:'refresh-proof',goal:'Refresh proof',state:'working',next_action:'New host result',identities:{head_sha:'3333333333333333333333333333333333333333'}}]};
+   window.openai.toolOutput={...window.openai.toolOutput,generated_at:'2026-10-28T06:00:00Z',progress:[{assignment:'refresh-proof',goal:'Refresh proof',state:'working',next_action:'New host result',identities:{head_sha:'3333333333333333333333333333333333333333'}}]};
    window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolOutput:window.openai.toolOutput}}}));
   });
   assert.equal(JSON.parse(await page.locator('#evidence').textContent()).head_sha,'3333333333333333333333333333333333333333');
