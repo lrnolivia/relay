@@ -3,14 +3,14 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
   const terminal = new Set(['completed','complete','finished','cancelled','superseded','retired']);
   let target=null, timer=null, flight=null, generation=0, failures=0, disposed=false, canonical=false, link=null;
   let checkedAt=null, newest=0, applying=false, inputKey=null;
-  const seen=new Set();
+  const seen=new Set(),list=x=>Array.isArray(x)?x:[];
   const note=document.createElement('p');note.id='card-freshness';note.className='micro';note.setAttribute('role','status');note.setAttribute('aria-live','polite');
   document.querySelector('.actions').before(note);
   const key=t=>t?JSON.stringify(t):'';
   const time=value=>{const n=Date.parse(value||'');return Number.isFinite(n)?n:0;};
   const stamp=data=>time(data.generated_at||data.checked_at||data.ci?.observed_at);
   const stop=()=>{clearTimeout(timer);timer=null;};
-  const item=data=>[data.claim,typeof data.assignment==='object'?data.assignment:null,...data.progress||[],...data.claims||[],...data.queue||[]].find(x=>x&&(x.assignment||x.id)===target?.assignment);
+  const item=data=>[data.claim,typeof data.assignment==='object'?data.assignment:null,...list(data.progress),...list(data.claims),...list(data.queue)].find(x=>x&&(x.assignment||x.id)===target?.assignment);
   function identify(data){
     const currentInput=JSON.stringify([toolInput?.project,toolInput?.assignment,toolInput?.repo,toolInput?.ref,toolInput?.owner]);
     if(inputKey&&inputKey!==currentInput){el.card._refreshTarget=null;el.card._refreshInputChanged=true;}
@@ -20,13 +20,14 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
     const navigation=el.card._refreshTarget;
     if(navigation&&(!data.project||data.project===navigation.project))return navigation.level==='assignment'?{project:navigation.project,assignment:navigation.assignment}:null;
     const project=data?.project||data?.work_card?.project;
-    const rows=[data?.claim,typeof data?.assignment==='object'?data.assignment:null,...data?.progress||[],...data?.claims||[],...data?.queue||[]].filter(Boolean);
-    const id=data?.work_card?.assignment||(typeof data?.assignment==='string'?data.assignment:null)||(rows.some(x=>(x.assignment||x.id)===toolInput?.assignment)?toolInput.assignment:null)||(rows.length===1?(rows[0].assignment||rows[0].id):null);
+    const rows=[data?.claim,typeof data?.assignment==='object'?data.assignment:null,...list(data?.progress),...list(data?.claims),...list(data?.queue)].filter(Boolean);
+    const ids=[...new Set(rows.map(x=>x.assignment||x.id).filter(x=>typeof x==='string'))];
+    const id=data?.work_card?.assignment||(typeof data?.assignment==='string'?data.assignment:null)||(rows.some(x=>(x.assignment||x.id)===toolInput?.assignment)?toolInput.assignment:null)||(ids.length===1?ids[0]:null);
     return typeof project==='string'&&typeof id==='string'?{project,assignment:id}:null;
   }
   function live(){if(!target)return false;if(target.ci)return lastData?.ci?.live===true;return !terminal.has(String(item(lastData)?.state||'').toLowerCase());}
   function status(message){
-    const checked=checkedAt?'Checked '+new Date(checkedAt).toLocaleTimeString()+'.':'Not checked in this card yet.';
+    const checked=checkedAt?'Checked '+new Date(checkedAt).toLocaleTimeString()+'.':'Not checked yet.';
     note.textContent=message||(!target?'':disposed?'Live updates stopped.':document.hidden?'Live updates paused while hidden. '+checked:!live()?'Final recorded state. '+checked:failures>=5?'Live updates paused after repeated connection failures. Use Refresh to retry. '+checked:failures?'Connection unavailable; retrying automatically. '+checked:'Live updates every '+(target.ci?'15':'30')+' seconds. '+checked);
     note.hidden=!note.textContent;
   }
@@ -34,7 +35,7 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
   function valid(data,t){
     if(!data||typeof data!=='object')return false;
     if(t.ci)return data.ci?.schema==='relay-ci-card/v1'&&(!data.ci.head_sha||!/^\w{40}$/.test(t.args.ref)||data.ci.head_sha===t.args.ref);
-    return data.project===t.project&&Array.isArray(data.progress)&&data.progress.some(x=>(x.assignment||x.id)===t.assignment);
+    return data.project===t.project&&Array.isArray(data.progress)&&[...data.progress,...list(data.queue)].some(x=>(x?.assignment||x?.id)===t.assignment);
   }
   async function refresh(manual=false){
     if(!target||disposed)return;
@@ -46,7 +47,7 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
     task.promise=(async()=>{try{
       const result=await callTool(bound.ci?'relay_source_checks':'relay_runner_progress',bound.ci?bound.args:{project:bound.project,assignment:bound.assignment});
       if(disposed||epoch!==generation||key(bound)!==key(target))return;
-      const data=unwrap(result);if(!valid(data,bound))throw Error('Relay did not return the requested current status. The previous view is preserved.');
+      const data=unwrap(result);if(!valid(data,bound))throw Error('Relay returned no matching status. Previous evidence is preserved.');
       if(stamp(data)&&stamp(data)<newest)throw Error('An older status response was ignored. The previous view is preserved.');
       // A successful read is freshness of the fetch, never proof of work progress.
       checkedAt=stamp(data)||Date.now();canonical=true;failures=0;applying=true;
@@ -71,7 +72,7 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
     if(!applying&&!changed&&canonical&&target&&!target.ci&&!Array.isArray(data.progress)){status();schedule(0);return;}
     newest=Math.max(newest,stamp(data));
     if(Array.isArray(data.progress)||data.ci){checkedAt=stamp(data)||checkedAt;canonical=true;}
-    if(target&&!target.ci&&Array.isArray(data.progress))data={...data,progress:data.progress.filter(x=>(x.assignment||x.id)===target.assignment),queue:[],claims:[],claim:undefined};
+    if(target&&!target.ci&&Array.isArray(data.progress)){const rows=data.progress.filter(x=>(x?.assignment||x?.id)===target.assignment);data={...data,progress:rows,queue:rows.length?[]:list(data.queue).filter(x=>(x?.assignment||x?.id)===target.assignment),claims:[],claim:undefined};}
     base(data);showLink(model(data,DIRECTORY));status();
     if(!flight)schedule(changed&&!data.work_card&&!data.ci?350:undefined);
   };
@@ -82,6 +83,6 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
   window.addEventListener('online',()=>{failures=0;schedule(0);});
   window.addEventListener('pagehide',()=>{disposed=true;generation++;stop();});
   window.addEventListener('pageshow',()=>{if(disposed){disposed=false;failures=0;schedule(0);}});
-  document.addEventListener('relay:target-change',()=>{const next=identify(lastData||{});if(key(next)===key(target))return;generation++;stop();target=next;canonical=false;newest=0;checkedAt=null;seen.clear();status();schedule(0);});
+  document.addEventListener('relay:target-change',()=>{const nav=el.card._refreshTarget,next=nav?.level==='assignment'?{project:nav.project,assignment:nav.assignment}:null;if(key(next)===key(target))return;generation++;stop();target=next;canonical=false;newest=0;checkedAt=null;seen.clear();status();schedule(0);});
   if(lastData)render(lastData);
 })();`.split("\n").filter(line=>!line.trimStart().startsWith("//")).map(line=>line.trim()).join("\n");

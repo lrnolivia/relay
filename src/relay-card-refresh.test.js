@@ -22,7 +22,7 @@ const hide=(page,value)=>page.evaluate(value=>{Object.defineProperty(document,'h
 test('ordinary query mounts fetch live progress without work_card; repeated globals do not starve polling and more than 90 polls stay live',async()=>{
  const initial=progress('task','officially-stale');const {browser,page}=await mount(initial);
  try{
-  assert.match(await page.locator('#summary').textContent(),/worker checked in recently.*22:26:46.*does not verify/);
+  assert.match(await page.locator('#summary').textContent(),/Worker connected.*22:26 UTC/);
   await page.clock.runFor(400);await page.waitForFunction(()=>window.calls.length===1);await page.locator('#title').filter({hasText:'Fresh task'}).waitFor();
   assert.match(await page.locator('#card-freshness').textContent(),/Live updates.*Checked/);
   for(let i=0;i<3;i++){await page.clock.runFor(9000);await page.evaluate(initial=>{window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolOutput:initial}}}));},initial);}
@@ -81,7 +81,7 @@ test('fresh routing notifications cannot downgrade observed progress; stale evid
   await page.clock.runFor(400);await page.waitForFunction(()=>window.pending.length===1);
   const newer=progress('task','officially-stale','2026-10-31T23:01:00Z');await page.evaluate(data=>window.pending.shift()(data),newer);await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
   await page.evaluate(()=>render({project:'relay',claim:{id:'task',goal:'Routing snapshot',state:'active',primary_staff:'valentina'}}));
-  assert.equal(await page.locator('#title').textContent(),'Repair task');assert.match(await page.locator('#state-label').textContent(),/No recent progress/);
+  assert.equal(await page.locator('#title').textContent(),'Repair task');assert.match(await page.locator('#state-label').textContent(),/Waiting for a work update/);
   await page.clock.runFor(10);await page.waitForFunction(()=>window.pending.length===1);
   assert.equal(contextCardModel(newer).evidence.progress_observed_at,'2026-10-31T22:26:46Z');
  }finally{await browser.close();}
@@ -111,11 +111,11 @@ test('real progress producer through mounted refresh keeps source age separate f
  const {browser,page}=await mount({project:'relay',claim});
  try{
   await page.evaluate(data=>window.next=data,current);await page.clock.runFor(400);
-  await page.locator('#state-label').filter({hasText:'No recent progress evidence'}).waitFor();
-  assert.match(await page.locator('#summary').textContent(),/22:26:46.*check-in does not verify/i);
+  await page.locator('#state-label').filter({hasText:'Waiting for a work update'}).waitFor();
+  assert.match(await page.locator('#summary').textContent(),/Worker connected.*22:26 UTC/);
   await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
-  assert.match(await page.locator('#card-freshness').textContent(),/Checked/);assert.equal(await page.locator('#state-label').textContent(),'No recent progress evidence');
-  const evidence=JSON.parse(await page.locator('#evidence').textContent());assert.equal(evidence.progress_freshness,'stale');assert.equal(evidence.progress_observed_at,'2026-10-31T22:26:46.000Z');
+  assert.match(await page.locator('#card-freshness').textContent(),/Checked/);assert.equal(await page.locator('#state-label').textContent(),'Waiting for a work update');
+  const evidence=JSON.parse(await page.locator('#evidence').textContent());assert.equal(evidence.progress_freshness,'stale');assert.match(evidence.progress_clock,/check-ins.*not verified progress/);assert.equal(evidence.progress_observed_at,'2026-10-31T22:26:46.000Z');
  }finally{await browser.close();}
 });
 
@@ -133,5 +133,31 @@ test('new host project and assignment replace hydrated explorer navigation and t
   await page.evaluate(data=>{window.openai.toolInput={project:'field',assignment:'third'};window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolInput:window.openai.toolInput,toolOutput:data}}}));},next);
   assert.equal(await page.locator('#title').textContent(),'Third assignment');await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
   assert.deepEqual((await calls(page)).at(-1).args,{project:'field',assignment:'third'});
+ }finally{await browser.close();}
+});
+
+test('queued-only progress remains live, then follows claimed and completed evidence without queue metadata winning',async()=>{
+ const queued={id:'task',goal:'Queued repair',state:'queued',primary_staff:'valentina',primary_team:'inspector'};
+ const initial={project:'relay',generated_at:'2026-10-31T23:00:00Z',progress:[],queue:[queued]};
+ const {browser,page}=await mount(initial);
+ try{
+  await page.evaluate(data=>window.next=data,initial);await page.clock.runFor(400);await page.waitForFunction(()=>window.calls.length===1&&!document.querySelector('#refresh').disabled);
+  assert.equal(await page.locator('#title').textContent(),'Queued repair');assert.match(await page.locator('#card-freshness').textContent(),/Live updates/);
+  const claimed={...progress('task','working','2026-10-31T23:01:00Z'),queue:[{...queued,state:'claimed'}]};claimed.progress[0].goal='Actually working';
+  await page.evaluate(data=>window.next=data,claimed);await page.clock.runFor(30050);await page.locator('#title').filter({hasText:'Actually working'}).waitFor();assert.equal((await calls(page)).at(-1).args.assignment,'task');
+  await page.evaluate(data=>window.next=data,progress('task','completed','2026-10-31T23:02:00Z'));await page.clock.runFor(30050);await page.locator('#card-freshness').filter({hasText:'Final recorded state'}).waitFor();const count=(await calls(page)).length;
+  await page.clock.runFor(300000);assert.equal((await calls(page)).length,count);
+ }finally{await browser.close();}
+});
+
+test('explicit explorer navigation stops the previous exact CI run even while lastData still contains ci',async()=>{
+ const {browser,page}=await mount({...progress(),schema:'relay-status-explorer/v1'},{input:{project:'relay',assignment:'task'}});
+ try{
+  await page.clock.runFor(400);await page.waitForFunction(()=>window.calls.length===1);
+  const data={ci:{schema:'relay-ci-card/v1',status:'running',telemetry:'reported',head_sha:'a'.repeat(40),live:true,tests:{},suites:[],jobs:{}}};
+  await page.evaluate(data=>{window.next=data;window.openai.toolInput={repo:'relay',ref:'a'.repeat(40)};window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolInput:window.openai.toolInput,toolOutput:data}}}));},data);
+  await page.clock.runFor(15050);await page.waitForFunction(()=>window.calls.some(c=>c.name==='relay_source_checks'));
+  await page.getByRole('button',{name:'‹ Project',exact:true}).click();const count=(await calls(page)).filter(c=>c.name==='relay_source_checks').length;
+  await page.clock.runFor(60000);assert.equal((await calls(page)).filter(c=>c.name==='relay_source_checks').length,count);assert.equal(await page.locator('#title').textContent(),'relay');assert.equal(await page.locator('#card-freshness').isVisible(),false);
  }finally{await browser.close();}
 });
