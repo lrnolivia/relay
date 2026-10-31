@@ -159,6 +159,12 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
     if(card.ordinary&&card.blocker)card.summary=null;
     if(!plan.steps.length){card.has_metric=false;card.metric=null;card.metric_label=null;}
   }
+  if(!ci && isAssignment && ['officially-stale','possibly-stale'].includes(status) && !plan.current){
+    card.label=status==='officially-stale'?'No recent progress evidence':'Progress update delayed';
+    const at=Number.isFinite(Date.parse(first.last_meaningful_progress_at))?first.last_meaningful_progress_at:null;
+    card.summary=(first.worker?.freshness==='fresh'?'The worker checked in recently. ':'')+(at?'No newer commit, check or deployment evidence since '+new Date(at).toISOString().replace('T',' ').replace('.000Z',' UTC').replace('Z',' UTC')+'.':'No recent commit, check or deployment evidence is available.')+' A check-in does not verify work completed.';
+  }
+  for(const [key,value] of Object.entries({checked_at:data.generated_at||data.checked_at,progress_observed_at:first.last_meaningful_progress_at,worker_heartbeat_at:first.worker?.heartbeat_at,progress_freshness:first.progress_freshness}))if(typeof value==='string')card.evidence[key]=safePresentationText(value,100);
   const link = ci && [ci.run?.url, ci.failed_jobs?.[0]?.url].find(url => typeof url === 'string' && /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/actions\/runs\/\d+[\w/.-]*$/.test(url));
   if (link) card.ci_link = link;
   if (milestone?.kind) card.milestone = { kind:safePresentationText(milestone.kind,40), label:safePresentationText(milestone.label,100) };
