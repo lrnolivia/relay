@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T07:56:00.459Z",
+  "updated_at": "2026-10-31T16:11:06.083Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8021,6 +8021,50 @@
       },
       "completed_at": "2026-10-31T06:04:46.531Z",
       "updated_at": "2026-10-31T06:04:46.531Z"
+    },
+    {
+      "id": "rtxforge-clear-row-contrast-20261031",
+      "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+      "goal": "Prototype warm-white Clear text and glyphs with brightness-adaptive support applied to whole control rows, replacing per-element black foreground.",
+      "acceptance": "Clear keeps text and glyphs warm white; headings keep a light accent. Only bright surfaces receive subtle feathered row backing and a restrained shadow, applied to the whole row rather than individual glyph/text. Smooth transitions, preserve dark/light themes and controls. Build and leave the native preview visible for user styling review; no beta publication.",
+      "next_action": "Inspect current contrast sampling, add row-level adaptive support and keep Clear foreground warm white; build and compare bright/dark native previews.",
+      "paths": [
+        "providers/glass-overlay/OverlayController.h",
+        "prototypes/overlay-rmlui/MaterialColor.h",
+        "prototypes/overlay-rmlui/Backdrop.h",
+        "prototypes/overlay-rmlui/Prototype.cpp",
+        "prototypes/overlay-rmlui/overlay.rcss",
+        "prototypes/overlay-rmlui/overlay.rml",
+        "tests/test_glass_preferences.py",
+        "docs/overlay.md"
+      ],
+      "resources": [
+        "overlay-clear-row-contrast"
+      ],
+      "task_class": "design",
+      "category": "design",
+      "primary_role": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-31T16:11:06.083Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Prototype warm-white Clear text and glyphs with brightness-adaptive support applied to whole control rows, replacing per-element black foreground.",
+          "acceptance": "Clear keeps text and glyphs warm white; headings keep a light accent. Only bright surfaces receive subtle feathered row backing and a restrained shadow, applied to the whole row rather than individual glyph/text. Smooth transitions, preserve dark/light themes and controls. Build and leave the native preview visible for user styling review; no beta publication.",
+          "at": "2026-10-31T16:11:06.083Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-clear-row-contrast-20261031:acceptance:0",
+            "text": "Clear keeps text and glyphs warm white; headings keep a light accent. Only bright surfaces receive subtle feathered row backing and a restrained shadow, applied to the whole row rather than individual glyph/text. Smooth transitions, preserve dark/light themes and controls. Build and leave the native preview visible for user styling review; no beta publication.",
+            "at": "2026-10-31T16:11:06.083Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
