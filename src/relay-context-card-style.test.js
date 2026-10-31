@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdir } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { relayContextCardResource, relayStatusCardResource, contextCardModel } from './relay-chat-ui.js';
 import { styleContextCard } from './relay-context-card-style.js';
 import { contextCardBrandAssets } from '../apps/web/generated.js';
@@ -175,7 +176,8 @@ test('staff heading keeps its identity-team accent when Inspector telemetry is p
 });
 
 test('assigned leads stay visible and generic Relay has a contrast-safe brand heading',async()=>{
- await mkdir('qa-evidence/context-cards/persona-brand',{recursive:true});
+ const captures=fileURLToPath(new URL('../qa-evidence/context-cards/persona-brand/',import.meta.url));
+ await mkdir(captures,{recursive:true});
  const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
  const luminance=rgb=>{const c=rgb.match(/[\d.]+/g).slice(0,3).map(Number).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4});return c[0]*.2126+c[1]*.7152+c[2]*.0722};
  try{for(const theme of ['light','dark']){for(const width of [360,760]){
@@ -190,7 +192,7 @@ test('assigned leads stay visible and generic Relay has a contrast-safe brand he
    assert.match(await page.locator('#feature-mark img').getAttribute('src'),/^data:image/);
    assert.doesNotMatch(await page.locator('#card-roles').textContent(),/Current step owner:/);
    await page.evaluate(()=>document.fonts.ready);
-   await page.locator('#card').screenshot({path:`qa-evidence/context-cards/persona-brand/${staff}-${state}-${theme}-${width}.png`});
+   await page.locator('#card').screenshot({path:`${captures}${staff}-${state}-${theme}-${width}.png`});
   }
   await page.evaluate(()=>render({ok:true}));
   assert.equal(await page.locator('#feature-title').textContent(),'Relay');
@@ -200,6 +202,6 @@ test('assigned leads stay visible and generic Relay has a contrast-safe brand he
   const values=[luminance(colors.text),luminance(colors.bg)].sort((a,b)=>b-a);
   assert.ok((values[0]+.05)/(values[1]+.05)>=4.5,'Relay heading meets normal-text contrast, not only large-heading minimum');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
-  await page.locator('#card').screenshot({path:`qa-evidence/context-cards/persona-brand/relay-generic-${theme}-${width}.png`});await page.close();
+  await page.locator('#card').screenshot({path:`${captures}relay-generic-${theme}-${width}.png`});await page.close();
  }}}finally{await browser.close()}
 });
