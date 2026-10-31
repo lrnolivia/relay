@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T06:40:53.760Z",
+  "updated_at": "2026-10-31T06:46:09.845Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22039,7 +22039,11 @@
         "providers/glass-overlay/OverlayController.h",
         "windows/overlay-rmlui/GlassRuntime.cpp",
         "prototypes/overlay-rmlui/Generate-Controls.ps1",
-        "prototypes/overlay-rmlui/Prototype.cpp"
+        "prototypes/overlay-rmlui/Prototype.cpp",
+        "providers/glass-overlay/ForgeGlassPanel.h",
+        "providers/glass-overlay/glass-candidate.patch",
+        "providers/glass-overlay/candidate.json",
+        "prototypes/overlay-rmlui/SessionData.h"
       ],
       "resources": [
         "overlay-settings-native-ui",
@@ -22047,7 +22051,7 @@
       ],
       "goal": "Put overlay update/settings actions and descriptions inside native row cards; use exact layout names Side Panel, Advanced, Bar in desktop and actual overlay.",
       "acceptance": "Native Windows overlay settings have no detached update button/description/status block; Update Overlays and Last overlay update use accessible responsive settings rows. Layout illustrations preserved and visible option names match Side Panel, Advanced, Bar on Windows/Linux and actual overlay. Preserve persisted layout IDs, review flow, settings and Game Mode parked scope. Build and inspect native affected UI.",
-      "next_action": "Complete review batch and user overlay refinements: inset scrollbars, visible adaptive dropdown chevrons, subtle text-button surfaces, slightly larger brand, compact centered layout cards and heading spacing, main NR render-resolution slider and pass-count stepper with runtime capability gating and native input checks. Custom HDR and borderless tests passing; finish runtime build and UI verification.",
+      "next_action": "Finish approved main NR row: processing stage beside pass stepper; resolution slider; measured dimensions/time in top NR live card, only fresh published runtime dimensions. Preserve ABI with optional telemetry metadata, update integration digests, build native renderer and preview controls, review all desktop changes and commit.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -22070,8 +22074,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T06:40:53.760Z",
-      "lease_until": "2026-10-31T18:40:53.760Z"
+      "updated_at": "2026-10-31T06:46:09.845Z",
+      "lease_until": "2026-10-31T18:46:09.845Z"
     }
   ]
 }
