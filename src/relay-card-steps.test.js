@@ -50,3 +50,11 @@ test('current-step headlines require bound observations and preserve held/termin
  const card=contextCardModel({claim:unknown});assert.equal(card.plan.steps[0].state,'unknown');assert.notEqual(card.label,'Step failed');
  const pending=structuredClone(unknown);pending.card_steps.steps[0].state='pending';assert.notEqual(contextCardModel({claim:pending}).label,'Running');
 });
+
+test('awaiting verification phase survives compact refresh without becoming passed or hiding real blockers',()=>{
+ const p=plan();p.steps[1].state='blocked';p.steps[1].receipt.phase='awaiting-verification';
+ const compact=assignmentCardContext({id:'cards',card_steps:p});const next=assignmentCardSteps(compact);
+ assert.equal(next.steps[1].state,'blocked');assert.equal(next.steps[1].receipt.phase,'awaiting-verification');assert.equal(next.passed,1);
+ delete p.steps[1].receipt.phase;assert.equal(normalizeCardSteps(p,'cards').steps[1].receipt.phase,undefined);
+ p.steps[1].state='failed';p.steps[1].receipt.phase='awaiting-verification';assert.equal(normalizeCardSteps(p,'cards').steps[1].receipt.phase,undefined);
+});

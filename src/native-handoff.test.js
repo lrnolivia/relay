@@ -20,7 +20,7 @@ test('prepare is routing only; read and duplicate prepare never authorize anothe
 test('real identity binding publishes running then awaiting verification, never pass',()=>{
  const a=assignment(),row=apply(a,prepare(a));apply(a,start(row));
  assert.equal(a.card_steps.sequence,2);assert.equal(a.card_steps.steps[0].state,'running');assert.deepEqual(a.card_steps.steps[0].receipt.owner,{staff:'roman',team:'inspector'});
- apply(a,result(row));assert.equal(a.native_handoffs[0].state,'reported');assert.equal(a.card_steps.steps[0].state,'blocked');assert.equal(a.card_steps.complete,false);
+ apply(a,result(row));assert.equal(a.native_handoffs[0].state,'reported');assert.equal(a.card_steps.steps[0].state,'blocked');assert.equal(a.card_steps.complete,false);assert.equal(a.card_steps.steps[0].receipt.phase,'awaiting-verification');
  const duplicate=transitionNativeHandoff(a,result(row),source,new Date(+now+999999));assert.equal(duplicate.replayed,true);assert.equal(duplicate.native_handoffs[0].reported_at,a.native_handoffs[0].reported_at);
  assert.throws(()=>transitionNativeHandoff(a,{...result(row),result_digest:'e'.repeat(64)},source,now),/conflicting/);
 });
@@ -57,4 +57,12 @@ test('complete private plan, prior evidence and dependencies survive selected-st
 test('changed canonical step or unverified dependency prevents starting a stale handoff',()=>{
  const a=assignment(),row=apply(a,prepare(a));a.card_steps.steps[0].state='unknown';assert.throws(()=>apply(a,start(row)),/step changed/);
  const b=assignment();apply(b,prepare(b));b.native_handoffs=[];b.card_steps.steps.unshift({id:'first',label:'First',depends_on:[],state:'pending',receipt:null});b.card_steps.steps[1].depends_on=['first'];assert.throws(()=>apply(b,prepare(b)),/prerequisites/);
+});
+
+test('awaiting marker is bounded to unverified blocked receipts',async()=>{
+ const {validateCardStepsPublication}=await import('./relay-card-steps.js');
+ const a=assignment(),row=apply(a,prepare(a));apply(a,start(row));apply(a,result(row));
+ for(const change of [p=>p.steps[0].state='passed',p=>p.steps[0].receipt.phase='arbitrary prose']){
+  const p=structuredClone(a.card_steps);p.sequence++;change(p);assert.throws(()=>validateCardStepsPublication(p,a,continuityObjectiveDigest(a.goal,a.acceptance),now));
+ }
 });

@@ -379,6 +379,7 @@ async function mutate(api, control, controlRepository, context, args) {
       commit_sha: attribution.sha,
       attribution,
       reconciled_after_transport_error: Boolean(writeError),
+      write_acknowledged: Boolean(!writeError && saved?.commit?.sha),
       recovery: 'Read relay_runner_assignments before another mutation; do not replay a stale revision.'
     }
   });
@@ -450,7 +451,7 @@ async function runnerControlQuery(name, args, env = {}, apiOverride, phase = 'pu
     const saved=await mutate(api,control,controlRepository,context,{project:args.project,action:'delegate',expected_record_sha:args.expected_record_sha,request:{id:args.assignment,owner:args.owner,handoff:args,verified_source_sha:head}});
     // Coordination CAS does not lock independent source/control refs. Never
     // issue a launch packet from the pre-write snapshot after a slow write.
-    let currentHead=null,launchBlocker=null;
+    let currentHead=null,launchBlocker=saved.receipt.write_acknowledged?null:'The write was recovered without an acknowledged winning CAS; reconcile the saved intent without launching.';
     try{
       await guardAutonomy(env,[args.project]);
       const current=await registration(api,control,args.project);

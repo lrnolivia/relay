@@ -205,3 +205,15 @@ test('assigned leads stay visible and generic Relay has a contrast-safe brand he
   await page.locator('#card').screenshot({path:`${captures}relay-generic-${theme}-${width}.png`});await page.close();
  }}}finally{await browser.close()}
 });
+
+test('successful native result renders awaiting verification through refresh without a pass',async()=>{
+ const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
+ const {assignmentCardContext}=await import('./relay-card-steps.js');
+ const claim={id:'native',state:'active',primary_staff:'julian',primary_team:'night-shift',goal:'Native handoff',card_steps:{schema:'relay-card-steps/v1',assignment:'native',revision:'plan',complete:false,steps:[{id:'review',label:'Review contract',state:'blocked',depends_on:[],receipt:{id:'native-result',assignment:'native',step_id:'review',plan_revision:'plan',observed_at:new Date().toISOString(),evidence:'Synthetic result digest',owner:{staff:'roman',team:'inspector'},phase:'awaiting-verification'}}]}};
+ try{const page=await browser.newPage({viewport:{width:360,height:800},reducedMotion:'reduce'});await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
+ for(const data of [{project:'relay',claim},{project:'relay',claim:assignmentCardContext(claim)}]){
+  await page.evaluate(data=>render(data),data);assert.match(await page.locator('.state').textContent(),/Awaiting verification/);assert.equal(await page.locator('.step-state').textContent(),'Awaiting verification');assert.equal(await page.locator('[data-step=review]').getAttribute('data-state'),'blocked');assert.equal(contextCardModel(data).plan.passed,0);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+ }
+ delete claim.card_steps.steps[0].receipt.phase;await page.evaluate(claim=>render({project:'relay',claim}),claim);assert.equal(await page.locator('.step-state').textContent(),'Blocked');
+ }finally{await browser.close();}
+});

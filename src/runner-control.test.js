@@ -26,8 +26,9 @@ function fixture(options = {}) {
     if (path.includes('coordination/relay.json?ref='+'d'.repeat(40))) return file({},parentRevision);
     if (path.includes('coordination/relay.json')) {
       if (request?.method === 'PUT') {
-        parentRevision=revision;
         writes.push(request);
+        if(options.enforceCas&&request.body.sha!==revision)throw Object.assign(new Error('Lost CAS'),{status:409});
+        parentRevision=revision;
         if (options.conflict) { revision = newSha; throw Object.assign(new Error('Conflict'), { status: 409 }); }
         if (options.writeError) throw options.writeError;
         record = JSON.parse(Buffer.from(request.body.content, 'base64').toString('utf8'));
@@ -688,14 +689,14 @@ test('native MCP catalog-to-canonical-to-card roundtrip preserves actual identit
  const running=await delegate(f,start);assert.equal(f.writes.length,2);
  const card=contextCardModel({project:'relay',claim:running.claim});assert.equal(card.plan.steps[0].owner.staff,'roman');assert.equal(card.plan.steps[0].state,'running');
  const done=await delegate(f,{...start,action:'result',expected_record_sha:running.record_sha,observed_at:new Date().toISOString(),state:'succeeded',result_digest:'e'.repeat(64)});
- assert.equal(done.handoff.receipt.state,'reported');assert.equal(done.claim.card_steps.steps[0].state,'blocked');assert.equal(done.handoff.objective_completed,false);assert.equal(f.writes.length,3);
+ assert.equal(contextCardModel({project:'relay',claim:done.claim}).label,'Awaiting verification');assert.equal(done.handoff.receipt.state,'reported');assert.equal(done.claim.card_steps.steps[0].state,'blocked');assert.equal(done.handoff.objective_completed,false);assert.equal(f.writes.length,3);
  const schema=runnerControlTools.find(x=>x.name==='relay_runner_delegate').inputSchema;
  assert.deepEqual(schema.properties.action.enum,['prepare','read','started','result']);assert.equal(schema.additionalProperties,false);
  await assert.rejects(delegate(f,{...p,transcript:'raw private data'}));assert.equal(f.writes.length,3);
 });
 test('native lost launch ID and lost start response read back without duplicate writes or launch',async()=>{
  const a=nativeClaim(),f=fixture({claims:[a],timeout:true}),p=nativePrepare(a);
- const prepared=await delegate(f,p);assert.equal(prepared.receipt.reconciled_after_transport_error,true);
+ const prepared=await delegate(f,p);assert.equal(prepared.receipt.reconciled_after_transport_error,true);assert.equal(prepared.handoff.launch_required,false);assert.equal(prepared.handoff.state,'reconciliation-needed');
  const readArgs={project:'relay',assignment:a.id,owner:a.owner,operation_id:p.operation_id,action:'read'};
  const read=await delegate(f,readArgs);assert.equal(read.handoff.state,'reconciliation-needed');assert.equal(read.handoff.launch_required,false);
  const again=await delegate(f,p);assert.equal(again.replayed,true);assert.equal(again.handoff.launch_required,false);assert.equal(f.writes.length,1);
@@ -727,4 +728,19 @@ test('lost prepare readback is recovered as uncertain launch, never a second int
  options.readbackUnavailable=false;
  const read=await delegate(f,{project:'relay',assignment:a.id,owner:a.owner,action:'read',operation_id:'native-review-1'});
  assert.equal(read.handoff.state,'reconciliation-needed');assert.equal(read.handoff.launch_required,false);assert.equal(read.handoff.receipt.state,'prepared');assert.equal(f.writes.length,1);
+});
+
+test('identical concurrent prepares at frozen time permit only the acknowledged CAS winner to launch',async t=>{
+ t.mock.timers.enable({apis:['Date'],now:Date.now()});
+ const a=nativeClaim(),f=fixture({claims:[a],enforceCas:true}),p=nativePrepare(a);
+ let arrivals=0,release;const bothHeads=new Promise(resolve=>release=resolve);
+ const api=async(path,args)=>{
+  if(path.includes('/git/ref/heads/relay%2Ftask')&&!f.writes.length){arrivals++;if(arrivals===2)release();await bothHeads;}
+  return f.api(path,args);
+ };
+ const responses=await Promise.all([callRunnerControl('relay_runner_delegate',p,{},api),callRunnerControl('relay_runner_delegate',p,{},api)]);
+ assert.equal(f.writes.length,2);assert.equal(f.writes[0].body.content,f.writes[1].body.content,'same-millisecond proposals are byte identical');
+ assert.equal(responses.filter(x=>x.handoff.launch_required).length,1);
+ const loser=responses.find(x=>!x.handoff.launch_required);assert.equal(loser.receipt.write_acknowledged,false);assert.equal(loser.receipt.reconciled_after_transport_error,true);assert.equal(loser.handoff.state,'reconciliation-needed');
+ assert.deepEqual(responses[0].handoff.receipt,responses[1].handoff.receipt);assert.equal(f.record.claims[0].native_handoffs.length,1);
 });

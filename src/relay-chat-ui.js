@@ -7,7 +7,7 @@ import { withHumanPresentation } from './communication-presentation.js';
 import { enrichWorkCard, isWorkCardTool, withWorkCardTemplate } from './work-card-delivery.js';
 import { assignmentCardContext } from './relay-card-steps.js';
 export function contextCardModel(data = {}, directory = DIRECTORY, options = {}) { return sharedContextCardModel(data, directory, { roles: ROLE_DIRECTORY, ...options }); }
-export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v23.html';
+export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v24.html';
 export const RELAY_CONTEXT_CARD_TOOL = 'relay_render_context_card';
 export const RELAY_STATUS_CARD_URI = 'ui://relay/status-card/v5-legacy-bridge.html';
 export const RELAY_STATUS_CARD_TOOL = 'relay_show_legacy_bridge_card';
