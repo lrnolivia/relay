@@ -209,3 +209,17 @@ test('new host assignment invalidates pending explorer project and overview repl
   }finally{await browser.close();}
  }
 });
+
+
+test('changed host assignment is honored when the project snapshot bytes are unchanged',async()=>{
+ const initial={...progress(),schema:'relay-status-explorer/v1',progress:[row('task'),row('other')]};
+ const {browser,page}=await mount(initial,{input:{project:'relay',assignment:'task'},hold:true});
+ try{
+  await page.clock.runFor(400);await page.waitForFunction(()=>window.pending.length===1);
+  await page.evaluate(data=>{window.openai.toolInput={project:'relay',assignment:'other'};window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolInput:window.openai.toolInput,toolOutput:data}}}));},initial);
+  assert.equal(await page.locator('#title').textContent(),'Repair other');
+  await page.evaluate(async data=>{window.pending.shift()(data);for(let i=0;i<20;i++)await Promise.resolve();},progress('task','failed','2026-10-31T23:01:00Z'));
+  assert.equal(await page.locator('#title').textContent(),'Repair other');
+  await page.locator('#refresh').click();await page.waitForFunction(()=>window.pending.length===1);assert.deepEqual((await calls(page)).at(-1).args,{project:'relay',assignment:'other'});
+ }finally{await browser.close();}
+});
