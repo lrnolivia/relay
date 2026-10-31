@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T22:16:09.629Z",
+  "updated_at": "2026-10-31T22:21:02.935Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22365,7 +22365,8 @@
         "tests/test_overlay_workbench.py",
         "tests/test_glass_preferences.py",
         "windows/overlay-rmlui/tests/",
-        "providers/glass-overlay/HdrControls.h"
+        "providers/glass-overlay/HdrControls.h",
+        "windows/overlay-rmlui/GlassRuntime.cpp"
       ],
       "resources": [
         "rtxforge-overlay-layout",
@@ -22373,7 +22374,7 @@
       ],
       "goal": "Repair shared overlay layout, alignment, clipping and stacking defects reported in Side Panel, Advanced and Bar without changing approved glass identity. Rebuild live prototype and verify rendered states across normal/larger text and scale.",
       "acceptance": "Advanced sidebar/content and scroll bounds align; Bar header, controls, footer and attached popovers stay reachable and padded; glyphs/labels center on their surfaces; prototype scene toolbar never obscures welcome toast; all3 layouts preserve controls and approved Clear materials; focused native regression checks and bounded screenshot review pass.",
-      "next_action": "Incorporate latest user refinements in PR134: centered Bar Settings modal, actual NR dimensions beside percent, right-aligned toast hint/tighter brand gap, Theme then Text order, truer accents, production More limited to Blur/Motion while preview retains tuning, friendly RenoDX tone-mapper label. Extend focused native checks and rebuild visible prototype.",
+      "next_action": "Finish user-directed layout pass: sticky main shell header/footer, centered Bar Settings modal using shared inspector, replace duplicate preset comparison with press-and-hold original NR preview, show actual render dimensions, tighten logo gap/right-align toast hint, reorder Appearance and keep only Blur/Motion for end users, truer accents and friendlier RenoDX option. Extend native tests, refresh prototype, update PR134 exact head.",
       "category": "design",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -22397,8 +22398,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T22:16:09.629Z",
-      "lease_until": "2026-11-01T10:16:09.629Z"
+      "updated_at": "2026-10-31T22:21:02.935Z",
+      "lease_until": "2026-11-01T10:21:02.935Z"
     }
   ]
 }
