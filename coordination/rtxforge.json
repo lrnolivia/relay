@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T06:25:20.985Z",
+  "updated_at": "2026-10-31T06:27:51.626Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22026,7 +22026,14 @@
         "prototypes/overlay-rmlui/overlay.rml",
         "PRODUCT.md",
         "docs/overlay.md",
-        "docs/releases/1.0-beta.md"
+        "docs/releases/1.0-beta.md",
+        "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+        "windows/RtxForge.Windows/Views/PackagesPage.cs",
+        "windows/RtxForge.Windows/Services/ForgeService.cs",
+        "windows/engine-host/game_display.py",
+        "windows/tests/test_game_display.py",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Pages.cs",
+        "windows/RtxForge.Windows/GameMode/GmUi.cs"
       ],
       "resources": [
         "overlay-settings-native-ui",
@@ -22034,7 +22041,7 @@
       ],
       "goal": "Put overlay update/settings actions and descriptions inside native row cards; use exact layout names Side Panel, Advanced, Bar in desktop and actual overlay.",
       "acceptance": "Native Windows overlay settings have no detached update button/description/status block; Update Overlays and Last overlay update use accessible responsive settings rows. Layout illustrations preserved and visible option names match Side Panel, Advanced, Bar on Windows/Linux and actual overlay. Preserve persisted layout IDs, review flow, settings and Game Mode parked scope. Build and inspect native affected UI.",
-      "next_action": "Finish row cards, glyphs, exact Side Panel/Advanced/Bar names and package-area grouping. Add reviewed architecture-checked per-game custom RenoDX add-on import preserving custom choice, automatic dependency download, and Extras RenoDX destination on Windows/Linux. Test custom cache identity/review/removal and native UI; Game Mode parked.",
+      "next_action": "Apply user review batch: row cards and glyphs, Side Panel/Advanced/Bar labels, Features Package grouping, per-game reviewed custom HDR imports and Extras RenoDX area, Global Settings rename, borderless without resolution override with legacy restore tests, Packages hardware/status cards. Build/test native UI; preserve parked Game Mode architecture.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -22057,8 +22064,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T06:25:20.985Z",
-      "lease_until": "2026-10-31T18:25:20.985Z"
+      "updated_at": "2026-10-31T06:27:51.626Z",
+      "lease_until": "2026-10-31T18:27:51.626Z"
     }
   ]
 }
