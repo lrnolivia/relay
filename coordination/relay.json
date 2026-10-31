@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T06:44:03.001Z",
+  "updated_at": "2026-10-31T06:58:33.302Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -20701,7 +20701,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "f7cc3588d8084e8143d196366191ad45193d62f8",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-31T06:25:45.579Z",
       "objective_history": {
         "baseline": {
@@ -20718,8 +20718,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T06:44:03.001Z",
-      "lease_until": "2026-10-31T18:44:03.001Z"
+      "updated_at": "2026-10-31T06:58:33.302Z",
+      "lease_until": "2026-10-31T18:58:33.302Z",
+      "pr": 269,
+      "merged_head_sha": "65996f0589c301843e0c704c13f153f8f05709ec",
+      "merge_commit_sha": "42b8b2ef17b39abecdb7920eb2318b9b5554917e",
+      "evidence": "PR269 merged by lrnolivia at 42b8b2ef17b39abecdb7920eb2318b9b5554917e. Exact PR65996f0 and main CI41178218031:1168 passed,0 failed,1 platform skip. Required Chromium card gate and24 captures passed; parent reviewed Julian/Nico lead portraits and Relay orange light/dark. v23 resource with v22+older alias tests; receipt-bound current_owner preserved. Canonical Workers Build c76056f3 succeeded, live162c2ca2-d849-4833-a8b4-5ae024bb8a0a100%,health200. Independent production smoke41178582228 verified exact live MCP card/control bytes, inventory, runtime and web source. Healthy revision102 recovery archive13033293627 retained/readback/restoration verified. Read-only actual rtxforge assignments resolve Julian active/Nico completed as Assignment lead,current_owner null. Native client render send returned widget unavailable; no actual host mounting claim. Separate specialist executor-host activation remains queued relay-specialist-host-activation-20261031, not marked fixed.",
+      "work_accounted": true,
+      "completed_at": "2026-10-31T06:58:33.302Z"
     }
   ],
   "migrated_from": "loew-inspector"
