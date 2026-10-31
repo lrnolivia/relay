@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T16:11:29.932Z",
+  "updated_at": "2026-10-31T16:13:28.839Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22154,14 +22154,15 @@
         "prototypes/overlay-rmlui/overlay.rcss",
         "prototypes/overlay-rmlui/overlay.rml",
         "tests/test_glass_preferences.py",
-        "docs/overlay.md"
+        "docs/overlay.md",
+        "windows/overlay-rmlui/GlassRuntime.cpp"
       ],
       "resources": [
         "overlay-clear-row-contrast"
       ],
       "goal": "Prototype warm-white Clear text and glyphs with brightness-adaptive support applied to whole control rows, replacing per-element black foreground.",
       "acceptance": "Clear keeps text and glyphs warm white; headings keep a light accent. Only bright surfaces receive subtle feathered row backing and a restrained shadow, applied to the whole row rather than individual glyph/text. Smooth transitions, preserve dark/light themes and controls. Build and leave the native preview visible for user styling review; no beta publication.",
-      "next_action": "Inspect current contrast sampling, add row-level adaptive support and keep Clear foreground warm white; build and compare bright/dark native previews.",
+      "next_action": "Use warm-white foreground and GPU feathered support per whole semantic row on bright surfaces; tiny row-wide shadow only when enabled and bright. Shared renderer path plus native prototype.",
       "task_class": "design",
       "category": "design",
       "primary_role": "design",
@@ -22187,8 +22188,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T16:11:29.932Z",
-      "lease_until": "2026-11-01T04:11:29.932Z"
+      "updated_at": "2026-10-31T16:13:28.839Z",
+      "lease_until": "2026-11-01T04:13:28.839Z"
     }
   ]
 }
