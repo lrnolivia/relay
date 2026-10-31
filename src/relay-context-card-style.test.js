@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { mkdir } from 'node:fs/promises';
 import { relayContextCardResource, relayStatusCardResource, contextCardModel } from './relay-chat-ui.js';
 import { styleContextCard } from './relay-context-card-style.js';
 import { contextCardBrandAssets } from '../apps/web/generated.js';
@@ -106,10 +107,10 @@ test('staff cards preserve step evidence, keyboard focus and routing distinction
   const changed=structuredClone(card);changed.claim.primary_staff='julian';changed.claim.card_steps.steps[1].state='passed';
   await page.evaluate(data=>render(data),changed);
   assert.equal(await details.getAttribute('open'),'');
-  assert.equal(await page.locator('#feature-title').textContent(),'Engineering');
-  assert.equal(await page.locator('#card').getAttribute('data-identity-team'),'runner');
+  assert.equal(await page.locator('#feature-title').textContent(),'Julian');
+  assert.equal(await page.locator('#card').getAttribute('data-identity-team'),'night-shift');
   assert.match(await page.locator('#card-roles').textContent(),/Assignment lead: Julian/);
-  assert.match(await page.locator('#team').textContent(),/Team update/);
+  assert.match(await page.locator('#team').textContent(),/Assignment lead/);
   assert.equal(await page.locator('[data-step=build]').getAttribute('data-state'),'passed');
   assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');
   assert.deepEqual(errors,[]);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
@@ -171,4 +172,34 @@ test('staff heading keeps its identity-team accent when Inspector telemetry is p
   const after=await page.locator('h1').evaluate(n=>getComputedStyle(n).color);assert.equal(after,before);assert.equal(after,theme==='dark'?'rgb(59, 203, 141)':'rgb(22, 121, 78)');
   assert.equal(await page.locator('#telemetry-value').evaluate(n=>getComputedStyle(n).stroke),theme==='dark'?'rgb(24, 175, 192)':'rgb(8, 122, 136)');await page.close();
  }}finally{await browser.close()}
+});
+
+test('assigned leads stay visible and generic Relay has a contrast-safe brand heading',async()=>{
+ await mkdir('qa-evidence/context-cards/persona-brand',{recursive:true});
+ const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
+ const luminance=rgb=>{const c=rgb.match(/[\d.]+/g).slice(0,3).map(Number).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4});return c[0]*.2126+c[1]*.7152+c[2]*.0722};
+ try{for(const theme of ['light','dark']){for(const width of [360,760]){
+  const page=await browser.newPage({viewport:{width,height:900},colorScheme:theme,reducedMotion:'reduce'});
+  await page.addInitScript(()=>{window.openai={toolOutput:{}}});
+  await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
+  for(const [staff,team,state,name] of [['julian','night-shift','active','Julian'],['nico','runner','completed','Nico']]){
+   await page.evaluate(data=>render(data),{project:'rtxforge',claim:{id:'ordinary',primary_staff:staff,primary_team:team,state,goal:'Screenshot-shaped assignment'}});
+   assert.equal(await page.locator('#feature-title').textContent(),name);
+   assert.match(await page.locator('#team').textContent(),/Assignment lead/);
+   assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),staff);
+   assert.match(await page.locator('#feature-mark img').getAttribute('src'),/^data:image/);
+   assert.doesNotMatch(await page.locator('#card-roles').textContent(),/Current step owner:/);
+   await page.evaluate(()=>document.fonts.ready);
+   await page.locator('#card').screenshot({path:`qa-evidence/context-cards/persona-brand/${staff}-${state}-${theme}-${width}.png`});
+  }
+  await page.evaluate(()=>render({ok:true}));
+  assert.equal(await page.locator('#feature-title').textContent(),'Relay');
+  assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),'');
+  const colors=await page.locator('h1').evaluate(n=>({text:getComputedStyle(n).color,bg:getComputedStyle(document.getElementById('card')).backgroundColor}));
+  assert.equal(colors.text,theme==='dark'?'rgb(240, 100, 59)':'rgb(181, 71, 31)');
+  const values=[luminance(colors.text),luminance(colors.bg)].sort((a,b)=>b-a);
+  assert.ok((values[0]+.05)/(values[1]+.05)>=4.5,'Relay heading meets normal-text contrast, not only large-heading minimum');
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await page.locator('#card').screenshot({path:`qa-evidence/context-cards/persona-brand/relay-generic-${theme}-${width}.png`});await page.close();
+ }}}finally{await browser.close()}
 });
