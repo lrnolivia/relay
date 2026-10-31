@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T06:58:33.302Z",
+  "updated_at": "2026-10-31T07:07:34.549Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -10313,7 +10313,7 @@
       "supporting_teams": [],
       "primary_staff": "julian",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-31T06:25:01.404Z",
       "objective_history": {
         "baseline": {
@@ -20726,6 +20726,83 @@
       "evidence": "PR269 merged by lrnolivia at 42b8b2ef17b39abecdb7920eb2318b9b5554917e. Exact PR65996f0 and main CI41178218031:1168 passed,0 failed,1 platform skip. Required Chromium card gate and24 captures passed; parent reviewed Julian/Nico lead portraits and Relay orange light/dark. v23 resource with v22+older alias tests; receipt-bound current_owner preserved. Canonical Workers Build c76056f3 succeeded, live162c2ca2-d849-4833-a8b4-5ae024bb8a0a100%,health200. Independent production smoke41178582228 verified exact live MCP card/control bytes, inventory, runtime and web source. Healthy revision102 recovery archive13033293627 retained/readback/restoration verified. Read-only actual rtxforge assignments resolve Julian active/Nico completed as Assignment lead,current_owner null. Native client render send returned widget unavailable; no actual host mounting claim. Separate specialist executor-host activation remains queued relay-specialist-host-activation-20261031, not marked fixed.",
       "work_accounted": true,
       "completed_at": "2026-10-31T06:58:33.302Z"
+    },
+    {
+      "id": "relay-specialist-host-activation-20261031",
+      "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+      "branch": "relay/native-specialist-handoff-20261031",
+      "paths": [
+        "src/native-handoff.js",
+        "src/native-handoff.test.js",
+        "src/runner-control.js",
+        "src/runner-control-core.js",
+        "src/runner-control.test.js",
+        "src/coordination.mjs",
+        "src/coordination-engine.js",
+        "test/coordination.test.mjs",
+        "src/specialist-workflow.js",
+        "src/specialist-workflow.test.js",
+        "src/resume-checkpoints.js",
+        "src/resume-checkpoints.test.js",
+        "src/work-card-delivery.js",
+        "src/work-card-delivery.test.js",
+        "src/index.js",
+        "src/relay-entry.test.js",
+        "src/relay-host-probe.test.js",
+        "test/tool-contract.test.mjs",
+        "docs/relay/SPECIALIST_DELIVERY_20261031.md",
+        "docs/relay/NATIVE_CONTINUITY_20261020.md"
+      ],
+      "resources": [
+        "relay-specialist-coordinator-workflow",
+        "relay-card-ordered-step-model",
+        "relay-native-mcp-handoff"
+      ],
+      "goal": "Complete the actual specialist delivery workflow for ordinary Relay assignments: coordinator-owned bounded role selection/delegation, actual execution receipts, and automatic evidence-bound card observations.",
+      "acceptance": "Preserve worker prohibition on creating agents/reassigning work and all shipped card compactness, icons, v22/older compatibility, attribution truth, ownership/CAS and security behavior. Ordinary preflight/resume must activate the coordinator workflow rather than imply routing proves contribution. Native delegation must bind an actual host agent receipt; CLI observations must derive actual canonical execution start/finish receipts. Validate explicit canonical staff/role routing before publication; no fabricated work, avatar rotation, retired identities, unrelated chat inspection or unrelated claim mutations. Add ordinary-task-to-specialist-execution-to-canonical-publisher-to-card tests, negative stale/forged/unassigned receipt cases, and demonstrate bounded real delegation only in this assignment. Focused/full tests, real rendered handoff evidence, independent review and exact-head CI; draft PR then parent-only human merge and canonical production verification. Do not modify held executor files or authentication/security configuration.\nRemaining explicit acceptance: identify existing authorized executor surface/configuration, safely activate merged ordinary coordinator, and verify bounded actual invocation through specialist receipt/publication/card. PR268 implementation already merged; activation is not complete.",
+      "next_action": "Implement bounded native-MCP prepare/read/started/result with atomic canonical handoff plus checklist CAS, immutable actual host agent binding, lost-launch reconciliation, schema/discovery tests and real launch-to-card proof. Preserve private plans, source/objective/owner controls and PR269 v23 cards; parent human merge only.",
+      "ledger_refs": [
+        "relay-specialist-delivery-20261031"
+      ],
+      "category": "coordination",
+      "primary_role": "coordinator",
+      "supporting_roles": [
+        "architect",
+        "integrator",
+        "verifier"
+      ],
+      "primary_team": "night-shift",
+      "supporting_teams": [
+        "runner",
+        "source",
+        "inspector"
+      ],
+      "primary_staff": "julian",
+      "supporting_staff": [
+        "ellis",
+        "rafael",
+        "roman"
+      ],
+      "base_sha": "534cf5ee217688fc56ce2be8fb10e380ff4bdd3c",
+      "state": "active",
+      "created_at": "2026-10-31T07:07:34.549Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Complete the actual specialist delivery workflow for ordinary Relay assignments: coordinator-owned bounded role selection/delegation, actual execution receipts, and automatic evidence-bound card observations.",
+          "acceptance": "Preserve worker prohibition on creating agents/reassigning work and all shipped card compactness, icons, v22/older compatibility, attribution truth, ownership/CAS and security behavior. Ordinary preflight/resume must activate the coordinator workflow rather than imply routing proves contribution. Native delegation must bind an actual host agent receipt; CLI observations must derive actual canonical execution start/finish receipts. Validate explicit canonical staff/role routing before publication; no fabricated work, avatar rotation, retired identities, unrelated chat inspection or unrelated claim mutations. Add ordinary-task-to-specialist-execution-to-canonical-publisher-to-card tests, negative stale/forged/unassigned receipt cases, and demonstrate bounded real delegation only in this assignment. Focused/full tests, real rendered handoff evidence, independent review and exact-head CI; draft PR then parent-only human merge and canonical production verification. Do not modify held executor files or authentication/security configuration.\nRemaining explicit acceptance: identify existing authorized executor surface/configuration, safely activate merged ordinary coordinator, and verify bounded actual invocation through specialist receipt/publication/card. PR268 implementation already merged; activation is not complete.",
+          "at": "2026-10-31T06:25:01.404Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-specialist-host-activation-20261031:acceptance:0",
+            "text": "Preserve worker prohibition on creating agents/reassigning work and all shipped card compactness, icons, v22/older compatibility, attribution truth, ownership/CAS and security behavior. Ordinary preflight/resume must activate the coordinator workflow rather than imply routing proves contribution. Native delegation must bind an actual host agent receipt; CLI observations must derive actual canonical execution start/finish receipts. Validate explicit canonical staff/role routing before publication; no fabricated work, avatar rotation, retired identities, unrelated chat inspection or unrelated claim mutations. Add ordinary-task-to-specialist-execution-to-canonical-publisher-to-card tests, negative stale/forged/unassigned receipt cases, and demonstrate bounded real delegation only in this assignment. Focused/full tests, real rendered handoff evidence, independent review and exact-head CI; draft PR then parent-only human merge and canonical production verification. Do not modify held executor files or authentication/security configuration.\nRemaining explicit acceptance: identify existing authorized executor surface/configuration, safely activate merged ordinary coordinator, and verify bounded actual invocation through specialist receipt/publication/card. PR268 implementation already merged; activation is not complete.",
+            "at": "2026-10-31T06:25:01.404Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-31T07:07:34.549Z",
+      "lease_until": "2026-10-31T19:07:34.549Z"
     }
   ],
   "migrated_from": "loew-inspector"
