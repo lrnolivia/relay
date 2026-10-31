@@ -9,6 +9,7 @@ test('coordinator selects a relevant routed specialist, never rotates staff or p
  assert.throws(()=>stageSpecialist({id:'verify',kind:'test'},{...assignment,supporting_staff:[]}),/staffing required/);
  assert.throws(()=>stageSpecialist({id:'verify',kind:'test'},{...assignment,supporting_staff:['felix']}),/staffing required/);
  assert.equal(stageSpecialist({kind:'ship',command:['trusted']},assignment),null);
+ assert.throws(()=>stageSpecialist({id:'review',kind:'review',specialist_role:'verifier'},{}),/staffing required/);
 });
 test('ordinary coordinator guidance makes activation and capability limits explicit without inventing contribution',()=>{
  const workflow=specialistWorkflow(assignment);

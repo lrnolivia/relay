@@ -141,3 +141,9 @@ test('native delegation emits observed work only after an actual agent receipt, 
  const recovered=await f.channel.nativeHost.reconcile(work);assert.deepEqual(recovered.observation.owner,owner);assert.equal(recovered.agent_id,'/root/fixture-integrator');
  assert.equal(seen.at(-1).state,'failed');assert.equal(seen.at(-1).source_sha,'b'.repeat(40));assert.deepEqual(seen.at(-1).owner,owner);
 });
+
+test('explicit specialist with no routed staff stops before any native launch packet',async t=>{
+ const f=await fixture(t);
+ await assert.rejects(f.channel.nativeHost.execute({operation_id:'no-staff'},{id:'review',kind:'review',specialist_role:'verifier'},{card_attribution:{}}),/staffing required/);
+ assert.equal((await fs.readdir(f.directory)).filter(x=>x.endsWith('.request.json')).length,0);
+});

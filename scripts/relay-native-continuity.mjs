@@ -115,7 +115,7 @@ export async function openNativeChannel({directory,config,workspace,waitMs=30000
   review:(proposal,context)=>exchange('review',{proposal,context}),
   execute:async(pending,stage,context,onObservation)=>{
    let observation=null;
-   const specialist=context.card_attribution?.primary_staff||context.card_attribution?.supporting_staff?.length?stageSpecialist(stage,context.card_attribution):null;
+   const specialist=stage.specialist_role||context.card_attribution?.primary_staff||context.card_attribution?.supporting_staff?.length?stageSpecialist(stage,context.card_attribution||{}):null;
    const started=async receipt=>{if(!receipt.owner)return;observation={state:'running',owner:receipt.owner,source_sha:context.source_sha,observed_at:receipt.launched_at||receipt.at,evidence:'sha256:'+digest(receipt)};await onObservation?.(observation);};
    const value=withTestMaintenance(await exchange('execute',{pending,stage,specialist,context:{...context,test_maintenance:testMaintenanceGuidance({host:'codex'})}},{stable:true,onStarted:specialist?undefined:started,onDelegated:specialist?started:undefined}));
    if(observation)await onObservation?.({...observation,state:value.state==='failed'?'failed':value.state==='cancelled'?'cancelled':'blocked',source_sha:value.head_sha,observed_at:new Date().toISOString(),evidence:'sha256:'+digest({operation_id:pending.operation_id,result:value})});

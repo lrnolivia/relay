@@ -114,7 +114,7 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
     const result=await reconcile(row.pending);
     if(result?.state==='queued'){
      const fresh=await gate();if(fresh.revision!==row.pending.control_revision||fresh.global_revision!==row.pending.global_revision)throw Error('Control revision changed before queued continuation');
-     try{const started=await execute(row.pending,stage,async observation=>{row.observation={...observation,input_digest:await identity(stage)};await persist(state);await observe(state);});if(!terminal.has(started?.state))throw Error('Uncertain queued execution');row.last_job=started;row.pending=null;row.execution_input_digest=started.specialist_execution?await identity(stage):null;await persist(state);}catch{row.state='reconciliation-required';await persist(state);continue;}
+     try{const started=await execute(row.pending,stage,async observation=>{row.observation={...observation,input_digest:await identity(stage)};await persist(state);await observe(state);});if(!terminal.has(started?.state))throw Error('Uncertain queued execution');row.last_job=started;row.pending=null;row.execution_input_digest=started.specialist_execution&&started.state==='succeeded'?await identity(stage):null;await persist(state);}catch{row.state='reconciliation-required';await persist(state);continue;}
     }else{
      if(!result||!terminal.has(result.state)){row.state='reconciliation-required';await persist(state);continue;}
      row.last_job=result;row.pending=null;
@@ -123,7 +123,7 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
      // Preserve real times; never rebase an old owner onto changed source.
      const currentEvidence=candidate&&result.head_sha===currentControl.source_sha&&(result.source_current===true||candidate.input_digest===currentInput);
      row.observation=currentEvidence?{...candidate,input_digest:currentInput,state:result.state==='failed'?'failed':result.state==='cancelled'?'cancelled':'blocked'}:null;
-     row.execution_input_digest=result.specialist_execution&&currentEvidence?currentInput:null;
+     row.execution_input_digest=result.specialist_execution&&result.state==='succeeded'&&currentEvidence?currentInput:null;
      await persist(state);await observe(state);
     }
     if(await intake(row.last_job?.continuity_additions||[])){restart=true;break;}
@@ -145,7 +145,7 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
     row.attempts++;actions++;row.state='dispatching';await persist(state);
     let result;try{result=await execute(row.pending,stage,async observation=>{row.observation={...observation,input_digest:await identity(stage)};await persist(state);await observe(state);});}catch{row.state='reconciliation-required';if(row.observation)row.observation.state='stale';await persist(state);await observe(state);break;}
     if(!result||!terminal.has(result.state)){row.state='reconciliation-required';if(row.observation)row.observation.state='stale';await persist(state);await observe(state);break;}
-    row.last_job=result;row.pending=null;row.execution_input_digest=result.specialist_execution?await identity(stage):null;await persist(state);await gate();
+    row.last_job=result;row.pending=null;row.execution_input_digest=result.specialist_execution&&result.state==='succeeded'?await identity(stage):null;await persist(state);await gate();
     if(await intake(result.continuity_additions||[])){restart=true;break;}
     input=await identity(stage);
    }
@@ -327,7 +327,7 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
     const bytes=[];for(const file of files){const full=path.resolve(workspace,file);if(!full.startsWith(path.resolve(workspace)+path.sep))throw Error('Input escapes workspace');let st;try{st=await fs.lstat(full);}catch(e){if(e.code==='ENOENT'){bytes.push([file,'deleted']);continue;}throw e;}if(!st.isFile()||st.isSymbolicLink()||st.size>16*1024*1024)throw Error('Input is not bounded source');bytes.push([file,hash(await fs.readFile(full))]);}return {bytes,environment};
    },
    verify,reconcile,
-   prepare:async(stage,c)=>{if(c.card_attribution.primary_staff||c.card_attribution.supporting_staff.length)stageSpecialist(stage,c.card_attribution);},
+   prepare:async(stage,c)=>{if(stage.specialist_role||c.card_attribution.primary_staff||c.card_attribution.supporting_staff.length)stageSpecialist(stage,c.card_attribution);},
    execute:async (pending,stage,onObservation)=>{
     const c=await readControl();if(c.held||c.global_held||!c.assignment_active||c.revision!==pending.control_revision||c.global_revision!==pending.global_revision||(pending.scope_revision&&c.canonical_record_sha!==pending.scope_revision)||(pending.provider&&pending.provider!==(config.provider||'codex'))||(stage.addition&&stage.addition.paths.some(p=>!insideExpansionScope(p,c.paths))))throw Error('Stop/revision changed before submit');
     if(stage.command){
@@ -341,7 +341,7 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
      const before=await outsideScope(c.paths),result=await nativeHost.execute(pending,stage,{original_goal:plan.expansion?.original_goal,original_criteria:plan.criteria,profiles:Object.keys(plan.expansion?.profiles||{}),card_attribution:c.card_attribution,paths:c.paths,source_sha:c.source_sha,canonical_record_sha:c.canonical_record_sha},onObservation);
      if(result.head_sha!==git(['rev-parse','HEAD'])||before!==await outsideScope(c.paths))throw Error('Native source report or admitted scope changed; preserve work for reconciliation');return result;
     }
-    const specialist=c.card_attribution.primary_staff||c.card_attribution.supporting_staff.length?stageSpecialist(stage,c.card_attribution):null;
+    const specialist=stage.specialist_role||c.card_attribution.primary_staff||c.card_attribution.supporting_staff.length?stageSpecialist(stage,c.card_attribution):null;
     const executionPrompt=pending.prompt+(specialist?'\n\nBounded responsibility: '+specialist.role+'. '+specialist.instruction:'');
     if(pending.execution_prompt&&pending.execution_prompt!==executionPrompt)throw Error('Specialist execution responsibility changed; reconcile original intent');
     pending.execution_prompt=executionPrompt;pending.specialist=specialist;

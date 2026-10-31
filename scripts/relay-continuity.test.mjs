@@ -184,3 +184,8 @@ test('promised specialist execution precedes a green verifier; pre-launch staffi
  ready=true;const result=await f.run({...options,journal:saved});assert.equal(launched,1);assert.equal(result.objective_completed,true);
  await f.run({...options,journal:result});assert.equal(launched,1,'matching completed specialist work is not repeated');
 });
+for(const state of ['failed','cancelled'])test('explicit specialist '+state+' cannot be satisfied by an already green command',async()=>{
+ const f=fixture();f.plan.stages=f.plan.stages.slice(0,1);f.plan.criteria=['A'];f.plan.stages[0].specialist_role='verifier';f.passed.a=true;
+ const result=await f.run({execute:async()=>({state,specialist_execution:true})});
+ assert.equal(result.objective_completed,false);assert.equal(result.stages.a.state,'parked');assert.equal(result.stages.a.receipt,null);
+});
