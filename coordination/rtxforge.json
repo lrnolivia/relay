@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T00:04:59.863Z",
+  "updated_at": "2026-10-31T00:37:16.408Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21762,6 +21762,77 @@
       "evidence": "Delivered via merged PR127: reviewed green head 3f4936259f64c7238217ebba6c1ae675335e5d12; verified human-owner merge f9b1b10dea05d47afd1a60e9f75cfaf8621629e2 has identical source tree. Explicit Beta10 Windows run41145908801 and Linux run41145913578 completed success at merge SHA. Beta release publishes Windows x64/ARM64 setup, x64 portable, Linux AppImage/Flatpak; both provenance lines match exact source. SHA-256 metadata matches downloaded sidecars for every current binary and retained Beta9 rollback binary. Managed overlay refresh required on installed app update, preserves originals/tuning/compatible presets, refuses foreign/modified files and retries busy games. Three selected games updated through production recovery transactions. All required PR/platform CI checks passed; native1440p frame input, 4K SDR/scRGB/PQ composition and outside-column preservation, DX11 state/single-thread/close-reopen, DX12 queue tests passed. BottomBar live-telemetry regression failed before fix and passed after. Updater fixture twice exposed Windows child log teardown race; exact child now awaited, all recovery assertions retained, 13 local tests/full CI pass. Actual ME2 DX11 scRGB Settings/shortcut/three layouts interactive; Backtick game-console conflict isolated with F10 and original preference restored. Control DX12 HDR10 glass/live MFG/NR observed; final menu HDR/NR logs active, final automated shortcut recheck unconfirmed. SonicDX9 intro/attract host NR feature18 evaluated5400frames; glass controls unconfirmed. DX10 gameplay, native Vulkan glass, Linux/Proton gameplay unverified; retained established rendering routes. Diagnostics removed, source worktree clean. Working 2560x1440 prototype left open at C:/Users/lrnol/.codex/tmp/overlay-workbench/OverlayPreview-final.exe (PID3904 responding), using retained worktree assets. Detailed final-test-report.json and release-verification-{windows,linux}.json in same scratch directory. No ongoing test-game process or temporary shortcut remains. Published PR metadata updated to accurate results.",
       "work_accounted": true,
       "completed_at": "2026-10-31T00:04:59.863Z"
+    },
+    {
+      "id": "rtxforge-managed-packages-settings-20261030",
+      "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+      "branch": "rtxforge/managed-packages-settings-20261030",
+      "paths": [
+        "scripts/feeder_provider.py",
+        "scripts/feeder_legacy.py",
+        "scripts/vulkan_app.py",
+        "scripts/overlay_refresh.py",
+        "scripts/package_downloads.py",
+        "scripts/library_media.py",
+        "providers/feeder.json",
+        "providers/feeder-runtime.json",
+        "windows/engine-host/",
+        "windows/RtxForge.Windows/Controls/",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/Services/",
+        "windows/RtxForge.Windows/MainWindow.Features.cs",
+        "windows/RtxForge.Windows/Views/PackagesPage.cs",
+        "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+        "windows/RtxForge.Windows/GameMode/",
+        "gui/rtxforge_gtk.py",
+        "gui/game_mode.py",
+        "tests/test_feeder_provider.py",
+        "tests/test_feeder_legacy.py",
+        "tests/test_vulkan_app.py",
+        "tests/test_overlay_refresh.py",
+        "tests/test_package_downloads.py",
+        "tests/linux_ui/",
+        "windows/tests/Settings/Program.cs",
+        "windows/tests/test_feeder_provider.py",
+        "windows/tests/test_overlay_packages.py",
+        "windows/tests/test_overlay_refresh_events.py",
+        "docs/overlay.md",
+        "docs/releases/1.0-beta.md",
+        "VERSION"
+      ],
+      "resources": [
+        "rtxforge-managed-provider-downloads",
+        "rtxforge-overlay-settings-parity",
+        "rtxforge-overlay-refresh-results"
+      ],
+      "goal": "Resolve supported Feeder/Vulkan packages automatically; align desktop overlay settings with the shipped glass overlay; make managed overlay refresh results visible.",
+      "acceptance": "No normal installation requires users to supply Feeder or Vulkan stacks. Resolve pinned verified packages automatically, retain optional advanced local overrides and original-file recovery, and fail with actionable download errors rather than import instructions. Desktop and Game Mode settings reflect real Sidebar/Advanced/Bottom Bar, Clear/Light/Dark/custom appearance, typography/scale and other current overlay preferences with consistent persistence. Show a visible truthful managed-overlay refresh result, including updated/current/blocked games; preserve result counts across retries and avoid repeated notifications. Verify cold-cache and integrity failure paths, settings roundtrip/native builds and refresh lifecycle. Preserve human attribution and notices. Prepare reviewable exact-source delivery and follow-on beta through normal green checks.",
+      "next_action": "Create isolated worktree at reviewed main, implement pinned Feeder auto-fetch and remove normal manual-stack setup, synchronize desktop glass preferences, persist/show refresh summaries and validate.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "f9b1b10dea05d47afd1a60e9f75cfaf8621629e2",
+      "state": "active",
+      "created_at": "2026-10-31T00:37:16.408Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Resolve supported Feeder/Vulkan packages automatically; align desktop overlay settings with the shipped glass overlay; make managed overlay refresh results visible.",
+          "acceptance": "No normal installation requires users to supply Feeder or Vulkan stacks. Resolve pinned verified packages automatically, retain optional advanced local overrides and original-file recovery, and fail with actionable download errors rather than import instructions. Desktop and Game Mode settings reflect real Sidebar/Advanced/Bottom Bar, Clear/Light/Dark/custom appearance, typography/scale and other current overlay preferences with consistent persistence. Show a visible truthful managed-overlay refresh result, including updated/current/blocked games; preserve result counts across retries and avoid repeated notifications. Verify cold-cache and integrity failure paths, settings roundtrip/native builds and refresh lifecycle. Preserve human attribution and notices. Prepare reviewable exact-source delivery and follow-on beta through normal green checks.",
+          "at": "2026-10-31T00:37:16.408Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-managed-packages-settings-20261030:acceptance:0",
+            "text": "No normal installation requires users to supply Feeder or Vulkan stacks. Resolve pinned verified packages automatically, retain optional advanced local overrides and original-file recovery, and fail with actionable download errors rather than import instructions. Desktop and Game Mode settings reflect real Sidebar/Advanced/Bottom Bar, Clear/Light/Dark/custom appearance, typography/scale and other current overlay preferences with consistent persistence. Show a visible truthful managed-overlay refresh result, including updated/current/blocked games; preserve result counts across retries and avoid repeated notifications. Verify cold-cache and integrity failure paths, settings roundtrip/native builds and refresh lifecycle. Preserve human attribution and notices. Prepare reviewable exact-source delivery and follow-on beta through normal green checks.",
+            "at": "2026-10-31T00:37:16.408Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-31T00:37:16.408Z",
+      "lease_until": "2026-10-31T12:37:16.408Z"
     }
   ]
 }
