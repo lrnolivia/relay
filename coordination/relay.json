@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T06:25:01.404Z",
+  "updated_at": "2026-10-31T06:25:24.015Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -20393,7 +20393,7 @@
         "roman"
       ],
       "base_sha": "c8587aa8c8cb4f6ff2a00db742e94f2b26db9139",
-      "state": "held",
+      "state": "superseded",
       "created_at": "2026-10-31T02:02:21.292Z",
       "objective_history": {
         "baseline": {
@@ -20410,7 +20410,7 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T03:05:27.641Z",
+      "updated_at": "2026-10-31T06:25:24.015Z",
       "lease_until": "2026-10-31T15:05:27.641Z",
       "card_steps": {
         "schema": "relay-card-steps/v1",
@@ -20655,7 +20655,20 @@
             }
           }
         }
-      ]
+      ],
+      "retirement": {
+        "at": "2026-10-31T06:25:24.015Z",
+        "intent": {
+          "operation_id": "retire-merged-specialist-implementation-20261031",
+          "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "disposition": "superseded",
+          "reason": "Implementation merged and deployed; preserve unresolved executor-host activation explicitly in linked queued follow-up rather than retaining a merged implementation branch slot.",
+          "evidence": "PR268 merged f3a9e4fdd772bccf2d99726c842a52bea28dae8c, healthy revision101/restored archive13027936791 verified. Authorized child terminal, Mac offline, no uncertain process or mutation. Original source branch/head, seq3 partial checklist and private real verifier receipts preserved. Follow-up relay-specialist-host-activation-20261031 retains full goal/acceptance/blocked next action. No whole-objective completion asserted.",
+          "superseded_by": "relay-specialist-host-activation-20261031",
+          "branch": "relay/specialist-delivery-20261031",
+          "head_sha": "1ace18a811e1678e23cbba2354daf4d923029a0d"
+        }
+      }
     }
   ],
   "migrated_from": "loew-inspector"
