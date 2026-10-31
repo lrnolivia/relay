@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T01:52:57.401Z",
+  "updated_at": "2026-10-31T01:55:50.443Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21825,7 +21825,9 @@
         "windows/RtxForge.Windows/Models/GlassAppearance.cs",
         "tests/linux_runtime/",
         "windows/overlay-rmlui/SmokeTest.cpp",
-        ".github/workflows/linux-build.yml"
+        ".github/workflows/linux-build.yml",
+        "prototypes/overlay-rmlui/overlay.rml",
+        "prototypes/overlay-rmlui/overlay.rcss"
       ],
       "resources": [
         "rtxforge-managed-provider-downloads",
@@ -21835,7 +21837,7 @@
       ],
       "goal": "Resolve supported Feeder/Vulkan packages automatically; align desktop overlay settings with the shipped glass overlay; make managed overlay refresh results visible.",
       "acceptance": "No normal installation requires users to supply Feeder or Vulkan stacks. Resolve pinned verified packages automatically, retain optional advanced local overrides and original-file recovery, and fail with actionable download errors rather than import instructions. Desktop and Game Mode settings reflect real Sidebar/Advanced/Bottom Bar, Clear/Light/Dark/custom appearance, typography/scale and other current overlay preferences with consistent persistence. Show a visible truthful managed-overlay refresh result, including updated/current/blocked games; preserve result counts across retries and avoid repeated notifications. Verify cold-cache and integrity failure paths, settings roundtrip/native builds and refresh lifecycle. Preserve human attribution and notices. Prepare reviewable exact-source delivery and follow-on beta through normal green checks.",
-      "next_action": "Complete final focused tests and exact-source CI, deliver Beta11 and install follow-up fixes. Add package/preferences regressions to Linux validation.",
+      "next_action": "Apply user-requested simple shipped Appearance and illustrated layout selectors in manager and overlay; retain prototype fine styling. Then final builds, exact-source CI and Beta11.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21859,8 +21861,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T01:52:57.401Z",
-      "lease_until": "2026-10-31T13:52:57.401Z"
+      "updated_at": "2026-10-31T01:55:50.443Z",
+      "lease_until": "2026-10-31T13:55:50.443Z"
     }
   ]
 }
