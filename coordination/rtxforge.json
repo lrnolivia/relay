@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T05:24:19.220Z",
+  "updated_at": "2026-10-31T06:04:46.531Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8002,7 +8002,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-31T03:18:13.715Z",
       "objective_history": {
         "baseline": {
@@ -8018,7 +8018,9 @@
             "at": "2026-10-31T03:18:13.715Z"
           }
         ]
-      }
+      },
+      "completed_at": "2026-10-31T06:04:46.531Z",
+      "updated_at": "2026-10-31T06:04:46.531Z"
     }
   ],
   "claims": [
@@ -21976,7 +21978,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "29d19af3426ddadb3ddb1fcd81152b47b627803c",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-31T03:18:55.095Z",
       "objective_history": {
         "baseline": {
@@ -21993,8 +21995,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T05:24:19.220Z",
-      "lease_until": "2026-10-31T17:24:19.220Z"
+      "updated_at": "2026-10-31T06:04:46.531Z",
+      "lease_until": "2026-10-31T18:04:46.531Z",
+      "pr": 130,
+      "merged_head_sha": "67c12557dc5fbfbd0b5370300066fe9d3e5af61e",
+      "merge_commit_sha": "59e2962089ee69a88a0aabb65db9c05db45b3cb3",
+      "evidence": "PR 130 human-owner squash merged 59e2962089ee69a88a0aabb65db9c05db45b3cb3, tree be1017346d67e3481223a251c7f008af7b20d29a identical to reviewed 67c12557dc5fbfbd0b5370300066fe9d3e5af61e. Final Windows 41170964286, Linux 41170964245, native UI 41170964201 green; 27 focused tests passed. Explicit Beta12 publications Windows 41172315190 and Linux 41172318092 succeeded. All five published binaries verified size/digest/sidecars, source provenance exact; 102 rollback assets retained. x64 Beta12 installed exit0, settings byte-identical, installed executable/engine/panel verified against published portable. Forced glass rollout required; refresh bundle 43515906c8eae2e601b147e09fdaa4f3dad66b10d9e1b8250cbbe6fc169642fe complete, 49 current and zero blocked. Control Resonant actual HDR10 3D + NR + glass controls passed; test removed and original OptiScaler config restored. ME2 repeatedly launched; final installed Beta12 run PID28064 at 3840x2160 Normandy rendered clean, RenoDX registered, NR ENGAGED 8667 evaluations, Delete opens overlay and Nudge mouse click opens Look & Detail. Per-game Delete preserved, global Backtick unchanged. ME2 temporary HDR removed, ReShade configs restored, new Beta12 panel/glass/dxgi hashes preserved; game and launcher exited cleanly via Exit confirmation, EA bootstrap exited normally, Steam Play ready. Evidence C:/Users/lrnol/.codex/tmp/renodx-hdr/me2-installed-beta12/live-result.json and restored.json; installed-beta12-verification.json and beta12-downloads/verification.json. Working tree clean. Known limits: Feeder compact NR data card shows dash despite active native logs; static conversation depth probe flat. Vulkan HDR layer loading unavailable; Linux/Proton gameplay not qualified. Game Mode shell work remains parked.",
+      "work_accounted": true,
+      "completed_at": "2026-10-31T06:04:46.531Z"
     }
   ]
 }
