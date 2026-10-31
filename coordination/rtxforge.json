@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T22:10:22.005Z",
+  "updated_at": "2026-10-31T22:16:09.629Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22364,7 +22364,8 @@
         "prototypes/overlay-rmlui/",
         "tests/test_overlay_workbench.py",
         "tests/test_glass_preferences.py",
-        "windows/overlay-rmlui/tests/"
+        "windows/overlay-rmlui/tests/",
+        "providers/glass-overlay/HdrControls.h"
       ],
       "resources": [
         "rtxforge-overlay-layout",
@@ -22372,7 +22373,7 @@
       ],
       "goal": "Repair shared overlay layout, alignment, clipping and stacking defects reported in Side Panel, Advanced and Bar without changing approved glass identity. Rebuild live prototype and verify rendered states across normal/larger text and scale.",
       "acceptance": "Advanced sidebar/content and scroll bounds align; Bar header, controls, footer and attached popovers stay reachable and padded; glyphs/labels center on their surfaces; prototype scene toolbar never obscures welcome toast; all3 layouts preserve controls and approved Clear materials; focused native regression checks and bounded screenshot review pass.",
-      "next_action": "PR134 at52c46cb82dec7486f5840056b084cb8a842d5561 contains shared viewport/slot/footer bounds, centered icon controls, padded disclosures and reorganized Advanced nav (Settings last), correctly restored Settings state. Native54-case matrix+input/frame/Clear/glyph tests and74 Python checks pass; detector clean; bounded visual review completed. Rebuilt visible prototype open at layout-repair-vs/Release/OverlayPrototype.exe, old closed. Await exact Windows/Linux/UI checks, address any failures, promote through normal squash process. No new Beta release dispatched.",
+      "next_action": "Incorporate latest user refinements in PR134: centered Bar Settings modal, actual NR dimensions beside percent, right-aligned toast hint/tighter brand gap, Theme then Text order, truer accents, production More limited to Blur/Motion while preview retains tuning, friendly RenoDX tone-mapper label. Extend focused native checks and rebuild visible prototype.",
       "category": "design",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -22396,8 +22397,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T22:10:22.005Z",
-      "lease_until": "2026-11-01T10:10:22.005Z"
+      "updated_at": "2026-10-31T22:16:09.629Z",
+      "lease_until": "2026-11-01T10:16:09.629Z"
     }
   ]
 }
