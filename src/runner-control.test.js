@@ -252,6 +252,8 @@ test('preflight requires current owner, active lease and complete scoped paths',
   const admitted = await callRunnerControl('relay_runner_preflight', args, {}, f.api);
   assert.equal(admitted.admitted, 'task');
   // Start-of-work admission carries the canonical test-maintenance workflow to any host.
+  assert.equal(admitted.specialist_workflow.coordinator_only, true);
+  assert.equal(admitted.specialist_workflow.participation, 'routing');
   assert.match(admitted.test_maintenance.canonical, /TEST_MAINTENANCE_20261023\.md$/);
   assert.match(admitted.test_maintenance.playwright_test_agents.not_equivalent, /Playwright MCP/);
   await assert.rejects(callRunnerControl('relay_runner_preflight', { ...args, paths: ['other/file'] }, {}, f.api), /exceed/);

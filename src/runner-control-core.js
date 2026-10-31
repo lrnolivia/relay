@@ -1,3 +1,4 @@
+import {specialistWorkflow} from './specialist-workflow.js';
 import { githubApiRequest } from './source.js';
 import { createHash } from 'node:crypto';
 import { transition, evaluate, occupying, normalizeScope, branchBudget } from './coordination-engine.js';
@@ -443,6 +444,7 @@ async function runnerControlQuery(name, args, env = {}, apiOverride, phase = 'pu
       owner:claim.owner, branch:claim.branch,
       publication_blockers: data.branches.some(branch => branch.name === claim.branch) ? [] : [{type:'missing_branch',assignment:claim.id,branch:claim.branch}],
       findings:data.findings,
+      specialist_workflow: specialistWorkflow(claim),
       test_maintenance: testMaintenanceGuidance({ category: claim.category || null })
     });
     return result(context, {
@@ -451,6 +453,7 @@ async function runnerControlQuery(name, args, env = {}, apiOverride, phase = 'pu
       branch: claim.branch,
       findings: data.findings,
       // Preflight is the start-of-work admission step for every host.
+      specialist_workflow: specialistWorkflow(claim),
       test_maintenance: testMaintenanceGuidance({ category: claim.category || null })
     });
   }

@@ -118,6 +118,9 @@ test("test-maintenance guidance rides every resume without changing checkpoint i
   assert.equal(deriveResumeCheckpoint({ project: "relay", assignment, progress: progress(), changedPaths: ["src/resume-checkpoints.js"], recentCommits: base.source.recent_commits, recordSha: "c".repeat(40), policySha: "d".repeat(40) }, new Date("2026-10-01T00:01:00.000Z")).checkpoint_id, rest.checkpoint_id);
   const retiredCheckpoint = deriveResumeCheckpoint({ project: "relay", assignment: { ...assignment, state: "cancelled", retirement: { at: "2026-10-01T00:00:00.000Z" } }, progress: progress() });
   assert.equal(retiredCheckpoint.test_maintenance, null);
+  assert.equal(retiredCheckpoint.specialist_workflow, null);
+  assert.equal(base.specialist_workflow.coordinator_only, true);
+  assert.equal(base.specialist_workflow.participation, 'routing');
 });
 
 test('pending feedback and acknowledgement change checkpoint identity without becoming completion', () => {

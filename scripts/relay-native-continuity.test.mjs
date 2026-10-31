@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import {openNativeChannel,pendingNativeRequest,beginNativeWork,replyNativeRequest} from './relay-native-continuity.mjs';
+import {openNativeChannel,pendingNativeRequest,beginNativeWork,recordNativeDelegation,replyNativeRequest} from './relay-native-continuity.mjs';
 import {nativeProofConfig,verifyNativeProof,proofDirectory} from './relay-native-proof.mjs';
 import {reconcileContinuity,validateContinuityPlan} from './relay-continuity.mjs';
 
@@ -121,14 +121,29 @@ test('native checklist publication uses the existing exact bound mutation start 
  await assert.rejects(f.channel.rpc('relay_runner_coordinate',{...args,request:{...args.request,id:'other'}}),/exceeds/);
 });
 
-test('native explicit start emits real bounded observations and rejects unbound persona claims',async t=>{
+test('native delegation emits observed work only after an actual agent receipt, never a routed persona start',async t=>{
  const f=await fixture(t),seen=[],work={operation_id:'observed-native',stage:'a'},owner={staff:'rafael',team:'source'};
- const running=f.channel.nativeHost.execute(work,{id:'a'},{source_sha:'a'.repeat(40),card_attribution:{primary_staff:'nico',primary_team:'runner',supporting_staff:['rafael'],supporting_teams:['source']}},async event=>seen.push(event));
+ const {execFileSync}=await import('node:child_process');const git=args=>execFileSync('git',args,{cwd:f.workspace,stdio:'pipe'});git(['init']);git(['config','user.name','Fixture']);git(['config','user.email','fixture@example.invalid']);git(['commit','--allow-empty','-m','fixture']);
+ const running=f.channel.nativeHost.execute(work,{id:'a',kind:'implementation',specialist_role:'integrator'},{source_sha:'a'.repeat(40),canonical_record_sha:'c'.repeat(40),card_attribution:{primary_staff:'nico',primary_team:'runner',supporting_staff:['rafael'],supporting_teams:['source']}},async event=>seen.push(event));
  const p=await pending(f.directory);
  await assert.rejects(beginNativeWork(f.directory,p.request.id,{staff:'roman',team:'inspector'}),/explicitly routed/);
- await beginNativeWork(f.directory,p.request.id,owner);
+ await assert.rejects(beginNativeWork(f.directory,p.request.id,owner),/actual delegation receipt/);
+ await beginNativeWork(f.directory,p.request.id);assert.equal(seen.length,0);
+ const receipt={schema:1,adapter:'codex-native-subagent',agent_id:'/root/fixture-integrator',request_digest:p.request.id,operation_id:work.operation_id,source_sha:'a'.repeat(40),record_sha:'c'.repeat(40),owner,launched_at:new Date().toISOString()};
+ await assert.rejects(recordNativeDelegation(f.directory,p.request.id,{...receipt,owner:{staff:'roman',team:'inspector'}}),/does not match/);
+ await assert.rejects(recordNativeDelegation(f.directory,p.request.id,{...receipt,source_sha:'d'.repeat(40)}),/does not match/);
+ await assert.rejects(recordNativeDelegation(f.directory,p.request.id,{...receipt,launched_at:'2020-01-01T00:00:00Z'}),/does not match/);
+ await recordNativeDelegation(f.directory,p.request.id,receipt);
+ await assert.rejects(recordNativeDelegation(f.directory,p.request.id,{...receipt,agent_id:'/root/other'}),/identity changed/);
  for(let i=0;i<100&&!seen.length;i++)await new Promise(r=>setTimeout(r,5));
  assert.equal(seen[0].state,'running');assert.deepEqual(seen[0].owner,owner);assert.match(seen[0].evidence,/^sha256:[a-f0-9]{64}$/);
- await replyNativeRequest(f.directory,p.request.id,{state:'failed',summary:'Synthetic verifier failure',head_sha:'b'.repeat(40)});await running;
+ await replyNativeRequest(f.directory,p.request.id,{state:'failed',summary:'Synthetic verifier failure',head_sha:'b'.repeat(40),agent_id:'/root/fixture-integrator'});await running;
+ const recovered=await f.channel.nativeHost.reconcile(work);assert.deepEqual(recovered.observation.owner,owner);assert.equal(recovered.agent_id,'/root/fixture-integrator');
  assert.equal(seen.at(-1).state,'failed');assert.equal(seen.at(-1).source_sha,'b'.repeat(40));assert.deepEqual(seen.at(-1).owner,owner);
+});
+
+test('explicit specialist with no routed staff stops before any native launch packet',async t=>{
+ const f=await fixture(t);
+ await assert.rejects(f.channel.nativeHost.execute({operation_id:'no-staff'},{id:'review',kind:'review',specialist_role:'verifier'},{card_attribution:{}}),/staffing required/);
+ assert.equal((await fs.readdir(f.directory)).filter(x=>x.endsWith('.request.json')).length,0);
 });
