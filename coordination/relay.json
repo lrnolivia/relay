@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T02:29:05.011Z",
+  "updated_at": "2026-10-31T02:29:25.258Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -20230,6 +20230,72 @@
       "completed_at": "2026-10-31T01:39:06.516Z"
     },
     {
+      "id": "relay-consumer-verification-20261028",
+      "owner": "01a18087-d63e-7060-a601-8be52e311c63",
+      "branch": "relay/consumer-verification-20261028",
+      "paths": [
+        "docs/relay/CONSUMER_VERIFICATION_20261028.md",
+        "docs/relay/TEST_MAINTENANCE_20261023.md",
+        "src/test-maintenance.js",
+        "src/test-maintenance.test.js",
+        "test/test-maintenance-contract.test.mjs",
+        ".impeccable/config.json",
+        "apps/web/verify-production.mjs",
+        "apps/web/verify-file-lifecycle.mjs",
+        "apps/web/verification-transport.mjs",
+        "apps/web/test/verification-transport.test.mjs",
+        "apps/web/test/verify-file-lifecycle.test.mjs"
+      ],
+      "resources": [
+        "relay-consumer-verification",
+        "test-maintenance-guidance",
+        "claude-executor-startup",
+        "relay-production-verification-transport"
+      ],
+      "goal": "Finish the remaining Relay verification for authenticated Claude, official Playwright Test Agents and native ChatGPT cards, as explicitly requested by Lauren in this chat on 2026-10-28.",
+      "acceptance": "1. Exercise an existing authenticated Claude environment consuming Relay guidance and record actual session/provider/source/report evidence; absent authentication remains an explicit blocker, never a synthetic pass. 2. Verify official Playwright Test Agent setup against the actual installed version, then run planner/generator/healer on an isolated approved browser scenario through available authenticated tooling; preserve assertions and report any unsupported host/version without installing global tooling or granting permissions. 3. Verify mounted Relay cards and read-only refresh/navigation on actual available native ChatGPT surfaces with direct UI evidence; distinguish Codex MCP Apps, ChatGPT Work/web and unavailable full-native UI access. 4. Repair only demonstrated in-scope guidance defects, preserve all earlier evidence, record exact results in canonical docs, and finish admitted changes through required checks and release. Missing credentials or denied native access must remain unverified until supplied.",
+      "next_action": "Remain HELD; preserve all other unfinished scope, resources, branch 088fcd23644cd80a0fde6ff0acfbcb47e8de8d2c and private WIP. User approved transferring only scripts/relay-executor.mjs and scripts/relay-executor.test.mjs to relay-specialist-delivery-20261031. Fresh canonical execution is terminal, no external activity, recorded PID44554 absent; both file blobs exactly match receiving checkout. Do not resume unrelated work.",
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "base_sha": "ceb3fa0270348185a416d9b0f04c4d3d272729a5",
+      "state": "held",
+      "created_at": "2026-10-28T04:11:28.015Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Finish the remaining Relay verification for authenticated Claude, official Playwright Test Agents and native ChatGPT cards, as explicitly requested by Lauren in this chat on 2026-10-28.",
+          "acceptance": "1. Exercise an existing authenticated Claude environment consuming Relay guidance and record actual session/provider/source/report evidence; absent authentication remains an explicit blocker, never a synthetic pass. 2. Verify official Playwright Test Agent setup against the actual installed version, then run planner/generator/healer on an isolated approved browser scenario through available authenticated tooling; preserve assertions and report any unsupported host/version without installing global tooling or granting permissions. 3. Verify mounted Relay cards and read-only refresh/navigation on actual available native ChatGPT surfaces with direct UI evidence; distinguish Codex MCP Apps, ChatGPT Work/web and unavailable full-native UI access. 4. Repair only demonstrated in-scope guidance defects, preserve all earlier evidence, record exact results in canonical docs, and finish admitted changes through required checks and release. Missing credentials or denied native access must remain unverified until supplied.",
+          "at": "2026-10-28T04:11:28.015Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-consumer-verification-20261028:acceptance:0",
+            "text": "1. Exercise an existing authenticated Claude environment consuming Relay guidance and record actual session/provider/source/report evidence; absent authentication remains an explicit blocker, never a synthetic pass. 2. Verify official Playwright Test Agent setup against the actual installed version, then run planner/generator/healer on an isolated approved browser scenario through available authenticated tooling; preserve assertions and report any unsupported host/version without installing global tooling or granting permissions. 3. Verify mounted Relay cards and read-only refresh/navigation on actual available native ChatGPT surfaces with direct UI evidence; distinguish Codex MCP Apps, ChatGPT Work/web and unavailable full-native UI access. 4. Repair only demonstrated in-scope guidance defects, preserve all earlier evidence, record exact results in canonical docs, and finish admitted changes through required checks and release. Missing credentials or denied native access must remain unverified until supplied.",
+            "at": "2026-10-28T04:11:28.015Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-31T02:29:05.011Z",
+      "lease_until": "2026-10-31T14:29:05.011Z",
+      "handoffs": [
+        {
+          "at": "2026-10-29T07:14:29.883Z",
+          "from": "01a18087-d63e-7060-a601-8be52e311c63",
+          "to": "dot-julian-card-fix-20261029",
+          "next_action": "Lauren explicitly authorized takeover on October 29 (Sentinel_140ceec0d210819199e5909ea1e44bb1: just ake it over). Fix only collapsed-card intrinsic height and supported inline initial display in ChatGPT/Codex; preserve Claude inline behavior, existing branch, all local-only checkpoints and dirty QA/private journal untouched. Read-only resume confirms held/stale worker and no active external job. Use isolated cloud workspace, bounded tests and draft PR only; no merge/deploy or unrelated original acceptance completion."
+        },
+        {
+          "at": "2026-10-29T07:24:37.204Z",
+          "from": "dot-julian-card-fix-20261029",
+          "to": "01a18087-d63e-7060-a601-8be52e311c63",
+          "next_action": "Keep unrelated original remainder HELD; no dispatch or chat contact. Two card files and hydration resource carved out to relay-card-intrinsic-inline-20261029 under user-authorized October 29 takeover. Preserve original acceptance, source branch, private checkpoints and unfinished verification; do not resume."
+        }
+      ]
+    },
+    {
       "id": "relay-specialist-delivery-20261031",
       "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
       "branch": "relay/specialist-delivery-20261031",
@@ -20245,7 +20311,9 @@
         "scripts/relay-native-continuity.mjs",
         "scripts/relay-native-continuity.test.mjs",
         "docs/relay/NATIVE_CONTINUITY_20261020.md",
-        "docs/relay/SPECIALIST_DELIVERY_20261031.md"
+        "docs/relay/SPECIALIST_DELIVERY_20261031.md",
+        "scripts/relay-executor.mjs",
+        "scripts/relay-executor.test.mjs"
       ],
       "resources": [
         "relay-specialist-coordinator-workflow",
@@ -20253,7 +20321,7 @@
       ],
       "goal": "Complete the actual specialist delivery workflow for ordinary Relay assignments: coordinator-owned bounded role selection/delegation, actual execution receipts, and automatic evidence-bound card observations.",
       "acceptance": "Preserve worker prohibition on creating agents/reassigning work and all shipped card compactness, icons, v22/older compatibility, attribution truth, ownership/CAS and security behavior. Ordinary preflight/resume must activate the coordinator workflow rather than imply routing proves contribution. Native delegation must bind an actual host agent receipt; CLI observations must derive actual canonical execution start/finish receipts. Validate explicit canonical staff/role routing before publication; no fabricated work, avatar rotation, retired identities, unrelated chat inspection or unrelated claim mutations. Add ordinary-task-to-specialist-execution-to-canonical-publisher-to-card tests, negative stale/forged/unassigned receipt cases, and demonstrate bounded real delegation only in this assignment. Focused/full tests, real rendered handoff evidence, independent review and exact-head CI; draft PR then parent-only human merge and canonical production verification. Do not modify held executor files or authentication/security configuration.",
-      "next_action": "Held pending exact user consent to transfer only scripts/relay-executor.mjs and scripts/relay-executor.test.mjs from held consumer-verification ownership. Preserve draft PR #268, branch relay/specialist-delivery-20261031 at 1f8b5bb663eaca705013e24692943c50f3c5f3ca and private specialist-proof receipts. After consent: refresh ownership, perform supported exact two-file transfer/readback and resume, then finish ordinary CLI coordinator activation. Do not merge partial PR or edit protected files. Actual verifier /root/delivery_verifier completed; canonical partial review sequence 2 verified, complete:false. No uncertain operations remain.",
+      "next_action": "Exact user-approved executor two-file transfer received; independently read back admission, resume this specialist repair only, then implement ordinary CLI coordinator activation with bounded specialist work, preserved worker no-recursive-delegation and evidence-bound publication. Keep PR268 draft until final tests/review; parent merges.",
       "category": "implementation",
       "primary_role": "builder",
       "supporting_roles": [
@@ -20290,8 +20358,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T02:26:47.228Z",
-      "lease_until": "2026-10-31T14:26:47.228Z",
+      "updated_at": "2026-10-31T02:29:25.258Z",
+      "lease_until": "2026-10-31T14:29:25.258Z",
       "card_steps": {
         "schema": "relay-card-steps/v1",
         "assignment": "relay-specialist-delivery-20261031",
@@ -20454,72 +20522,6 @@
               ]
             }
           }
-        }
-      ]
-    },
-    {
-      "id": "relay-consumer-verification-20261028",
-      "owner": "01a18087-d63e-7060-a601-8be52e311c63",
-      "branch": "relay/consumer-verification-20261028",
-      "paths": [
-        "docs/relay/CONSUMER_VERIFICATION_20261028.md",
-        "docs/relay/TEST_MAINTENANCE_20261023.md",
-        "src/test-maintenance.js",
-        "src/test-maintenance.test.js",
-        "test/test-maintenance-contract.test.mjs",
-        ".impeccable/config.json",
-        "apps/web/verify-production.mjs",
-        "apps/web/verify-file-lifecycle.mjs",
-        "apps/web/verification-transport.mjs",
-        "apps/web/test/verification-transport.test.mjs",
-        "apps/web/test/verify-file-lifecycle.test.mjs"
-      ],
-      "resources": [
-        "relay-consumer-verification",
-        "test-maintenance-guidance",
-        "claude-executor-startup",
-        "relay-production-verification-transport"
-      ],
-      "goal": "Finish the remaining Relay verification for authenticated Claude, official Playwright Test Agents and native ChatGPT cards, as explicitly requested by Lauren in this chat on 2026-10-28.",
-      "acceptance": "1. Exercise an existing authenticated Claude environment consuming Relay guidance and record actual session/provider/source/report evidence; absent authentication remains an explicit blocker, never a synthetic pass. 2. Verify official Playwright Test Agent setup against the actual installed version, then run planner/generator/healer on an isolated approved browser scenario through available authenticated tooling; preserve assertions and report any unsupported host/version without installing global tooling or granting permissions. 3. Verify mounted Relay cards and read-only refresh/navigation on actual available native ChatGPT surfaces with direct UI evidence; distinguish Codex MCP Apps, ChatGPT Work/web and unavailable full-native UI access. 4. Repair only demonstrated in-scope guidance defects, preserve all earlier evidence, record exact results in canonical docs, and finish admitted changes through required checks and release. Missing credentials or denied native access must remain unverified until supplied.",
-      "next_action": "Remain HELD; preserve all other unfinished scope, resources, branch 088fcd23644cd80a0fde6ff0acfbcb47e8de8d2c and private WIP. User approved transferring only scripts/relay-executor.mjs and scripts/relay-executor.test.mjs to relay-specialist-delivery-20261031. Fresh canonical execution is terminal, no external activity, recorded PID44554 absent; both file blobs exactly match receiving checkout. Do not resume unrelated work.",
-      "category": "qa-verification",
-      "primary_team": "inspector",
-      "supporting_teams": [],
-      "primary_staff": "roman",
-      "supporting_staff": [],
-      "base_sha": "ceb3fa0270348185a416d9b0f04c4d3d272729a5",
-      "state": "held",
-      "created_at": "2026-10-28T04:11:28.015Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Finish the remaining Relay verification for authenticated Claude, official Playwright Test Agents and native ChatGPT cards, as explicitly requested by Lauren in this chat on 2026-10-28.",
-          "acceptance": "1. Exercise an existing authenticated Claude environment consuming Relay guidance and record actual session/provider/source/report evidence; absent authentication remains an explicit blocker, never a synthetic pass. 2. Verify official Playwright Test Agent setup against the actual installed version, then run planner/generator/healer on an isolated approved browser scenario through available authenticated tooling; preserve assertions and report any unsupported host/version without installing global tooling or granting permissions. 3. Verify mounted Relay cards and read-only refresh/navigation on actual available native ChatGPT surfaces with direct UI evidence; distinguish Codex MCP Apps, ChatGPT Work/web and unavailable full-native UI access. 4. Repair only demonstrated in-scope guidance defects, preserve all earlier evidence, record exact results in canonical docs, and finish admitted changes through required checks and release. Missing credentials or denied native access must remain unverified until supplied.",
-          "at": "2026-10-28T04:11:28.015Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "relay-consumer-verification-20261028:acceptance:0",
-            "text": "1. Exercise an existing authenticated Claude environment consuming Relay guidance and record actual session/provider/source/report evidence; absent authentication remains an explicit blocker, never a synthetic pass. 2. Verify official Playwright Test Agent setup against the actual installed version, then run planner/generator/healer on an isolated approved browser scenario through available authenticated tooling; preserve assertions and report any unsupported host/version without installing global tooling or granting permissions. 3. Verify mounted Relay cards and read-only refresh/navigation on actual available native ChatGPT surfaces with direct UI evidence; distinguish Codex MCP Apps, ChatGPT Work/web and unavailable full-native UI access. 4. Repair only demonstrated in-scope guidance defects, preserve all earlier evidence, record exact results in canonical docs, and finish admitted changes through required checks and release. Missing credentials or denied native access must remain unverified until supplied.",
-            "at": "2026-10-28T04:11:28.015Z"
-          }
-        ]
-      },
-      "updated_at": "2026-10-31T02:29:05.011Z",
-      "lease_until": "2026-10-31T14:29:05.011Z",
-      "handoffs": [
-        {
-          "at": "2026-10-29T07:14:29.883Z",
-          "from": "01a18087-d63e-7060-a601-8be52e311c63",
-          "to": "dot-julian-card-fix-20261029",
-          "next_action": "Lauren explicitly authorized takeover on October 29 (Sentinel_140ceec0d210819199e5909ea1e44bb1: just ake it over). Fix only collapsed-card intrinsic height and supported inline initial display in ChatGPT/Codex; preserve Claude inline behavior, existing branch, all local-only checkpoints and dirty QA/private journal untouched. Read-only resume confirms held/stale worker and no active external job. Use isolated cloud workspace, bounded tests and draft PR only; no merge/deploy or unrelated original acceptance completion."
-        },
-        {
-          "at": "2026-10-29T07:24:37.204Z",
-          "from": "dot-julian-card-fix-20261029",
-          "to": "01a18087-d63e-7060-a601-8be52e311c63",
-          "next_action": "Keep unrelated original remainder HELD; no dispatch or chat contact. Two card files and hydration resource carved out to relay-card-intrinsic-inline-20261029 under user-authorized October 29 takeover. Preserve original acceptance, source branch, private checkpoints and unfinished verification; do not resume."
         }
       ]
     }
