@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T06:31:55.301Z",
+  "updated_at": "2026-10-31T06:34:57.990Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -20681,14 +20681,17 @@
         "src/relay-context-card-style.test.js",
         "src/relay-chat-ui.test.js",
         "src/relay-context-card-browser.js",
-        ".github/workflows/ci.yml"
+        ".github/workflows/ci.yml",
+        "src/relay-chat-ui.js",
+        "src/index.js",
+        "src/relay-entry.test.js"
       ],
       "resources": [
         "relay-card-persona-brand-presentation"
       ],
       "goal": "Correct screenshot-confirmed missing assigned people and Relay brand heading color without claiming unobserved contributions.",
       "acceptance": "Assigned active and completed cards show valid canonical lead portrait labeled Assignment lead; receipt-bound current specialists supersede, explicit team-only current work stays truthful; generic Relay uses contrast-safe Terra Prime orange; focused/full tests and rendered desktop/mobile evidence pass before reviewed release.",
-      "next_action": "Preserve existing CI screenshots for this card-only repair branch, then review actual DOM captures and full checks.",
+      "next_action": "Publish fresh v23 card resource while retaining v22 and previous aliases; required tests emit screenshots, existing optional old harness selection unchanged.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -20712,8 +20715,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T06:31:55.301Z",
-      "lease_until": "2026-10-31T18:31:55.301Z"
+      "updated_at": "2026-10-31T06:34:57.990Z",
+      "lease_until": "2026-10-31T18:34:57.990Z"
     }
   ],
   "migrated_from": "loew-inspector"
