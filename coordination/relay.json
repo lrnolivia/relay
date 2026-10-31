@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T02:29:46.102Z",
+  "updated_at": "2026-10-31T02:51:43.123Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -20358,8 +20358,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T02:29:46.102Z",
-      "lease_until": "2026-10-31T14:29:46.102Z",
+      "updated_at": "2026-10-31T02:51:43.123Z",
+      "lease_until": "2026-10-31T14:51:43.123Z",
       "card_steps": {
         "schema": "relay-card-steps/v1",
         "assignment": "relay-specialist-delivery-20261031",
@@ -20369,7 +20369,7 @@
           "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
           "branch": "relay/specialist-delivery-20261031"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
@@ -20378,23 +20378,23 @@
             "depends_on": [],
             "state": "passed",
             "receipt": {
-              "id": "verify-delivery-contract:5bd2e8ac7f433f16557d6284fc764382",
+              "id": "verify-delivery-contract:c57962fe4c1cb310ba96b0495ae3e48d",
               "assignment": "relay-specialist-delivery-20261031",
               "step_id": "verify-delivery-contract",
               "plan_revision": "a3dff1b25464d1ec2d70a7d8db9c5936830c9a3d94d3e52dcb1c0ced8bb42b4a",
-              "input_digest": "5bd2e8ac7f433f16557d6284fc764382369745152539be7a045e1c9bf817af58",
-              "evidence": "sha256:8d786a898494041c83a45a9b9c649fe1a899e38855a9e474e505acd0053a5797",
-              "source_sha": "1f8b5bb663eaca705013e24692943c50f3c5f3ca",
+              "input_digest": "c57962fe4c1cb310ba96b0495ae3e48de2f80e0b5b5dc160702eaa6ac2f0907d",
+              "evidence": "sha256:9ba28cec1b23d50c9a5be5b6f7bd5ce96c8cf26e8b8c022ef49f7bdca8843fb0",
+              "source_sha": "1ace18a811e1678e23cbba2354daf4d923029a0d",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
-              "observed_at": "2026-10-31T02:23:27.686Z"
+              "observed_at": "2026-10-31T02:50:34.706Z"
             }
           }
         ]
       },
-      "amendment_count": 2,
+      "amendment_count": 3,
       "amendments": [
         {
           "at": "2026-10-31T02:19:56.298Z",
@@ -20517,6 +20517,86 @@
                       "team": "inspector"
                     },
                     "observed_at": "2026-10-31T02:23:27.686Z"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "at": "2026-10-31T02:51:43.123Z",
+          "by": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "reason": "Publish actual final bounded native verifier review at 1ace18a after exact-source local verification. Partial plan only; remote CI, merge and release remain separate and incomplete.",
+          "fields": [
+            "card_steps"
+          ],
+          "before": {
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "relay-specialist-delivery-20261031",
+              "revision": "a3dff1b25464d1ec2d70a7d8db9c5936830c9a3d94d3e52dcb1c0ced8bb42b4a",
+              "objective_digest": "0f0ded3c0ac5a177c8efc301225c3c9fa6182045577151a96c5e01a123675848",
+              "publisher": {
+                "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+                "branch": "relay/specialist-delivery-20261031"
+              },
+              "sequence": 2,
+              "complete": false,
+              "steps": [
+                {
+                  "id": "verify-delivery-contract",
+                  "label": "verify delivery contract",
+                  "depends_on": [],
+                  "state": "passed",
+                  "receipt": {
+                    "id": "verify-delivery-contract:5bd2e8ac7f433f16557d6284fc764382",
+                    "assignment": "relay-specialist-delivery-20261031",
+                    "step_id": "verify-delivery-contract",
+                    "plan_revision": "a3dff1b25464d1ec2d70a7d8db9c5936830c9a3d94d3e52dcb1c0ced8bb42b4a",
+                    "input_digest": "5bd2e8ac7f433f16557d6284fc764382369745152539be7a045e1c9bf817af58",
+                    "evidence": "sha256:8d786a898494041c83a45a9b9c649fe1a899e38855a9e474e505acd0053a5797",
+                    "source_sha": "1f8b5bb663eaca705013e24692943c50f3c5f3ca",
+                    "owner": {
+                      "staff": "roman",
+                      "team": "inspector"
+                    },
+                    "observed_at": "2026-10-31T02:23:27.686Z"
+                  }
+                }
+              ]
+            }
+          },
+          "after": {
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "relay-specialist-delivery-20261031",
+              "revision": "a3dff1b25464d1ec2d70a7d8db9c5936830c9a3d94d3e52dcb1c0ced8bb42b4a",
+              "objective_digest": "0f0ded3c0ac5a177c8efc301225c3c9fa6182045577151a96c5e01a123675848",
+              "publisher": {
+                "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+                "branch": "relay/specialist-delivery-20261031"
+              },
+              "sequence": 3,
+              "complete": false,
+              "steps": [
+                {
+                  "id": "verify-delivery-contract",
+                  "label": "verify delivery contract",
+                  "depends_on": [],
+                  "state": "passed",
+                  "receipt": {
+                    "id": "verify-delivery-contract:c57962fe4c1cb310ba96b0495ae3e48d",
+                    "assignment": "relay-specialist-delivery-20261031",
+                    "step_id": "verify-delivery-contract",
+                    "plan_revision": "a3dff1b25464d1ec2d70a7d8db9c5936830c9a3d94d3e52dcb1c0ced8bb42b4a",
+                    "input_digest": "c57962fe4c1cb310ba96b0495ae3e48de2f80e0b5b5dc160702eaa6ac2f0907d",
+                    "evidence": "sha256:9ba28cec1b23d50c9a5be5b6f7bd5ce96c8cf26e8b8c022ef49f7bdca8843fb0",
+                    "source_sha": "1ace18a811e1678e23cbba2354daf4d923029a0d",
+                    "owner": {
+                      "staff": "roman",
+                      "team": "inspector"
+                    },
+                    "observed_at": "2026-10-31T02:50:34.706Z"
                   }
                 }
               ]
