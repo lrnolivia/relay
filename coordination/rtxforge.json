@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T03:17:19.207Z",
+  "updated_at": "2026-10-31T03:18:13.715Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7964,6 +7964,58 @@
             "id": "rtxforge-auto-update-20261029:acceptance:0",
             "text": "Background checks and verified staging enabled by default with an opt-out; simple restart/apply action shared by desktop and Game Mode; safe behavior during game operations, offline/failure recovery, correct installed-format behavior including Flatpak/portable guidance, no game-file changes. Validate update integrity and lifecycle with meaningful tests and native builds, exact-source CI, merge and beta release. Retain previous task's pending native-media registration evidence (run 40974336657, artifact 12942266963) honestly; no invented Visuals receipt.",
             "at": "2026-10-30T00:41:23.182Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-automatic-renodx-hdr-20261030",
+      "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+      "goal": "Add optional automatic per-game RenoDX HDR installation, matching and verified downloads; prefer managed OptiScaler ReShade side-loading and use standalone ReShade where compatible. Park Game Mode architecture work.",
+      "acceptance": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
+      "next_action": "Claim isolated branch from current reviewed main; inspect official RenoDX metadata/release catalog and pinned OptiScaler loading hooks; implement safe automatic HDR route and desktop controls with recovery.",
+      "paths": [
+        "scripts/renodx_hdr.py",
+        "scripts/desktop_service.py",
+        "scripts/extra_tools.py",
+        "scripts/planning.py",
+        "scripts/engine_bridge.py",
+        "scripts/package_downloads.py",
+        "providers/renodx-hdr.json",
+        "providers/renodx-hdr/",
+        "windows/engine-host/",
+        "windows/RtxForge.Windows/Controls/",
+        "windows/RtxForge.Windows/Services/",
+        "windows/RtxForge.Windows/Views/GameDetailsPage.xaml.cs",
+        "gui/rtxforge_gtk.py",
+        "tests/test_renodx_hdr.py",
+        "windows/tests/",
+        "docs/renodx-hdr.md",
+        "THIRD_PARTY_NOTICES.md",
+        "packaging/"
+      ],
+      "resources": [
+        "rtxforge-automatic-renodx-hdr"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-10-31T03:18:13.715Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Add optional automatic per-game RenoDX HDR installation, matching and verified downloads; prefer managed OptiScaler ReShade side-loading and use standalone ReShade where compatible. Park Game Mode architecture work.",
+          "acceptance": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
+          "at": "2026-10-31T03:18:13.715Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-automatic-renodx-hdr-20261030:acceptance:0",
+            "text": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
+            "at": "2026-10-31T03:18:13.715Z"
           }
         ]
       }
