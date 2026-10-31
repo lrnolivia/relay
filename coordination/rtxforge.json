@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T03:41:52.253Z",
+  "updated_at": "2026-10-31T04:06:21.004Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21964,7 +21964,7 @@
       ],
       "goal": "Add optional automatic per-game RenoDX HDR installation, matching and verified downloads; prefer managed OptiScaler ReShade side-loading and use standalone ReShade where compatible. Park Game Mode architecture work.",
       "acceptance": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
-      "next_action": "PR129 draft at 5a52350 includes automatic pinned RenoDX HDR matching/downloads, OptiScaler/Feeder/standalone routes, portable receipts and Proton override transactions; Windows build0warnings and21 focused checks pass. Actual Control Resonant+ME2 readonly preparation and cold-cache source verification pass. Native desktop card reviewed. Latest fix prevents side-loaded ReShade.ini reclassifying a verified OptiScaler dxgi during repair; new Linux core regression awaits exact-head CI. Continue exact-source CI and in-game composition acceptance; Vulkan layer route remains explicitly unavailable. Game Mode architecture parked.",
+      "next_action": "PR129 at52f9088: Linux AppImage/Flatpak and GTK native/KDE/Wayland checks green; Windows native candidate green, x64/ARM64 build/testing running.22 focused local checks and native build pass. Controlled Control Resonant HDR+NR+MFG test initially showed corrupt startup; precreated ReShade.ini now respects saved menu policy and fresh run25800 is clean without NR toggles. Fresh live data NRrunning=true15.72ms,29FPS rendered, native_generated3/presented4; previous run10416 reached clean3D and native RML Look&Detail input worked. Continue fresh3D and ME2Feeder coexistence tests, restore exact test settings/files, then finish reviewed source delivery. Game Mode architecture remains parked; Vulkan HDR route explicitly unavailable.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21988,8 +21988,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T03:41:52.253Z",
-      "lease_until": "2026-10-31T15:41:52.253Z"
+      "updated_at": "2026-10-31T04:06:21.004Z",
+      "lease_until": "2026-10-31T16:06:21.004Z"
     }
   ]
 }
