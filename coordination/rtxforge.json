@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-30T23:44:41.659Z",
+  "updated_at": "2026-10-31T00:04:59.863Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21668,7 +21668,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "3907a1aba00160a7f5926b2349c1778c035138e5",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-30T02:30:51.239Z",
       "objective_history": {
         "baseline": {
@@ -21697,8 +21697,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T23:44:41.659Z",
-      "lease_until": "2026-10-31T11:44:41.659Z",
+      "updated_at": "2026-10-31T00:04:59.863Z",
+      "lease_until": "2026-10-31T12:04:59.863Z",
       "amendment_count": 3,
       "amendments": [
         {
@@ -21755,7 +21755,13 @@
             "next_action": "Apply final theme defaults and layout names, implement full Settings, validate native interactions, then integrate approved renderer into runtime packaging and managed overlay update path. Keep prototype available for styling."
           }
         }
-      ]
+      ],
+      "pr": 127,
+      "merged_head_sha": "3f4936259f64c7238217ebba6c1ae675335e5d12",
+      "merge_commit_sha": "f9b1b10dea05d47afd1a60e9f75cfaf8621629e2",
+      "evidence": "Delivered via merged PR127: reviewed green head 3f4936259f64c7238217ebba6c1ae675335e5d12; verified human-owner merge f9b1b10dea05d47afd1a60e9f75cfaf8621629e2 has identical source tree. Explicit Beta10 Windows run41145908801 and Linux run41145913578 completed success at merge SHA. Beta release publishes Windows x64/ARM64 setup, x64 portable, Linux AppImage/Flatpak; both provenance lines match exact source. SHA-256 metadata matches downloaded sidecars for every current binary and retained Beta9 rollback binary. Managed overlay refresh required on installed app update, preserves originals/tuning/compatible presets, refuses foreign/modified files and retries busy games. Three selected games updated through production recovery transactions. All required PR/platform CI checks passed; native1440p frame input, 4K SDR/scRGB/PQ composition and outside-column preservation, DX11 state/single-thread/close-reopen, DX12 queue tests passed. BottomBar live-telemetry regression failed before fix and passed after. Updater fixture twice exposed Windows child log teardown race; exact child now awaited, all recovery assertions retained, 13 local tests/full CI pass. Actual ME2 DX11 scRGB Settings/shortcut/three layouts interactive; Backtick game-console conflict isolated with F10 and original preference restored. Control DX12 HDR10 glass/live MFG/NR observed; final menu HDR/NR logs active, final automated shortcut recheck unconfirmed. SonicDX9 intro/attract host NR feature18 evaluated5400frames; glass controls unconfirmed. DX10 gameplay, native Vulkan glass, Linux/Proton gameplay unverified; retained established rendering routes. Diagnostics removed, source worktree clean. Working 2560x1440 prototype left open at C:/Users/lrnol/.codex/tmp/overlay-workbench/OverlayPreview-final.exe (PID3904 responding), using retained worktree assets. Detailed final-test-report.json and release-verification-{windows,linux}.json in same scratch directory. No ongoing test-game process or temporary shortcut remains. Published PR metadata updated to accurate results.",
+      "work_accounted": true,
+      "completed_at": "2026-10-31T00:04:59.863Z"
     }
   ]
 }
