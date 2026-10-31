@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T23:01:48.621Z",
+  "updated_at": "2026-10-31T23:05:14.252Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22391,7 +22391,10 @@
         "windows/feeder-panel/EffectBridge.h",
         "windows/feeder-panel/rtxforge-panel.cpp",
         "tests/test_reshade_effects.py",
-        "windows/build/Build-FeederPanel.ps1"
+        "windows/build/Build-FeederPanel.ps1",
+        "windows/feeder-panel/effects-addon.cpp",
+        "scripts/feeder_provider.py",
+        "scripts/build_feeder_panel.py"
       ],
       "resources": [
         "rtxforge-overlay-layout",
@@ -22399,7 +22402,7 @@
       ],
       "goal": "Repair shared overlay layout, alignment, clipping and stacking defects reported in Side Panel, Advanced and Bar without changing approved glass identity. Rebuild live prototype and verify rendered states across normal/larger text and scale.",
       "acceptance": "Advanced sidebar/content and scroll bounds align; Bar header, controls, footer and attached popovers stay reachable and padded; glyphs/labels center on their surfaces; prototype scene toolbar never obscures welcome toast; all3 layouts preserve controls and approved Clear materials; focused native regression checks and bounded screenshot review pass.",
-      "next_action": "Validate reviewed ReShade imports, compile the live shader reflection bridge, and expose discovered effect controls in the glass overlay while retaining the approved layout fixes.",
+      "next_action": "Package the reflected-effects bridge alongside ReShade imports; validate the import lifecycle and real native UI. Complete Game Mode page parity.",
       "category": "design",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -22423,8 +22426,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T23:01:48.621Z",
-      "lease_until": "2026-11-01T11:01:48.621Z"
+      "updated_at": "2026-10-31T23:05:14.252Z",
+      "lease_until": "2026-11-01T11:05:14.252Z"
     }
   ]
 }
