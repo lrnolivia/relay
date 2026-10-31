@@ -1,5 +1,7 @@
 import {validateContinuityAdditions,expansionDigest} from '../packages/runner/src/continuity-expansion.mjs';
-import {runContinuityExecution,sourceFingerprint} from './relay-continuity.mjs';
+import {runContinuityExecution,sourceFingerprint,specialistExecutionRpc} from './relay-continuity.mjs';
+import {getStaff} from '../src/staff-registry.js';
+import {stageSpecialist,ordinaryReviewResponsibility} from '../src/specialist-workflow.js';
 import { installSkills } from '../packages/skills/install.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -80,9 +82,134 @@ export async function stopProcess(child, graceMs=2000) {
   if(child.exitCode===null&&child.signalCode===null)await new Promise(resolve=>child.once('exit',resolve));
 }
 
-export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=spawn,pollMs=30000,getPlatform=()=>os.platform(),getVersion=()=>execFileSync(executionProvider(config),['--version'],{encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim(),clock=()=>new Date().toISOString(),admittedContinuation=null}) {
+const coordinatorHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
+const readPrivate=async file=>{try{return JSON.parse(await fs.readFile(file,'utf8'));}catch(error){if(error.code!=='ENOENT')throw error;return null;}};
+const writePrivate=async(file,value)=>{await fs.writeFile(file+'.tmp',JSON.stringify(value)+'\n',{mode:0o600});await fs.rename(file+'.tmp',file);};
+
+export function parseSpecialistReview(text,binding){
+  if(typeof text!=='string'||Buffer.byteLength(text)>16384||!text.startsWith('RELAY_SPECIALIST_REVIEW\n'))throw Error('Invalid specialist review envelope');
+  const r=JSON.parse(text.slice('RELAY_SPECIALIST_REVIEW\n'.length));
+  if(!r||Object.keys(r).sort().join()!=='evidence,findings,initial_job_id,schema,source_fingerprint,verdict'||r.schema!==1||!['passed','failed','blocked'].includes(r.verdict)||r.initial_job_id!==binding.initial_job_id||r.source_fingerprint!==binding.source_fingerprint||typeof r.findings!=='string'||r.findings.length>8000||typeof r.evidence!=='string'||!r.evidence.trim()||r.evidence.length>4000)throw Error('Specialist review does not match its bounded work/source');
+  return r;
+}
+
+// This is the coordinator entry used by ordinary dispatch. The coding process
+// remains a bounded worker and cannot delegate. No transcript is public state.
+export async function runExecution(options){
+  const {config,rpc}=options,workspace=await fs.realpath(options.workspace),directory=path.resolve(options.stateDir);
+  const worker=args=>runSingleExecution({...options,...args});
+  if(config.continuity)return runContinuityExecution({...options,workspace,stateDir:directory,runExecution:worker});
+  if(config.resume&&!await readPrivate(path.join(directory,'ordinary.json'))){
+    const legacy=await readPrivate(path.join(directory,'receipt.json'));
+    if(!legacy||legacy.project!==config.project||legacy.assignment!==config.assignment||config.job_id&&legacy.job?.id!==config.job_id)throw Error('Explicit legacy resume requires its exact original execution receipt');
+    return {...await worker({...options,workspace,stateDir:directory}),specialist_workflow_pending:true,next_action:'Legacy session recovered. Reconcile its real result and matching private acceptance plan before coordinator review.'};
+  }
+  if(directory===workspace||directory.startsWith(workspace+path.sep))throw Error('Coordinator receipts must live outside the checkout');
+  await fs.mkdir(directory,{recursive:true,mode:0o700});
+  const lock=path.join(directory,'ordinary.lock');await fs.mkdir(lock,{mode:0o700});
+  const file=path.join(directory,'ordinary.json');
+  try{
+    // Do not migrate a legacy executor's private lifecycle into new directories.
+    for(const name of ['executor.lock','receipt.json','continuity.json']){try{await fs.lstat(path.join(directory,name));throw Error('Existing execution/private plan requires explicit reconciliation before ordinary coordination');}catch(error){if(error.code!=='ENOENT')throw error;}}
+    let saved=await readPrivate(file);
+    const readAssignment=async()=>{
+      const r=await rpc('relay_runner_assignments',{project:config.project,assignment:config.assignment}),a=r.ok===true?r.claims?.find(x=>x.id===config.assignment):null;
+      if(!a||a.owner!==config.owner||a.branch!==config.branch||a.state!=='active'||Date.parse(a.lease_until)<=Date.now()||!/^[a-f0-9]{40}$/.test(r.record_sha||''))throw Error('Ordinary coordinator requires current active ownership');
+      for(const scope of ['global',config.project]){const c=await rpc('relay_autonomy',{action:'status',scope});if(c.ok!==true||c.state?.held!==false||!Number.isSafeInteger(c.state.revision))throw Error('Authoritative control stops ordinary coordination');}
+      return {a,record:r.record_sha};
+    };
+    let {a,record}=await readAssignment();
+    const binding={project:config.project,assignment:config.assignment,owner:config.owner,branch:config.branch,provider:executionProvider(config),workspace,executor_id:config.executor_id,objective_digest:coordinatorHash({goal:a.goal,acceptance:a.acceptance}),paths:a.paths,resources:a.resources||[]};
+    if(saved&&(JSON.stringify(saved.binding)!==JSON.stringify(binding)||config.job_id&&saved.initial_job.id!==config.job_id))throw Error('Ordinary bootstrap identity changed; preserve original private plan');
+    const status=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,...(saved||config.job_id?{job_id:saved?.initial_job.id||config.job_id}:{})});
+    const initial=status.job;
+    if(status.ok!==true||!initial||initial.project!==config.project||initial.assignment!==config.assignment||(config.job_id&&initial.id!==config.job_id)||initial.owner!==config.owner||initial.branch!==config.branch||!initial.required_capabilities?.includes(binding.provider+'-cli'))throw Error('Original execution/provider binding is unavailable');
+    if(saved){
+      if(saved.plan_digest!==coordinatorHash(saved.plan)||initial.request!==saved.initial_job.request||initial.initial_head_sha!==saved.initial_job.initial_head_sha)throw Error('Original execution or private plan changed; reconcile saved identity');
+      const revision=coordinatorHash({objective_digest:saved.plan.objective_digest,criteria:saved.plan.criteria,stages:saved.plan.stages.map(({id,kind,criteria,depends_on})=>({id,kind,criteria,depends_on}))});
+      if(a.card_steps&&a.card_steps.revision!==revision)throw Error('Canonical priorities changed; reconcile the matching private plan without replacement');
+    }
+    if(!saved){
+      if(a.card_steps)throw Error('Existing canonical priorities require their matching private plan; automatic partial plan cannot replace them');
+      if(initial.state!=='queued'||initial.initial_head_sha!==execFileSync('git',['rev-parse','HEAD'],{cwd:workspace,encoding:'utf8'}).trim()||changedPaths(workspace).length)throw Error('Ordinary bootstrap requires the exact clean queued execution; reconcile prior work');
+      const lead=getStaff(a.primary_staff);if(!lead||lead.status==='retired')throw Error('Ordinary worker needs admitted lead responsibility before launch');
+      const {role:reviewRole,person:reviewer,instruction:reviewInstruction}=ordinaryReviewResponsibility(a);
+      const roles=[...new Set([...(a.supporting_roles||[]),...(a.supporting_staff||[]).map(id=>getStaff(id)?.role.id).filter(Boolean),reviewRole])];
+      const staffing={primary_role:a.primary_role||lead.role.id,primary_staff:a.primary_staff,primary_team:a.primary_team,supporting_roles:roles,supporting_staff:[...new Set([...(a.supporting_staff||[]),reviewer.id])],supporting_teams:[...new Set([...(a.supporting_teams||[]),reviewer.home_team])].filter(x=>x!==a.primary_team)};
+      const stage=(id,kind,role,depends_on,prompt)=>({id,kind,specialist_role:role,criteria:[id],depends_on,prompt,verify:['relay-ordinary-receipt-v1',id],inputs:a.paths});
+      const plan={schema:1,authorization:'Existing admitted execution plus coordinator-owned bounded independent review; no new scope or release authority.',completion_scope:'subobjective',objective_digest:binding.objective_digest,criteria:['run-assigned-worker','review-current-work'],environment:{adapter:'ordinary-coordinator-v1',provider:binding.provider},stages:[stage('run-assigned-worker','implementation',staffing.primary_role,[],initial.request),stage('review-current-work','review',reviewRole,['run-assigned-worker'],reviewInstruction+' Independently review the current admitted work against its unchanged objective and acceptance. Inspect actual source and relevant checks; do not edit source. Report actual findings and unresolved work. This is a bounded review, never whole-assignment completion.')]};
+      saved={schema:1,binding,initial_job:initial,staffing,plan,plan_digest:coordinatorHash(plan),staffing_intent:{action:'amend',project:config.project,expected_record_sha:record,request:{id:config.assignment,owner:config.owner,...staffing,reason:'Admit bounded independent reviewer for ordinary execution; routing only until actual process receipts'}}};
+      await writePrivate(file,saved);
+      // Intent is durable before the one mutation. A lost response is reconciled
+      // below, never retried just because the transport failed.
+      try{await rpc('relay_runner_coordinate',saved.staffing_intent);}catch{}
+      ({a,record}=await readAssignment());
+    }
+    if(saved.staffing_intent){
+      if(Object.entries(saved.staffing).some(([k,v])=>JSON.stringify(a[k])!==JSON.stringify(v))||coordinatorHash({goal:a.goal,acceptance:a.acceptance})!==binding.objective_digest||JSON.stringify(a.paths)!==JSON.stringify(binding.paths)||JSON.stringify(a.resources||[])!==JSON.stringify(binding.resources))throw Error('Staffing amendment unconfirmed; reconcile saved exact intent without replay');
+      saved.staffing_intent=null;saved.staffing_record=record;await writePrivate(file,saved);
+    }
+    for(const stage of saved.plan.stages)stageSpecialist(stage,a);
+    const runDirectory=path.join(directory,'continuity');
+    const priorJournal=await readPrivate(path.join(runDirectory,'continuity.json'));
+    if(priorJournal){
+      for(const stage of saved.plan.stages){
+        const row=priorJournal.stages?.[stage.id],pending=row?.pending;
+        if(!pending?.job_id)continue;
+        const receiptFile=path.join(runDirectory,pending.job_id,'receipt.json'),receipt=await readPrivate(receiptFile);
+        if(!receipt||receipt.pid||receipt.coordinator_source!==await sourceFingerprint(workspace))continue;
+        const read=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,job_id:pending.job_id}),job=read.job;
+        if(read.ok!==true||!job||!['succeeded','failed','cancelled'].includes(job.state)||job.id!==pending.job_id||job.owner!==config.owner||job.branch!==config.branch||job.executor_id!==config.executor_id)continue;
+        const finish=receipt.pending;
+        if(finish){
+          if(!job.events?.some(e=>e.action==='finish'&&e.operation_id===finish.operation_id&&e.revision===job.revision&&e.executor_id===job.executor_id)||finish.action!=='finish'||finish.job_id!==job.id||finish.expected_revision+1!==job.revision||finish.executor_id!==job.executor_id||JSON.stringify(finish.result)!==JSON.stringify(job.result))continue;
+          receipt.job=job;receipt.pending=null;await writePrivate(receiptFile,receipt);
+        }else if(JSON.stringify(receipt.job)!==JSON.stringify(job))continue;
+        if(receipt.job.result?.session_id!==receipt.session_id)continue;
+        const events=await fs.readFile(path.join(runDirectory,job.id,'events-'+job.attempt+'.jsonl'));
+        if(job.result.evidence!=='sha256:'+createHash('sha256').update(events).digest('hex'))continue;
+        // Validate the already acknowledged finish using the original job time.
+        // This is readback reconstruction, not a second finish RPC or launch.
+        let observation;
+        await specialistExecutionRpc({rpc:async()=>({ok:true,job}),config,jobId:job.id,specialist:pending.specialist,sourceSha:job.initial_head_sha,terminalReadback:true,onObservation:async value=>{observation=value;}})('relay_execution',{action:'finish',job_id:job.id,executor_id:job.executor_id,expected_revision:job.revision-1,result:job.result});
+        if(observation){pending.specialist_receipt={job_digest:coordinatorHash(job),source_fingerprint:receipt.coordinator_source,observation};await writePrivate(path.join(runDirectory,'continuity.json'),priorJournal);}
+      }
+    }
+    const verifyStage=async stage=>{
+      const fail={passed:false,fingerprint:'ordinary-receipt-unverified'};
+      const journal=await readPrivate(path.join(runDirectory,'continuity.json')),row=journal?.stages?.[stage.id],id=row?.last_job?.job_id||row?.pending?.job_id;
+      if(!id)return fail;
+      const receipt=await readPrivate(path.join(runDirectory,id,'receipt.json'));
+      if(!receipt||receipt.pending||receipt.pid||receipt.job?.id!==id||receipt.job.state!=='succeeded'||!receipt.session_id||receipt.job.result?.session_id!==receipt.session_id||receipt.job.executor_id!==config.executor_id||receipt.provider!==binding.provider||receipt.job.owner!==config.owner||receipt.job.branch!==config.branch||receipt.coordinator_source!==await sourceFingerprint(workspace))return fail;
+      const canonical=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,job_id:id});
+      if(canonical.ok!==true||JSON.stringify(canonical.job)!==JSON.stringify(receipt.job))return fail;
+      const events=await fs.readFile(path.join(runDirectory,id,'events-'+receipt.job.attempt+'.jsonl'));
+      if(receipt.job.result.evidence!=='sha256:'+createHash('sha256').update(events).digest('hex'))return fail;
+      if(stage.id==='review-current-work'){
+        const expected={initial_job_id:saved.initial_job.id,source_fingerprint:receipt.coordinator_source};
+        if(JSON.stringify(receipt.specialist_review_binding)!==JSON.stringify(expected)||!receipt.specialist_review||receipt.specialist_review.verdict!=='passed')return fail;
+        parseSpecialistReview('RELAY_SPECIALIST_REVIEW\n'+JSON.stringify(receipt.specialist_review),expected);
+        const prior=await readPrivate(path.join(runDirectory,saved.initial_job.id,'receipt.json'));
+        if(!prior||prior.session_id===receipt.session_id)return fail;
+        // Re-read the actual transcript, not just a journalled model assertion.
+        const reports=events.toString().trim().split('\n').flatMap(line=>executorEvent(binding.provider,JSON.parse(line)).texts).filter(t=>t.startsWith('RELAY_SPECIALIST_REVIEW\n'));
+        if(!reports.length||reports.some(t=>JSON.stringify(parseSpecialistReview(t,expected))!==JSON.stringify(receipt.specialist_review)))return fail;
+      }else if(id!==saved.initial_job.id)return fail;
+      return {passed:true,evidence:'sha256:'+coordinatorHash({job:receipt.job,review:receipt.specialist_review||null,source:receipt.coordinator_source})};
+    };
+    const result=await runContinuityExecution({...options,workspace,stateDir:runDirectory,config:{...config,continuity:saved.plan,initial_stage:'run-assigned-worker',initial_job:saved.initial_job},verifyStage,runExecution:async args=>{
+      const before=await sourceFingerprint(workspace),review=args.config.coordinator_stage==='review-current-work';
+      const result=await worker({...args,config:{...args.config,...(review?{specialist_review:{initial_job_id:saved.initial_job.id,source_fingerprint:before}}:{})}});
+      const after=await sourceFingerprint(workspace),receipt=await readPrivate(result.receipt);
+      if(review&&before!==after)throw Error('Reviewer changed source; preserve WIP and invalidate review');
+      if(receipt.coordinator_source!==after)throw Error('Worker source proof changed after terminal receipt');return result;
+    }});
+    return {...result,job_id:saved.initial_job.id,state:result.subobjective_completed?'succeeded':'blocked',objective_completed:false};
+  }finally{await fs.rm(lock,{recursive:true});}
+}
+
+export async function runSingleExecution({config,workspace,stateDir,rpc,spawnProcess=spawn,pollMs=30000,getPlatform=()=>os.platform(),getVersion=()=>execFileSync(executionProvider(config),['--version'],{encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim(),clock=()=>new Date().toISOString(),admittedContinuation=null}) {
   const provider=executionProvider(config);
-  if(config.continuity)return runContinuityExecution({config,workspace,stateDir,rpc,runExecution});
   workspace=await fs.realpath(workspace);stateDir=path.resolve(stateDir);
   if(stateDir===workspace||stateDir.startsWith(workspace+path.sep))throw Error('Execution receipts must live outside the checkout');
   await fs.mkdir(stateDir,{recursive:true,mode:0o700});
@@ -185,7 +312,8 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     await save();
     // Complete bounded capture/readback/restoration before starting a child.
     if(protectionEnabled)await protectSource(journal.session_id||null,'Initial admitted source snapshot verified before work');
-    const prompt=executionPrompt(job,{...context,test_maintenance:testMaintenanceGuidance({host:provider}),...(config.continuity_discovery?{continuity_discovery:{...config.continuity_discovery,report_prefix:'RELAY_CONTINUITY_ADDITIONS\n',schema:1,instruction:'Emit one JSON report with additions (data only) after the prefix in an agent message. New stages require coordinator review and existing verifier profiles. Never propose a changed goal, permissions or paid services.'}}:{}),installed_skills:journal.skills?{directory:journal.skills.directory,digest:journal.skills.digest,executable:false}:null},uniqueSkills,inbox.filename);
+    if(config.specialist_review){journal.specialist_review_binding=config.specialist_review;journal.specialist_review=null;await save();}
+    const prompt=executionPrompt(job,{...context,...(config.coordinator_specialist?{bounded_specialist:config.coordinator_specialist}:{}),...(config.specialist_review?{specialist_review:{...config.specialist_review,instruction:'Independent read-only review. Do not edit source, create agents, reassign, merge or deploy. Inspect actual source and run relevant checks. Return one agent message beginning RELAY_SPECIALIST_REVIEW followed by newline and JSON with schema:1, verdict:passed|failed|blocked, initial_job_id, source_fingerprint, findings (bounded string), evidence (nonempty bounded string). Echo the supplied binding exactly; report only actual findings. Process success alone is not review approval.'}}:{}),test_maintenance:testMaintenanceGuidance({host:provider}),...(config.continuity_discovery?{continuity_discovery:{...config.continuity_discovery,report_prefix:'RELAY_CONTINUITY_ADDITIONS\n',schema:1,instruction:'Emit one JSON report with additions (data only) after the prefix in an agent message. New stages require coordinator review and existing verifier profiles. Never propose a changed goal, permissions or paid services.'}}:{}),installed_skills:journal.skills?{directory:journal.skills.directory,digest:journal.skills.digest,executable:false}:null},uniqueSkills,inbox.filename);
     if(Buffer.byteLength(prompt)>128000)throw Error('Execution context exceeds 128 KiB before process start; preserve the receipt and narrow the bounded job without dropping original acceptance');
     const transcript=await fs.open(path.join(stateDir,'events-'+job.attempt+'.jsonl'),'a',0o600);
     let session=journal.session_id||null,turnCompleted=false,parseFailed=false;
@@ -199,7 +327,7 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     journal.pid=child.pid;journal.started_at=clock();await save();
     const exit=new Promise(resolve=>{child.once('error',error=>resolve({code:null,error:error.message}));child.once('exit',(code,signal)=>resolve({code,signal}));});
     const lines=createInterface({input:child.stdout});
-    const consume=(async()=>{for await(const line of lines){await transcript.write(line+'\n');try{const event=JSON.parse(line),normalized=executorEvent(provider,event);if(typeof normalized.session_id==='string'){if(session&&session!==normalized.session_id)throw Error('Executor session identity changed');session=normalized.session_id;journal.session_id=session;await save();}if(normalized.completed)turnCompleted=true;for(const text of normalized.texts){if(config.continuity_discovery){const additions=continuityProposals(text);if(additions.length){journal.continuity_additions ||= [];for(const p of additions){const prior=journal.continuity_additions.find(x=>x.id===p.id);if(prior&&expansionDigest(prior)!==expansionDigest(p))throw Error('Worker changed a proposal identity');if(!prior)journal.continuity_additions.push(p);}validateContinuityAdditions(journal.continuity_additions);await save();}}const maintenance=parseTestMaintenanceReport(text);if(maintenance){journal.test_maintenance_report=maintenance;await save();}if(feedback&&provider==='claude')await feedback.consume({type:'item.completed',item:{type:'agent_message',text}});}if(feedback&&provider==='codex')await feedback.consume(event);}catch{parseFailed=true;}}})();
+    const consume=(async()=>{for await(const line of lines){await transcript.write(line+'\n');try{const event=JSON.parse(line),normalized=executorEvent(provider,event);if(typeof normalized.session_id==='string'){if(session&&session!==normalized.session_id)throw Error('Executor session identity changed');session=normalized.session_id;journal.session_id=session;await save();}if(normalized.completed)turnCompleted=true;for(const text of normalized.texts){if(config.specialist_review&&text.startsWith('RELAY_SPECIALIST_REVIEW\n')){const report=parseSpecialistReview(text,config.specialist_review);if(journal.specialist_review&&JSON.stringify(journal.specialist_review)!==JSON.stringify(report))throw Error('Conflicting specialist verdict');journal.specialist_review=report;await save();}if(config.continuity_discovery){const additions=continuityProposals(text);if(additions.length){journal.continuity_additions ||= [];for(const p of additions){const prior=journal.continuity_additions.find(x=>x.id===p.id);if(prior&&expansionDigest(prior)!==expansionDigest(p))throw Error('Worker changed a proposal identity');if(!prior)journal.continuity_additions.push(p);}validateContinuityAdditions(journal.continuity_additions);await save();}}const maintenance=parseTestMaintenanceReport(text);if(maintenance){journal.test_maintenance_report=maintenance;await save();}if(feedback&&provider==='claude')await feedback.consume({type:'item.completed',item:{type:'agent_message',text}});}if(feedback&&provider==='codex')await feedback.consume(event);}catch{parseFailed=true;}}})();
     child.stderr.on('data',()=>{}); // provider stderr can contain credentials; final exit is still recorded.
     try{job=(await call('start',{job_id:job.id,expected_revision:job.revision,executor_id:config.executor_id,lease_token:journal.lease_token,process:{pid:child.pid,host:os.hostname(),version,adapter:provider+'-cli'}})).job;}
     catch(error){stop();await exit;throw error;}
@@ -225,8 +353,10 @@ export async function runExecution({config,workspace,stateDir,rpc,spawnProcess=s
     job=(await call('status',{job_id:job.id})).job;
     let scopeError=null;try{assertScope(changedPaths(workspace),job.objective.paths);}catch(error){scopeError=error;}
     if(protectionEnabled&&job.state!=='cancel_requested'&&!stopping&&!scopeError)await protectSource(session,'Final source bytes saved, read back and restored before exit accounting');
-    const result={state:job.state==='cancel_requested'?'cancelled':ended.code===0&&turnCompleted&&session&&!parseFailed&&!scopeError&&!stopping?'succeeded':'failed',exit_code:ended.code,
-      ...(session?{session_id:session}:{}),head_sha:git(['rev-parse','HEAD']),summary:scopeError?.message || (stopping?'Process stopped; preserve checkpoint for explicit recovery.':['Coding process exited. Review source changes and verification evidence before completing the assignment.',journal.test_maintenance_report?testMaintenanceSummary(evaluateTestMaintenance(journal.test_maintenance_report,{head_sha:git(['rev-parse','HEAD'])})):null].filter(Boolean).join(' ')),
+    const reviewFailed=config.specialist_review&&(!journal.specialist_review||journal.specialist_review.verdict!=='passed'||config.specialist_review.source_fingerprint!==await sourceFingerprint(workspace));
+    if(config.coordinator_stage){journal.coordinator_source=await sourceFingerprint(workspace);await save();}
+    const result={state:job.state==='cancel_requested'?'cancelled':ended.code===0&&turnCompleted&&session&&!parseFailed&&!scopeError&&!stopping&&!reviewFailed?'succeeded':'failed',exit_code:ended.code,
+      ...(session?{session_id:session}:{}),head_sha:git(['rev-parse','HEAD']),summary:scopeError?.message || (reviewFailed?'Independent review did not pass. '+(journal.specialist_review?.findings||'No valid source-bound verdict was returned.').slice(0,700):null) || (stopping?'Process stopped; preserve checkpoint for explicit recovery.':['Coding process exited. Review source changes and verification evidence before completing the assignment.',journal.test_maintenance_report?testMaintenanceSummary(evaluateTestMaintenance(journal.test_maintenance_report,{head_sha:git(['rev-parse','HEAD'])})):null].filter(Boolean).join(' ')),
       ...(journal.continuity_additions?.length?{continuity_additions:journal.continuity_additions}:{}),evidence:'sha256:'+createHash('sha256').update(await fs.readFile(path.join(stateDir,'events-'+job.attempt+'.jsonl'))).digest('hex')};
     job=(await call('finish',{job_id:job.id,expected_revision:job.revision,executor_id:config.executor_id,lease_token:journal.lease_token,result})).job;
     return {job_id:job.id,state:job.state,objective_completed:false,receipt:journalPath,...(job.result?.continuity_additions?{continuity_additions:job.result.continuity_additions}:{})};
@@ -314,6 +444,6 @@ if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
   const config=JSON.parse(await fs.readFile(configFile,'utf8'));
   for(const key of ['project','assignment','owner','branch','executor_id'])if(typeof config[key]!=='string'||!config[key])throw Error('Missing executor configuration: '+key);
   const rpc=createMcpClient({token:process.env.RELAY_MCP_TOKEN});
-  const result=command==='restore'?await recoverSourceCheckpoint({config,receipt:JSON.parse(await fs.readFile(workspace,'utf8')),directory:stateDir,rpc}):command==='continue'?await runContinuityExecution({config,workspace,stateDir,rpc,runExecution}):await runExecution({config,workspace,stateDir,rpc});
+  const result=command==='restore'?await recoverSourceCheckpoint({config,receipt:JSON.parse(await fs.readFile(workspace,'utf8')),directory:stateDir,rpc}):command==='continue'?await runContinuityExecution({config,workspace,stateDir,rpc,runExecution:runSingleExecution}):await runExecution({config,workspace,stateDir,rpc});
   console.log(JSON.stringify(result,null,2));
 }

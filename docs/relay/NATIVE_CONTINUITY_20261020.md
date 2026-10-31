@@ -78,4 +78,4 @@ Publish the receipt with `node scripts/relay-native-continuity.mjs delegate CHAN
 
 If invocation times out, preserve the started intent and reconcile through the actual host receipt. Never launch again because a delegation file is missing. A stored delegation is immutable; a late terminal reply recovers the same identity without duplicate work. Raw prompts, agent receipts and process journals remain private; only bounded step evidence crosses into cards.
 
-See [specialist delivery](SPECIALIST_DELIVERY_20261031.md) for ordinary coordinator activation and the CLI entry limitation.
+See [specialist delivery](SPECIALIST_DELIVERY_20261031.md) for ordinary coordinator activation, automatic CLI review, and private-plan recovery boundaries.

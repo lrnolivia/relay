@@ -79,7 +79,8 @@ test('executor bounds response bytes and distinguishes response read cancellatio
   }
 });
 
-import { runExecution } from './relay-executor.mjs';
+// These unchanged tests exercise the bounded worker, now called by the coordinator.
+import { runSingleExecution as runExecution, runExecution as runOrdinaryExecution, parseSpecialistReview } from './relay-executor.mjs';
 import { operateJob } from '../packages/runner/src/jobs.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -284,4 +285,95 @@ for (const provider of ['claude','codex']) test(`${provider} CLI receives its ow
   const summary=JSON.parse(stored).jobs[0].result.summary;
   assert.match(summary,/Test maintenance pass · 3 passed, 0 failed, 1 skipped of 4 · commit [a-f0-9]{12} · run local-1 · skips: print preview \(Covered by native suite\)/);
  }finally{await fs.rm(root,{recursive:true,force:true});}
+});
+
+import {createHash} from 'node:crypto';
+import {validateCardStepsPublication,assignmentCardContext} from '../src/relay-card-steps.js';
+import {contextCardModel} from '../src/relay-context-card-model.js';
+const ordinaryHash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
+async function ordinaryFixture(options={}){
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-ordinary-')),workspace=path.join(root,'checkout'),stateDir=path.join(root,'receipts');await fs.mkdir(workspace);
+ const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim();
+ git(['init','-b','relay/fixture']);git(['config','user.name','Fixture']);git(['config','user.email','fixture@example.invalid']);git(['remote','add','origin','https://github.com/lrnolivia/fixture.git']);await fs.writeFile(path.join(workspace,'README.md'),'Synthetic ordinary coordinator fixture\n');git(['add','.']);git(['commit','-m','fixture']);
+ const claim={id:'fixture',state:'active',owner:'fixture',branch:'relay/fixture',repository:'lrnolivia/fixture',lease_until:'2099-01-01T00:00:00Z',head_sha:git(['rev-parse','HEAD']),goal:'Review a synthetic fixture',acceptance:'Leave fixture intact and review actual source',paths:['README.md'],resources:[],category:'implementation',primary_role:'builder',primary_staff:'nico',primary_team:'runner',supporting_roles:[],supporting_staff:[],supporting_teams:[],...options.claim};
+ const values=new Map();let etag=0,revision=1,spawns=0,staffWrites=0,lostFinish=false;const calls=[],cards=[];
+ const bucket={get:async k=>{const v=values.get(k);return v?{etag:v.etag,json:async()=>JSON.parse(v.text)}:null;},put:async(k,text,{onlyIf})=>{const old=values.get(k);if(onlyIf instanceof Headers?Boolean(old):onlyIf.etagMatches!==old?.etag)return null;const tag=String(++etag);values.set(k,{text,etag:tag});return {etag:tag};}};
+ const submitted=await operateJob(bucket,{action:'submit',project:'fixture',assignment:'fixture',expected_owner:'fixture',expected_branch:claim.branch,expected_head_sha:claim.head_sha,prompt:'Synthetic original request: inspect README without changing it',required_capabilities:['codex-cli'],operation_id:'ordinary-original'},claim);
+ const rpc=async(name,args)=>{
+  calls.push({name,args:structuredClone(args)});
+  if(name==='relay_autonomy')return {ok:true,state:{held:false,revision:1}};
+  if(name==='relay_runner_assignments')return {ok:true,record_sha:revision.toString(16).padStart(40,'0'),claims:[structuredClone(claim)]};
+  if(name==='relay_runner_coordinate'){
+   assert.equal(args.expected_record_sha,revision.toString(16).padStart(40,'0'));assert.equal(args.request.owner,claim.owner);
+   if(args.request.card_steps){claim.card_steps=validateCardStepsPublication(args.request.card_steps,claim,ordinaryHash({goal:claim.goal,acceptance:claim.acceptance}));cards.push(contextCardModel({claim:assignmentCardContext(claim)}));}
+   else {staffWrites++;if(options.staffFailure)throw Error('Synthetic lost response before write');for(const key of ['primary_role','primary_staff','primary_team','supporting_roles','supporting_staff','supporting_teams'])claim[key]=args.request[key];}
+   revision++;if(options.staffLostAfter&&!args.request.card_steps)throw Error('Synthetic lost staffing response after application');return {ok:true};
+  }
+  if(name==='relay_runner_resume')return {ok:true,synthetic:true};
+  if(name==='relay_context')return {ok:true,entries:[]};
+  if(name==='relay_runner_feedback_peek')return {ok:true,feedback:{available:true,events:[],conflicts:[]}};
+  assert.equal(name,'relay_execution');const result=await operateJob(bucket,args,claim);if(options.loseFinish&&args.action==='finish'&&!lostFinish){lostFinish=true;throw Error('Synthetic lost finish response after write');}return result;
+ };
+ const run=()=>runOrdinaryExecution({workspace,stateDir,config:{project:'fixture',assignment:'fixture',owner:'fixture',branch:'relay/fixture',executor_id:'fixture',job_id:submitted.job.id},rpc,pollMs:10000,getVersion:()=> 'synthetic ordinary CLI test',spawnProcess:(_cmd,args,spawnOptions)=>{
+  spawns++;assert.ok(!args.includes('resume'),'independent jobs need separate sessions');
+  return spawn(process.execPath,['-e',`let prompt='';process.stdin.on('data',x=>prompt+=x);process.stdin.on('end',()=>{const d=JSON.parse(prompt.slice(prompt.indexOf('\\n\\n')+2));if(!prompt.includes('Do not create other agents or reassign work.'))process.exit(5);console.log(JSON.stringify({type:'thread.started',thread_id:'synthetic-session-'+${spawns}}));const b=d.context.specialist_review;if(b){${options.changeSource?"require('fs').appendFileSync('README.md','changed by reviewer');":''}const report={schema:1,verdict:${JSON.stringify(options.verdict||'passed')},initial_job_id:b.initial_job_id,source_fingerprint:${options.forge?"'f'.repeat(64)":"b.source_fingerprint"},findings:'Synthetic subprocess inspected the fixture',evidence:'README exists; this test is synthetic, not an authenticated model run'};${options.noReport?'':"console.log(JSON.stringify({type:'item.completed',item:{type:'agent_message',text:'RELAY_SPECIALIST_REVIEW\\n'+JSON.stringify(report)}}));"}}console.log(JSON.stringify({type:'turn.completed'}));});`],spawnOptions);
+ }});
+ return {root,workspace,stateDir,claim,run,rpc,calls,cards,submitted,get spawns(){return spawns;},get staffWrites(){return staffWrites;},cleanup:()=>fs.rm(root,{recursive:true,force:true})};
+}
+test('ordinary entry adopts original job, actually launches independent CLI reviewer, validates publisher and renders specialist handoff',async()=>{
+ const f=await ordinaryFixture();try{
+  const result=await f.run();assert.equal(result.state,'succeeded');assert.equal(result.subobjective_completed,true);assert.equal(result.objective_completed,false);assert.equal(f.spawns,2);assert.equal(f.staffWrites,1);
+  assert.equal(result.job_id,f.submitted.job.id);assert.equal(f.claim.card_steps.complete,false);assert.deepEqual(f.claim.card_steps.steps.map(s=>s.state),['passed','passed']);
+  const submitted=f.calls.filter(c=>c.name==='relay_execution'&&c.args.action==='submit');assert.equal(submitted.length,1,'only review is newly submitted');
+  const original=JSON.parse(await fs.readFile(path.join(f.stateDir,'continuity',f.submitted.job.id,'receipt.json'),'utf8'));assert.equal(original.job.request,f.submitted.job.request);
+  assert.ok(f.cards.some(c=>c.identity.speaker?.id==='nico'&&c.plan.current==='run-assigned-worker'));
+  assert.ok(f.cards.some(c=>c.identity.speaker?.id==='roman'&&c.identity.lead.id==='nico'&&c.plan.current==='review-current-work'));
+  const repeated=await f.run();assert.equal(repeated.state,'succeeded');assert.equal(f.spawns,2,'refresh must not relaunch either worker');
+ }finally{await f.cleanup();}
+});
+for(const [label,options] of [['missing verdict',{noReport:true}],['forged source',{forge:true}],['failed review',{verdict:'failed'}],['reviewer source edit',{changeSource:true}]])test('ordinary review cannot pass with '+label,async()=>{
+ const f=await ordinaryFixture(options);try{if(options.changeSource)await assert.rejects(f.run(),/terminal but current source proof/);else{const result=await f.run();assert.equal(result.objective_completed,false);assert.equal(result.subobjective_completed,false);}assert.notEqual(f.claim.card_steps.steps[1].state,'passed');assert.ok(f.spawns<=3);if(options.verdict==='failed')assert.ok(f.cards.some(c=>c.identity.speaker?.id==='roman'&&c.plan.steps.find(s=>s.id==='review-current-work')?.state==='failed'));if(options.changeSource)assert.match(await fs.readFile(path.join(f.workspace,'README.md'),'utf8'),/changed by reviewer/);}finally{await f.cleanup();}
+});
+test('ordinary bootstrap preserves existing canonical plan and requires its private verifier authority',async()=>{
+ const f=await ordinaryFixture({claim:{card_steps:{revision:'existing'}}});try{await assert.rejects(f.run(),/matching private plan/);assert.equal(f.spawns,0);assert.equal(f.staffWrites,0);assert.deepEqual(f.claim.card_steps,{revision:'existing'});}finally{await f.cleanup();}
+});
+test('uncertain reviewer staffing is saved, reconciled and never replayed or launched',async()=>{
+ const f=await ordinaryFixture({staffFailure:true});try{await assert.rejects(f.run(),/Staffing amendment unconfirmed/);await assert.rejects(f.run(),/Staffing amendment unconfirmed/);assert.equal(f.staffWrites,1);assert.equal(f.spawns,0);assert.ok(JSON.parse(await fs.readFile(path.join(f.stateDir,'ordinary.json'),'utf8')).staffing_intent);}finally{await f.cleanup();}
+});
+test('ordinary entry refuses legacy pending receipt instead of duplicating an existing process',async()=>{
+ const f=await ordinaryFixture();try{await fs.mkdir(f.stateDir);await fs.writeFile(path.join(f.stateDir,'receipt.json'),JSON.stringify({pending:{action:'start'}}));await assert.rejects(f.run(),/explicit reconciliation/);assert.equal(f.spawns,0);assert.equal(f.staffWrites,0);}finally{await f.cleanup();}
+});
+test('ordinary saved plan rejects owner changes and stale source without new specialist launches',async()=>{
+ const f=await ordinaryFixture();try{await f.run();await fs.appendFile(path.join(f.workspace,'README.md'),'new source');await assert.rejects(f.run(),/terminal but current source proof/);assert.equal(f.spawns,2);f.claim.owner='other';await assert.rejects(f.run(),/active ownership/);assert.equal(f.spawns,2);}finally{await f.cleanup();}
+});
+test('ordinary resume reconciles lost canonical finish without another original process or submit',async()=>{
+ const f=await ordinaryFixture({loseFinish:true});try{
+  const first=await f.run();assert.equal(first.subobjective_completed,false);assert.equal(f.spawns,1);
+  const receiptFile=path.join(f.stateDir,'continuity',f.submitted.job.id,'receipt.json');assert.equal(JSON.parse(await fs.readFile(receiptFile,'utf8')).pending.action,'finish');
+  const resumed=await f.run();assert.equal(resumed.subobjective_completed,true);assert.equal(f.spawns,2);assert.equal(JSON.parse(await fs.readFile(receiptFile,'utf8')).pending,null);
+  assert.equal(f.calls.filter(c=>c.name==='relay_execution'&&c.args.action==='submit').length,1);
+  assert.equal(f.calls.filter(c=>c.name==='relay_execution'&&c.args.action==='finish'&&c.args.job_id===f.submitted.job.id).length,1,'readback must not replay finish');
+ }finally{await f.cleanup();}
+});
+test('explicit legacy resume still reaches the original bounded session and leaves specialist review pending',async()=>{
+ const f=await ordinaryFixture(),config={project:'fixture',assignment:'fixture',owner:'fixture',branch:'relay/fixture',executor_id:'fixture',job_id:f.submitted.job.id};
+ try{
+  const spawnWorker=(good)=> (_cmd,args,options)=>{if(good)assert.ok(args.includes('resume'));return spawn(process.execPath,['-e',`process.stdin.resume();process.stdin.on('end',()=>{console.log(JSON.stringify({type:'thread.started',thread_id:'legacy-session'}));${good?"console.log(JSON.stringify({type:'turn.completed'}));":"process.exitCode=1;"}});`],options);};
+  const first=await runExecution({workspace:f.workspace,stateDir:f.stateDir,config,rpc:f.rpc,getVersion:()=> 'synthetic',spawnProcess:spawnWorker(false)});assert.equal(first.state,'failed');
+  const resumed=await runOrdinaryExecution({workspace:f.workspace,stateDir:f.stateDir,config:{...config,resume:true},rpc:f.rpc,getVersion:()=> 'synthetic',spawnProcess:spawnWorker(true)});
+  assert.equal(resumed.state,'succeeded');assert.equal(resumed.specialist_workflow_pending,true);assert.equal(resumed.objective_completed,false);assert.equal(f.staffWrites,0);
+ }finally{await f.cleanup();}
+});
+test('ordinary staffing lost response after application continues only from exact independent readback',async()=>{
+ const f=await ordinaryFixture({staffLostAfter:true});try{assert.equal((await f.run()).subobjective_completed,true);assert.equal(f.staffWrites,1);assert.equal(f.spawns,2);}finally{await f.cleanup();}
+});
+test('ordinary resume refuses a replaced canonical plan without rewriting shared priorities',async()=>{
+ const f=await ordinaryFixture();try{await f.run();f.claim.card_steps.revision='f'.repeat(64);await assert.rejects(f.run(),/Canonical priorities changed/);assert.equal(f.spawns,2);assert.equal(f.claim.card_steps.revision,'f'.repeat(64));}finally{await f.cleanup();}
+});
+test('ordinary design work invokes the admitted design editor and preserves existing support bindings',async()=>{
+ const f=await ordinaryFixture({claim:{category:'design',primary_role:'art-director',primary_staff:'valentina',primary_team:'inspector',supporting_roles:['integrator'],supporting_staff:['rafael'],supporting_teams:['source']}});
+ try{assert.equal((await f.run()).subobjective_completed,true);assert.deepEqual(f.claim.supporting_staff,['rafael','margot']);assert.deepEqual(f.claim.supporting_teams,['source']);assert.ok(f.cards.some(c=>c.identity.speaker?.id==='margot'&&c.identity.lead.id==='valentina'));assert.equal(f.spawns,2);}finally{await f.cleanup();}
+});
+for(const [label,claim,person] of [['integration',{supporting_roles:['integrator'],supporting_staff:['rafael'],supporting_teams:['source']},'rafael'],['release',{category:'release'},'luca']])test('ordinary '+label+' work invokes a relevant specialist through actual process and canonical card',async()=>{
+ const f=await ordinaryFixture({claim});try{assert.equal((await f.run()).subobjective_completed,true);assert.ok(f.cards.some(c=>c.identity.speaker?.id===person&&c.plan.current==='review-current-work'));assert.equal(f.spawns,2);}finally{await f.cleanup();}
 });

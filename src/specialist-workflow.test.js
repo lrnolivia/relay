@@ -15,5 +15,15 @@ test('ordinary coordinator guidance makes activation and capability limits expli
  const workflow=specialistWorkflow(assignment);
  assert.equal(workflow.required,true);assert.equal(workflow.coordinator_only,true);assert.equal(workflow.participation,'routing');
  assert.match(workflow.steps.join(' '),/actual authorized host subagent/);
- assert.match(workflow.steps.join(' '),/single-job CLI execution does not itself/);
+ assert.match(workflow.steps.join(' '),/independent reviewer automatically/);
+});
+
+test('ordinary review uses canonical task responsibilities rather than one universal reviewer',async()=>{
+ const {ordinaryReviewResponsibility}=await import('./specialist-workflow.js');
+ for(const [category,role,person] of [['design','design-editor','margot'],['architecture','architect','ellis'],['release','release-captain','luca'],['maintenance','reliability-lead','gabriel'],['research','researcher','naomi'],['qa-verification','verifier','roman']]){
+  const r=ordinaryReviewResponsibility({category,primary_staff:'nico'});assert.equal(r.role,role);assert.equal(r.person.id,person);assert.ok(r.instruction);
+ }
+ assert.equal(ordinaryReviewResponsibility({category:'implementation',primary_staff:'nico',supporting_roles:['integrator','verifier']}).person.id,'rafael');
+ assert.equal(ordinaryReviewResponsibility({category:'qa-verification',primary_staff:'roman'}).person.id,'ellis');
+ assert.equal(ordinaryReviewResponsibility({goal:'Use every named person',paths:['release/design.js'],primary_staff:'nico'}).role,'verifier','unknown scope only receives general verification; prose/path guesses cannot select roles');
 });

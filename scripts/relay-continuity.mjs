@@ -231,7 +231,7 @@ export async function publishContinuityCard({config,plan,journal,rpc,readControl
 }
 
 // Observe only acknowledged canonical process receipts. No routing event emits work.
-export function specialistExecutionRpc({rpc,config,jobId,specialist,sourceSha,onObservation,onReceipt=async()=>{}}){
+export function specialistExecutionRpc({rpc,config,jobId,specialist,sourceSha,onObservation,onReceipt=async()=>{},terminalReadback=false}){
  return async(name,args)=>{
   const result=await rpc(name,args);
   if(!specialist||name!=='relay_execution'||!['start','finish'].includes(args.action))return result;
@@ -241,7 +241,7 @@ export function specialistExecutionRpc({rpc,config,jobId,specialist,sourceSha,on
      args.action==='start'&&(job.state!=='running'||JSON.stringify(process)!==JSON.stringify(args.process))||
      args.action==='finish'&&(!terminal.has(job.state)||JSON.stringify(job.result)!==JSON.stringify(args.result)))throw Error('Specialist observation requires the exact acknowledged execution receipt');
   const at=args.action==='start'?job.started_at:job.finished_at,head=args.action==='start'?sourceSha:job.result.head_sha;
-  if(!Number.isFinite(Date.parse(at))||Date.now()-Date.parse(at)>300000||Date.parse(at)>Date.now()+5000||!/^[a-f0-9]{40}$/.test(head||''))throw Error('Specialist execution observation is stale or has unknown source');
+  if(!Number.isFinite(Date.parse(at))||(!terminalReadback||args.action!=='finish')&&Date.now()-Date.parse(at)>300000||Date.parse(at)>Date.now()+5000||!/^[a-f0-9]{40}$/.test(head||''))throw Error('Specialist execution observation is stale or has unknown source');
   const observation={owner:specialist.owner,state:args.action==='start'?'running':job.state==='succeeded'?'blocked':job.state,source_sha:head,observed_at:at,
    evidence:'sha256:'+hash({job_id:job.id,attempt:job.attempt,revision:job.revision,executor_id:job.executor_id,process,at,result:job.result||null})};
   await onObservation(observation);await onReceipt(job,observation);
@@ -249,7 +249,7 @@ export function specialistExecutionRpc({rpc,config,jobId,specialist,sourceSha,on
  };
 }
 
-export async function runContinuityExecution({config,workspace,stateDir,rpc,runExecution,nativeHost}){
+export async function runContinuityExecution({config,workspace,stateDir,rpc,runExecution,nativeHost,verifyStage}){
  workspace=await fs.realpath(workspace);
  const plan=validateContinuityPlan(config.continuity),directory=path.resolve(stateDir);
  if(directory===workspace||directory.startsWith(workspace+path.sep))throw Error('Continuity receipts must live outside the checkout');
@@ -277,13 +277,14 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
   const saved=JSON.parse(await fs.readFile(filename,'utf8')),stage=expandedContinuityPlan(plan,saved.additions||[]).stages.find(s=>s.id===pending.stage);
   if(nativeHost&&!stage.command)return nativeHost.reconcile(pending,stage);
   if(stage.command){const proof=await verify(stage);return proof.passed?{state:'succeeded',evidence:proof.evidence}:null;}
-  const job=await jobStatus(pending.job_id||'job_'+hash({project:config.project,assignment:config.assignment,operation:pending.operation_id}));
+  const job=await jobStatus(pending.job_id||(stage.id===config.initial_stage?config.initial_job?.id:null)||'job_'+hash({project:config.project,assignment:config.assignment,operation:pending.operation_id}));
   if(!job||job.request!==(pending.execution_prompt||pending.prompt))return null;
   const proof=pending.specialist_receipt;
   const sourceCurrent=proof&&proof.job_digest===hash(job)&&proof.source_fingerprint===await sourceFingerprint(workspace);
   return {state:job.state,job_id:job.id,head_sha:job.result?.head_sha,specialist_execution:Boolean(sourceCurrent),source_current:Boolean(sourceCurrent),...(sourceCurrent?{observation:proof.observation}:{}),...(job.result?.continuity_additions?{continuity_additions:job.result.continuity_additions}:{})};
  };
  const verify=async stage=>{
+  if(verifyStage)return verifyStage(stage);
   const r=spawnSync(stage.verify[0],stage.verify.slice(1),{cwd:workspace,env:process.env,encoding:'utf8',timeout:120000,maxBuffer:1024*1024,stdio:['ignore','pipe','pipe']});
   return {passed:r.status===0,evidence:'sha256:'+hash({command:stage.verify,stdout:r.stdout,stderr:r.stderr,status:r.status}),fingerprint:hash({status:r.status,signal:r.signal})};
  };
@@ -327,7 +328,7 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
     const bytes=[];for(const file of files){const full=path.resolve(workspace,file);if(!full.startsWith(path.resolve(workspace)+path.sep))throw Error('Input escapes workspace');let st;try{st=await fs.lstat(full);}catch(e){if(e.code==='ENOENT'){bytes.push([file,'deleted']);continue;}throw e;}if(!st.isFile()||st.isSymbolicLink()||st.size>16*1024*1024)throw Error('Input is not bounded source');bytes.push([file,hash(await fs.readFile(full))]);}return {bytes,environment};
    },
    verify,reconcile,
-   prepare:async(stage,c)=>{if(stage.specialist_role||c.card_attribution.primary_staff||c.card_attribution.supporting_staff.length)stageSpecialist(stage,c.card_attribution);},
+   prepare:async(stage,c)=>{if(stage.id===config.initial_stage&&(await jobStatus(config.initial_job.id))?.state!=='queued')throw Error('Original execution is terminal but current source proof is unverified; reconcile without another launch');if(stage.specialist_role||c.card_attribution.primary_staff||c.card_attribution.supporting_staff.length)stageSpecialist(stage,c.card_attribution);},
    execute:async (pending,stage,onObservation)=>{
     const c=await readControl();if(c.held||c.global_held||!c.assignment_active||c.revision!==pending.control_revision||c.global_revision!==pending.global_revision||(pending.scope_revision&&c.canonical_record_sha!==pending.scope_revision)||(pending.provider&&pending.provider!==(config.provider||'codex'))||(stage.addition&&stage.addition.paths.some(p=>!insideExpansionScope(p,c.paths))))throw Error('Stop/revision changed before submit');
     if(stage.command){
@@ -342,12 +343,14 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
      if(result.head_sha!==git(['rev-parse','HEAD'])||before!==await outsideScope(c.paths))throw Error('Native source report or admitted scope changed; preserve work for reconciliation');return result;
     }
     const specialist=stage.specialist_role||c.card_attribution.primary_staff||c.card_attribution.supporting_staff.length?stageSpecialist(stage,c.card_attribution):null;
-    const executionPrompt=pending.prompt+(specialist?'\n\nBounded responsibility: '+specialist.role+'. '+specialist.instruction:'');
+    const adopted=stage.id===config.initial_stage?config.initial_job:null;
+    const executionPrompt=adopted?adopted.request:pending.prompt+(specialist?'\n\nBounded responsibility: '+specialist.role+'. '+specialist.instruction:'');
     if(pending.execution_prompt&&pending.execution_prompt!==executionPrompt)throw Error('Specialist execution responsibility changed; reconcile original intent');
     pending.execution_prompt=executionPrompt;pending.specialist=specialist;
     const intent=JSON.parse(await fs.readFile(filename,'utf8'));intent.stages[pending.stage].pending=pending;await persist(intent);
     let job=await jobStatus();
-    const expectedJob='job_'+hash({project:config.project,assignment:config.assignment,operation:pending.operation_id});
+    const expectedJob=adopted?.id||'job_'+hash({project:config.project,assignment:config.assignment,operation:pending.operation_id});
+    if(adopted){job=await jobStatus(expectedJob);if(!job||job.id!==adopted.id||job.request!==adopted.request||job.initial_head_sha!==adopted.initial_head_sha||job.owner!==config.owner||job.branch!==config.branch||job.state!=='queued')throw Error('Original execution is no longer safely queued; reconcile its exact receipt');}
     if(job?.id!==expectedJob){
      if(job&&!terminal.has(job.state))throw Error('An unreconciled execution occupies the assignment');
      const result=await rpc('relay_execution',{action:'submit',project:config.project,assignment:config.assignment,expected_owner:config.owner,expected_branch:config.branch,expected_head_sha:c.source_sha,operation_id:pending.operation_id,prompt:executionPrompt,required_capabilities:[(config.provider||'codex')+'-cli',...(config.source_checkpoints?['source-byte-checkpoints-v1']:[])]});job=result.job;
@@ -355,7 +358,7 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
     pending.job_id=job.id;
     // Persist binding before starting a process; a crash can reconcile this job.
     const saved=JSON.parse(await fs.readFile(filename,'utf8'));saved.stages[pending.stage].pending=pending;await persist(saved);
-    const result=await runExecution({config:{...config,job_id:job.id,continuity:undefined,resume:false,...(plan.expansion?{continuity_discovery:{goal_digest:hash(plan.expansion.original_goal),profiles:Object.keys(plan.expansion.profiles),original_criteria:plan.criteria}}:{})},workspace,stateDir:path.join(directory,job.id),rpc:specialistExecutionRpc({rpc,config,jobId:job.id,specialist,sourceSha:c.source_sha,onObservation,onReceipt:async(job,observation)=>{
+    const result=await runExecution({config:{...config,job_id:job.id,continuity:undefined,resume:false,coordinator_stage:stage.id,coordinator_specialist:specialist,...(plan.expansion?{continuity_discovery:{goal_digest:hash(plan.expansion.original_goal),profiles:Object.keys(plan.expansion.profiles),original_criteria:plan.criteria}}:{})},workspace,stateDir:path.join(directory,job.id),rpc:specialistExecutionRpc({rpc,config,jobId:job.id,specialist,sourceSha:c.source_sha,onObservation,onReceipt:async(job,observation)=>{
      if(!terminal.has(job.state))return;
      pending.specialist_receipt={job_digest:hash(job),source_fingerprint:await sourceFingerprint(workspace),observation};
      const saved=JSON.parse(await fs.readFile(filename,'utf8'));saved.stages[pending.stage].pending=pending;await persist(saved);

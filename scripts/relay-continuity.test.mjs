@@ -189,3 +189,14 @@ for(const state of ['failed','cancelled'])test('explicit specialist '+state+' ca
  const result=await f.run({execute:async()=>({state,specialist_execution:true})});
  assert.equal(result.objective_completed,false);assert.equal(result.stages.a.state,'parked');assert.equal(result.stages.a.receipt,null);
 });
+test('terminal readback keeps historical process time while fresh launch observations still reject stale receipts',async()=>{
+ const {specialistExecutionRpc}=await import('./relay-continuity.mjs');
+ const sha='a'.repeat(40),at=new Date(Date.now()-3600000).toISOString(),config={project:'relay',assignment:'fixture',owner:'worker',branch:'relay/fixture'},result={state:'succeeded',exit_code:0,session_id:'real-fixture-session',head_sha:sha};
+ const job={id:'job-fixture',...config,initial_head_sha:sha,executor_id:'fixture',revision:4,attempt:1,process:{pid:42,host:'fixture',adapter:'codex-cli'},state:'succeeded',started_at:at,finished_at:at,result};
+ const args={action:'finish',job_id:job.id,executor_id:job.executor_id,expected_revision:3,result},observations=[];
+ const options={rpc:async()=>({ok:true,job}),config,jobId:job.id,specialist:{owner:{staff:'roman',team:'inspector'}},sourceSha:sha,onObservation:async o=>observations.push(o)};
+ await assert.rejects(specialistExecutionRpc(options)('relay_execution',args),/stale/);
+ await specialistExecutionRpc({...options,terminalReadback:true})('relay_execution',args);
+ assert.equal(observations[0].observed_at,at);assert.equal(observations[0].state,'blocked');
+ job.state='running';job.revision=3;await assert.rejects(specialistExecutionRpc({...options,terminalReadback:true})('relay_execution',{action:'start',job_id:job.id,executor_id:job.executor_id,expected_revision:2,process:job.process}),/stale/);
+});
