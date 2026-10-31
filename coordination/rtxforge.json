@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T22:57:12.841Z",
+  "updated_at": "2026-10-31T23:01:48.621Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22390,7 +22390,8 @@
         "providers/glass-overlay/EffectControls.h",
         "windows/feeder-panel/EffectBridge.h",
         "windows/feeder-panel/rtxforge-panel.cpp",
-        "tests/test_reshade_effects.py"
+        "tests/test_reshade_effects.py",
+        "windows/build/Build-FeederPanel.ps1"
       ],
       "resources": [
         "rtxforge-overlay-layout",
@@ -22398,7 +22399,7 @@
       ],
       "goal": "Repair shared overlay layout, alignment, clipping and stacking defects reported in Side Panel, Advanced and Bar without changing approved glass identity. Rebuild live prototype and verify rendered states across normal/larger text and scale.",
       "acceptance": "Advanced sidebar/content and scroll bounds align; Bar header, controls, footer and attached popovers stay reachable and padded; glyphs/labels center on their surfaces; prototype scene toolbar never obscures welcome toast; all3 layouts preserve controls and approved Clear materials; focused native regression checks and bounded screenshot review pass.",
-      "next_action": "Implement per-game ReShade automatic and custom ZIP/file import in Tools, verify hash-guarded restoration, and integrate dynamic shader parameter discovery while finishing overlay/Game Mode parity.",
+      "next_action": "Validate reviewed ReShade imports, compile the live shader reflection bridge, and expose discovered effect controls in the glass overlay while retaining the approved layout fixes.",
       "category": "design",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -22422,8 +22423,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T22:57:12.841Z",
-      "lease_until": "2026-11-01T10:57:12.841Z"
+      "updated_at": "2026-10-31T23:01:48.621Z",
+      "lease_until": "2026-11-01T11:01:48.621Z"
     }
   ]
 }
