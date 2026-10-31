@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T04:23:36.783Z",
+  "updated_at": "2026-10-31T04:38:50.369Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21960,14 +21960,16 @@
         "engine/tests/test_v13_core_hardening.py",
         "VERSION",
         "docs/releases/1.0-beta.md",
-        "windows/README.md"
+        "windows/README.md",
+        "windows/overlay-rmlui/",
+        "windows/feeder-panel/"
       ],
       "resources": [
         "rtxforge-automatic-renodx-hdr"
       ],
       "goal": "Add optional automatic per-game RenoDX HDR installation, matching and verified downloads; prefer managed OptiScaler ReShade side-loading and use standalone ReShade where compatible. Park Game Mode architecture work.",
       "acceptance": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
-      "next_action": "ME2 must launch and complete its live Feeder/HDR test before shipping, per latest user requirement. EA signed in; launch redirects to Steam then returns Play with no game process. Diagnose launcher handoff preserving installed stacks and saves; finish live test, restore exact original configs, update notes and require exact-head CI before Beta12.",
+      "next_action": "ME2 launch fixed: hidden Steam Big Picture keyboard interstitial cleared. Actual ME2 3D, RenoDX HDR+NR co-load and active evaluations verified. Opening overlay causes repeatable black band on baseline without new HDR, independent of NR cost meter. Fix DX11 state restoration compatibility with ReShade tracked pipeline; test actual game before Beta12 delivery, preserve original settings.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21991,8 +21993,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T04:23:36.783Z",
-      "lease_until": "2026-10-31T16:23:36.783Z"
+      "updated_at": "2026-10-31T04:38:50.369Z",
+      "lease_until": "2026-10-31T16:38:50.369Z"
     }
   ]
 }
