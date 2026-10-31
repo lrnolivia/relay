@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T00:45:34.868Z",
+  "updated_at": "2026-10-31T01:08:49.060Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21813,7 +21813,15 @@
         "windows/overlay-rmlui/GlassRuntime.cpp",
         "providers/feeder-panel/previous.json",
         "scripts/vulkan_dlssg_provider.py",
-        "tests/test_vulkan_dlssg_provider.py"
+        "tests/test_vulkan_dlssg_provider.py",
+        "scripts/glass_preferences.py",
+        "scripts/linux_overlay_host.py",
+        "tests/test_glass_preferences.py",
+        "tests/test_vulkan_app_routes.py",
+        "tests/test_cross_os_adapt.py",
+        "tests/linux_runtime/test_vulkan_cross_os.py",
+        "tests/linux_runtime/test_proton_overlay.py",
+        "tests/linux_runtime/test_linux_overlay_host.py"
       ],
       "resources": [
         "rtxforge-managed-provider-downloads",
@@ -21823,7 +21831,7 @@
       ],
       "goal": "Resolve supported Feeder/Vulkan packages automatically; align desktop overlay settings with the shipped glass overlay; make managed overlay refresh results visible.",
       "acceptance": "No normal installation requires users to supply Feeder or Vulkan stacks. Resolve pinned verified packages automatically, retain optional advanced local overrides and original-file recovery, and fail with actionable download errors rather than import instructions. Desktop and Game Mode settings reflect real Sidebar/Advanced/Bottom Bar, Clear/Light/Dark/custom appearance, typography/scale and other current overlay preferences with consistent persistence. Show a visible truthful managed-overlay refresh result, including updated/current/blocked games; preserve result counts across retries and avoid repeated notifications. Verify cold-cache and integrity failure paths, settings roundtrip/native builds and refresh lifecycle. Preserve human attribution and notices. Prepare reviewable exact-source delivery and follow-on beta through normal green checks.",
-      "next_action": "Cold-cache Feeder download verified with all14 files. Implement shared glass INI desktop controls/live reload; cumulative visible refresh result. Reconcile pinned production Vulkan runtime overrides and explicit preserved migration of unrecorded old panels, recover absent owned bridge files, then cross-OS revision handling and production repair of five blocked targets.",
+      "next_action": "Five real game repairs applied with exact-hash recovery and rollback; Vulkan production runtime revalidated after stopping old helper. Seven Vulkan route tests pass including Windows-to-Linux-to-Windows backup adoption/repair/restore and corrupt-backup refusal. Six cross-OS engine tests pass with production Windows fcntl shim. Native Dx11/Dx12 SDR/HDR checks and Windows build pass. Complete uniform appearance JSON bridge for Linux/Windows settings, visible cumulative refresh summary, remaining regressions and exact-source beta delivery.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21847,8 +21855,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T00:45:34.868Z",
-      "lease_until": "2026-10-31T12:45:34.868Z"
+      "updated_at": "2026-10-31T01:08:49.060Z",
+      "lease_until": "2026-10-31T13:08:49.060Z"
     }
   ]
 }
