@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T03:27:37.304Z",
+  "updated_at": "2026-10-31T03:32:58.650Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21953,14 +21953,16 @@
         "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
         "windows/RtxForge.Windows/MainWindow.Features.cs",
         "windows/RtxForge.Windows/Models/Models.cs",
-        "windows/build/Bundle-Engine.ps1"
+        "windows/build/Bundle-Engine.ps1",
+        ".github/workflows/windows-build.yml",
+        ".github/workflows/linux-build.yml"
       ],
       "resources": [
         "rtxforge-automatic-renodx-hdr"
       ],
       "goal": "Add optional automatic per-game RenoDX HDR installation, matching and verified downloads; prefer managed OptiScaler ReShade side-loading and use standalone ReShade where compatible. Park Game Mode architecture work.",
       "acceptance": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
-      "next_action": "Finish automatic per-game HDR catalog/dependency/side-load transactions and desktop Tools controls; verify native build, focused integrity/restore tests and cold-cache real package preparation. Bundle upstream HDR notices. Game Mode shell work remains parked.",
+      "next_action": "Register focused HDR integrity/recovery tests in both native CI gates; verify desktop Tools integration and automatic real-package preparation. Keep Game Mode architecture parked; Vulkan HDR layer remains explicitly unavailable pending implementation.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21984,8 +21986,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T03:27:37.304Z",
-      "lease_until": "2026-10-31T15:27:37.304Z"
+      "updated_at": "2026-10-31T03:32:58.650Z",
+      "lease_until": "2026-10-31T15:32:58.650Z"
     }
   ]
 }
