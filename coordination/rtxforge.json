@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T07:31:07.836Z",
+  "updated_at": "2026-10-31T07:40:15.200Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22056,7 +22056,9 @@
         "prototypes/overlay-rmlui/CMakeLists.txt",
         "providers/skynizz-bridge/panel-candidate.json",
         ".github/workflows/windows-build.yml",
-        ".github/workflows/linux-build.yml"
+        ".github/workflows/linux-build.yml",
+        "tests/ui_game_mode.py",
+        "windows/tests/test_review_copy.py"
       ],
       "resources": [
         "overlay-settings-native-ui",
@@ -22064,7 +22066,7 @@
       ],
       "goal": "Put overlay update/settings actions and descriptions inside native row cards; use exact layout names Side Panel, Advanced, Bar in desktop and actual overlay.",
       "acceptance": "Native Windows overlay settings have no detached update button/description/status block; Update Overlays and Last overlay update use accessible responsive settings rows. Layout illustrations preserved and visible option names match Side Panel, Advanced, Bar on Windows/Linux and actual overlay. Preserve persisted layout IDs, review flow, settings and Game Mode parked scope. Build and inspect native affected UI.",
-      "next_action": "Owner-authored draft PR 131 open at 1e63f470. Add HDR queue tests to both platform CI jobs, then wait exact checks and integrate only green source. Local builds and 119 tests plus 28 lifecycle checks passed; prototype open.",
+      "next_action": "PR 131 at f8fccd673330cd4d3515a5c717fd059f3e1c1265: exact Windows native builds and tests pass; Linux stale layout fixture corrected. Canonical CLI used because MCP engine is stale after Runner engine update. Wait exact CI then squash integrate; no beta publication. Prototype open.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -22087,8 +22089,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T07:31:07.836Z",
-      "lease_until": "2026-10-31T19:31:07.836Z"
+      "updated_at": "2026-10-31T07:40:15.200Z",
+      "lease_until": "2026-10-31T19:40:15.200Z"
     }
   ]
 }
