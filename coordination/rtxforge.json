@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T07:07:40.516Z",
+  "updated_at": "2026-10-31T07:13:40.841Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22051,7 +22051,10 @@
         "windows/RtxForge.Windows/Services/NativePanelCoordinator.cs",
         "scripts/linux_overlay_host.py",
         "providers/skynizz-bridge/ForgePanelChannel.h",
-        "providers/glass-overlay/HdrControls.h"
+        "providers/glass-overlay/HdrControls.h",
+        "windows/overlay-rmlui/CMakeLists.txt",
+        "prototypes/overlay-rmlui/CMakeLists.txt",
+        "providers/skynizz-bridge/panel-candidate.json"
       ],
       "resources": [
         "overlay-settings-native-ui",
@@ -22059,7 +22062,7 @@
       ],
       "goal": "Put overlay update/settings actions and descriptions inside native row cards; use exact layout names Side Panel, Advanced, Bar in desktop and actual overlay.",
       "acceptance": "Native Windows overlay settings have no detached update button/description/status block; Update Overlays and Last overlay update use accessible responsive settings rows. Layout illustrations preserved and visible option names match Side Panel, Advanced, Bar on Windows/Linux and actual overlay. Preserve persisted layout IDs, review flow, settings and Game Mode parked scope. Build and inspect native affected UI.",
-      "next_action": "Finish HDR full Advanced page and Side Panel/Bar popout, known-build metadata and queued startup edits after game close, provider stack labels; native renderer and controller input checks passed. Complete tests for queued edits/drift, host integration, code/visual review and leave ready prototype.",
+      "next_action": "Finish verified HDR startup controls and queue tests, actual runtime stack labels, then native builds and final UI confirmation.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -22082,8 +22085,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T07:07:40.516Z",
-      "lease_until": "2026-10-31T19:07:40.516Z"
+      "updated_at": "2026-10-31T07:13:40.841Z",
+      "lease_until": "2026-10-31T19:13:40.841Z"
     }
   ]
 }
