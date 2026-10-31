@@ -137,3 +137,50 @@ test('changed source inputs remove old current-owner observations before the fir
  await f.run({journal,observe:async state=>seen.push(structuredClone(state))});
  assert.equal(seen[0].stages.a.observation,null);assert.equal(seen[0].stages.a.receipt,null);
 });
+
+test('CLI canonical start and finish drive specialist cards, and reject foreign or stale process receipts',async()=>{
+ const {specialistExecutionRpc,continuityCardProjection}=await import('./relay-continuity.mjs');
+ const {stageSpecialist}=await import('../src/specialist-workflow.js');
+ const {assignmentCardContext,validateCardStepsPublication}=await import('../src/relay-card-steps.js');
+ const {contextCardModel}=await import('../src/relay-context-card-model.js');
+ const p=plan(),sha='b'.repeat(40),claim={id:'fixture',owner:'worker',branch:'relay/fixture',state:'active',lease_until:new Date(Date.now()+3600000).toISOString(),primary_staff:'nico',primary_team:'runner',supporting_staff:['roman'],supporting_teams:['inspector']};
+ const config={project:'relay',assignment:claim.id,owner:claim.owner,branch:claim.branch},specialist=stageSpecialist({id:'a',kind:'test'},claim);
+ const journal={schema:1,plan_digest:createHash('sha256').update(JSON.stringify(p)).digest('hex'),stages:{a:{state:'dispatching'}}},cards=[];
+ let response;
+ const rpc=specialistExecutionRpc({rpc:async()=>response,config,jobId:'job-fixture',specialist,sourceSha:sha,onObservation:async observation=>{
+  journal.stages.a.observation={...observation,input_digest:'c'.repeat(64)};
+  claim.card_steps=validateCardStepsPublication(continuityCardProjection({plan:p,journal,assignment:claim}),claim,p.objective_digest);
+  cards.push(contextCardModel({progress:[assignmentCardContext(claim)]}));
+ }});
+ const process={pid:123,host:'synthetic-fixture',version:'fixture',adapter:'codex-cli'},now=new Date().toISOString();
+ const job={id:'job-fixture',project:'relay',assignment:claim.id,owner:claim.owner,branch:claim.branch,initial_head_sha:sha,executor_id:'test-executor',attempt:1,revision:3,process,state:'running',started_at:now};
+ const args={action:'start',job_id:job.id,expected_revision:2,executor_id:job.executor_id,process};
+ for(const change of [{owner:'other'},{id:'foreign'},{initial_head_sha:'d'.repeat(40)},{started_at:'2000-01-01T00:00:00Z'},{revision:2},{process:{...process,pid:999}}]){
+  response={ok:true,job:{...job,...change}};await assert.rejects(rpc('relay_execution',args),/Specialist/);
+ }
+ assert.equal(cards.length,0);
+ response={ok:true,job};await rpc('relay_execution',args);
+ assert.equal(cards[0].identity.speaker.id,'roman');assert.equal(cards[0].identity.lead.id,'nico');assert.equal(cards[0].plan.passed,0);
+ const result={state:'succeeded',exit_code:0,session_id:'fixture-session',head_sha:sha};
+ response={ok:true,job:{...job,revision:4,state:'succeeded',result,finished_at:now}};
+ await rpc('relay_execution',{...args,action:'finish',expected_revision:3,result});
+ assert.equal(cards.at(-1).plan.steps[0].state,'blocked');assert.equal(cards.at(-1).plan.passed,0,'process completion is not verified acceptance');
+});
+
+test('recovered old specialist result cannot gain ownership of new source or a fresh observation time',async()=>{
+ const f=fixture();f.plan.stages=f.plan.stages.slice(0,1);f.plan.criteria=['A'];
+ f.options.execute=async()=>{throw Error('Interrupted actual execution')};
+ const journal=await f.run(),oldTime='2026-01-01T00:00:00Z';
+ journal.stages.a.observation={owner:{staff:'roman',team:'inspector'},input_digest:'old',source_sha:'b'.repeat(40),observed_at:oldTime,state:'running'};
+ f.versions.a=2;f.control.source_sha='e'.repeat(40);f.passed.a=true;
+ const result=await f.run({journal,reconcile:async()=>({state:'succeeded',head_sha:'b'.repeat(40),observation:journal.stages.a.observation})});
+ assert.equal(result.stages.a.observation,null);assert.equal(result.stages.a.receipt.owner,undefined);
+});
+test('promised specialist execution precedes a green verifier; pre-launch staffing blockers leave no uncertain work',async()=>{
+ const f=fixture();f.plan.stages=f.plan.stages.slice(0,1);f.plan.criteria=['A'];f.plan.stages[0].specialist_role='verifier';f.passed.a=true;
+ let saved,ready=false,launched=0;
+ const options={persist:async value=>{saved=structuredClone(value)},prepare:async()=>{if(!ready)throw Error('Staffing required')},execute:async()=>{launched++;return {state:'succeeded',specialist_execution:true}}};
+ await assert.rejects(f.run(options),/Staffing required/);assert.equal(saved.stages.a.pending,undefined);assert.equal(launched,0);
+ ready=true;const result=await f.run({...options,journal:saved});assert.equal(launched,1);assert.equal(result.objective_completed,true);
+ await f.run({...options,journal:result});assert.equal(launched,1,'matching completed specialist work is not repeated');
+});

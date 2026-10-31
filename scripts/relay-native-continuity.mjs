@@ -1,10 +1,11 @@
+import {stageSpecialist,validateDelegationReceipt} from '../src/specialist-workflow.js';
 import {validCardOwner} from '../src/relay-card-steps.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import {randomUUID} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
-import {runContinuityExecution} from './relay-continuity.mjs';
+import {runContinuityExecution,sourceFingerprint} from './relay-continuity.mjs';
 import {expansionDigest,validateContinuityAdditions} from '../packages/runner/src/continuity-expansion.mjs';
 import {testMaintenanceGuidance,evaluateTestMaintenance,testMaintenanceSummary} from '../src/test-maintenance.js';
 
@@ -58,8 +59,9 @@ function authorizeRpc(name,args,config){
 function validateReply(request,value){
  if(!value||typeof value!=='object'||Array.isArray(value)||Buffer.byteLength(JSON.stringify(value))>LIMIT)throw Error('Native reply must be a bounded object');
  if(request.kind==='execute'){
-  if(Object.keys(value).some(k=>!['state','summary','head_sha','continuity_additions','test_maintenance_report'].includes(k))||!terminal.has(value.state)||typeof value.summary!=='string'||!value.summary.trim()||value.summary.length>2000||!/^[a-f0-9]{40}$/.test(value.head_sha||''))throw Error('Native work requires a terminal attributed report, never a process or objective claim');
+  if(Object.keys(value).some(k=>!['state','summary','head_sha','continuity_additions','test_maintenance_report','agent_id'].includes(k))||!terminal.has(value.state)||typeof value.summary!=='string'||!value.summary.trim()||value.summary.length>2000||!/^[a-f0-9]{40}$/.test(value.head_sha||''))throw Error('Native work requires a terminal attributed report, never a process or objective claim');
   if(value.test_maintenance_report!==undefined&&(!value.test_maintenance_report||typeof value.test_maintenance_report!=='object'||Array.isArray(value.test_maintenance_report)||Buffer.byteLength(JSON.stringify(value.test_maintenance_report))>65536))throw Error('Native test-maintenance report must be a bounded object');
+  if(request.data.specialist && (typeof value.agent_id!=='string'||!value.agent_id))throw Error('Specialist result requires its actual delegated agent identity');
   validateContinuityAdditions(value.continuity_additions||[]);
  }else if(request.kind==='review'){
   if(Object.keys(value).some(k=>!['verdict','preserves_goal','goal_digest','within_authority','sensitive_permissions','paid_services','canonical_key','reason'].includes(k))||!['admit','reject','authority-required'].includes(value.verdict))throw Error('Native coordinator review is a decision, not executable worker data');
@@ -80,16 +82,17 @@ export async function openNativeChannel({directory,config,workspace,waitMs=30000
  if(directory===workspace||directory.startsWith(workspace+path.sep))throw Error('Native channel must remain outside source');
  const manifest={schema:1,adapter:'codex-native-tools',binding:Object.fromEntries(bindings.map(k=>[k,config[k]])),workspace,plan_digest:digest(config.continuity)};
  await writeOnce(path.join(directory,'manifest.json'),manifest);
- const exchange=async(kind,data,{stable=false,onStarted}={})=>{
+ const exchange=async(kind,data,{stable=false,onStarted,onDelegated}={})=>{
   if((await fs.readdir(directory)).filter(x=>x.endsWith('.request.json')).length>=512)throw Error('Native channel request budget exhausted; checkpoint and reconcile');
   const request={schema:1,kind,binding:manifest.binding,data,nonce:stable?null:randomUUID()},id=digest(request),packet={...request,id};
   await writeOnce(path.join(directory,id+'.request.json'),packet);
   // One owner is waiting at a time; this pointer is not the durable intent.
   await fs.writeFile(path.join(directory,'current.json.tmp'),JSON.stringify({id})+'\n',{mode:0o600});await fs.rename(path.join(directory,'current.json.tmp'),path.join(directory,'current.json'));
   const until=Date.now()+waitMs;
-  let startDelivered=false;
+  let startDelivered=false,delegationDelivered=false;
   while(Date.now()<until){
    if(onStarted&&!startDelivered)try{const started=await readJSON(path.join(directory,id+'.started.json'));if(started.request_digest!==id||started.operation_id!==data.pending.operation_id)throw Error('Native start binding changed');startDelivered=true;await onStarted(started);}catch(e){if(e.code!=='ENOENT')throw e;}
+   if(onDelegated&&!delegationDelivered)try{const delegated=await readJSON(path.join(directory,id+'.delegation.json'));validateDelegationReceipt(delegated,packet,Date.parse(delegated.launched_at));delegationDelivered=true;await onDelegated(delegated);}catch(e){if(e.code!=='ENOENT')throw e;}
    try{const reply=await readJSON(path.join(directory,id+'.response.json'));if(reply.request_digest!==id)throw Error('Native reply is for another request');if(reply.error)throw Error('Native tool request failed; reconcile original intent');return validateReply(packet,reply.value);}
    catch(e){if(e.code!=='ENOENT')throw e;}
    await new Promise(resolve=>setTimeout(resolve,100));
@@ -112,15 +115,20 @@ export async function openNativeChannel({directory,config,workspace,waitMs=30000
   review:(proposal,context)=>exchange('review',{proposal,context}),
   execute:async(pending,stage,context,onObservation)=>{
    let observation=null;
-   const started=async receipt=>{if(!receipt.owner)return;observation={state:'running',owner:receipt.owner,source_sha:context.source_sha,observed_at:receipt.at,evidence:'sha256:'+digest(receipt)};await onObservation?.(observation);};
-   const value=withTestMaintenance(await exchange('execute',{pending,stage,context:{...context,test_maintenance:testMaintenanceGuidance({host:'codex'})}},{stable:true,onStarted:started}));
+   const specialist=context.card_attribution?.primary_staff||context.card_attribution?.supporting_staff?.length?stageSpecialist(stage,context.card_attribution):null;
+   const started=async receipt=>{if(!receipt.owner)return;observation={state:'running',owner:receipt.owner,source_sha:context.source_sha,observed_at:receipt.launched_at||receipt.at,evidence:'sha256:'+digest(receipt)};await onObservation?.(observation);};
+   const value=withTestMaintenance(await exchange('execute',{pending,stage,specialist,context:{...context,test_maintenance:testMaintenanceGuidance({host:'codex'})}},{stable:true,onStarted:specialist?undefined:started,onDelegated:specialist?started:undefined}));
    if(observation)await onObservation?.({...observation,state:value.state==='failed'?'failed':value.state==='cancelled'?'cancelled':'blocked',source_sha:value.head_sha,observed_at:new Date().toISOString(),evidence:'sha256:'+digest({operation_id:pending.operation_id,result:value})});
-   return {...value,adapter:'codex-native-tools',host:os.hostname(),objective_completed:false,process_verified:false,execution_evidence_source:'native-task-reported; acceptance checked by configured verifier'};
+   return {...value,specialist_execution:Boolean(specialist),adapter:'codex-native-tools',host:os.hostname(),objective_completed:false,process_verified:false,execution_evidence_source:'native-task-reported; acceptance checked by configured verifier'};
   },
   reconcile:async pending=>{
    const files=await fs.readdir(directory);
    for(const file of files.filter(x=>/^[a-f0-9]{64}\.request\.json$/.test(x))){const q=await readJSON(path.join(directory,file));if(q.kind!=='execute'||q.data.pending.operation_id!==pending.operation_id)continue;
-    try{const r=await readJSON(path.join(directory,q.id+'.response.json'));if(r.request_digest!==q.id||r.error)return null;return withTestMaintenance(validateReply(q,r.value));}catch(e){if(e.code==='ENOENT')return null;throw e;}
+    try{const r=await readJSON(path.join(directory,q.id+'.response.json'));if(r.request_digest!==q.id||r.error)return null;const value=withTestMaintenance(validateReply(q,r.value));
+     if(!q.data.specialist)return value;
+     const receipt=await readJSON(path.join(directory,q.id+'.delegation.json'));validateDelegationReceipt(receipt,q,Date.parse(receipt.launched_at));
+     if(value.agent_id!==receipt.agent_id)throw Error('Recovered specialist identity changed');
+     return {...value,specialist_execution:true,source_current:typeof r.source_fingerprint==='string'&&r.source_fingerprint===await sourceFingerprint(workspace),observation:{owner:receipt.owner,state:value.state==='succeeded'?'blocked':value.state,source_sha:value.head_sha,observed_at:r.observed_at||receipt.launched_at,evidence:'sha256:'+digest({receipt,result:value})}};}catch(e){if(e.code==='ENOENT')return null;throw e;}
    }
    return null;
   }
@@ -144,8 +152,16 @@ export async function pendingNativeRequest(directory){
 }
 export async function beginNativeWork(directory,id,owner=null){
  const p=await pendingNativeRequest(directory);if(p.request.id!==id||!requiresStart(p.request)||p.state!=='pending')throw Error('Native work is already started/answered or request changed; reconcile, do not execute again');
- if(owner!==null&&(p.request.kind!=='execute'||!validCardOwner(owner,p.request.data.context.card_attribution||{})))throw Error('Native observation requires an explicitly routed canonical fictional staff identity');
+ if(owner!==null&&(p.request.kind!=='execute'||p.request.data.specialist||owner.staff!==null||!validCardOwner(owner,p.request.data.context.card_attribution||{})))throw Error('Native observation requires an explicitly routed team; named staff requires an actual delegation receipt');
  await writeOnce(path.join(directory,id+'.started.json'),{...(owner?{owner}:{}),request_digest:id,operation_id:p.request.data.pending?.operation_id||p.request.id,at:new Date().toISOString()},{exclusive:true});
+}
+export async function recordNativeDelegation(directory,id,receipt){
+ const p=await readNativeRequest(directory,id);
+ if(p.request.kind!=='execute'||p.state!=='started')throw Error('Persist native start before delegation; reconcile answered work');
+ const started=await readJSON(path.join(directory,id+'.started.json'));
+ validateDelegationReceipt(receipt,p.request);
+ if(Date.parse(receipt.launched_at)<Date.parse(started.at))throw Error('Delegation predates its durable launch intent');
+ await writeOnce(path.join(directory,id+'.delegation.json'),receipt);
 }
 export async function replyNativeRequest(directory,id,value){
  let p=await pendingNativeRequest(directory);
@@ -159,8 +175,18 @@ export async function replyNativeRequest(directory,id,value){
   if(started?.request_digest!==id||started.operation_id!==p.request.data.pending.operation_id)throw Error('Late native result requires its exact start receipt');
  }
  validateReply(p.request,value);
+ if(p.request.data.specialist){
+  const receipt=await readJSON(path.join(directory,id+'.delegation.json'));
+  validateDelegationReceipt(receipt,p.request,Date.parse(receipt.launched_at));
+  if(value.agent_id!==receipt.agent_id)throw Error('Specialist result belongs to another actual agent');
+ }
  if(requiresStart(p.request)&&p.state==='pending')throw Error('Persist native work start before reporting its result');
- await writeOnce(path.join(directory,id+'.response.json'),{request_digest:id,value});
+ const filename=path.join(directory,id+'.response.json');
+ // Exact retries reuse original source proof and time, never refresh evidence.
+ try{const prior=await readJSON(filename);if(prior.request_digest!==id||digest(prior.value)!==digest(value))throw Error('Native packet identity changed; reconcile original intent');return;}catch(e){if(e.code!=='ENOENT')throw e;}
+ const manifest=await readJSON(path.join(directory,'manifest.json'));
+ const proof=p.request.data.specialist?{source_fingerprint:await sourceFingerprint(manifest.workspace),observed_at:new Date().toISOString()}:{};
+ await writeOnce(filename,{request_digest:id,value,...proof});
 }
 
 if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href){
@@ -170,6 +196,7 @@ if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1]
   const result=await runContinuityExecution({config,workspace:b,stateDir:c,rpc:channel.rpc,nativeHost:channel.nativeHost});console.log(JSON.stringify(result,null,2));
  }else if(action==='pending')console.log(JSON.stringify(await pendingNativeRequest(a)));
  else if(action==='begin')await beginNativeWork(a,b,c?JSON.parse(await fs.readFile(c,'utf8')):null);
+ else if(action==='delegate')await recordNativeDelegation(a,b,JSON.parse(await fs.readFile(c,'utf8')));
  else if(action==='reply')await replyNativeRequest(a,b,JSON.parse(await fs.readFile(c,'utf8')));
  else throw Error('Usage: relay-native-continuity.mjs run CONFIG CHECKOUT PRIVATE_RECEIPTS; pending CHANNEL; begin CHANNEL ID; reply CHANNEL ID PRIVATE_RESPONSE_FILE');
 }

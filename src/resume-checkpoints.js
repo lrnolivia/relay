@@ -1,3 +1,4 @@
+import {specialistWorkflow} from './specialist-workflow.js';
 import { readSourceRecoveryHints } from '../packages/runner/src/jobs.mjs';
 import { readPendingFeedback } from "./feedback-control.js";
 import { retired } from "./coordination-engine.js";
@@ -161,6 +162,7 @@ export function deriveResumeCheckpoint(input, now = new Date()) {
     // Delivered on every resume so Claude and Codex receive the same canonical
     // workflow without anyone copying it between chats. Kept out of the
     // checkpoint hash: guidance is policy, not assignment evidence.
+    specialist_workflow: retired(core) ? null : specialistWorkflow(input.assignment),
     test_maintenance: retired(core) ? null : testMaintenanceGuidance({ category: input.assignment?.category || null }),
     resume: {
       instruction: retired(core) ? "Assignment retired. Preserve its evidence; do not renew or resume it. Any future work requires fresh admission." : core.next_action || "Reconcile current canonical evidence before choosing the next action.",
