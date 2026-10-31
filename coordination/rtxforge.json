@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T06:59:26.184Z",
+  "updated_at": "2026-10-31T07:07:40.516Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22050,7 +22050,8 @@
         "tests/test_renodx_hdr_settings.py",
         "windows/RtxForge.Windows/Services/NativePanelCoordinator.cs",
         "scripts/linux_overlay_host.py",
-        "providers/skynizz-bridge/ForgePanelChannel.h"
+        "providers/skynizz-bridge/ForgePanelChannel.h",
+        "providers/glass-overlay/HdrControls.h"
       ],
       "resources": [
         "overlay-settings-native-ui",
@@ -22058,7 +22059,7 @@
       ],
       "goal": "Put overlay update/settings actions and descriptions inside native row cards; use exact layout names Side Panel, Advanced, Bar in desktop and actual overlay.",
       "acceptance": "Native Windows overlay settings have no detached update button/description/status block; Update Overlays and Last overlay update use accessible responsive settings rows. Layout illustrations preserved and visible option names match Side Panel, Advanced, Bar on Windows/Linux and actual overlay. Preserve persisted layout IDs, review flow, settings and Game Mode parked scope. Build and inspect native affected UI.",
-      "next_action": "Complete Impeccable Advanced control/state fixes, provider-stack telemetry and HDR popout/full page with verified per-game schema and explicit saved/restart behavior where live API unavailable. Existing custom HDR tests, borderless resolution-preservation and native app build pass; rebuild renderer/hosts, verify visuals and complete integration.",
+      "next_action": "Finish HDR full Advanced page and Side Panel/Bar popout, known-build metadata and queued startup edits after game close, provider stack labels; native renderer and controller input checks passed. Complete tests for queued edits/drift, host integration, code/visual review and leave ready prototype.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -22081,8 +22082,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T06:59:26.184Z",
-      "lease_until": "2026-10-31T18:59:26.184Z"
+      "updated_at": "2026-10-31T07:07:40.516Z",
+      "lease_until": "2026-10-31T19:07:40.516Z"
     }
   ]
 }
