@@ -1,4 +1,5 @@
 import {cardStepsPublicationSchema} from './relay-card-steps.js';
+import {nativeHandoffSchema} from './native-handoff.js';
 import {canonicalAdditionSchema} from '../packages/runner/src/continuity-expansion.mjs';
 import {
   callRunnerControlCore,
@@ -80,6 +81,11 @@ const schema = (properties, required = []) => ({
 });
 
 const DEFINITIONS = [
+  {
+    name:'relay_runner_delegate',
+    description:'COORDINATOR HANDOFF — prepare/read/started/result for actual native host specialists. Before ordinary stage work, prepare a bounded task for an already routed role using the current owner, record/source/objective digests and actual available host delegation tool. Persist the returned packet; launch once only when launch_required=true, then bind the real returned agent ID with started and report its actual result digest. Read reconciles lost replies and NEVER authorizes relaunch. Unknown launch ID requires reconciliation, not timeout/retry. Success awaits separate verification, never an acceptance pass. No raw prompt/transcript or secret input. Relay does not itself spawn host agents; missing host tools are an explicit blocker. Each mutation and card observation use one canonical CAS. Exact duplicates return original receipts; conflicting reuse rejects.',
+    inputSchema:nativeHandoffSchema,mutation:true
+  },
   ...feedbackToolDefinitions,
   {
     name: 'relay_runner_projects',
@@ -141,7 +147,7 @@ const DEFINITIONS = [
   },
   {
     name: 'relay_runner_coordinate',
-    description: 'COMMAND / TRANSACTION — perform one CAS-protected Runner queue, claim, amend, rescope, heartbeat, hold, handoff, complete, retire, or reconcile mutation. Read relay_runner_assignments/project first to obtain the current expected_record_sha and ownership. Claim resolves base_sha server-side; callers must omit it. Claim normally admits a branch that does not exist yet; to adopt an existing branch, pass its exact live head as expected_head_sha plus a reason, which are recorded on the claim. Completion requires a verified merged PR and synchronizes its queue row. Action-specific request fields are strict: heartbeat and hold require only id, owner and next_action; handoff requires only id, owner, successor and next_action. Do not pass branch or reason to these actions. rescope requires only id, owner, paths, resources and next_action; complete requires only id, owner, pr, work_accounted=true and evidence. reason is accepted only by amend, reconcile, retire and an adopting claim. A validation error lists every unsupported and missing field with the full contract of that action. Do not pass next_action to complete. Handoff supports queued-only assignments without starting execution. Reconcile repairs only the claimed queue row of a completed claim with matching owner and original pr; it re-verifies the merged identity, preserves acceptance, and is idempotent. Retirement records cancelled/superseded work without delivery or deletion: require current owner, disposition, reason, evidence, operation_id and expected_head_sha for claims (null only for an absent branch); superseded also requires superseded_by. Stop writers and account for retained work before retiring. On conflict/uncertain outcome, refresh canonical state before retrying; never replay blindly or take over ownership implicitly.',
+    description: 'COMMAND / TRANSACTION — perform one CAS-protected Runner queue, claim, amend, rescope, heartbeat, hold, handoff, complete, retire, or reconcile mutation. Read relay_runner_assignments/project first to obtain the current expected_record_sha and ownership. After admission, use the returned specialist_workflow.native_mcp action through relay_runner_delegate in this coordinator before bounded specialist work; routing alone is not execution. Claim resolves base_sha server-side; callers must omit it. Claim normally admits a branch that does not exist yet; to adopt an existing branch, pass its exact live head as expected_head_sha plus a reason, which are recorded on the claim. Completion requires a verified merged PR and synchronizes its queue row. Action-specific request fields are strict: heartbeat and hold require only id, owner and next_action; handoff requires only id, owner, successor and next_action. Do not pass branch or reason to these actions. rescope requires only id, owner, paths, resources and next_action; complete requires only id, owner, pr, work_accounted=true and evidence. reason is accepted only by amend, reconcile, retire and an adopting claim. A validation error lists every unsupported and missing field with the full contract of that action. Do not pass next_action to complete. Handoff supports queued-only assignments without starting execution. Reconcile repairs only the claimed queue row of a completed claim with matching owner and original pr; it re-verifies the merged identity, preserves acceptance, and is idempotent. Retirement records cancelled/superseded work without delivery or deletion: require current owner, disposition, reason, evidence, operation_id and expected_head_sha for claims (null only for an absent branch); superseded also requires superseded_by. Stop writers and account for retained work before retiring. On conflict/uncertain outcome, refresh canonical state before retrying; never replay blindly or take over ownership implicitly.',
     inputSchema: schema({
       project: projectSchema,
       action: { type: 'string', enum: MUTATIONS },
@@ -242,7 +248,7 @@ export async function callRunnerControl(name, args, env, apiOverride) {
   if (name === 'relay_cloud_deploy_project_version') {
     return deployProjectCloudVersion(env, args.project, args.version_id, args.message, { github: apiOverride });
   }
-  if (name === 'relay_runner_coordinate') {
+  if (name === 'relay_runner_coordinate' || name === 'relay_runner_delegate') {
     const api = apiOverride || ((path, options) => githubApiRequest(env, path, options));
     const control = runnerControlBase(env);
     const project = control === '/repos/lrnolivia/relay' && ['loew-inspector', 'loew-runner'].includes(args.project) ? 'relay' : args.project;

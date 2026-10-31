@@ -38,12 +38,15 @@ export function ordinaryReviewResponsibility(assignment) {
 
 export function specialistWorkflow(assignment = {}) {
   return {schema:1, coordinator_only:true, participation:'routing', canonical:'docs/relay/SPECIALIST_DELIVERY_20261031.md',
+    native_mcp:{tool:'relay_runner_delegate',actions:['prepare','read','started','result'],
+      next_action:'Before ordinary specialist stage work, use prepare with the current assignment owner, record/source/objective identity, an already routed role and your actual available host delegation tool. Keep task prompts private; submit only a bounded step label and intent digest. Launch only on the first confirmed launch_required packet, bind the real agent ID with started, then report its result. If prepared already exists, read/reconcile its actual launch; never launch again from a read or retry. Missing host delegation tools are an explicit blocker, not a missing standalone token.',
+      pending:(assignment.native_handoffs||[]).filter(x=>x.state!=='reported').map(x=>({operation_id:x.operation_id,step_id:x.step_id,state:x.state,agent_id:x.start?.agent_id||null,recovery:'Read the canonical handoff; do not relaunch.'}))},
     required:assignment.state === 'active', available_staff:[assignment.primary_staff,...(assignment.supporting_staff || [])].filter(Boolean),
     steps:[
       'Before ordinary implementation, the coordinator records the complete authorized acceptance plan with real stage-specific verifiers. Reuse a matching private plan; reconcile any pending execution before creating work.',
       'Choose relevant bounded specialist roles for the plan, including independent verification when required. Canonically admit missing supporting roles and read them back before launch; team membership alone is not staffing.',
-      'Run the native continuity coordinator in the current Codex task, or the ordinary CLI coordinator (which automatically runs a bounded worker and independent review when no private plan exists). For native specialist work: persist begin, invoke an actual authorized host subagent, attach its exact returned identity using delegate, then publish its actual result. Never substitute a persona label for a launched worker.',
-      'The adapter automatically publishes observed running/terminal states and verified acceptance. A missing host invocation capability or missing complete plan is an explicit coordinator blocker, never permission for workers to create agents.',
+      'For ordinary MCP chats use relay_runner_delegate in this current coordinator: prepare, invoke an actual authorized host subagent, started with its real ID, then result. The repository-local native continuity adapter remains available for existing private plans. Never substitute a persona label for a launched worker.',
+      'The MCP handoff automatically publishes observed running/result states only; successful native results await separate verification. The configured continuity verifier alone publishes verified acceptance. A missing host invocation capability or missing complete plan is an explicit coordinator blocker, never permission for workers to create agents.',
       'Ordinary CLI entry adopts the original queued job and runs a separately recorded independent reviewer automatically. Its default two-stage checklist is partial, not complete acceptance. Existing canonical priorities require their matching private plan; preserve the worker no-delegation boundary.'
     ]};
 }

@@ -30,7 +30,13 @@ test("authenticated endpoint preserves original tools and controls alongside the
   };
   const { result: { tools } } = await rpc("tools/list");
   // The exact inventory preserves every existing tool and the admitted additions.
-  assert.deepEqual(tools.filter(tool => tool.name !== HOST_PROBE_TOOL).map(tool => tool.name).sort(), [...originalTools, "relay_autonomy", "relay_context", "relay_execution", "relay_night_shift", "relay_skills", "relay_ui_request", "relay_test_card_action", "relay_card_action_sample", "relay_runner_feedback_submit", "relay_runner_feedback_peek", "relay_runner_feedback_status", "relay_runner_feedback_ack", "relay_test_card_static_standard", "relay_test_card_static_compat", "relay_test_card_lifecycle_standard"].sort());
+  assert.deepEqual(tools.filter(tool => tool.name !== HOST_PROBE_TOOL).map(tool => tool.name).sort(), [...originalTools, "relay_runner_delegate", "relay_autonomy", "relay_context", "relay_execution", "relay_night_shift", "relay_skills", "relay_ui_request", "relay_test_card_action", "relay_card_action_sample", "relay_runner_feedback_submit", "relay_runner_feedback_peek", "relay_runner_feedback_status", "relay_runner_feedback_ack", "relay_test_card_static_standard", "relay_test_card_static_compat", "relay_test_card_lifecycle_standard"].sort());
+  const native=tools.find(tool=>tool.name==='relay_runner_delegate');
+  assert.deepEqual(native.inputSchema.properties.action.enum,['prepare','read','started','result']);
+  assert.equal(native.inputSchema.additionalProperties,false);
+  assert.ok(native._meta.ui.resourceUri);
+  assert.ok(tools.find(tool=>tool.name==='relay_runner_coordinate').inputSchema.properties.request.properties.card_steps);
+  const nativeInit=(await rpc('initialize')).result;assert.match(nativeInit.instructions,/relay_runner_delegate/);
   const autonomy = tools.find(tool => tool.name === "relay_autonomy");
   assert.deepEqual(autonomy.securitySchemes, [{ type: "oauth2", scopes: [] }]);
   assert.deepEqual(autonomy.inputSchema.properties.action.enum, ["status", "hold", "resume", "quarantine", "wait", "recover_wait", "healthy", "approve", "rollback", "configure_build_guard"]);
