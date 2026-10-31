@@ -1,5 +1,6 @@
 import {getStaff, normalizeAssignmentStaff, staffMatchesRole} from './staff-registry.js';
 import {validCardOwner} from './relay-card-steps.js';
+import {continuityObjectiveDigest} from '../packages/runner/src/continuity-expansion.mjs';
 
 // These are stage responsibilities, not evidence that anyone has contributed.
 const roles = Object.freeze({implementation:'builder', test:'verifier', review:'verifier', runtime:'reliability-lead', ship:'release-captain'});
@@ -39,6 +40,7 @@ export function ordinaryReviewResponsibility(assignment) {
 export function specialistWorkflow(assignment = {}) {
   return {schema:1, coordinator_only:true, participation:'routing', canonical:'docs/relay/SPECIALIST_DELIVERY_20261031.md',
     native_mcp:{tool:'relay_runner_delegate',actions:['prepare','read','started','result'],
+      binding:{assignment:assignment.id||null,owner:assignment.owner||null,branch:assignment.branch||null,objective_digest:typeof assignment.goal==='string'&&typeof assignment.acceptance==='string'?continuityObjectiveDigest(assignment.goal,assignment.acceptance):null},
       next_action:'Before ordinary specialist stage work, use prepare with the current assignment owner, record/source/objective identity, an already routed role and your actual available host delegation tool. Keep task prompts private; submit only a bounded step label and intent digest. Launch only on the first confirmed launch_required packet, bind the real agent ID with started, then report its result. If prepared already exists, read/reconcile its actual launch; never launch again from a read or retry. Missing host delegation tools are an explicit blocker, not a missing standalone token.',
       pending:(assignment.native_handoffs||[]).filter(x=>x.state!=='reported').map(x=>({operation_id:x.operation_id,step_id:x.step_id,state:x.state,agent_id:x.start?.agent_id||null,recovery:'Read the canonical handoff; do not relaunch.'}))},
     required:assignment.state === 'active', available_staff:[assignment.primary_staff,...(assignment.supporting_staff || [])].filter(Boolean),
