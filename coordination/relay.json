@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T01:36:12.722Z",
+  "updated_at": "2026-10-31T01:39:06.516Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -9907,7 +9907,7 @@
       ],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-10-31T00:44:46.975Z",
       "objective_history": {
         "baseline": {
@@ -9958,7 +9958,7 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T01:36:12.722Z",
+      "updated_at": "2026-10-31T01:39:06.516Z",
       "amendment_count": 5,
       "amendments": [
         {
@@ -10276,7 +10276,8 @@
             }
           }
         }
-      ]
+      ],
+      "completed_at": "2026-10-31T01:39:06.516Z"
     }
   ],
   "claims": [
@@ -19918,7 +19919,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "db643f2764dfe85f9f6f1617f7fda0d5ba02b409",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-31T00:45:46.106Z",
       "objective_history": {
         "baseline": {
@@ -19935,8 +19936,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T01:36:12.722Z",
-      "lease_until": "2026-10-31T13:36:12.722Z",
+      "updated_at": "2026-10-31T01:39:06.516Z",
+      "lease_until": "2026-10-31T13:39:06.516Z",
       "card_steps": {
         "schema": "relay-card-steps/v1",
         "assignment": "relay-card-corrections-20261031",
@@ -20288,7 +20289,13 @@
             }
           }
         }
-      ]
+      ],
+      "pr": 267,
+      "merged_head_sha": "4843bf93caa36464ae9361a6d01ceda85a7fc4e2",
+      "merge_commit_sha": "421df6a749fc8786102dff13140079b93dee9e15",
+      "evidence": "Released PR #267, human-merged by lrnolivia: tested head 4843bf93caa36464ae9361a6d01ceda85a7fc4e2, merge 421df6a749fc8786102dff13140079b93dee9e15. Exact-head local build and 1144 tests passed/2 existing platform skips; 151 focused tests passed; independent final review no blocker; 50 exact-head DOM captures in Library libfile_c3d925b8828481918eb3bc7f0ab53a0b. Main quality 41154749717 passed with 1145 passed/1 platform skip. Workers Build eb24cfbf-6c69-4473-8225-a12ef7f69cce succeeded, deployed version a1a9cf95-d86f-45ff-b642-e632d8789277 at 100%, authenticated health 200. Exact-source production MCP/resource/web/icon smoke 41155497425 passed. Retention 41155090347 attempt 1 failed before healthy registration; durable archive/restoration and absent operation reconciled; one supported workflow retry attempt 2 passed. Independent autonomy readback revision 100 records exact release healthy with archive 7f284409570d66178593541f35adcad043f60525561a2517ad6709630dcc7d88 and restore c5b002ee7cdc2b3b2e9c10c46edc5acfa6b200dc67d03e787e9d58a9d8e740bd; old baseline archives preserved. Actual own-assignment publication seq1-5 and independent progress/render readback verified receipt-bound team-only running then real verifier-passed step, complete:false; no named staff contributions fabricated. Real rtxForge registered icon initial/refresh hashes matched. Approved v4 assets unchanged and current v22 resource exact-byte verified; older aliases covered by exact-source tests, not separately live-probed. Native inline host acceptance remains unobserved: current-task expanded MCP Apps inventory empty. This limit is explicitly retained, not represented as passed. Old superseded assignment/private journals and unrelated held work preserved. All implementation/release work accounted; no uncertain mutation or running native verification process remains.",
+      "work_accounted": true,
+      "completed_at": "2026-10-31T01:39:06.516Z"
     }
   ],
   "migrated_from": "loew-inspector"
