@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T01:16:37.720Z",
+  "updated_at": "2026-10-31T01:27:39.937Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -9923,7 +9923,66 @@
             "at": "2026-10-31T00:44:46.975Z"
           }
         ]
-      }
+      },
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "relay-card-corrections-20261031",
+        "revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
+        "objective_digest": "cbe5b8b7d1c6fd44b28cb57a49f8c8f010e6cf76781750771827a4ae0366fee2",
+        "publisher": {
+          "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "branch": "relay/card-corrections-20261031"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "verify-live-card-data",
+            "label": "verify live card data",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "updated_at": "2026-10-31T01:27:39.937Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-31T01:27:39.937Z",
+          "by": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "reason": "Publish verified continuity checklist milestone",
+          "fields": [
+            "card_steps"
+          ],
+          "before": {
+            "card_steps": null
+          },
+          "after": {
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "relay-card-corrections-20261031",
+              "revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
+              "objective_digest": "cbe5b8b7d1c6fd44b28cb57a49f8c8f010e6cf76781750771827a4ae0366fee2",
+              "publisher": {
+                "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+                "branch": "relay/card-corrections-20261031"
+              },
+              "sequence": 1,
+              "complete": false,
+              "steps": [
+                {
+                  "id": "verify-live-card-data",
+                  "label": "verify live card data",
+                  "depends_on": [],
+                  "state": "pending",
+                  "receipt": null
+                }
+              ]
+            }
+          }
+        }
+      ]
     }
   ],
   "claims": [
@@ -19582,8 +19641,66 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T01:16:37.720Z",
-      "lease_until": "2026-10-31T13:16:37.720Z"
+      "updated_at": "2026-10-31T01:27:39.937Z",
+      "lease_until": "2026-10-31T13:27:39.937Z",
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "relay-card-corrections-20261031",
+        "revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
+        "objective_digest": "cbe5b8b7d1c6fd44b28cb57a49f8c8f010e6cf76781750771827a4ae0366fee2",
+        "publisher": {
+          "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "branch": "relay/card-corrections-20261031"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "verify-live-card-data",
+            "label": "verify live card data",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-31T01:27:39.937Z",
+          "by": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "reason": "Publish verified continuity checklist milestone",
+          "fields": [
+            "card_steps"
+          ],
+          "before": {
+            "card_steps": null
+          },
+          "after": {
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "relay-card-corrections-20261031",
+              "revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
+              "objective_digest": "cbe5b8b7d1c6fd44b28cb57a49f8c8f010e6cf76781750771827a4ae0366fee2",
+              "publisher": {
+                "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+                "branch": "relay/card-corrections-20261031"
+              },
+              "sequence": 1,
+              "complete": false,
+              "steps": [
+                {
+                  "id": "verify-live-card-data",
+                  "label": "verify live card data",
+                  "depends_on": [],
+                  "state": "pending",
+                  "receipt": null
+                }
+              ]
+            }
+          }
+        }
+      ]
     }
   ],
   "migrated_from": "loew-inspector"
