@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {cardIdentity,cardStaff,CARD_TEAMS} from './relay-card-identity.js';
 test('a routing lead is distinct from a receipt-bound current step owner',()=>{
  const record={primary_staff:'nico',primary_team:'runner',supporting_staff:['roman'],supporting_teams:['inspector']};
- const lead=cardIdentity(record);assert.equal(lead.relationship,'Assignment lead');assert.equal(lead.participation,'routing');assert.equal(lead.current_owner,null);
+ const lead=cardIdentity(record);assert.equal(lead.relationship,'Team update');assert.equal(lead.speaker,null);assert.equal(lead.participation,'routing');assert.equal(lead.current_owner,null);
  const work=cardIdentity(record,{current:'verify',steps:[{id:'verify',receipt:{id:'observed'},owner:{staff:'roman',team:'inspector'}}]});
  assert.equal(work.speaker.id,'roman');assert.equal(work.lead.id,'nico');assert.equal(work.team,'inspector');
 });
@@ -14,7 +14,7 @@ test('a named person keeps their canonical team while cross-team work stays expl
  const record={primary_staff:'nico',primary_team:'runner'};
  const plan={current:'verify',steps:[{id:'verify',receipt:{id:'observed'},owner:{staff:'rafael',team:'inspector'}}]};
  const current=cardIdentity(record,plan);assert.equal(current.team,'source');assert.equal(current.team_label,'Integrations');assert.equal(current.step_team,'inspector');assert.equal(current.step_team_label,'Design & QA');
- const next=cardIdentity({...record,primary_staff:'julian'},{steps:[]});assert.equal(next.team,'night-shift');assert.equal(next.assignment_team,'runner');assert.equal(next.relationship,'Assignment lead');
+ const next=cardIdentity({...record,primary_staff:'julian'},{steps:[]});assert.equal(next.team,'runner');assert.equal(next.assignment_team,'runner');assert.equal(next.relationship,'Team update');assert.equal(next.lead.id,'julian');
  assert.equal(cardIdentity({primary_team:'inspector'}).team,'inspector');
 });
 

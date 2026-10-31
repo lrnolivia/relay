@@ -1,3 +1,4 @@
+import {validCardOwner} from '../src/relay-card-steps.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
@@ -79,14 +80,16 @@ export async function openNativeChannel({directory,config,workspace,waitMs=30000
  if(directory===workspace||directory.startsWith(workspace+path.sep))throw Error('Native channel must remain outside source');
  const manifest={schema:1,adapter:'codex-native-tools',binding:Object.fromEntries(bindings.map(k=>[k,config[k]])),workspace,plan_digest:digest(config.continuity)};
  await writeOnce(path.join(directory,'manifest.json'),manifest);
- const exchange=async(kind,data,{stable=false}={})=>{
+ const exchange=async(kind,data,{stable=false,onStarted}={})=>{
   if((await fs.readdir(directory)).filter(x=>x.endsWith('.request.json')).length>=512)throw Error('Native channel request budget exhausted; checkpoint and reconcile');
   const request={schema:1,kind,binding:manifest.binding,data,nonce:stable?null:randomUUID()},id=digest(request),packet={...request,id};
   await writeOnce(path.join(directory,id+'.request.json'),packet);
   // One owner is waiting at a time; this pointer is not the durable intent.
   await fs.writeFile(path.join(directory,'current.json.tmp'),JSON.stringify({id})+'\n',{mode:0o600});await fs.rename(path.join(directory,'current.json.tmp'),path.join(directory,'current.json'));
   const until=Date.now()+waitMs;
+  let startDelivered=false;
   while(Date.now()<until){
+   if(onStarted&&!startDelivered)try{const started=await readJSON(path.join(directory,id+'.started.json'));if(started.request_digest!==id||started.operation_id!==data.pending.operation_id)throw Error('Native start binding changed');startDelivered=true;await onStarted(started);}catch(e){if(e.code!=='ENOENT')throw e;}
    try{const reply=await readJSON(path.join(directory,id+'.response.json'));if(reply.request_digest!==id)throw Error('Native reply is for another request');if(reply.error)throw Error('Native tool request failed; reconcile original intent');return validateReply(packet,reply.value);}
    catch(e){if(e.code!=='ENOENT')throw e;}
    await new Promise(resolve=>setTimeout(resolve,100));
@@ -107,8 +110,11 @@ export async function openNativeChannel({directory,config,workspace,waitMs=30000
  };
  const nativeHost={
   review:(proposal,context)=>exchange('review',{proposal,context}),
-  execute:async(pending,stage,context)=>{
-   const value=withTestMaintenance(await exchange('execute',{pending,stage,context:{...context,test_maintenance:testMaintenanceGuidance({host:'codex'})}},{stable:true}));
+  execute:async(pending,stage,context,onObservation)=>{
+   let observation=null;
+   const started=async receipt=>{if(!receipt.owner)return;observation={state:'running',owner:receipt.owner,source_sha:context.source_sha,observed_at:receipt.at,evidence:'sha256:'+digest(receipt)};await onObservation?.(observation);};
+   const value=withTestMaintenance(await exchange('execute',{pending,stage,context:{...context,test_maintenance:testMaintenanceGuidance({host:'codex'})}},{stable:true,onStarted:started}));
+   if(observation)await onObservation?.({...observation,state:value.state==='failed'?'failed':value.state==='cancelled'?'cancelled':'blocked',source_sha:value.head_sha,observed_at:new Date().toISOString(),evidence:'sha256:'+digest({operation_id:pending.operation_id,result:value})});
    return {...value,adapter:'codex-native-tools',host:os.hostname(),objective_completed:false,process_verified:false,execution_evidence_source:'native-task-reported; acceptance checked by configured verifier'};
   },
   reconcile:async pending=>{
@@ -136,9 +142,10 @@ export async function pendingNativeRequest(directory){
  directory=await privateDirectory(directory);const pointer=await readJSON(path.join(directory,'current.json'));
  return readNativeRequest(directory,pointer.id);
 }
-export async function beginNativeWork(directory,id){
+export async function beginNativeWork(directory,id,owner=null){
  const p=await pendingNativeRequest(directory);if(p.request.id!==id||!requiresStart(p.request)||p.state!=='pending')throw Error('Native work is already started/answered or request changed; reconcile, do not execute again');
- await writeOnce(path.join(directory,id+'.started.json'),{request_digest:id,operation_id:p.request.data.pending?.operation_id||p.request.id,at:new Date().toISOString()},{exclusive:true});
+ if(owner!==null&&(p.request.kind!=='execute'||!validCardOwner(owner,p.request.data.context.card_attribution||{})))throw Error('Native observation requires an explicitly routed canonical fictional staff identity');
+ await writeOnce(path.join(directory,id+'.started.json'),{...(owner?{owner}:{}),request_digest:id,operation_id:p.request.data.pending?.operation_id||p.request.id,at:new Date().toISOString()},{exclusive:true});
 }
 export async function replyNativeRequest(directory,id,value){
  let p=await pendingNativeRequest(directory);
@@ -162,7 +169,7 @@ if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1]
   const config=JSON.parse(await fs.readFile(a,'utf8')),channel=await openNativeChannel({directory:path.join(c,'native-channel'),config,workspace:b});
   const result=await runContinuityExecution({config,workspace:b,stateDir:c,rpc:channel.rpc,nativeHost:channel.nativeHost});console.log(JSON.stringify(result,null,2));
  }else if(action==='pending')console.log(JSON.stringify(await pendingNativeRequest(a)));
- else if(action==='begin')await beginNativeWork(a,b);
+ else if(action==='begin')await beginNativeWork(a,b,c?JSON.parse(await fs.readFile(c,'utf8')):null);
  else if(action==='reply')await replyNativeRequest(a,b,JSON.parse(await fs.readFile(c,'utf8')));
  else throw Error('Usage: relay-native-continuity.mjs run CONFIG CHECKOUT PRIVATE_RECEIPTS; pending CHANNEL; begin CHANNEL ID; reply CHANNEL ID PRIVATE_RESPONSE_FILE');
 }

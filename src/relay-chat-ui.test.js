@@ -5,7 +5,7 @@ import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI,
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v21.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v22.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -191,7 +191,7 @@ test('card initializes the standard MCP Apps bridge even when window.openai exis
     const frame=page.frameLocator('#widget');
     await frame.locator('#title').filter({hasText:'Staff routing is ready'}).waitFor();
     assert.equal(await page.evaluate(()=>window.seenInitialize),true);
-    assert.equal(await frame.locator('#team').textContent(),'Coordinator · Assignment lead');
+    assert.equal(await frame.locator('#team').textContent(),'Team update');
     assert.equal(await frame.locator('#staff').getAttribute('title'),'Julian with Roman');
   } finally {await browser.close()}
 });
@@ -251,7 +251,7 @@ test('feature identity keeps a truthful metric without accepting an unbound perc
   assert.equal(runner.feature,'runner');
   assert.equal(runner.percent,null);
   assert.notEqual(runner.metric,'50%');
-  assert.equal(runner.metric_label,'current state');
+  assert.equal(runner.has_metric,false);assert.equal(runner.metric_label,null);
   assert.equal(runner.signal,'working');
 
   const verification=contextCardModel({checks:{check_runs:[
@@ -494,8 +494,8 @@ test("job-focused card rows show work rather than staff and collapse long copy",
     {id:'relay-skills-completion-20261003',state:'working',primary_staff:'roman'},
     {id:'old-job',state:'completed',primary_staff:'nico'}
   ]});
-  assert.deepEqual(model.rows.map(x=>x.label),['relay card polish','relay skills completion']);
-  assert.equal(model.metric,'7'); assert.equal(model.metric_label,'active jobs');
+  assert.deepEqual(model.rows,[]);
+  assert.equal(model.has_metric,false);assert.equal(model.metric,null);
   assert.ok(model.title.length<=72); assert.ok(model.summary.length<=150);
   assert.equal(model.next_step,null); assert.equal(model.evidence.goal,detail.trim());
   assert.equal(model.primary_staff,'Ellis');
@@ -505,7 +505,7 @@ test("job-focused card never turns a missing completion value into zero percent"
   const {contextCardModel}=await import('./relay-chat-ui.js');
   for(const value of [null,undefined,'']) {
     const model=contextCardModel({claims:[{id:'check-preview',state:'active',progress_percent:value}]});
-    assert.equal(model.percent,null); assert.equal(model.metric,'1');
+    assert.equal(model.percent,null);assert.equal(model.has_metric,false);assert.equal(model.metric,null);
   }
 });
 
@@ -744,17 +744,17 @@ test('an ordinary claim mounts a staff-attributed work card that follows the sam
     await frame.locator('#title').filter({hasText:'Repair normal-work cards'}).waitFor();
     // Mount-time recovery reads canonical progress once; the tool result still drives the card.
     await page.waitForFunction(()=>true);
-    await frame.locator('#rows').filter({hasText:'Work started'}).waitFor();
-    assert.equal(await frame.locator('#team').textContent(),'Integrator · Assignment lead');
+    assert.equal(await frame.locator('#rows').textContent(),'');
+    assert.equal(await frame.locator('#team').textContent(),'Team update');
     assert.equal(await frame.locator('#staff').isHidden(),false);
-    assert.match(await frame.locator('#rows').textContent(),/This step\W*Work started/);
+    assert.equal(await frame.locator('#rows').textContent(),'');
     await page.clock.runFor(31000);
     await frame.locator('#state-label').filter({hasText:/hold/i}).waitFor();
     await page.clock.runFor(31000);
     await frame.locator('#state-label').filter({hasText:/complete/i}).waitFor();
     // The card keeps the step it was mounted for after the live state moves on.
-    assert.match(await frame.locator('#rows').textContent(),/This step\W*Work started/);
-    assert.equal(await frame.locator('#team').textContent(),'Integrator · Assignment lead');
+    assert.equal(await frame.locator('#rows').textContent(),'');
+    assert.equal(await frame.locator('#team').textContent(),'Team update');
     await page.clock.runFor(120000);
     assert.deepEqual(calls.map(call=>call.args),[{project:'relay'},{project:'relay',assignment:claim.id},{project:'relay',assignment:claim.id}]);
     assert.ok(calls.every(call=>call.name==='relay_runner_progress'));
@@ -893,4 +893,14 @@ test('mounted card shrinks an oversized iframe and follows repeated evidence tog
     await page.waitForFunction(h=>window.sizes.at(-1)?.height===h,narrowCollapsed);
     assert.equal(await assertFits(),narrowCollapsed,'shorter tool result shrinks back without reopening evidence');
   } finally { await browser.close(); }
+});
+
+test('ordinary failed/no-plan outcomes retain the real cause and next step without redundant telemetry',async()=>{
+ const {contextCardModel}=await import('./relay-chat-ui.js');
+ const next='Finish native visual confirmation and protocol regression tests; wire new tests and native panel fixtures into exact-source CI, publish a draft PR, and retain explicit gameplay acceptance limits.';
+ const row={assignment:'rtxforge-overlay-workbench',owner:'worker',state:'failed',goal:'rtxforge overlay workbench',primary_staff:'nico',primary_team:'runner',waiting_reason:'Publish Windows Beta failed',next_action:next};
+ const m=contextCardModel({project:'rtxforge',progress:[row],work_card:{milestone:{kind:'step',label:'Step recorded'}}});
+ assert.equal(m.has_metric,false);assert.equal(m.metric,null);assert.deepEqual(m.rows,[]);assert.deepEqual(m.plan.steps,[]);assert.equal(m.identity.speaker,null);assert.equal(m.identity.lead.id,'nico');
+ assert.equal(m.blocker,'Publish Windows Beta failed');assert.equal(m.evidence.next_action,next);assert.equal(m.next_step,'Read the next step below.');
+ for(const state of ['active','queued','possibly-stale','unknown','blocked','completed','cancelled','superseded']){const card=contextCardModel({project:'rtxforge',claim:{...row,state}});assert.equal(card.has_metric,false);assert.equal(card.evidence.next_action,next);if(['completed','cancelled','superseded'].includes(state))assert.equal(card.next_step,null);}
 });

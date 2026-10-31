@@ -94,13 +94,13 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   const qa = rawQa&&typeof rawQa==='object'?{intended_result:safePresentationText(rawQa.intended_result),reason:safePresentationText(rawQa.reason),...(Array.isArray(rawQa.checks)?{checks:rawQa.checks.slice(0,5).map(x=>safePresentationText(x))}:{})}:null;
   const handoff = data.action === 'handoff' ? 'The assignment was transferred.' : safePresentationText(data.handoff?.summary)||null;
   const identities = first.identities || checkpoint.identities || data.identities || {};
-  const evidence = { assignment:first.id || first.assignment || (typeof data.assignment==='string'?data.assignment:null), owner:first.owner, branch:first.branch || identities.branch, head_sha:identities.head_sha || identities.pr_head_sha || pr?.head?.sha, pr:pr?.number || identities.pr, merge_commit_sha:pr?.merged===true?pr.merge_commit_sha:identities.merge_commit_sha, version_id:data.version_id, deployment_id:data.deployment?.id, evidence_id:data.evidence_id || data.evidence?.evidence_id, record_sha:data.record_sha, goal:first.goal || fullTitle, summary:fullSummary, next_action:first.next_action || checkpoint.next_action || null, presentation:normalized.message_id, error_class:data.error?.class, ...(normalized.message_id==='error.admission'?{admission_findings:normalized.technical.admission_findings}:{}), retry_not_before:normalized.retry.not_before };
+  const evidence = { assignment:first.id || first.assignment || (typeof data.assignment==='string'?data.assignment:null), owner:first.owner, branch:first.branch || identities.branch, head_sha:identities.head_sha || identities.pr_head_sha || pr?.head?.sha, pr:pr?.number || identities.pr, merge_commit_sha:pr?.merged===true?pr.merge_commit_sha:identities.merge_commit_sha, version_id:data.version_id, deployment_id:data.deployment?.id, evidence_id:data.evidence_id || data.evidence?.evidence_id, record_sha:data.record_sha, goal:first.goal || fullTitle, summary:fullSummary, next_action:first.next_action || checkpoint.next_action || human.next_step || null, blocker:first.waiting_reason || null, presentation:normalized.message_id, error_class:data.error?.class, ...(normalized.message_id==='error.admission'?{admission_findings:normalized.technical.admission_findings}:{}), retry_not_before:normalized.retry.not_before };
   const normalize = value => String(value || '').trim().replace(/\s+/g,' ').toLowerCase();
   const rawNext = human.next_step || first.next_action || checkpoint.next_action || null;
   const terminal = ['completed','complete','finished','cancelled','superseded'].includes(String(status).toLowerCase());
   const safeNext=safePresentationText(typeof rawNext==='string'?rawNext:'',2000);
   const opaqueIdentity=/\b[a-f0-9]{24,40}\b|\b[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\b/i.test(safeNext);
-  let nextStep = presentation.next_step || (terminal || error ? null : safeNext ? (safeNext.length<=240&&!opaqueIdentity?safeNext:'The full next step is in Technical details.') : null);
+  let nextStep = presentation.next_step || (terminal || error ? null : safeNext ? (safeNext.length<=140&&!opaqueIdentity&&!technicalNote(safeNext)?safeNext:'Read the next step below.') : null);
   if (nextStep && !presentation.next_step && (normalize(rawNext)===normalize(first.goal) || normalize(rawNext) === normalize(first.next_action||checkpoint.next_action)&&normalize(rawNext)===normalize(human.what_changed) || normalize(rawNext) === normalize(fullSummary) || normalize(nextStep) === normalize(summary) || normalize(summary).includes(normalize(nextStep)))) nextStep = null;
   if (rows.length === 1 && rows[0].label === primary && normalize(rows[0].text) === normalize(label)) rows = [];
   const primaryTeam = first.primary_team || data.primary_team || (checks ? 'inspector' : pr ? 'source' : 'relay');
@@ -113,15 +113,15 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   const percent = plan.total ? Math.round(plan.passed/plan.total*100) : null;
   let metric = percent != null ? percent+'%' : label;
   let metric_label = percent != null ? 'completion' : 'current state';
-  if (!checks && !pr && jobs.length && percent == null) { metric=String(data.coverage?.active ?? activeJobs.length); metric_label='active jobs'; }
+
   if (checks) { const done=checks.filter(x=>x.status==='completed').length; metric=checks.length ? done+'/'+checks.length : label; metric_label=checks.length ? 'checks reported' : 'verification'; }
   if (pr?.number) { metric='#'+pr.number; metric_label=pr.merged?'merged pull request':pr.draft?'draft pull request':'pull request'; }
   // Keep uncertainty/deadlines intact instead of clipping the only explanation.
   summary=presentation.summary;
-  const has_metric=percent!==null||Boolean(checks?.length)||Boolean(pr?.number)||(!checks&&!pr&&jobs.length>0);
-  const card = { title:safePresentationText(title), feature, primary_staff:safePresentationText(primary), primary_role:primaryRole?safePresentationText(primaryRole,60):null, staff_unresolved:unresolvedStaff, staff_note:staffNote?safePresentationText(staffNote,200):null, team:safePresentationText(team), label, tone, signal, summary, rows:rows.map(row=>({label:safePresentationText(row.label,100),text:safePresentationText(row.text,100)})), blocker, qa, handoff, next_step:nextStep, metric, metric_label, has_metric, percent, evidence:Object.fromEntries(Object.entries(evidence).filter(([,v])=>['string','number','boolean'].includes(typeof v)).map(([key,value])=>[key,typeof value==='string'?safePresentationText(value,2000):value])), refresh:Boolean(data.project), human_v1:presentation };
+  const has_metric=percent!==null||Boolean(checks?.length)||Boolean(pr?.number);
+  const card = { title:safePresentationText(title), feature, primary_staff:safePresentationText(primary), primary_role:primaryRole?safePresentationText(primaryRole,60):null, staff_unresolved:unresolvedStaff, staff_note:staffNote?safePresentationText(staffNote,200):null, team:safePresentationText(team), label, tone, signal, summary, rows:rows.map(row=>({label:safePresentationText(row.label,100),text:safePresentationText(row.text,100)})), blocker, qa, handoff, next_step:nextStep, metric, metric_label, has_metric, percent, evidence:Object.fromEntries(Object.entries(evidence).filter(([,v])=>['string','number','boolean'].includes(typeof v)).map(([key,value])=>[key,typeof value==='string'?safePresentationText(value,12000):value])), refresh:Boolean(data.project), human_v1:presentation };
   const milestone = data.work_card?.milestone && typeof data.work_card.milestone === 'object' ? data.work_card.milestone : null;
-  Object.assign(card,{plan,identity,project:typeof data.project==='string'?safePresentationText(data.project,80):null});
+  Object.assign(card,{plan,identity,project:typeof data.project==='string'?safePresentationText(data.project,80):null,project_icon:cardProjectIcon(data.project_icon,data.project),project_label:safePresentationText(data.project_icon?.project===data.project?data.project_icon?.name:null,80)||data.project});
   if(identity.speaker){card.primary_staff=identity.speaker.name;card.primary_role=identity.speaker.role;card.staff_unresolved=false;card.staff_note=null;}
   if(identity.team!=='relay')card.feature=identity.team;
   if(plan.steps.length){card.metric=plan.passed+'/'+(plan.total??'?');card.metric_label='steps verified';card.has_metric=plan.total!==null;card.rows=[];}
@@ -142,11 +142,32 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
     card.title=ci.conclusion==='success'?'The checks passed':ci.conclusion==='failure'?'A check needs attention':ci.conclusion==='cancelled'?'The run was cancelled':ci.status==='queued'?'Checks are queued':'Checking the build';
     card.summary=ci.stale?'The last update is more than two minutes old.':ci.conclusion==='failure'?'A check needs attention. The reported results are below.':ci.conclusion==='success'?'The reported checks passed.':ci.conclusion==='cancelled'?'This run was cancelled. Reported results are preserved.':ci.status==='queued'?'Waiting for the run to start.':'Checks are running. Results update as suites report.';
     card.rows=[];
-  } else if (milestone?.label) {
-    card.rows = [{label:'This step',text:safePresentationText(milestone.label,100)}, ...card.rows].slice(0,4);
+  } else if (!checks && !pr) {
+    const currentStep=plan.steps.find(step=>step.id===plan.current&&step.receipt);
+    if(currentStep){
+      card.evidence.assignment_state=status;
+      card.evidence.current_step=currentStep.id;
+      card.evidence.current_step_state=currentStep.state;
+      // Observed step state outranks routing status, never terminal/held authority
+      // or an error reading the current assignment. Unknown stays unknown.
+      const stepStatus={running:['Running','info','working','This step is running.'],failed:['Step failed','bad','danger','This step failed. The recorded evidence is below.'],blocked:['Step blocked','wait','external','This step is blocked. The recorded evidence is below.'],stale:['Update needed','wait','external','This step needs a fresh update. Showing the last recorded evidence.']}[currentStep.state];
+      if(stepStatus&&!terminal&&status!=='held'&&!error){const [label,tone,signal,summary]=stepStatus;Object.assign(card,{label,tone,signal,summary});}
+    }
+    // Ordinary outcomes have one state and cause, never a numeric jobs hero.
+    card.rows=[];
+    card.ordinary=isAssignment&&!plan.steps.length;
+    if(card.ordinary&&card.blocker)card.summary=null;
+    if(!plan.steps.length){card.has_metric=false;card.metric=null;card.metric_label=null;}
   }
   const link = ci && [ci.run?.url, ci.failed_jobs?.[0]?.url].find(url => typeof url === 'string' && /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/actions\/runs\/\d+[\w/.-]*$/.test(url));
   if (link) card.ci_link = link;
   if (milestone?.kind) card.milestone = { kind:safePresentationText(milestone.kind,40), label:safePresentationText(milestone.label,100) };
   return card;
+}
+
+// Only bounded inline bytes from a matching server projection can enter an img.
+export function cardProjectIcon(value,project){
+ const i=value?.icon;
+ if(!value||value.project!==project||value.status!=='found'||!i||!Number.isInteger(i.bytes)||i.bytes<1||i.bytes>262144||!/^[a-f0-9]{64}$/.test(i.sha256||'')||!/^[a-f0-9]{40}$/.test(i.blob_sha||'')||typeof i.data_url!=='string'||i.data_url.length>350000||!/^data:image\/(?:png|svg\+xml|x-icon|webp|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/.test(i.data_url))return null;
+ return {data_url:i.data_url,sha256:i.sha256,path:i.path,repository:i.repository};
 }

@@ -71,14 +71,14 @@ test('asset omissions fail the build instead of shipping broken brand images', (
 test('material explanations and actionable next steps remain visible without duplicated status metrics',()=>{
   const html=relayContextCardResource().text;
   assert.match(html,/\.summary\{display:block!important;-webkit-line-clamp:unset!important/);
-  assert.match(html,/longCardCopy\('next','Read the full next step'/);
+  assert.match(html,/longCardCopy\('next','Read the next step'/);
   assert.match(html,/stat\.hidden=m\.has_metric===false/);
   const failure=contextCardModel({ok:false,error:{class:'uncertain_write'}});
   assert.equal(failure.blocker,null);assert.equal(failure.has_metric,false);
   assert.match(failure.summary,/whether or not/);assert.match(failure.next_step,/status before/);
   const assigned=contextCardModel({claim:{state:'active'}});
   assert.equal(assigned.has_metric,false);
-  assert.equal(contextCardModel({claims:[{state:'active'}]}).has_metric,true);
+  assert.equal(contextCardModel({claims:[{state:'active'}]}).has_metric,false);
 });
 
 test('staff cards preserve step evidence, keyboard focus and routing distinctions through refresh and handoff',async()=>{
@@ -106,10 +106,10 @@ test('staff cards preserve step evidence, keyboard focus and routing distinction
   const changed=structuredClone(card);changed.claim.primary_staff='julian';changed.claim.card_steps.steps[1].state='passed';
   await page.evaluate(data=>render(data),changed);
   assert.equal(await details.getAttribute('open'),'');
-  assert.equal(await page.locator('#feature-title').textContent(),'Julian');
-  assert.equal(await page.locator('#card').getAttribute('data-identity-team'),'night-shift');
-  assert.match(await page.locator('#card-roles').textContent(),/Assignment team: Engineering/);
-  assert.match(await page.locator('#team').textContent(),/Assignment lead/);
+  assert.equal(await page.locator('#feature-title').textContent(),'Engineering');
+  assert.equal(await page.locator('#card').getAttribute('data-identity-team'),'runner');
+  assert.match(await page.locator('#card-roles').textContent(),/Assignment lead: Julian/);
+  assert.match(await page.locator('#team').textContent(),/Team update/);
   assert.equal(await page.locator('[data-step=build]').getAttribute('data-state'),'passed');
   assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');
   assert.deepEqual(errors,[]);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
@@ -162,7 +162,7 @@ test('all suite states have explicit accessible words and headings meet contrast
 
 test('staff heading keeps its identity-team accent when Inspector telemetry is present',async()=>{
  const {chromium}=await import('playwright');const browser=await chromium.launch({headless:true});
- const claim={id:'cards',goal:'Build cards',state:'active',primary_staff:'nico',primary_team:'runner'};
+ const claim={id:'cards',goal:'Build cards',state:'active',primary_staff:'nico',primary_team:'runner',card_steps:{schema:'relay-card-steps/v1',assignment:'cards',revision:'r1',complete:true,steps:[{id:'build',label:'Build cards',state:'running',depends_on:[],receipt:{id:'start',assignment:'cards',step_id:'build',plan_revision:'r1',observed_at:new Date().toISOString(),evidence:'Synthetic exact start',owner:{staff:'nico',team:'runner'}}}]}};
  try{for(const theme of ['light','dark']){
   const page=await browser.newPage({colorScheme:theme});await page.addInitScript(claim=>{window.openai={toolOutput:{project:'relay',claim}}},claim);
   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.locator('#feature-title').filter({hasText:'Nico'}).waitFor();

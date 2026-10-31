@@ -120,3 +120,15 @@ test('native checklist publication uses the existing exact bound mutation start 
  await assert.rejects(replyNativeRequest(f.directory,p.request.id,{ok:true}),/Persist/);await beginNativeWork(f.directory,p.request.id);await replyNativeRequest(f.directory,p.request.id,{ok:true});assert.deepEqual(await result,{ok:true});
  await assert.rejects(f.channel.rpc('relay_runner_coordinate',{...args,request:{...args.request,id:'other'}}),/exceeds/);
 });
+
+test('native explicit start emits real bounded observations and rejects unbound persona claims',async t=>{
+ const f=await fixture(t),seen=[],work={operation_id:'observed-native',stage:'a'},owner={staff:'rafael',team:'source'};
+ const running=f.channel.nativeHost.execute(work,{id:'a'},{source_sha:'a'.repeat(40),card_attribution:{primary_staff:'nico',primary_team:'runner',supporting_staff:['rafael'],supporting_teams:['source']}},async event=>seen.push(event));
+ const p=await pending(f.directory);
+ await assert.rejects(beginNativeWork(f.directory,p.request.id,{staff:'roman',team:'inspector'}),/explicitly routed/);
+ await beginNativeWork(f.directory,p.request.id,owner);
+ for(let i=0;i<100&&!seen.length;i++)await new Promise(r=>setTimeout(r,5));
+ assert.equal(seen[0].state,'running');assert.deepEqual(seen[0].owner,owner);assert.match(seen[0].evidence,/^sha256:[a-f0-9]{64}$/);
+ await replyNativeRequest(f.directory,p.request.id,{state:'failed',summary:'Synthetic verifier failure',head_sha:'b'.repeat(40)});await running;
+ assert.equal(seen.at(-1).state,'failed');assert.equal(seen.at(-1).source_sha,'b'.repeat(40));assert.deepEqual(seen.at(-1).owner,owner);
+});
