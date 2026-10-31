@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T03:18:55.095Z",
+  "updated_at": "2026-10-31T03:23:54.317Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21944,20 +21944,22 @@
         "windows/engine-host/",
         "windows/RtxForge.Windows/Controls/",
         "windows/RtxForge.Windows/Services/",
-        "windows/RtxForge.Windows/Views/GameDetailsPage.xaml.cs",
         "gui/rtxforge_gtk.py",
         "tests/test_renodx_hdr.py",
         "windows/tests/",
         "docs/renodx-hdr.md",
         "THIRD_PARTY_NOTICES.md",
-        "packaging/"
+        "packaging/",
+        "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
+        "windows/RtxForge.Windows/MainWindow.Features.cs",
+        "windows/RtxForge.Windows/Models/Models.cs"
       ],
       "resources": [
         "rtxforge-automatic-renodx-hdr"
       ],
       "goal": "Add optional automatic per-game RenoDX HDR installation, matching and verified downloads; prefer managed OptiScaler ReShade side-loading and use standalone ReShade where compatible. Park Game Mode architecture work.",
       "acceptance": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
-      "next_action": "Claim isolated branch from current reviewed main; inspect official RenoDX metadata/release catalog and pinned OptiScaler loading hooks; implement safe automatic HDR route and desktop controls with recovery.",
+      "next_action": "Implement pinned official HDR catalog, automatic per-game loader/dependency plans and reversible receipts; add HDR controls to existing desktop Tools surfaces only. Game Mode work stays parked.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21981,8 +21983,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T03:18:55.095Z",
-      "lease_until": "2026-10-31T15:18:55.095Z"
+      "updated_at": "2026-10-31T03:23:54.317Z",
+      "lease_until": "2026-10-31T15:23:54.317Z"
     }
   ]
 }
