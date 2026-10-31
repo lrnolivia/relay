@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T01:36:23.106Z",
+  "updated_at": "2026-10-31T01:48:17.573Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21823,7 +21823,8 @@
         "tests/linux_runtime/test_proton_overlay.py",
         "tests/linux_runtime/test_linux_overlay_host.py",
         "windows/RtxForge.Windows/Models/GlassAppearance.cs",
-        "tests/linux_runtime/"
+        "tests/linux_runtime/",
+        "windows/overlay-rmlui/SmokeTest.cpp"
       ],
       "resources": [
         "rtxforge-managed-provider-downloads",
@@ -21833,7 +21834,7 @@
       ],
       "goal": "Resolve supported Feeder/Vulkan packages automatically; align desktop overlay settings with the shipped glass overlay; make managed overlay refresh results visible.",
       "acceptance": "No normal installation requires users to supply Feeder or Vulkan stacks. Resolve pinned verified packages automatically, retain optional advanced local overrides and original-file recovery, and fail with actionable download errors rather than import instructions. Desktop and Game Mode settings reflect real Sidebar/Advanced/Bottom Bar, Clear/Light/Dark/custom appearance, typography/scale and other current overlay preferences with consistent persistence. Show a visible truthful managed-overlay refresh result, including updated/current/blocked games; preserve result counts across retries and avoid repeated notifications. Verify cold-cache and integrity failure paths, settings roundtrip/native builds and refresh lifecycle. Preserve human attribution and notices. Prepare reviewable exact-source delivery and follow-on beta through normal green checks.",
-      "next_action": "Finish final UI review and exact-source Beta11 delivery. Implemented verified empty-cache Feeder downloads, shared appearance schema/JSON bridge and Windows/Linux desktop/Game Mode controls, persistent cumulative refresh notices/history, five real repairs, portable Vulkan backups/adoption/repair/restore, Skynizz other-OS DLL-revision reconciliation, Feeder shared inventories and recognition. Verify game-file read permissions across OSes, source-focused regressions, native hardware fixtures and clean builds; publish only with green exact-source checks and rollback.",
+      "next_action": "Final Beta11 validation. Native and Windows builds pass; Windows Settings visually reviewed. Add real native helper appearance-update regression (unchanged preset revision), isolated test preferences, Linux helper settings and file-permission regressions; finish docs/version, commit and exact-source CI. Five real blocked games repaired with retained recovery; Windows/Linux Vulkan adoption/repair/restore and Skynizz DLL-revision reconciliation tested. Keep native Vulkan glass/Proton gameplay acceptance unclaimed.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21857,8 +21858,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T01:36:23.106Z",
-      "lease_until": "2026-10-31T13:36:23.106Z"
+      "updated_at": "2026-10-31T01:48:17.573Z",
+      "lease_until": "2026-10-31T13:48:17.573Z"
     }
   ]
 }
