@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T07:40:15.200Z",
+  "updated_at": "2026-10-31T07:56:00.459Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22072,7 +22072,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "59e2962089ee69a88a0aabb65db9c05db45b3cb3",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-31T06:18:33.964Z",
       "objective_history": {
         "baseline": {
@@ -22089,8 +22089,14 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T07:40:15.200Z",
-      "lease_until": "2026-10-31T19:40:15.200Z"
+      "updated_at": "2026-10-31T07:56:00.459Z",
+      "lease_until": "2026-10-31T19:56:00.459Z",
+      "pr": 131,
+      "merged_head_sha": "f8fccd673330cd4d3515a5c717fd059f3e1c1265",
+      "merge_commit_sha": "0539c64393a6d9ab79cdabacc85a9b3264188390",
+      "evidence": "PR 131 human-owner squash merged 0539c64393a6d9ab79cdabacc85a9b3264188390; tree 0a8ef2f0617dc1b7852804e920b8fa9ad5adc410 equals reviewed f8fccd673330cd4d3515a5c717fd059f3e1c1265. Exact-head Windows x64/ARM64 and installer checks 41181280264, Linux AppImage/Flatpak 41181280307, native/KDE/Wayland UI 41181280235 and Runner admission 41181280280 attempt2 all green. Local native app zero warnings/errors; prototype input/HDR edit-reset/Bar attachment checks and DX11/DX12 SDR/scRGB/PQ smoke pass. OptiScaler, NR forwarder and Feeder add-ons compile. 119 focused and 28 lifecycle tests plus new display-calibration/race checks passed; Linux core/helper coverage passed in CI. Settings row cards, approved layout names, package organization, glyphs, borderless resolution preservation, NR controls/telemetry and runtime-stack labels delivered. Optional custom per-game HDR, Extras entry, full Advanced page/popout and verified startup adapters delivered for pinned Control Resonant/ME Legendary Edition; edits queue until exit and preserve native changes/concurrent saves. Unknown builds retain native menu; peak calibration stays Display default until set. Prototype left open from C:/Users/lrnol/.codex/tmp/overlay-settings-native-build/Release/OverlayPrototype.exe. Installed Beta12 and its 49 managed overlays retained; no new beta dispatched or installed. Fresh gameplay and Linux/Proton HDR for this revision remain unqualified; Game Mode shell migration parked. Working tree clean.",
+      "work_accounted": true,
+      "completed_at": "2026-10-31T07:56:00.459Z"
     }
   ]
 }
