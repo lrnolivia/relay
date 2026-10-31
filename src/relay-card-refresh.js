@@ -2,7 +2,7 @@
 export const LIVE_WORK_SCRIPT=String.raw`(()=>{
   const terminal = new Set(['completed','complete','finished','cancelled','superseded','retired']);
   let target=null, timer=null, flight=null, generation=0, failures=0, disposed=false, canonical=false, link=null;
-  let checkedAt=null, newest=0, applying=false;
+  let checkedAt=null, newest=0, applying=false, inputKey=null;
   const seen=new Set();
   const note=document.createElement('p');note.id='card-freshness';note.className='micro';note.setAttribute('role','status');note.setAttribute('aria-live','polite');
   document.querySelector('.actions').before(note);
@@ -12,9 +12,13 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
   const stop=()=>{clearTimeout(timer);timer=null;};
   const item=data=>[data.claim,typeof data.assignment==='object'?data.assignment:null,...data.progress||[],...data.claims||[],...data.queue||[]].find(x=>x&&(x.assignment||x.id)===target?.assignment);
   function identify(data){
+    const currentInput=JSON.stringify([toolInput?.project,toolInput?.assignment,toolInput?.repo,toolInput?.ref,toolInput?.owner]);
+    if(inputKey&&inputKey!==currentInput){el.card._refreshTarget=null;el.card._refreshInputChanged=true;}
+    inputKey=currentInput;
+
     if(data?.ci&&typeof toolInput?.repo==='string'&&typeof toolInput?.ref==='string')return {ci:true,args:{...(typeof toolInput.owner==='string'?{owner:toolInput.owner}:{}),repo:toolInput.repo,ref:toolInput.ref}};
     const navigation=el.card._refreshTarget;
-    if(navigation)return navigation.level==='assignment'?{project:navigation.project,assignment:navigation.assignment}:null;
+    if(navigation&&(!data.project||data.project===navigation.project))return navigation.level==='assignment'?{project:navigation.project,assignment:navigation.assignment}:null;
     const project=data?.project||data?.work_card?.project;
     const rows=[data?.claim,typeof data?.assignment==='object'?data.assignment:null,...data?.progress||[],...data?.claims||[],...data?.queue||[]].filter(Boolean);
     const id=data?.work_card?.assignment||(typeof data?.assignment==='string'?data.assignment:null)||(rows.some(x=>(x.assignment||x.id)===toolInput?.assignment)?toolInput.assignment:null)||(rows.length===1?(rows[0].assignment||rows[0].id):null);

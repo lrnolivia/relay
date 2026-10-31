@@ -118,3 +118,20 @@ test('real progress producer through mounted refresh keeps source age separate f
   const evidence=JSON.parse(await page.locator('#evidence').textContent());assert.equal(evidence.progress_freshness,'stale');assert.equal(evidence.progress_observed_at,'2026-10-31T22:26:46.000Z');
  }finally{await browser.close();}
 });
+
+test('new host project and assignment replace hydrated explorer navigation and the shared refresh target',async()=>{
+ const initial={...progress(),schema:'relay-status-explorer/v1'};
+ const {browser,page}=await mount(initial,{input:{project:'relay',assignment:'task'}});
+ try{
+  await page.clock.runFor(400);await page.waitForFunction(()=>window.calls.length===1);
+  const next={...progress('next','working','2026-10-31T23:05:00Z'),project:'field'};
+  await page.evaluate(data=>{window.openai.toolInput={project:'field',assignment:'next'};window.openai.toolOutput=data;window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolInput:window.openai.toolInput,toolOutput:data}}}));},next);
+  assert.equal(await page.locator('#title').textContent(),'Repair next');
+  await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
+  assert.deepEqual((await calls(page)).at(-1).args,{project:'field',assignment:'next'});
+  next.progress[0].assignment='third';next.progress[0].goal='Third assignment';next.generated_at='2026-10-31T23:06:00Z';
+  await page.evaluate(data=>{window.openai.toolInput={project:'field',assignment:'third'};window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolInput:window.openai.toolInput,toolOutput:data}}}));},next);
+  assert.equal(await page.locator('#title').textContent(),'Third assignment');await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
+  assert.deepEqual((await calls(page)).at(-1).args,{project:'field',assignment:'third'});
+ }finally{await browser.close();}
+});
