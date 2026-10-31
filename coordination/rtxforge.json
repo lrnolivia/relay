@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T21:42:45.014Z",
+  "updated_at": "2026-10-31T22:10:22.005Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22372,7 +22372,7 @@
       ],
       "goal": "Repair shared overlay layout, alignment, clipping and stacking defects reported in Side Panel, Advanced and Bar without changing approved glass identity. Rebuild live prototype and verify rendered states across normal/larger text and scale.",
       "acceptance": "Advanced sidebar/content and scroll bounds align; Bar header, controls, footer and attached popovers stay reachable and padded; glyphs/labels center on their surfaces; prototype scene toolbar never obscures welcome toast; all3 layouts preserve controls and approved Clear materials; focused native regression checks and bounded screenshot review pass.",
-      "next_action": "Inspect shared layout rules and exact screenshots, implement bounded layout fixes, build native prototype, verify all3 layouts and focused native regression tests.",
+      "next_action": "PR134 at52c46cb82dec7486f5840056b084cb8a842d5561 contains shared viewport/slot/footer bounds, centered icon controls, padded disclosures and reorganized Advanced nav (Settings last), correctly restored Settings state. Native54-case matrix+input/frame/Clear/glyph tests and74 Python checks pass; detector clean; bounded visual review completed. Rebuilt visible prototype open at layout-repair-vs/Release/OverlayPrototype.exe, old closed. Await exact Windows/Linux/UI checks, address any failures, promote through normal squash process. No new Beta release dispatched.",
       "category": "design",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -22396,8 +22396,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T21:42:45.014Z",
-      "lease_until": "2026-11-01T09:42:45.014Z"
+      "updated_at": "2026-10-31T22:10:22.005Z",
+      "lease_until": "2026-11-01T10:10:22.005Z"
     }
   ]
 }
