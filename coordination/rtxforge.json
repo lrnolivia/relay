@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T02:02:58.495Z",
+  "updated_at": "2026-10-31T02:05:18.520Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21830,7 +21830,9 @@
         "prototypes/overlay-rmlui/overlay.rcss",
         "gui/overlay_layouts.py",
         "assets/game-mode/icons/",
-        "windows/RtxForge.Windows/RtxForge.Windows.csproj"
+        "windows/RtxForge.Windows/RtxForge.Windows.csproj",
+        "gui/game_mode_icons.py",
+        "tests/test_game_mode_icons.py"
       ],
       "resources": [
         "rtxforge-managed-provider-downloads",
@@ -21840,7 +21842,7 @@
       ],
       "goal": "Resolve supported Feeder/Vulkan packages automatically; align desktop overlay settings with the shipped glass overlay; make managed overlay refresh results visible.",
       "acceptance": "No normal installation requires users to supply Feeder or Vulkan stacks. Resolve pinned verified packages automatically, retain optional advanced local overrides and original-file recovery, and fail with actionable download errors rather than import instructions. Desktop and Game Mode settings reflect real Sidebar/Advanced/Bottom Bar, Clear/Light/Dark/custom appearance, typography/scale and other current overlay preferences with consistent persistence. Show a visible truthful managed-overlay refresh result, including updated/current/blocked games; preserve result counts across retries and avoid repeated notifications. Verify cold-cache and integrity failure paths, settings roundtrip/native builds and refresh lifecycle. Preserve human attribution and notices. Prepare reviewable exact-source delivery and follow-on beta through normal green checks.",
-      "next_action": "Add requested shared Phosphor Game Mode glyphs across Windows/Linux and finish illustrated layout/simple appearance changes; final CI then Beta11.",
+      "next_action": "Finish shared Phosphor symbols using a single pinned manifest/font and symbolic SVGs, then review and build Beta11 with current five-game repair evidence.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21864,8 +21866,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T02:02:58.495Z",
-      "lease_until": "2026-10-31T14:02:58.495Z"
+      "updated_at": "2026-10-31T02:05:18.520Z",
+      "lease_until": "2026-10-31T14:05:18.520Z"
     }
   ]
 }
