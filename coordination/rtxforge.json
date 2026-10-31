@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T05:00:52.324Z",
+  "updated_at": "2026-10-31T05:24:19.220Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21969,7 +21969,7 @@
       ],
       "goal": "Add optional automatic per-game RenoDX HDR installation, matching and verified downloads; prefer managed OptiScaler ReShade side-loading and use standalone ReShade where compatible. Park Game Mode architecture work.",
       "acceptance": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
-      "next_action": "ME2 passed fresh D3D11/scRGB Normandy HDR+Feeder NR (ENGAGED evaluations), original glass renderer, Delete shortcut and Look&Detail input. Steam keyboard interstitial cleared; Backtick conflict was game console, not renderer; state experiment reverted. Fixed Feeder late helper polling before closed-panel early return. Actual saved ME2 subgame now derives exact Steam manifest ID; actual-row install/remove passed. 27 focused tests pass. Original game INI/panel/glass and HDR removal verified; retain per-game Delete override, global Backtick unchanged. Final source commit/CI and human-owner PR, reviewed Beta12 publish/install and managed overlay refresh next.",
+      "next_action": "Human-owner PR130 squash merged 59e2962089ee69a88a0aabb65db9c05db45b3cb3; identical tree be1017346d67e3481223a251c7f008af7b20d29a to reviewed head67c12557dc5fbfbd0b5370300066fe9d3e5af61e. All exact-head Windows x64/ARM64, Linux AppImage/Flatpak, native UI/renderer checks green; 27 focused tests pass. ME2 HDR+NR+glass actual scene/control check passed; real saved-row automatic install/remove passed, original files restored; per-game Delete retained. Explicit Beta12 Windows publication41172315190 and Linux41172318092 running at merge SHA. Verify five downloads/provenance and rollback, install locally preserving settings, verify forced managed overlay refresh, recheck ME2 with installed package then complete. Game Mode architecture parked.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21993,8 +21993,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T05:00:52.324Z",
-      "lease_until": "2026-10-31T17:00:52.324Z"
+      "updated_at": "2026-10-31T05:24:19.220Z",
+      "lease_until": "2026-10-31T17:24:19.220Z"
     }
   ]
 }
