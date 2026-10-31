@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T06:25:24.015Z",
+  "updated_at": "2026-10-31T06:25:45.579Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -20669,6 +20669,49 @@
           "head_sha": "1ace18a811e1678e23cbba2354daf4d923029a0d"
         }
       }
+    },
+    {
+      "id": "relay-card-persona-brand-20261031",
+      "owner": "cloud-relay-card-persona-20261031",
+      "branch": "relay/card-persona-brand-20261031",
+      "paths": [
+        "src/relay-card-identity.js",
+        "src/relay-card-identity.test.js",
+        "src/relay-context-card-style.js",
+        "src/relay-context-card-style.test.js",
+        "src/relay-chat-ui.test.js"
+      ],
+      "resources": [
+        "relay-card-persona-brand-presentation"
+      ],
+      "goal": "Correct screenshot-confirmed missing assigned people and Relay brand heading color without claiming unobserved contributions.",
+      "acceptance": "Assigned active and completed cards show valid canonical lead portrait labeled Assignment lead; receipt-bound current specialists supersede, explicit team-only current work stays truthful; generic Relay uses contrast-safe Terra Prime orange; focused/full tests and rendered desktop/mobile evidence pass before reviewed release.",
+      "next_action": "Implement bounded identity fallback and brand token repairs in isolated cloud checkout; preserve held coordinator/executor activation follow-up and all other ownership.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "f7cc3588d8084e8143d196366191ad45193d62f8",
+      "state": "active",
+      "created_at": "2026-10-31T06:25:45.579Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Correct screenshot-confirmed missing assigned people and Relay brand heading color without claiming unobserved contributions.",
+          "acceptance": "Assigned active and completed cards show valid canonical lead portrait labeled Assignment lead; receipt-bound current specialists supersede, explicit team-only current work stays truthful; generic Relay uses contrast-safe Terra Prime orange; focused/full tests and rendered desktop/mobile evidence pass before reviewed release.",
+          "at": "2026-10-31T06:25:45.579Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-card-persona-brand-20261031:acceptance:0",
+            "text": "Assigned active and completed cards show valid canonical lead portrait labeled Assignment lead; receipt-bound current specialists supersede, explicit team-only current work stays truthful; generic Relay uses contrast-safe Terra Prime orange; focused/full tests and rendered desktop/mobile evidence pass before reviewed release.",
+            "at": "2026-10-31T06:25:45.579Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-31T06:25:45.579Z",
+      "lease_until": "2026-10-31T18:25:45.579Z"
     }
   ],
   "migrated_from": "loew-inspector"
