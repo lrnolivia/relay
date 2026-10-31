@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T06:19:35.161Z",
+  "updated_at": "2026-10-31T06:23:44.219Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22013,10 +22013,9 @@
         "windows/RtxForge.Windows/Controls/OverlayUiReviewView.cs",
         "windows/RtxForge.Windows/Controls/OverlayLayoutPicker.cs",
         "windows/RtxForge.Windows/Controls/Preferences.cs",
+        "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
         "gui/overlay_layouts.py",
         "prototypes/overlay-rmlui/overlay.rml",
-        "prototypes/overlay-rmlui/Prototype.cpp",
-        "providers/glass-overlay/ForgeGlassPanel.h",
         "PRODUCT.md",
         "docs/overlay.md",
         "docs/releases/1.0-beta.md"
@@ -22026,7 +22025,7 @@
       ],
       "goal": "Put overlay update/settings actions and descriptions inside native row cards; use exact layout names Side Panel, Advanced, Bar in desktop and actual overlay.",
       "acceptance": "Native Windows overlay settings have no detached update button/description/status block; Update Overlays and Last overlay update use accessible responsive settings rows. Layout illustrations preserved and visible option names match Side Panel, Advanced, Bar on Windows/Linux and actual overlay. Preserve persisted layout IDs, review flow, settings and Game Mode parked scope. Build and inspect native affected UI.",
-      "next_action": "Implement native row cards with contained update/history feedback, exact Side Panel/Advanced/Bar captions in desktop and actual shared RmlUi assets; build and inspect Windows UI, preserve layout keys and parked Game Mode.",
+      "next_action": "Complete native row cards and missing Text size/Motion/Notifications glyphs; exact Side Panel/Advanced/Bar names; remove Overview Install route card, group route details and Overlay expander within Features Package area per user correction. Build and inspect native Windows settings and game Features; Game Mode parked.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -22049,8 +22048,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T06:19:35.161Z",
-      "lease_until": "2026-10-31T18:19:35.161Z"
+      "updated_at": "2026-10-31T06:23:44.219Z",
+      "lease_until": "2026-10-31T18:23:44.219Z"
     }
   ]
 }
