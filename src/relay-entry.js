@@ -1,3 +1,4 @@
+import {withCardProjectIcon} from './relay-project-icon.js';
 import {verifyAccessJwt} from './access-verification.js';
 import { contextTool, callContext } from '../packages/runner/src/context-service.mjs';
 import { nativeCompatibleJobsTool as jobsTool, callCompatibleJobs as callJobs } from './native-oversight-compat.js';
@@ -179,7 +180,7 @@ async function rewrite(response, mutate) {
   const body = await response.text();
   let payload;
   try { payload = JSON.parse(body); } catch { return new Response(body, { status: response.status, headers: response.headers }); }
-  mutate(payload);
+  await mutate(payload);
   return responseJson(payload, response.status, response.headers);
 }
 function patchVersion(payload) {
@@ -376,7 +377,7 @@ export default {
           const args = validateLifecycleArguments(name, message.params?.arguments || {});
           result = await callSourceLifecycleTool(name, args, env);
         }
-        return toolResult(message.id ?? null, result, name, message.params?.arguments || {},env.RELAY_HUMAN_PRESENTATION);
+        return toolResult(message.id ?? null, await withCardProjectIcon(name,result,env), name, message.params?.arguments || {},env.RELAY_HUMAN_PRESENTATION);
       } catch (error) {
         return toolError(message.id ?? null, error, message.params?.name || "",message.params?.arguments || {},env.RELAY_HUMAN_PRESENTATION);
       }
@@ -422,8 +423,8 @@ export default {
       });
     }
     if (message.method === "tools/call") {
-      return rewrite(response, payload => {
-        const data = payload?.result?.structuredContent;
+      return rewrite(response, async payload => {
+        const data = await withCardProjectIcon(message.params?.name,payload?.result?.structuredContent,env);
         const options={operation:presentationOperation(message.params?.name,message.params?.arguments||{}),now:new Date().toISOString(),mode:env.RELAY_HUMAN_PRESENTATION};
         if (data) payload.result.structuredContent = isContextualRelayTool(message.params?.name)?contextualPresentation(data,options):withHumanPresentation(data,options);
         // Retain all legacy content, JSON-RPC/isError fields, and auth headers.

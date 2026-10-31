@@ -3,7 +3,7 @@ import {validateContinuityAdditions,validateExpansionPolicy,expandedContinuityPl
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {execFileSync,spawnSync} from 'node:child_process';
-import {CARD_STEPS_SCHEMA,validateCardStepsPublication} from '../src/relay-card-steps.js';
+import {CARD_STEPS_SCHEMA,validateCardStepsPublication,validCardOwner} from '../src/relay-card-steps.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const terminal=new Set(['succeeded','failed','cancelled']);
 
@@ -102,7 +102,7 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
   validateContinuityPlan(effective);
   // Revalidate saved input identities before displaying resumed checkpoints.
   // A source/environment change must never briefly republish an old pass.
-  for(const stage of effective.stages){const row=state.stages[stage.id];if(row?.state==='passed'&&row.receipt?.input_digest!==await identity(stage)){row.state='ready';row.receipt=null;}}
+  for(const stage of effective.stages){const row=state.stages[stage.id],currentInput=await identity(stage);if(row?.state==='passed'&&row.receipt?.input_digest!==currentInput){row.state='ready';row.receipt=null;}if(row?.observation&&row.observation.input_digest!==currentInput)row.observation=null;}
   await observe(state);
   for(const stage of effective.stages){
    if(stage.depends_on.some(id=>state.stages[id]?.state!=='passed'))continue;
@@ -112,10 +112,12 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
     const result=await reconcile(row.pending);
     if(result?.state==='queued'){
      const fresh=await gate();if(fresh.revision!==row.pending.control_revision||fresh.global_revision!==row.pending.global_revision)throw Error('Control revision changed before queued continuation');
-     try{const started=await execute(row.pending,stage);if(!terminal.has(started?.state))throw Error('Uncertain queued execution');row.last_job=started;row.pending=null;await persist(state);}catch{row.state='reconciliation-required';await persist(state);continue;}
+     try{const started=await execute(row.pending,stage,async observation=>{row.observation={...observation,input_digest:await identity(stage)};await persist(state);await observe(state);});if(!terminal.has(started?.state))throw Error('Uncertain queued execution');row.last_job=started;row.pending=null;await persist(state);}catch{row.state='reconciliation-required';await persist(state);continue;}
     }else{
      if(!result||!terminal.has(result.state)){row.state='reconciliation-required';await persist(state);continue;}
-     row.last_job=result;row.pending=null;await persist(state);
+     row.last_job=result;row.pending=null;
+     if(row.observation&&/^[a-f0-9]{40}$/.test(result.head_sha||'')){row.observation={...row.observation,state:result.state==='failed'?'failed':result.state==='cancelled'?'cancelled':'blocked',source_sha:result.head_sha,input_digest:await identity(stage),observed_at:new Date().toISOString(),evidence:'sha256:'+hash(result)};}
+     await persist(state);await observe(state);
     }
     if(await intake(row.last_job?.continuity_additions||[])){restart=true;break;}
    }
@@ -123,8 +125,9 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
    if(row.receipt?.input_digest===input&&row.state==='passed'&&['implementation','test'].includes(stage.kind))continue;
    while(true){
     control=await gate();const proof=await verify(stage),after=await identity(stage);
-    if(proof?.passed===true&&typeof proof.evidence==='string'&&proof.evidence&&after===input){row.state='passed';row.receipt={input_digest:after,evidence:proof.evidence,source_sha:control.source_sha};await persist(state);await observe(state);break;}
+    if(proof?.passed===true&&typeof proof.evidence==='string'&&proof.evidence&&after===input){row.state='passed';row.receipt={input_digest:after,evidence:proof.evidence,source_sha:control.source_sha,...(row.observation?.input_digest===after?{owner:row.observation.owner}:{} )};await persist(state);await observe(state);break;}
     row.state='repair-required';row.receipt=null;
+    if(row.observation&&row.observation.input_digest!==after)row.observation=null;
     await persist(state);await observe(state);
     const fingerprint=hash({input:after,diagnostic:proof?.fingerprint||'verification-failed'});
     if(row.failure!==fingerprint){row.failure=fingerprint;row.attempts=0;}
@@ -132,8 +135,8 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
     const fresh=await gate();if(fresh.revision!==control.revision||fresh.global_revision!==control.global_revision)throw Error('Control revision changed before continuation; refresh without launching');
     row.pending={operation_id:'continuity-'+hash({plan:state.plan_digest,stage:stage.id,input:after,attempt:row.attempts}),stage:stage.id,prompt:stage.prompt,control_revision:fresh.revision,global_revision:fresh.global_revision,scope_revision:fresh.canonical_record_sha||null,provider:fresh.provider||null};
     row.attempts++;actions++;row.state='dispatching';await persist(state);
-    let result;try{result=await execute(row.pending,stage);}catch{row.state='reconciliation-required';await persist(state);break;}
-    if(!result||!terminal.has(result.state)){row.state='reconciliation-required';await persist(state);break;}
+    let result;try{result=await execute(row.pending,stage,async observation=>{row.observation={...observation,input_digest:await identity(stage)};await persist(state);await observe(state);});}catch{row.state='reconciliation-required';if(row.observation)row.observation.state='stale';await persist(state);await observe(state);break;}
+    if(!result||!terminal.has(result.state)){row.state='reconciliation-required';if(row.observation)row.observation.state='stale';await persist(state);await observe(state);break;}
     row.last_job=result;row.pending=null;await persist(state);await gate();
     if(await intake(result.continuity_additions||[])){restart=true;break;}
     input=await identity(stage);
@@ -166,11 +169,14 @@ export function continuityCardProjection({plan,journal,assignment,observed_at=ne
   const row=journal.stages?.[stage.id],proof=row?.receipt;
   const passed=row?.state==='passed'&&/^[a-f0-9]{64}$/.test(proof?.input_digest||'')&&/^sha256:[a-f0-9]{64}$/.test(proof?.evidence||'')&&/^[a-f0-9]{40}$/.test(proof?.source_sha||'');
   if(row?.state==='passed'&&!passed)throw Error('Checklist pass lacks matching verifier evidence');
+  const observation=row?.observation;
+  if(observation&&(!validCardOwner(observation.owner,assignment)||!['running','failed','blocked','cancelled','stale','skipped'].includes(observation.state)||!/^sha256:[a-f0-9]{64}$/.test(observation.evidence||'')||!/^[a-f0-9]{64}$/.test(observation.input_digest||'')||!/^[a-f0-9]{40}$/.test(observation.source_sha||'')||!Number.isFinite(Date.parse(observation.observed_at))))throw Error('Invalid bounded execution observation');
+  const active=!passed&&observation;
   const old=previous?.steps.find(s=>s.id===stage.id)?.receipt;
-  return {id:stage.id,label:stage.id.replaceAll('-',' '),depends_on:stage.depends_on,state:passed?'passed':!row||row.state==='ready'?'pending':'unknown',receipt:passed?{
-   id:stage.id+':'+proof.input_digest.slice(0,32),assignment:assignment.id,step_id:stage.id,plan_revision:revision,input_digest:proof.input_digest,evidence:proof.evidence,source_sha:proof.source_sha,
+  return {id:stage.id,label:stage.id.replaceAll('-',' '),depends_on:stage.depends_on,state:passed?'passed':active?active.state:!row||row.state==='ready'?'pending':'unknown',receipt:passed?{
+   id:stage.id+':'+proof.input_digest.slice(0,32),assignment:assignment.id,step_id:stage.id,plan_revision:revision,input_digest:proof.input_digest,evidence:proof.evidence,source_sha:proof.source_sha,...(proof.owner?{owner:proof.owner}:{}),
    observed_at:old?.input_digest===proof.input_digest&&old?.evidence===proof.evidence&&old?.source_sha===proof.source_sha?old.observed_at:observed_at
-  }:null};
+  }:active?{id:stage.id+':'+active.input_digest.slice(0,32),assignment:assignment.id,step_id:stage.id,plan_revision:revision,input_digest:active.input_digest,evidence:active.evidence,source_sha:active.source_sha,observed_at:active.observed_at,owner:active.owner}:null};
  });
  // Invalidated prerequisites also invalidate dependent display receipts until
  // their own verifiers run again. A previous pass is not current completion.
@@ -236,7 +242,7 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
  const readControl=async()=>{
   const global=await rpc('relay_autonomy',{action:'status',scope:'global'}),project=await rpc('relay_autonomy',{action:'status',scope:config.project}),a=await assignment();
   if(global.ok!==true||project.ok!==true||!Number.isSafeInteger(global.state?.revision)||!Number.isSafeInteger(project.state?.revision))throw Error('Authoritative control unavailable');
-  return {global_held:global.state.held,held:project.state.held,revision:project.state.revision,global_revision:global.state.revision,assignment_active:a.state==='active'&&Date.parse(a.lease_until)>Date.now(),objective_digest:hash({goal:a.goal,acceptance:a.acceptance}),original_goal_digest:hash(a.goal),provider:config.provider||'codex',canonical_record_sha:assignmentRecord,paths:a.paths||[],acceptance_additions:a.acceptance_additions||[],source_sha:git(['rev-parse','HEAD'])};
+  return {global_held:global.state.held,held:project.state.held,revision:project.state.revision,global_revision:global.state.revision,assignment_active:a.state==='active'&&Date.parse(a.lease_until)>Date.now(),objective_digest:hash({goal:a.goal,acceptance:a.acceptance}),original_goal_digest:hash(a.goal),provider:config.provider||'codex',canonical_record_sha:assignmentRecord,card_attribution:{primary_staff:a.primary_staff,primary_team:a.primary_team,supporting_staff:a.supporting_staff||[],supporting_teams:a.supporting_teams||[]},paths:a.paths||[],acceptance_additions:a.acceptance_additions||[],source_sha:git(['rev-parse','HEAD'])};
  };
  const jobStatus=async job_id=>{const result=await rpc('relay_execution',{action:'status',project:config.project,assignment:config.assignment,...(job_id?{job_id}:{})});if(result.ok!==true)throw Error('Authoritative execution status unavailable');return result.job;};
  const outsideScope=async paths=>{const files=[...new Set([...git(['diff','--name-only','-z','HEAD']).split('\0'),...git(['ls-files','--others','--exclude-standard','-z']).split('\0')])].filter(x=>x&&!x.startsWith('qa-evidence/')&&!insideExpansionScope(x,paths)).sort(),snapshot=[];for(const file of files){try{const st=await fs.lstat(path.join(workspace,file));if(!st.isFile()||st.isSymbolicLink()||st.size>16*1024*1024)throw Error('Unbounded outside-scope source');snapshot.push([file,hash(await fs.readFile(path.join(workspace,file)))]);}catch(e){if(e.code!=='ENOENT')throw e;snapshot.push([file,'deleted']);}}return hash(snapshot);};
@@ -292,7 +298,7 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
     const bytes=[];for(const file of files){const full=path.resolve(workspace,file);if(!full.startsWith(path.resolve(workspace)+path.sep))throw Error('Input escapes workspace');let st;try{st=await fs.lstat(full);}catch(e){if(e.code==='ENOENT'){bytes.push([file,'deleted']);continue;}throw e;}if(!st.isFile()||st.isSymbolicLink()||st.size>16*1024*1024)throw Error('Input is not bounded source');bytes.push([file,hash(await fs.readFile(full))]);}return {bytes,environment};
    },
    verify,reconcile,
-   execute:async (pending,stage)=>{
+   execute:async (pending,stage,onObservation)=>{
     const c=await readControl();if(c.held||c.global_held||!c.assignment_active||c.revision!==pending.control_revision||c.global_revision!==pending.global_revision||(pending.scope_revision&&c.canonical_record_sha!==pending.scope_revision)||(pending.provider&&pending.provider!==(config.provider||'codex'))||(stage.addition&&stage.addition.paths.some(p=>!insideExpansionScope(p,c.paths))))throw Error('Stop/revision changed before submit');
     if(stage.command){
      const result=spawnSync(stage.command[0],stage.command.slice(1),{cwd:workspace,env:process.env,encoding:'utf8',timeout:120000,maxBuffer:1024*1024,stdio:['ignore','pipe','pipe']});
@@ -302,7 +308,7 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
     if(nativeHost){
      pending.adapter='codex-native-tools';const saved=JSON.parse(await fs.readFile(filename,'utf8'));saved.stages[pending.stage].pending=pending;await persist(saved);
      const broker=await jobStatus();if(broker&&!terminal.has(broker.state))throw Error('Unreconciled coding execution occupies this assignment');
-     const before=await outsideScope(c.paths),result=await nativeHost.execute(pending,stage,{original_goal:plan.expansion?.original_goal,original_criteria:plan.criteria,profiles:Object.keys(plan.expansion?.profiles||{}),paths:c.paths,source_sha:c.source_sha,canonical_record_sha:c.canonical_record_sha});
+     const before=await outsideScope(c.paths),result=await nativeHost.execute(pending,stage,{original_goal:plan.expansion?.original_goal,original_criteria:plan.criteria,profiles:Object.keys(plan.expansion?.profiles||{}),card_attribution:c.card_attribution,paths:c.paths,source_sha:c.source_sha,canonical_record_sha:c.canonical_record_sha},onObservation);
      if(result.head_sha!==git(['rev-parse','HEAD'])||before!==await outsideScope(c.paths))throw Error('Native source report or admitted scope changed; preserve work for reconciliation');return result;
     }
     let job=await jobStatus();

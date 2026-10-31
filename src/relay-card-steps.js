@@ -1,3 +1,4 @@
+import {STAFF} from './staff-registry.js';
 import { safePresentationText } from './human-presentation.js';
 
 // A presentation contract, never an execution or authority contract. Producers
@@ -20,8 +21,8 @@ export const cardStepsPublicationSchema={type:'object',additionalProperties:fals
  publisher:{type:'object',additionalProperties:false,required:['owner','branch'],properties:{owner:{type:'string',minLength:1,maxLength:100},branch:{type:'string',minLength:1,maxLength:200}}},
  sequence:{type:'integer',minimum:1,maximum:1000000},complete:{type:'boolean'},
  steps:{type:'array',minItems:1,maxItems:32,items:{type:'object',additionalProperties:false,required:['id','label','depends_on','state','receipt'],properties:{
-  id:stableSchema,label:{type:'string',minLength:1,maxLength:160},depends_on:{type:'array',maxItems:32,uniqueItems:true,items:stableSchema},state:{enum:['pending','unknown','passed']},
-  receipt:{anyOf:[{type:'null'},{type:'object',additionalProperties:false,required:['id','assignment','step_id','plan_revision','input_digest','evidence','source_sha','observed_at'],properties:{id:{type:'string',pattern:ID.source},assignment:{type:'string',pattern:ID.source},step_id:stableSchema,plan_revision:digestSchema,input_digest:digestSchema,evidence:{type:'string',pattern:'^sha256:[a-f0-9]{64}$'},source_sha:{type:'string',pattern:'^[a-f0-9]{40}$'},observed_at:{type:'string',maxLength:40}}}]}
+  id:stableSchema,label:{type:'string',minLength:1,maxLength:160},depends_on:{type:'array',maxItems:32,uniqueItems:true,items:stableSchema},state:{enum:['pending','unknown','running','passed','failed','blocked','cancelled','stale','skipped']},
+  receipt:{anyOf:[{type:'null'},{type:'object',additionalProperties:false,required:['id','assignment','step_id','plan_revision','input_digest','evidence','source_sha','observed_at'],properties:{id:{type:'string',pattern:ID.source},assignment:{type:'string',pattern:ID.source},step_id:stableSchema,plan_revision:digestSchema,input_digest:digestSchema,evidence:{type:'string',pattern:'^sha256:[a-f0-9]{64}$'},source_sha:{type:'string',pattern:'^[a-f0-9]{40}$'},observed_at:{type:'string',maxLength:40},owner:{type:'object',additionalProperties:false,required:['staff','team'],properties:{staff:{type:['string','null'],maxLength:80},team:{type:'string',enum:['runner','inspector','night-shift','source','cloud','release','skills']}}}}}]}
  }}}
 }};
 const exactKeys=(value,keys)=>object(value)&&Object.keys(value).sort().join(',')===[...keys].sort().join(',');
@@ -32,10 +33,11 @@ export function validateCardStepsPublication(value,record,objectiveDigest,now=ne
  if(value.sequence!==(previous?.sequence||0)+1||previous&&(previous.revision!==value.revision||previous.objective_digest!==value.objective_digest))fail();
  const ids=new Map();
  for(const step of value.steps){
-  if(!exactKeys(step,['id','label','depends_on','state','receipt'])||! /^[a-z][a-z0-9-]{0,63}$/.test(step.id)||ids.has(step.id)||typeof step.label!=='string'||!step.label.trim()||step.label.length>160||/[\x00-\x1f<>]/.test(step.label)||!Array.isArray(step.depends_on)||new Set(step.depends_on).size!==step.depends_on.length||step.depends_on.some(id=>!ids.has(id))||!['pending','unknown','passed'].includes(step.state))fail();
+  if(!exactKeys(step,['id','label','depends_on','state','receipt'])||! /^[a-z][a-z0-9-]{0,63}$/.test(step.id)||ids.has(step.id)||typeof step.label!=='string'||!step.label.trim()||step.label.length>160||/[\x00-\x1f<>]/.test(step.label)||!Array.isArray(step.depends_on)||new Set(step.depends_on).size!==step.depends_on.length||step.depends_on.some(id=>!ids.has(id))||!STATES.has(step.state))fail();
   const r=step.receipt;
-  if(step.state==='passed'){
-   if(!exactKeys(r,['id','assignment','step_id','plan_revision','input_digest','evidence','source_sha','observed_at'])||!ID.test(r.id)||r.assignment!==record.id||r.step_id!==step.id||r.plan_revision!==value.revision||!/^[a-f0-9]{64}$/.test(r.input_digest)||!/^sha256:[a-f0-9]{64}$/.test(r.evidence)||!/^[a-f0-9]{40}$/.test(r.source_sha)||typeof r.observed_at!=='string'||r.observed_at.length>40||!Number.isFinite(Date.parse(r.observed_at))||Date.parse(r.observed_at)>+now+60000||step.depends_on.some(id=>ids.get(id).state!=='passed'))fail();
+  if(!['pending','unknown'].includes(step.state)){
+   if(!exactKeys(r,['id','assignment','step_id','plan_revision','input_digest','evidence','source_sha','observed_at',...(r&&Object.hasOwn(r,'owner')?['owner']:[])])||!ID.test(r.id)||r.assignment!==record.id||r.step_id!==step.id||r.plan_revision!==value.revision||!/^[a-f0-9]{64}$/.test(r.input_digest)||!/^sha256:[a-f0-9]{64}$/.test(r.evidence)||!/^[a-f0-9]{40}$/.test(r.source_sha)||typeof r.observed_at!=='string'||r.observed_at.length>40||!Number.isFinite(Date.parse(r.observed_at))||Date.parse(r.observed_at)>+now+60000||(step.state==='passed'||step.state==='running')&&step.depends_on.some(id=>ids.get(id).state!=='passed'))fail();
+   if(r.owner!==undefined&&!validCardOwner(r.owner,record))fail();
   }else if(r!==null)fail();
   ids.set(step.id,step);
  }
@@ -124,4 +126,14 @@ export async function continuityCardSteps({assignment,plan,journal,observed_at} 
       receipt:verified?{id:stage.id+':'+proof.input_digest.slice(0,32),assignment,step_id:stage.id,plan_revision:digest,evidence:proof.evidence,source_sha:proof.source_sha,observed_at}:null};
   });
   return normalizeCardSteps({schema:CARD_STEPS_SCHEMA,assignment,revision:digest,complete,steps},assignment);
+}
+
+// An observation may name only an explicitly routed canonical persona/team.
+// This bounds attribution; routing by itself still creates no observation.
+export function validCardOwner(owner,record){
+ if(!exactKeys(owner,['staff','team']))return false;
+ const teams=[record.primary_team,...(record.supporting_teams||[])];
+ if(owner.staff===null)return teams.includes(owner.team);
+ const person=STAFF.find(p=>p.id===owner.staff&&p.status!=='retired');
+ return !!person&&person.home_team===owner.team&&[record.primary_staff,...(record.supporting_staff||[])].includes(owner.staff);
 }

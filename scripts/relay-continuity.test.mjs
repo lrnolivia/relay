@@ -1,3 +1,4 @@
+import {createHash} from 'node:crypto';
 import {transition} from '../src/coordination-engine.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -109,4 +110,30 @@ test('authoritative CAS rejection stops once and permits a fresh later attempt w
  const run=()=>publishContinuityCard({config:{project:'relay',assignment:'fixture',owner:'worker',branch:'relay/fixture'},plan:p,journal,rpc,readControl:async()=>({held:false,assignment_active:true,objective_digest:p.objective_digest,canonical_record_sha:revision}),readIntent:async()=>intent,saveIntent:async value=>{intent=value}});
  await assert.rejects(run(),/rejected without application: conflict/);assert.equal(writes,1);assert.equal(intent,null);
  assert.equal((await run()).published,true);assert.equal(writes,2);assert.equal(intent,null);
+});
+
+test('official observation projection round-trips canonical validation, progress context and specialist identity',async()=>{
+ const {continuityCardProjection}=await import('./relay-continuity.mjs');
+ const {assignmentCardContext,validateCardStepsPublication}=await import('../src/relay-card-steps.js');
+ const {contextCardModel}=await import('../src/relay-context-card-model.js');
+ const p=plan(),hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
+ const claim={id:'fixture',owner:'worker',branch:'relay/fixture',state:'active',lease_until:new Date(Date.now()+3600000).toISOString(),primary_staff:'nico',primary_team:'runner',supporting_staff:['rafael','roman'],supporting_teams:['source','inspector']};
+ const j={schema:1,plan_digest:hash(p),stages:{a:{state:'dispatching',observation:{state:'running',owner:{staff:'rafael',team:'source'},input_digest:'b'.repeat(64),evidence:'sha256:'+'c'.repeat(64),source_sha:'d'.repeat(40),observed_at:new Date().toISOString()}}}};
+ const project=()=>continuityCardProjection({plan:p,journal:j,assignment:claim});
+ const projection=project();claim.card_steps=validateCardStepsPublication(projection,claim,p.objective_digest);
+ const card=contextCardModel({project:'relay',progress:[assignmentCardContext(claim)]});
+ assert.equal(card.identity.speaker.id,'rafael');assert.equal(card.identity.team,'source');assert.equal(card.identity.lead.id,'nico');assert.equal(card.plan.passed,0);
+ j.stages.a.observation={...j.stages.a.observation,state:'failed',owner:{staff:'roman',team:'inspector'}};
+ claim.card_steps=validateCardStepsPublication(project(),claim,p.objective_digest);
+ assert.equal(contextCardModel({claim:assignmentCardContext(claim)}).identity.speaker.id,'roman');
+ for(const change of [x=>x.steps[0].receipt.owner.staff='felix',x=>x.steps[0].receipt.owner.team='cloud',x=>x.steps[0].receipt.evidence='javascript:alert(1)',x=>x.steps[0].receipt.plan_revision='f'.repeat(64),x=>x.publisher.owner='other',x=>x.sequence=1]){const bad=structuredClone(project());change(bad);assert.throws(()=>validateCardStepsPublication(bad,claim,p.objective_digest));}
+ const none=contextCardModel({claim:{...claim,card_steps:null}});assert.equal(none.identity.speaker,null);assert.equal(none.identity.lead.id,'nico');
+});
+
+test('changed source inputs remove old current-owner observations before the first resume publication',async()=>{
+ const f=fixture(),seen=[],journal=await f.run();
+ journal.stages.a.observation={owner:{staff:'rafael',team:'source'},input_digest:journal.stages.a.receipt.input_digest,state:'running'};
+ f.versions.a++;f.passed.a=false;
+ await f.run({journal,observe:async state=>seen.push(structuredClone(state))});
+ assert.equal(seen[0].stages.a.observation,null);assert.equal(seen[0].stages.a.receipt,null);
 });

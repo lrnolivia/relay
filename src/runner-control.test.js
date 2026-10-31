@@ -630,7 +630,7 @@ test('real continuity verifier publishes through canonical control, live progres
   if(name==='relay_runner_coordinate'){
    const progress=await callProgress({project:'relay',assignment:'task'},{},f.api);await page.evaluate(data=>render(data),progress);
    const rows=await page.locator('[data-step]').evaluateAll(nodes=>nodes.map(n=>({id:n.dataset.step,state:n.dataset.state})));states.push(rows);
-   assert.deepEqual(rows.map(r=>r.id),['build','verify']);assert.equal(await page.locator('#feature-title').textContent(),'Nico');
+   assert.deepEqual(rows.map(r=>r.id),['build','verify']);assert.equal(await page.locator('#feature-title').textContent(),'Engineering');
    assert.doesNotMatch(JSON.stringify(progress),/PRIVATE|process\.exit|console\.log/);
   }
   return result;
@@ -638,7 +638,7 @@ test('real continuity verifier publishes through canonical control, live progres
  const config={project:'relay',assignment:'task',owner:'worker',branch:'relay/task',continuity:plan};
  const run=()=>runContinuityExecution({config,workspace,stateDir:path.join(root,'private'),rpc,runExecution:()=>{throw Error('Actual verifier already passes; no coding job');}});
  const result=await run();assert.equal(result.objective_completed,true);assert.deepEqual(states.map(rows=>rows.map(r=>r.state)),[['pending','pending'],['passed','pending'],['passed','passed']]);
- assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');assert.match(await page.locator('#team').textContent(),/Assignment lead/);assert.equal(f.record.claims[0].card_steps.steps[0].receipt.source_sha,source);
+ assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');assert.match(await page.locator('#team').textContent(),/Team update/);assert.equal(f.record.claims[0].card_steps.steps[0].receipt.source_sha,source);
  const writes=f.writes.length;await run();assert.equal(f.writes.length,writes,'identical refresh does not publish another amendment');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 });
 
@@ -652,4 +652,21 @@ test('new canonical acceptance immediately removes the old full denominator befo
  assert.ok(f.record.claims[0].amendments.at(-1).fields.includes('card_steps'),'derived invalidation is in canonical amendment history');
  await assert.rejects(coordinate(f,'amend',{id:'task',owner:'worker',card_steps:{...p,sequence:2},reason:'Attempt to restore old full coverage'},newSha));
  assert.equal(f.writes.length,1,'a complete projection cannot omit known canonical additions');
+});
+
+test('official specialist observation publisher reaches canonical progress and the rendered card across handoff',async()=>{
+ const {continuityCardProjection}=await import('../scripts/relay-continuity.mjs');
+ const {callProgress}=await import('./progress-api.js');const {contextCardModel}=await import('./relay-chat-ui.js');
+ const c=claim({primary_staff:'nico',primary_team:'runner',supporting_staff:['rafael','roman'],supporting_teams:['source','inspector']}),f=fixture({claims:[c],dynamicRevision:true});
+ const p={schema:1,authorization:'Synthetic regression only',objective_digest:publishedSteps().objective_digest,environment:{node:'22'},criteria:['verify'],stages:[{id:'verify',kind:'test',criteria:['verify'],depends_on:[],prompt:'Verify synthetic card',inputs:['src/'],verify:['node','test.mjs']}]};
+ const j={schema:1,plan_digest:createHash('sha256').update(JSON.stringify(p)).digest('hex'),stages:{verify:{state:'dispatching',observation:{state:'running',owner:{staff:'rafael',team:'source'},input_digest:'e'.repeat(64),evidence:'sha256:'+'f'.repeat(64),source_sha:sha,observed_at:new Date().toISOString()}}}};
+ for(const [staff,team,state] of [['rafael','source','running'],['roman','inspector','failed']]){
+  j.stages.verify.observation={...j.stages.verify.observation,state,owner:{staff,team}};
+  const snapshot=await callRunnerControl('relay_runner_assignments',{project:'relay',assignment:'task'},{},f.api);
+  const projection=continuityCardProjection({plan:p,journal:j,assignment:snapshot.claims[0]});
+  await coordinate(f,'amend',{id:'task',owner:'worker',reason:'Publish synthetic observed step',card_steps:projection},snapshot.record_sha);
+  const progress=await callRunnerControl('relay_runner_progress',{project:'relay',assignment:'task'},{},f.api),model=contextCardModel(progress);
+  assert.equal(model.identity.speaker.id,staff);assert.equal(model.identity.team,team);assert.equal(model.identity.lead.id,'nico');assert.equal(model.plan.steps[0].state,state);assert.equal(model.plan.passed,0);
+ }
+ assert.equal(f.writes.length,2);
 });
