@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { chromium } from 'playwright';
-import { relayContextCardResource } from '../src/relay-chat-ui.js';
+import { contextCardModel, relayContextCardResource } from '../src/relay-chat-ui.js';
 import { webSourceSha } from '../apps/web/generated.js';
 
 const expected=process.env.EXPECTED_SOURCE_SHA;
@@ -21,10 +21,11 @@ const fixtures={
  empty:{project:'relay',checks:{check_runs:[]}},
  complete:{project:'relay',claim:{id:'sample-complete',primary_team:'runner',primary_staff:'ellis',state:'completed',goal:'Verification finished',next_action:'Obsolete next action must stay hidden.'}},
  jobs:{project:'relay',claims:[{id:'relay-card-polish-20261003',primary_team:'runner',primary_staff:'ellis',state:'active',goal:'Continue the full project implementation and review every source and runtime detail. '.repeat(8),next_action:'Review the captured layout and current job status.'},{id:'relay-feedback-delivery-20261003',state:'working',primary_staff:'roman'},{id:'old-task',state:'completed',primary_staff:'nico'}]},
+ generic:{ok:true},
  loading:null,
 };
 try {
- const cases=[['runner',768,'dark'],['inspector',768,'light'],['relay',390,'dark'],['night-shift',390,'light'],['blocked',320,'dark'],['empty',320,'light'],['complete',390,'dark'],['loading',390,'light'],['jobs',390,'dark'],['jobs',768,'light']];
+ const cases=[['runner',768,'dark'],['inspector',768,'light'],['relay',390,'dark'],['night-shift',390,'light'],['blocked',320,'dark'],['empty',320,'light'],['complete',390,'dark'],['loading',390,'light'],['jobs',390,'dark'],['jobs',768,'light'],['generic',360,'dark'],['generic',760,'light']];
  for(const [name,width,theme] of cases){
   const page=await browser.newPage({viewport:{width,height:1000},colorScheme:theme,reducedMotion:'reduce'}),errors=[],unexpected=[];
   page.on('pageerror',error=>errors.push(error.message));
@@ -47,11 +48,14 @@ try {
   await frame.locator('#feature-title').waitFor();
   if(fixtures[name])await frame.locator('#title').filter({hasText:name==='jobs'?'relay card polish':name==='empty'?'Verification':fixtures[name].claim?.goal||'Relay update'}).waitFor();
   await frame.locator('body').evaluate(async()=>{await document.fonts.load('400 36px "Momo Trust Display"');await document.fonts.load('400 14px Inter');await document.fonts.load('600 14px Inter');await document.fonts.ready;await Promise.all([...document.images].map(img=>img.complete?Promise.resolve():new Promise(resolve=>{img.onload=resolve;img.onerror=resolve})));});
-  const geometry=await frame.locator('body').evaluate(()=>({width:innerWidth,overflow:document.documentElement.scrollWidth>innerWidth,font:document.fonts.check('400 36px "Momo Trust Display"'),headingFont:getComputedStyle(document.querySelector('h1')).fontFamily,bodyFont:getComputedStyle(document.body).fontFamily,interLoaded:document.fonts.check('400 14px Inter'),outerPadding:parseFloat(getComputedStyle(document.querySelector('#card')).paddingLeft),actionsInHero:Boolean(document.querySelector('.hero #open-relay')),nextInHero:Boolean(document.querySelector('.hero #next')),buttons:[...document.querySelectorAll('.actions button')].filter(el=>!el.hidden).map(el=>({label:el.textContent,height:el.getBoundingClientRect().height})),images:[...document.querySelectorAll('.feature-mark img')].map(img=>({loaded:img.complete&&img.naturalWidth>0,source:img.src.slice(0,22)})),glyphMotion:getComputedStyle(document.querySelector('.feature-mark'),'::after').animationName,percent:document.querySelector('#meter').hidden?null:document.querySelector('#metric').textContent,diagnosticsExpanded:document.querySelector('#details').open}));
+  const geometry=await frame.locator('body').evaluate(()=>({width:innerWidth,overflow:document.documentElement.scrollWidth>innerWidth,font:document.fonts.check('400 36px "Momo Trust Display"'),headingFont:getComputedStyle(document.querySelector('h1')).fontFamily,bodyFont:getComputedStyle(document.body).fontFamily,interLoaded:document.fonts.check('400 14px Inter'),outerPadding:parseFloat(getComputedStyle(document.querySelector('#card')).paddingLeft),actionsAfterHero:Boolean(document.querySelector('.actions #open-relay')&&(document.querySelector('.hero').compareDocumentPosition(document.querySelector('.actions'))&Node.DOCUMENT_POSITION_FOLLOWING)),nextInHero:Boolean(document.querySelector('.hero #next')),buttons:[...document.querySelectorAll('.actions button')].filter(el=>!el.hidden).map(el=>({label:el.textContent,height:el.getBoundingClientRect().height})),images:[...document.querySelectorAll('.feature-mark img')].map(img=>({loaded:img.complete&&img.naturalWidth>0,source:img.src.slice(0,22)})),glyphMotion:getComputedStyle(document.querySelector('.feature-mark'),'::after').animationName,percent:document.querySelector('#meter').hidden?null:document.querySelector('#metric').textContent,diagnosticsExpanded:document.querySelector('#details').open}));
   await writeFile(directory+'/'+name+'-'+width+'-geometry.json',JSON.stringify(geometry,null,2));
-  assert.equal(geometry.overflow,false);assert.ok(geometry.font);assert.match(geometry.headingFont,/Momo/);assert.match(geometry.bodyFont,/Inter/);assert.ok(geometry.interLoaded);assert.ok(geometry.outerPadding>=12);assert.ok(geometry.actionsInHero);assert.ok(geometry.nextInHero);assert.ok(geometry.buttons.length<=2);assert.ok(geometry.buttons.every(button=>button.height>=44));assert.equal(geometry.glyphMotion,'none');assert.equal(geometry.diagnosticsExpanded,false);if(name!=='loading')assert.ok(geometry.images.every(image=>image.loaded));
+  assert.equal(geometry.overflow,false);assert.ok(geometry.font);assert.match(geometry.headingFont,/Momo/);assert.match(geometry.bodyFont,/Inter/);assert.ok(geometry.interLoaded);assert.ok(geometry.outerPadding>=12);assert.ok(geometry.actionsAfterHero);assert.ok(geometry.nextInHero);assert.ok(geometry.buttons.length<=2);assert.ok(geometry.buttons.every(button=>button.height>=44));assert.equal(geometry.glyphMotion,'none');assert.equal(geometry.diagnosticsExpanded,false);if(name!=='loading')assert.ok(geometry.images.every(image=>image.loaded));
   if(['relay','inspector','night-shift','blocked','empty','complete'].includes(name))assert.equal(geometry.percent,null);
-  if(name==='jobs'){assert.equal(await frame.locator('#metric').textContent(),'2');assert.match(await frame.locator('#rows').textContent(),/relay card polish/);assert.doesNotMatch(await frame.locator('#rows').textContent(),/Ellis|Roman/);}
+  // Ordinary multi-assignment responses show the selected assignment, not a fabricated active-job hero.
+  if(name==='jobs'){assert.equal(await frame.locator('.insight').isVisible(),false);assert.equal(await frame.locator('#plan-panel').isVisible(),false);assert.equal(await frame.locator('#rows').textContent(),'');assert.match(await frame.locator('#title').textContent(),/relay card polish/);}
+  if(fixtures[name]){const identity=contextCardModel(fixtures[name]).identity;assert.equal(await frame.locator('#feature-title').textContent(),identity.speaker?.name||identity.team_label);if(identity.speaker){assert.match(await frame.locator('#team').textContent(),/Assignment lead/);assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),identity.speaker.id);assert.ok(geometry.images.length>0);}}
+  if(name==='generic'){assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),'');assert.equal(await frame.locator('#feature-title').evaluate(el=>getComputedStyle(el).color),theme==='dark'?'rgb(240, 100, 59)':'rgb(181, 71, 31)');}
   if(name==='complete')assert.equal(await frame.locator('#next').isVisible(),false);
   assert.deepEqual(errors,[]);assert.deepEqual(unexpected,[]);
   const surface=`context-card-${name}-${width}-${theme}`,screenshot=await frame.locator('#card').screenshot();
