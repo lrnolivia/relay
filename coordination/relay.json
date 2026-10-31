@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T00:45:23.173Z",
+  "updated_at": "2026-10-31T00:45:46.106Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -9907,7 +9907,7 @@
       ],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-31T00:44:46.975Z",
       "objective_history": {
         "baseline": {
@@ -19505,6 +19505,84 @@
           "head_sha": "c7f2a90f599c1ae045cb77bae029b7cc2aad9fa1"
         }
       }
+    },
+    {
+      "id": "relay-card-corrections-20261031",
+      "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+      "branch": "relay/card-corrections-20261031",
+      "paths": [
+        "src/relay-context-card-model.js",
+        "src/relay-context-card-browser.js",
+        "src/relay-chat-ui.js",
+        "src/relay-chat-ui.test.js",
+        "src/relay-card-steps.js",
+        "src/relay-card-steps.test.js",
+        "src/relay-card-identity.js",
+        "src/relay-card-identity.test.js",
+        "docs/relay/STAFF_LED_CARDS_20261030.md",
+        "src/relay-context-card-style.js",
+        "src/relay-context-card-style.test.js",
+        "src/progress-observation.js",
+        "src/progress-observation.test.js",
+        "src/progress-api.js",
+        "src/progress-api.test.js",
+        "scripts/relay-continuity.mjs",
+        "scripts/relay-continuity.test.mjs",
+        "scripts/relay-native-continuity.mjs",
+        "scripts/relay-native-continuity.test.mjs",
+        "src/runner-control.js",
+        "src/runner-control-core.js",
+        "src/runner-control.test.js",
+        "src/coordination-transport.test.js",
+        "src/coordination-engine.js",
+        "test/coordination.test.mjs",
+        "src/coordination.mjs",
+        "src/index.js",
+        "src/relay-entry.test.js",
+        "src/relay-project-icon.js",
+        "src/relay-project-icon.test.js",
+        "src/work-card-delivery.js",
+        "src/work-card-delivery.test.js",
+        "docs/relay/CARD_CORRECTIONS_20261031.md"
+      ],
+      "resources": [
+        "relay-staff-led-cards",
+        "relay-card-ordered-step-model",
+        "relay-inline-card-intrinsic-sizing",
+        "relay-card-project-icon-projection"
+      ],
+      "goal": "Correct the shipped Relay cards: evidence-bound specialist attribution through the official publisher, compact ordinary failed/no-plan outcomes, and real registered project icons on initial responses and refresh.",
+      "acceptance": "Preserve approved v4 avatars, Terra Prime styling, CI and canonical checklist truth, routing versus contribution, Claude bridge and intrinsic sizing/version compatibility. Official producer-to-canonical-to-progress-to-render tests must show real bounded current-step owner observations; unknown identity uses honest team-only presentation with lead separate. Validate registered-repository icons server-side across ordinary cards and refresh. Inspect actual ordinary outcome DOM at 360/720 light/dark with disclosures and edge states. Focused/full tests, build, independent review and remote CI at exact head; draft PR then parent-only human merge and canonical Workers Build/live verification under existing release approval. Carry forward old assignment's unverified native-host acceptance; no fabricated completion or private journals. No authentication/security changes.",
+      "next_action": "Implement and verify the three admitted card corrections from current main; preserve predecessor branch/private receipts and never invent specialist contribution.",
+      "category": "implementation",
+      "primary_role": "builder",
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector",
+        "source"
+      ],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "db643f2764dfe85f9f6f1617f7fda0d5ba02b409",
+      "state": "active",
+      "created_at": "2026-10-31T00:45:46.106Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Correct the shipped Relay cards: evidence-bound specialist attribution through the official publisher, compact ordinary failed/no-plan outcomes, and real registered project icons on initial responses and refresh.",
+          "acceptance": "Preserve approved v4 avatars, Terra Prime styling, CI and canonical checklist truth, routing versus contribution, Claude bridge and intrinsic sizing/version compatibility. Official producer-to-canonical-to-progress-to-render tests must show real bounded current-step owner observations; unknown identity uses honest team-only presentation with lead separate. Validate registered-repository icons server-side across ordinary cards and refresh. Inspect actual ordinary outcome DOM at 360/720 light/dark with disclosures and edge states. Focused/full tests, build, independent review and remote CI at exact head; draft PR then parent-only human merge and canonical Workers Build/live verification under existing release approval. Carry forward old assignment's unverified native-host acceptance; no fabricated completion or private journals. No authentication/security changes.",
+          "at": "2026-10-31T00:44:46.975Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-card-corrections-20261031:acceptance:0",
+            "text": "Preserve approved v4 avatars, Terra Prime styling, CI and canonical checklist truth, routing versus contribution, Claude bridge and intrinsic sizing/version compatibility. Official producer-to-canonical-to-progress-to-render tests must show real bounded current-step owner observations; unknown identity uses honest team-only presentation with lead separate. Validate registered-repository icons server-side across ordinary cards and refresh. Inspect actual ordinary outcome DOM at 360/720 light/dark with disclosures and edge states. Focused/full tests, build, independent review and remote CI at exact head; draft PR then parent-only human merge and canonical Workers Build/live verification under existing release approval. Carry forward old assignment's unverified native-host acceptance; no fabricated completion or private journals. No authentication/security changes.",
+            "at": "2026-10-31T00:44:46.975Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-31T00:45:46.106Z",
+      "lease_until": "2026-10-31T12:45:46.106Z"
     }
   ],
   "migrated_from": "loew-inspector"
