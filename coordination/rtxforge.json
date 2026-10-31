@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T06:34:16.268Z",
+  "updated_at": "2026-10-31T06:40:53.760Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22035,7 +22035,11 @@
         "windows/RtxForge.Windows/GameMode/GameModeView.Pages.cs",
         "windows/RtxForge.Windows/GameMode/GmUi.cs",
         "prototypes/overlay-rmlui/overlay.rcss",
-        "windows/tests/test_skynizz_provider.py"
+        "windows/tests/test_skynizz_provider.py",
+        "providers/glass-overlay/OverlayController.h",
+        "windows/overlay-rmlui/GlassRuntime.cpp",
+        "prototypes/overlay-rmlui/Generate-Controls.ps1",
+        "prototypes/overlay-rmlui/Prototype.cpp"
       ],
       "resources": [
         "overlay-settings-native-ui",
@@ -22043,7 +22047,7 @@
       ],
       "goal": "Put overlay update/settings actions and descriptions inside native row cards; use exact layout names Side Panel, Advanced, Bar in desktop and actual overlay.",
       "acceptance": "Native Windows overlay settings have no detached update button/description/status block; Update Overlays and Last overlay update use accessible responsive settings rows. Layout illustrations preserved and visible option names match Side Panel, Advanced, Bar on Windows/Linux and actual overlay. Preserve persisted layout IDs, review flow, settings and Game Mode parked scope. Build and inspect native affected UI.",
-      "next_action": "Finish requested review batch incl. overlay Layout/Shortcut heading spacing and compact centered layout illustrations. Custom HDR workflow 4 new tests and borderless legacy restore tests pass, Windows build clean. Review native Extras/game picker/Package controls and Packages status cards, update lifecycle fixture for preserved resolution, commit reviewable changes.",
+      "next_action": "Complete review batch and user overlay refinements: inset scrollbars, visible adaptive dropdown chevrons, subtle text-button surfaces, slightly larger brand, compact centered layout cards and heading spacing, main NR render-resolution slider and pass-count stepper with runtime capability gating and native input checks. Custom HDR and borderless tests passing; finish runtime build and UI verification.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -22066,8 +22070,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T06:34:16.268Z",
-      "lease_until": "2026-10-31T18:34:16.268Z"
+      "updated_at": "2026-10-31T06:40:53.760Z",
+      "lease_until": "2026-10-31T18:40:53.760Z"
     }
   ]
 }
