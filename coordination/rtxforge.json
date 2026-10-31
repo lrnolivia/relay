@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T20:11:56.093Z",
+  "updated_at": "2026-10-31T20:12:25.373Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8122,7 +8122,7 @@
       "supporting_teams": [],
       "primary_staff": "luca",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-31T20:11:56.093Z",
       "objective_history": {
         "baseline": {
@@ -22299,6 +22299,53 @@
       "evidence": "PR132 human-owner squash merged cec409d6ed8900a476cbadff16b289e0e8e7cb9b; tree 2f90132efd179e67f7253a553c87b39384831837 equals reviewed approved head bca35faf7b42de712992e5bdd7c98c9a01a7d911. Exact-head Windows 41220356484, Linux 41220356551, coordination 41220356468 and attribution checks green. Native 1440p interaction and Clear white-foreground checks pass; 68 focused preference/workbench tests pass; shared DX11/DX12 SDR/scRGB/PQ composition/state fixtures pass. User approved corrected foreground-mask styling with 'looks perfect'. Clear retains warm-white labels/glyphs and light accent headings; faint shared foreground shadow only over bright glass, gentle existing-surface highlight control, no row rectangles/shadow boxes. Dark/Light palettes retained. Current live preview verified open window47448204 from C:/Users/lrnol/.codex/tmp/clear-row-prototype-build/Release/OverlayPrototype.exe. No beta publication or installation performed; fresh gameplay qualification not claimed. Source clean; styling work fully accounted.",
       "work_accounted": true,
       "completed_at": "2026-10-31T20:05:06.422Z"
+    },
+    {
+      "id": "rtxforge-beta13-release-20261031",
+      "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+      "branch": "rtxforge/beta13-release-20261031",
+      "paths": [
+        "VERSION",
+        "docs/releases/1.0-beta.md",
+        "windows/README.md",
+        "providers/glass-overlay/rollout-policy.json",
+        "windows/build/Build-GlassOverlay.ps1",
+        "tests/test_overlay_refresh.py",
+        "tests/test_glass_preferences.py"
+      ],
+      "resources": [
+        "rtxforge-beta13-publication",
+        "rtxforge-installed-windows-update"
+      ],
+      "goal": "Publish and install Beta 13 with the approved Clear styling and merged overlay/HDR improvements; force verified managed overlay refresh while preserving user settings and recovery files.",
+      "acceptance": "Review and merge a versioned Beta13 release change from approved main. Exact-source Windows x64/ARM64 and Linux AppImage/Flatpak publications pass; verify published downloads and SHA256/provenance plus retained rollback assets. Install verified Windows x64 build on this machine, preserve settings/custom shortcuts, and verify required managed overlay refresh with truthful updated/current/blocked results. Preserve human attribution and upstream notices; do not imply fresh gameplay qualification.",
+      "next_action": "Inspect version/rollout contracts; prepare Beta13 source and required overlay revision, validate then publish exact reviewed main and install verified x64 assets.",
+      "category": "release",
+      "primary_role": "release",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": "luca",
+      "supporting_staff": [],
+      "base_sha": "cec409d6ed8900a476cbadff16b289e0e8e7cb9b",
+      "state": "active",
+      "created_at": "2026-10-31T20:12:25.373Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish and install Beta 13 with the approved Clear styling and merged overlay/HDR improvements; force verified managed overlay refresh while preserving user settings and recovery files.",
+          "acceptance": "Review and merge a versioned Beta13 release change from approved main. Exact-source Windows x64/ARM64 and Linux AppImage/Flatpak publications pass; verify published downloads and SHA256/provenance plus retained rollback assets. Install verified Windows x64 build on this machine, preserve settings/custom shortcuts, and verify required managed overlay refresh with truthful updated/current/blocked results. Preserve human attribution and upstream notices; do not imply fresh gameplay qualification.",
+          "at": "2026-10-31T20:11:56.093Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta13-release-20261031:acceptance:0",
+            "text": "Review and merge a versioned Beta13 release change from approved main. Exact-source Windows x64/ARM64 and Linux AppImage/Flatpak publications pass; verify published downloads and SHA256/provenance plus retained rollback assets. Install verified Windows x64 build on this machine, preserve settings/custom shortcuts, and verify required managed overlay refresh with truthful updated/current/blocked results. Preserve human attribution and upstream notices; do not imply fresh gameplay qualification.",
+            "at": "2026-10-31T20:11:56.093Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-31T20:12:25.373Z",
+      "lease_until": "2026-11-01T08:12:25.373Z"
     }
   ]
 }
