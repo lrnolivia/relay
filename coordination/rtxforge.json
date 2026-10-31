@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T04:15:15.818Z",
+  "updated_at": "2026-10-31T04:23:36.783Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21967,7 +21967,7 @@
       ],
       "goal": "Add optional automatic per-game RenoDX HDR installation, matching and verified downloads; prefer managed OptiScaler ReShade side-loading and use standalone ReShade where compatible. Park Game Mode architecture work.",
       "acceptance": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
-      "next_action": "Finalize reviewed automatic optional RenoDX HDR for the next beta. Control Resonant clean cold startup+3D, live NR15.9ms/24renderedFPS and actualgenerated3/presented4 verified; nativeglass Look&Detail input confirmed. Test files removed and exact originalINI restored. ME2 install/remove and Feeder reuse verified; gameplayunverified EAlauncher neverstarted. Finalize foreignOS host ownership guards and release notes/version, run exact-head CI, merge only green, publish/verify follow-on beta and install with preserved settings. Game Mode architecture parked; Vulkan HDR layer explicitly unavailable.",
+      "next_action": "ME2 must launch and complete its live Feeder/HDR test before shipping, per latest user requirement. EA signed in; launch redirects to Steam then returns Play with no game process. Diagnose launcher handoff preserving installed stacks and saves; finish live test, restore exact original configs, update notes and require exact-head CI before Beta12.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21991,8 +21991,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T04:15:15.818Z",
-      "lease_until": "2026-10-31T16:15:15.818Z"
+      "updated_at": "2026-10-31T04:23:36.783Z",
+      "lease_until": "2026-10-31T16:23:36.783Z"
     }
   ]
 }
