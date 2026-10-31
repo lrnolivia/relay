@@ -1,4 +1,5 @@
 import {specialistWorkflow} from './specialist-workflow.js';
+import {nativeIntent,nativeHandoffView,transitionNativeHandoff} from './native-handoff.js';
 import { githubApiRequest } from './source.js';
 import { createHash } from 'node:crypto';
 import { transition, evaluate, occupying, normalizeScope, branchBudget } from './coordination-engine.js';
@@ -7,7 +8,7 @@ import { guardAutonomy } from './autonomy-control.js';
 import { attributedCommitBody, verifyAttributedCommit, reconcileAttributedContentsCommit } from './commit-attribution.js';
 import { testMaintenanceGuidance } from './test-maintenance.js';
 
-export const RUNNER_ENGINE_SHA = '1707fd1390344de8f0192a2adc10923fcd94ca26';
+export const RUNNER_ENGINE_SHA = 'cf508e4338861ea5a5bb5d5e209677ff5fb10399';
 export const DEFAULT_RUNNER_CONTROL_REPOSITORY = 'lrnolivia/relay';
 
 export class ControlError extends Error {
@@ -188,6 +189,7 @@ async function mutate(api, control, controlRepository, context, args) {
   }
 
   const allowed = {
+    delegate: ['id','owner','handoff','verified_source_sha'],
     queue: ['id', 'owner', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams'],
     claim: ['id', 'owner', 'branch', 'paths', 'resources', 'goal', 'acceptance', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams', 'expected_head_sha', 'reason'],
     amend: ['id', 'owner', 'card_steps', 'paths', 'resources', 'goal', 'acceptance', 'acceptance_additions', 'next_action', 'task_class', 'ledger_refs', 'category', 'labels', 'tags', 'primary_role', 'supporting_roles', 'primary_staff', 'supporting_staff', 'primary_team', 'supporting_teams', 'reason'],
@@ -202,6 +204,7 @@ async function mutate(api, control, controlRepository, context, args) {
   const unsupported = Object.keys(args.request).filter(key => !allowed.includes(key));
 
   const required = {
+    delegate: ['handoff','verified_source_sha'],
     queue: ['paths', 'goal', 'acceptance', 'next_action'],
     claim: ['branch', 'paths', 'goal', 'acceptance', 'next_action'],
     amend: ['reason'],
@@ -367,6 +370,7 @@ async function mutate(api, control, controlRepository, context, args) {
     action: args.action,
     claim: assignment,
     assignment,
+    specialist_workflow: specialistWorkflow(assignment),
     receipt: {
       repository: controlRepository,
       path: `coordination/${args.project}.json`,
@@ -375,6 +379,7 @@ async function mutate(api, control, controlRepository, context, args) {
       commit_sha: attribution.sha,
       attribution,
       reconciled_after_transport_error: Boolean(writeError),
+      write_acknowledged: Boolean(!writeError && saved?.commit?.sha),
       recovery: 'Read relay_runner_assignments before another mutation; do not replay a stale revision.'
     }
   });
@@ -431,6 +436,30 @@ async function runnerControlQuery(name, args, env = {}, apiOverride, phase = 'pu
   }
 
   await engineGuard(api, control);
+  if (name === 'relay_runner_delegate') {
+    nativeIntent(args);
+    const claim=context.record.value.claims.find(x=>x.id===args.assignment);
+    if(!claim||claim.owner!==args.owner)throw new ControlError('ownership','Native handoff requires the current assignment owner');
+    const head=(await api(`/repos/${context.registration.repository}/git/ref/heads/${encodeURIComponent(claim.branch)}`))?.object?.sha;
+    if(!/^[a-f0-9]{40}$/.test(head||''))throw new ControlError('provider','Native handoff source unavailable');
+    const row=claim.native_handoffs?.find(x=>x.operation_id===args.operation_id);
+    if(args.action==='read')return result(context,{assignment:claim,handoff:nativeHandoffView(row,{source_sha:head,assignment:claim})});
+    await guardAutonomy(env,[args.project]);
+    let patch;
+    try{patch=transitionNativeHandoff(claim,args,head);}catch(error){throw new ControlError('policy',error.message);}
+    if(patch.replayed)return result(context,{assignment:claim,replayed:true,handoff:nativeHandoffView(row,{source_sha:head,assignment:claim})});
+    const saved=await mutate(api,control,controlRepository,context,{project:args.project,action:'delegate',expected_record_sha:args.expected_record_sha,request:{id:args.assignment,owner:args.owner,handoff:args,verified_source_sha:head}});
+    // Coordination CAS does not lock independent source/control refs. Never
+    // issue a launch packet from the pre-write snapshot after a slow write.
+    let currentHead=null,launchBlocker=saved.receipt.write_acknowledged?null:'The write was recovered without an acknowledged winning CAS; reconcile the saved intent without launching.';
+    try{
+      await guardAutonomy(env,[args.project]);
+      const current=await registration(api,control,args.project);
+      currentHead=(await api(`/repos/${context.registration.repository}/git/ref/heads/${encodeURIComponent(claim.branch)}`))?.object?.sha;
+      if(current.record.sha!==saved.record_sha||current.registrationSha!==context.registrationSha||currentHead!==head)throw Error('Source, policy or coordination changed during publication');
+    }catch{currentHead=null;launchBlocker='Fresh source/control/ownership readback unavailable or changed; preserve the recorded intent and reconcile without launching.';}
+    return {...saved,action:args.action,...(launchBlocker?{launch_blocker:launchBlocker}:{}),handoff:nativeHandoffView(saved.assignment.native_handoffs.find(x=>x.operation_id===args.operation_id),{source_sha:currentHead,assignment:saved.assignment,launch:args.action==='prepare'&&!launchBlocker})};
+  }
   if (name === 'relay_runner_coordinate') {
     return mutate(api, control, controlRepository, context, args);
   }

@@ -150,7 +150,7 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
       card.evidence.current_step_state=currentStep.state;
       // Observed step state outranks routing status, never terminal/held authority
       // or an error reading the current assignment. Unknown stays unknown.
-      const stepStatus={running:['Running','info','working','This step is running.'],failed:['Step failed','bad','danger','This step failed. The recorded evidence is below.'],blocked:['Step blocked','wait','external','This step is blocked. The recorded evidence is below.'],stale:['Update needed','wait','external','This step needs a fresh update. Showing the last recorded evidence.']}[currentStep.state];
+      const stepStatus=currentStep.receipt.phase==='awaiting-verification'?['Awaiting verification','wait','external','The specialist finished this step. Its result still needs verification.']:{running:['Running','info','working','This step is running.'],failed:['Step failed','bad','danger','This step failed. The recorded evidence is below.'],blocked:['Step blocked','wait','external','This step is blocked. The recorded evidence is below.'],stale:['Update needed','wait','external','This step needs a fresh update. Showing the last recorded evidence.']}[currentStep.state];
       if(stepStatus&&!terminal&&status!=='held'&&!error){const [label,tone,signal,summary]=stepStatus;Object.assign(card,{label,tone,signal,summary});}
     }
     // Ordinary outcomes have one state and cause, never a numeric jobs hero.

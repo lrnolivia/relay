@@ -79,3 +79,7 @@ Publish the receipt with `node scripts/relay-native-continuity.mjs delegate CHAN
 If invocation times out, preserve the started intent and reconcile through the actual host receipt. Never launch again because a delegation file is missing. A stored delegation is immutable; a late terminal reply recovers the same identity without duplicate work. Raw prompts, agent receipts and process journals remain private; only bounded step evidence crosses into cards.
 
 See [specialist delivery](SPECIALIST_DELIVERY_20261031.md) for ordinary coordinator activation, automatic CLI review, and private-plan recovery boundaries.
+
+## Ordinary MCP chats without a local adapter
+
+Use `relay_runner_delegate` (`prepare`, `read`, `started`, `result`) from the current authorized coordinator. The returned packet binds one real host invocation before named running attribution. The current host, not Relay's server, invokes its actual subagent tool. Persist intent first, launch only from the first confirmed `launch_required` packet, record the actual returned agent ID, and report its result digest. Prepared intents with unknown launch IDs must be reconciled, never relaunched or timed out into a safe retry. This path needs the existing Relay MCP connection and host delegation capability; it does not require `RELAY_MCP_TOKEN`. Existing private continuity plans and separately configured acceptance verifiers remain authoritative. See `SPECIALIST_DELIVERY_20261031.md` for exact boundaries; successful agent exit alone never marks acceptance passed.

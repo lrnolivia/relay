@@ -1,4 +1,5 @@
 import {validateCardStepsPublication} from './relay-card-steps.js';
+import {transitionNativeHandoff} from './native-handoff.js';
 import {appendCanonicalAdditions,insideExpansionScope,continuityObjectiveDigest} from '../packages/runner/src/continuity-expansion.mjs';
 import { normalizeAssignmentStaff } from "./staff-registry.js";
 // Deterministic admission rules; expired leases retain ownership until reconciliation.
@@ -135,6 +136,14 @@ export function transition(record, request, policy, now = new Date()) {
   const current = claims.find((c) => c.id === request.id);
   const queued = next.queue.find((q) => q.id === request.id);
   if (!request.id || !request.owner) throw new Error('Stable assignment id and owner id are required.');
+  if (request.action === 'delegate') {
+    if (!current) throw Error('Native handoff requires a claimed assignment');
+    if(request.handoff?.project!==record.project||request.handoff.assignment!==request.id||request.handoff.owner!==request.owner)throw Error('Native handoff outer binding mismatch');
+    const patch=transitionNativeHandoff(current,request.handoff,request.verified_source_sha,now);
+    if(patch.replayed)return next;
+    delete patch.replayed;Object.assign(current,patch,{updated_at:now.toISOString()});
+    next.updated_at=now.toISOString();return next;
+  }
   if (request.action === 'reconcile') {
     if (!current || current.state !== 'completed' || !queued) throw new Error('Reconciliation requires a completed claim and its queue row.');
     if (current.owner !== request.owner) throw new Error('Reconciliation requires current claim ownership.');

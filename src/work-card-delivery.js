@@ -5,6 +5,7 @@ import { summarizeCiChecks } from './ci-test-telemetry.js';
 // shows its start, steps, blockers and completion without anyone asking for a card. Queries
 // (progress, assignments, resume) stay data-first, and the card refreshes itself in place.
 export const WORK_CARD_TOOLS = Object.freeze({
+  relay_runner_delegate: ['Recording the specialist handoff…', 'Specialist handoff recorded.'],
   relay_runner_coordinate: ['Updating Relay work…', 'Relay work updated.'],
   relay_execution: ['Updating the coding job…', 'Coding job updated.'],
   relay_source_open_pull_request: ['Opening the pull request…', 'Pull request opened.'],
@@ -37,6 +38,7 @@ export function workCardMilestone(name, data = {}) {
   if (!isWorkCardTool(name) || !data || typeof data !== 'object') return null;
   if (data.ok === false || data.isError || data.error) return { kind: 'failed', label: LABELS.failed };
   let kind = null;
+  if (name === 'relay_runner_delegate') kind = data.action==='started'?'started':data.action==='result'?'step':'status';
   if (name === 'relay_runner_coordinate') kind = COORDINATION[data.action] || null;
   else if (name === 'relay_execution') kind = EXECUTION[data.action] || (data.job ? 'status' : null);
   else if (name === 'relay_source_open_pull_request') kind = 'pull-request';

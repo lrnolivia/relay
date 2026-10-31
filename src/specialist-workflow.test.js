@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {continuityObjectiveDigest} from '../packages/runner/src/continuity-expansion.mjs';
 import {stageSpecialist,specialistWorkflow} from './specialist-workflow.js';
 
 const assignment={state:'active',primary_staff:'nico',primary_team:'runner',supporting_staff:['roman','rafael'],supporting_teams:['inspector','source']};
@@ -26,4 +27,11 @@ test('ordinary review uses canonical task responsibilities rather than one unive
  assert.equal(ordinaryReviewResponsibility({category:'implementation',primary_staff:'nico',supporting_roles:['integrator','verifier']}).person.id,'rafael');
  assert.equal(ordinaryReviewResponsibility({category:'qa-verification',primary_staff:'roman'}).person.id,'ellis');
  assert.equal(ordinaryReviewResponsibility({goal:'Use every named person',paths:['release/design.js'],primary_staff:'nico'}).role,'verifier','unknown scope only receives general verification; prose/path guesses cannot select roles');
+});
+
+test('ordinary native guidance supplies canonical objective binding without requiring prompt disclosure',()=>{
+ const assignment={id:'task',owner:'coordinator',branch:'relay/task',goal:'Native handoff',acceptance:'Real receipt',state:'active'};
+ const native=specialistWorkflow(assignment).native_mcp;
+ assert.deepEqual(native.binding,{assignment:'task',owner:'coordinator',branch:'relay/task',objective_digest:continuityObjectiveDigest(assignment.goal,assignment.acceptance)});
+ assert.equal(native.tool,'relay_runner_delegate');assert.deepEqual(native.actions,['prepare','read','started','result']);assert.match(native.next_action,/Keep task prompts private/);
 });
