@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T03:18:13.715Z",
+  "updated_at": "2026-10-31T03:18:55.095Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8002,7 +8002,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-10-31T03:18:13.715Z",
       "objective_history": {
         "baseline": {
@@ -21927,6 +21927,62 @@
       "evidence": "PR128 merged as 29d19af3426ddadb3ddb1fcd81152b47b627803c. Exact-source Windows publication41161023927 attempt2 and Linux41161027181 succeeded; all five Beta11 binaries independently verified against SHA256 sidecars/API and retained Beta10 rollback assets. Verified x64 installer exited0; installed executable equals verified portable, version1.0.0-beta.11, settings unchanged. Installed app reopened; production overlay refresh ledger complete bundle a1f8f49656734fa5b9ce375ba2ada42904c2ef4036b286d7b10c55fed59dbd3c, zero blocked, 49 current targets. Fresh production scoped review of previously blocked five has zero plans/zero blocked/five current. Native settings contains illustrated layouts and persistent Last overlay update. No new gameplay acceptance claimed; Game Mode migration parked at user request. Automatic RenoDX HDR is a new follow-up, not included in Beta11.",
       "work_accounted": true,
       "completed_at": "2026-10-31T03:17:19.207Z"
+    },
+    {
+      "id": "rtxforge-automatic-renodx-hdr-20261030",
+      "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+      "branch": "rtxforge/automatic-renodx-hdr-20261030",
+      "paths": [
+        "scripts/renodx_hdr.py",
+        "scripts/desktop_service.py",
+        "scripts/extra_tools.py",
+        "scripts/planning.py",
+        "scripts/engine_bridge.py",
+        "scripts/package_downloads.py",
+        "providers/renodx-hdr.json",
+        "providers/renodx-hdr/",
+        "windows/engine-host/",
+        "windows/RtxForge.Windows/Controls/",
+        "windows/RtxForge.Windows/Services/",
+        "windows/RtxForge.Windows/Views/GameDetailsPage.xaml.cs",
+        "gui/rtxforge_gtk.py",
+        "tests/test_renodx_hdr.py",
+        "windows/tests/",
+        "docs/renodx-hdr.md",
+        "THIRD_PARTY_NOTICES.md",
+        "packaging/"
+      ],
+      "resources": [
+        "rtxforge-automatic-renodx-hdr"
+      ],
+      "goal": "Add optional automatic per-game RenoDX HDR installation, matching and verified downloads; prefer managed OptiScaler ReShade side-loading and use standalone ReShade where compatible. Park Game Mode architecture work.",
+      "acceptance": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
+      "next_action": "Claim isolated branch from current reviewed main; inspect official RenoDX metadata/release catalog and pinned OptiScaler loading hooks; implement safe automatic HDR route and desktop controls with recovery.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "29d19af3426ddadb3ddb1fcd81152b47b627803c",
+      "state": "active",
+      "created_at": "2026-10-31T03:18:55.095Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Add optional automatic per-game RenoDX HDR installation, matching and verified downloads; prefer managed OptiScaler ReShade side-loading and use standalone ReShade where compatible. Park Game Mode architecture work.",
+          "acceptance": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
+          "at": "2026-10-31T03:18:13.715Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-automatic-renodx-hdr-20261030:acceptance:0",
+            "text": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
+            "at": "2026-10-31T03:18:13.715Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-31T03:18:55.095Z",
+      "lease_until": "2026-10-31T15:18:55.095Z"
     }
   ]
 }
