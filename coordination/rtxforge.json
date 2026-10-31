@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T00:37:16.408Z",
+  "updated_at": "2026-10-31T00:38:26.137Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21798,16 +21798,25 @@
         "windows/tests/test_overlay_refresh_events.py",
         "docs/overlay.md",
         "docs/releases/1.0-beta.md",
-        "VERSION"
+        "VERSION",
+        "scripts/cross_os.py",
+        "scripts/engine_bridge.py",
+        "scripts/proton_overlay.py",
+        "scripts/overlay_settings.py",
+        "tests/test_cross_os.py",
+        "tests/test_engine_bridge.py",
+        "tests/test_overlay_settings.py",
+        "providers/feeder-legacy.json"
       ],
       "resources": [
         "rtxforge-managed-provider-downloads",
         "rtxforge-overlay-settings-parity",
-        "rtxforge-overlay-refresh-results"
+        "rtxforge-overlay-refresh-results",
+        "rtxforge-cross-os-ownership"
       ],
       "goal": "Resolve supported Feeder/Vulkan packages automatically; align desktop overlay settings with the shipped glass overlay; make managed overlay refresh results visible.",
       "acceptance": "No normal installation requires users to supply Feeder or Vulkan stacks. Resolve pinned verified packages automatically, retain optional advanced local overrides and original-file recovery, and fail with actionable download errors rather than import instructions. Desktop and Game Mode settings reflect real Sidebar/Advanced/Bottom Bar, Clear/Light/Dark/custom appearance, typography/scale and other current overlay preferences with consistent persistence. Show a visible truthful managed-overlay refresh result, including updated/current/blocked games; preserve result counts across retries and avoid repeated notifications. Verify cold-cache and integrity failure paths, settings roundtrip/native builds and refresh lifecycle. Preserve human attribution and notices. Prepare reviewable exact-source delivery and follow-on beta through normal green checks.",
-      "next_action": "Create isolated worktree at reviewed main, implement pinned Feeder auto-fetch and remove normal manual-stack setup, synchronize desktop glass preferences, persist/show refresh summaries and validate.",
+      "next_action": "Trace five actual refresh blocks against local/shared records and managed file provenance; reconcile current cross-OS revisions without bypassing hash/backup guards. Implement auto package resolution, shared desktop/native appearance settings and visible cumulative refresh summary.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21831,8 +21840,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T00:37:16.408Z",
-      "lease_until": "2026-10-31T12:37:16.408Z"
+      "updated_at": "2026-10-31T00:38:26.137Z",
+      "lease_until": "2026-10-31T12:38:26.137Z"
     }
   ]
 }
