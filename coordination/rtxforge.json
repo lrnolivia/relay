@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T16:13:28.839Z",
+  "updated_at": "2026-10-31T16:31:21.197Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8025,9 +8025,9 @@
     {
       "id": "rtxforge-clear-row-contrast-20261031",
       "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
-      "goal": "Prototype warm-white Clear text and glyphs with brightness-adaptive support applied to whole control rows, replacing per-element black foreground.",
-      "acceptance": "Clear keeps text and glyphs warm white; headings keep a light accent. Only bright surfaces receive subtle feathered row backing and a restrained shadow, applied to the whole row rather than individual glyph/text. Smooth transitions, preserve dark/light themes and controls. Build and leave the native preview visible for user styling review; no beta publication.",
-      "next_action": "Inspect current contrast sampling, add row-level adaptive support and keep Clear foreground warm white; build and compare bright/dark native previews.",
+      "goal": "Preserve the user's approved Clear styling: warm-white text and glyphs, a subtle brightness-adaptive shadow following foreground ink consistently, gentle highlight control in existing glass, no row rectangles or shadow boxes.",
+      "acceptance": "User approved latest native preview with 'looks perfect'. No black text/glyphs on Clear, including menus. No added shadow-box/row surfaces. Shared subtle shadow follows actual text and glyph masks only over bright areas; Dark/Light retain their palettes. Native prototype input/white-foreground checks and shared DX11/DX12/HDR fixtures pass. Preserve exact visual appearance and leave prototype visible. No beta publication in this task.",
+      "next_action": "Pin approved preview, verify shared renderer, commit and prepare reviewable exact-source integration without further styling changes.",
       "paths": [
         "providers/glass-overlay/OverlayController.h",
         "prototypes/overlay-rmlui/MaterialColor.h",
@@ -8062,9 +8062,39 @@
             "id": "rtxforge-clear-row-contrast-20261031:acceptance:0",
             "text": "Clear keeps text and glyphs warm white; headings keep a light accent. Only bright surfaces receive subtle feathered row backing and a restrained shadow, applied to the whole row rather than individual glyph/text. Smooth transitions, preserve dark/light themes and controls. Build and leave the native preview visible for user styling review; no beta publication.",
             "at": "2026-10-31T16:11:06.083Z"
+          },
+          {
+            "id": "rtxforge-clear-row-contrast-20261031:acceptance:1",
+            "text": "User approved latest native preview with 'looks perfect'. No black text/glyphs on Clear, including menus. No added shadow-box/row surfaces. Shared subtle shadow follows actual text and glyph masks only over bright areas; Dark/Light retain their palettes. Native prototype input/white-foreground checks and shared DX11/DX12/HDR fixtures pass. Preserve exact visual appearance and leave prototype visible. No beta publication in this task.",
+            "at": "2026-10-31T16:31:21.197Z",
+            "reason": "User clarified 'whole row' means consistent label/glyph/value treatment, rejected rectangular shadow supports, and approved the corrected foreground-mask version."
           }
         ]
-      }
+      },
+      "updated_at": "2026-10-31T16:31:21.197Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-31T16:31:21.197Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "User clarified 'whole row' means consistent label/glyph/value treatment, rejected rectangular shadow supports, and approved the corrected foreground-mask version.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Prototype warm-white Clear text and glyphs with brightness-adaptive support applied to whole control rows, replacing per-element black foreground.",
+            "acceptance": "Clear keeps text and glyphs warm white; headings keep a light accent. Only bright surfaces receive subtle feathered row backing and a restrained shadow, applied to the whole row rather than individual glyph/text. Smooth transitions, preserve dark/light themes and controls. Build and leave the native preview visible for user styling review; no beta publication.",
+            "next_action": "Use warm-white foreground and GPU feathered support per whole semantic row on bright surfaces; tiny row-wide shadow only when enabled and bright. Shared renderer path plus native prototype."
+          },
+          "after": {
+            "goal": "Preserve the user's approved Clear styling: warm-white text and glyphs, a subtle brightness-adaptive shadow following foreground ink consistently, gentle highlight control in existing glass, no row rectangles or shadow boxes.",
+            "acceptance": "User approved latest native preview with 'looks perfect'. No black text/glyphs on Clear, including menus. No added shadow-box/row surfaces. Shared subtle shadow follows actual text and glyph masks only over bright areas; Dark/Light retain their palettes. Native prototype input/white-foreground checks and shared DX11/DX12/HDR fixtures pass. Preserve exact visual appearance and leave prototype visible. No beta publication in this task.",
+            "next_action": "Pin approved preview, verify shared renderer, commit and prepare reviewable exact-source integration without further styling changes."
+          }
+        }
+      ]
     }
   ],
   "claims": [
@@ -22160,9 +22190,9 @@
       "resources": [
         "overlay-clear-row-contrast"
       ],
-      "goal": "Prototype warm-white Clear text and glyphs with brightness-adaptive support applied to whole control rows, replacing per-element black foreground.",
-      "acceptance": "Clear keeps text and glyphs warm white; headings keep a light accent. Only bright surfaces receive subtle feathered row backing and a restrained shadow, applied to the whole row rather than individual glyph/text. Smooth transitions, preserve dark/light themes and controls. Build and leave the native preview visible for user styling review; no beta publication.",
-      "next_action": "Use warm-white foreground and GPU feathered support per whole semantic row on bright surfaces; tiny row-wide shadow only when enabled and bright. Shared renderer path plus native prototype.",
+      "goal": "Preserve the user's approved Clear styling: warm-white text and glyphs, a subtle brightness-adaptive shadow following foreground ink consistently, gentle highlight control in existing glass, no row rectangles or shadow boxes.",
+      "acceptance": "User approved latest native preview with 'looks perfect'. No black text/glyphs on Clear, including menus. No added shadow-box/row surfaces. Shared subtle shadow follows actual text and glyph masks only over bright areas; Dark/Light retain their palettes. Native prototype input/white-foreground checks and shared DX11/DX12/HDR fixtures pass. Preserve exact visual appearance and leave prototype visible. No beta publication in this task.",
+      "next_action": "Pin approved preview, verify shared renderer, commit and prepare reviewable exact-source integration without further styling changes.",
       "task_class": "design",
       "category": "design",
       "primary_role": "design",
@@ -22185,11 +22215,40 @@
             "id": "rtxforge-clear-row-contrast-20261031:acceptance:0",
             "text": "Clear keeps text and glyphs warm white; headings keep a light accent. Only bright surfaces receive subtle feathered row backing and a restrained shadow, applied to the whole row rather than individual glyph/text. Smooth transitions, preserve dark/light themes and controls. Build and leave the native preview visible for user styling review; no beta publication.",
             "at": "2026-10-31T16:11:06.083Z"
+          },
+          {
+            "id": "rtxforge-clear-row-contrast-20261031:acceptance:1",
+            "text": "User approved latest native preview with 'looks perfect'. No black text/glyphs on Clear, including menus. No added shadow-box/row surfaces. Shared subtle shadow follows actual text and glyph masks only over bright areas; Dark/Light retain their palettes. Native prototype input/white-foreground checks and shared DX11/DX12/HDR fixtures pass. Preserve exact visual appearance and leave prototype visible. No beta publication in this task.",
+            "at": "2026-10-31T16:31:21.197Z",
+            "reason": "User clarified 'whole row' means consistent label/glyph/value treatment, rejected rectangular shadow supports, and approved the corrected foreground-mask version."
           }
         ]
       },
-      "updated_at": "2026-10-31T16:13:28.839Z",
-      "lease_until": "2026-11-01T04:13:28.839Z"
+      "updated_at": "2026-10-31T16:31:21.197Z",
+      "lease_until": "2026-11-01T04:31:21.197Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-31T16:31:21.197Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "User clarified 'whole row' means consistent label/glyph/value treatment, rejected rectangular shadow supports, and approved the corrected foreground-mask version.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Prototype warm-white Clear text and glyphs with brightness-adaptive support applied to whole control rows, replacing per-element black foreground.",
+            "acceptance": "Clear keeps text and glyphs warm white; headings keep a light accent. Only bright surfaces receive subtle feathered row backing and a restrained shadow, applied to the whole row rather than individual glyph/text. Smooth transitions, preserve dark/light themes and controls. Build and leave the native preview visible for user styling review; no beta publication.",
+            "next_action": "Use warm-white foreground and GPU feathered support per whole semantic row on bright surfaces; tiny row-wide shadow only when enabled and bright. Shared renderer path plus native prototype."
+          },
+          "after": {
+            "goal": "Preserve the user's approved Clear styling: warm-white text and glyphs, a subtle brightness-adaptive shadow following foreground ink consistently, gentle highlight control in existing glass, no row rectangles or shadow boxes.",
+            "acceptance": "User approved latest native preview with 'looks perfect'. No black text/glyphs on Clear, including menus. No added shadow-box/row surfaces. Shared subtle shadow follows actual text and glyph masks only over bright areas; Dark/Light retain their palettes. Native prototype input/white-foreground checks and shared DX11/DX12/HDR fixtures pass. Preserve exact visual appearance and leave prototype visible. No beta publication in this task.",
+            "next_action": "Pin approved preview, verify shared renderer, commit and prepare reviewable exact-source integration without further styling changes."
+          }
+        }
+      ]
     }
   ]
 }
