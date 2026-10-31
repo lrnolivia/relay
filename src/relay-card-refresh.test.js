@@ -5,7 +5,7 @@ import {relayContextCardResource,contextCardModel} from './relay-chat-ui.js';
 const row=(id='task',state='working')=>({assignment:id,goal:'Repair '+id,state,primary_staff:'valentina',primary_team:'inspector',worker:{heartbeat_at:'2026-10-31T22:57:12Z',freshness:'fresh'},last_meaningful_progress_at:'2026-10-31T22:26:46Z',progress_freshness:'stale'});
 const progress=(id='task',state='working',at='2026-10-31T23:00:00Z')=>({project:'relay',generated_at:at,progress:[row(id,state)]});
 async function mount(output,{input={project:'relay'},hold=false}={}){
- const browser=await chromium.launch({headless:true}),page=await browser.newPage();await page.clock.install({time:new Date('2026-10-31T23:00:00Z')});
+ const browser=await chromium.launch({headless:true}),page=await browser.newPage();await page.clock.install({time:new Date('2026-10-31T23:00:00Z')});await page.clock.pauseAt(new Date('2026-10-31T23:00:00.001Z'));
  await page.addInitScript(({output,input,hold})=>{
   window.calls=[];window.pending=[];window.next=null;window.hold=hold;
   window.openai={toolInput:input,toolOutput:output,callTool:async(name,args)=>{

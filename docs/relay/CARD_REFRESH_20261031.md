@@ -19,6 +19,7 @@ Momo's canonical source is the embedded WOFF in `src/relay-context-card-style.js
 New production-DOM tests cover queued → claimed → completed canonical progress/queue responses, ordinary snapshots without work_card, over 90 reads, duplicate notifications, shared manual/automatic targeting, project/assignment switches, late/older/malformed responses, hidden/resume, page restoration, online recovery, backoff and terminal behavior. A real `deriveObservedProgress` producer result passes through the mounted read path and retains stale source evidence despite fresh heartbeat and successful fetch. Existing CI, icons, native/browser bridge, intrinsic resizing, reduced motion and historical resource aliases remain required.
 
 Intent-aware assertion changes:
+- The browser fixture pauses its installed clock before navigation so a slower CI mount cannot consume the initial 350ms interval before assertions. Timer expectations and behavior assertions are unchanged.
 - Failed-refresh feedback moved from the work blocker to the separate live-fetch status. The last work view and exact one-call assertion remain.
 - Entering an explorer assignment now performs its own assignment-bound read; expected calls include that read.
 - Manual refresh preserves navigation instead of navigating through project view; hydration test waits for actual new receipt rather than incidental widget-state echo counts, and expects the exact assignment argument.
