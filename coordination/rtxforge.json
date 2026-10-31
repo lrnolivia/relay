@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T02:40:52.359Z",
+  "updated_at": "2026-10-31T02:57:41.980Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21843,7 +21843,7 @@
       ],
       "goal": "Resolve supported Feeder/Vulkan packages automatically; align desktop overlay settings with the shipped glass overlay; make managed overlay refresh results visible.",
       "acceptance": "No normal installation requires users to supply Feeder or Vulkan stacks. Resolve pinned verified packages automatically, retain optional advanced local overrides and original-file recovery, and fail with actionable download errors rather than import instructions. Desktop and Game Mode settings reflect real Sidebar/Advanced/Bottom Bar, Clear/Light/Dark/custom appearance, typography/scale and other current overlay preferences with consistent persistence. Show a visible truthful managed-overlay refresh result, including updated/current/blocked games; preserve result counts across retries and avoid repeated notifications. Verify cold-cache and integrity failure paths, settings roundtrip/native builds and refresh lifecycle. Preserve human attribution and notices. Prepare reviewable exact-source delivery and follow-on beta through normal green checks.",
-      "next_action": "PR128 merged as 29d19af3426ddadb3ddb1fcd81152b47b627803c after all exact-head Windows/Linux/native/UI checks passed. Human owner merge and identical tree verified. Explicit Beta11 Windows+Linux publication dispatched for that SHA. Wait both publication runs, verify release checksums/provenance and retained Beta10 rollback assets, install Beta11, reopen real app and confirm forced overlay refresh plus visible report. Five scoped games repaired/current; prototype retained.",
+      "next_action": "Linux Beta11 publication 41161027181 succeeded at merge29d19af3426ddadb3ddb1fcd81152b47b627803c; both Linux downloads, update metadata and retained Beta10 rollback sizes/digests independently verified. Windows publication41161023927 x64 job failed existing rapid same-size DLL rewrite status test; PR and local73tests pass; 200local repeats did not reproduce. Retried only x64 job124420951394 once with assertions unchanged; ARM64/native succeeded. Wait retry and Windows publication, verify5binaries, install verified x64 setup, confirm forced overlay update notification/report, then complete claim.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21867,8 +21867,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T02:40:52.359Z",
-      "lease_until": "2026-10-31T14:40:52.359Z"
+      "updated_at": "2026-10-31T02:57:41.980Z",
+      "lease_until": "2026-10-31T14:57:41.980Z"
     }
   ]
 }
