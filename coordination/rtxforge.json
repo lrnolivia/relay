@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T16:31:21.197Z",
+  "updated_at": "2026-10-31T16:36:01.010Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22192,7 +22192,7 @@
       ],
       "goal": "Preserve the user's approved Clear styling: warm-white text and glyphs, a subtle brightness-adaptive shadow following foreground ink consistently, gentle highlight control in existing glass, no row rectangles or shadow boxes.",
       "acceptance": "User approved latest native preview with 'looks perfect'. No black text/glyphs on Clear, including menus. No added shadow-box/row surfaces. Shared subtle shadow follows actual text and glyph masks only over bright areas; Dark/Light retain their palettes. Native prototype input/white-foreground checks and shared DX11/DX12/HDR fixtures pass. Preserve exact visual appearance and leave prototype visible. No beta publication in this task.",
-      "next_action": "Pin approved preview, verify shared renderer, commit and prepare reviewable exact-source integration without further styling changes.",
+      "next_action": "User approved corrected preview ('looks perfect'). Approved styling checkpoint bca35fa (PR132 draft), no further visual changes: warm-white Clear ink, very subtle foreground-mask shadow on bright surfaces, no row boxes. Prototype visible at clear-row-prototype-build/Release/OverlayPrototype.exe. Native interaction/white-foreground checks, 68 focused tests and shared DX11/DX12 SDR/scRGB/PQ smoke all pass. Platform CI is running for PR132; continue exact-source integration only after green, no beta publication.",
       "task_class": "design",
       "category": "design",
       "primary_role": "design",
@@ -22224,8 +22224,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T16:31:21.197Z",
-      "lease_until": "2026-11-01T04:31:21.197Z",
+      "updated_at": "2026-10-31T16:36:01.010Z",
+      "lease_until": "2026-11-01T04:36:01.010Z",
       "amendment_count": 1,
       "amendments": [
         {
