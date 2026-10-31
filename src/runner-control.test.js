@@ -660,13 +660,13 @@ test('official specialist observation publisher reaches canonical progress and t
  const c=claim({primary_staff:'nico',primary_team:'runner',supporting_staff:['rafael','roman'],supporting_teams:['source','inspector']}),f=fixture({claims:[c],dynamicRevision:true});
  const p={schema:1,authorization:'Synthetic regression only',objective_digest:publishedSteps().objective_digest,environment:{node:'22'},criteria:['verify'],stages:[{id:'verify',kind:'test',criteria:['verify'],depends_on:[],prompt:'Verify synthetic card',inputs:['src/'],verify:['node','test.mjs']}]};
  const j={schema:1,plan_digest:createHash('sha256').update(JSON.stringify(p)).digest('hex'),stages:{verify:{state:'dispatching',observation:{state:'running',owner:{staff:'rafael',team:'source'},input_digest:'e'.repeat(64),evidence:'sha256:'+'f'.repeat(64),source_sha:sha,observed_at:new Date().toISOString()}}}};
- for(const [staff,team,state] of [['rafael','source','running'],['roman','inspector','failed']]){
+ for(const [staff,team,state,label] of [['rafael','source','running','Running'],['roman','inspector','failed','Step failed'],['roman','inspector','blocked','Step blocked'],['rafael','source','stale','Update needed']]){
   j.stages.verify.observation={...j.stages.verify.observation,state,owner:{staff,team}};
   const snapshot=await callRunnerControl('relay_runner_assignments',{project:'relay',assignment:'task'},{},f.api);
   const projection=continuityCardProjection({plan:p,journal:j,assignment:snapshot.claims[0]});
   await coordinate(f,'amend',{id:'task',owner:'worker',reason:'Publish synthetic observed step',card_steps:projection},snapshot.record_sha);
   const progress=await callRunnerControl('relay_runner_progress',{project:'relay',assignment:'task'},{},f.api),model=contextCardModel(progress);
-  assert.equal(model.identity.speaker.id,staff);assert.equal(model.identity.team,team);assert.equal(model.identity.lead.id,'nico');assert.equal(model.plan.steps[0].state,state);assert.equal(model.plan.passed,0);
+  assert.equal(model.identity.speaker.id,staff);assert.equal(model.identity.team,team);assert.equal(model.identity.lead.id,'nico');assert.equal(model.plan.steps[0].state,state);assert.equal(model.plan.passed,0);assert.equal(model.label,label);assert.equal(model.evidence.assignment_state,progress.progress[0].state);assert.doesNotMatch(model.summary,/worker is assigned/);
  }
- assert.equal(f.writes.length,2);
+ assert.equal(f.writes.length,4);
 });

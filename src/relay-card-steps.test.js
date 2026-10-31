@@ -40,3 +40,13 @@ test('canonical continuity receipts adapt without inferring staff, timestamps or
  const expanded={...j,effective_plan:{...p,stages:[...p.stages,{id:'new-stage'}]}};
  assert.equal((await continuityCardSteps({assignment:'cards',plan:p,journal:expanded,observed_at:'2026-10-30T00:00:00Z'})).total,null);
 });
+
+test('current-step headlines require bound observations and preserve held/terminal authority',async()=>{
+ const {contextCardModel}=await import('./relay-context-card-model.js');
+ const claim={id:'work',owner:'worker',goal:'Canonical work',state:'active',primary_team:'runner',card_steps:{schema:CARD_STEPS_SCHEMA,assignment:'work',revision:'plan',complete:true,steps:[{id:'verify',label:'Verify',depends_on:[],state:'failed',receipt:{id:'receipt',assignment:'work',step_id:'verify',plan_revision:'plan',evidence:'Observed failure',observed_at:'2026-10-31T00:00:00Z'}}]}};
+ assert.equal(contextCardModel({claim}).label,'Step failed');
+ for(const state of ['held','completed']){const card=contextCardModel({claim:{...claim,state}});assert.notEqual(card.label,'Step failed');assert.equal(card.evidence.assignment_state,state);}
+ const unknown=structuredClone(claim);unknown.card_steps.steps[0].receipt=null;
+ const card=contextCardModel({claim:unknown});assert.equal(card.plan.steps[0].state,'unknown');assert.notEqual(card.label,'Step failed');
+ const pending=structuredClone(unknown);pending.card_steps.steps[0].state='pending';assert.notEqual(contextCardModel({claim:pending}).label,'Running');
+});
