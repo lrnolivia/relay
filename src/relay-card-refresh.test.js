@@ -4,7 +4,7 @@ import {chromium} from 'playwright';
 import {relayContextCardResource,contextCardModel} from './relay-chat-ui.js';
 const row=(id='task',state='working')=>({assignment:id,goal:'Repair '+id,state,primary_staff:'valentina',primary_team:'inspector',worker:{heartbeat_at:'2026-10-31T22:57:12Z',freshness:'fresh'},last_meaningful_progress_at:'2026-10-31T22:26:46Z',progress_freshness:'stale'});
 const progress=(id='task',state='working',at='2026-10-31T23:00:00Z')=>({project:'relay',generated_at:at,progress:[row(id,state)]});
-async function mount(output,{input={project:'relay'},hold=false}={}){
+async function mount(output,{input={project:'relay'},hold=false,waitStaff=true}={}){
  const browser=await chromium.launch({headless:true}),page=await browser.newPage();await page.clock.install({time:new Date('2026-10-31T23:00:00Z')});await page.clock.pauseAt(new Date('2026-10-31T23:00:00.001Z'));
  await page.addInitScript(({output,input,hold})=>{
   window.calls=[];window.pending=[];window.next=null;window.hold=hold;
@@ -13,7 +13,7 @@ async function mount(output,{input={project:'relay'},hold=false}={}){
    return window.next||{project:args.project,generated_at:new Date().toISOString(),progress:[{assignment:args.assignment,goal:'Fresh '+args.assignment,state:'working',primary_staff:'valentina',primary_team:'inspector'}]};
   }};
  },{output,input,hold});
- await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.locator('#feature-title').filter({hasText:'Valentina'}).waitFor();
+ await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));if(waitStaff)await page.locator('#feature-title').filter({hasText:'Valentina'}).waitFor();
  return {browser,page};
 }
 const calls=page=>page.evaluate(()=>window.calls);
@@ -160,4 +160,52 @@ test('explicit explorer navigation stops the previous exact CI run even while la
   await page.getByRole('button',{name:'‹ Project',exact:true}).click();const count=(await calls(page)).filter(c=>c.name==='relay_source_checks').length;
   await page.clock.runFor(60000);assert.equal((await calls(page)).filter(c=>c.name==='relay_source_checks').length,count);assert.equal(await page.locator('#title').textContent(),'relay');assert.equal(await page.locator('#card-freshness').isVisible(),false);
  }finally{await browser.close();}
+});
+
+
+test('queued explorer hydration honors explicit assignment across queued, claimed and completed reads',async()=>{
+ const queued={id:'task',goal:'Queued explorer repair',state:'queued',primary_staff:'valentina',primary_team:'inspector'};
+ const initial={schema:'relay-status-explorer/v1',project:'relay',generated_at:'2026-10-31T23:00:00Z',progress:[],queue:[queued]};
+ const {browser,page}=await mount(initial,{input:{project:'relay',assignment:'task'},waitStaff:false});
+ try{
+  assert.equal(await page.locator('#title').textContent(),'Queued explorer repair');
+  assert.match(await page.locator('.status-navigation').textContent(),/Assignment/);
+  await page.evaluate(data=>window.next=data,initial);await page.clock.runFor(400);await page.waitForFunction(()=>window.calls.length===1&&!document.querySelector('#refresh').disabled);
+  assert.deepEqual((await calls(page))[0].args,{project:'relay',assignment:'task'});
+  const claimed={...progress('task','working','2026-10-31T23:01:00Z'),queue:[{...queued,state:'claimed'}]};
+  await page.evaluate(data=>window.next=data,claimed);await page.clock.runFor(30050);await page.waitForFunction(()=>window.calls.length===2&&!document.querySelector('#refresh').disabled);
+  assert.equal(await page.locator('#title').textContent(),'Repair task');assert.match(await page.locator('.status-navigation').textContent(),/Assignment/);
+  await page.evaluate(data=>window.next=data,progress('task','completed','2026-10-31T23:02:00Z'));await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
+  assert.match(await page.locator('#card-freshness').textContent(),/Final recorded state/);const count=(await calls(page)).length;await page.clock.runFor(90000);assert.equal((await calls(page)).length,count);
+  assert.ok((await calls(page)).every(c=>c.args.assignment==='task'));
+ }finally{await browser.close();}
+});
+
+test('new host assignment invalidates pending explorer project and overview replies, including errors',async()=>{
+ for(const level of ['project','overview'])for(const failed of [false,true])for(const project of ['relay','field']){
+  const {browser,page}=await mount({...progress(),schema:'relay-status-explorer/v1'},{input:{project:'relay',assignment:'task'},hold:true});
+  try{
+   // Navigate before the initial assignment timer fires, leaving exactly one explorer request held.
+   await page.getByRole('button',{name:'‹ Project',exact:true}).click();
+   await page.locator('#title').filter({hasText:/^relay$/}).waitFor();
+   if(level==='overview')await page.getByRole('button',{name:'‹ Overall',exact:true}).click();
+   else await page.locator('#refresh').click();
+   await page.waitForFunction(()=>window.pending.length===1);
+   const latest={...progress('new-task','blocked','2026-10-31T23:05:00Z'),project};
+   await page.evaluate(data=>{window.openai.toolInput={project:data.project,assignment:'new-task'};window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolInput:window.openai.toolInput,toolOutput:data}}}));},latest);
+   assert.equal(await page.locator('#title').textContent(),'Repair new-task');
+   const old=failed?{ok:false,error:{class:'provider',message:'Old navigation failed'}}:level==='project'?progress():{projects:[{id:'relay',coordination:'enabled'}]};
+   await page.evaluate(async data=>{window.pending.shift()(data);for(let i=0;i<20;i++)await Promise.resolve();},old);
+   assert.equal(await page.locator('#title').textContent(),'Repair new-task',level+' late '+(failed?'error':'success')+' must not replace current host evidence');
+   assert.equal(await page.locator('#blocker').isVisible(),false);
+   await page.getByRole('button',{name:'‹ Project',exact:true}).click();
+   assert.match(await page.locator('#rows').textContent(),/Repair new-task/);
+   await page.getByRole('button',{name:/Repair new-task/}).click();
+   await page.locator('#refresh').click();await page.waitForFunction(()=>window.pending.length===1);
+   assert.deepEqual((await calls(page)).at(-1).args,{project,assignment:'new-task'});
+   await page.evaluate(async data=>{window.pending.shift()(data);for(let i=0;i<20;i++)await Promise.resolve();},latest);
+   await page.getByRole('button',{name:'‹ Project',exact:true}).click();
+   assert.match(await page.locator('#rows').textContent(),/Repair new-task/);
+  }finally{await browser.close();}
+ }
 });
