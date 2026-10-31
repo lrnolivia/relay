@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T01:34:53.765Z",
+  "updated_at": "2026-10-31T01:36:12.722Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -9933,33 +9933,33 @@
           "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
           "branch": "relay/card-corrections-20261031"
         },
-        "sequence": 4,
+        "sequence": 5,
         "complete": false,
         "steps": [
           {
             "id": "verify-live-card-data",
             "label": "verify live card data",
             "depends_on": [],
-            "state": "blocked",
+            "state": "passed",
             "receipt": {
               "id": "verify-live-card-data:0f478c09afdfab879afd543dd77a1638",
               "assignment": "relay-card-corrections-20261031",
               "step_id": "verify-live-card-data",
               "plan_revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
               "input_digest": "0f478c09afdfab879afd543dd77a163888c6989856c400d59666b5d4f4e0c477",
-              "evidence": "sha256:b6e74440faa7a5dcc67944035dc0bcf9ffc786b8c869c2e9ba78bf0642dc4fde",
+              "evidence": "sha256:3f34d0a4e6307ee002cfc312362d177e4bfa4749b030a9ceb46c5a85689c3905",
               "source_sha": "4843bf93caa36464ae9361a6d01ceda85a7fc4e2",
-              "observed_at": "2026-10-31T01:34:04.604Z",
               "owner": {
                 "staff": null,
                 "team": "inspector"
-              }
+              },
+              "observed_at": "2026-10-31T01:35:52.706Z"
             }
           }
         ]
       },
-      "updated_at": "2026-10-31T01:34:53.765Z",
-      "amendment_count": 4,
+      "updated_at": "2026-10-31T01:36:12.722Z",
+      "amendment_count": 5,
       "amendments": [
         {
           "at": "2026-10-31T01:27:39.937Z",
@@ -10190,6 +10190,86 @@
                       "staff": null,
                       "team": "inspector"
                     }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "at": "2026-10-31T01:36:12.722Z",
+          "by": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "reason": "Publish verified continuity checklist milestone",
+          "fields": [
+            "card_steps"
+          ],
+          "before": {
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "relay-card-corrections-20261031",
+              "revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
+              "objective_digest": "cbe5b8b7d1c6fd44b28cb57a49f8c8f010e6cf76781750771827a4ae0366fee2",
+              "publisher": {
+                "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+                "branch": "relay/card-corrections-20261031"
+              },
+              "sequence": 4,
+              "complete": false,
+              "steps": [
+                {
+                  "id": "verify-live-card-data",
+                  "label": "verify live card data",
+                  "depends_on": [],
+                  "state": "blocked",
+                  "receipt": {
+                    "id": "verify-live-card-data:0f478c09afdfab879afd543dd77a1638",
+                    "assignment": "relay-card-corrections-20261031",
+                    "step_id": "verify-live-card-data",
+                    "plan_revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
+                    "input_digest": "0f478c09afdfab879afd543dd77a163888c6989856c400d59666b5d4f4e0c477",
+                    "evidence": "sha256:b6e74440faa7a5dcc67944035dc0bcf9ffc786b8c869c2e9ba78bf0642dc4fde",
+                    "source_sha": "4843bf93caa36464ae9361a6d01ceda85a7fc4e2",
+                    "observed_at": "2026-10-31T01:34:04.604Z",
+                    "owner": {
+                      "staff": null,
+                      "team": "inspector"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "after": {
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "relay-card-corrections-20261031",
+              "revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
+              "objective_digest": "cbe5b8b7d1c6fd44b28cb57a49f8c8f010e6cf76781750771827a4ae0366fee2",
+              "publisher": {
+                "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+                "branch": "relay/card-corrections-20261031"
+              },
+              "sequence": 5,
+              "complete": false,
+              "steps": [
+                {
+                  "id": "verify-live-card-data",
+                  "label": "verify live card data",
+                  "depends_on": [],
+                  "state": "passed",
+                  "receipt": {
+                    "id": "verify-live-card-data:0f478c09afdfab879afd543dd77a1638",
+                    "assignment": "relay-card-corrections-20261031",
+                    "step_id": "verify-live-card-data",
+                    "plan_revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
+                    "input_digest": "0f478c09afdfab879afd543dd77a163888c6989856c400d59666b5d4f4e0c477",
+                    "evidence": "sha256:3f34d0a4e6307ee002cfc312362d177e4bfa4749b030a9ceb46c5a85689c3905",
+                    "source_sha": "4843bf93caa36464ae9361a6d01ceda85a7fc4e2",
+                    "owner": {
+                      "staff": null,
+                      "team": "inspector"
+                    },
+                    "observed_at": "2026-10-31T01:35:52.706Z"
                   }
                 }
               ]
@@ -19855,8 +19935,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T01:34:53.765Z",
-      "lease_until": "2026-10-31T13:34:53.765Z",
+      "updated_at": "2026-10-31T01:36:12.722Z",
+      "lease_until": "2026-10-31T13:36:12.722Z",
       "card_steps": {
         "schema": "relay-card-steps/v1",
         "assignment": "relay-card-corrections-20261031",
@@ -19866,32 +19946,32 @@
           "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
           "branch": "relay/card-corrections-20261031"
         },
-        "sequence": 4,
+        "sequence": 5,
         "complete": false,
         "steps": [
           {
             "id": "verify-live-card-data",
             "label": "verify live card data",
             "depends_on": [],
-            "state": "blocked",
+            "state": "passed",
             "receipt": {
               "id": "verify-live-card-data:0f478c09afdfab879afd543dd77a1638",
               "assignment": "relay-card-corrections-20261031",
               "step_id": "verify-live-card-data",
               "plan_revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
               "input_digest": "0f478c09afdfab879afd543dd77a163888c6989856c400d59666b5d4f4e0c477",
-              "evidence": "sha256:b6e74440faa7a5dcc67944035dc0bcf9ffc786b8c869c2e9ba78bf0642dc4fde",
+              "evidence": "sha256:3f34d0a4e6307ee002cfc312362d177e4bfa4749b030a9ceb46c5a85689c3905",
               "source_sha": "4843bf93caa36464ae9361a6d01ceda85a7fc4e2",
-              "observed_at": "2026-10-31T01:34:04.604Z",
               "owner": {
                 "staff": null,
                 "team": "inspector"
-              }
+              },
+              "observed_at": "2026-10-31T01:35:52.706Z"
             }
           }
         ]
       },
-      "amendment_count": 4,
+      "amendment_count": 5,
       "amendments": [
         {
           "at": "2026-10-31T01:27:39.937Z",
@@ -20122,6 +20202,86 @@
                       "staff": null,
                       "team": "inspector"
                     }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "at": "2026-10-31T01:36:12.722Z",
+          "by": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "reason": "Publish verified continuity checklist milestone",
+          "fields": [
+            "card_steps"
+          ],
+          "before": {
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "relay-card-corrections-20261031",
+              "revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
+              "objective_digest": "cbe5b8b7d1c6fd44b28cb57a49f8c8f010e6cf76781750771827a4ae0366fee2",
+              "publisher": {
+                "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+                "branch": "relay/card-corrections-20261031"
+              },
+              "sequence": 4,
+              "complete": false,
+              "steps": [
+                {
+                  "id": "verify-live-card-data",
+                  "label": "verify live card data",
+                  "depends_on": [],
+                  "state": "blocked",
+                  "receipt": {
+                    "id": "verify-live-card-data:0f478c09afdfab879afd543dd77a1638",
+                    "assignment": "relay-card-corrections-20261031",
+                    "step_id": "verify-live-card-data",
+                    "plan_revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
+                    "input_digest": "0f478c09afdfab879afd543dd77a163888c6989856c400d59666b5d4f4e0c477",
+                    "evidence": "sha256:b6e74440faa7a5dcc67944035dc0bcf9ffc786b8c869c2e9ba78bf0642dc4fde",
+                    "source_sha": "4843bf93caa36464ae9361a6d01ceda85a7fc4e2",
+                    "observed_at": "2026-10-31T01:34:04.604Z",
+                    "owner": {
+                      "staff": null,
+                      "team": "inspector"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "after": {
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "relay-card-corrections-20261031",
+              "revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
+              "objective_digest": "cbe5b8b7d1c6fd44b28cb57a49f8c8f010e6cf76781750771827a4ae0366fee2",
+              "publisher": {
+                "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+                "branch": "relay/card-corrections-20261031"
+              },
+              "sequence": 5,
+              "complete": false,
+              "steps": [
+                {
+                  "id": "verify-live-card-data",
+                  "label": "verify live card data",
+                  "depends_on": [],
+                  "state": "passed",
+                  "receipt": {
+                    "id": "verify-live-card-data:0f478c09afdfab879afd543dd77a1638",
+                    "assignment": "relay-card-corrections-20261031",
+                    "step_id": "verify-live-card-data",
+                    "plan_revision": "c660a169a01443121be73441430aa30e3c5400e3af66452f4f9b81acfa079a05",
+                    "input_digest": "0f478c09afdfab879afd543dd77a163888c6989856c400d59666b5d4f4e0c477",
+                    "evidence": "sha256:3f34d0a4e6307ee002cfc312362d177e4bfa4749b030a9ceb46c5a85689c3905",
+                    "source_sha": "4843bf93caa36464ae9361a6d01ceda85a7fc4e2",
+                    "owner": {
+                      "staff": null,
+                      "team": "inspector"
+                    },
+                    "observed_at": "2026-10-31T01:35:52.706Z"
                   }
                 }
               ]
