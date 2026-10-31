@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T21:04:05.596Z",
+  "updated_at": "2026-10-31T21:42:45.014Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22354,6 +22354,50 @@
       "evidence": "PR133 squash merged as verified human owner at 0ed4eebc374d6fe65765abc3d7d60092e8b1f5f9; tree exactly matches reviewed3baeff9e742607d7527adc3dfc6e68e2aeace74d. Review Windows41238092957/Linux41238092937/UI41238092901 green. Explicit publication Windows41239587006 and Linux41239590868 succeeded at exact merge. Public Beta13 all5 binaries verified against SHA256 sidecars, GitHub digests, expected sizes and both OS source/version provenance; Linux metadata matches; all113 old assets retained,124 total. Verified x64 installer exit0, installed VERSION13,10 app/engine/renderer files match portable, revision2 required receipt exact merge. Existing3 preference files byte-identical;172 original recovery backups hashes unchanged. App opened and in-app overlay update report verified; durable revision2 bundle469ec64a409b518617d70b93dc65fc315001ef02572074bc6cbf4fd8dc14c171 complete,49 current,0 blocked. Initial app/helper simultaneous refresh collided with transient file access/stale review; stopped duplicate helper, normal fresh retry completed, helper restarted successfully; concurrency is an observation for future refresh hardening, not a source fix claimed in this release. Prototype remains open. Evidence C:/Users/lrnol/.codex/tmp/beta13-release/downloads/verification.json, installed-verification.json, recovery-verification.json, source.json, publication-runs.json; Beta12 recovery saved under LOCALAPPDATA/rtxForge/recovery/install-beta13-20261031. Release worktree clean. No new gameplay qualification claimed.",
       "work_accounted": true,
       "completed_at": "2026-10-31T21:04:05.596Z"
+    },
+    {
+      "id": "rtxforge-overlay-layout-repair-20261031",
+      "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+      "branch": "rtxforge/overlay-layout-repair-20261031",
+      "paths": [
+        "providers/glass-overlay/OverlayController.h",
+        "prototypes/overlay-rmlui/",
+        "tests/test_overlay_workbench.py",
+        "tests/test_glass_preferences.py",
+        "windows/overlay-rmlui/tests/"
+      ],
+      "resources": [
+        "rtxforge-overlay-layout",
+        "rtxforge-live-prototype"
+      ],
+      "goal": "Repair shared overlay layout, alignment, clipping and stacking defects reported in Side Panel, Advanced and Bar without changing approved glass identity. Rebuild live prototype and verify rendered states across normal/larger text and scale.",
+      "acceptance": "Advanced sidebar/content and scroll bounds align; Bar header, controls, footer and attached popovers stay reachable and padded; glyphs/labels center on their surfaces; prototype scene toolbar never obscures welcome toast; all3 layouts preserve controls and approved Clear materials; focused native regression checks and bounded screenshot review pass.",
+      "next_action": "Inspect shared layout rules and exact screenshots, implement bounded layout fixes, build native prototype, verify all3 layouts and focused native regression tests.",
+      "category": "design",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "base_sha": "0ed4eebc374d6fe65765abc3d7d60092e8b1f5f9",
+      "state": "active",
+      "created_at": "2026-10-31T21:42:45.014Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Repair shared overlay layout, alignment, clipping and stacking defects reported in Side Panel, Advanced and Bar without changing approved glass identity. Rebuild live prototype and verify rendered states across normal/larger text and scale.",
+          "acceptance": "Advanced sidebar/content and scroll bounds align; Bar header, controls, footer and attached popovers stay reachable and padded; glyphs/labels center on their surfaces; prototype scene toolbar never obscures welcome toast; all3 layouts preserve controls and approved Clear materials; focused native regression checks and bounded screenshot review pass.",
+          "at": "2026-10-31T21:42:45.014Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-overlay-layout-repair-20261031:acceptance:0",
+            "text": "Advanced sidebar/content and scroll bounds align; Bar header, controls, footer and attached popovers stay reachable and padded; glyphs/labels center on their surfaces; prototype scene toolbar never obscures welcome toast; all3 layouts preserve controls and approved Clear materials; focused native regression checks and bounded screenshot review pass.",
+            "at": "2026-10-31T21:42:45.014Z"
+          }
+        ]
+      },
+      "updated_at": "2026-10-31T21:42:45.014Z",
+      "lease_until": "2026-11-01T09:42:45.014Z"
     }
   ]
 }
