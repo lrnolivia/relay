@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T06:27:51.626Z",
+  "updated_at": "2026-10-31T06:34:16.268Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22033,7 +22033,9 @@
         "windows/engine-host/game_display.py",
         "windows/tests/test_game_display.py",
         "windows/RtxForge.Windows/GameMode/GameModeView.Pages.cs",
-        "windows/RtxForge.Windows/GameMode/GmUi.cs"
+        "windows/RtxForge.Windows/GameMode/GmUi.cs",
+        "prototypes/overlay-rmlui/overlay.rcss",
+        "windows/tests/test_skynizz_provider.py"
       ],
       "resources": [
         "overlay-settings-native-ui",
@@ -22041,7 +22043,7 @@
       ],
       "goal": "Put overlay update/settings actions and descriptions inside native row cards; use exact layout names Side Panel, Advanced, Bar in desktop and actual overlay.",
       "acceptance": "Native Windows overlay settings have no detached update button/description/status block; Update Overlays and Last overlay update use accessible responsive settings rows. Layout illustrations preserved and visible option names match Side Panel, Advanced, Bar on Windows/Linux and actual overlay. Preserve persisted layout IDs, review flow, settings and Game Mode parked scope. Build and inspect native affected UI.",
-      "next_action": "Apply user review batch: row cards and glyphs, Side Panel/Advanced/Bar labels, Features Package grouping, per-game reviewed custom HDR imports and Extras RenoDX area, Global Settings rename, borderless without resolution override with legacy restore tests, Packages hardware/status cards. Build/test native UI; preserve parked Game Mode architecture.",
+      "next_action": "Finish requested review batch incl. overlay Layout/Shortcut heading spacing and compact centered layout illustrations. Custom HDR workflow 4 new tests and borderless legacy restore tests pass, Windows build clean. Review native Extras/game picker/Package controls and Packages status cards, update lifecycle fixture for preserved resolution, commit reviewable changes.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -22064,8 +22066,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T06:27:51.626Z",
-      "lease_until": "2026-10-31T18:27:51.626Z"
+      "updated_at": "2026-10-31T06:34:16.268Z",
+      "lease_until": "2026-10-31T18:34:16.268Z"
     }
   ]
 }
