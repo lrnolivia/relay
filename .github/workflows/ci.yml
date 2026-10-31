@@ -99,7 +99,7 @@ jobs:
           BEFORE_SHA: ${{ github.event.before }}
           HEAD_SHA: ${{ github.sha }}
           RELAY_CI_PREVIEW_REQUIRED: ${{ github.event_name == 'pull_request' && github.event.pull_request.draft == true && ((github.head_ref == 'relay/mcp-rebuild-20261003' && github.event.pull_request.head.repo.full_name == github.repository) || startsWith(github.head_ref, 'relay/retained-interactive-previews-') || startsWith(github.head_ref, 'relay/website-work-queue-views-') || startsWith(github.head_ref, 'relay/2.0-approved-visual-port-') || startsWith(github.head_ref, 'relay/website-project-context-polish-') || startsWith(github.head_ref, 'relay/website-notifications-review-')) }}
-          RELAY_CI_CARD_REQUIRED: ${{ github.head_ref == 'relay/mcp-rebuild-20261003' || startsWith(github.head_ref, 'relay/context-card-visual-parity-') || (github.event_name == 'push' && contains(github.event.head_commit.message, 'contextual card visual parity')) }}
+          RELAY_CI_CARD_REQUIRED: ${{ github.head_ref == 'relay/mcp-rebuild-20261003' || startsWith(github.head_ref, 'relay/context-card-visual-parity-') || startsWith(github.head_ref, 'relay/card-persona-brand-') || (github.event_name == 'push' && contains(github.event.head_commit.message, 'contextual card visual parity')) }}
         run: |
           node --input-type=module <<'JS'
           import {execFileSync} from 'node:child_process';
@@ -284,7 +284,7 @@ jobs:
           path: qa-evidence/ci-stages/
           if-no-files-found: error
       - name: Preserve contextual card captures
-        if: always() && (github.head_ref == 'relay/mcp-rebuild-20261003' || startsWith(github.head_ref, 'relay/context-card-visual-parity-') || (github.event_name == 'push' && contains(github.event.head_commit.message, 'contextual card visual parity')))
+        if: always() && (github.head_ref == 'relay/mcp-rebuild-20261003' || startsWith(github.head_ref, 'relay/context-card-visual-parity-') || startsWith(github.head_ref, 'relay/card-persona-brand-') || (github.event_name == 'push' && contains(github.event.head_commit.message, 'contextual card visual parity')))
         uses: actions/upload-artifact@v4
         with:
           name: relay-context-cards-${{ github.event.pull_request.number || github.sha }}

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {cardIdentity,cardStaff,CARD_TEAMS} from './relay-card-identity.js';
 test('a routing lead is distinct from a receipt-bound current step owner',()=>{
  const record={primary_staff:'nico',primary_team:'runner',supporting_staff:['roman'],supporting_teams:['inspector']};
- const lead=cardIdentity(record);assert.equal(lead.relationship,'Team update');assert.equal(lead.speaker,null);assert.equal(lead.participation,'routing');assert.equal(lead.current_owner,null);
+ const lead=cardIdentity(record);assert.equal(lead.relationship,'Assignment lead');assert.equal(lead.speaker.id,'nico');assert.equal(lead.participation,'routing');assert.equal(lead.current_owner,null);
  const work=cardIdentity(record,{current:'verify',steps:[{id:'verify',receipt:{id:'observed'},owner:{staff:'roman',team:'inspector'}}]});
  assert.equal(work.speaker.id,'roman');assert.equal(work.lead.id,'nico');assert.equal(work.team,'inspector');
 });
@@ -14,7 +14,7 @@ test('a named person keeps their canonical team while cross-team work stays expl
  const record={primary_staff:'nico',primary_team:'runner'};
  const plan={current:'verify',steps:[{id:'verify',receipt:{id:'observed'},owner:{staff:'rafael',team:'inspector'}}]};
  const current=cardIdentity(record,plan);assert.equal(current.team,'source');assert.equal(current.team_label,'Integrations');assert.equal(current.step_team,'inspector');assert.equal(current.step_team_label,'Design & QA');
- const next=cardIdentity({...record,primary_staff:'julian'},{steps:[]});assert.equal(next.team,'runner');assert.equal(next.assignment_team,'runner');assert.equal(next.relationship,'Team update');assert.equal(next.lead.id,'julian');
+ const next=cardIdentity({...record,primary_staff:'julian'},{steps:[]});assert.equal(next.team,'night-shift');assert.equal(next.assignment_team,'runner');assert.equal(next.relationship,'Assignment lead');assert.equal(next.lead.id,'julian');
  assert.equal(cardIdentity({primary_team:'inspector'}).team,'inspector');
 });
 
@@ -36,4 +36,19 @@ test('approved portrait manifest follows the canonical roster and binds every em
   assert.equal(createHash('sha256').update(embedded).digest('hex'),person.files.card128.sha256);
   for(const file of Object.values(person.files)){const bytes=await readFile(new URL('../assets/staff/'+file.path,import.meta.url));assert.equal(bytes.length,file.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),file.sha256);}
  }
+});
+
+test('assignment lead stays visible without claiming receipt ownership, including finished assignments',()=>{
+ for(const state of ['active','completed','held']){
+  const identity=cardIdentity({state,primary_staff:'julian',primary_team:'night-shift'});
+  assert.equal(identity.speaker.id,'julian');assert.equal(identity.relationship,'Assignment lead');
+  assert.equal(identity.current_owner,null);assert.equal(identity.participation,'routing');
+ }
+ for(const primary_staff of ['unknown','felix',null])assert.equal(cardIdentity({primary_staff}).speaker,null);
+ assert.equal(cardIdentity().team,'relay');assert.equal(cardIdentity().speaker,null);
+});
+test('explicit team-only work never becomes the lead performing the step',()=>{
+ const identity=cardIdentity({primary_staff:'nico',primary_team:'runner'},{current:'verify',steps:[{id:'verify',receipt:{id:'real-team-receipt'},owner:{staff:null,team:'inspector'}}]});
+ assert.equal(identity.speaker,null);assert.equal(identity.current_owner,null);
+ assert.equal(identity.lead.id,'nico');assert.equal(identity.team,'inspector');assert.equal(identity.relationship,'Team update');
 });

@@ -5,7 +5,7 @@ import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI,
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v22.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v23.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -191,7 +191,7 @@ test('card initializes the standard MCP Apps bridge even when window.openai exis
     const frame=page.frameLocator('#widget');
     await frame.locator('#title').filter({hasText:'Staff routing is ready'}).waitFor();
     assert.equal(await page.evaluate(()=>window.seenInitialize),true);
-    assert.equal(await frame.locator('#team').textContent(),'Team update');
+    assert.match(await frame.locator('#team').textContent(),/Assignment lead/);
     assert.equal(await frame.locator('#staff').getAttribute('title'),'Julian with Roman');
   } finally {await browser.close()}
 });
@@ -745,7 +745,7 @@ test('an ordinary claim mounts a staff-attributed work card that follows the sam
     // Mount-time recovery reads canonical progress once; the tool result still drives the card.
     await page.waitForFunction(()=>true);
     assert.equal(await frame.locator('#rows').textContent(),'');
-    assert.equal(await frame.locator('#team').textContent(),'Team update');
+    assert.match(await frame.locator('#team').textContent(),/Assignment lead/);
     assert.equal(await frame.locator('#staff').isHidden(),false);
     assert.equal(await frame.locator('#rows').textContent(),'');
     await page.clock.runFor(31000);
@@ -754,7 +754,7 @@ test('an ordinary claim mounts a staff-attributed work card that follows the sam
     await frame.locator('#state-label').filter({hasText:/complete/i}).waitFor();
     // The card keeps the step it was mounted for after the live state moves on.
     assert.equal(await frame.locator('#rows').textContent(),'');
-    assert.equal(await frame.locator('#team').textContent(),'Team update');
+    assert.match(await frame.locator('#team').textContent(),/Assignment lead/);
     await page.clock.runFor(120000);
     assert.deepEqual(calls.map(call=>call.args),[{project:'relay'},{project:'relay',assignment:claim.id},{project:'relay',assignment:claim.id}]);
     assert.ok(calls.every(call=>call.name==='relay_runner_progress'));
@@ -900,7 +900,7 @@ test('ordinary failed/no-plan outcomes retain the real cause and next step witho
  const next='Finish native visual confirmation and protocol regression tests; wire new tests and native panel fixtures into exact-source CI, publish a draft PR, and retain explicit gameplay acceptance limits.';
  const row={assignment:'rtxforge-overlay-workbench',owner:'worker',state:'failed',goal:'rtxforge overlay workbench',primary_staff:'nico',primary_team:'runner',waiting_reason:'Publish Windows Beta failed',next_action:next};
  const m=contextCardModel({project:'rtxforge',progress:[row],work_card:{milestone:{kind:'step',label:'Step recorded'}}});
- assert.equal(m.has_metric,false);assert.equal(m.metric,null);assert.deepEqual(m.rows,[]);assert.deepEqual(m.plan.steps,[]);assert.equal(m.identity.speaker,null);assert.equal(m.identity.lead.id,'nico');
+ assert.equal(m.has_metric,false);assert.equal(m.metric,null);assert.deepEqual(m.rows,[]);assert.deepEqual(m.plan.steps,[]);assert.equal(m.identity.speaker.id,'nico');assert.equal(m.identity.relationship,'Assignment lead');assert.equal(m.identity.current_owner,null);assert.equal(m.identity.lead.id,'nico');
  assert.equal(m.blocker,'Publish Windows Beta failed');assert.equal(m.evidence.next_action,next);assert.equal(m.next_step,'Read the next step below.');
  for(const state of ['active','queued','possibly-stale','unknown','blocked','completed','cancelled','superseded']){const card=contextCardModel({project:'rtxforge',claim:{...row,state}});assert.equal(card.has_metric,false);assert.equal(card.evidence.next_action,next);if(['completed','cancelled','superseded'].includes(state))assert.equal(card.next_step,null);}
 });

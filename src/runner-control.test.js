@@ -632,7 +632,7 @@ test('real continuity verifier publishes through canonical control, live progres
   if(name==='relay_runner_coordinate'){
    const progress=await callProgress({project:'relay',assignment:'task'},{},f.api);await page.evaluate(data=>render(data),progress);
    const rows=await page.locator('[data-step]').evaluateAll(nodes=>nodes.map(n=>({id:n.dataset.step,state:n.dataset.state})));states.push(rows);
-   assert.deepEqual(rows.map(r=>r.id),['build','verify']);assert.equal(await page.locator('#feature-title').textContent(),'Engineering');
+   assert.deepEqual(rows.map(r=>r.id),['build','verify']);assert.equal(await page.locator('#feature-title').textContent(),'Nico');assert.match(await page.locator('#team').textContent(),/Assignment lead/);assert.doesNotMatch(await page.locator('#card-roles').textContent(),/Current step owner:/);
    assert.doesNotMatch(JSON.stringify(progress),/PRIVATE|process\.exit|console\.log/);
   }
   return result;
@@ -640,7 +640,7 @@ test('real continuity verifier publishes through canonical control, live progres
  const config={project:'relay',assignment:'task',owner:'worker',branch:'relay/task',continuity:plan};
  const run=()=>runContinuityExecution({config,workspace,stateDir:path.join(root,'private'),rpc,runExecution:()=>{throw Error('Actual verifier already passes; no coding job');}});
  const result=await run();assert.equal(result.objective_completed,true);assert.deepEqual(states.map(rows=>rows.map(r=>r.state)),[['pending','pending'],['passed','pending'],['passed','passed']]);
- assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');assert.match(await page.locator('#team').textContent(),/Team update/);assert.equal(f.record.claims[0].card_steps.steps[0].receipt.source_sha,source);
+ assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');assert.match(await page.locator('#team').textContent(),/Assignment lead/);assert.doesNotMatch(await page.locator('#card-roles').textContent(),/Current step owner:/);assert.equal(f.record.claims[0].card_steps.steps[0].receipt.source_sha,source);
  const writes=f.writes.length;await run();assert.equal(f.writes.length,writes,'identical refresh does not publish another amendment');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 });
 

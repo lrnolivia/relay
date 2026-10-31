@@ -127,7 +127,7 @@ test('official observation projection round-trips canonical validation, progress
  claim.card_steps=validateCardStepsPublication(project(),claim,p.objective_digest);
  assert.equal(contextCardModel({claim:assignmentCardContext(claim)}).identity.speaker.id,'roman');
  for(const change of [x=>x.steps[0].receipt.owner.staff='felix',x=>x.steps[0].receipt.owner.team='cloud',x=>x.steps[0].receipt.evidence='javascript:alert(1)',x=>x.steps[0].receipt.plan_revision='f'.repeat(64),x=>x.publisher.owner='other',x=>x.sequence=1]){const bad=structuredClone(project());change(bad);assert.throws(()=>validateCardStepsPublication(bad,claim,p.objective_digest));}
- const none=contextCardModel({claim:{...claim,card_steps:null}});assert.equal(none.identity.speaker,null);assert.equal(none.identity.lead.id,'nico');
+ const none=contextCardModel({claim:{...claim,card_steps:null}});assert.equal(none.identity.speaker.id,'nico');assert.equal(none.identity.relationship,'Assignment lead');assert.equal(none.identity.current_owner,null);assert.equal(none.identity.lead.id,'nico');
 });
 
 test('changed source inputs remove old current-owner observations before the first resume publication',async()=>{
