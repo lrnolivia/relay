@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T00:44:46.975Z",
+  "updated_at": "2026-10-31T00:45:23.173Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -18667,7 +18667,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "f18b46604b8ec9be4dcf205a02add11bb2ae08ee",
-      "state": "held",
+      "state": "superseded",
       "created_at": "2026-10-30T00:28:37.216Z",
       "objective_history": {
         "baseline": {
@@ -18690,7 +18690,7 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T03:02:06.186Z",
+      "updated_at": "2026-10-31T00:45:23.173Z",
       "lease_until": "2026-10-30T15:02:06.186Z",
       "amendment_count": 6,
       "amendments": [
@@ -19491,6 +19491,19 @@
             "receipt": null
           }
         ]
+      },
+      "retirement": {
+        "at": "2026-10-31T00:45:23.173Z",
+        "intent": {
+          "operation_id": "card-corrections-reconcile-20261031",
+          "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "disposition": "superseded",
+          "reason": "The user requested three shipped-card corrections after PR 266 merged. Preserve the merged branch and unfinished acceptance; the queued successor will implement the corrections from fresh main.",
+          "evidence": "Owner recovery at 2026-10-31: no continuity adapter process running; tracked checkout clean at c7f2a90f599c1ae045cb77bae029b7cc2aad9fa1; only untracked qa-evidence preserved. Private card-release-continuity-receipts retained with null card-publication.json and unanswered read-only snapshot a2b7dab5b8ff2163cf757de55da8280860739c484639a77ab1c531c1abf60273. Canonical sequence 5 retains three passes; fourth local verifier report unpublished, native host acceptance unverified. PR 266 merged acdf251c28bc50707a867b1645bb8e87d6b6f2b6. No replay or completion claim. Successor carries remaining acceptance and user-reported defects. Sole writer is quiescent; no other owner scope changes.",
+          "superseded_by": "relay-card-corrections-20261031",
+          "branch": "relay/staff-led-cards-20261030",
+          "head_sha": "c7f2a90f599c1ae045cb77bae029b7cc2aad9fa1"
+        }
       }
     }
   ],
