@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T06:18:33.964Z",
+  "updated_at": "2026-10-31T06:19:35.161Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22012,8 +22012,11 @@
         "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
         "windows/RtxForge.Windows/Controls/OverlayUiReviewView.cs",
         "windows/RtxForge.Windows/Controls/OverlayLayoutPicker.cs",
+        "windows/RtxForge.Windows/Controls/Preferences.cs",
         "gui/overlay_layouts.py",
-        "windows/overlay-rmlui/",
+        "prototypes/overlay-rmlui/overlay.rml",
+        "prototypes/overlay-rmlui/Prototype.cpp",
+        "providers/glass-overlay/ForgeGlassPanel.h",
         "PRODUCT.md",
         "docs/overlay.md",
         "docs/releases/1.0-beta.md"
@@ -22023,7 +22026,7 @@
       ],
       "goal": "Put overlay update/settings actions and descriptions inside native row cards; use exact layout names Side Panel, Advanced, Bar in desktop and actual overlay.",
       "acceptance": "Native Windows overlay settings have no detached update button/description/status block; Update Overlays and Last overlay update use accessible responsive settings rows. Layout illustrations preserved and visible option names match Side Panel, Advanced, Bar on Windows/Linux and actual overlay. Preserve persisted layout IDs, review flow, settings and Game Mode parked scope. Build and inspect native affected UI.",
-      "next_action": "Create isolated main-based worktree, reuse Prefs.Row for update/history controls and status, correct visible layout labels, compile and verify native UI.",
+      "next_action": "Implement native row cards with contained update/history feedback, exact Side Panel/Advanced/Bar captions in desktop and actual shared RmlUi assets; build and inspect Windows UI, preserve layout keys and parked Game Mode.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -22046,8 +22049,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T06:18:33.964Z",
-      "lease_until": "2026-10-31T18:18:33.964Z"
+      "updated_at": "2026-10-31T06:19:35.161Z",
+      "lease_until": "2026-10-31T18:19:35.161Z"
     }
   ]
 }
