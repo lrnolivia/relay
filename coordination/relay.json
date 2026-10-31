@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-10-31T02:02:21.292Z",
+  "updated_at": "2026-10-31T02:19:56.298Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -20358,8 +20358,92 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T02:02:21.292Z",
-      "lease_until": "2026-10-31T14:02:21.292Z"
+      "updated_at": "2026-10-31T02:19:56.298Z",
+      "lease_until": "2026-10-31T14:19:56.298Z",
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "relay-specialist-delivery-20261031",
+        "revision": "a3dff1b25464d1ec2d70a7d8db9c5936830c9a3d94d3e52dcb1c0ced8bb42b4a",
+        "objective_digest": "0f0ded3c0ac5a177c8efc301225c3c9fa6182045577151a96c5e01a123675848",
+        "publisher": {
+          "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "branch": "relay/specialist-delivery-20261031"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "verify-delivery-contract",
+            "label": "verify delivery contract",
+            "depends_on": [],
+            "state": "blocked",
+            "receipt": {
+              "id": "verify-delivery-contract:5bd2e8ac7f433f16557d6284fc764382",
+              "assignment": "relay-specialist-delivery-20261031",
+              "step_id": "verify-delivery-contract",
+              "plan_revision": "a3dff1b25464d1ec2d70a7d8db9c5936830c9a3d94d3e52dcb1c0ced8bb42b4a",
+              "input_digest": "5bd2e8ac7f433f16557d6284fc764382369745152539be7a045e1c9bf817af58",
+              "evidence": "sha256:a060d5004233599280307626658f1a00f5cc8390abcbd12fcb2ad23debef2a66",
+              "source_sha": "1f8b5bb663eaca705013e24692943c50f3c5f3ca",
+              "observed_at": "2026-10-31T02:19:34.227Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              }
+            }
+          }
+        ]
+      },
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-10-31T02:19:56.298Z",
+          "by": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+          "reason": "Publish actual bounded specialist review observation from the native coordinator; partial plan, no objective completion.",
+          "fields": [
+            "card_steps"
+          ],
+          "before": {
+            "card_steps": null
+          },
+          "after": {
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "relay-specialist-delivery-20261031",
+              "revision": "a3dff1b25464d1ec2d70a7d8db9c5936830c9a3d94d3e52dcb1c0ced8bb42b4a",
+              "objective_digest": "0f0ded3c0ac5a177c8efc301225c3c9fa6182045577151a96c5e01a123675848",
+              "publisher": {
+                "owner": "01a18a2a-394f-75c4-ba56-7f19dda3d00e",
+                "branch": "relay/specialist-delivery-20261031"
+              },
+              "sequence": 1,
+              "complete": false,
+              "steps": [
+                {
+                  "id": "verify-delivery-contract",
+                  "label": "verify delivery contract",
+                  "depends_on": [],
+                  "state": "blocked",
+                  "receipt": {
+                    "id": "verify-delivery-contract:5bd2e8ac7f433f16557d6284fc764382",
+                    "assignment": "relay-specialist-delivery-20261031",
+                    "step_id": "verify-delivery-contract",
+                    "plan_revision": "a3dff1b25464d1ec2d70a7d8db9c5936830c9a3d94d3e52dcb1c0ced8bb42b4a",
+                    "input_digest": "5bd2e8ac7f433f16557d6284fc764382369745152539be7a045e1c9bf817af58",
+                    "evidence": "sha256:a060d5004233599280307626658f1a00f5cc8390abcbd12fcb2ad23debef2a66",
+                    "source_sha": "1f8b5bb663eaca705013e24692943c50f3c5f3ca",
+                    "observed_at": "2026-10-31T02:19:34.227Z",
+                    "owner": {
+                      "staff": "roman",
+                      "team": "inspector"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
     }
   ],
   "migrated_from": "loew-inspector"
