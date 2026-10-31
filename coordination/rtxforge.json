@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T03:32:58.650Z",
+  "updated_at": "2026-10-31T03:40:39.271Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -21955,14 +21955,16 @@
         "windows/RtxForge.Windows/Models/Models.cs",
         "windows/build/Bundle-Engine.ps1",
         ".github/workflows/windows-build.yml",
-        ".github/workflows/linux-build.yml"
+        ".github/workflows/linux-build.yml",
+        "engine/rtxengine.py",
+        "engine/tests/test_v13_core_hardening.py"
       ],
       "resources": [
         "rtxforge-automatic-renodx-hdr"
       ],
       "goal": "Add optional automatic per-game RenoDX HDR installation, matching and verified downloads; prefer managed OptiScaler ReShade side-loading and use standalone ReShade where compatible. Park Game Mode architecture work.",
       "acceptance": "User enables RenoDX HDR without hunting mod files or supplying dependencies. Match supported games deterministically; download exact verified add-on and full add-on ReShade runtime; preserve NR/MFG, existing configuration and original-file recovery. Prefer OptiScaler LoadReShade route where supported; otherwise reuse compatible ReShade or choose an available correct graphics proxy without clobbering other mods. Show truthful unsupported/ambiguous/manual-only availability instead of guessing. Provide reversible guarded install/update/remove and both desktop integrations, with focused fixture/integrity/race/restore tests and native build checks. No Game Mode shell migration or redesign. Preserve human attribution and upstream notices; do not claim live HDR/game acceptance without actual tests.",
-      "next_action": "Register focused HDR integrity/recovery tests in both native CI gates; verify desktop Tools integration and automatic real-package preparation. Keep Game Mode architecture parked; Vulkan HDR layer remains explicitly unavailable pending implementation.",
+      "next_action": "Resolve HDR composition acceptance before merging PR129. Correct ReShade detection so a verified managed OptiScaler proxy plus side-loaded ReShade settings cannot be reclassified as a ReShade proxy during future repair. Add Linux core regression; native build and21 focused tests pass, real Control Resonant/ME2 preparation verified; no game files changed. Vulkan route remains unavailable, Game Mode architecture parked.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -21986,8 +21988,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T03:32:58.650Z",
-      "lease_until": "2026-10-31T15:32:58.650Z"
+      "updated_at": "2026-10-31T03:40:39.271Z",
+      "lease_until": "2026-10-31T15:40:39.271Z"
     }
   ]
 }
