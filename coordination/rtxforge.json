@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-10-31T07:28:32.865Z",
+  "updated_at": "2026-10-31T07:31:07.836Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22054,7 +22054,9 @@
         "providers/glass-overlay/HdrControls.h",
         "windows/overlay-rmlui/CMakeLists.txt",
         "prototypes/overlay-rmlui/CMakeLists.txt",
-        "providers/skynizz-bridge/panel-candidate.json"
+        "providers/skynizz-bridge/panel-candidate.json",
+        ".github/workflows/windows-build.yml",
+        ".github/workflows/linux-build.yml"
       ],
       "resources": [
         "overlay-settings-native-ui",
@@ -22062,7 +22064,7 @@
       ],
       "goal": "Put overlay update/settings actions and descriptions inside native row cards; use exact layout names Side Panel, Advanced, Bar in desktop and actual overlay.",
       "acceptance": "Native Windows overlay settings have no detached update button/description/status block; Update Overlays and Last overlay update use accessible responsive settings rows. Layout illustrations preserved and visible option names match Side Panel, Advanced, Bar on Windows/Linux and actual overlay. Preserve persisted layout IDs, review flow, settings and Game Mode parked scope. Build and inspect native affected UI.",
-      "next_action": "All Windows native builds pass including OptiScaler/forwarder and Feeder; prototype native interaction/HDR navigation and DX11/DX12/HDR smoke pass. Final correctness findings fixed, queued-save race regression passes. Open owner-authored draft PR, run Linux/core checks in CI (fcntl unavailable on Windows), integrate only exact green revision; no beta publication yet.",
+      "next_action": "Owner-authored draft PR 131 open at 1e63f470. Add HDR queue tests to both platform CI jobs, then wait exact checks and integrate only green source. Local builds and 119 tests plus 28 lifecycle checks passed; prototype open.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -22085,8 +22087,8 @@
           }
         ]
       },
-      "updated_at": "2026-10-31T07:28:32.865Z",
-      "lease_until": "2026-10-31T19:28:32.865Z"
+      "updated_at": "2026-10-31T07:31:07.836Z",
+      "lease_until": "2026-10-31T19:31:07.836Z"
     }
   ]
 }
