@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T18:52:53.655Z",
+  "updated_at": "2026-11-01T18:55:38.064Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22808,6 +22808,48 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-preview-game-picker-edge-20261101",
+      "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+      "branch": "rtxforge/preview-game-picker-edge-20261101",
+      "paths": [
+        "prototypes/overlay-rmlui/Prototype.cpp",
+        "prototypes/overlay-rmlui/overlay.rcss",
+        "VERSION",
+        "docs/releases/1.0-beta.md"
+      ],
+      "resources": [
+        "rtxforge-desktop-overlay-preview"
+      ],
+      "goal": "Place the full-preview game chooser at the far screen edge opposite the configured Side Panel.",
+      "acceptance": "In chrome-free Desktop full preview, a left Side Panel places game selection at the far right and a right Side Panel places it at the far left. Close remains reachable and unobstructed. Advanced and Bar retain their existing chooser position; switching layouts or side updates placement immediately. Native layout assertions and offscreen renders verify both sides and modes at representative sizes. Preserve game selection, approved materials and injected overlay behavior. Publish/install reviewed follow-up under user's ship/install authorization without replacing published Beta15 assets.",
+      "next_action": "Implement scoped desktop-preview chooser edge classes, verify native geometry for both sides and mode changes, then prepare reviewed Beta16 follow-up.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "base_sha": "01380eb275c64f228003dc3a78ff499e5be76977",
+      "state": "active",
+      "created_at": "2026-11-01T18:55:38.064Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Place the full-preview game chooser at the far screen edge opposite the configured Side Panel.",
+          "acceptance": "In chrome-free Desktop full preview, a left Side Panel places game selection at the far right and a right Side Panel places it at the far left. Close remains reachable and unobstructed. Advanced and Bar retain their existing chooser position; switching layouts or side updates placement immediately. Native layout assertions and offscreen renders verify both sides and modes at representative sizes. Preserve game selection, approved materials and injected overlay behavior. Publish/install reviewed follow-up under user's ship/install authorization without replacing published Beta15 assets.",
+          "at": "2026-11-01T18:55:38.064Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-preview-game-picker-edge-20261101:acceptance:0",
+            "text": "In chrome-free Desktop full preview, a left Side Panel places game selection at the far right and a right Side Panel places it at the far left. Close remains reachable and unobstructed. Advanced and Bar retain their existing chooser position; switching layouts or side updates placement immediately. Native layout assertions and offscreen renders verify both sides and modes at representative sizes. Preserve game selection, approved materials and injected overlay behavior. Publish/install reviewed follow-up under user's ship/install authorization without replacing published Beta15 assets.",
+            "at": "2026-11-01T18:55:38.064Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-01T18:55:38.064Z",
+      "lease_until": "2026-11-02T06:55:38.064Z"
     }
   ]
 }
