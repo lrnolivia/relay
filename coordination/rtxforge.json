@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T01:13:38.678Z",
+  "updated_at": "2026-11-01T01:16:18.742Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8141,6 +8141,46 @@
       },
       "completed_at": "2026-10-31T21:04:05.596Z",
       "updated_at": "2026-10-31T21:04:05.596Z"
+    },
+    {
+      "id": "rtxforge-library-overlay-preview-20261031",
+      "owner": "01a1891f-107d-7911-aba0-7db805de289c",
+      "goal": "Embed the actual overlay prototype renderer in Desktop and Game Mode settings so players preview their overlay using games from their own library and screenshots belonging to the selected game.",
+      "acceptance": "Settings > Overlay exposes the same preview in Desktop and Game Mode. Game selection comes from the actual scanned library, not the prototype's fixed four-game catalogue. Load screenshots for that exact game, prefer local/cached screenshots, preserve source attribution, honor existing online-media preferences, and show honest empty/offline states without substituting another game's image. Preview actual Side Panel, Advanced and Bar layouts and current Light/Dark/Clear/Accent themes through shared rendering and appearance settings. Changes are visibly reflected, shared between both settings views, and keyboard/controller accessible. Never attach to a game process, alter game installations, or present demo metrics as live telemetry. Verify native rendering, persistence, exact-game media identity, empty/error states and both navigation modes; qualify platform coverage.",
+      "next_action": "Read-only design traced shared renderer/controller in prototypes/overlay-rmlui and current Windows/Desktop/Game Mode settings plus library media. Existing active assignment rtxforge-overlay-layout-repair-20261031 owns these integration files and is changing them now. No competing branch, writer or executor started. Await user's requested cross-task messaging authorization or serialize implementation after the active claim releases the paths.",
+      "paths": [
+        "prototypes/overlay-rmlui/",
+        "scripts/library_media.py",
+        "gui/rtxforge_gtk.py",
+        "gui/game_mode.py",
+        "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Overlay.cs"
+      ],
+      "resources": [
+        "rtxforge-overlay-settings-preview"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-11-01T01:16:18.742Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Embed the actual overlay prototype renderer in Desktop and Game Mode settings so players preview their overlay using games from their own library and screenshots belonging to the selected game.",
+          "acceptance": "Settings > Overlay exposes the same preview in Desktop and Game Mode. Game selection comes from the actual scanned library, not the prototype's fixed four-game catalogue. Load screenshots for that exact game, prefer local/cached screenshots, preserve source attribution, honor existing online-media preferences, and show honest empty/offline states without substituting another game's image. Preview actual Side Panel, Advanced and Bar layouts and current Light/Dark/Clear/Accent themes through shared rendering and appearance settings. Changes are visibly reflected, shared between both settings views, and keyboard/controller accessible. Never attach to a game process, alter game installations, or present demo metrics as live telemetry. Verify native rendering, persistence, exact-game media identity, empty/error states and both navigation modes; qualify platform coverage.",
+          "at": "2026-11-01T01:16:18.742Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-library-overlay-preview-20261031:acceptance:0",
+            "text": "Settings > Overlay exposes the same preview in Desktop and Game Mode. Game selection comes from the actual scanned library, not the prototype's fixed four-game catalogue. Load screenshots for that exact game, prefer local/cached screenshots, preserve source attribution, honor existing online-media preferences, and show honest empty/offline states without substituting another game's image. Preview actual Side Panel, Advanced and Bar layouts and current Light/Dark/Clear/Accent themes through shared rendering and appearance settings. Changes are visibly reflected, shared between both settings views, and keyboard/controller accessible. Never attach to a game process, alter game installations, or present demo metrics as live telemetry. Verify native rendering, persistence, exact-game media identity, empty/error states and both navigation modes; qualify platform coverage.",
+            "at": "2026-11-01T01:16:18.742Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
