@@ -237,6 +237,8 @@ test('typed refresh failures preserve evidence and checked clock without leaking
   assert.match(await page.locator('#card-freshness').textContent(),/Relay could not read/);assert.ok((await page.locator('#card-freshness').textContent()).endsWith(checked));assert.equal(await page.locator('#title').textContent(),'Fresh task');
   await page.evaluate(data=>window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolOutput:data}}})),progress('task','working','2026-10-31T23:05:00Z'));
   assert.match(await page.locator('#card-freshness').textContent(),/Live updates/);assert.equal(await page.locator('#card-refresh-diagnostics').isVisible(),false);
+  await page.evaluate(data=>window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolOutput:data}}})),{...progress('task','working','2026-10-31T23:02:00Z'),ok:false,error:{message:'old failure'}});
+  assert.match(await page.locator('#card-freshness').textContent(),/Live updates/);assert.equal(await page.locator('#card-refresh-diagnostics').isVisible(),false);
  }finally{await browser.close();}
 });
 test('native timeout preserves last evidence, ignores its late answer, and never dispatches through MCP',async()=>{
@@ -248,5 +250,12 @@ test('native timeout preserves last evidence, ignores its late answer, and never
   assert.equal(await page.evaluate(()=>window.mcpReads),0);assert.equal((await calls(page)).length,1);
   await page.evaluate(data=>window.pending.shift()(data),progress('task','failed','2026-10-31T23:05:00Z'));assert.equal(await page.locator('#title').textContent(),'Repair task');
   await page.evaluate(()=>window.hold=false);await page.locator('#refresh').click();await page.locator('#title').filter({hasText:'Fresh task'}).waitFor();assert.equal(await page.locator('#card-refresh-diagnostics').isVisible(),false);
+ }finally{await browser.close();}
+});
+test('changed explorer input is honored before matching old-target error diagnostics',async()=>{
+ const initial={...progress(),schema:'relay-status-explorer/v1',progress:[row('task'),row('other')]};const {browser,page}=await mount(initial,{input:{project:'relay',assignment:'task'}});
+ try{
+  await page.evaluate(data=>{window.openai.toolInput={project:'relay',assignment:'other'};window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolInput:window.openai.toolInput,toolOutput:data}}}));},{...initial,generated_at:'2026-10-31T23:01:00Z',ok:false,error:{message:'old target error'}});
+  assert.equal(await page.locator('#title').textContent(),'Repair other');assert.equal(await page.locator('#card').evaluate(n=>n._refreshTarget.assignment),'other');
  }finally{await browser.close();}
 });

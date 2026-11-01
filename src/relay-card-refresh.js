@@ -65,10 +65,10 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
   const base=render;
   render=function(result){
     let data=unwrap(result);if(!data||typeof data!=='object')return;
-    if(target&&canonical&&valid(data,target)&&(result?.isError||data.ok===false||data.isError||data.error)){failures++;recordFailure(failure('provider_error'),target);status();schedule();return;}
     const next=identify(data),changed=key(next)!==key(target),signature=JSON.stringify(data);
     if(!applying&&!changed&&seen.has(signature))return;
     if(!applying&&!changed&&newest&&stamp(data)&&stamp(data)<newest)return;
+    if(!changed&&!el.card._refreshInputChanged&&target&&canonical&&valid(data,target)&&(result?.isError||data.ok===false||data.isError||data.error)){failures++;recordFailure(failure('provider_error'),target);status();schedule();return;}
     if(changed){generation++;stop();target=next;failures=0;lastFailure=null;canonical=false;checkedAt=null;newest=0;seen.clear();}
     else if(!applying)generation++;
     seen.clear();seen.add(signature);
