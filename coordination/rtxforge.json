@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T01:11:25.787Z",
+  "updated_at": "2026-11-01T01:13:38.678Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22424,7 +22424,8 @@
         "windows/RtxForge.Windows/Services/OverlayArtwork.cs",
         "windows/tests/Settings/",
         "windows/overlay-rmlui/KeyMap.h",
-        "windows/tests/OverlayArtwork/"
+        "windows/tests/OverlayArtwork/",
+        "tests/test_app_completion.py"
       ],
       "resources": [
         "rtxforge-overlay-layout",
@@ -22433,7 +22434,7 @@
       ],
       "goal": "Repair and complete the approved glass overlay preview, carry Packages/Extras/Game Details/Settings parity into Game Mode, and add per-game ReShade installation/import with dynamically discovered shader and custom INI controls.",
       "acceptance": "The 54-case native layout matrix and real input tests pass, including sticky chrome, attached Bar popovers, Clear white ink and Clear-Light-Dark accent transitions. Windows app and native DLL builds pass; focused import/rollback/ownership tests pass. Tools on desktop and Game Mode accept automatic ReShade or user ZIP/DLL/add-on/preset imports without replacing a custom host; add-on-capable ReShade exposes shader parameters and explicitly labeled scalar INI settings. Preserve original backups, saved tuning, branding and the approved materials. Retain the live prototype and report platform/game qualification limits honestly.",
-      "next_action": "Add Accent surface saturation alongside character across native preview/runtime, desktop and Game Mode with shared persistence and theme reset. Fix candidate CI failure, rebuild exact source, then install the new overlay into now-closed ME2 using verified reversible refresh and test it.",
+      "next_action": "Complete Accent saturation, update obsolete ReShade import fixtures exposed by Package UI CI, and rebuild/test the candidate. ME2 is closed; use the verified scoped package updater with preserved backups to install this candidate for qualification.",
       "category": "design",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -22463,8 +22464,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T01:11:25.787Z",
-      "lease_until": "2026-11-01T13:11:25.787Z",
+      "updated_at": "2026-11-01T01:13:38.678Z",
+      "lease_until": "2026-11-01T13:13:38.678Z",
       "amendment_count": 1,
       "amendments": [
         {
