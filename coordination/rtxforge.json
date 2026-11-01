@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T17:40:02.958Z",
+  "updated_at": "2026-11-01T17:44:20.599Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22472,99 +22472,6 @@
       "lease_until": "2026-11-01T18:58:06.947Z"
     },
     {
-      "id": "rtxforge-tauri-game-mode-20261031",
-      "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
-      "branch": "rtxforge/tauri-game-mode-20261031",
-      "paths": [
-        "prototypes/game-mode-tauri/",
-        "windows/RtxForge.Windows/Views/GamePage.xaml",
-        "windows/RtxForge.Windows/Views/GamePage.Hero.cs"
-      ],
-      "resources": [
-        "rtxforge-tauri-game-mode",
-        "rtxforge-desktop-hero-presentation"
-      ],
-      "goal": "Build isolated Windows/Linux Tauri Game Mode prototype using approved overlay glass UI.",
-      "acceptance": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests.",
-      "next_action": "Validate wider inset scrollbars at desktop/narrow widths alongside pending translucent hero-card palette, yellow ink, adaptive badge refinements. Match Desktop hero presentation and update isolated local preview after checks.",
-      "category": "implementation",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "0ed4eebc374d6fe65765abc3d7d60092e8b1f5f9",
-      "state": "active",
-      "created_at": "2026-11-01T02:31:44.563Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Build isolated Windows/Linux Tauri Game Mode prototype using approved overlay glass UI.",
-          "acceptance": "Runnable prototype under prototypes/game-mode-tauri/ with Library, Details, Packages, Extras, Settings, read-only real-data adapter, keyboard/gamepad navigation, responsive validation and documented gaps. No existing shell replacement, installs, game mutations or publication.",
-          "at": "2026-11-01T02:31:44.563Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-tauri-game-mode-20261031:acceptance:0",
-            "text": "Runnable prototype under prototypes/game-mode-tauri/ with Library, Details, Packages, Extras, Settings, read-only real-data adapter, keyboard/gamepad navigation, responsive validation and documented gaps. No existing shell replacement, installs, game mutations or publication.",
-            "at": "2026-11-01T02:31:44.563Z"
-          },
-          {
-            "id": "rtxforge-tauri-game-mode-20261031:acceptance:1",
-            "text": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Port approved hero content layout and adaptive surfaces into Windows Desktop. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests.",
-            "at": "2026-11-01T06:32:12.166Z",
-            "reason": "Latest explicit user instructions authorize Desktop hero port and publication/local installation after finishing UI and install-flow validation."
-          },
-          {
-            "id": "rtxforge-tauri-game-mode-20261031:acceptance:2",
-            "text": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests.",
-            "at": "2026-11-01T17:39:30.715Z",
-            "reason": "User explicitly cancelled the Desktop hero port for now; retain Game Mode work and withdraw the port from the preview branch."
-          }
-        ]
-      },
-      "updated_at": "2026-11-01T17:39:30.715Z",
-      "lease_until": "2026-11-02T05:39:30.715Z",
-      "handoffs": [
-        {
-          "at": "2026-11-01T03:49:34.330Z",
-          "from": "rtxforge-tauri-game-mode-worker-20261031",
-          "to": "01a19538-4244-7092-b9db-1b2c93a26118",
-          "next_action": "User explicitly requested a separate user-owned chat; prior subagent stopped. New rtxForge Frost Game Mode Redesign chat adopts existing isolated worktree and all untracked Tauri source, current preview and full feedback. Continue desktop parity and read-only preview iteration; parent returns to native overlay."
-        }
-      ],
-      "amendment_count": 2,
-      "amendments": [
-        {
-          "at": "2026-11-01T06:32:12.166Z",
-          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
-          "reason": "Latest explicit user instructions authorize Desktop hero port and publication/local installation after finishing UI and install-flow validation.",
-          "fields": [
-            "acceptance"
-          ],
-          "before": {
-            "acceptance": "Runnable prototype under prototypes/game-mode-tauri/ with Library, Details, Packages, Extras, Settings, read-only real-data adapter, keyboard/gamepad navigation, responsive validation and documented gaps. No existing shell replacement, installs, game mutations or publication."
-          },
-          "after": {
-            "acceptance": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Port approved hero content layout and adaptive surfaces into Windows Desktop. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests."
-          }
-        },
-        {
-          "at": "2026-11-01T17:39:30.715Z",
-          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
-          "reason": "User explicitly cancelled the Desktop hero port for now; retain Game Mode work and withdraw the port from the preview branch.",
-          "fields": [
-            "acceptance"
-          ],
-          "before": {
-            "acceptance": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Port approved hero content layout and adaptive surfaces into Windows Desktop. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests."
-          },
-          "after": {
-            "acceptance": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests."
-          }
-        }
-      ]
-    },
-    {
       "id": "rtxforge-overlay-layout-repair-20261031",
       "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
       "branch": "rtxforge/overlay-layout-repair-20261031",
@@ -22802,6 +22709,96 @@
           "after": {
             "goal": "Compact responsive Desktop Overlay preview with immediate game accents, game selection within the full preview, and persisted Left/Right Side Panel placement.",
             "acceptance": "Inline 16:9 preview is bounded to a compact size; game accent and theme/layout changes render promptly and stale asynchronous results cannot win. Full native preview can select games from the same real library without OS titlebar or screenshot uploads. Side Panel has persisted Left/Right placement in native overlay, Windows and Linux preferences and inline preview; pop-out panels open inward, free dragging remains. Validation stages: primary implementation owner verifies Windows build and read-only native settings UI; portable settings tests verify default, valid and invalid side persistence; native layout/input tests verify both screen edges and inward placement. Preserve approved materials and user tuning; no new moving-gameplay qualification claimed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rtxforge-tauri-game-mode-20261031",
+      "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+      "branch": "rtxforge/tauri-game-mode-20261031",
+      "paths": [
+        "prototypes/game-mode-tauri/"
+      ],
+      "resources": [
+        "rtxforge-tauri-game-mode"
+      ],
+      "goal": "Build isolated Windows/Linux Tauri Game Mode prototype using approved overlay glass UI.",
+      "acceptance": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests.",
+      "next_action": "Desktop hero port cancelled by user and withdrawn in pushed commit 553d114; release Desktop paths. Continue Game Mode-only hero-glass saturation refinement, existing overlay presentation handoff and validation of the isolated preview.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "0ed4eebc374d6fe65765abc3d7d60092e8b1f5f9",
+      "state": "active",
+      "created_at": "2026-11-01T02:31:44.563Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Build isolated Windows/Linux Tauri Game Mode prototype using approved overlay glass UI.",
+          "acceptance": "Runnable prototype under prototypes/game-mode-tauri/ with Library, Details, Packages, Extras, Settings, read-only real-data adapter, keyboard/gamepad navigation, responsive validation and documented gaps. No existing shell replacement, installs, game mutations or publication.",
+          "at": "2026-11-01T02:31:44.563Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-tauri-game-mode-20261031:acceptance:0",
+            "text": "Runnable prototype under prototypes/game-mode-tauri/ with Library, Details, Packages, Extras, Settings, read-only real-data adapter, keyboard/gamepad navigation, responsive validation and documented gaps. No existing shell replacement, installs, game mutations or publication.",
+            "at": "2026-11-01T02:31:44.563Z"
+          },
+          {
+            "id": "rtxforge-tauri-game-mode-20261031:acceptance:1",
+            "text": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Port approved hero content layout and adaptive surfaces into Windows Desktop. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests.",
+            "at": "2026-11-01T06:32:12.166Z",
+            "reason": "Latest explicit user instructions authorize Desktop hero port and publication/local installation after finishing UI and install-flow validation."
+          },
+          {
+            "id": "rtxforge-tauri-game-mode-20261031:acceptance:2",
+            "text": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests.",
+            "at": "2026-11-01T17:39:30.715Z",
+            "reason": "User explicitly cancelled the Desktop hero port for now; retain Game Mode work and withdraw the port from the preview branch."
+          }
+        ]
+      },
+      "updated_at": "2026-11-01T17:44:20.599Z",
+      "lease_until": "2026-11-02T05:44:20.599Z",
+      "handoffs": [
+        {
+          "at": "2026-11-01T03:49:34.330Z",
+          "from": "rtxforge-tauri-game-mode-worker-20261031",
+          "to": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "next_action": "User explicitly requested a separate user-owned chat; prior subagent stopped. New rtxForge Frost Game Mode Redesign chat adopts existing isolated worktree and all untracked Tauri source, current preview and full feedback. Continue desktop parity and read-only preview iteration; parent returns to native overlay."
+        }
+      ],
+      "amendment_count": 2,
+      "amendments": [
+        {
+          "at": "2026-11-01T06:32:12.166Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Latest explicit user instructions authorize Desktop hero port and publication/local installation after finishing UI and install-flow validation.",
+          "fields": [
+            "acceptance"
+          ],
+          "before": {
+            "acceptance": "Runnable prototype under prototypes/game-mode-tauri/ with Library, Details, Packages, Extras, Settings, read-only real-data adapter, keyboard/gamepad navigation, responsive validation and documented gaps. No existing shell replacement, installs, game mutations or publication."
+          },
+          "after": {
+            "acceptance": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Port approved hero content layout and adaptive surfaces into Windows Desktop. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests."
+          }
+        },
+        {
+          "at": "2026-11-01T17:39:30.715Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "User explicitly cancelled the Desktop hero port for now; retain Game Mode work and withdraw the port from the preview branch.",
+          "fields": [
+            "acceptance"
+          ],
+          "before": {
+            "acceptance": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Port approved hero content layout and adaptive surfaces into Windows Desktop. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests."
+          },
+          "after": {
+            "acceptance": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests."
           }
         }
       ]
