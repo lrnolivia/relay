@@ -5,6 +5,22 @@ import {validateCardStepsPublication,assignmentCardContext} from './relay-card-s
 import {contextCardModel} from './relay-context-card-model.js';
 const digest='a'.repeat(64),source='b'.repeat(40),now=new Date('2026-11-01T00:00:00Z');
 const assignment=()=>({id:'demo',owner:'host',branch:'relay/demo',state:'active',goal:'Build the UI',primary_staff:'nico',primary_team:'runner',supporting_staff:['valentina'],supporting_teams:['inspector'],lease_until:'2026-11-02T00:00:00Z'});
+
+test('explicit preview disposition survives immutable history, with strict source and truthful absence',()=>{
+ for(const state of ['pending','attached','unavailable']){
+  const p=publication(),u=p.steps[0].receipt.update;
+  u.preview=state==='unavailable'?{state,reason:'The rendering service was unavailable at submission.'}:{state};
+  if(state==='attached')u.artifacts=[{evidence_id:'vis_preview123',source_sha:source,caption:'Submitted design',kind:'design'}];
+  const r=publish(assignment(),p);assert.deepEqual(assignmentCardUpdates(r)[0].preview,u.preview);
+  assert.deepEqual(assignmentCardContext(r).card_updates.items[0].preview,u.preview);
+  const replay=structuredClone(p);replay.sequence++;assert.equal(publish(r,replay).card_updates.items.length,1);
+  replay.steps[0].receipt.update.preview={state:'unavailable',reason:'Different submission'};replay.steps[0].receipt.update.artifacts=[];
+  assert.throws(()=>publish(r,replay),/immutable/);
+ }
+ for(const preview of [{state:'unavailable'},{state:'unavailable',reason:'<private>'},{state:'attached'},{state:'pending',reason:'extra'},{state:'other'}])assert.equal(validPublicCardUpdate({text:'Public',artifacts:[],preview},{source_sha:source}),false);
+ const old=publish(assignment(),publication());assert.equal(assignmentCardUpdates(old).length,1,'legacy receipts remain readable');
+ const forged=structuredClone(old);forged.card_updates.items[0].preview={state:'pending'};assert.deepEqual(assignmentCardUpdates(forged),[],'projection cannot acquire a disposition absent from its immutable receipt');
+});
 const publication=(sequence=1,id='build-1',state='running',staff='nico')=>({schema:'relay-card-steps/v1',assignment:'demo',revision:digest,objective_digest:digest,publisher:{owner:'host',branch:'relay/demo'},sequence,complete:false,steps:[{id:'build',label:'Build the UI',depends_on:[],state,receipt:{id,assignment:'demo',step_id:'build',plan_revision:digest,input_digest:digest,evidence:'sha256:'+digest,source_sha:source,observed_at:now.toISOString(),owner:{staff,team:staff==='valentina'?'inspector':'runner'},update:{text:'The bounded layout change is ready to check.',artifacts:[]}}}]});
 function publish(record,p){const valid=validateCardStepsPublication(p,record,digest,now);return {...record,card_updates:appendCardUpdates(record,valid,now),card_steps:valid};}
 test('ordinary publisher -> canonical history -> transport -> model preserves real contributors and past receipts',()=>{

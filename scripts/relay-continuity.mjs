@@ -5,6 +5,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {execFileSync,spawnSync} from 'node:child_process';
 import {CARD_STEPS_SCHEMA,validateCardStepsPublication,validCardOwner} from '../src/relay-card-steps.js';
+import {validPublicCardUpdate,isDesignSubmission,requireDesignSubmission} from '../src/relay-card-updates.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const terminal=new Set(['succeeded','failed','cancelled']);
 
@@ -19,6 +20,7 @@ export function validateContinuityPlan(plan){
   if(!/^[a-z][a-z0-9-]{0,63}$/.test(stage.id||'')||ids.has(stage.id)||!['implementation','test','review','ship','runtime'].includes(stage.kind)||typeof stage.prompt!=='string'||!stage.prompt.trim()||!Array.isArray(stage.criteria)||!stage.criteria.length||stage.criteria.some(id=>!plan.criteria.includes(id))||!Array.isArray(stage.depends_on)||stage.depends_on.some(id=>!ids.has(id)))throw Error('Stages must cover authorized acceptance with ordered dependencies');
   if(!Array.isArray(stage.verify)||!stage.verify.length||stage.verify.some(x=>typeof x!=='string'||!x)||!Array.isArray(stage.inputs)||!stage.inputs.length||stage.inputs.some(x=>!x||x.startsWith('/')||x.split('/').includes('..')))throw Error('Declare each verifier and all its relevant source/config inputs');
   if(stage.specialist_role!==undefined&&(typeof stage.specialist_role!=='string'||!/^[-a-z][a-z0-9-]{0,63}$/.test(stage.specialist_role)||stage.command))throw Error('Specialist responsibility requires a bounded role and actual worker stage');
+  if(stage.public_submission!==undefined&&(!isDesignSubmission(stage.public_submission)||stage.command||!stage.specialist_role))throw Error('Design submission requires an explicit versioned specialist stage');
   if(stage.command&&(!Array.isArray(stage.command)||!stage.command.length||stage.command.some(x=>typeof x!=='string'||!x)))throw Error('Publication actions require an explicit trusted command');
   ids.add(stage.id);stage.criteria.forEach(id=>covered.add(id));
  }
@@ -118,7 +120,7 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
     }else{
      if(!result||!terminal.has(result.state)){row.state='reconciliation-required';await persist(state);continue;}
      row.last_job=result;row.pending=null;
-     const currentInput=await identity(stage),currentControl=await gate(),candidate=result.observation||row.observation;
+     const currentInput=await identity(stage),currentControl=await gate(),recovered=result.observation,prior=row.observation,candidate=recovered&&prior&&recovered.evidence===prior.evidence&&recovered.source_sha===prior.source_sha&&JSON.stringify(recovered.owner)===JSON.stringify(prior.owner)&&JSON.stringify(recovered.update||null)===JSON.stringify(prior.update||null)?prior:recovered||prior;
      // A terminal receipt is not proof that the current bytes were its work.
      // Preserve real times; never rebase an old owner onto changed source.
      const currentEvidence=candidate&&result.head_sha===currentControl.source_sha&&(result.source_current===true||candidate.input_digest===currentInput);
@@ -132,7 +134,7 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
    if(row.receipt?.input_digest===input&&row.state==='passed'&&['implementation','test'].includes(stage.kind)&&(!stage.specialist_role||row.execution_input_digest===input))continue;
    while(true){
     control=await gate();const proof=stage.specialist_role&&(!row.last_job?.specialist_execution||row.execution_input_digest!==input)?{passed:false,fingerprint:'specialist-execution-required'}:await verify(stage),after=await identity(stage);
-    if(proof?.passed===true&&typeof proof.evidence==='string'&&proof.evidence&&after===input){row.state='passed';row.receipt={input_digest:after,evidence:proof.evidence,source_sha:control.source_sha,...(row.observation?.input_digest===after?{owner:row.observation.owner}:{} )};await persist(state);await observe(state);break;}
+    if(proof?.passed===true&&typeof proof.evidence==='string'&&proof.evidence&&after===input){row.state='passed';row.receipt={input_digest:after,evidence:proof.evidence,source_sha:control.source_sha,...(row.observation?.input_digest===after?{owner:row.observation.owner,...(row.observation.update&&row.observation.source_sha===control.source_sha?{update:structuredClone(row.observation.update)}:{})}:{} )};await persist(state);await observe(state);break;}
     row.state='repair-required';row.receipt=null;
     if(row.observation&&row.observation.input_digest!==after)row.observation=null;
     await persist(state);await observe(state);
@@ -166,8 +168,8 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
  await persist(state);await observe(state);return state;
 }
 
-// Only digests and stable public stage IDs cross this boundary. The execution
-// journal, verifier argv/output, prompts and routing roster remain private.
+// Only proofs, stable stage IDs and separately authored bounded public updates
+// cross this boundary. Journals, verifier output and prompts remain private.
 export function continuityCardProjection({plan,journal,assignment,observed_at=new Date().toISOString()}) {
  validateContinuityPlan(plan);
  if(journal?.schema!==1||journal.plan_digest!==hash(plan))throw Error('Checklist journal belongs to a different plan');
@@ -178,14 +180,16 @@ export function continuityCardProjection({plan,journal,assignment,observed_at=ne
   const passed=row?.state==='passed'&&/^[a-f0-9]{64}$/.test(proof?.input_digest||'')&&/^sha256:[a-f0-9]{64}$/.test(proof?.evidence||'')&&/^[a-f0-9]{40}$/.test(proof?.source_sha||'');
   if(row?.state==='passed'&&!passed)throw Error('Checklist pass lacks matching verifier evidence');
   const observation=row?.observation;
+  for(const value of [proof,observation])if(value?.update!==undefined&&!validPublicCardUpdate(value.update,value))throw Error('Invalid explicitly public stage update');
   if(observation&&(!validCardOwner(observation.owner,assignment)||!['running','failed','blocked','cancelled','stale','skipped'].includes(observation.state)||!/^sha256:[a-f0-9]{64}$/.test(observation.evidence||'')||!/^[a-f0-9]{64}$/.test(observation.input_digest||'')||!/^[a-f0-9]{40}$/.test(observation.source_sha||'')||!Number.isFinite(Date.parse(observation.observed_at))))throw Error('Invalid bounded execution observation');
   const active=!passed&&observation;
   const old=previous?.steps.find(s=>s.id===stage.id)?.receipt;
   const state=passed?'passed':active?active.state:!row||row.state==='ready'?'pending':'unknown';
   const receipt=passed?{
    id:stage.id+':'+proof.input_digest.slice(0,32),assignment:assignment.id,step_id:stage.id,plan_revision:revision,input_digest:proof.input_digest,evidence:proof.evidence,source_sha:proof.source_sha,...(proof.owner?{owner:proof.owner}:{}),
+   ...(proof.update?{update:structuredClone(proof.update)}:{}),
    observed_at:old?.input_digest===proof.input_digest&&old?.evidence===proof.evidence&&old?.source_sha===proof.source_sha?old.observed_at:observed_at
-  }:active?{id:stage.id+':'+active.input_digest.slice(0,32),assignment:assignment.id,step_id:stage.id,plan_revision:revision,input_digest:active.input_digest,evidence:active.evidence,source_sha:active.source_sha,observed_at:active.observed_at,owner:active.owner}:null;
+  }:active?{id:stage.id+':'+active.input_digest.slice(0,32),assignment:assignment.id,step_id:stage.id,plan_revision:revision,input_digest:active.input_digest,evidence:active.evidence,source_sha:active.source_sha,observed_at:active.observed_at,owner:active.owner,...(active.update?{update:structuredClone(active.update)}:{})}:null;
   if(receipt){
    const identity=r=>({assignment:r.assignment,step_id:r.step_id,plan_revision:r.plan_revision,input_digest:r.input_digest,evidence:r.evidence,source_sha:r.source_sha,owner:r.owner||null,phase:r.phase||null,update:r.update||null});
    const oldStep=previous?.steps.find(s=>s.id===stage.id);
@@ -242,7 +246,7 @@ export async function publishContinuityCard({config,plan,journal,rpc,readControl
 }
 
 // Observe only acknowledged canonical process receipts. No routing event emits work.
-export function specialistExecutionRpc({rpc,config,jobId,specialist,sourceSha,onObservation,onReceipt=async()=>{},terminalReadback=false}){
+export function specialistExecutionRpc({rpc,config,jobId,specialist,sourceSha,onObservation,onReceipt=async()=>{},terminalReadback=false,publicUpdate=async()=>null,submission=null}){
  return async(name,args)=>{
   const result=await rpc(name,args);
   if(!specialist||name!=='relay_execution'||!['start','finish'].includes(args.action))return result;
@@ -253,11 +257,34 @@ export function specialistExecutionRpc({rpc,config,jobId,specialist,sourceSha,on
      args.action==='finish'&&(!terminal.has(job.state)||JSON.stringify(job.result)!==JSON.stringify(args.result)))throw Error('Specialist observation requires the exact acknowledged execution receipt');
   const at=args.action==='start'?job.started_at:job.finished_at,head=args.action==='start'?sourceSha:job.result.head_sha;
   if(!Number.isFinite(Date.parse(at))||(!terminalReadback||args.action!=='finish')&&Date.now()-Date.parse(at)>300000||Date.parse(at)>Date.now()+5000||!/^[a-f0-9]{40}$/.test(head||''))throw Error('Specialist execution observation is stale or has unknown source');
-  const observation={owner:specialist.owner,state:args.action==='start'?'running':job.state==='succeeded'?'blocked':job.state,source_sha:head,observed_at:at,
-   evidence:'sha256:'+hash({job_id:job.id,attempt:job.attempt,revision:job.revision,executor_id:job.executor_id,process,at,result:job.result||null})};
-  await onObservation(observation);await onReceipt(job,observation);
+  const update=await publicUpdate(job,args.action);
+  if(update!==null&&!validPublicCardUpdate(update,{source_sha:head}))throw Error('Invalid explicitly public execution update');
+  if(isDesignSubmission(submission)&&args.action==='finish'&&job.state==='succeeded')requireDesignSubmission(update,{source_sha:head});
+  const observation={owner:specialist.owner,state:args.action==='start'?'running':job.state==='succeeded'?'blocked':job.state,source_sha:head,observed_at:at,...(update?{update:structuredClone(update)}:{}),
+   evidence:'sha256:'+hash({job_id:job.id,attempt:job.attempt,revision:job.revision,executor_id:job.executor_id,process,at,result:job.result||null,...(update?{public_update:update}:{})})};
+  // Persist the exact authored envelope/proof before any public observation.
+  // A crash after publication must recover this snapshot, never reread prose.
+  await onReceipt(job,observation);await onObservation(observation);
   return result;
  };
+}
+
+export function continuityExecutionPrompt(pending,base,publicationInstruction){
+ const fresh=base+publicationInstruction;
+ if(pending.execution_prompt!==undefined&&pending.execution_prompt!==base&&pending.execution_prompt!==fresh)throw Error('Specialist execution responsibility changed; reconcile original intent');
+ return pending.execution_prompt??fresh;
+}
+
+// Only this separately authored, exactly bound envelope crosses the public
+// boundary. Never extract text or media from execution summaries or logs.
+export async function readPublicStageUpdate(filename,binding){
+ let st;try{st=await fs.lstat(filename);}catch(e){if(e.code==='ENOENT')return null;throw e;}
+ if(!st.isFile()||st.isSymbolicLink()||st.size>8192)throw Error('Public stage update requires a bounded regular file');
+ const bytes=await fs.readFile(filename);if(bytes.length>8192)throw Error('Public stage update exceeds its bound');
+ const value=JSON.parse(bytes.toString('utf8'));
+ const keys=['schema','project','assignment','owner','branch','operation_id','source_sha','update'];
+ if(!value||Object.keys(value).sort().join()!==keys.sort().join()||value.schema!==1||Object.entries(binding).some(([key,v])=>value[key]!==v)||!validPublicCardUpdate(value.update,value))throw Error('Public stage update does not match its assignment and source');
+ return structuredClone(value.update);
 }
 
 export async function runContinuityExecution({config,workspace,stateDir,rpc,runExecution,nativeHost,verifyStage}){
@@ -355,8 +382,12 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
     }
     const specialist=stage.specialist_role||c.card_attribution.primary_staff||c.card_attribution.supporting_staff.length?stageSpecialist(stage,c.card_attribution):null;
     const adopted=stage.id===config.initial_stage?config.initial_job:null;
-    const executionPrompt=adopted?adopted.request:pending.prompt+(specialist?'\n\nBounded responsibility: '+specialist.role+'. '+specialist.instruction:'');
-    if(pending.execution_prompt&&pending.execution_prompt!==executionPrompt)throw Error('Specialist execution responsibility changed; reconcile original intent');
+    const publicFile=pending.public_update_file||path.join(directory,'public-'+hash(pending.operation_id)+'.json');pending.public_update_file=publicFile;
+    const publicBinding={schema:1,project:config.project,assignment:config.assignment,owner:config.owner,branch:config.branch,operation_id:pending.operation_id,source_sha:'<actual final Git HEAD>',update:{text:'<explicitly authored public summary>',artifacts:[]}};
+    const publicationInstruction='\n\nPublic submission: after actual work, author only a bounded public update in '+publicFile+' using '+JSON.stringify(publicBinding)+'. This separate envelope is optional for non-submissions and must never copy private logs, prompts or results. At actual design submission include update.preview {state:"attached"} with existing Inspector design artifacts bound to this assignment and final source, or {state:"unavailable",reason:"<specific reason>"}. Kickoff uses {state:"pending"}; never fabricate previews. The file is private input; only its validated update is published.';
+    const basePrompt=adopted?adopted.request:pending.prompt+(specialist?'\n\nBounded responsibility: '+specialist.role+'. '+specialist.instruction:'');
+    if(!pending.execution_prompt&&stage.public_submission)pending.public_submission=structuredClone(stage.public_submission);
+    const executionPrompt=adopted?continuityExecutionPrompt(pending,basePrompt,''):continuityExecutionPrompt(pending,basePrompt,publicationInstruction);
     pending.execution_prompt=executionPrompt;pending.specialist=specialist;
     const intent=JSON.parse(await fs.readFile(filename,'utf8'));intent.stages[pending.stage].pending=pending;await persist(intent);
     let job=await jobStatus();
@@ -369,7 +400,7 @@ export async function runContinuityExecution({config,workspace,stateDir,rpc,runE
     pending.job_id=job.id;
     // Persist binding before starting a process; a crash can reconcile this job.
     const saved=JSON.parse(await fs.readFile(filename,'utf8'));saved.stages[pending.stage].pending=pending;await persist(saved);
-    const result=await runExecution({config:{...config,job_id:job.id,continuity:undefined,resume:false,coordinator_stage:stage.id,coordinator_specialist:specialist,...(plan.expansion?{continuity_discovery:{goal_digest:hash(plan.expansion.original_goal),profiles:Object.keys(plan.expansion.profiles),original_criteria:plan.criteria}}:{})},workspace,stateDir:path.join(directory,job.id),rpc:specialistExecutionRpc({rpc,config,jobId:job.id,specialist,sourceSha:c.source_sha,onObservation,onReceipt:async(job,observation)=>{
+    const result=await runExecution({config:{...config,job_id:job.id,continuity:undefined,resume:false,coordinator_stage:stage.id,coordinator_specialist:specialist?{...specialist,public_submission:{file:publicFile,binding:publicBinding,required:pending.public_submission||null,instruction:publicationInstruction}}:null,...(plan.expansion?{continuity_discovery:{goal_digest:hash(plan.expansion.original_goal),profiles:Object.keys(plan.expansion.profiles),original_criteria:plan.criteria}}:{})},workspace,stateDir:path.join(directory,job.id),rpc:specialistExecutionRpc({rpc,config,jobId:job.id,specialist,sourceSha:c.source_sha,onObservation,submission:pending.public_submission,publicUpdate:async(job,phase)=>phase==='finish'?readPublicStageUpdate(publicFile,{project:config.project,assignment:config.assignment,owner:config.owner,branch:config.branch,operation_id:pending.operation_id,source_sha:job.result.head_sha}):null,onReceipt:async(job,observation)=>{
      if(!terminal.has(job.state))return;
      pending.specialist_receipt={job_digest:hash(job),source_fingerprint:await sourceFingerprint(workspace),observation};
      const saved=JSON.parse(await fs.readFile(filename,'utf8'));saved.stages[pending.stage].pending=pending;await persist(saved);

@@ -137,9 +137,20 @@ test('native delegation emits observed work only after an actual agent receipt, 
  await assert.rejects(recordNativeDelegation(f.directory,p.request.id,{...receipt,agent_id:'/root/other'}),/identity changed/);
  for(let i=0;i<100&&!seen.length;i++)await new Promise(r=>setTimeout(r,5));
  assert.equal(seen[0].state,'running');assert.deepEqual(seen[0].owner,owner);assert.match(seen[0].evidence,/^sha256:[a-f0-9]{64}$/);
- await replyNativeRequest(f.directory,p.request.id,{state:'failed',summary:'Synthetic verifier failure',head_sha:'b'.repeat(40),agent_id:'/root/fixture-integrator'});await running;
+ const update={text:'The bounded review found an issue.',artifacts:[],preview:{state:'unavailable',reason:'This review stage did not render a design.'}};
+ await assert.rejects(replyNativeRequest(f.directory,p.request.id,{state:'failed',summary:'PRIVATE',head_sha:'b'.repeat(40),agent_id:'/root/fixture-integrator',update:{...update,artifacts:[{evidence_id:'vis_wrongsource',source_sha:'c'.repeat(40),caption:'Wrong source',kind:'design'}]}}),/source-bound/);
+ await replyNativeRequest(f.directory,p.request.id,{state:'failed',summary:'Synthetic verifier failure',head_sha:'b'.repeat(40),agent_id:'/root/fixture-integrator',update,test_maintenance_report:{schema:1,tested_commit:'b'.repeat(40),run:{id:'legacy-native-report'},counts:{passed:0,failed:1,skipped:0,total:1},behaviors:[{id:'fixture',status:'unchanged'}],tests:[{id:'failed fixture',behavior:'fixture',outcome:'failed'}]}});await running;
  const recovered=await f.channel.nativeHost.reconcile(work);assert.deepEqual(recovered.observation.owner,owner);assert.equal(recovered.agent_id,'/root/fixture-integrator');
  assert.equal(seen.at(-1).state,'failed');assert.equal(seen.at(-1).source_sha,'b'.repeat(40));assert.deepEqual(seen.at(-1).owner,owner);
+ assert.deepEqual(seen.at(-1).update,update);assert.deepEqual(recovered.observation.update,update);
+ assert.deepEqual(recovered.observation,seen.at(-1),'recovery reuses the persisted completion observation, including evidence and original time');
+ const legacyFile=path.join(f.directory,p.request.id+'.response.json'),legacyPacket=JSON.parse(await fs.readFile(legacyFile,'utf8'));delete legacyPacket.observation;await fs.writeFile(legacyFile,JSON.stringify(legacyPacket));
+ const legacyRecovered=await f.channel.nativeHost.reconcile(work);assert.deepEqual(legacyRecovered.observation,seen.at(-1),'a pre-upgrade response with a test report is normalized exactly once');
+ const {continuityCardProjection}=await import('./relay-continuity.mjs'),{appendCardUpdates}=await import('../src/relay-card-updates.js'),{createHash}=await import('node:crypto');
+ const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex'),plan={schema:1,authorization:'Fixture',objective_digest:'a'.repeat(64),environment:{fixture:true},criteria:['review'],stages:[{id:'a',kind:'review',prompt:'Private fixture task',criteria:['review'],depends_on:[],inputs:['README.md'],verify:['verify']}]};
+ let record={id:'native',owner:'host',branch:'relay/native',primary_staff:'rafael',primary_team:'source'},journal={schema:1,plan_digest:hash(plan),stages:{a:{state:'dispatching',observation:{...seen.at(-1),input_digest:'b'.repeat(64)}}}};
+ const first=continuityCardProjection({plan,journal,assignment:record});record={...record,card_updates:appendCardUpdates(record,first),card_steps:first};journal.stages.a.observation={...recovered.observation,input_digest:'b'.repeat(64)};
+ const replay=continuityCardProjection({plan,journal,assignment:record});assert.equal(replay.steps[0].receipt.id,first.steps[0].receipt.id);assert.equal(appendCardUpdates(record,replay).items.length,1);
 });
 
 test('explicit specialist with no routed staff stops before any native launch packet',async t=>{

@@ -13,7 +13,7 @@ async function mount(output,{input={project:'relay'},hold=false,waitStaff=true}=
    return window.next||{project:args.project,generated_at:new Date().toISOString(),progress:[{assignment:args.assignment,goal:'Fresh '+args.assignment,state:'working',primary_staff:'valentina',primary_team:'inspector'}]};
   }};
  },{output,input,hold});
- await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));if(waitStaff)await page.locator('#feature-title').filter({hasText:'Valentina'}).waitFor();
+ await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));if(waitStaff)await page.locator('#family-assignment-lead').filter({hasText:'Assigned lead: Valentina'}).waitFor();
  return {browser,page};
 }
 const calls=page=>page.evaluate(()=>window.calls);

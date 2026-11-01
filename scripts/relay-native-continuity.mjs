@@ -1,4 +1,5 @@
 import {stageSpecialist,validateDelegationReceipt} from '../src/specialist-workflow.js';
+import {validPublicCardUpdate,isDesignSubmission,requireDesignSubmission} from '../src/relay-card-updates.js';
 import {validCardOwner} from '../src/relay-card-steps.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -14,6 +15,7 @@ const terminal=new Set(['succeeded','failed','cancelled']);
 const bindings=['project','assignment','owner','branch'];
 const requiresStart=request=>request.kind==='execute'||request.kind==='rpc'&&request.data.name==='relay_runner_coordinate';
 const digest=expansionDigest;
+export function nativeCompletionObservation(operation_id,owner,value,observed_at){value=withTestMaintenance(value);return {owner,state:value.state==='succeeded'?'blocked':value.state,source_sha:value.head_sha,observed_at,...(value.update?{update:structuredClone(value.update)}:{}),evidence:'sha256:'+digest({operation_id,result:value})};}
 async function privateDirectory(directory){
  directory=path.resolve(directory);await fs.mkdir(directory,{recursive:true,mode:0o700});
  for(let p=directory;;p=path.dirname(p)){if((await fs.lstat(p)).isSymbolicLink())throw Error('Native channel cannot traverse a symlink');if(path.dirname(p)===p)break;}
@@ -59,7 +61,9 @@ function authorizeRpc(name,args,config){
 function validateReply(request,value){
  if(!value||typeof value!=='object'||Array.isArray(value)||Buffer.byteLength(JSON.stringify(value))>LIMIT)throw Error('Native reply must be a bounded object');
  if(request.kind==='execute'){
-  if(Object.keys(value).some(k=>!['state','summary','head_sha','continuity_additions','test_maintenance_report','agent_id'].includes(k))||!terminal.has(value.state)||typeof value.summary!=='string'||!value.summary.trim()||value.summary.length>2000||!/^[a-f0-9]{40}$/.test(value.head_sha||''))throw Error('Native work requires a terminal attributed report, never a process or objective claim');
+  if(Object.keys(value).some(k=>!['state','summary','head_sha','continuity_additions','test_maintenance_report','agent_id','update'].includes(k))||!terminal.has(value.state)||typeof value.summary!=='string'||!value.summary.trim()||value.summary.length>2000||!/^[a-f0-9]{40}$/.test(value.head_sha||''))throw Error('Native work requires a terminal attributed report, never a process or objective claim');
+  if(value.state==='succeeded'&&isDesignSubmission(request.data.stage?.public_submission))requireDesignSubmission(value.update,{source_sha:value.head_sha});
+  if(value.update!==undefined&&!validPublicCardUpdate(value.update,{source_sha:value.head_sha}))throw Error('Native public update must be explicitly authored and source-bound');
   if(value.test_maintenance_report!==undefined&&(!value.test_maintenance_report||typeof value.test_maintenance_report!=='object'||Array.isArray(value.test_maintenance_report)||Buffer.byteLength(JSON.stringify(value.test_maintenance_report))>65536))throw Error('Native test-maintenance report must be a bounded object');
   if(request.data.specialist && (typeof value.agent_id!=='string'||!value.agent_id))throw Error('Specialist result requires its actual delegated agent identity');
   validateContinuityAdditions(value.continuity_additions||[]);
@@ -82,7 +86,7 @@ export async function openNativeChannel({directory,config,workspace,waitMs=30000
  if(directory===workspace||directory.startsWith(workspace+path.sep))throw Error('Native channel must remain outside source');
  const manifest={schema:1,adapter:'codex-native-tools',binding:Object.fromEntries(bindings.map(k=>[k,config[k]])),workspace,plan_digest:digest(config.continuity)};
  await writeOnce(path.join(directory,'manifest.json'),manifest);
- const exchange=async(kind,data,{stable=false,onStarted,onDelegated}={})=>{
+ const exchange=async(kind,data,{stable=false,onStarted,onDelegated,onResult}={})=>{
   if((await fs.readdir(directory)).filter(x=>x.endsWith('.request.json')).length>=512)throw Error('Native channel request budget exhausted; checkpoint and reconcile');
   const request={schema:1,kind,binding:manifest.binding,data,nonce:stable?null:randomUUID()},id=digest(request),packet={...request,id};
   await writeOnce(path.join(directory,id+'.request.json'),packet);
@@ -93,7 +97,7 @@ export async function openNativeChannel({directory,config,workspace,waitMs=30000
   while(Date.now()<until){
    if(onStarted&&!startDelivered)try{const started=await readJSON(path.join(directory,id+'.started.json'));if(started.request_digest!==id||started.operation_id!==data.pending.operation_id)throw Error('Native start binding changed');startDelivered=true;await onStarted(started);}catch(e){if(e.code!=='ENOENT')throw e;}
    if(onDelegated&&!delegationDelivered)try{const delegated=await readJSON(path.join(directory,id+'.delegation.json'));validateDelegationReceipt(delegated,packet,Date.parse(delegated.launched_at));delegationDelivered=true;await onDelegated(delegated);}catch(e){if(e.code!=='ENOENT')throw e;}
-   try{const reply=await readJSON(path.join(directory,id+'.response.json'));if(reply.request_digest!==id)throw Error('Native reply is for another request');if(reply.error)throw Error('Native tool request failed; reconcile original intent');return validateReply(packet,reply.value);}
+   try{const reply=await readJSON(path.join(directory,id+'.response.json'));if(reply.request_digest!==id)throw Error('Native reply is for another request');if(reply.error)throw Error('Native tool request failed; reconcile original intent');const value=validateReply(packet,reply.value);await onResult?.(reply);return value;}
    catch(e){if(e.code!=='ENOENT')throw e;}
    await new Promise(resolve=>setTimeout(resolve,100));
   }
@@ -114,11 +118,11 @@ export async function openNativeChannel({directory,config,workspace,waitMs=30000
  const nativeHost={
   review:(proposal,context)=>exchange('review',{proposal,context}),
   execute:async(pending,stage,context,onObservation)=>{
-   let observation=null;
+   let observation=null,completion=null;
    const specialist=stage.specialist_role||context.card_attribution?.primary_staff||context.card_attribution?.supporting_staff?.length?stageSpecialist(stage,context.card_attribution||{}):null;
    const started=async receipt=>{if(!receipt.owner)return;observation={state:'running',owner:receipt.owner,source_sha:context.source_sha,observed_at:receipt.launched_at||receipt.at,evidence:'sha256:'+digest(receipt)};await onObservation?.(observation);};
-   const value=withTestMaintenance(await exchange('execute',{pending,stage,specialist,context:{...context,test_maintenance:testMaintenanceGuidance({host:'codex'})}},{stable:true,onStarted:specialist?undefined:started,onDelegated:specialist?started:undefined}));
-   if(observation)await onObservation?.({...observation,state:value.state==='failed'?'failed':value.state==='cancelled'?'cancelled':'blocked',source_sha:value.head_sha,observed_at:new Date().toISOString(),evidence:'sha256:'+digest({operation_id:pending.operation_id,result:value})});
+   const value=withTestMaintenance(await exchange('execute',{pending,stage,specialist,context:{...context,test_maintenance:testMaintenanceGuidance({host:'codex'})}},{stable:true,onStarted:specialist?undefined:started,onDelegated:specialist?started:undefined,onResult:async reply=>{completion=reply.observation||nativeCompletionObservation(pending.operation_id,observation?.owner,reply.value,reply.observed_at);}}));
+   if(observation&&completion)await onObservation?.(completion);
    return {...value,specialist_execution:Boolean(specialist),adapter:'codex-native-tools',host:os.hostname(),objective_completed:false,process_verified:false,execution_evidence_source:'native-task-reported; acceptance checked by configured verifier'};
   },
   reconcile:async pending=>{
@@ -128,7 +132,7 @@ export async function openNativeChannel({directory,config,workspace,waitMs=30000
      if(!q.data.specialist)return value;
      const receipt=await readJSON(path.join(directory,q.id+'.delegation.json'));validateDelegationReceipt(receipt,q,Date.parse(receipt.launched_at));
      if(value.agent_id!==receipt.agent_id)throw Error('Recovered specialist identity changed');
-     return {...value,specialist_execution:true,source_current:typeof r.source_fingerprint==='string'&&r.source_fingerprint===await sourceFingerprint(workspace),observation:{owner:receipt.owner,state:value.state==='succeeded'?'blocked':value.state,source_sha:value.head_sha,observed_at:r.observed_at||receipt.launched_at,evidence:'sha256:'+digest({receipt,result:value})}};}catch(e){if(e.code==='ENOENT')return null;throw e;}
+     return {...value,specialist_execution:true,source_current:typeof r.source_fingerprint==='string'&&r.source_fingerprint===await sourceFingerprint(workspace),observation:r.observation||nativeCompletionObservation(pending.operation_id,receipt.owner,r.value,r.observed_at||receipt.launched_at)};}catch(e){if(e.code==='ENOENT')return null;throw e;}
    }
    return null;
   }
@@ -185,7 +189,8 @@ export async function replyNativeRequest(directory,id,value){
  // Exact retries reuse original source proof and time, never refresh evidence.
  try{const prior=await readJSON(filename);if(prior.request_digest!==id||digest(prior.value)!==digest(value))throw Error('Native packet identity changed; reconcile original intent');return;}catch(e){if(e.code!=='ENOENT')throw e;}
  const manifest=await readJSON(path.join(directory,'manifest.json'));
- const proof=p.request.data.specialist?{source_fingerprint:await sourceFingerprint(manifest.workspace),observed_at:new Date().toISOString()}:{};
+ const observed_at=new Date().toISOString();
+ const proof=p.request.data.specialist?{source_fingerprint:await sourceFingerprint(manifest.workspace),observed_at,observation:nativeCompletionObservation(p.request.data.pending.operation_id,p.request.data.specialist.owner,value,observed_at)}:{};
  await writeOnce(filename,{request_digest:id,value,...proof});
 }
 

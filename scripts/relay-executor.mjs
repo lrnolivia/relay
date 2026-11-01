@@ -1,5 +1,5 @@
 import {validateContinuityAdditions,expansionDigest} from '../packages/runner/src/continuity-expansion.mjs';
-import {runContinuityExecution,sourceFingerprint,specialistExecutionRpc} from './relay-continuity.mjs';
+import {runContinuityExecution,sourceFingerprint,specialistExecutionRpc,readPublicStageUpdate} from './relay-continuity.mjs';
 import {getStaff} from '../src/staff-registry.js';
 import {stageSpecialist,ordinaryReviewResponsibility} from '../src/specialist-workflow.js';
 import { installSkills } from '../packages/skills/install.mjs';
@@ -138,6 +138,7 @@ export async function runExecution(options){
       const staffing={primary_role:a.primary_role||lead.role.id,primary_staff:a.primary_staff,primary_team:a.primary_team,supporting_roles:roles,supporting_staff:[...new Set([...(a.supporting_staff||[]),reviewer.id])],supporting_teams:[...new Set([...(a.supporting_teams||[]),reviewer.home_team])].filter(x=>x!==a.primary_team)};
       const stage=(id,kind,role,depends_on,prompt)=>({id,kind,specialist_role:role,criteria:[id],depends_on,prompt,verify:['relay-ordinary-receipt-v1',id],inputs:a.paths});
       const plan={schema:1,authorization:'Existing admitted execution plus coordinator-owned bounded independent review; no new scope or release authority.',completion_scope:'subobjective',objective_digest:binding.objective_digest,criteria:['run-assigned-worker','review-current-work'],environment:{adapter:'ordinary-coordinator-v1',provider:binding.provider},stages:[stage('run-assigned-worker','implementation',staffing.primary_role,[],initial.request),stage('review-current-work','review',reviewRole,['run-assigned-worker'],reviewInstruction+' Independently review the current admitted work against its unchanged objective and acceptance. Inspect actual source and relevant checks; do not edit source. Report actual findings and unresolved work. This is a bounded review, never whole-assignment completion.')]};
+      if(a.category==='design')plan.stages[0].public_submission={schema:1,kind:'design'};
       saved={schema:1,binding,initial_job:initial,staffing,plan,plan_digest:coordinatorHash(plan),staffing_intent:{action:'amend',project:config.project,expected_record_sha:record,request:{id:config.assignment,owner:config.owner,...staffing,reason:'Admit bounded independent reviewer for ordinary execution; routing only until actual process receipts'}}};
       await writePrivate(file,saved);
       // Intent is durable before the one mutation. A lost response is reconciled
@@ -168,10 +169,11 @@ export async function runExecution(options){
         if(receipt.job.result?.session_id!==receipt.session_id)continue;
         const events=await fs.readFile(path.join(runDirectory,job.id,'events-'+job.attempt+'.jsonl'));
         if(job.result.evidence!=='sha256:'+createHash('sha256').update(events).digest('hex'))continue;
+        if(pending.specialist_receipt){if(pending.specialist_receipt.job_digest!==coordinatorHash(job)||pending.specialist_receipt.source_fingerprint!==receipt.coordinator_source)throw Error('Saved immutable completion proof changed; reconcile without reauthoring');continue;}
         // Validate the already acknowledged finish using the original job time.
         // This is readback reconstruction, not a second finish RPC or launch.
         let observation;
-        await specialistExecutionRpc({rpc:async()=>({ok:true,job}),config,jobId:job.id,specialist:pending.specialist,sourceSha:job.initial_head_sha,terminalReadback:true,onObservation:async value=>{observation=value;}})('relay_execution',{action:'finish',job_id:job.id,executor_id:job.executor_id,expected_revision:job.revision-1,result:job.result});
+        await specialistExecutionRpc({rpc:async()=>({ok:true,job}),config,jobId:job.id,specialist:pending.specialist,sourceSha:job.initial_head_sha,terminalReadback:true,submission:pending.public_submission,publicUpdate:async()=>pending.public_update_file?readPublicStageUpdate(pending.public_update_file,{project:config.project,assignment:config.assignment,owner:config.owner,branch:config.branch,operation_id:pending.operation_id,source_sha:job.result.head_sha}):null,onObservation:async value=>{observation=value;}})('relay_execution',{action:'finish',job_id:job.id,executor_id:job.executor_id,expected_revision:job.revision-1,result:job.result});
         if(observation){pending.specialist_receipt={job_digest:coordinatorHash(job),source_fingerprint:receipt.coordinator_source,observation};await writePrivate(path.join(runDirectory,'continuity.json'),priorJournal);}
       }
     }

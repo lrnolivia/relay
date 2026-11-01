@@ -57,6 +57,22 @@ function fixture(options = {}) {
 const coordinate = (f, action, request = defaultRequest, expected_record_sha = sha) => callRunnerControl('relay_runner_coordinate', { project: 'relay', action, request, expected_record_sha }, {}, f.api);
 const claim = (extra = {}) => ({ ...defaultRequest, state: 'active', base_sha: sha, created_at: new Date().toISOString(), lease_until: new Date(Date.now() + 3600000).toISOString(), ...extra });
 
+test('canonical design publication verifies real Inspector metadata and image before writing, with historical replay preserved',async()=>{
+ const {storeEvidence}=await import('./evidence.js'),{continuityObjectiveDigest}=await import('../packages/runner/src/continuity-expansion.mjs');
+ const a=claim({primary_staff:'valentina',primary_team:'inspector'}),objects=new Map();
+ const bucket={put:async(k,v)=>objects.set(k,v),get:async k=>objects.has(k)?{json:async()=>JSON.parse(objects.get(k))}:null,list:async()=>({objects:[...objects.keys()].map(key=>({key})),truncated:false})};
+ const meta=await storeEvidence(bucket,{requestId:'design-acceptance',targetUrl:'https://relay.loew.fi',kind:'screenshot',screenshotBytes:new Uint8Array(Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9WlQZQAAAABJRU5ErkJggg==','base64')),context:{project:'relay',assignment:'task',commit_sha:sha},viewport:{width:760,height:900}});
+ const p={schema:'relay-card-steps/v1',assignment:'task',revision:'a'.repeat(64),objective_digest:continuityObjectiveDigest(a.goal,a.acceptance),publisher:{owner:a.owner,branch:a.branch},sequence:1,complete:false,steps:[{id:'design',label:'Submit design',depends_on:[],state:'blocked',receipt:{id:'design-submission',assignment:'task',step_id:'design',plan_revision:'a'.repeat(64),input_digest:'b'.repeat(64),evidence:'sha256:'+'c'.repeat(64),source_sha:sha,observed_at:new Date().toISOString(),owner:{staff:'valentina',team:'inspector'},update:{text:'Design submitted.',artifacts:[{evidence_id:meta.evidence_id,source_sha:sha,caption:'Stored design capture',kind:'design'}],preview:{state:'attached'}}}}]};
+ const request={id:a.id,owner:a.owner,reason:'Publish actual design submission',card_steps:p};
+ for(const field of ['missing','project','assignment','commit_sha','image']){
+  const altered={...bucket,get:async key=>{if(field==='missing'&&key===meta.metadata_key||field==='image'&&key===meta.screenshot_key)return null;const item=await bucket.get(key);if(item&&key===meta.metadata_key&&['project','assignment','commit_sha'].includes(field))return {json:async()=>({...meta,context:{...meta.context,[field]:'other'}})};return item;}};
+  const f=fixture({claims:[a]});await assert.rejects(callRunnerControl('relay_runner_coordinate',{project:'relay',action:'amend',request,expected_record_sha:sha},{EVIDENCE:altered},f.api),/does not exist|does not match/);assert.equal(f.writes.length,0);
+ }
+ const f=fixture({claims:[a]});await callRunnerControl('relay_runner_coordinate',{project:'relay',action:'amend',request,expected_record_sha:sha},{EVIDENCE:bucket},f.api);assert.equal(f.writes.length,1);assert.equal(f.record.claims[0].card_updates.items[0].preview.state,'attached');
+ // A retained receipt can be replayed after media retention changes without reauthoring history.
+ objects.delete(meta.screenshot_key);const replay={...request,card_steps:{...p,sequence:2}};await callRunnerControl('relay_runner_coordinate',{project:'relay',action:'amend',request:replay,expected_record_sha:newSha},{EVIDENCE:bucket},f.api);assert.equal(f.record.claims[0].card_updates.items.length,1);
+});
+
 test('canonical teams survive queue claim heartbeat and audited amendment under machine ownership', async () => {
   const f=fixture();
   const {branch,...queuedRequest}=defaultRequest;
@@ -635,7 +651,7 @@ test('real continuity verifier publishes through canonical control, live progres
   if(name==='relay_runner_coordinate'){
    const progress=await callProgress({project:'relay',assignment:'task'},{},f.api);await page.evaluate(data=>render(data),progress);
    const rows=await page.locator('[data-step]').evaluateAll(nodes=>nodes.map(n=>({id:n.dataset.step,state:n.dataset.state})));states.push(rows);
-   assert.deepEqual(rows.map(r=>r.id),['build','verify']);assert.equal(await page.locator('#feature-title').textContent(),'Nico');assert.match(await page.locator('#team').textContent(),/Assignment lead/);assert.doesNotMatch(await page.locator('#card-roles').textContent(),/Current step owner:/);
+   assert.deepEqual(rows.map(r=>r.id),['build','verify']);assert.equal(await page.locator('#family-assignment-lead').textContent(),'Assigned lead: Nico');assert.match(await page.locator('#card-project').textContent(),/relay/);assert.doesNotMatch(await page.locator('#card-roles').textContent(),/Current step owner:/);
    assert.doesNotMatch(JSON.stringify(progress),/PRIVATE|process\.exit|console\.log/);
   }
   return result;
@@ -643,7 +659,7 @@ test('real continuity verifier publishes through canonical control, live progres
  const config={project:'relay',assignment:'task',owner:'worker',branch:'relay/task',continuity:plan};
  const run=()=>runContinuityExecution({config,workspace,stateDir:path.join(root,'private'),rpc,runExecution:()=>{throw Error('Actual verifier already passes; no coding job');}});
  const result=await run();assert.equal(result.objective_completed,true);assert.deepEqual(states.map(rows=>rows.map(r=>r.state)),[['pending','pending'],['passed','pending'],['passed','passed']]);
- assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');assert.match(await page.locator('#team').textContent(),/Assignment lead/);assert.doesNotMatch(await page.locator('#card-roles').textContent(),/Current step owner:/);assert.equal(f.record.claims[0].card_steps.steps[0].receipt.source_sha,source);
+ assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');assert.match(await page.locator('#family-assignment-lead').textContent(),/Assigned lead/);assert.doesNotMatch(await page.locator('#card-roles').textContent(),/Current step owner:/);assert.equal(f.record.claims[0].card_steps.steps[0].receipt.source_sha,source);
  const writes=f.writes.length;await run();assert.equal(f.writes.length,writes,'identical refresh does not publish another amendment');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 });
 

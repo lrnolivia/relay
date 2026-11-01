@@ -1,5 +1,5 @@
 import {createHash} from 'node:crypto';
-import {publicCardUpdateSchema,validPublicCardUpdate} from './relay-card-updates.js';
+import {publicCardUpdateSchema,validPublicCardUpdate,designSubmissionSchema,isDesignSubmission,requireDesignSubmission} from './relay-card-updates.js';
 import {stageSpecialist} from './specialist-workflow.js';
 import {validateCardStepsPublication} from './relay-card-steps.js';
 import {continuityObjectiveDigest} from '../packages/runner/src/continuity-expansion.mjs';
@@ -19,6 +19,7 @@ export const nativeHandoffSchema={type:'object',additionalProperties:false,requi
   host_tool:{...text(160),pattern:'^[a-zA-Z0-9_.:-]+$'},host_available:{type:'boolean'},intent_digest:digest,
   request_digest:digest,agent_id:{...text(240),pattern:'^[-a-zA-Z0-9_/.]+$'},observed_at:text(40),
   state:{type:'string',enum:['succeeded','failed','blocked','cancelled']},result_digest:digest,
+  submission:designSubmissionSchema,
   update:{...publicCardUpdateSchema,description:'Optional explicitly authored public update on started/result only. Never copy private prompts, transcripts or diagnostic logs. Visual references must bind this assignment and exact source.'}
 }};
 const fields={read:[],prepare:['source_sha','objective_digest','step_id','label','role','host_tool','host_available','intent_digest'],started:['request_digest','source_sha','agent_id','observed_at'],result:['request_digest','source_sha','agent_id','observed_at','state','result_digest']};
@@ -29,7 +30,8 @@ export function nativeIntent(args){
     if(!rule||typeof value!==rule.type||rule.type==='string'&&(value.length<(rule.minLength||0)||value.length>(rule.maxLength||1000)||rule.pattern&&!new RegExp(rule.pattern).test(value))||rule.enum&&!rule.enum.includes(value))fail('invalid '+key);
   }
   const selected=fields[args.action];if(!selected)fail('unknown action');
-  const optional=['started','result'].includes(args.action)?['update']:[];
+  const optional=['started','result'].includes(args.action)?['update']:args.action==='prepare'?['submission']:[];
+  if(args.submission!==undefined&&!isDesignSubmission(args.submission))fail('invalid submission boundary');
   if(args.update!==undefined&&!validPublicCardUpdate(args.update,{source_sha:args.source_sha}))fail('invalid public update');
   const common=['project','assignment','owner','action','operation_id',...(args.action==='read'?[]:['expected_record_sha'])];
   if([...common,...selected].some(k=>args[k]===undefined)||Object.keys(args).some(k=>![...common,...selected,...optional].includes(k)))fail('exact action fields are required');
@@ -40,7 +42,7 @@ export function nativeHandoffView(row,{source_sha,assignment,launch=false}={}){
   return {schema:1,receipt:row||null,source_current:current,launch_required:Boolean(launch&&current),
     state:!row?'absent':!current?'reconciliation-needed':row.state==='prepared'&&!launch?'reconciliation-needed':row.state,
     next_action:!row?'Prepare one bounded task only if this coordinator has an actual authorized host delegation tool.':!current?'Preserve historical evidence; reconcile changed source, ownership, lease or objective. Do not launch.':row.state==='prepared'?(launch?'Persist this packet locally, invoke the actual host tool exactly once, then report started with its returned agent ID.':'A launch may already have happened. Recover its exact ID through this task’s authorized host receipt; never relaunch or expire the intent into a retry.') :row.state==='started'?'Wait for the exact recorded agent, then report its actual result digest. Do not create another agent.':'Result is recorded; successful execution awaits separate task-specific verification and is not an acceptance pass.',
-    ...(launch&&current?{delegation:{host_tool:row.prepare.host_tool,operation_id:row.operation_id,request_digest:row.request_digest,source_sha:row.source_sha,step_id:row.step_id,role:row.specialist.role,staff:row.specialist.owner,paths:assignment.paths,intent_digest:row.prepare.intent_digest,instructions:'Immediately before the actual host call, refresh current control/owner/source and stop on change or uncertainty. This protocol is read-only snapshot review/research/inspection: inspect exactly source_sha; do not edit source, commit, or treat uncommitted work as that snapshot. Perform only the locally retained bounded task matching intent_digest under this assignment and source. Do not create agents, reassign, modify credentials, merge or deploy. Return actual findings. The coordinator may supply a concise explicitly public update with started/result; never copy the private result automatically. Attach only existing Inspector visuals bound to this assignment and exact source. The staff label is fictional; no Git identity is granted.'}}:{}),
+    ...(launch&&current?{delegation:{host_tool:row.prepare.host_tool,operation_id:row.operation_id,request_digest:row.request_digest,source_sha:row.source_sha,step_id:row.step_id,role:row.specialist.role,staff:row.specialist.owner,paths:assignment.paths,intent_digest:row.prepare.intent_digest,instructions:'Immediately before the actual host call, refresh current control/owner/source and stop on change or uncertainty. This protocol is read-only snapshot review/research/inspection: inspect exactly source_sha; do not edit source, commit, or treat uncommitted work as that snapshot. Perform only the locally retained bounded task matching intent_digest under this assignment and source. Do not create agents, reassign, modify credentials, merge or deploy. Return actual findings. Declare submission {schema:1,kind:"design"} at prepare only for an actual design-submission stage; successful result then requires an attached preview or meaningful unavailable reason. The coordinator should author a concise explicitly public update with started/result; never copy the private result automatically. At actual design submission include preview attached with a real design artifact or preview unavailable with a specific reason; kickoff preview is pending. Attach only existing Inspector visuals bound to this assignment and exact source. The staff label is fictional; no Git identity is granted.'}}:{}),
     attestation:'Coordinator-reported actual host invocation; not independently verified or cryptographic proof. Raw prompts, transcripts and secrets stay private.',objective_completed:false};
 }
 
@@ -83,6 +85,7 @@ export function transitionNativeHandoff(assignment,args,verifiedSource,now=new D
       if(row.state!=='prepared'||rows.some(x=>x.start?.agent_id===args.agent_id))fail('agent identity already bound');
       row.start=intent;row.state='started';row.started_at=now.toISOString();
     }else{
+      if(args.state==='succeeded'&&isDesignSubmission(row.prepare.submission))requireDesignSubmission(args.update,{source_sha:args.source_sha});
       if(row.state!=='started'||row.start.agent_id!==args.agent_id||at<Date.parse(row.start.observed_at))fail('result requires exact started agent');
       row.result=intent;row.state='reported';row.reported_at=now.toISOString();
     }

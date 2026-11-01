@@ -1,3 +1,4 @@
+import {fileURLToPath} from 'node:url';
 import test from "node:test";
 import assert from "node:assert/strict";
 import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI, RELAY_STATUS_CARD_TOOL, relayContextCardDescriptor, relayContextCardResource, relayContextCardTool, relayStatusCardDescriptor, relayStatusCardResource, relayStatusCardTool, validateRelayContextCardArguments, contextualizeRelayTool, isContextualRelayTool } from "./relay-chat-ui.js";
@@ -5,7 +6,7 @@ import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI,
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v27.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v28.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -191,7 +192,7 @@ test('card initializes the standard MCP Apps bridge even when window.openai exis
     const frame=page.frameLocator('#widget');
     await frame.locator('#title').filter({hasText:'Staff routing is ready'}).waitFor();
     assert.equal(await page.evaluate(()=>window.seenInitialize),true);
-    assert.match(await frame.locator('#team').textContent(),/Assignment lead/);
+    assert.match(await frame.locator('#family-assignment-lead').textContent(),/Assigned lead/);
     assert.equal(await frame.locator('#staff').getAttribute('title'),'Julian with Roman');
   } finally {await browser.close()}
 });
@@ -413,7 +414,7 @@ test('production context card model remains executable after Worker keepNames bu
   const { build } = await import('esbuild');
   const { runInNewContext } = await import('node:vm');
   const built = await build({
-    entryPoints: [new URL('./relay-chat-ui.js', import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL('./relay-chat-ui.js', import.meta.url))],
     bundle: true, write: false, format: 'esm', platform: 'neutral', keepNames: true
   });
   const bundled = await import('data:text/javascript;base64,' + Buffer.from(built.outputFiles[0].text).toString('base64'));
@@ -637,7 +638,7 @@ test('human_v1 card preserves error facts and pending release steps without gues
 
 test('human_v1 generated current and legacy bridge resources share exact server semantics',async()=>{
   const {build}=await import('esbuild');const {runInNewContext}=await import('node:vm');
-  const built=await build({entryPoints:[new URL('./relay-chat-ui.js',import.meta.url).pathname],bundle:true,write:false,format:'esm',platform:'neutral',keepNames:true});
+  const built=await build({entryPoints:[fileURLToPath(new URL('./relay-chat-ui.js',import.meta.url))],bundle:true,write:false,format:'esm',platform:'neutral',keepNames:true});
   const module=await import('data:text/javascript;base64,'+Buffer.from(built.outputFiles[0].text).toString('base64'));
   const cases=[
     {ok:true,manifest_complete:false,truncated:true,presentation_operation:{kind:'query',name:'relay_source_tree'}},
@@ -746,8 +747,8 @@ test('an ordinary claim mounts a staff-attributed work card that follows the sam
     // Mount-time recovery reads canonical progress once; the tool result still drives the card.
     await page.waitForFunction(()=>true);
     assert.equal(await frame.locator('#rows').textContent(),'');
-    assert.match(await frame.locator('#team').textContent(),/Assignment lead/);
-    assert.equal(await frame.locator('#staff').isHidden(),false);
+    assert.match(await frame.locator('#family-assignment-lead').textContent(),/Assigned lead/);
+    assert.equal(await frame.locator('#family-assignment-lead').isHidden(),false);
     assert.equal(await frame.locator('#rows').textContent(),'');
     await page.clock.runFor(31000);
     await frame.locator('#state-label').filter({hasText:/hold/i}).waitFor();
@@ -755,7 +756,7 @@ test('an ordinary claim mounts a staff-attributed work card that follows the sam
     await frame.locator('#state-label').filter({hasText:/complete/i}).waitFor();
     // The card keeps the step it was mounted for after the live state moves on.
     assert.equal(await frame.locator('#rows').textContent(),'');
-    assert.match(await frame.locator('#team').textContent(),/Assignment lead/);
+    assert.match(await frame.locator('#family-assignment-lead').textContent(),/Assigned lead/);
     await page.clock.runFor(120000);
     assert.deepEqual(calls.map(call=>call.args),[{project:'relay'},{project:'relay',assignment:claim.id},{project:'relay',assignment:claim.id}]);
     assert.ok(calls.every(call=>call.name==='relay_runner_progress'));

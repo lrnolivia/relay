@@ -4,6 +4,72 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {reconcileContinuity,validateContinuityPlan} from './relay-continuity.mjs';
 const plan=()=>({schema:1,authorization:'Explicit user authorization includes testing, review and shipping',objective_digest:'a'.repeat(64),environment:{node:'22.23.3',lock:'fixture'},criteria:['A','B','C'],stages:['A','B','C'].map((id,i)=>({id:id.toLowerCase(),kind:i===0?'implementation':i===1?'test':'ship',criteria:[id],depends_on:i?[String.fromCharCode(96+i)]:[],prompt:'Complete '+id,inputs:[id+'.js'],verify:['verify',id]}))});
+
+test('pre-upgrade queued prompts resume unchanged while changed responsibilities still reject',async()=>{
+ const {continuityExecutionPrompt}=await import('./relay-continuity.mjs');
+ const old='Original bounded task\n\nBounded responsibility: builder. Original instruction.',publication='\n\nPublic submission instruction';
+ const pending={operation_id:'existing-job',job_id:'job-original',execution_prompt:old};
+ assert.equal(continuityExecutionPrompt(pending,old,publication),old);assert.equal(pending.job_id,'job-original');
+ assert.equal(continuityExecutionPrompt({},old,publication),old+publication);
+ assert.equal(continuityExecutionPrompt({execution_prompt:old+publication},old,publication),old+publication);
+ assert.throws(()=>continuityExecutionPrompt(pending,old+' changed role',publication),/responsibility changed/);
+ assert.equal(continuityExecutionPrompt({execution_prompt:'Original adopted request'},'Original adopted request',''),'Original adopted request');
+});
+
+test('pre-upgrade private pending journal resumes its exact queued job without resubmission',async t=>{
+ const fs=await import('node:fs/promises'),os=await import('node:os'),path=await import('node:path'),{execFileSync}=await import('node:child_process');
+ const {runContinuityExecution}=await import('./relay-continuity.mjs'),{stageSpecialist}=await import('../src/specialist-workflow.js');
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-legacy-pending-')),workspace=path.join(root,'checkout'),stateDir=path.join(root,'private');t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.mkdir(workspace);await fs.mkdir(stateDir);
+ const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8',stdio:'pipe'}).trim();git(['init','-b','relay/fixture']);git(['config','user.name','Fixture']);git(['config','user.email','fixture@example.invalid']);await fs.writeFile(path.join(workspace,'README.md'),'fixture');git(['add','.']);git(['commit','-m','fixture']);
+ const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex'),head=git(['rev-parse','HEAD']);
+ let claim={id:'fixture',owner:'host',branch:'relay/fixture',state:'active',lease_until:new Date(Date.now()+3600000).toISOString(),primary_staff:'nico',primary_team:'runner',paths:['README.md'],resources:[],goal:'Keep the queued request',acceptance:'Resume once'};
+ const p={schema:1,authorization:'Fixture',objective_digest:hash({goal:claim.goal,acceptance:claim.acceptance}),environment:{fixture:true},criteria:['a'],stages:[{id:'a',kind:'implementation',specialist_role:'builder',criteria:['a'],depends_on:[],prompt:'Original task',inputs:['README.md'],verify:['fixture-verifier']}]};
+ const specialist=stageSpecialist(p.stages[0],claim),legacy='Original task\n\nBounded responsibility: '+specialist.role+'. '+specialist.instruction,operation_id='continuity-pre-upgrade',jobId='job_'+hash({project:'relay',assignment:'fixture',operation:operation_id});
+ const job={id:jobId,state:'queued',project:'relay',assignment:'fixture',owner:'host',branch:claim.branch,initial_head_sha:head,request:legacy};
+ await fs.writeFile(path.join(stateDir,'continuity.json'),JSON.stringify({schema:1,plan_digest:hash(p),stages:{a:{state:'reconciliation-required',attempts:1,pending:{operation_id,stage:'a',prompt:'Original task',execution_prompt:legacy,specialist,job_id:jobId,control_revision:1,global_revision:1}}}}));
+ let revision='a'.repeat(40),ran=0,submits=0;
+ const rpc=async(name,args)=>{if(name==='relay_autonomy')return {ok:true,state:{held:false,revision:1}};if(name==='relay_runner_assignments')return {ok:true,record_sha:revision,claims:[structuredClone(claim)]};if(name==='relay_execution'){if(args.action==='submit')submits++;return {ok:true,job:structuredClone(job)}};if(name==='relay_runner_coordinate'){claim=transition({claims:[claim],queue:[]},{...args.request,action:args.action},{max_active_branches:4,lease_hours:12}).claims[0];revision=hash(claim).slice(0,40);return {ok:true}};throw Error(name)};
+ const result=await runContinuityExecution({config:{project:'relay',assignment:'fixture',owner:'host',branch:claim.branch,continuity:p},workspace,stateDir,rpc,verifyStage:async()=>({passed:ran===1,evidence:'sha256:'+'b'.repeat(64)}),runExecution:async args=>{ran++;assert.equal(args.config.job_id,jobId);assert.match(args.config.coordinator_specialist.public_submission.instruction,/Public submission/);assert.equal(job.request,legacy);return {state:'succeeded',head_sha:head}}});
+ assert.equal(result.objective_completed,true);assert.equal(ran,1);assert.equal(submits,0);assert.equal(job.request,legacy);
+});
+
+test('completion proof is durable before public observation and restart cannot reauthor from a changed public file',async t=>{
+ const fs=await import('node:fs/promises'),os=await import('node:os'),path=await import('node:path');
+ const {specialistExecutionRpc,continuityCardProjection}=await import('./relay-continuity.mjs'),{appendCardUpdates}=await import('../src/relay-card-updates.js');
+ const directory=await fs.mkdtemp(path.join(os.tmpdir(),'relay-public-crash-'));t.after(()=>fs.rm(directory,{recursive:true,force:true}));const input=path.join(directory,'public.json'),proofFile=path.join(directory,'completion.json');
+ const update={text:'Explicit public submission before crash.',artifacts:[],preview:{state:'unavailable',reason:'The renderer was unavailable for this design submission.'}};await fs.writeFile(input,JSON.stringify(update));
+ const p=plan(),hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex'),sha='b'.repeat(40),now=new Date().toISOString(),process={pid:123,host:'fixture',adapter:'codex-cli'};
+ let record={id:'fixture',owner:'host',branch:'relay/fixture',primary_staff:'nico',primary_team:'runner'},journal={schema:1,plan_digest:hash(p),stages:{a:{state:'dispatching'}}};
+ const job={id:'job-fixture',project:'relay',assignment:'fixture',owner:'host',branch:record.branch,initial_head_sha:sha,executor_id:'worker',attempt:1,revision:4,process,state:'succeeded',finished_at:now,result:{head_sha:sha,summary:'PRIVATE EXECUTION SUMMARY'}};
+ const events=[],rpc=specialistExecutionRpc({rpc:async()=>({ok:true,job}),config:{project:'relay',assignment:'fixture',owner:'host',branch:record.branch},jobId:job.id,specialist:{owner:{staff:'nico',team:'runner'}},sourceSha:sha,publicUpdate:async()=>JSON.parse(await fs.readFile(input,'utf8')),onReceipt:async(job,observation)=>{await fs.writeFile(proofFile,JSON.stringify({job_digest:hash(job),observation}));events.push('durable-proof')},onObservation:async observation=>{assert.equal(events[0],'durable-proof');journal.stages.a.observation={...observation,input_digest:'c'.repeat(64)};const publication=continuityCardProjection({plan:p,journal,assignment:record});record={...record,card_updates:appendCardUpdates(record,publication),card_steps:publication};events.push('published');throw Error('Crash after successful public observation');}});
+ await assert.rejects(rpc('relay_execution',{action:'finish',job_id:job.id,expected_revision:3,executor_id:job.executor_id,result:job.result}),/Crash/);assert.deepEqual(events,['durable-proof','published']);assert.equal(record.card_updates.items.length,1);
+ await fs.writeFile(input,JSON.stringify({...update,text:'Changed after the crash'}));const saved=JSON.parse(await fs.readFile(proofFile,'utf8'));assert.equal(saved.job_digest,hash(job));journal.stages.a.observation={...saved.observation,input_digest:'c'.repeat(64)};
+ const recovered=continuityCardProjection({plan:p,journal,assignment:record});assert.equal(recovered.steps[0].receipt.id,record.card_steps.steps[0].receipt.id);assert.equal(appendCardUpdates(record,recovered).items.length,1);assert.equal(record.card_updates.items[0].text,update.text);assert.equal(JSON.stringify(record.card_updates).includes('PRIVATE EXECUTION SUMMARY'),false);
+});
+
+test('separately authored public submission crosses projection and pending recovery without private journal text',async t=>{
+ const fs=await import('node:fs/promises'),os=await import('node:os'),path=await import('node:path');
+ const {readPublicStageUpdate,continuityCardProjection,publishContinuityCard}=await import('./relay-continuity.mjs');
+ const directory=await fs.mkdtemp(path.join(os.tmpdir(),'relay-public-input-'));t.after(()=>fs.rm(directory,{recursive:true,force:true}));
+ const filename=path.join(directory,'submission.json'),binding={project:'relay',assignment:'public',owner:'host',branch:'relay/public',operation_id:'design',source_sha:'b'.repeat(40)};
+ assert.equal(await readPublicStageUpdate(filename,binding),null);
+ const update={text:'The design is submitted for review.',artifacts:[],preview:{state:'unavailable',reason:'No renderer is available in this stage.'}};
+ const envelope={schema:1,...binding,update};await fs.writeFile(filename,JSON.stringify(envelope));assert.deepEqual(await readPublicStageUpdate(filename,binding),update);
+ for(const key of ['project','assignment','owner','branch','operation_id','source_sha'])await assert.rejects(readPublicStageUpdate(filename,{...binding,[key]:'other'}),/does not match/);
+ await fs.writeFile(filename,JSON.stringify({...envelope,private_result:'Never public'}));await assert.rejects(readPublicStageUpdate(filename,binding),/does not match/);
+ const p=plan(),hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
+ let claim={id:'public',owner:'host',branch:'relay/public',goal:'Design',acceptance:'Review',primary_staff:'valentina',primary_team:'inspector',state:'active',lease_until:new Date(Date.now()+3600000).toISOString()};p.objective_digest=hash({goal:claim.goal,acceptance:claim.acceptance});
+ const journal={schema:1,plan_digest:hash(p),private_result:'PRIVATE RESULT',stages:{a:{state:'dispatching',pending:{prompt:'PRIVATE PROMPT'},observation:{owner:{staff:'valentina',team:'inspector'},state:'blocked',source_sha:binding.source_sha,observed_at:new Date().toISOString(),input_digest:'c'.repeat(64),evidence:'sha256:'+'d'.repeat(64),update}}}};
+ const projection=continuityCardProjection({plan:p,journal,assignment:claim});assert.deepEqual(projection.steps[0].receipt.update,update);assert.equal(JSON.stringify(projection).includes('PRIVATE'),false);
+ let intent=null,revision='e'.repeat(40),writes=0;
+ const options={config:{project:'relay',assignment:claim.id,owner:claim.owner,branch:claim.branch},plan:p,journal,readControl:async()=>({assignment_active:true,objective_digest:p.objective_digest,canonical_record_sha:revision}),readIntent:async()=>intent,saveIntent:async value=>{intent=structuredClone(value)},rpc:async(name,args)=>{
+  if(name==='relay_runner_assignments')return {ok:true,record_sha:revision,claims:[structuredClone(claim)]};
+  writes++;assert.deepEqual(args.request.card_steps.steps[0].receipt.update,update);claim=transition({claims:[claim],queue:[]},{...args.request,action:args.action},{max_active_branches:4,lease_hours:12}).claims[0];revision='f'.repeat(40);throw Error('Lost acknowledged response');
+ }};
+ assert.equal((await publishContinuityCard(options)).reconciled,true);assert.equal(writes,1);assert.equal(intent,null);assert.deepEqual(claim.card_updates.items[0].preview,update.preview);
+ const legacy=structuredClone(claim.card_steps.steps[0].receipt);assert.equal((await publishContinuityCard(options)).unchanged,true);assert.equal(writes,1);assert.equal(claim.card_steps.steps[0].receipt.id,legacy.id);
+ journal.stages.a.observation.update.preview.reason='Another actual submission';const changed=continuityCardProjection({plan:p,journal,assignment:claim});assert.notEqual(changed.steps[0].receipt.id,legacy.id);
+});
 function fixture(){
  const p=plan(),f={plan:p,calls:[],saved:[],versions:{a:1,b:1,c:1},passed:{},control:{held:false,global_held:false,assignment_active:true,revision:1,global_revision:0,objective_digest:p.objective_digest,source_sha:'b'.repeat(40)}};
  f.options={plan:p,persist:async s=>f.saved.push(structuredClone(s)),readControl:async()=>structuredClone(f.control),inputs:async s=>f.versions[s.id],verify:async s=>({passed:f.passed[s.id]===true,evidence:'exact-'+s.id,fingerprint:'fixable'}),execute:async pending=>{f.calls.push(pending.stage);f.passed[pending.stage]=true;return {state:'succeeded'};},reconcile:async()=>null};

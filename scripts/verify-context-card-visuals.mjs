@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import {spawnSync} from 'node:child_process';
 import { chromium } from 'playwright';
 import { contextCardModel, relayContextCardResource, contextualPresentation } from '../src/relay-chat-ui.js';
 import {appendCardUpdates} from '../src/relay-card-updates.js';
@@ -9,6 +10,11 @@ import { webSourceSha } from '../apps/web/generated.js';
 
 const expected=process.env.EXPECTED_SOURCE_SHA;
 assert.match(expected||'',/^[a-f0-9]{40}$/);assert.equal(webSourceSha,expected);
+// Capture the real ordinary command/publication path at this exact source too;
+// the static visual samples below alone do not prove ordinary workflow delivery.
+const ordinary=spawnSync(process.execPath,['--test','--test-name-pattern=^ordinary coordinate command','src/relay-card-family.test.js'],{env:{...process.env,EXPECTED_SOURCE_SHA:expected},encoding:'utf8',timeout:120000,maxBuffer:1024*1024});
+assert.equal(ordinary.status,0,'Ordinary coordinate DOM captures failed: '+ordinary.stdout+'\n'+ordinary.stderr);
+const ordinaryReceipt=JSON.parse(await readFile('qa-evidence/context-cards/ordinary-receipt.json','utf8'));assert.equal(ordinaryReceipt.source_sha,expected);assert.equal(ordinaryReceipt.captures.length,16);
 const directory='qa-evidence/context-cards';await mkdir(directory,{recursive:true});
 const resource=relayContextCardResource(),browser=await chromium.launch(),captures=[];
 const origin='https://relay-card-fixture.test';
@@ -45,7 +51,7 @@ const fixtures={
  'product-night-shift':contextualPresentation({ok:true,state:'waiting-for-human'},{operation:{name:'relay_night_shift',kind:'query'}}),
  loading:null,
  'family-full':familyFixture(3),
- 'family-single':familyFixture(1),
+ 'family-single':{...familyFixture(1),presentation_view:'individual',presentation_update_id:'event-0'},
  'family-media':familyFixture(3,{artifact:{evidence_id:'vis_fixturepreview',source_sha:expected,caption:'Fixture overlay capture',kind:'design'}}),
 };
 try {
@@ -80,7 +86,7 @@ try {
   if(['relay','inspector','night-shift','blocked','empty','complete'].includes(name))assert.equal(geometry.percent,null);
   // Ordinary multi-assignment responses show the selected assignment, not a fabricated active-job hero.
   if(name==='jobs'){assert.equal(await frame.locator('.insight').isVisible(),false);assert.equal(await frame.locator('#plan-panel').isVisible(),false);assert.equal(await frame.locator('#rows').textContent(),'');assert.match(await frame.locator('#title').textContent(),/relay card polish/);}
-  if(fixtures[name]){const model=contextCardModel(fixtures[name]),identity=model.identity;assert.equal(await frame.locator('#feature-title').textContent(),model.family==='product'?(model.product==='night-shift'?'night shift':model.product):identity.speaker?.name||identity.team_label);if(identity.speaker){assert.ok((await frame.locator('#team').textContent()).includes(identity.relationship));assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),identity.speaker.id);assert.ok(geometry.images.length>0);}}
+  if(fixtures[name]){const model=contextCardModel(fixtures[name]),identity=model.identity;assert.equal(await frame.locator('#feature-title').textContent(),model.family==='product'?(model.product==='night-shift'?'night shift':model.product):model.family==='assignment'?(model.project_label||model.project||'Assignment'):identity.speaker?.name||identity.team_label);if(model.family==='assignment'){assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),'');if(identity.lead)assert.equal(await frame.locator('#family-assignment-lead').textContent(),'Assigned lead: '+identity.lead.name);if(model.project_icon)assert.ok(geometry.images.length>0);}else if(identity.speaker){assert.ok((await frame.locator('#team').textContent()).includes(identity.relationship));assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),identity.speaker.id);assert.ok(geometry.images.length>0);}}
   if(name==='generic'){assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),'');assert.equal(await frame.locator('#feature-title').evaluate(el=>getComputedStyle(el).color),theme==='dark'?'rgb(240, 100, 59)':'rgb(181, 71, 31)');}
   if(name.startsWith('family-')){assert.equal(await frame.locator('.family-update').count(),name==='family-single'?1:3);assert.equal(await frame.locator('#family-crew').isVisible(),true);assert.equal(await frame.locator('.card-header').isVisible(),false);if(name==='family-media')await frame.locator('.family-capture img').waitFor();}
   if(name==='family-single'){assert.equal(await frame.locator('#plan-panel').isVisible(),false);assert.equal(await frame.locator('.family-range').count(),0);assert.equal(await frame.locator('.family-nav').count(),0);assert.equal(await frame.locator('.family-track').count(),0);}
