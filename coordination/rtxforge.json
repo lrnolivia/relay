@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T18:51:02.985Z",
+  "updated_at": "2026-11-01T18:52:53.655Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22667,7 +22667,7 @@
       "primary_staff": "valentina",
       "supporting_staff": [],
       "base_sha": "3370fa1e185193bff3c5c15fa250b9cd4c61b892",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-01T16:43:23.789Z",
       "objective_history": {
         "baseline": {
@@ -22690,8 +22690,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T18:45:29.954Z",
-      "lease_until": "2026-11-02T06:45:29.954Z",
+      "updated_at": "2026-11-01T18:52:53.655Z",
+      "lease_until": "2026-11-02T06:52:53.655Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -22711,7 +22711,13 @@
             "acceptance": "Inline 16:9 preview is bounded to a compact size; game accent and theme/layout changes render promptly and stale asynchronous results cannot win. Full native preview can select games from the same real library without OS titlebar or screenshot uploads. Side Panel has persisted Left/Right placement in native overlay, Windows and Linux preferences and inline preview; pop-out panels open inward, free dragging remains. Validation stages: primary implementation owner verifies Windows build and read-only native settings UI; portable settings tests verify default, valid and invalid side persistence; native layout/input tests verify both screen edges and inward placement. Preserve approved materials and user tuning; no new moving-gameplay qualification claimed."
           }
         }
-      ]
+      ],
+      "pr": 136,
+      "merged_head_sha": "4e1a39ceecafade8adb76b4782e9d6fd9c2aeb7b",
+      "merge_commit_sha": "01380eb275c64f228003dc3a78ff499e5be76977",
+      "evidence": "PR136 merged at01380eb275c64f228003dc3a78ff499e5be76977; treeedd6ed7c8cf95ea4151711df5d482adb7d64915d matches reviewed head4e1a39ce. Required Windows/Linux/native/UI/attribution checks all green. Manual publication Windows41335870028 and Linux41335872274 succeeded for exact mergedSHA. Beta15 x64 installer verified SHA256fc8a33480bb6c1fa8a080f705a2afef953d9a05e32907b74d864e53b9e63e8cc,11Beta14rollbackassets retained. Installed exit0, engineVERSIONbeta15 and requiredrollout5 verified; app opened Overlay Settings, automatic refresh still verifying games. Evidence C:/Users/lrnol/.codex/tmp/rtxforge-beta15-install/. Separate user-requested chooser edge placement will be a fresh post-merge follow-up; no uncommitted source left. Game Mode handoff delivered.",
+      "work_accounted": true,
+      "completed_at": "2026-11-01T18:52:53.655Z"
     },
     {
       "id": "rtxforge-tauri-game-mode-20261031",
