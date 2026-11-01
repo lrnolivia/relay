@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-01T03:07:28.122Z",
+  "updated_at": "2026-11-01T03:07:52.650Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21085,7 +21085,7 @@
         "roman"
       ],
       "base_sha": "971da416bd5d6dc1ac7a74d88f0d3cbb0f21570e",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-01T01:06:07.497Z",
       "objective_history": {
         "baseline": {
@@ -21102,8 +21102,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T03:05:03.339Z",
-      "lease_until": "2026-11-01T15:05:03.339Z"
+      "updated_at": "2026-11-01T03:07:52.650Z",
+      "lease_until": "2026-11-01T15:07:52.650Z",
+      "pr": 272,
+      "merged_head_sha": "5a20b0e5bf51dc4b0f7d1c74f88d51c48474693d",
+      "merge_commit_sha": "74e020d7d32746a559eedbaab3181e2342f42257",
+      "evidence": "Source implementation delivered: human-merged PR272 tested5a20b0e5 ->74e020d7d32746a559eedbaab3181e2342f42257. Independent source/pixels approved;1227tests0fail1platformskip;26hash-bound DOM captures. Main CI41267371012 and live smoke41267639672 success; production807b5395 at100%, health200, v26 exact485142bytes SHA256d45b3d61634b5be33f56b201983a96d6d977fa0b4921dcb61be19145f62e68f4;21portraits/21displaystaff/6teams/4management hashes verified. Healthy recovery revision105 retained/restored exact archive13067776637. Actual own-assignment render read shows real merged PR/check events/project icon. INCOMPLETE live public-history/artifact roundtrip explicitly preserved in independently read-back queued relay-card-publication-live-acceptance-20261101 (recorddfdf0701), connector card_steps absent/no existing CLI token; no fabricated publication, native host mount or specialist activation claim. Existing native-host-activation-followup-20261031 unchanged. No pending mutation or source WIP.",
+      "work_accounted": true,
+      "completed_at": "2026-11-01T03:07:52.650Z"
     }
   ],
   "migrated_from": "loew-inspector"
