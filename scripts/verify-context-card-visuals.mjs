@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import {spawnSync} from 'node:child_process';
 import { chromium } from 'playwright';
 import { contextCardModel, relayContextCardResource, contextualPresentation } from '../src/relay-chat-ui.js';
 import {appendCardUpdates} from '../src/relay-card-updates.js';
@@ -9,6 +10,11 @@ import { webSourceSha } from '../apps/web/generated.js';
 
 const expected=process.env.EXPECTED_SOURCE_SHA;
 assert.match(expected||'',/^[a-f0-9]{40}$/);assert.equal(webSourceSha,expected);
+// Capture the real ordinary command/publication path at this exact source too;
+// the static visual samples below alone do not prove ordinary workflow delivery.
+const ordinary=spawnSync(process.execPath,['--test','--test-name-pattern=^ordinary coordinate command','src/relay-card-family.test.js'],{env:{...process.env,EXPECTED_SOURCE_SHA:expected},encoding:'utf8',timeout:120000,maxBuffer:1024*1024});
+assert.equal(ordinary.status,0,'Ordinary coordinate DOM captures failed: '+ordinary.stdout+'\n'+ordinary.stderr);
+const ordinaryReceipt=JSON.parse(await readFile('qa-evidence/context-cards/ordinary-receipt.json','utf8'));assert.equal(ordinaryReceipt.source_sha,expected);assert.equal(ordinaryReceipt.captures.length,16);
 const directory='qa-evidence/context-cards';await mkdir(directory,{recursive:true});
 const resource=relayContextCardResource(),browser=await chromium.launch(),captures=[];
 const origin='https://relay-card-fixture.test';

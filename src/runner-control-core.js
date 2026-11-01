@@ -7,6 +7,8 @@ import { projectCiPolicy, projectCiRoute } from './ci-routing.js';
 import { guardAutonomy } from './autonomy-control.js';
 import { attributedCommitBody, verifyAttributedCommit, reconcileAttributedContentsCommit } from './commit-attribution.js';
 import { testMaintenanceGuidance } from './test-maintenance.js';
+import {getVisualEvidence} from '../packages/runner/src/visual-evidence.mjs';
+import {receiptSnapshot,validPublicCardUpdate} from './relay-card-updates.js';
 
 export const RUNNER_ENGINE_SHA = '250f951e7fc171ba66987408f391484bddc29023';
 export const DEFAULT_RUNNER_CONTROL_REPOSITORY = 'lrnolivia/relay';
@@ -181,7 +183,18 @@ function result(context, extra) {
   };
 }
 
-async function mutate(api, control, controlRepository, context, args) {
+export async function verifyDesignPreviewEvidence(update,binding,bucket){
+  if(update?.preview?.state!=='attached')return;
+  if(!validPublicCardUpdate(update,binding))throw new ControlError('policy','Design preview descriptor is invalid');
+  if(!bucket?.get)throw new ControlError('policy','Design preview storage is unavailable; publish an explicit unavailable reason');
+  for(const artifact of update.artifacts.filter(a=>a.kind==='design')){
+    let meta,image;
+    try{meta=await getVisualEvidence(bucket,artifact.evidence_id);if(meta?.screenshot_key)image=await bucket.get(meta.screenshot_key);}catch{}
+    if(!meta||meta.evidence_id!==artifact.evidence_id||meta.context?.project!==binding.project||meta.context?.assignment!==binding.assignment||meta.context?.commit_sha!==binding.source_sha||artifact.source_sha!==binding.source_sha||!image||!(meta.screenshot_bytes>0))throw new ControlError('policy','Design preview does not exist or does not match this project, assignment and source');
+  }
+}
+
+async function mutate(api, control, controlRepository, context, args, env = {}) {
   if (context.record.sha !== args.expected_record_sha) {
     throw new ControlError('conflict', 'Record changed; refresh ownership before resubmitting', {
       record_sha: context.record.sha
@@ -294,6 +307,16 @@ async function mutate(api, control, controlRepository, context, args) {
     }
   }
 
+  const existing=context.record.value.claims.find(item=>item.id===request.id);
+  if(request.card_steps||args.action==='delegate'&&request.handoff?.update){
+    if(!existing||existing.owner!==request.owner)throw new ControlError('ownership','Design publication requires the current assignment owner');
+    const steps=request.card_steps?.steps||[];
+    for(const step of steps){const prior=existing.card_steps?.steps.find(old=>old.id===step.id);if(step.receipt?.update?.preview?.state==='attached'&&(!prior?.receipt||receiptSnapshot(prior,prior.receipt)!==receiptSnapshot(step,step.receipt)))await verifyDesignPreviewEvidence(step.receipt.update,{project:context.registration.id,assignment:existing.id,source_sha:step.receipt.source_sha},env.EVIDENCE);}
+    if(args.action==='delegate'){
+      const handoff=existing.native_handoffs?.find(row=>row.operation_id===request.handoff.operation_id),phase=request.handoff.action==='started'?'start':'result';
+      if(!handoff?.[phase])await verifyDesignPreviewEvidence(request.handoff.update,{project:context.registration.id,assignment:existing.id,source_sha:request.handoff.source_sha},env.EVIDENCE);
+    }
+  }
   let next;
   try {
     next = transition(context.record.value, request, context.policy);
@@ -448,7 +471,7 @@ async function runnerControlQuery(name, args, env = {}, apiOverride, phase = 'pu
     let patch;
     try{patch=transitionNativeHandoff(claim,args,head);}catch(error){throw new ControlError('policy',error.message);}
     if(patch.replayed)return result(context,{assignment:claim,replayed:true,handoff:nativeHandoffView(row,{source_sha:head,assignment:claim})});
-    const saved=await mutate(api,control,controlRepository,context,{project:args.project,action:'delegate',expected_record_sha:args.expected_record_sha,request:{id:args.assignment,owner:args.owner,handoff:args,verified_source_sha:head}});
+    const saved=await mutate(api,control,controlRepository,context,{project:args.project,action:'delegate',expected_record_sha:args.expected_record_sha,request:{id:args.assignment,owner:args.owner,handoff:args,verified_source_sha:head}},env);
     // Coordination CAS does not lock independent source/control refs. Never
     // issue a launch packet from the pre-write snapshot after a slow write.
     let currentHead=null,launchBlocker=saved.receipt.write_acknowledged?null:'The write was recovered without an acknowledged winning CAS; reconcile the saved intent without launching.';
@@ -461,7 +484,7 @@ async function runnerControlQuery(name, args, env = {}, apiOverride, phase = 'pu
     return {...saved,action:args.action,...(launchBlocker?{launch_blocker:launchBlocker}:{}),handoff:nativeHandoffView(saved.assignment.native_handoffs.find(x=>x.operation_id===args.operation_id),{source_sha:currentHead,assignment:saved.assignment,launch:args.action==='prepare'&&!launchBlocker})};
   }
   if (name === 'relay_runner_coordinate') {
-    return mutate(api, control, controlRepository, context, args);
+    return mutate(api, control, controlRepository, context, args, env);
   }
 
   const data = await inventory(api, context);

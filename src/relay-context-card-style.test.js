@@ -93,26 +93,26 @@ test('staff cards preserve step evidence, keyboard focus and routing distinction
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.addInitScript(data=>{window.openai={toolInput:{project:'relay'},toolOutput:data}},card);
   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
-  await page.locator('#feature-title').filter({hasText:'Rafael'}).waitFor();
-  assert.match(await page.locator('#team').textContent(),/Current step owner/);
+  await page.locator('#family-assignment-lead').filter({hasText:'Assigned lead: Nico'}).waitFor();
+  assert.match(await page.locator('#card-roles').textContent(),/Current step owner: Rafael/);
   assert.match(await page.locator('#card-roles').textContent(),/Assignment lead: Nico/);
-  assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),'rafael');
+  assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),'');assert.equal(await page.locator('.family-avatar').count(),0,'routing cannot fabricate a contributor bubble');
   assert.equal(await page.locator('#card').getAttribute('data-identity-team'),'source');
   const {TEAM_EMBLEMS}=await import('../assets/teams/card-assets.js');
-  assert.equal(await page.locator('.team-emblem .team-icon-dark').innerHTML(),await page.evaluate(svg=>{const node=document.createElement('div');node.innerHTML=svg;return node.innerHTML},TEAM_EMBLEMS['source-dark']));
+  assert.equal(contextCardModel(card).identity.speaker.team,'source');assert.equal(contextCardModel(card).identity.speaker.emblem,'runner');assert.ok(TEAM_EMBLEMS['runner-dark'],'display emblem remains distinct from runtime home team');
   assert.match(await page.locator('#feature-title').evaluate(node=>getComputedStyle(node).color),/^color\(srgb /,'canonical source-family contrast variant');
   assert.match(await page.locator('#card-roles').textContent(),/Step team: Design & QA/);
-  const details=page.locator('[data-step=build] details');await details.locator('summary').focus();await page.keyboard.press('Enter');
+  const details=page.locator('#details');await details.locator(':scope > summary').focus();await page.keyboard.press('Enter');
   await page.evaluate(data=>render(data),card);
   assert.equal(await details.getAttribute('open'),'');
-  assert.equal(await page.evaluate(()=>document.activeElement.closest('[data-step]')?.dataset.step),'build');
+  assert.equal(await details.locator(':scope > summary').evaluate(n=>document.activeElement===n),true);assert.match(await page.locator('#family-plan-proof').textContent(),/Synthetic receipt build/);
   const changed=structuredClone(card);changed.claim.primary_staff='julian';changed.claim.card_steps.steps[1].state='passed';
   await page.evaluate(data=>render(data),changed);
   assert.equal(await details.getAttribute('open'),'');
-  assert.equal(await page.locator('#feature-title').textContent(),'Julian');
+  assert.equal(await page.locator('#feature-title').textContent(),'relay');assert.equal(await page.locator('#family-assignment-lead').textContent(),'Assigned lead: Julian');
   assert.equal(await page.locator('#card').getAttribute('data-identity-team'),'night-shift');
   assert.match(await page.locator('#card-roles').textContent(),/Assignment lead: Julian/);
-  assert.match(await page.locator('#team').textContent(),/Assignment lead/);
+  assert.match(await page.locator('#family-assignment-lead').textContent(),/Assigned lead/);
   assert.equal(await page.locator('[data-step=build]').getAttribute('data-state'),'passed');
   assert.equal(await page.locator('#plan-count').textContent(),'2 of 2 verified');
   assert.deepEqual(errors,[]);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
@@ -168,7 +168,7 @@ test('staff heading keeps its identity-team accent when Inspector telemetry is p
  const claim={id:'cards',goal:'Build cards',state:'active',primary_staff:'nico',primary_team:'runner',card_steps:{schema:'relay-card-steps/v1',assignment:'cards',revision:'r1',complete:true,steps:[{id:'build',label:'Build cards',state:'running',depends_on:[],receipt:{id:'start',assignment:'cards',step_id:'build',plan_revision:'r1',observed_at:new Date().toISOString(),evidence:'Synthetic exact start',owner:{staff:'nico',team:'runner'}}}]}};
  try{for(const theme of ['light','dark']){
   const page=await browser.newPage({colorScheme:theme});await page.addInitScript(claim=>{window.openai={toolOutput:{project:'relay',claim}}},claim);
-  await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.locator('#feature-title').filter({hasText:'Nico'}).waitFor();
+  await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.locator('#family-assignment-lead').filter({hasText:'Assigned lead: Nico'}).waitFor();
   const before=await page.locator('h1').evaluate(n=>getComputedStyle(n).color);
   await page.evaluate(claim=>render({project:'relay',claim,ci:{schema:'relay-ci-card/v1',status:'running',telemetry:'reported',tests:{},suites:[],suites_done:1,suites_total:2,jobs:{}}}),claim);
   const after=await page.locator('h1').evaluate(n=>getComputedStyle(n).color);assert.equal(after,before);assert.match(after,/^color\(srgb /,'canonical turquoise is mixed only with the theme ink for readable headings');
@@ -187,10 +187,10 @@ test('assigned leads stay visible and generic Relay has a contrast-safe brand he
   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
   for(const [staff,team,state,name] of [['julian','night-shift','active','Julian'],['nico','runner','completed','Nico']]){
    await page.evaluate(data=>render(data),{project:'rtxforge',claim:{id:'ordinary',primary_staff:staff,primary_team:team,state,goal:'Screenshot-shaped assignment'}});
-   assert.equal(await page.locator('#feature-title').textContent(),name);
-   assert.match(await page.locator('#team').textContent(),/Assignment lead/);
-   assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),staff);
-   assert.match(await page.locator('#feature-mark img').getAttribute('src'),/^data:image/);
+   assert.equal(await page.locator('#feature-title').textContent(),'rtxforge');assert.equal(await page.locator('#family-assignment-lead').textContent(),'Assigned lead: '+name);
+   assert.match(await page.locator('#family-assignment-lead').textContent(),/Assigned lead/);
+   assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),'');
+   assert.match(await page.locator('#card-project').textContent(),/rtxforge/);assert.equal(await page.locator('.family-avatar').count(),0);
    assert.doesNotMatch(await page.locator('#card-roles').textContent(),/Current step owner:/);
    await page.evaluate(()=>document.fonts.ready);
    await page.locator('#card').screenshot({path:`${captures}${staff}-${state}-${theme}-${width}.png`});
@@ -226,7 +226,8 @@ test('all 21 approved framed portraits preserve bytes and settle inside clipped 
    const page=await browser.newPage({viewport:{width:360,height:800},colorScheme:theme});
    await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
    for(const [id,bytes] of Object.entries(STAFF_PORTRAITS)){
-    await page.evaluate(id=>render({project:'relay',claim:{primary_staff:id,state:'active',goal:'Inspect approved avatar'}}),id);
+    // Unit exercise of the approved portrait renderer; the assignment shell owns its public header.
+    await page.evaluate(id=>{const data={project:'relay',claim:{primary_staff:id,state:'active',goal:'Inspect approved avatar'}};render(data);renderStaffCard(model(data,DIRECTORY));delete el.card.dataset.family;el.card.dataset.productMessage='false';},id);
     assert.equal(await page.locator('.portrait-frame img').getAttribute('src'),bytes,'approved source remains byte-identical for '+id);
     for(const size of [32,48]){
      const geometry=await page.locator('#feature-mark').evaluate((mark,size)=>{mark.style.width=size+'px';mark.style.height=size+'px';const box=mark.getBoundingClientRect(),crop=mark.querySelector('.portrait-frame'),img=crop.querySelector('img'),r=img.getBoundingClientRect();return {overflow:getComputedStyle(crop).overflow,box:{x:box.x,y:box.y,w:box.width,h:box.height},image:{x:r.x,y:r.y,w:r.width,h:r.height}}},size);

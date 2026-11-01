@@ -43,8 +43,9 @@ async function ordinaryCommands(){
  const {PROJECT_AUTHOR}=await import('./commit-attribution.js');
  const {withCardProjectIcon}=await import('./relay-project-icon.js');
  const {readFile}=await import('node:fs/promises');
- const assets=new Map();for(const path of ['apps/web/public/relay.assets.json','icons/relay-icon.png']){const bytes=await readFile(path),sha=(await import('node:crypto')).createHash('sha1').update(Buffer.concat([Buffer.from('blob '+bytes.length+'\0'),bytes])).digest('hex');assets.set(sha,{bytes,path});}
+ const assets=new Map();for(const path of ['apps/web/public/relay.assets.json','icons/relay-icon.png']){const bytes=await readFile(new URL('../'+path,import.meta.url)),sha=(await import('node:crypto')).createHash('sha1').update(Buffer.concat([Buffer.from('blob '+bytes.length+'\0'),bytes])).digest('hex');assets.set(sha,{bytes,path});}
  const {createHash}=await import('node:crypto');
+ let evidenceBucket;
  let record={schema:1,project:'relay',claims:[],queue:[],legacy_branches:[]},revision='a'.repeat(40),parent=revision,message;
  const file=(content,sha=revision)=>({type:'file',sha,encoding:'base64',content:Buffer.from(typeof content==='string'?content:JSON.stringify(content)).toString('base64')});
  const api=async(path,request)=>{
@@ -63,8 +64,8 @@ async function ordinaryCommands(){
   if(path.includes('/pulls?'))return [];
   throw Error('Unexpected ordinary command API '+path);
  };
- return {get claim(){return record.claims[0]},command:async(action,request)=>{
-  const output=await callRunnerControl('relay_runner_coordinate',{project:'relay',action,request,expected_record_sha:revision},{},api);
+ return {get claim(){return record.claims[0]},set evidence(bucket){evidenceBucket=bucket},command:async(action,request)=>{
+  const output=await callRunnerControl('relay_runner_coordinate',{project:'relay',action,request,expected_record_sha:revision},{EVIDENCE:evidenceBucket},api);
   return contextualPresentation(await withCardProjectIcon('relay_runner_coordinate',output,{},api),{operation:{name:'relay_runner_coordinate',kind:'command'}});
  }};
 }
@@ -80,6 +81,7 @@ test('ordinary coordinate command mounts project shell at zero, one and many upd
  try{const page=await imageBrowser.newPage({viewport:{width:640,height:360}});await page.setContent('<style>body{background:#272826;color:#eee;font:20px system-ui;padding:32px}h1{color:#d98c68}</style><small>RENDERED TEST DESIGN</small><h1>Overlay controls</h1><p>Source-bound submission preview</p><button>Open settings</button>');preview=await page.screenshot();}finally{await imageBrowser.close();}
  const objects=new Map(),bucket={put:async(k,v)=>objects.set(k,v),get:async k=>objects.has(k)?{json:async()=>JSON.parse(objects.get(k))}:null};
  const meta=await storeEvidence(bucket,{requestId:'ordinary-design',targetUrl:'https://relay.loew.fi',kind:'screenshot',screenshotBytes:preview,context:{project:'relay',assignment:'ordinary',commit_sha:source,environment:'preview'},viewport:{width:640,height:360}});
+ f.evidence=bucket;
  const captures=[];
  const inspect=async(name,expected)=>{for(const [width,theme] of [[760,'light'],[760,'dark'],[360,'light'],[360,'dark']]){
   const {browser,page}=await mount(data,{width,theme,imageBytes:preview.toString('base64')});try{

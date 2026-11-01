@@ -168,8 +168,8 @@ export async function reconcileContinuity({plan,journal,persist,readControl,inpu
  await persist(state);await observe(state);return state;
 }
 
-// Only digests and stable public stage IDs cross this boundary. The execution
-// journal, verifier argv/output, prompts and routing roster remain private.
+// Only proofs, stable stage IDs and separately authored bounded public updates
+// cross this boundary. Journals, verifier output and prompts remain private.
 export function continuityCardProjection({plan,journal,assignment,observed_at=new Date().toISOString()}) {
  validateContinuityPlan(plan);
  if(journal?.schema!==1||journal.plan_digest!==hash(plan))throw Error('Checklist journal belongs to a different plan');
@@ -262,7 +262,9 @@ export function specialistExecutionRpc({rpc,config,jobId,specialist,sourceSha,on
   if(isDesignSubmission(submission)&&args.action==='finish'&&job.state==='succeeded')requireDesignSubmission(update,{source_sha:head});
   const observation={owner:specialist.owner,state:args.action==='start'?'running':job.state==='succeeded'?'blocked':job.state,source_sha:head,observed_at:at,...(update?{update:structuredClone(update)}:{}),
    evidence:'sha256:'+hash({job_id:job.id,attempt:job.attempt,revision:job.revision,executor_id:job.executor_id,process,at,result:job.result||null,...(update?{public_update:update}:{})})};
-  await onObservation(observation);await onReceipt(job,observation);
+  // Persist the exact authored envelope/proof before any public observation.
+  // A crash after publication must recover this snapshot, never reread prose.
+  await onReceipt(job,observation);await onObservation(observation);
   return result;
  };
 }

@@ -16,6 +16,37 @@ test('pre-upgrade queued prompts resume unchanged while changed responsibilities
  assert.equal(continuityExecutionPrompt({execution_prompt:'Original adopted request'},'Original adopted request',''),'Original adopted request');
 });
 
+test('pre-upgrade private pending journal resumes its exact queued job without resubmission',async t=>{
+ const fs=await import('node:fs/promises'),os=await import('node:os'),path=await import('node:path'),{execFileSync}=await import('node:child_process');
+ const {runContinuityExecution}=await import('./relay-continuity.mjs'),{stageSpecialist}=await import('../src/specialist-workflow.js');
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'relay-legacy-pending-')),workspace=path.join(root,'checkout'),stateDir=path.join(root,'private');t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.mkdir(workspace);await fs.mkdir(stateDir);
+ const git=args=>execFileSync('git',args,{cwd:workspace,encoding:'utf8',stdio:'pipe'}).trim();git(['init','-b','relay/fixture']);git(['config','user.name','Fixture']);git(['config','user.email','fixture@example.invalid']);await fs.writeFile(path.join(workspace,'README.md'),'fixture');git(['add','.']);git(['commit','-m','fixture']);
+ const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex'),head=git(['rev-parse','HEAD']);
+ let claim={id:'fixture',owner:'host',branch:'relay/fixture',state:'active',lease_until:new Date(Date.now()+3600000).toISOString(),primary_staff:'nico',primary_team:'runner',paths:['README.md'],resources:[],goal:'Keep the queued request',acceptance:'Resume once'};
+ const p={schema:1,authorization:'Fixture',objective_digest:hash({goal:claim.goal,acceptance:claim.acceptance}),environment:{fixture:true},criteria:['a'],stages:[{id:'a',kind:'implementation',specialist_role:'builder',criteria:['a'],depends_on:[],prompt:'Original task',inputs:['README.md'],verify:['fixture-verifier']}]};
+ const specialist=stageSpecialist(p.stages[0],claim),legacy='Original task\n\nBounded responsibility: '+specialist.role+'. '+specialist.instruction,operation_id='continuity-pre-upgrade',jobId='job_'+hash({project:'relay',assignment:'fixture',operation:operation_id});
+ const job={id:jobId,state:'queued',project:'relay',assignment:'fixture',owner:'host',branch:claim.branch,initial_head_sha:head,request:legacy};
+ await fs.writeFile(path.join(stateDir,'continuity.json'),JSON.stringify({schema:1,plan_digest:hash(p),stages:{a:{state:'reconciliation-required',attempts:1,pending:{operation_id,stage:'a',prompt:'Original task',execution_prompt:legacy,specialist,job_id:jobId,control_revision:1,global_revision:1}}}}));
+ let revision='a'.repeat(40),ran=0,submits=0;
+ const rpc=async(name,args)=>{if(name==='relay_autonomy')return {ok:true,state:{held:false,revision:1}};if(name==='relay_runner_assignments')return {ok:true,record_sha:revision,claims:[structuredClone(claim)]};if(name==='relay_execution'){if(args.action==='submit')submits++;return {ok:true,job:structuredClone(job)}};if(name==='relay_runner_coordinate'){claim=transition({claims:[claim],queue:[]},{...args.request,action:args.action},{max_active_branches:4,lease_hours:12}).claims[0];revision=hash(claim).slice(0,40);return {ok:true}};throw Error(name)};
+ const result=await runContinuityExecution({config:{project:'relay',assignment:'fixture',owner:'host',branch:claim.branch,continuity:p},workspace,stateDir,rpc,verifyStage:async()=>({passed:ran===1,evidence:'sha256:'+'b'.repeat(64)}),runExecution:async args=>{ran++;assert.equal(args.config.job_id,jobId);assert.match(args.config.coordinator_specialist.public_submission.instruction,/Public submission/);assert.equal(job.request,legacy);return {state:'succeeded',head_sha:head}}});
+ assert.equal(result.objective_completed,true);assert.equal(ran,1);assert.equal(submits,0);assert.equal(job.request,legacy);
+});
+
+test('completion proof is durable before public observation and restart cannot reauthor from a changed public file',async t=>{
+ const fs=await import('node:fs/promises'),os=await import('node:os'),path=await import('node:path');
+ const {specialistExecutionRpc,continuityCardProjection}=await import('./relay-continuity.mjs'),{appendCardUpdates}=await import('../src/relay-card-updates.js');
+ const directory=await fs.mkdtemp(path.join(os.tmpdir(),'relay-public-crash-'));t.after(()=>fs.rm(directory,{recursive:true,force:true}));const input=path.join(directory,'public.json'),proofFile=path.join(directory,'completion.json');
+ const update={text:'Explicit public submission before crash.',artifacts:[],preview:{state:'unavailable',reason:'The renderer was unavailable for this design submission.'}};await fs.writeFile(input,JSON.stringify(update));
+ const p=plan(),hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex'),sha='b'.repeat(40),now=new Date().toISOString(),process={pid:123,host:'fixture',adapter:'codex-cli'};
+ let record={id:'fixture',owner:'host',branch:'relay/fixture',primary_staff:'nico',primary_team:'runner'},journal={schema:1,plan_digest:hash(p),stages:{a:{state:'dispatching'}}};
+ const job={id:'job-fixture',project:'relay',assignment:'fixture',owner:'host',branch:record.branch,initial_head_sha:sha,executor_id:'worker',attempt:1,revision:4,process,state:'succeeded',finished_at:now,result:{head_sha:sha,summary:'PRIVATE EXECUTION SUMMARY'}};
+ const events=[],rpc=specialistExecutionRpc({rpc:async()=>({ok:true,job}),config:{project:'relay',assignment:'fixture',owner:'host',branch:record.branch},jobId:job.id,specialist:{owner:{staff:'nico',team:'runner'}},sourceSha:sha,publicUpdate:async()=>JSON.parse(await fs.readFile(input,'utf8')),onReceipt:async(job,observation)=>{await fs.writeFile(proofFile,JSON.stringify({job_digest:hash(job),observation}));events.push('durable-proof')},onObservation:async observation=>{assert.equal(events[0],'durable-proof');journal.stages.a.observation={...observation,input_digest:'c'.repeat(64)};const publication=continuityCardProjection({plan:p,journal,assignment:record});record={...record,card_updates:appendCardUpdates(record,publication),card_steps:publication};events.push('published');throw Error('Crash after successful public observation');}});
+ await assert.rejects(rpc('relay_execution',{action:'finish',job_id:job.id,expected_revision:3,executor_id:job.executor_id,result:job.result}),/Crash/);assert.deepEqual(events,['durable-proof','published']);assert.equal(record.card_updates.items.length,1);
+ await fs.writeFile(input,JSON.stringify({...update,text:'Changed after the crash'}));const saved=JSON.parse(await fs.readFile(proofFile,'utf8'));assert.equal(saved.job_digest,hash(job));journal.stages.a.observation={...saved.observation,input_digest:'c'.repeat(64)};
+ const recovered=continuityCardProjection({plan:p,journal,assignment:record});assert.equal(recovered.steps[0].receipt.id,record.card_steps.steps[0].receipt.id);assert.equal(appendCardUpdates(record,recovered).items.length,1);assert.equal(record.card_updates.items[0].text,update.text);assert.equal(JSON.stringify(record.card_updates).includes('PRIVATE EXECUTION SUMMARY'),false);
+});
+
 test('separately authored public submission crosses projection and pending recovery without private journal text',async t=>{
  const fs=await import('node:fs/promises'),os=await import('node:os'),path=await import('node:path');
  const {readPublicStageUpdate,continuityCardProjection,publishContinuityCard}=await import('./relay-continuity.mjs');

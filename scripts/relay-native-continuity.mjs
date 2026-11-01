@@ -132,7 +132,7 @@ export async function openNativeChannel({directory,config,workspace,waitMs=30000
      if(!q.data.specialist)return value;
      const receipt=await readJSON(path.join(directory,q.id+'.delegation.json'));validateDelegationReceipt(receipt,q,Date.parse(receipt.launched_at));
      if(value.agent_id!==receipt.agent_id)throw Error('Recovered specialist identity changed');
-     return {...value,specialist_execution:true,source_current:typeof r.source_fingerprint==='string'&&r.source_fingerprint===await sourceFingerprint(workspace),observation:r.observation||nativeCompletionObservation(pending.operation_id,receipt.owner,value,r.observed_at||receipt.launched_at)};}catch(e){if(e.code==='ENOENT')return null;throw e;}
+     return {...value,specialist_execution:true,source_current:typeof r.source_fingerprint==='string'&&r.source_fingerprint===await sourceFingerprint(workspace),observation:r.observation||nativeCompletionObservation(pending.operation_id,receipt.owner,r.value,r.observed_at||receipt.launched_at)};}catch(e){if(e.code==='ENOENT')return null;throw e;}
    }
    return null;
   }

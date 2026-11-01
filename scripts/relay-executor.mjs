@@ -169,6 +169,7 @@ export async function runExecution(options){
         if(receipt.job.result?.session_id!==receipt.session_id)continue;
         const events=await fs.readFile(path.join(runDirectory,job.id,'events-'+job.attempt+'.jsonl'));
         if(job.result.evidence!=='sha256:'+createHash('sha256').update(events).digest('hex'))continue;
+        if(pending.specialist_receipt){if(pending.specialist_receipt.job_digest!==coordinatorHash(job)||pending.specialist_receipt.source_fingerprint!==receipt.coordinator_source)throw Error('Saved immutable completion proof changed; reconcile without reauthoring');continue;}
         // Validate the already acknowledged finish using the original job time.
         // This is readback reconstruction, not a second finish RPC or launch.
         let observation;
