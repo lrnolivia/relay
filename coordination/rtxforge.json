@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T06:11:05.885Z",
+  "updated_at": "2026-11-01T06:19:19.373Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22432,53 +22432,6 @@
       "completed_at": "2026-10-31T21:04:05.596Z"
     },
     {
-      "id": "rtxforge-tauri-game-mode-20261031",
-      "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
-      "branch": "rtxforge/tauri-game-mode-20261031",
-      "paths": [
-        "prototypes/game-mode-tauri/"
-      ],
-      "resources": [
-        "rtxforge-tauri-game-mode"
-      ],
-      "goal": "Build isolated Windows/Linux Tauri Game Mode prototype using approved overlay glass UI.",
-      "acceptance": "Runnable prototype under prototypes/game-mode-tauri/ with Library, Details, Packages, Extras, Settings, read-only real-data adapter, keyboard/gamepad navigation, responsive validation and documented gaps. No existing shell replacement, installs, game mutations or publication.",
-      "next_action": "Finish adaptive hero color rules, native artwork fidelity and controller install UI checks; prepare user-authorized publication and local installation. Desktop header port also authorized; coordinate occupied paths before integration.",
-      "category": "implementation",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "0ed4eebc374d6fe65765abc3d7d60092e8b1f5f9",
-      "state": "active",
-      "created_at": "2026-11-01T02:31:44.563Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Build isolated Windows/Linux Tauri Game Mode prototype using approved overlay glass UI.",
-          "acceptance": "Runnable prototype under prototypes/game-mode-tauri/ with Library, Details, Packages, Extras, Settings, read-only real-data adapter, keyboard/gamepad navigation, responsive validation and documented gaps. No existing shell replacement, installs, game mutations or publication.",
-          "at": "2026-11-01T02:31:44.563Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-tauri-game-mode-20261031:acceptance:0",
-            "text": "Runnable prototype under prototypes/game-mode-tauri/ with Library, Details, Packages, Extras, Settings, read-only real-data adapter, keyboard/gamepad navigation, responsive validation and documented gaps. No existing shell replacement, installs, game mutations or publication.",
-            "at": "2026-11-01T02:31:44.563Z"
-          }
-        ]
-      },
-      "updated_at": "2026-11-01T06:11:05.885Z",
-      "lease_until": "2026-11-01T18:11:05.885Z",
-      "handoffs": [
-        {
-          "at": "2026-11-01T03:49:34.330Z",
-          "from": "rtxforge-tauri-game-mode-worker-20261031",
-          "to": "01a19538-4244-7092-b9db-1b2c93a26118",
-          "next_action": "User explicitly requested a separate user-owned chat; prior subagent stopped. New rtxForge Frost Game Mode Redesign chat adopts existing isolated worktree and all untracked Tauri source, current preview and full feedback. Continue desktop parity and read-only preview iteration; parent returns to native overlay."
-        }
-      ]
-    },
-    {
       "id": "rtxforge-website-frost-themes-20261101",
       "owner": "root:website_frost_themes",
       "branch": "rtxforge/website-frost-themes-20261101",
@@ -22659,6 +22612,56 @@
             "goal": "Repair and complete the approved glass overlay preview, carry Packages/Extras/Game Details/Settings parity into Game Mode, and add per-game ReShade installation/import with dynamically discovered shader and custom INI controls.",
             "acceptance": "The 54-case native layout matrix and real input tests pass, including sticky chrome, attached Bar popovers, Clear white ink and Clear-Light-Dark accent transitions. Windows app and native DLL builds pass; focused import/rollback/ownership tests pass. Tools on desktop and Game Mode accept automatic ReShade or user ZIP/DLL/add-on/preset imports without replacing a custom host; add-on-capable ReShade exposes shader parameters and explicitly labeled scalar INI settings. Preserve original backups, saved tuning, branding and the approved materials. Retain the live prototype and report platform/game qualification limits honestly."
           }
+        }
+      ]
+    },
+    {
+      "id": "rtxforge-tauri-game-mode-20261031",
+      "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+      "branch": "rtxforge/tauri-game-mode-20261031",
+      "paths": [
+        "prototypes/game-mode-tauri/",
+        "windows/RtxForge.Windows/Views/GamePage.xaml",
+        "windows/RtxForge.Windows/Views/GamePage.Hero.cs"
+      ],
+      "resources": [
+        "rtxforge-tauri-game-mode",
+        "rtxforge-desktop-hero-presentation"
+      ],
+      "goal": "Build isolated Windows/Linux Tauri Game Mode prototype using approved overlay glass UI.",
+      "acceptance": "Runnable prototype under prototypes/game-mode-tauri/ with Library, Details, Packages, Extras, Settings, read-only real-data adapter, keyboard/gamepad navigation, responsive validation and documented gaps. No existing shell replacement, installs, game mutations or publication.",
+      "next_action": "User approved Desktop hero presentation port, publication and local installation; isolate XAML/new partial from occupied GamePage.xaml.cs, validate Game Mode and Desktop before publication.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "0ed4eebc374d6fe65765abc3d7d60092e8b1f5f9",
+      "state": "active",
+      "created_at": "2026-11-01T02:31:44.563Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Build isolated Windows/Linux Tauri Game Mode prototype using approved overlay glass UI.",
+          "acceptance": "Runnable prototype under prototypes/game-mode-tauri/ with Library, Details, Packages, Extras, Settings, read-only real-data adapter, keyboard/gamepad navigation, responsive validation and documented gaps. No existing shell replacement, installs, game mutations or publication.",
+          "at": "2026-11-01T02:31:44.563Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-tauri-game-mode-20261031:acceptance:0",
+            "text": "Runnable prototype under prototypes/game-mode-tauri/ with Library, Details, Packages, Extras, Settings, read-only real-data adapter, keyboard/gamepad navigation, responsive validation and documented gaps. No existing shell replacement, installs, game mutations or publication.",
+            "at": "2026-11-01T02:31:44.563Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-01T06:19:19.373Z",
+      "lease_until": "2026-11-01T18:19:19.373Z",
+      "handoffs": [
+        {
+          "at": "2026-11-01T03:49:34.330Z",
+          "from": "rtxforge-tauri-game-mode-worker-20261031",
+          "to": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "next_action": "User explicitly requested a separate user-owned chat; prior subagent stopped. New rtxForge Frost Game Mode Redesign chat adopts existing isolated worktree and all untracked Tauri source, current preview and full feedback. Continue desktop parity and read-only preview iteration; parent returns to native overlay."
         }
       ]
     }
