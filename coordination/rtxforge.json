@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T17:28:57.046Z",
+  "updated_at": "2026-11-01T17:32:30.467Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22724,14 +22724,16 @@
         "windows/overlay-rmlui/SmokeTest.cpp",
         "VERSION",
         "providers/glass-overlay/rollout-policy.json",
-        "docs/releases/1.0-beta.md"
+        "docs/releases/1.0-beta.md",
+        "windows/RtxForge.Windows/Controls/GameOverlayPreferencesView.cs",
+        "windows/RtxForge.Windows/Controls/OverlayPresentationView.cs"
       ],
       "resources": [
         "rtxforge-desktop-overlay-preview"
       ],
       "goal": "Compact responsive Desktop Overlay preview with immediate game accents, game selection within the full preview, and persisted Left/Right Side Panel placement.",
       "acceptance": "Inline 16:9 preview is bounded to a compact size; game accent and theme/layout changes render promptly and stale asynchronous results cannot win. Full native preview can select games from the same real library without OS titlebar or screenshot uploads. Side Panel has persisted Left/Right placement in native overlay, Windows and Linux preferences and inline preview; pop-out panels open inward, free dragging remains. Validation stages: primary implementation owner verifies Windows build and read-only native settings UI; portable settings tests verify default, valid and invalid side persistence; native layout/input tests verify both screen edges and inward placement. Preserve approved materials and user tuning; no new moving-gameplay qualification claimed.",
-      "next_action": "User authorized shipping and installing after final checks. Updated Desktop preview/settings handoff sent to independent Game Mode thread. Prepare Beta15 and required overlay rollout revision5, verify exact-source CI before publication and installation.",
+      "next_action": "Update shared Desktop/global and Game Details Overlay presentation; preview current game in details, retain shared appearance and per-game menu semantics. Independent Game Mode worker has both explicit user handoffs. Then Beta15 exact-source checks, publish and install.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -22761,8 +22763,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T17:28:57.046Z",
-      "lease_until": "2026-11-02T05:28:57.046Z",
+      "updated_at": "2026-11-01T17:32:30.467Z",
+      "lease_until": "2026-11-02T05:32:30.467Z",
       "amendment_count": 1,
       "amendments": [
         {
