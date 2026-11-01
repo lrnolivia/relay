@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T20:50:14.551Z",
+  "updated_at": "2026-11-01T23:18:18.885Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22998,6 +22998,45 @@
       "evidence": "PR137 merged55f2d8b54e15165e427add24b05b40e5758d178d, tree48eab9ea6c3a5168a15387886abd7549138b73eb matches reviewed e3ade04. All16PR checks green;80portable,WindowsSettings/x64Release,native54layout+18picker+6Barandtransition/dragfixtures,DX11/DX12SDR-HDR/helper checks passed. Actual host independent read-only review found2defects,fixed and regression-tested; native-binding endpoint provider failed with actual canonical ID, evidence retained without invented worker. PublishedBeta16 Windows41346230909/Linux41346233461 bothsuccess. InstallerSHA8bdcde72532721befef286686b235cb56ec582ba76aab454eec62601a04445ae installedexit0. Requiredrollout6complete0blocked;41managedDLLcopies(including2host64)match e8472eee4a351fc11e8e5128347b830a055192ad28db3f0ea46958ab895f2335. Appearance preserved.11Beta15rollbackassetsretained. Receipts C:/Users/lrnol/.codex/tmp/rtxforge-beta16-install/. Sharedprefs handedtoGameMode. WebsitecompacttoolbarrestoredandfreshGameModecaptureslive; deploymentreceipt separatewebsiteworker.",
       "work_accounted": true,
       "completed_at": "2026-11-01T20:50:14.551Z"
+    },
+    {
+      "id": "rtxforge-overlay-accent-toggle-alignment-20261101",
+      "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+      "branch": "rtxforge/overlay-accent-toggle-alignment-20261101",
+      "paths": [
+        "windows/RtxForge.Windows/Controls/OverlayPresentationView.cs"
+      ],
+      "resources": [
+        "rtxforge-desktop-overlay-preview"
+      ],
+      "goal": "Right-align the Accent Tint switch within its native Overlay Settings card.",
+      "acceptance": "Accent Tint switch uses its natural width and aligns to the card's right padding in the shared global and Game Details Overlay appearance view. Existing native style and behavior are preserved; Windows build passes.",
+      "next_action": "Remove the ToggleSwitch default minimum-width gutter, explicitly right-align the shared Accent Tint control, build Windows and submit the focused fix.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "55f2d8b54e15165e427add24b05b40e5758d178d",
+      "state": "active",
+      "created_at": "2026-11-01T23:18:18.885Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Right-align the Accent Tint switch within its native Overlay Settings card.",
+          "acceptance": "Accent Tint switch uses its natural width and aligns to the card's right padding in the shared global and Game Details Overlay appearance view. Existing native style and behavior are preserved; Windows build passes.",
+          "at": "2026-11-01T23:18:18.885Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-overlay-accent-toggle-alignment-20261101:acceptance:0",
+            "text": "Accent Tint switch uses its natural width and aligns to the card's right padding in the shared global and Game Details Overlay appearance view. Existing native style and behavior are preserved; Windows build passes.",
+            "at": "2026-11-01T23:18:18.885Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-01T23:18:18.885Z",
+      "lease_until": "2026-11-02T11:18:18.885Z"
     }
   ]
 }
