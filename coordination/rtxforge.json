@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T17:15:29.298Z",
+  "updated_at": "2026-11-01T17:28:57.046Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22721,14 +22721,17 @@
         "prototypes/overlay-rmlui/",
         "windows/overlay-rmlui/tests/",
         "windows/overlay-rmlui/GlassRuntime.cpp",
-        "windows/overlay-rmlui/SmokeTest.cpp"
+        "windows/overlay-rmlui/SmokeTest.cpp",
+        "VERSION",
+        "providers/glass-overlay/rollout-policy.json",
+        "docs/releases/1.0-beta.md"
       ],
       "resources": [
         "rtxforge-desktop-overlay-preview"
       ],
       "goal": "Compact responsive Desktop Overlay preview with immediate game accents, game selection within the full preview, and persisted Left/Right Side Panel placement.",
       "acceptance": "Inline 16:9 preview is bounded to a compact size; game accent and theme/layout changes render promptly and stale asynchronous results cannot win. Full native preview can select games from the same real library without OS titlebar or screenshot uploads. Side Panel has persisted Left/Right placement in native overlay, Windows and Linux preferences and inline preview; pop-out panels open inward, free dragging remains. Validation stages: primary implementation owner verifies Windows build and read-only native settings UI; portable settings tests verify default, valid and invalid side persistence; native layout/input tests verify both screen edges and inward placement. Preserve approved materials and user tuning; no new moving-gameplay qualification claimed.",
-      "next_action": "Finish preview-right surface and game picker, extend the renderer/helper appearance bridge with Side Panel edge. Windows and portable tests passed; native renderer fixtures passed, final input/edge checks and Windows visual confirmation next.",
+      "next_action": "User authorized shipping and installing after final checks. Updated Desktop preview/settings handoff sent to independent Game Mode thread. Prepare Beta15 and required overlay rollout revision5, verify exact-source CI before publication and installation.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -22758,8 +22761,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T17:15:29.298Z",
-      "lease_until": "2026-11-02T05:15:29.298Z",
+      "updated_at": "2026-11-01T17:28:57.046Z",
+      "lease_until": "2026-11-02T05:28:57.046Z",
       "amendment_count": 1,
       "amendments": [
         {
