@@ -8,7 +8,7 @@ import { guardAutonomy } from './autonomy-control.js';
 import { attributedCommitBody, verifyAttributedCommit, reconcileAttributedContentsCommit } from './commit-attribution.js';
 import { testMaintenanceGuidance } from './test-maintenance.js';
 
-export const RUNNER_ENGINE_SHA = 'cf508e4338861ea5a5bb5d5e209677ff5fb10399';
+export const RUNNER_ENGINE_SHA = '250f951e7fc171ba66987408f391484bddc29023';
 export const DEFAULT_RUNNER_CONTROL_REPOSITORY = 'lrnolivia/relay';
 
 export class ControlError extends Error {

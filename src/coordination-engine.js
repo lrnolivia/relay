@@ -1,3 +1,4 @@
+import {appendCardUpdates,cardUpdatesAudit} from './relay-card-updates.js';
 import {validateCardStepsPublication} from './relay-card-steps.js';
 import {transitionNativeHandoff} from './native-handoff.js';
 import {appendCanonicalAdditions,insideExpansionScope,continuityObjectiveDigest} from '../packages/runner/src/continuity-expansion.mjs';
@@ -121,8 +122,8 @@ function preserveObjective(target, now, source='first-observed-current-record') 
 function appendAmendment(target, request, fields, before, now) {
   const entry = {
     at: now.toISOString(), by: request.owner, reason: request.reason, fields,
-    before: Object.fromEntries(fields.map((field) => [field, structuredClone(before[field] ?? null)])),
-    after: Object.fromEntries(fields.map((field) => [field, structuredClone(target[field] ?? null)]))
+    before: Object.fromEntries(fields.map((field) => [field, field==='card_updates'?cardUpdatesAudit(before[field]):structuredClone(before[field] ?? null)])),
+    after: Object.fromEntries(fields.map((field) => [field, field==='card_updates'?cardUpdatesAudit(target[field]):structuredClone(target[field] ?? null)]))
   };
   target.amendment_count = Number(target.amendment_count || 0) + 1;
   target.amendments = [...(Array.isArray(target.amendments) ? target.amendments : []), entry];
@@ -141,7 +142,7 @@ export function transition(record, request, policy, now = new Date()) {
     if(request.handoff?.project!==record.project||request.handoff.assignment!==request.id||request.handoff.owner!==request.owner)throw Error('Native handoff outer binding mismatch');
     const patch=transitionNativeHandoff(current,request.handoff,request.verified_source_sha,now);
     if(patch.replayed)return next;
-    delete patch.replayed;Object.assign(current,patch,{updated_at:now.toISOString()});
+    delete patch.replayed;if(patch.card_steps)patch.card_updates=appendCardUpdates(current,patch.card_steps,now);Object.assign(current,patch,{updated_at:now.toISOString()});
     next.updated_at=now.toISOString();return next;
   }
   if (request.action === 'reconcile') {
@@ -238,6 +239,7 @@ export function transition(record, request, policy, now = new Date()) {
     if ('card_steps' in request) {
       if (supplied.some(key=>key!=='card_steps')) throw Error('Checklist publication cannot amend scope, routing or objective');
       patch.card_steps=validateCardStepsPublication(request.card_steps,target,continuityObjectiveDigest(target.goal,target.acceptance),now);
+      patch.card_updates=appendCardUpdates(target,patch.card_steps,now);
     }
     if ('goal' in request) { if (typeof request.goal !== 'string' || !request.goal.trim()) throw new Error('Goal cannot be empty.'); patch.goal = request.goal; }
     if ('acceptance' in request) { if (typeof request.acceptance !== 'string' || !request.acceptance.trim()) throw new Error('Acceptance cannot be empty.'); patch.acceptance = request.acceptance; }
@@ -255,11 +257,11 @@ export function transition(record, request, policy, now = new Date()) {
     if ('ledger_refs' in request) patch.ledger_refs = normalizeLedgerRefs(request.ledger_refs);
     Object.assign(patch, metadataFields(request));
     const objectiveChanged=(patch.goal!==undefined&&patch.goal!==target.goal)||(patch.acceptance!==undefined&&patch.acceptance!==target.acceptance);
-    if(objectiveChanged&&target.card_steps)patch.card_steps=undefined;
+    if(objectiveChanged&&target.card_steps){patch.card_steps=undefined;patch.card_updates=undefined;}
     else if(target.card_steps&&patch.acceptance_additions?.length>(target.acceptance_additions?.length||0))patch.card_steps={...target.card_steps,complete:false};
     // Acceptance grows atomically with loss of the old complete denominator.
     // Retain verified steps until the publisher incorporates the new priorities.
-    if('card_steps' in patch&&!supplied.includes('card_steps'))supplied.push('card_steps');
+    for(const derived of ['card_steps','card_updates'])if(derived in patch&&!supplied.includes(derived))supplied.push(derived);
     const before = Object.fromEntries(supplied.map((field) => [field, target[field]]));
     const staffPatch = Object.fromEntries(["primary_staff", "supporting_staff", "primary_team", "supporting_teams"].filter(key => key in request).map(key => [key, request[key]]));
     const preview = { ...target, ...patch, ...staffPatch };

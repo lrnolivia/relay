@@ -66,3 +66,21 @@ test('awaiting marker is bounded to unverified blocked receipts',async()=>{
   const p=structuredClone(a.card_steps);p.sequence++;change(p);assert.throws(()=>validateCardStepsPublication(p,a,continuityObjectiveDigest(a.goal,a.acceptance),now));
  }
 });
+
+test('hosted native public update is discoverable, immutable and atomically projected without private result prose',async()=>{
+ const {nativeHandoffSchema}=await import('./native-handoff.js');
+ const {appendCardUpdates,assignmentCardUpdates}=await import('./relay-card-updates.js');
+ assert.equal(nativeHandoffSchema.properties.update.additionalProperties,false);
+ const {runnerControlTools}=await import('./runner-control.js');assert.deepEqual(runnerControlTools.find(t=>t.name==='relay_runner_delegate').inputSchema.properties.update,nativeHandoffSchema.properties.update);
+ const ordinary=runnerControlTools.find(t=>t.name==='relay_runner_coordinate').inputSchema.properties.request.properties.card_steps;assert.ok(ordinary.properties.steps.items.properties.receipt.anyOf[1].properties.update);
+ const a=assignment(),row=apply(a,prepare(a));
+ const update={text:'The scoped contract review found one issue to fix.',artifacts:[]};
+ const args={...start(row),update};const patch=transitionNativeHandoff(a,args,source,now);
+ a.card_updates=appendCardUpdates(a,patch.card_steps,now);Object.assign(a,patch);
+ assert.equal(assignmentCardUpdates(a)[0].text,update.text);assert.equal(assignmentCardUpdates(a)[0].owner.staff,'roman');
+ assert.equal(transitionNativeHandoff(a,args,source,now).replayed,true);
+ assert.throws(()=>transitionNativeHandoff(a,{...args,update:{...update,text:'Changed report'}},source,now),/conflicting/);
+ assert.throws(()=>nativeIntent({...result(row),update:{...update,prompt:'private'}}),/invalid public update/);
+ assert.throws(()=>nativeIntent({...prepare(assignment()),update}),/exact action/);
+ const b=assignment(),br=apply(b,prepare(b));apply(b,start(br));apply(b,result(br));assert.equal(b.card_steps.steps[0].receipt.update,undefined);
+});

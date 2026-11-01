@@ -15,7 +15,7 @@ import {
 test("canonical staff roster has expected active, reserve, and retired identities", () => {
   assert.equal(validateStaffRegistry(STAFF), true);
   const snapshot = staffDirectorySnapshot();
-  assert.deepEqual(snapshot.counts, { active: 14, reserve: 3, retired: 1 });
+  assert.deepEqual(snapshot.counts, { active: 21, reserve: 0, retired: 1 });
   assert.equal(STAFF_POLICY.identity_is_sticky, true);
   assert.equal(STAFF_POLICY.identity_is_authority, false);
   assert.equal(STAFF_POLICY.canned_jokes, false);
@@ -25,7 +25,7 @@ test("canonical staff roster has expected active, reserve, and retired identitie
     assert.ok(activeNames.includes(name), `missing active staff: ${name}`);
   }
   const reserveNames = listStaff({ status: "reserve" }).map(person => person.display_name);
-  assert.deepEqual(reserveNames.sort(), ["Bianca","Dominique","Mateo"]);
+  assert.deepEqual(reserveNames.sort(), []);
   assert.equal(getStaff("Felix").status, "retired");
 });
 
@@ -34,7 +34,8 @@ test("sticky names resolve case-insensitively and cannot be silently reused", ()
   assert.equal(getStaff("ROMAN").display_name, "Roman");
   assert.throws(() => assertStaffNameAvailable("Roman"), /already sticky/);
   assert.throws(() => assertStaffNameAvailable("felix"), /already sticky/);
-  assert.equal(assertStaffNameAvailable("Celeste"), true);
+  assert.throws(() => assertStaffNameAvailable("Celeste"), /already sticky/);
+  assert.equal(assertStaffNameAvailable("UnassignedExample"), true);
 });
 
 test("retired staff cannot be bound and binding preserves canonical owner authority", () => {
@@ -62,11 +63,11 @@ test("role and subnet lookup is deterministic and excludes retired identities", 
   const source = staffCandidates({ subnet: "source" });
   assert.deepEqual(source.map(person => person.display_name), ["Rafael"]);
   const creative = staffCandidates({ subnet: "creative" });
-  assert.deepEqual(creative.map(person => person.display_name), ["Margot","Sabine","Valentina","Bianca"]);
+  assert.deepEqual(creative.map(person => person.display_name), ["Bianca","Margot","Sabine","Valentina"]);
   assert.equal(creative.some(person => person.status === "retired"), false);
 
   const verify = listStaff({ role: "verification" });
-  assert.deepEqual(verify.map(person => person.display_name), ["Luca","Roman"]);
+  assert.deepEqual(verify.map(person => person.display_name), ["Celeste","Luca","Roman","Theo"]);
 });
 
 test("personality metadata shapes presentation but never authority or truth policy", () => {
@@ -147,7 +148,7 @@ test('routing ranks role and team fit instead of sending all implementation to t
   assert.equal(pick({primary_role:'builder',primary_team:'source'}),'nico');
   // Exact verifier role beats the release captain's verification affinity.
   assert.deepEqual(normalizeAssignmentStaff({primary_role:'integrator',supporting_roles:['verification']}).supporting_staff,['roman']);
-  assert.equal(pick({primary_team:'runner',primary_role:'brand-launch'}),null);
+  assert.equal(pick({primary_team:'runner',primary_role:'brand-launch'}),'bianca');
 });
 
 test('card attribution names role and team, keeps the executor owner separate and explains gaps', async () => {

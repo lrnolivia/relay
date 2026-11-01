@@ -1,3 +1,4 @@
+import {STAFF_DISPLAY,DISPLAY_TEAMS} from './staff-display.js';
 import { STAFF } from './staff-registry.js';
 
 export const CARD_TEAMS = Object.freeze({
@@ -6,7 +7,8 @@ export const CARD_TEAMS = Object.freeze({
 });
 export function cardStaff(id) {
   const person = STAFF.find(p=>p.id===id && p.status!=='retired');
-  return person ? {id:person.id,name:person.display_name,role:person.role.title.replace(/^The /,''),status:person.status,team:person.home_team} : null;
+  const display=STAFF_DISPLAY[id];
+  return person ? {id:person.id,name:person.display_name,role:display?.role||person.role.title.replace(/^The /,''),status:person.status,team:person.home_team,display_team:display?.team||null,display_team_label:DISPLAY_TEAMS[display?.team]?.label||DISPLAY_TEAMS[display?.team]?.name||null,emblem:display?.emblem||person.home_team,management:display?.management===true} : null;
 }
 export function cardIdentity(record = {}, plan = {}, fallbackTeam = 'relay') {
   const lead = cardStaff(record.primary_staff || record.staff_attribution?.primary?.id);

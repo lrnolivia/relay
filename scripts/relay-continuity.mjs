@@ -181,10 +181,21 @@ export function continuityCardProjection({plan,journal,assignment,observed_at=ne
   if(observation&&(!validCardOwner(observation.owner,assignment)||!['running','failed','blocked','cancelled','stale','skipped'].includes(observation.state)||!/^sha256:[a-f0-9]{64}$/.test(observation.evidence||'')||!/^[a-f0-9]{64}$/.test(observation.input_digest||'')||!/^[a-f0-9]{40}$/.test(observation.source_sha||'')||!Number.isFinite(Date.parse(observation.observed_at))))throw Error('Invalid bounded execution observation');
   const active=!passed&&observation;
   const old=previous?.steps.find(s=>s.id===stage.id)?.receipt;
-  return {id:stage.id,label:stage.id.replaceAll('-',' '),depends_on:stage.depends_on,state:passed?'passed':active?active.state:!row||row.state==='ready'?'pending':'unknown',receipt:passed?{
+  const state=passed?'passed':active?active.state:!row||row.state==='ready'?'pending':'unknown';
+  const receipt=passed?{
    id:stage.id+':'+proof.input_digest.slice(0,32),assignment:assignment.id,step_id:stage.id,plan_revision:revision,input_digest:proof.input_digest,evidence:proof.evidence,source_sha:proof.source_sha,...(proof.owner?{owner:proof.owner}:{}),
    observed_at:old?.input_digest===proof.input_digest&&old?.evidence===proof.evidence&&old?.source_sha===proof.source_sha?old.observed_at:observed_at
-  }:active?{id:stage.id+':'+active.input_digest.slice(0,32),assignment:assignment.id,step_id:stage.id,plan_revision:revision,input_digest:active.input_digest,evidence:active.evidence,source_sha:active.source_sha,observed_at:active.observed_at,owner:active.owner}:null};
+  }:active?{id:stage.id+':'+active.input_digest.slice(0,32),assignment:assignment.id,step_id:stage.id,plan_revision:revision,input_digest:active.input_digest,evidence:active.evidence,source_sha:active.source_sha,observed_at:active.observed_at,owner:active.owner}:null;
+  if(receipt){
+   const identity=r=>({assignment:r.assignment,step_id:r.step_id,plan_revision:r.plan_revision,input_digest:r.input_digest,evidence:r.evidence,source_sha:r.source_sha,owner:r.owner||null,phase:r.phase||null,update:r.update||null});
+   const oldStep=previous?.steps.find(s=>s.id===stage.id);
+   const unchanged=old&&oldStep.state===state&&hash(identity(old))===hash(identity(receipt));
+   // Preserve existing IDs/pending intents when the proof is unchanged. New
+   // proof or state gets a new immutable identity even for unchanged inputs.
+   receipt.id=unchanged?old.id:stage.id.slice(0,48)+':'+hash({state,receipt:identity(receipt)});
+   if(unchanged)receipt.observed_at=old.observed_at;
+  }
+  return {id:stage.id,label:stage.id.replaceAll('-',' '),depends_on:stage.depends_on,state,receipt};
  });
  // Invalidated prerequisites also invalidate dependent display receipts until
  // their own verifiers run again. A previous pass is not current completion.
