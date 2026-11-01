@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-01T03:43:00.314Z",
+  "updated_at": "2026-11-01T03:47:27.748Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21158,7 +21158,7 @@
         "roman"
       ],
       "base_sha": "6a3351e60db60ae9db0d5d646ce6c9be27993c9f",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-01T03:22:06.134Z",
       "objective_history": {
         "baseline": {
@@ -21175,8 +21175,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T03:30:11.429Z",
-      "lease_until": "2026-11-01T15:30:11.429Z"
+      "updated_at": "2026-11-01T03:47:27.748Z",
+      "lease_until": "2026-11-01T15:47:27.748Z",
+      "pr": 273,
+      "merged_head_sha": "3320ac4b6e7a9413aabfa1ac414039dcb5608103",
+      "merge_commit_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
+      "evidence": "Delivered bounded refresh/diagnostic repair and locked coordination dependency setup. Human-merged PR273 exact tested3320ac4b ->289d6b3c50cf9c92f2834978c8753fb35b647e22.1239tests passed0failed1unchangedplatformskip; independent source/pixels approved,28source-hash-bound DOM captures. Normal admission gate passes unchanged; clean locked npm ci --ignore-scripts imports canonical engine. Worker b76de261-184e-484b-b538-6fdf094dd406 at100%, health200. Main CI41270198097 and fresh production smoke41270257865 success, live v27 exact488152bytes SHA256312960074eb93073b3518bebbea8af867833e5ec539236febe7f850372ada28c with priorv26alias. Healthy retained/restored archive13069082023 at safetyrevision106. Native Windows failure root cause is NOT claimed established; v27 now preserves typed safe diagnostics and no ambiguous bridge replay. Parent owns actual fresh-host publication acceptance separately; this completion does not mutate or complete that queue or specialist activation. No pending uncertain source/write operation.",
+      "work_accounted": true,
+      "completed_at": "2026-11-01T03:47:27.748Z"
     }
   ],
   "migrated_from": "loew-inspector"
