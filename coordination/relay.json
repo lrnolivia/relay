@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-01T03:49:31.569Z",
+  "updated_at": "2026-11-01T03:50:15.079Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21233,7 +21233,7 @@
           "next_action": "Fresh authorized Windows child now exposes coordinate.card_steps and relay_runner_delegate after user app restart. Reconcile queued-only record (no branch, private intent or previous publication/launch exists), then admit bounded own-assignment read-only specialist acceptance at fresh source. Preserve actual host agent identity, once-only prepare/start/result, explicitly public bounded update and real source/assignment-bound visual; verify canonical history and rendered card without fabricated work. Existing native-host-activation follow-up and active PR273 release writer remain separate, no overlapping source writes."
         }
       ],
-      "updated_at": "2026-11-01T03:49:31.569Z",
+      "updated_at": "2026-11-01T03:50:15.079Z",
       "lease_until": "2026-11-01T15:48:15.813Z",
       "native_handoffs": [
         {
@@ -21265,10 +21265,21 @@
             "host_available": true,
             "intent_digest": "ee1ba893e471d9ec967f5c03ee1107edddccd3952a853229e327d8300135f172"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-01T03:49:31.569Z",
           "request_digest": "a994674f1bca058f342d2566b80edf667edbcd7ba2a979f3e9621076190dab87",
-          "step_digest": "e19c1115256f251ef0e7ebf5a19bcbf2360624086b08c50aff2402f07073e55d"
+          "step_digest": "5024dc6bb7400dd30e0f5ab0666da8f32dea1df06a21fd1bfcbe67ae7fe46ff4",
+          "start": {
+            "request_digest": "a994674f1bca058f342d2566b80edf667edbcd7ba2a979f3e9621076190dab87",
+            "source_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
+            "agent_id": "/root/relay_publication_verifier",
+            "observed_at": "2026-11-01T03:50:07Z",
+            "update": {
+              "text": "A verifier has started a read-only review of the shipped public-update contract and Relay connection page at release 289d6b3c. The review checks receipt and source binding; native card visibility remains unverified.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-01T03:50:15.079Z"
         }
       ],
       "card_steps": {
@@ -21280,15 +21291,32 @@
           "owner": "01a19531-c5e7-70b3-87ce-4e193a8ed032",
           "branch": "relay/card-publication-live-acceptance-20261101"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "review-shipped-publication",
             "label": "Review shipped public-update evidence and the live connection page",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "relay-card-live-verifier-20261101:started",
+              "assignment": "relay-card-publication-live-acceptance-20261101",
+              "step_id": "review-shipped-publication",
+              "plan_revision": "892fa8f4255bb9cdb5fd64487bbc62d5abc153d7c169d959d3cffe462ce5c615",
+              "input_digest": "a994674f1bca058f342d2566b80edf667edbcd7ba2a979f3e9621076190dab87",
+              "evidence": "sha256:96f5494cb4235a6d2e2ca9b42d7ebb6f0e7be2b6d30da8c3f013d9fef4595514",
+              "source_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
+              "observed_at": "2026-11-01T03:50:07Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "A verifier has started a read-only review of the shipped public-update contract and Relay connection page at release 289d6b3c. The review checks receipt and source binding; native card visibility remains unverified.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -21296,10 +21324,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "relay-card-publication-live-acceptance-20261101",
         "revision": "892fa8f4255bb9cdb5fd64487bbc62d5abc153d7c169d959d3cffe462ce5c615",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "relay-card-live-verifier-20261101:started": "2c5cb75bf7493274e1473426aac0e4ab7378de1b8cc48618b034e1b36b7d2bb1"
+        },
+        "items": [
+          {
+            "key": "relay-card-live-verifier-20261101:started:a994674f1bca058f342d2566b80edf667edbcd7ba2a979f3e9621076190dab87:running:",
+            "receipt_snapshot": "{\"label\":\"Review shipped public-update evidence and the live connection page\",\"receipt\":{\"assignment\":\"relay-card-publication-live-acceptance-20261101\",\"evidence\":\"sha256:96f5494cb4235a6d2e2ca9b42d7ebb6f0e7be2b6d30da8c3f013d9fef4595514\",\"id\":\"relay-card-live-verifier-20261101:started\",\"input_digest\":\"a994674f1bca058f342d2566b80edf667edbcd7ba2a979f3e9621076190dab87\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"892fa8f4255bb9cdb5fd64487bbc62d5abc153d7c169d959d3cffe462ce5c615\",\"source_sha\":\"289d6b3c50cf9c92f2834978c8753fb35b647e22\",\"step_id\":\"review-shipped-publication\",\"update\":{\"artifacts\":[],\"text\":\"A verifier has started a read-only review of the shipped public-update contract and Relay connection page at release 289d6b3c. The review checks receipt and source binding; native card visibility remains unverified.\"}},\"state\":\"running\"}",
+            "id": "relay-card-live-verifier-20261101:started",
+            "assignment": "relay-card-publication-live-acceptance-20261101",
+            "step_id": "review-shipped-publication",
+            "revision": "892fa8f4255bb9cdb5fd64487bbc62d5abc153d7c169d959d3cffe462ce5c615",
+            "label": "Review shipped public-update evidence and the live connection page",
+            "state": "running",
+            "phase": null,
+            "source_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
+            "observed_at": "2026-11-01T03:50:07Z",
+            "recorded_at": "2026-11-01T03:50:15.079Z",
+            "receipt_digest": "sha256:96f5494cb4235a6d2e2ca9b42d7ebb6f0e7be2b6d30da8c3f013d9fef4595514",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "A verifier has started a read-only review of the shipped public-update contract and Relay connection page at release 289d6b3c. The review checks receipt and source binding; native card visibility remains unverified.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          }
+        ]
       }
     }
   ],
