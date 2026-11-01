@@ -3,6 +3,8 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { chromium } from 'playwright';
 import { contextCardModel, relayContextCardResource } from '../src/relay-chat-ui.js';
+import {appendCardUpdates} from '../src/relay-card-updates.js';
+import {assignmentCardContext,validateCardStepsPublication} from '../src/relay-card-steps.js';
 import { webSourceSha } from '../apps/web/generated.js';
 
 const expected=process.env.EXPECTED_SOURCE_SHA;
@@ -12,6 +14,17 @@ const resource=relayContextCardResource(),browser=await chromium.launch(),captur
 const origin='https://relay-card-fixture.test';
 const clientId=process.env.CF_ACCESS_CLIENT_ID,clientSecret=process.env.CF_ACCESS_CLIENT_SECRET;
 const auth=clientId&&clientSecret?{Authorization:JSON.stringify({'cf-access-client-id':clientId,'cf-access-client-secret':clientSecret}),'CF-Access-Client-Id':clientId,'CF-Access-Client-Secret':clientSecret}:null;
+const revision='a'.repeat(64),source=expected,now=new Date('2026-11-01T00:00:00Z');
+function familyFixture(count=3,{id='card-demo',artifact=null}={}){
+ let record={id,owner:'fixture-host',branch:'relay/fixture',state:'active',goal:'A clearer overlay, built together',primary_staff:'julian',primary_team:'night-shift',supporting_staff:['valentina','nico','roman'],supporting_teams:['inspector','runner'],lease_until:'2026-11-02T00:00:00Z'};
+ const people=['valentina','nico','roman','julian'],teams=['inspector','runner','inspector','night-shift'];
+ for(let i=0;i<count;i++){
+  const pub={schema:'relay-card-steps/v1',assignment:id,revision,objective_digest:revision,publisher:{owner:record.owner,branch:record.branch},sequence:i+1,complete:false,steps:[{id:'stage-'+i,label:['Design the overlay','Build the change','Review the result','Coordinate the next step'][i],depends_on:[],state:i===2?'blocked':'running',receipt:{id:'event-'+i,assignment:id,step_id:'stage-'+i,plan_revision:revision,input_digest:revision,evidence:'sha256:'+revision,source_sha:source,observed_at:now.toISOString(),owner:{staff:people[i],team:teams[i]},update:{text:['The spacing and hierarchy are ready for review.','The interaction is implemented. Verification is next.','One keyboard issue needs attention before acceptance.','The next priorities are recorded.'][i],artifacts:i===0&&artifact?[artifact]:[]}}}]};
+  pub.steps.unshift(...(record.card_steps?.steps||[]));
+  const validated=validateCardStepsPublication(pub,record,revision,now);record={...record,card_updates:appendCardUpdates(record,validated,now),card_steps:validated};
+ }
+ return {project:'relay',claim:assignmentCardContext(record)};
+}
 const fixtures={
  runner:{project:'relay',claim:{id:'sample-runner',primary_team:'runner',primary_staff:'ellis',goal:'The release is moving',state:'active',progress_percent:68,next_action:'Review the captured desktop and phone layouts.'},human:{what_changed:'The approved interface is built. Verification is checking the last interactions.'}},
  inspector:{project:'relay',claim:{id:'sample-inspector',primary_team:'inspector',primary_staff:'nico',goal:'Ready for your review',state:'waiting-for-human',next_action:'Review the exact build in Inspector.'},human:{what_changed:'Screenshots and an interactive preview are available. This sample does not claim a human approval.'}},
@@ -23,21 +36,25 @@ const fixtures={
  jobs:{project:'relay',claims:[{id:'relay-card-polish-20261003',primary_team:'runner',primary_staff:'ellis',state:'active',goal:'Continue the full project implementation and review every source and runtime detail. '.repeat(8),next_action:'Review the captured layout and current job status.'},{id:'relay-feedback-delivery-20261003',state:'working',primary_staff:'roman'},{id:'old-task',state:'completed',primary_staff:'nico'}]},
  generic:{ok:true},
  loading:null,
+ 'family-full':familyFixture(3),
+ 'family-single':familyFixture(1),
+ 'family-media':familyFixture(3,{artifact:{evidence_id:'vis_fixturepreview',source_sha:expected,caption:'Fixture overlay capture',kind:'design'}}),
 };
 try {
- const cases=[['runner',768,'dark'],['inspector',768,'light'],['relay',390,'dark'],['night-shift',390,'light'],['blocked',320,'dark'],['empty',320,'light'],['complete',390,'dark'],['loading',390,'light'],['jobs',390,'dark'],['jobs',768,'light'],['generic',360,'dark'],['generic',760,'light']];
+ const visualPage=await browser.newPage({viewport:{width:640,height:360}});await visualPage.setContent('<!doctype html><style>body{margin:0;background:#151718;color:#eee;font:18px system-ui;padding:28px}main{background:#282b2c;border-radius:20px;padding:24px}h2{color:#92c8bf;font-size:26px}button{border:1px solid #7a9e99;border-radius:9px;background:#303b3b;color:white;padding:12px 18px}</style><main><small>RENDERED TEST FIXTURE · NOT LIVE PRODUCT</small><h2>Overlay controls</h2><p>Preview the spacing, hierarchy and keyboard controls.</p><button>Open settings</button></main>');const fixtureImage=(await visualPage.screenshot()).toString('base64');await visualPage.close();
+ const cases=[['runner',768,'dark'],['inspector',768,'light'],['relay',390,'dark'],['night-shift',390,'light'],['blocked',320,'dark'],['empty',320,'light'],['complete',390,'dark'],['loading',390,'light'],['jobs',390,'dark'],['jobs',768,'light'],['generic',360,'dark'],['generic',760,'light'],['family-full',760,'dark'],['family-full',360,'light'],['family-single',760,'light'],['family-single',360,'dark'],['family-media',760,'dark'],['family-media',360,'light']];
  for(const [name,width,theme] of cases){
   const page=await browser.newPage({viewport:{width,height:1000},colorScheme:theme,reducedMotion:'reduce'}),errors=[],unexpected=[];
   page.on('pageerror',error=>errors.push(error.message));
-  await page.addInitScript(({fixture})=>{
+  await page.addInitScript(({fixture,fixtureImage,source})=>{
    if(window.parent===window)return;
-   window.__calls=[];
+   window.__calls=[];window.__manualRefresh=false;
    window.openai={toolInput:fixture?{project:'relay'}:{},toolOutput:fixture,
-    callTool:async(name,args)=>{window.__calls.push({name,args});return name==='relay_runner_progress'?{structuredContent:{project:'relay',progress:[{assignment:'sample-refreshed',primary_team:'runner',primary_staff:'ellis',state:'working',goal:'Refreshed canonical state',progress_percent:70}]}}:{}},
+    callTool:async(name,args)=>{window.__calls.push({name,args});if(name==='relay_ui_request')return {structuredContent:args.path.endsWith('/image')?{status:200,content_type:'image/png',base64:fixtureImage}:{status:200,body:{evidence_id:'vis_fixturepreview',context:{project:'relay',assignment:'card-demo',commit_sha:source}}}};if(name==='relay_runner_progress'&&!window.__manualRefresh)return {structuredContent:fixture};return name==='relay_runner_progress'?{structuredContent:{project:'relay',progress:[{assignment:args.assignment||fixture?.claim?.id||'sample-runner',primary_team:'runner',primary_staff:'ellis',state:'working',goal:'Refreshed canonical state',progress_percent:70}]}}:{}},
     openExternal:async({href})=>{window.__calls.push({name:"openExternal",href})},
     notifyIntrinsicHeight:height=>{window.__reportedHeight=height}
    };
-  },{fixture:fixtures[name]});
+  },{fixture:fixtures[name],fixtureImage,source:expected});
   await page.route('**/*',route=>{
    const url=route.request().url();
    if(url===origin+'/card')return route.fulfill({contentType:'text/html',body:resource.text,headers:{'Content-Security-Policy':"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: https://relay.loew.fi; font-src data:; connect-src https://relay.loew.fi"}});
@@ -45,7 +62,7 @@ try {
    unexpected.push(url);return route.abort();
   });
   await page.goto(origin+'/host');const frame=page.frameLocator('iframe');
-  await frame.locator('#feature-title').waitFor();
+  await frame.locator('#feature-title').waitFor({state:'attached'});
   if(fixtures[name])await frame.locator('#title').filter({hasText:name==='jobs'?'relay card polish':name==='empty'?'Verification':fixtures[name].claim?.goal||'Relay update'}).waitFor();
   await frame.locator('body').evaluate(async()=>{await document.fonts.load('400 36px "Momo Trust Display"');await document.fonts.load('400 14px Inter');await document.fonts.load('600 14px Inter');await document.fonts.ready;await Promise.all([...document.images].map(img=>img.complete?Promise.resolve():new Promise(resolve=>{img.onload=resolve;img.onerror=resolve})));});
   const geometry=await frame.locator('body').evaluate(()=>({width:innerWidth,overflow:document.documentElement.scrollWidth>innerWidth,font:document.fonts.check('400 36px "Momo Trust Display"'),headingFont:getComputedStyle(document.querySelector('h1')).fontFamily,bodyFont:getComputedStyle(document.body).fontFamily,interLoaded:document.fonts.check('400 14px Inter'),outerPadding:parseFloat(getComputedStyle(document.querySelector('#card')).paddingLeft),actionsAfterHero:Boolean(document.querySelector('.actions #open-relay')&&(document.querySelector('.hero').compareDocumentPosition(document.querySelector('.actions'))&Node.DOCUMENT_POSITION_FOLLOWING)),nextInHero:Boolean(document.querySelector('.hero #next')),buttons:[...document.querySelectorAll('.actions button')].filter(el=>!el.hidden).map(el=>({label:el.textContent,height:el.getBoundingClientRect().height})),images:[...document.querySelectorAll('.feature-mark img')].map(img=>({loaded:img.complete&&img.naturalWidth>0,source:img.src.slice(0,22)})),glyphMotion:getComputedStyle(document.querySelector('.feature-mark'),'::after').animationName,percent:document.querySelector('#meter').hidden?null:document.querySelector('#metric').textContent,diagnosticsExpanded:document.querySelector('#details').open}));
@@ -54,21 +71,23 @@ try {
   if(['relay','inspector','night-shift','blocked','empty','complete'].includes(name))assert.equal(geometry.percent,null);
   // Ordinary multi-assignment responses show the selected assignment, not a fabricated active-job hero.
   if(name==='jobs'){assert.equal(await frame.locator('.insight').isVisible(),false);assert.equal(await frame.locator('#plan-panel').isVisible(),false);assert.equal(await frame.locator('#rows').textContent(),'');assert.match(await frame.locator('#title').textContent(),/relay card polish/);}
-  if(fixtures[name]){const identity=contextCardModel(fixtures[name]).identity;assert.equal(await frame.locator('#feature-title').textContent(),identity.speaker?.name||identity.team_label);if(identity.speaker){assert.match(await frame.locator('#team').textContent(),/Assignment lead/);assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),identity.speaker.id);assert.ok(geometry.images.length>0);}}
+  if(fixtures[name]){const identity=contextCardModel(fixtures[name]).identity;assert.equal(await frame.locator('#feature-title').textContent(),contextCardModel(fixtures[name]).family==='product'?'relay':identity.speaker?.name||identity.team_label);if(identity.speaker){assert.ok((await frame.locator('#team').textContent()).includes(identity.relationship));assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),identity.speaker.id);assert.ok(geometry.images.length>0);}}
   if(name==='generic'){assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),'');assert.equal(await frame.locator('#feature-title').evaluate(el=>getComputedStyle(el).color),theme==='dark'?'rgb(240, 100, 59)':'rgb(181, 71, 31)');}
+  if(name.startsWith('family-')){assert.equal(await frame.locator('.family-update').count(),name==='family-single'?1:3);assert.equal(await frame.locator('#family-crew').isVisible(),true);assert.equal(await frame.locator('.card-header').isVisible(),false);if(name==='family-media')await frame.locator('.family-capture img').waitFor();}
   if(name==='complete')assert.equal(await frame.locator('#next').isVisible(),false);
   assert.deepEqual(errors,[]);assert.deepEqual(unexpected,[]);
   const surface=`context-card-${name}-${width}-${theme}`,screenshot=await frame.locator('#card').screenshot();
   await writeFile(directory+'/'+surface+'.png',screenshot);
   const capture={surface,theme,width,fixture:true,source_sha:expected,resource:resource.uri,sha256:createHash('sha256').update(screenshot).digest('hex'),geometry};
   if(auth){
-   const metadata={kind:'pr_preview',target_url:'https://relay.loew.fi/inspector',context:{project:'relay',environment:'preview',surface,commit_sha:expected,...(process.env.PREVIEW_PR?{pr_number:Number(process.env.PREVIEW_PR)}:{})},viewport:{width,height:1000},engine:'github-chromium',engine_reason:'contextual_card_fixture_verification',step_label:surface+' · sample data · native host not verified',title:'Context card visual parity · '+expected.slice(0,7),dom:{fixture:true,resource_uri:resource.uri,geometry,qa_helper:{title:'Context card visual parity',purpose:'Compare the card with the approved Inspector composition. This is sample data in a Chromium host fixture, not proof of native ChatGPT mounting.',artifact:{repository:'lrnolivia/relay',head_sha:expected,environment:'preview'},questions:['Do the larger product mark, Momo title and compact content match the approved card?','Are status, next action and buttons readable on the phone?'],checklist:['Check both light and dark captures.','The existing Linux native-client mounting task remains separate.'],overall_verdict:null,known_issues:['Actual Linux native ChatGPT mount is not verified by these captures.'],visuals:{evidence_ids:[]}}},assertions:[{id:'no-overflow',status:'pass',detail:'Card fits the tested viewport.'},{id:'embedded-assets',status:'pass',detail:'Momo and product artwork render without external network requests.'}],trace:[{action:'render_context_card_fixture',source_sha:expected,resource_uri:resource.uri,state:name}]};
+   const metadata={kind:'pr_preview',target_url:'https://relay.loew.fi/inspector',context:{project:'relay',assignment:fixtures[name]?.claim?.id||null,environment:'preview',surface,commit_sha:expected,...(process.env.PREVIEW_PR?{pr_number:Number(process.env.PREVIEW_PR)}:{})},viewport:{width,height:1000},engine:'github-chromium',engine_reason:'contextual_card_fixture_verification',step_label:surface+' · sample data · native host not verified',title:'Context card visual parity · '+expected.slice(0,7),dom:{fixture:true,resource_uri:resource.uri,geometry,qa_helper:{title:'Context card visual parity',purpose:'Compare the card with the approved Inspector composition. This is sample data in a Chromium host fixture, not proof of native ChatGPT mounting.',artifact:{repository:'lrnolivia/relay',head_sha:expected,environment:'preview'},questions:['Do the larger product mark, Momo title and compact content match the approved card?','Are status, next action and buttons readable on the phone?'],checklist:['Check both light and dark captures.','The existing Linux native-client mounting task remains separate.'],overall_verdict:null,known_issues:['Actual Linux native ChatGPT mount is not verified by these captures.'],visuals:{evidence_ids:[]}}},assertions:[{id:'no-overflow',status:'pass',detail:'Card fits the tested viewport.'},{id:'embedded-assets',status:'pass',detail:'Momo and product artwork render without external network requests.'}],trace:[{action:'render_context_card_fixture',source_sha:expected,resource_uri:resource.uri,state:name}]};
    const form=new FormData();form.set('metadata',JSON.stringify(metadata));form.set('screenshot',new Blob([screenshot],{type:'image/png'}),surface+'.png');
    const uploaded=await fetch('https://relay.loew.fi/evidence/ingest',{method:'POST',headers:auth,body:form,signal:AbortSignal.timeout(45000)});assert.ok(uploaded.ok,'Inspector ingest: '+uploaded.status);const stored=await uploaded.json();capture.evidence_id=stored.evidence_id;
    const image=await fetch('https://relay.loew.fi/api/visual/'+stored.evidence_id+'/image',{headers:auth,signal:AbortSignal.timeout(45000)});assert.ok(image.ok);assert.equal(createHash('sha256').update(new Uint8Array(await image.arrayBuffer())).digest('hex'),capture.sha256);capture.readback_verified=true;
   }
   captures.push(capture);
   if(name==='runner'){
+   await frame.locator('body').evaluate(()=>{window.__calls=[];window.__manualRefresh=true});
    await frame.locator('#refresh').click();await frame.locator('#title').filter({hasText:'Refreshed canonical state'}).waitFor();await frame.locator('#open-relay').click();
    const calls=await frame.locator('body').evaluate(()=>window.__calls);assert.deepEqual(calls.map(call=>call.name),['relay_runner_progress','openExternal']);
    await page.keyboard.press('Shift+Tab');
