@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T19:47:53.771Z",
+  "updated_at": "2026-11-01T19:48:39.116Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22869,7 +22869,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T19:47:53.771Z",
+      "updated_at": "2026-11-01T19:48:39.116Z",
       "lease_until": "2026-11-02T07:47:53.771Z",
       "amendment_count": 3,
       "amendments": [
@@ -22925,7 +22925,73 @@
       ],
       "supporting_roles": [
         "verification"
-      ]
+      ],
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "preview-edge-v16-review-admitted-prepare",
+          "assignment": "rtxforge-preview-game-picker-edge-20261101",
+          "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "branch": "rtxforge/preview-game-picker-edge-20261101",
+          "source_sha": "23fb6f85ffe0776bfed33db7c4f0cc8b8e122e74",
+          "objective_digest": "afceae0f6584ffa5d0161e1c65f3fce7a2cf3073106b562514a0f64cffa21785",
+          "scope_digest": "59e5226ffaf76e0611ff88e120ddaa86f5efbff07eaab03bbc125f9dea7fef95",
+          "step_id": "preview-edge-review",
+          "specialist": {
+            "role": "verification",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "23fb6f85ffe0776bfed33db7c4f0cc8b8e122e74",
+            "objective_digest": "afceae0f6584ffa5d0161e1c65f3fce7a2cf3073106b562514a0f64cffa21785",
+            "step_id": "preview-edge-review",
+            "label": "Review picker and Bar edge changes",
+            "role": "verification",
+            "host_tool": "collaboration.followup_task",
+            "host_available": true,
+            "intent_digest": "6b1828b912ea0d19adcfedc21e8d3e246e6e240c881b02f6694af8e04e890519"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-01T19:48:39.116Z",
+          "request_digest": "21445d05cb8337fa7a98041ea36a924a5cc9e577273cfb1cf6d15b81014023ff",
+          "step_digest": "4ade3874bf1a24e3df7dc52501c1409669883d6e56ee38763e5cfddfa0558e45"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "rtxforge-preview-game-picker-edge-20261101",
+        "revision": "63dd0b1ea3f174882a59950960713772d6a52539f850d25282097236cbace970",
+        "objective_digest": "afceae0f6584ffa5d0161e1c65f3fce7a2cf3073106b562514a0f64cffa21785",
+        "publisher": {
+          "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "branch": "rtxforge/preview-game-picker-edge-20261101"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "preview-edge-review",
+            "label": "Review picker and Bar edge changes",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "rtxforge-preview-game-picker-edge-20261101",
+        "revision": "63dd0b1ea3f174882a59950960713772d6a52539f850d25282097236cbace970",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
