@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T16:46:25.592Z",
+  "updated_at": "2026-11-01T16:55:22.681Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22710,14 +22710,23 @@
         "windows/RtxForge.Windows/Controls/OverlayPreviewView.cs",
         "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
         "windows/RtxForge.Windows/Services/OverlayAccent.cs",
-        "windows/tests/OverlayArtwork/"
+        "windows/RtxForge.Windows/Services/OverlayPreview.cs",
+        "windows/RtxForge.Windows/Models/GlassAppearance.cs",
+        "windows/tests/Settings/",
+        "scripts/glass_preferences.py",
+        "tests/test_glass_preferences.py",
+        "gui/overlay_layouts.py",
+        "gui/rtxforge_gtk.py",
+        "providers/glass-overlay/OverlayController.h",
+        "prototypes/overlay-rmlui/",
+        "windows/overlay-rmlui/tests/"
       ],
       "resources": [
         "rtxforge-desktop-overlay-preview"
       ],
       "goal": "Make the Desktop Overlay Settings preview compact and refresh per-game accent immediately, independently of screenshot loading.",
       "acceptance": "A bounded 16:9 inline preview remains compact at normal and large window sizes, with native Layout/Theme/Accent controls beside it when space allows. Selecting a game refreshes its accent without waiting for screenshot I/O; rapid selection cannot apply stale colors or photos. Full preview stays accurate. Windows build and focused native UI verification pass.",
-      "next_action": "Inspect sizing and accent pipeline, implement compact sizing and immediate generation-guarded color updates, build and open a read-only working preview. Preserve all user tuning and unrelated work.",
+      "next_action": "Complete compact preview and immediate guarded accent updates; add native full-preview game selection and persisted left/right Side Panel placement across overlay and native desktop preferences. Verify Windows settings, native layout/input and portable preference checks.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -22741,8 +22750,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T16:43:23.789Z",
-      "lease_until": "2026-11-02T04:43:23.789Z"
+      "updated_at": "2026-11-01T16:55:22.681Z",
+      "lease_until": "2026-11-02T04:55:22.681Z"
     }
   ]
 }
