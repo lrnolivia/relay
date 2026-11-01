@@ -1,6 +1,8 @@
 import { normalizeCommunicationResult, formatRelay, safePresentationText } from './human-presentation.js';
 import { legacyContextCardModel } from './relay-context-card-legacy-model.js';
 import { assignmentCardSteps } from './relay-card-steps.js';
+import {assignmentCardUpdates} from './relay-card-updates.js';
+import { cardStaff } from './relay-card-identity.js';
 import { cardIdentity } from './relay-card-identity.js';
 
 export function contextCardModel(data = {}, directory = {}, options = {}) {
@@ -121,7 +123,8 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   const has_metric=percent!==null||Boolean(checks?.length)||Boolean(pr?.number);
   const card = { title:safePresentationText(title), feature, primary_staff:safePresentationText(primary), primary_role:primaryRole?safePresentationText(primaryRole,60):null, staff_unresolved:unresolvedStaff, staff_note:staffNote?safePresentationText(staffNote,200):null, team:safePresentationText(team), label, tone, signal, summary, rows:rows.map(row=>({label:safePresentationText(row.label,100),text:safePresentationText(row.text,100)})), blocker, qa, handoff, next_step:nextStep, metric, metric_label, has_metric, percent, evidence:Object.fromEntries(Object.entries(evidence).filter(([,v])=>['string','number','boolean'].includes(typeof v)).map(([key,value])=>[key,typeof value==='string'?safePresentationText(value,12000):value])), refresh:Boolean(data.project), human_v1:presentation };
   const milestone = data.work_card?.milestone && typeof data.work_card.milestone === 'object' ? data.work_card.milestone : null;
-  Object.assign(card,{plan,identity,project:typeof data.project==='string'?safePresentationText(data.project,80):null,project_icon:cardProjectIcon(data.project_icon,data.project),project_label:safePresentationText(data.project_icon?.project===data.project?data.project_icon?.name:null,80)||data.project});
+  const updates=assignmentCardUpdates(first).map(update=>({...update,person:cardStaff(update.owner?.staff)}));
+  Object.assign(card,{updates,updates_truncated:first.card_updates?.truncated===true,product:ci?'inspector':String(data.work_card?.tool||'').startsWith('relay_runner_')?'runner':String(data.work_card?.tool||'').startsWith('relay_verify_')?'inspector':'relay',family:updates.length>1?'assignment':updates.length===1?'single':isAssignment?'assignment-status':'product',plan,identity,project:typeof data.project==='string'?safePresentationText(data.project,80):null,project_icon:cardProjectIcon(data.project_icon,data.project),project_label:safePresentationText(data.project_icon?.project===data.project?data.project_icon?.name:null,80)||data.project});
   if(identity.speaker){card.primary_staff=identity.speaker.name;card.primary_role=identity.speaker.role;card.staff_unresolved=false;card.staff_note=null;}
   if(identity.team!=='relay')card.feature=identity.team;
   if(plan.steps.length){card.metric=plan.passed+'/'+(plan.total??'?');card.metric_label='steps verified';card.has_metric=plan.total!==null;card.rows=[];}

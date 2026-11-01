@@ -1,3 +1,4 @@
+import {FAMILY_BRANDS} from './relay-card-family.js';
 import { LIVE_WORK_SCRIPT } from './relay-card-refresh.js';
 import { STAFF } from './staff-registry.js';
 import { contextCardBrandAssets } from '../apps/web/generated.js';
@@ -8,7 +9,7 @@ import { withHumanPresentation } from './communication-presentation.js';
 import { enrichWorkCard, isWorkCardTool, withWorkCardTemplate } from './work-card-delivery.js';
 import { assignmentCardContext } from './relay-card-steps.js';
 export function contextCardModel(data = {}, directory = DIRECTORY, options = {}) { return sharedContextCardModel(data, directory, { roles: ROLE_DIRECTORY, ...options }); }
-export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v25.html';
+export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v26.html';
 export const RELAY_CONTEXT_CARD_TOOL = 'relay_render_context_card';
 export const RELAY_STATUS_CARD_URI = 'ui://relay/status-card/v5-legacy-bridge.html';
 export const RELAY_STATUS_CARD_TOOL = 'relay_show_legacy_bridge_card';
@@ -211,7 +212,7 @@ imageButton.addEventListener('click',enlargeScreenshot);imageButton.addEventList
 function compactCardBrandAssets(html) {
   // The initial image keeps the exact canonical bytes and still works without
   // JavaScript. Reuse its src instead of embedding the same 64 KiB a second time.
-  const marker='const CARD_BRAND_ASSETS={"relay":'+JSON.stringify(contextCardBrandAssets.relay);
+  const marker='const CARD_BRAND_ASSETS={"relay":'+JSON.stringify(FAMILY_BRANDS.relay);
   if(!html.includes(marker))throw Error('Initial card brand deduplication target missing');
   return html.replace(marker,'const CARD_BRAND_ASSETS={"relay":document.querySelector("#feature-mark img").getAttribute("src")');
 }
