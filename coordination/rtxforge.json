@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T19:41:22.251Z",
+  "updated_at": "2026-11-01T19:46:23.104Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22867,9 +22867,9 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T19:26:52.312Z",
-      "lease_until": "2026-11-02T07:26:52.312Z",
-      "amendment_count": 1,
+      "updated_at": "2026-11-01T19:46:23.104Z",
+      "lease_until": "2026-11-02T07:46:23.104Z",
+      "amendment_count": 2,
       "amendments": [
         {
           "at": "2026-11-01T19:26:52.312Z",
@@ -22887,7 +22887,26 @@
             "goal": "Theme and align full-preview game selection opposite the chosen overlay edge, and offer persisted top/bottom Bar positioning across native overlay and desktop/Linux settings; publish and install Beta16.",
             "acceptance": "Game picker follows Side Panel top on opposite horizontal edge and matches its theme. Top/Bottom Bar persists through shared preferences, preview illustration and settings; attached panels open inward and picker moves opposite. Focused native/portable/Windows checks pass, reviewed CI source is published and installed with required overlay rollout revision6."
           }
+        },
+        {
+          "at": "2026-11-01T19:46:23.104Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "Add independent read-only review of the committed preview and Bar-position changes before release.",
+          "fields": [
+            "supporting_roles"
+          ],
+          "before": {
+            "supporting_roles": null
+          },
+          "after": {
+            "supporting_roles": [
+              "verification"
+            ]
+          }
         }
+      ],
+      "supporting_roles": [
+        "verification"
       ]
     }
   ]
