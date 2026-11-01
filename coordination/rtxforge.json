@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T05:53:59.767Z",
+  "updated_at": "2026-11-01T06:03:03.557Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22598,7 +22598,9 @@
         "windows/overlay-rmlui/CMakeLists.txt",
         "windows/build/Build-GlassOverlay.ps1",
         "windows/RtxForge.Windows/App.xaml.cs",
-        ".github/workflows/overlay-native.yml"
+        ".github/workflows/overlay-native.yml",
+        "windows/RtxForge.Windows/Controls/OverlayLayoutPicker.cs",
+        "gui/overlay_layouts.py"
       ],
       "resources": [
         "rtxforge-overlay-layout",
@@ -22607,7 +22609,7 @@
       ],
       "goal": "Repair and complete the approved glass overlay preview, carry Packages/Extras/Game Details/Settings parity into Game Mode, and add per-game ReShade installation/import with dynamically discovered shader and custom INI controls.",
       "acceptance": "The 54-case native layout matrix and real input tests pass, including sticky chrome, attached Bar popovers, Clear white ink and Clear-Light-Dark accent transitions. Windows app and native DLL builds pass; focused import/rollback/ownership tests pass. Tools on desktop and Game Mode accept automatic ReShade or user ZIP/DLL/add-on/preset imports without replacing a custom host; add-on-capable ReShade exposes shader parameters and explicitly labeled scalar INI settings. Preserve original backups, saved tuning, branding and the approved materials. Retain the live prototype and report platform/game qualification limits honestly.",
-      "next_action": "Finish simplified inline 16:9 Desktop preview with search and title-bar-free full view, verify actual library/appearance/layout updates, then exact-source CI before authorized publication. Website delivered separately.",
+      "next_action": "Simplify Desktop overlay settings to instant illustration over a cropped game scene, group native theme swatches and Accent Tint with layout; parity on GTK; preserve full renderer on click. Website worker handles requested neutral tints and pill navigation.",
       "category": "design",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -22637,8 +22639,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T05:45:47.713Z",
-      "lease_until": "2026-11-01T17:45:47.713Z",
+      "updated_at": "2026-11-01T06:03:03.557Z",
+      "lease_until": "2026-11-01T18:03:03.557Z",
       "amendment_count": 1,
       "amendments": [
         {
