@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T17:39:30.715Z",
+  "updated_at": "2026-11-01T17:40:02.958Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22753,7 +22753,7 @@
       ],
       "goal": "Compact responsive Desktop Overlay preview with immediate game accents, game selection within the full preview, and persisted Left/Right Side Panel placement.",
       "acceptance": "Inline 16:9 preview is bounded to a compact size; game accent and theme/layout changes render promptly and stale asynchronous results cannot win. Full native preview can select games from the same real library without OS titlebar or screenshot uploads. Side Panel has persisted Left/Right placement in native overlay, Windows and Linux preferences and inline preview; pop-out panels open inward, free dragging remains. Validation stages: primary implementation owner verifies Windows build and read-only native settings UI; portable settings tests verify default, valid and invalid side persistence; native layout/input tests verify both screen edges and inward placement. Preserve approved materials and user tuning; no new moving-gameplay qualification claimed.",
-      "next_action": "Update shared Desktop/global and Game Details Overlay presentation; preview current game in details, retain shared appearance and per-game menu semantics. Independent Game Mode worker has both explicit user handoffs. Then Beta15 exact-source checks, publish and install.",
+      "next_action": "PR136 head59766bb325311e6658bf87622d908c2a9afbaafb ready for exact-source CI. Windows0warnings/errors,79Python tests,Settings checks,renderer/helper fixtures and54native layout cases pass. Shared Desktop/Game Details panel and Linux shared appearance done; Game Mode integration handoff delivered. Publish/install Beta15 only after required CI.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -22783,8 +22783,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T17:32:30.467Z",
-      "lease_until": "2026-11-02T05:32:30.467Z",
+      "updated_at": "2026-11-01T17:40:02.958Z",
+      "lease_until": "2026-11-02T05:40:02.958Z",
       "amendment_count": 1,
       "amendments": [
         {
