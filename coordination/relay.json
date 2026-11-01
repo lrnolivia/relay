@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-01T23:48:19.543Z",
+  "updated_at": "2026-11-01T23:54:28.727Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21622,6 +21622,59 @@
       "evidence": "Merge: https://github.com/lrnolivia/relay/commit/6387ace814039c39a7c9720561b28abf570fcd8e\nProduction smoke: https://github.com/lrnolivia/relay/actions/runs/41363234244\nRecovery assurance: https://github.com/lrnolivia/relay/actions/runs/41363289295",
       "work_accounted": true,
       "completed_at": "2026-11-01T23:48:19.543Z"
+    },
+    {
+      "id": "relay-assignment-lead-id-badge-20261101",
+      "owner": "01a19804-e77b-7229-8982-76ae7a4b30c2",
+      "branch": "relay/assignment-lead-id-badge-20261101",
+      "paths": [
+        "src/relay-card-family.js",
+        "src/relay-card-family.test.js",
+        "src/relay-chat-ui.js",
+        "src/relay-chat-ui.test.js",
+        "src/index.js",
+        "src/relay-entry.test.js",
+        "scripts/verify-context-card-visuals.mjs"
+      ],
+      "resources": [
+        "relay-assignment-header-lead-badge"
+      ],
+      "goal": "Replace the plain assigned-lead line with a compact canonical staff ID badge inside the project-owned assignment header.",
+      "acceptance": "Project and assignment title stay primary. Show actual assigned lead's existing approved portrait crop with subtle shadow, bold Momo name in canonical contrast-safe team accent, small-caps team label and actual team icon, plus clear lead-role label. Apply every real assigned staff identity; graceful missing or failed avatar fallback; no lead, cross-team/current contributor distinction, keyboard/accessibility, responsive light/dark and layout transitions. Preserve assignment shell, contributor messages, public preview/privacy/workflow contracts, race/reduced-motion safeguards and old resource aliases. Meaningful model-to-DOM tests, appropriate full checks and exact-head locally inspected captures. New draft PR for parent human merge only; no merge/approval or new screenshot export.",
+      "next_action": "Implement header-only lead badge using existing staff identity assets after independent readback/preflight. Test model-to-DOM identity/fallback/transitions and local pixels, publish tested draft PR. Preserve all unrelated reservations and queued native UI acceptance.",
+      "category": "implementation",
+      "primary_role": "builder",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "nico",
+      "supporting_staff": [
+        "roman"
+      ],
+      "base_sha": "dc7dda7a732418e39132a5f8a81ecd41753966bd",
+      "state": "active",
+      "created_at": "2026-11-01T23:54:28.727Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Replace the plain assigned-lead line with a compact canonical staff ID badge inside the project-owned assignment header.",
+          "acceptance": "Project and assignment title stay primary. Show actual assigned lead's existing approved portrait crop with subtle shadow, bold Momo name in canonical contrast-safe team accent, small-caps team label and actual team icon, plus clear lead-role label. Apply every real assigned staff identity; graceful missing or failed avatar fallback; no lead, cross-team/current contributor distinction, keyboard/accessibility, responsive light/dark and layout transitions. Preserve assignment shell, contributor messages, public preview/privacy/workflow contracts, race/reduced-motion safeguards and old resource aliases. Meaningful model-to-DOM tests, appropriate full checks and exact-head locally inspected captures. New draft PR for parent human merge only; no merge/approval or new screenshot export.",
+          "at": "2026-11-01T23:54:28.727Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-assignment-lead-id-badge-20261101:acceptance:0",
+            "text": "Project and assignment title stay primary. Show actual assigned lead's existing approved portrait crop with subtle shadow, bold Momo name in canonical contrast-safe team accent, small-caps team label and actual team icon, plus clear lead-role label. Apply every real assigned staff identity; graceful missing or failed avatar fallback; no lead, cross-team/current contributor distinction, keyboard/accessibility, responsive light/dark and layout transitions. Preserve assignment shell, contributor messages, public preview/privacy/workflow contracts, race/reduced-motion safeguards and old resource aliases. Meaningful model-to-DOM tests, appropriate full checks and exact-head locally inspected captures. New draft PR for parent human merge only; no merge/approval or new screenshot export.",
+            "at": "2026-11-01T23:54:28.727Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-01T23:54:28.727Z",
+      "lease_until": "2026-11-02T11:54:28.727Z"
     }
   ],
   "migrated_from": "loew-inspector"
