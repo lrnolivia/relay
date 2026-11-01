@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T20:41:00.801Z",
+  "updated_at": "2026-11-01T20:50:14.551Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22846,7 +22846,7 @@
         "roman"
       ],
       "base_sha": "01380eb275c64f228003dc3a78ff499e5be76977",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-01T18:55:38.064Z",
       "objective_history": {
         "baseline": {
@@ -22869,8 +22869,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T20:06:37.834Z",
-      "lease_until": "2026-11-02T08:06:37.834Z",
+      "updated_at": "2026-11-01T20:50:14.551Z",
+      "lease_until": "2026-11-02T08:50:14.551Z",
       "amendment_count": 3,
       "amendments": [
         {
@@ -22991,7 +22991,13 @@
         "truncated": false,
         "identities": {},
         "items": []
-      }
+      },
+      "pr": 137,
+      "merged_head_sha": "e3ade04cc66c45c41907db70c89cacab18d89470",
+      "merge_commit_sha": "55f2d8b54e15165e427add24b05b40e5758d178d",
+      "evidence": "PR137 merged55f2d8b54e15165e427add24b05b40e5758d178d, tree48eab9ea6c3a5168a15387886abd7549138b73eb matches reviewed e3ade04. All16PR checks green;80portable,WindowsSettings/x64Release,native54layout+18picker+6Barandtransition/dragfixtures,DX11/DX12SDR-HDR/helper checks passed. Actual host independent read-only review found2defects,fixed and regression-tested; native-binding endpoint provider failed with actual canonical ID, evidence retained without invented worker. PublishedBeta16 Windows41346230909/Linux41346233461 bothsuccess. InstallerSHA8bdcde72532721befef286686b235cb56ec582ba76aab454eec62601a04445ae installedexit0. Requiredrollout6complete0blocked;41managedDLLcopies(including2host64)match e8472eee4a351fc11e8e5128347b830a055192ad28db3f0ea46958ab895f2335. Appearance preserved.11Beta15rollbackassetsretained. Receipts C:/Users/lrnol/.codex/tmp/rtxforge-beta16-install/. Sharedprefs handedtoGameMode. WebsitecompacttoolbarrestoredandfreshGameModecaptureslive; deploymentreceipt separatewebsiteworker.",
+      "work_accounted": true,
+      "completed_at": "2026-11-01T20:50:14.551Z"
     }
   ]
 }
