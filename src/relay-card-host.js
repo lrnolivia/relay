@@ -1,5 +1,5 @@
 // Shared by the embedded card and deterministic bridge tests. Never serialize raw host errors.
-export function createCardHost({native,ready,rpc,unwrap,now=Date.now,setTimer=setTimeout,clearTimer=clearTimeout}) {
+export const CARD_HOST_SCRIPT=String.raw`function createCardHost({native,ready,rpc,unwrap,now=Date.now,setTimer=setTimeout,clearTimer=clearTimeout}) {
  let sequence=0;const ownedErrors=new WeakSet();
  return async function callTool(name,args){
   const start=now(),request='card-read-'+(++sequence);
@@ -19,4 +19,4 @@ export function createCardHost({native,ready,rpc,unwrap,now=Date.now,setTimer=se
   try{await ready();}catch(error){throw classify(error,'mcp','initialize');}
   try{return checked(await rpc('tools/call',{name,arguments:args}),'mcp');}catch(error){throw classify(error,'mcp','read');}
  };
-}
+}`;

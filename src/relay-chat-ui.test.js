@@ -420,6 +420,7 @@ test('production context card model remains executable after Worker keepNames bu
   const html = bundled.relayContextCardResource().text;
   const script = html.match(/<script>([\s\S]*?)<\/script>/)?.[1];
   assert.ok(script, 'actual shipped resource includes its browser program');
+  const {CARD_HOST_SCRIPT}=await import('./relay-card-host.js');assert.ok(script.includes(CARD_HOST_SCRIPT),'Worker bundling preserves the exact tested host bridge literal');
   const prefix = script.slice(0, script.indexOf('const FEATURES='));
   assert.ok(prefix.includes('const model='), 'test executes the actual embedded model');
   const cases = [

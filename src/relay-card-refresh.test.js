@@ -233,6 +233,10 @@ test('typed refresh failures preserve evidence and checked clock without leaking
    assert.equal(await page.locator('#title').textContent(),'Fresh task');assert.ok((await page.locator('#card-freshness').textContent()).endsWith(checked));
    const diag=await page.locator('#card-refresh-diagnostics').textContent();assert.ok(diag.includes(code));assert.ok(!diag.includes('PRIVATE'));assert.equal(await page.locator('#details').evaluate(x=>x.open),false);
   }
+  await page.evaluate(data=>window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolOutput:data}}})),{...progress('task','working','2026-10-31T23:04:00Z'),ok:false,error:{message:'private failure'}});
+  assert.match(await page.locator('#card-freshness').textContent(),/Relay could not read/);assert.ok((await page.locator('#card-freshness').textContent()).endsWith(checked));assert.equal(await page.locator('#title').textContent(),'Fresh task');
+  await page.evaluate(data=>window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolOutput:data}}})),progress('task','working','2026-10-31T23:05:00Z'));
+  assert.match(await page.locator('#card-freshness').textContent(),/Live updates/);assert.equal(await page.locator('#card-refresh-diagnostics').isVisible(),false);
  }finally{await browser.close();}
 });
 test('native timeout preserves last evidence, ignores its late answer, and never dispatches through MCP',async()=>{

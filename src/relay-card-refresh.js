@@ -65,6 +65,7 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
   const base=render;
   render=function(result){
     let data=unwrap(result);if(!data||typeof data!=='object')return;
+    if(target&&canonical&&valid(data,target)&&(result?.isError||data.ok===false||data.isError||data.error)){failures++;recordFailure(failure('provider_error'),target);status();schedule();return;}
     const next=identify(data),changed=key(next)!==key(target),signature=JSON.stringify(data);
     if(!applying&&!changed&&seen.has(signature))return;
     if(!applying&&!changed&&newest&&stamp(data)&&stamp(data)<newest)return;
@@ -75,7 +76,7 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
     // already observed progress with an Assigned snapshot while that read runs.
     if(!applying&&!changed&&canonical&&target&&!target.ci&&!Array.isArray(data.progress)){status();schedule(0);return;}
     newest=Math.max(newest,stamp(data));
-    if(Array.isArray(data.progress)||data.ci){checkedAt=stamp(data)||checkedAt;canonical=true;}
+    if(Array.isArray(data.progress)||data.ci){checkedAt=stamp(data)||checkedAt;canonical=true;if(target&&data.ok!==false&&!data.isError&&!data.error&&valid(data,target)){failures=0;lastFailure=null;}}
     if(target&&!target.ci&&Array.isArray(data.progress)){const rows=data.progress.filter(x=>(x?.assignment||x?.id)===target.assignment);data={...data,progress:rows,queue:rows.length?[]:list(data.queue).filter(x=>(x?.assignment||x?.id)===target.assignment),claims:[],claim:undefined};}
     base(data);showLink(model(data,DIRECTORY));status();
     if(!flight)schedule(changed&&!data.work_card&&!data.ci?350:undefined);
