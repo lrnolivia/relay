@@ -143,6 +143,12 @@ test('native delegation emits observed work only after an actual agent receipt, 
  const recovered=await f.channel.nativeHost.reconcile(work);assert.deepEqual(recovered.observation.owner,owner);assert.equal(recovered.agent_id,'/root/fixture-integrator');
  assert.equal(seen.at(-1).state,'failed');assert.equal(seen.at(-1).source_sha,'b'.repeat(40));assert.deepEqual(seen.at(-1).owner,owner);
  assert.deepEqual(seen.at(-1).update,update);assert.deepEqual(recovered.observation.update,update);
+ assert.deepEqual(recovered.observation,seen.at(-1),'recovery reuses the persisted completion observation, including evidence and original time');
+ const {continuityCardProjection}=await import('./relay-continuity.mjs'),{appendCardUpdates}=await import('../src/relay-card-updates.js'),{createHash}=await import('node:crypto');
+ const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex'),plan={schema:1,authorization:'Fixture',objective_digest:'a'.repeat(64),environment:{fixture:true},criteria:['review'],stages:[{id:'a',kind:'review',prompt:'Private fixture task',criteria:['review'],depends_on:[],inputs:['README.md'],verify:['verify']}]};
+ let record={id:'native',owner:'host',branch:'relay/native',primary_staff:'rafael',primary_team:'source'},journal={schema:1,plan_digest:hash(plan),stages:{a:{state:'dispatching',observation:{...seen.at(-1),input_digest:'b'.repeat(64)}}}};
+ const first=continuityCardProjection({plan,journal,assignment:record});record={...record,card_updates:appendCardUpdates(record,first),card_steps:first};journal.stages.a.observation={...recovered.observation,input_digest:'b'.repeat(64)};
+ const replay=continuityCardProjection({plan,journal,assignment:record});assert.equal(replay.steps[0].receipt.id,first.steps[0].receipt.id);assert.equal(appendCardUpdates(record,replay).items.length,1);
 });
 
 test('explicit specialist with no routed staff stops before any native launch packet',async t=>{

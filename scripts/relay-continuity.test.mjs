@@ -5,6 +5,17 @@ import assert from 'node:assert/strict';
 import {reconcileContinuity,validateContinuityPlan} from './relay-continuity.mjs';
 const plan=()=>({schema:1,authorization:'Explicit user authorization includes testing, review and shipping',objective_digest:'a'.repeat(64),environment:{node:'22.23.3',lock:'fixture'},criteria:['A','B','C'],stages:['A','B','C'].map((id,i)=>({id:id.toLowerCase(),kind:i===0?'implementation':i===1?'test':'ship',criteria:[id],depends_on:i?[String.fromCharCode(96+i)]:[],prompt:'Complete '+id,inputs:[id+'.js'],verify:['verify',id]}))});
 
+test('pre-upgrade queued prompts resume unchanged while changed responsibilities still reject',async()=>{
+ const {continuityExecutionPrompt}=await import('./relay-continuity.mjs');
+ const old='Original bounded task\n\nBounded responsibility: builder. Original instruction.',publication='\n\nPublic submission instruction';
+ const pending={operation_id:'existing-job',job_id:'job-original',execution_prompt:old};
+ assert.equal(continuityExecutionPrompt(pending,old,publication),old);assert.equal(pending.job_id,'job-original');
+ assert.equal(continuityExecutionPrompt({},old,publication),old+publication);
+ assert.equal(continuityExecutionPrompt({execution_prompt:old+publication},old,publication),old+publication);
+ assert.throws(()=>continuityExecutionPrompt(pending,old+' changed role',publication),/responsibility changed/);
+ assert.equal(continuityExecutionPrompt({execution_prompt:'Original adopted request'},'Original adopted request',''),'Original adopted request');
+});
+
 test('separately authored public submission crosses projection and pending recovery without private journal text',async t=>{
  const fs=await import('node:fs/promises'),os=await import('node:os'),path=await import('node:path');
  const {readPublicStageUpdate,continuityCardProjection,publishContinuityCard}=await import('./relay-continuity.mjs');

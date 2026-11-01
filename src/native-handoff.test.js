@@ -9,6 +9,14 @@ const apply=(a,args,time=now)=>{const p=transitionNativeHandoff(a,args,source,ti
 const start=(row,extra={})=>({project:'relay',assignment:'task',owner:'worker',action:'started',operation_id:'review-1',expected_record_sha:record,source_sha:source,request_digest:row.request_digest,agent_id:'/root/real-review',observed_at:now.toISOString(),...extra});
 const result=row=>({...start(row),action:'result',state:'succeeded',result_digest:'d'.repeat(64)});
 
+test('new explicit design-submission boundary requires disposition while legacy results remain valid',()=>{
+ const a=assignment(),row=apply(a,{...prepare(a),submission:{schema:1,kind:'design'}});apply(a,start(row));
+ for(const update of [undefined,{text:'Submitted',artifacts:[],preview:{state:'pending'}},{text:'Submitted',artifacts:[],preview:{state:'unavailable',reason:'N/A'}}])assert.throws(()=>apply(a,{...result(row),...(update?{update}:{})}),/Design submission requires/);
+ apply(a,{...result(row),update:{text:'Submitted for review.',artifacts:[],preview:{state:'unavailable',reason:'The design renderer was unavailable at submission.'}}});
+ assert.equal(a.native_handoffs[0].state,'reported');
+ const legacy=assignment(),old=apply(legacy,prepare(legacy));apply(legacy,start(old));apply(legacy,result(old));assert.equal(legacy.native_handoffs[0].state,'reported');
+});
+
 test('prepare is routing only; read and duplicate prepare never authorize another launch',()=>{
  const a=assignment(),args=prepare(a),row=apply(a,args);
  assert.equal(a.card_steps.steps[0].state,'pending');assert.equal(a.card_steps.steps[0].receipt,null);

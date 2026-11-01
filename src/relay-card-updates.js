@@ -17,6 +17,12 @@ export function validPublicCardUpdate(update,receipt){
  return p?.state==='unavailable'?exact(p,['state','reason'])&&copy(p.reason,240)&&!design
   :exact(p,['state'])&&(p.state==='attached'?design:p.state==='pending'&&!design);
 }
+export const designSubmissionSchema={type:'object',additionalProperties:false,required:['schema','kind'],properties:{schema:{const:1},kind:{const:'design'}}};
+export const isDesignSubmission=value=>exact(value,['schema','kind'])&&value.schema===1&&value.kind==='design';
+export function requireDesignSubmission(update,receipt){
+ if(!validPublicCardUpdate(update,receipt)||!['attached','unavailable'].includes(update.preview?.state)||update.preview.state==='unavailable'&&(update.preview.reason.trim().length<12||/^(?:not available|unavailable|no preview|none|n\/?a)[.! ]*$/i.test(update.preview.reason.trim())))throw Error('Design submission requires a bound preview or a meaningful unavailable reason');
+ return update;
+}
 const STATE_COPY={running:'Work started.',passed:'This step is verified.',failed:'This step needs attention.',blocked:'This step is blocked.',cancelled:'This step was cancelled.',skipped:'This step was skipped.',stale:'Waiting for a work update.'};
 const fingerprint=(step,receipt)=>[receipt.id,receipt.input_digest,step.state,receipt.phase||''].join(':');
 // A fresh coordinator may observe the same verified proof again. Its fetch/

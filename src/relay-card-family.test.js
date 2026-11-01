@@ -19,8 +19,8 @@ function fixture(count=3,{id='card-demo',artifact=null}={}){
  return {project:'relay',claim:assignmentCardContext(record)};
 }
 function individual(data){return {...data,presentation_view:'individual',presentation_update_id:data.claim.card_updates.items[0].id};}
-async function mount(data,{width=760,media='valid',hold=false,sourceSha=source,imageBytes=png}={}){
- const browser=await chromium.launch({headless:true}),page=await browser.newPage({viewport:{width,height:1100},reducedMotion:'reduce'});
+async function mount(data,{width=760,media='valid',hold=false,sourceSha=source,imageBytes=png,theme='light'}={}){
+ const browser=await chromium.launch({headless:true}),page=await browser.newPage({viewport:{width,height:1100},colorScheme:theme,reducedMotion:'reduce'});
  await page.clock.install({time:now});await page.clock.pauseAt(new Date(+now+1));
  await page.addInitScript(({data,media,hold,png,source})=>{
   window.calls=[];window.pendingMedia=[];
@@ -41,10 +41,15 @@ const artifact={evidence_id:'vis_abcdefgh',source_sha:source,caption:'Recorded o
 async function ordinaryCommands(){
  const {callRunnerControl,RUNNER_ENGINE_SHA}=await import('./runner-control.js');
  const {PROJECT_AUTHOR}=await import('./commit-attribution.js');
+ const {withCardProjectIcon}=await import('./relay-project-icon.js');
+ const {readFile}=await import('node:fs/promises');
+ const assets=new Map();for(const path of ['apps/web/public/relay.assets.json','icons/relay-icon.png']){const bytes=await readFile(path),sha=(await import('node:crypto')).createHash('sha1').update(Buffer.concat([Buffer.from('blob '+bytes.length+'\0'),bytes])).digest('hex');assets.set(sha,{bytes,path});}
  const {createHash}=await import('node:crypto');
  let record={schema:1,project:'relay',claims:[],queue:[],legacy_branches:[]},revision='a'.repeat(40),parent=revision,message;
  const file=(content,sha=revision)=>({type:'file',sha,encoding:'base64',content:Buffer.from(typeof content==='string'?content:JSON.stringify(content)).toString('base64')});
  const api=async(path,request)=>{
+  if(path.includes('/git/trees/'))return {truncated:false,tree:[...assets].map(([sha,a])=>({sha,path:a.path,size:a.bytes.length,type:'blob'}))};
+  if(path.includes('/git/blobs/')){const a=assets.get(path.split('/').at(-1));return {encoding:'base64',content:a.bytes.toString('base64')};}
   if(path.includes('src/coordination.mjs'))return file('',RUNNER_ENGINE_SHA);
   if(path.includes('projects/relay.json'))return file({id:'relay',repository:'lrnolivia/relay',managed:true,default_branch:'main',implementation:{branch_prefixes:['relay/'],excluded_branches:['main']},coordination:{record:'coordination/relay.json',status:'enabled',max_active_branches:4,lease_hours:12}});
   if(path.includes('coordination/relay.json?ref='+'d'.repeat(40)))return file({},parent);
@@ -60,7 +65,7 @@ async function ordinaryCommands(){
  };
  return {get claim(){return record.claims[0]},command:async(action,request)=>{
   const output=await callRunnerControl('relay_runner_coordinate',{project:'relay',action,request,expected_record_sha:revision},{},api);
-  return contextualPresentation(output,{operation:{name:'relay_runner_coordinate',kind:'command'}});
+  return contextualPresentation(await withCardProjectIcon('relay_runner_coordinate',output,{},api),{operation:{name:'relay_runner_coordinate',kind:'command'}});
  }};
 }
 
@@ -76,15 +81,15 @@ test('ordinary coordinate command mounts project shell at zero, one and many upd
  const objects=new Map(),bucket={put:async(k,v)=>objects.set(k,v),get:async k=>objects.has(k)?{json:async()=>JSON.parse(objects.get(k))}:null};
  const meta=await storeEvidence(bucket,{requestId:'ordinary-design',targetUrl:'https://relay.loew.fi',kind:'screenshot',screenshotBytes:preview,context:{project:'relay',assignment:'ordinary',commit_sha:source,environment:'preview'},viewport:{width:640,height:360}});
  const captures=[];
- const inspect=async(name,expected)=>{for(const width of [760,360]){
-  const {browser,page}=await mount(data,{width,imageBytes:preview.toString('base64')});try{
-   assert.equal(await page.locator('#card').getAttribute('data-family'),'assignment');assert.equal(await page.locator('#feature-title').textContent(),'relay');assert.equal(await page.locator('.family-update').count(),expected);
+ const inspect=async(name,expected)=>{for(const [width,theme] of [[760,'light'],[760,'dark'],[360,'light'],[360,'dark']]){
+  const {browser,page}=await mount(data,{width,theme,imageBytes:preview.toString('base64')});try{
+   assert.equal(await page.locator('#card').getAttribute('data-family'),'assignment');assert.equal(await page.locator('#feature-title').textContent(),'relay');assert.equal(await page.locator('#card-project img').count(),1);assert.equal(await page.locator('.family-update').count(),expected);
    assert.equal(await page.locator('#feature-mark [data-staff]').count(),0);assert.equal(await page.locator('#card').evaluate(n=>n.scrollWidth>innerWidth),false);
    assert.equal((await page.locator('#card').textContent()).includes('PRIVATE'),false);
    if(!expected){assert.equal(await page.locator('.family-empty').textContent(),'No contributor updates have been published.');assert.equal(await page.locator('#family-plan-empty').isVisible(),true);assert.equal(await page.locator('.family-avatar').count(),0);}
    if(name==='submitted'){await page.locator('.family-capture img').waitFor();assert.equal(await page.locator('.family-name').first().textContent(),'Valentina');assert.equal(await page.locator('#plan-panel').isVisible(),true);}
    if(name==='unavailable')assert.match(await page.locator('.family-media-note').allTextContents().then(x=>x.join(' ')),/Design preview unavailable: Rendering service unavailable at submission/);
-   if(process.env.EXPECTED_SOURCE_SHA){await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})))});const bytes=await page.locator('#card').screenshot(),path='qa-evidence/context-cards/ordinary-'+name+'-'+width+'.png';await mkdir('qa-evidence/context-cards',{recursive:true});await writeFile(path,bytes);captures.push({path,width,source_sha:process.env.EXPECTED_SOURCE_SHA,resource:relayContextCardResource().uri,resource_sha256:createHash('sha256').update(relayContextCardResource().text).digest('hex'),sha256:createHash('sha256').update(bytes).digest('hex'),fixture:'canonical-coordinate-to-DOM; native host unverified'});}
+   if(process.env.EXPECTED_SOURCE_SHA){if(width===360&&['submitted','unavailable'].includes(name)){const track=page.locator('.family-track');await track.evaluate(n=>n.scrollLeft=n.scrollWidth);await page.clock.runFor(50);}await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})))});const bytes=await page.locator('#card').screenshot(),path='qa-evidence/context-cards/ordinary-'+name+'-'+width+'-'+theme+'.png';await mkdir('qa-evidence/context-cards',{recursive:true});await writeFile(path,bytes);captures.push({path,width,theme,source_sha:process.env.EXPECTED_SOURCE_SHA,resource:relayContextCardResource().uri,resource_sha256:createHash('sha256').update(relayContextCardResource().text).digest('hex'),sha256:createHash('sha256').update(bytes).digest('hex'),fixture:'canonical-coordinate-to-DOM; native host unverified'});}
   }finally{await browser.close();}
  }};
  await inspect('no-updates',0);
