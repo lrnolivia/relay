@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T18:38:33.327Z",
+  "updated_at": "2026-11-01T18:45:29.954Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22660,7 +22660,7 @@
       ],
       "goal": "Compact responsive Desktop Overlay preview with immediate game accents, game selection within the full preview, and persisted Left/Right Side Panel placement.",
       "acceptance": "Inline 16:9 preview is bounded to a compact size; game accent and theme/layout changes render promptly and stale asynchronous results cannot win. Full native preview can select games from the same real library without OS titlebar or screenshot uploads. Side Panel has persisted Left/Right placement in native overlay, Windows and Linux preferences and inline preview; pop-out panels open inward, free dragging remains. Validation stages: primary implementation owner verifies Windows build and read-only native settings UI; portable settings tests verify default, valid and invalid side persistence; native layout/input tests verify both screen edges and inward placement. Preserve approved materials and user tuning; no new moving-gameplay qualification claimed.",
-      "next_action": "PR136 merged at01380eb275c64f228003dc3a78ff499e5be76977; exact reviewed treeedd6ed7c8cf95ea4151711df5d482adb7d64915d matches mergedtree. All required checks green. Explicit Windows/Linux Beta15 publication dispatched at mergedSHA; verify rollback/checksums and install x64, then verify rollout5 receipts. Game Mode handoffs delivered.",
+      "next_action": "Beta15 published successfully at01380eb275c64f228003dc3a78ff499e5be76977; x64 installer SHA256fc8a33480bb6c1fa8a080f705a2afef953d9a05e32907b74d864e53b9e63e8cc verified against checksum and provider digest; all11Beta14 rollback assets retained. Install then verify rollout5. User game-chooser opposite-edge request is a post-merge follow-up; no published asset replacement.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -22690,8 +22690,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T18:18:30.031Z",
-      "lease_until": "2026-11-02T06:18:30.031Z",
+      "updated_at": "2026-11-01T18:45:29.954Z",
+      "lease_until": "2026-11-02T06:45:29.954Z",
       "amendment_count": 1,
       "amendments": [
         {
