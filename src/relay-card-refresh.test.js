@@ -52,9 +52,9 @@ test('hidden cards pause transport; resume reads immediately; errors back off, p
   await hide(page,true);await page.clock.runFor(300000);assert.equal((await calls(page)).length,0);
   assert.match(await page.locator('#card-freshness').textContent(),/paused while hidden/);
   await page.evaluate(()=>window.next={ok:false,error:{class:'provider',message:'Synthetic provider failure'}});
-  await hide(page,false);await page.clock.runFor(5);await page.waitForFunction(()=>window.calls.length===1);await page.locator('#card-freshness').filter({hasText:'retrying automatically'}).waitFor();
+  await hide(page,false);await page.clock.runFor(5);await page.waitForFunction(()=>window.calls.length===1);await page.locator('#card-freshness').filter({hasText:'Retrying automatically'}).waitFor();
   for(const delay of [30000,60000,120000,120000]){const n=(await calls(page)).length;await page.clock.runFor(delay+10);await page.waitForFunction(n=>window.calls.length>n,n);await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);}
-  assert.equal((await calls(page)).length,5);assert.match(await page.locator('#card-freshness').textContent(),/paused after repeated/);assert.equal(await page.locator('#title').textContent(),'Repair task');
+  assert.equal((await calls(page)).length,5);assert.match(await page.locator('#card-freshness').textContent(),/Use Refresh to try again/);assert.equal(await page.locator('#title').textContent(),'Repair task');
   await page.clock.runFor(600000);assert.equal((await calls(page)).length,5);
   await page.evaluate(()=>window.next=null);await page.locator('#refresh').click();await page.locator('#title').filter({hasText:'Fresh task'}).waitFor();assert.match(await page.locator('#card-freshness').textContent(),/Live updates/);
  }finally{await browser.close();}
