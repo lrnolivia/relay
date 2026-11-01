@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-01T03:48:15.813Z",
+  "updated_at": "2026-11-01T03:49:31.569Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21233,8 +21233,74 @@
           "next_action": "Fresh authorized Windows child now exposes coordinate.card_steps and relay_runner_delegate after user app restart. Reconcile queued-only record (no branch, private intent or previous publication/launch exists), then admit bounded own-assignment read-only specialist acceptance at fresh source. Preserve actual host agent identity, once-only prepare/start/result, explicitly public bounded update and real source/assignment-bound visual; verify canonical history and rendered card without fabricated work. Existing native-host-activation follow-up and active PR273 release writer remain separate, no overlapping source writes."
         }
       ],
-      "updated_at": "2026-11-01T03:48:15.813Z",
-      "lease_until": "2026-11-01T15:48:15.813Z"
+      "updated_at": "2026-11-01T03:49:31.569Z",
+      "lease_until": "2026-11-01T15:48:15.813Z",
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "relay",
+          "operation_id": "relay-card-live-verifier-20261101",
+          "assignment": "relay-card-publication-live-acceptance-20261101",
+          "owner": "01a19531-c5e7-70b3-87ce-4e193a8ed032",
+          "branch": "relay/card-publication-live-acceptance-20261101",
+          "source_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
+          "objective_digest": "ed18fe9e0a81934c91615182a2ee68172c34b12794250dafa37167348e5406ae",
+          "scope_digest": "4abde638b2d2c780e9c36d1a42c9c0d35e10930ea32d31c09899a47844425516",
+          "step_id": "review-shipped-publication",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
+            "objective_digest": "ed18fe9e0a81934c91615182a2ee68172c34b12794250dafa37167348e5406ae",
+            "step_id": "review-shipped-publication",
+            "label": "Review shipped public-update evidence and the live connection page",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "ee1ba893e471d9ec967f5c03ee1107edddccd3952a853229e327d8300135f172"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-01T03:49:31.569Z",
+          "request_digest": "a994674f1bca058f342d2566b80edf667edbcd7ba2a979f3e9621076190dab87",
+          "step_digest": "e19c1115256f251ef0e7ebf5a19bcbf2360624086b08c50aff2402f07073e55d"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "relay-card-publication-live-acceptance-20261101",
+        "revision": "892fa8f4255bb9cdb5fd64487bbc62d5abc153d7c169d959d3cffe462ce5c615",
+        "objective_digest": "ed18fe9e0a81934c91615182a2ee68172c34b12794250dafa37167348e5406ae",
+        "publisher": {
+          "owner": "01a19531-c5e7-70b3-87ce-4e193a8ed032",
+          "branch": "relay/card-publication-live-acceptance-20261101"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "review-shipped-publication",
+            "label": "Review shipped public-update evidence and the live connection page",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "relay-card-publication-live-acceptance-20261101",
+        "revision": "892fa8f4255bb9cdb5fd64487bbc62d5abc153d7c169d959d3cffe462ce5c615",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ],
   "migrated_from": "loew-inspector"
