@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T19:22:21.884Z",
+  "updated_at": "2026-11-01T19:26:52.312Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22835,8 +22835,8 @@
       "resources": [
         "rtxforge-desktop-overlay-preview"
       ],
-      "goal": "Place the full-preview game chooser at the far screen edge opposite the configured Side Panel.",
-      "acceptance": "In chrome-free Desktop full preview, a left Side Panel places game selection at the far right and a right Side Panel places it at the far left. Close remains reachable and unobstructed. Advanced and Bar retain their existing chooser position; switching layouts or side updates placement immediately. Native layout assertions and offscreen renders verify both sides and modes at representative sizes. Preserve game selection, approved materials and injected overlay behavior. Publish/install reviewed follow-up under user's ship/install authorization without replacing published Beta15 assets.",
+      "goal": "Theme and align full-preview game selection opposite the chosen overlay edge, and offer persisted top/bottom Bar positioning across native overlay and desktop/Linux settings; publish and install Beta16.",
+      "acceptance": "Game picker follows Side Panel top on opposite horizontal edge and matches its theme. Top/Bottom Bar persists through shared preferences, preview illustration and settings; attached panels open inward and picker moves opposite. Focused native/portable/Windows checks pass, reviewed CI source is published and installed with required overlay rollout revision6.",
       "next_action": "Persist BarPosition top/bottom across C#/Python/helper/native, invert anchored popup geometry and pointer for top Bar, theme picker through existing glass compositor and align opposite selected layout edge. Run portable/Windows/native fixtures and bounded renders; then ship/install Beta16.",
       "category": "implementation",
       "primary_team": "runner",
@@ -22858,11 +22858,37 @@
             "id": "rtxforge-preview-game-picker-edge-20261101:acceptance:0",
             "text": "In chrome-free Desktop full preview, a left Side Panel places game selection at the far right and a right Side Panel places it at the far left. Close remains reachable and unobstructed. Advanced and Bar retain their existing chooser position; switching layouts or side updates placement immediately. Native layout assertions and offscreen renders verify both sides and modes at representative sizes. Preserve game selection, approved materials and injected overlay behavior. Publish/install reviewed follow-up under user's ship/install authorization without replacing published Beta15 assets.",
             "at": "2026-11-01T18:55:38.064Z"
+          },
+          {
+            "id": "rtxforge-preview-game-picker-edge-20261101:acceptance:1",
+            "text": "Game picker follows Side Panel top on opposite horizontal edge and matches its theme. Top/Bottom Bar persists through shared preferences, preview illustration and settings; attached panels open inward and picker moves opposite. Focused native/portable/Windows checks pass, reviewed CI source is published and installed with required overlay rollout revision6.",
+            "at": "2026-11-01T19:26:52.312Z",
+            "reason": "User expanded the follow-up to themed/aligned game selection and Top/Bottom Bar placement."
           }
         ]
       },
-      "updated_at": "2026-11-01T19:13:54.849Z",
-      "lease_until": "2026-11-02T07:13:54.849Z"
+      "updated_at": "2026-11-01T19:26:52.312Z",
+      "lease_until": "2026-11-02T07:26:52.312Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-01T19:26:52.312Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "User expanded the follow-up to themed/aligned game selection and Top/Bottom Bar placement.",
+          "fields": [
+            "goal",
+            "acceptance"
+          ],
+          "before": {
+            "goal": "Place the full-preview game chooser at the far screen edge opposite the configured Side Panel.",
+            "acceptance": "In chrome-free Desktop full preview, a left Side Panel places game selection at the far right and a right Side Panel places it at the far left. Close remains reachable and unobstructed. Advanced and Bar retain their existing chooser position; switching layouts or side updates placement immediately. Native layout assertions and offscreen renders verify both sides and modes at representative sizes. Preserve game selection, approved materials and injected overlay behavior. Publish/install reviewed follow-up under user's ship/install authorization without replacing published Beta15 assets."
+          },
+          "after": {
+            "goal": "Theme and align full-preview game selection opposite the chosen overlay edge, and offer persisted top/bottom Bar positioning across native overlay and desktop/Linux settings; publish and install Beta16.",
+            "acceptance": "Game picker follows Side Panel top on opposite horizontal edge and matches its theme. Top/Bottom Bar persists through shared preferences, preview illustration and settings; attached panels open inward and picker moves opposite. Focused native/portable/Windows checks pass, reviewed CI source is published and installed with required overlay rollout revision6."
+          }
+        }
+      ]
     }
   ]
 }
