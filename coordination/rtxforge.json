@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T19:07:24.000Z",
+  "updated_at": "2026-11-01T19:09:03.227Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22828,14 +22828,16 @@
         "scripts/glass_preferences.py",
         "tests/test_glass_preferences.py",
         "windows/tests/Settings/",
-        "gui/rtxforge_gtk.py"
+        "gui/rtxforge_gtk.py",
+        "prototypes/overlay-rmlui/overlay.rml",
+        "providers/glass-overlay/Backdrop.h"
       ],
       "resources": [
         "rtxforge-desktop-overlay-preview"
       ],
       "goal": "Place the full-preview game chooser at the far screen edge opposite the configured Side Panel.",
       "acceptance": "In chrome-free Desktop full preview, a left Side Panel places game selection at the far right and a right Side Panel places it at the far left. Close remains reachable and unobstructed. Advanced and Bar retain their existing chooser position; switching layouts or side updates placement immediately. Native layout assertions and offscreen renders verify both sides and modes at representative sizes. Preserve game selection, approved materials and injected overlay behavior. Publish/install reviewed follow-up under user's ship/install authorization without replacing published Beta15 assets.",
-      "next_action": "User added picker vertical alignment and matching material, plus persisted Bar Top/Bottom positioning with picker at opposite edge. Extend shared preferences/Windows/GTK/native rendering and focused fixtures; then ship/install Beta16 under prior authorization.",
+      "next_action": "Implement persisted Bar Top/Bottom including inward anchored popovers, themed full-preview game chooser aligned to Side Panel top/opposite Bar edge. Tests cover settings and native placement across layouts; ship Beta16 after exact-source checks.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -22859,8 +22861,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T19:07:24.000Z",
-      "lease_until": "2026-11-02T07:07:24.000Z"
+      "updated_at": "2026-11-01T19:09:03.227Z",
+      "lease_until": "2026-11-02T07:09:03.227Z"
     }
   ]
 }
