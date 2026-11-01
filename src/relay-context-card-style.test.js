@@ -1,3 +1,4 @@
+import {FAMILY_BRANDS} from './relay-card-family.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -17,7 +18,7 @@ test('versioned legacy bridge preserves the byte-exact host and style shell', ()
 });
 test('context card embeds canonical artwork and Momo without external fonts', () => {
   const html = relayContextCardResource().text;
-  assert.ok(html.includes(contextCardBrandAssets.relay));
+  assert.ok(html.includes(FAMILY_BRANDS.relay));
   assert.match(html, /data:font\/woff;base64,/);
   assert.match(html, /SIL OPEN FONT LICENSE Version 1.1/);
   assert.match(html, /font-family:"Momo Trust Display"/);
@@ -25,7 +26,7 @@ test('context card embeds canonical artwork and Momo without external fonts', ()
   assert.ok(html.indexOf('id="diag"') > html.indexOf('<details id="details"'));
   assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/);
   assert.ok(Buffer.byteLength(html) < 512 * 1024, 'self-contained card remains bounded');
-  assert.equal(html.split(contextCardBrandAssets.relay).length-1,1,'canonical initial icon bytes are embedded once');
+  assert.equal(html.split(FAMILY_BRANDS.relay).length-1,1,'canonical initial icon bytes are embedded once');
   assert.match(html,/CARD_BRAND_ASSETS=\{"relay":document\.querySelector\("#feature-mark img"\)\.getAttribute\("src"\)/);
   assert.match(html, /prefers-reduced-motion/);
   assert.match(html, /visibilitychange/);
@@ -125,7 +126,7 @@ test('suite rings use the suite denominator, settle first observation, and honor
   const page=await browser.newPage({viewport:{width:720,height:900}});await page.clock.install();
   await page.addInitScript(data=>{window.openai={toolOutput:data}},data);
   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
-  await page.locator('#feature-title').filter({hasText:'Design & QA'}).waitFor();
+  await page.locator('#feature-title').filter({hasText:'inspector'}).waitFor();
   assert.equal(await page.locator('#telemetry-ring').isVisible(),true);
   assert.equal(await page.locator('#telemetry-value').getAttribute('stroke-dasharray'),'25 100');
   assert.equal(await page.locator('#metric-label').textContent(),'of 4 suites finished');
@@ -195,7 +196,7 @@ test('assigned leads stay visible and generic Relay has a contrast-safe brand he
    await page.locator('#card').screenshot({path:`${captures}${staff}-${state}-${theme}-${width}.png`});
   }
   await page.evaluate(()=>render({ok:true}));
-  assert.equal(await page.locator('#feature-title').textContent(),'Relay');
+  assert.equal(await page.locator('#feature-title').textContent(),'relay');
   assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),'');
   const colors=await page.locator('h1').evaluate(n=>({text:getComputedStyle(n).color,bg:getComputedStyle(document.getElementById('card')).backgroundColor}));
   assert.equal(colors.text,theme==='dark'?'rgb(240, 100, 59)':'rgb(181, 71, 31)');
@@ -218,7 +219,7 @@ test('successful native result renders awaiting verification through refresh wit
  }finally{await browser.close();}
 });
 
-test('all 17 approved portraits preserve bytes and settle inside clipped small frames; team headings retain readable home-team families',async()=>{
+test('all 21 approved framed portraits preserve bytes and settle inside clipped small frames; team headings retain readable home-team families',async()=>{
  const {chromium}=await import('playwright');const {STAFF_PORTRAITS}=await import('../assets/staff/card-assets.js');const browser=await chromium.launch({headless:true});
  try{
   for(const theme of ['light','dark']){
