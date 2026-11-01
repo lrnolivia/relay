@@ -3,8 +3,22 @@
 ## One truthful surface, three forms
 
 - **Assignment:** project/assignment identity, shared canonical priorities, and bounded recorded staff updates. Two update surfaces plus a continuation on desktop; one plus a continuation on narrow clients. Accessible surfaced arrows and keyboard scrolling; no pretend chat transcript.
-- **Single update:** one actual owner-attributed report inside its assignment, without redundant carousel chrome.
+- **Single update:** one actual owner-attributed report inside its assignment, with no overview checklist, status dashboard, crew heading, range or carousel controls. Identity/message retain the same padded surface.
 - **Product/status:** Relay, Runner, Inspector or Night Shift retains its real product mark and accent. With no recorded contributions, an assignment may identify its **Assignment lead**, never claim that person performed a step. Empty plans, empty update panels and zero-job heroes are omitted.
+
+### Boundary rules
+
+| Input context | Form | Ownership/progress rule |
+| --- | --- | --- |
+| Two or more admitted updates | Assignment overview | Actual bounded history and canonical plan only |
+| One admitted update | Compact single update | Assignment context, staff identity, one message and evidence/actions only |
+| Explicit assignment record, including partial goal-only records | Assignment status fallback | Keep legitimate labeled lead/context; never invent authored contribution |
+| Generic result without assignment | Compact product message | Product comes from actual tool operation, not staff home team |
+| CI Inspector report | Inspector telemetry | Preserve reported CI data; do not hide it under compact-message rules |
+| Explorer overall/project navigation | Explorer | Internal `presentation_view` suppresses assignment selection; never borrow the first assignment's crew |
+| Explorer explicit assignment | Selected assignment's own form | Recompute identity/plan/updates from the exact selected record |
+
+Product provenance is carried as a bounded `presentation_operation` from the contextual tool adapter (or the existing work-card envelope). Runner/execution, Inspector verification and Night Shift operations resolve their own canonical mark/color. No arbitrary product flag creates participation. Existing mounted explorer, late-input recovery and project-identity tests remain gates alongside the new form-transition tests.
 
 The existing polling controller remains authoritative: exact target fencing, single-flight reads, hidden pause/resume, backoff, terminal handling and independent source/fetch freshness. A recent check is not new work. An unchanged update history preserves its DOM, focus and carousel position. The product pulse is one 680 ms arrival indication on actual changed history; reduced-motion disables it. It never indicates online presence.
 

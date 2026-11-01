@@ -9,6 +9,7 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   if(data?.presentation_mode==='legacy')return legacyContextCardModel(data,directory);
   if(!data||typeof data!=='object'||Array.isArray(data))data={};
   data={...data};
+  if(data.presentation_view==='explorer')data={...data,primary_staff:null,primary_team:null,supporting_staff:[],supporting_teams:[],staff_attribution:null,human:{}};
   const records=value=>Array.isArray(value)?value.filter(item=>item&&typeof item==='object'&&!Array.isArray(item)):[];
   for(const key of ['claims','queue','progress','checkpoints'])data[key]=records(data[key]);
   const normalized=normalizeCommunicationResult(data,{operation:data.presentation_operation||{name:'relay_render_context_card',kind:'query'},now:data.checked_at||null});
@@ -19,7 +20,7 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   const TERMINAL = ['completed','complete','finished','cancelled','superseded','retired'];
   const LIVE_RANK = ['waiting-for-human','blocked','active','working','waiting-on-external-system','held','reserved-but-idle','possibly-stale','queued'];
   const current = list => list.filter(x=>!TERMINAL.includes(String(x.state||'').toLowerCase())).map((x,i)=>({x,i,r:LIVE_RANK.includes(x.state)?LIVE_RANK.indexOf(x.state):LIVE_RANK.length})).sort((a,b)=>Number(Boolean(a.x.lease_expired))-Number(Boolean(b.x.lease_expired))||a.r-b.r||a.i-b.i).map(e=>e.x)[0];
-  const first = data.claim || (typeof data.assignment === 'object' ? data.assignment : null) || current(data.claims) || current(data.queue) || current(data.progress) || data.latest?.assignment || checkpoints[0]?.assignment || current(records(data.coordination?.claims)) || data.claims[0] || data.queue[0] || data.progress[0] || {};
+  const first = data.presentation_view==='explorer' ? {} : data.claim || (typeof data.assignment === 'object' ? data.assignment : null) || current(data.claims) || current(data.queue) || current(data.progress) || data.latest?.assignment || checkpoints[0]?.assignment || current(records(data.coordination?.claims)) || data.claims[0] || data.queue[0] || data.progress[0] || {};
   const checkpoint = data.latest || checkpoints[0] || {};
   const technicalNote = text => /[a-f0-9]{24,40}|relay_[a-z_]+|version_id|commit_sha|Worker version|PR #\d+/.test(String(text || ''));
   const human = data.human && typeof data.human==='object' ? data.human : {};
@@ -125,7 +126,7 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   const milestone = data.work_card?.milestone && typeof data.work_card.milestone === 'object' ? data.work_card.milestone : null;
   const updates=assignmentCardUpdates(first).map(update=>({...update,person:cardStaff(update.owner?.staff)}));
   const operation=String(data.work_card?.tool||data.presentation_operation?.name||'');
-  Object.assign(card,{updates,updates_truncated:first.card_updates?.truncated===true,product:ci?'inspector':operation==='relay_night_shift'?'night-shift':operation.startsWith('relay_runner_')||operation==='relay_execution'?'runner':operation.startsWith('relay_verify_')?'inspector':'relay',family:updates.length>1?'assignment':updates.length===1?'single':(isAssignment||identity.lead)?'assignment-status':'product',plan,identity,project:typeof data.project==='string'?safePresentationText(data.project,80):null,project_icon:cardProjectIcon(data.project_icon,data.project),project_label:safePresentationText(data.project_icon?.project===data.project?data.project_icon?.name:null,80)||data.project});
+  Object.assign(card,{updates,updates_truncated:first.card_updates?.truncated===true,product:ci?'inspector':operation==='relay_night_shift'?'night-shift':operation.startsWith('relay_runner_')||operation==='relay_execution'?'runner':operation.startsWith('relay_verify_')?'inspector':'relay',family:data.presentation_view==='explorer'?'explorer':updates.length>1?'assignment':updates.length===1?'single':(isAssignment||identity.lead||Boolean(first.goal))?'assignment-status':'product',plan,identity,project:typeof data.project==='string'?safePresentationText(data.project,80):null,project_icon:cardProjectIcon(data.project_icon,data.project),project_label:safePresentationText(data.project_icon?.project===data.project?data.project_icon?.name:null,80)||data.project});
   if(identity.speaker){card.primary_staff=identity.speaker.name;card.primary_role=identity.speaker.role;card.staff_unresolved=false;card.staff_note=null;}
   if(identity.team!=='relay')card.feature=identity.team;
   if(plan.steps.length){card.metric=plan.passed+'/'+(plan.total??'?');card.metric_label='steps verified';card.has_metric=plan.total!==null;card.rows=[];}

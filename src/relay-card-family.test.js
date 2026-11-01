@@ -87,6 +87,7 @@ test('ordinary failure and no-plan cards keep details collapsed and omit empty c
  test('partial explicit assignment retains labeled lead without inventing an authored update; generic staff fields stay product-only',()=>{
  const m=contextCardModel({project:'relay',claim:{primary_staff:'julian',goal:'Coordinate review',state:'active'}});
  assert.equal(m.family,'assignment-status');assert.equal(m.identity.lead.id,'julian');assert.equal(m.identity.relationship,'Assignment lead');assert.equal(m.identity.current_owner,null);assert.deepEqual(m.updates,[]);
+ const partial=contextCardModel({project:'relay',claims:[{state:'active',goal:'Late input recovered'}]});assert.equal(partial.family,'assignment-status');assert.equal(partial.title,'Late input recovered');assert.equal(partial.identity.lead,null);
  const generic=contextCardModel({project:'relay',primary_staff:'julian',human:{staff:'Julian'}});assert.equal(generic.family,'product');assert.equal(generic.identity.lead,null);assert.deepEqual(generic.updates,[]);
  });
 
@@ -130,4 +131,29 @@ test('overview to single preserves reachable keyboard focus and restores overvie
   assert.equal(await page.locator('.family-update-details summary').evaluate(n=>n===document.activeElement),true);assert.equal(await page.locator('#plan-panel').isVisible(),false);assert.equal(await page.locator('.family-nav').count(),0);
   await page.evaluate(data=>render(data),fixture(3));await page.clock.runFor(50);assert.equal(await page.locator('#plan-panel').isVisible(),true);assert.equal(await page.locator('.family-update-details summary').first().evaluate(n=>n===document.activeElement),true);
  }finally{await browser.close();}}
+});
+
+test('card family boundary table distinguishes actual assignment context, explorer, CI and generic product operations',()=>{
+ const ci={schema:'relay-ci-card/v1',status:'running',telemetry:'unreported',run:{id:'1'},tests:{},suites:[],jobs:{total:0}};
+ const cases=[
+  ['ordinary ID',{claim:{id:'a',state:'active',goal:'Actual assignment'}},'assignment-status'],
+  ['partial claim',{claim:{state:'active',goal:'Actual partial assignment'}},'assignment-status'],
+  ['partial queue',{queue:[{state:'queued',goal:'Actual queued assignment'}]},'assignment-status'],
+  ['partial progress',{progress:[{state:'working',goal:'Actual progress assignment'}]},'assignment-status'],
+  ['generic goal',{goal:'Not assignment-bound',state:'working'},'product'],
+  ['generic failure',{ok:false,error:{message:'Unavailable'}},'product'],
+  ['CI Inspector',{ci},'product'],
+  ['explorer',{...fixture(2),presentation_view:'explorer',primary_staff:'julian',primary_team:'night-shift',supporting_staff:['nico'],staff_attribution:{primary:{id:'valentina',display_name:'Valentina'}},human:{responsible_staff:{display_name:'Julian',role:'Project Lead'},supporting_staff:[{display_name:'Nico'}]}},'explorer'],
+  ['single update',fixture(1),'single'],['full overview',fixture(3),'assignment']
+ ];
+ for(const [label,data,expected]of cases){const m=contextCardModel(data);assert.equal(m.family,expected,label);if(expected==='explorer'){assert.deepEqual(m.updates,[]);assert.deepEqual(m.plan.steps,[]);assert.equal(m.identity.lead,null);assert.equal(m.identity.speaker,null);assert.equal(m.primary_staff,'Relay');assert.equal(m.team,'Relay');}}
+ const c=contextCardModel({ci});assert.equal(c.product,'inspector');assert.ok(c.ci);
+});
+test('explorer overview and project never borrow one assignment crew; explicit assignment view renders its own updates',async()=>{
+ const browser=await chromium.launch({headless:true});try{const page=await browser.newPage({viewport:{width:390,height:1000}});const data=fixture(2);
+ await page.addInitScript(data=>{window.openai={toolOutput:{schema:'relay-status-explorer/v1',projects:[{id:'relay',name:'Relay',coordination:'enabled'}]},widgetState:{},setWidgetState(state){this.widgetState=state},callTool:async()=>({structuredContent:{project:'relay',progress:[data.claim],queue:[]}})}},data);
+ await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.getByRole('button',{name:/Relay.*1 open/}).waitFor();assert.equal(await page.locator('#family-crew').isVisible(),false);assert.equal(await page.locator('#plan-panel').isVisible(),false);assert.equal(await page.locator('#card').getAttribute('data-family'),'explorer');
+ await page.getByRole('button',{name:/Relay.*1 open/}).click();assert.equal(await page.locator('#family-crew').isVisible(),false);await page.getByRole('button',{name:/A clearer overlay, built together/}).click();await page.locator('.family-update').first().waitFor();assert.equal(await page.locator('.family-update').count(),2);assert.equal(await page.locator('#card').getAttribute('data-family'),'assignment');
+ await page.getByRole('button',{name:'‹ Project',exact:true}).click();assert.equal(await page.locator('#family-crew').isVisible(),false);assert.equal(await page.locator('#plan-panel').isVisible(),false);await page.getByRole('button',{name:'‹ Overall',exact:true}).click();await page.locator('#title').filter({hasText:'Your projects'}).waitFor();assert.equal(await page.locator('#family-crew').isVisible(),false);
+ }finally{await browser.close();}
 });
