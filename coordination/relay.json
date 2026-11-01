@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-01T03:07:52.650Z",
+  "updated_at": "2026-11-01T03:22:06.134Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21110,6 +21110,61 @@
       "evidence": "Source implementation delivered: human-merged PR272 tested5a20b0e5 ->74e020d7d32746a559eedbaab3181e2342f42257. Independent source/pixels approved;1227tests0fail1platformskip;26hash-bound DOM captures. Main CI41267371012 and live smoke41267639672 success; production807b5395 at100%, health200, v26 exact485142bytes SHA256d45b3d61634b5be33f56b201983a96d6d977fa0b4921dcb61be19145f62e68f4;21portraits/21displaystaff/6teams/4management hashes verified. Healthy recovery revision105 retained/restored exact archive13067776637. Actual own-assignment render read shows real merged PR/check events/project icon. INCOMPLETE live public-history/artifact roundtrip explicitly preserved in independently read-back queued relay-card-publication-live-acceptance-20261101 (recorddfdf0701), connector card_steps absent/no existing CLI token; no fabricated publication, native host mount or specialist activation claim. Existing native-host-activation-followup-20261031 unchanged. No pending mutation or source WIP.",
       "work_accounted": true,
       "completed_at": "2026-11-01T03:07:52.650Z"
+    },
+    {
+      "id": "relay-card-host-refresh-20261101",
+      "owner": "01a194a1-25fc-7577-9ad5-79b60c31f004:7",
+      "branch": "relay/assignment-card-family-refresh-20261101",
+      "paths": [
+        "src/relay-chat-ui.js",
+        "src/relay-chat-ui.test.js",
+        "src/relay-card-refresh.js",
+        "src/relay-card-refresh.test.js",
+        "src/relay-card-host.js",
+        "src/relay-card-host.test.js",
+        "src/index.js",
+        "src/relay-entry.test.js",
+        "scripts/verify-context-card-visuals.mjs"
+      ],
+      "resources": [
+        "relay-card-host-refresh"
+      ],
+      "goal": "Repair misleading live-refresh failures and ambiguous bridge retries in the shipped context card without inventing a host root cause.",
+      "acceptance": "Select available OpenAI or MCP bridge safely; no secondary dispatch after ambiguous timeout. Distinguish host unavailable, timeout, provider failure, missing/wrong target and older reply with safe bounded technical diagnostics; preserve last good evidence and true successful checked time. Cover both host interfaces, late globals, slow/cancelled/out-of-order/provider errors, single-flight retries and existing explorer/card modes. No timeout inflation, security/access changes, unrelated claims or desktop/chat reads. Exact-source full CI and actual DOM evidence, independent review and parent human merge. Existing blocked publication/native activation continuations unchanged.",
+      "next_action": "Implement typed bounded host-read diagnostics and refresh states; verify deterministic bridge races before draft PR.",
+      "category": "maintenance",
+      "primary_role": "maintainer",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": null,
+      "supporting_staff": [
+        "roman"
+      ],
+      "base_sha": "6a3351e60db60ae9db0d5d646ce6c9be27993c9f",
+      "state": "active",
+      "created_at": "2026-11-01T03:22:06.134Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Repair misleading live-refresh failures and ambiguous bridge retries in the shipped context card without inventing a host root cause.",
+          "acceptance": "Select available OpenAI or MCP bridge safely; no secondary dispatch after ambiguous timeout. Distinguish host unavailable, timeout, provider failure, missing/wrong target and older reply with safe bounded technical diagnostics; preserve last good evidence and true successful checked time. Cover both host interfaces, late globals, slow/cancelled/out-of-order/provider errors, single-flight retries and existing explorer/card modes. No timeout inflation, security/access changes, unrelated claims or desktop/chat reads. Exact-source full CI and actual DOM evidence, independent review and parent human merge. Existing blocked publication/native activation continuations unchanged.",
+          "at": "2026-11-01T03:22:06.134Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-card-host-refresh-20261101:acceptance:0",
+            "text": "Select available OpenAI or MCP bridge safely; no secondary dispatch after ambiguous timeout. Distinguish host unavailable, timeout, provider failure, missing/wrong target and older reply with safe bounded technical diagnostics; preserve last good evidence and true successful checked time. Cover both host interfaces, late globals, slow/cancelled/out-of-order/provider errors, single-flight retries and existing explorer/card modes. No timeout inflation, security/access changes, unrelated claims or desktop/chat reads. Exact-source full CI and actual DOM evidence, independent review and parent human merge. Existing blocked publication/native activation continuations unchanged.",
+            "at": "2026-11-01T03:22:06.134Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-01T03:22:06.134Z",
+      "lease_until": "2026-11-01T15:22:06.134Z"
     }
   ],
   "migrated_from": "loew-inspector"
