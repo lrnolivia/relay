@@ -2,10 +2,14 @@
 export const LIVE_WORK_SCRIPT=String.raw`(()=>{
   const terminal = new Set(['completed','complete','finished','cancelled','superseded','retired']);
   let target=null, timer=null, flight=null, generation=0, failures=0, disposed=false, canonical=false, link=null;
-  let checkedAt=null, newest=0, applying=false, inputKey=null;
+  let checkedAt=null, newest=0, applying=false, inputKey=null, lastFailure=null;
   const seen=new Set(),list=x=>Array.isArray(x)?x:[];
   const note=document.createElement('p');note.id='card-freshness';note.className='micro';note.setAttribute('role','status');note.setAttribute('aria-live','polite');
   document.querySelector('.actions').before(note);
+  const diagnostics=document.createElement('pre');diagnostics.id='card-refresh-diagnostics';diagnostics.hidden=true;el.details.append(diagnostics);
+  const descriptions={timeout:'The update took too long.',host_unavailable:'This chat has not connected live updates yet.',host_error:'The chat could not request an update.',provider_error:'Relay could not read the latest update.',missing_target:'This assignment was missing from the reply.',wrong_target:'A reply for another assignment was ignored.',stale_response:'An older update was ignored.',cancelled:'The update was cancelled.'};
+  function recordFailure(error,bound){const raw=error?.cardDiagnostic||{},code=Object.hasOwn(descriptions,raw.code)?raw.code:'host_error';lastFailure={code,bridge:['openai','mcp','card'].includes(raw.bridge)?raw.bridge:'card',stage:['initialize','read','response'].includes(raw.stage)?raw.stage:'response',...(typeof raw.request==='string'&&/^card-read-[0-9]{1,9}$/.test(raw.request)?{request:raw.request}:{}),...(Number.isFinite(raw.elapsed_ms)?{elapsed_ms:Math.max(0,Math.min(300000,Math.round(raw.elapsed_ms)))}:{}),target:bound.ci?'ci':/^[a-z0-9-]{1,80}$/.test(bound.project)&&/^[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,99}$/.test(bound.assignment)?bound.project+'/'+bound.assignment:'unavailable'};}
+  function failure(code){return Object.assign(Error(code),{cardDiagnostic:{code,bridge:'card',stage:'response'}});}
   const key=t=>t?JSON.stringify(t):'';
   const time=value=>{const n=Date.parse(value||'');return Number.isFinite(n)?n:0;};
   const stamp=data=>time(data.generated_at||data.checked_at||data.ci?.observed_at);
@@ -28,8 +32,8 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
   function live(){if(!target)return false;if(target.ci)return lastData?.ci?.live===true;return !terminal.has(String(item(lastData)?.state||'').toLowerCase());}
   function status(message){
     const checked=checkedAt?'Checked '+new Date(checkedAt).toLocaleTimeString()+'.':'Not checked yet.';
-    note.textContent=message||(!target?'':disposed?'Live updates stopped.':document.hidden?'Live updates paused while hidden. '+checked:!live()?'Final recorded state. '+checked:failures>=5?'Live updates paused after repeated connection failures. Use Refresh to retry. '+checked:failures?'Connection unavailable; retrying automatically. '+checked:'Live updates every '+(target.ci?'15':'30')+' seconds. '+checked);
-    note.hidden=!note.textContent;
+    note.textContent=message||(!target?'':disposed?'Live updates stopped.':document.hidden?'Live updates paused while hidden. '+checked:!live()?'Final recorded state. '+checked:failures?descriptions[lastFailure?.code||'host_error']+' '+(failures>=5?'Use Refresh to try again.':'Retrying automatically.')+' '+checked:'Live updates every '+(target.ci?'15':'30')+' seconds. '+checked);
+    note.hidden=!note.textContent;diagnostics.hidden=!lastFailure;if(lastFailure){el.details.hidden=false;diagnostics.textContent='Live update diagnostics\n'+JSON.stringify(lastFailure,null,2);}else diagnostics.textContent='';
   }
   function schedule(delay){stop();if(disposed||document.hidden||!target||!live()||failures>=5)return;timer=setTimeout(()=>{timer=null;void refresh()},delay??(failures?Math.min(120000,15000*2**failures):target.ci?15000:30000));}
   function valid(data,t){
@@ -47,13 +51,13 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
     task.promise=(async()=>{try{
       const result=await callTool(bound.ci?'relay_source_checks':'relay_runner_progress',bound.ci?bound.args:{project:bound.project,assignment:bound.assignment});
       if(disposed||epoch!==generation||key(bound)!==key(target))return;
-      const data=unwrap(result);if(!valid(data,bound))throw Error('Relay returned no matching status. Previous evidence is preserved.');
-      if(stamp(data)&&stamp(data)<newest)throw Error('An older status response was ignored. The previous view is preserved.');
+      const data=unwrap(result);if(!valid(data,bound))throw failure(data?.project&&data.project!==bound.project?'wrong_target':'missing_target');
+      if(stamp(data)&&stamp(data)<newest)throw failure('stale_response');
       // A successful read is freshness of the fetch, never proof of work progress.
-      checkedAt=stamp(data)||Date.now();canonical=true;failures=0;applying=true;
+      checkedAt=stamp(data)||Date.now();canonical=true;failures=0;lastFailure=null;applying=true;
       try{render(result);}finally{applying=false;}
       el.refresh.textContent='Refresh';
-    }catch(error){if(epoch===generation&&!disposed){failures++;el.refresh.textContent='Try refresh again';}}
+    }catch(error){if(epoch===generation&&!disposed){failures++;recordFailure(error,bound);el.refresh.textContent='Try refresh again';}}
     finally{if(flight===task)flight=null;el.refresh.disabled=false;if(!failures)el.refresh.textContent='Refresh';status();schedule(epoch===generation?undefined:0);}})();
     return task.promise;
   }
@@ -64,14 +68,15 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
     const next=identify(data),changed=key(next)!==key(target),signature=JSON.stringify(data);
     if(!applying&&!changed&&seen.has(signature))return;
     if(!applying&&!changed&&newest&&stamp(data)&&stamp(data)<newest)return;
-    if(changed){generation++;stop();target=next;failures=0;canonical=false;checkedAt=null;newest=0;seen.clear();}
+    if(!changed&&!el.card._refreshInputChanged&&target&&canonical&&valid(data,target)&&(result?.isError||data.ok===false||data.isError||data.error)){failures++;recordFailure(failure('provider_error'),target);status();schedule();return;}
+    if(changed){generation++;stop();target=next;failures=0;lastFailure=null;canonical=false;checkedAt=null;newest=0;seen.clear();}
     else if(!applying)generation++;
     seen.clear();seen.add(signature);
     // A newer routing notification requests fresh observation; it cannot replace
     // already observed progress with an Assigned snapshot while that read runs.
     if(!applying&&!changed&&canonical&&target&&!target.ci&&!Array.isArray(data.progress)){status();schedule(0);return;}
     newest=Math.max(newest,stamp(data));
-    if(Array.isArray(data.progress)||data.ci){checkedAt=stamp(data)||checkedAt;canonical=true;}
+    if(Array.isArray(data.progress)||data.ci){checkedAt=stamp(data)||checkedAt;canonical=true;if(target&&data.ok!==false&&!data.isError&&!data.error&&valid(data,target)){failures=0;lastFailure=null;}}
     if(target&&!target.ci&&Array.isArray(data.progress)){const rows=data.progress.filter(x=>(x?.assignment||x?.id)===target.assignment);data={...data,progress:rows,queue:rows.length?[]:list(data.queue).filter(x=>(x?.assignment||x?.id)===target.assignment),claims:[],claim:undefined};}
     base(data);showLink(model(data,DIRECTORY));status();
     if(!flight)schedule(changed&&!data.work_card&&!data.ci?350:undefined);
@@ -83,6 +88,6 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
   window.addEventListener('online',()=>{failures=0;schedule(0);});
   window.addEventListener('pagehide',()=>{disposed=true;generation++;stop();});
   window.addEventListener('pageshow',()=>{if(disposed){disposed=false;failures=0;schedule(0);}});
-  document.addEventListener('relay:target-change',()=>{const nav=el.card._refreshTarget,next=nav?.level==='assignment'?{project:nav.project,assignment:nav.assignment}:null;if(key(next)===key(target))return;generation++;stop();target=next;canonical=false;newest=0;checkedAt=null;seen.clear();status();schedule(0);});
+  document.addEventListener('relay:target-change',()=>{const nav=el.card._refreshTarget,next=nav?.level==='assignment'?{project:nav.project,assignment:nav.assignment}:null;if(key(next)===key(target))return;generation++;stop();target=next;failures=0;lastFailure=null;canonical=false;newest=0;checkedAt=null;seen.clear();status();schedule(0);});
   if(lastData)render(lastData);
 })();`.split("\n").filter(line=>!line.trimStart().startsWith("//")).map(line=>line.trim()).join("\n");

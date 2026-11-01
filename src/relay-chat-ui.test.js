@@ -5,7 +5,7 @@ import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI,
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v26.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v27.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -420,6 +420,7 @@ test('production context card model remains executable after Worker keepNames bu
   const html = bundled.relayContextCardResource().text;
   const script = html.match(/<script>([\s\S]*?)<\/script>/)?.[1];
   assert.ok(script, 'actual shipped resource includes its browser program');
+  const {CARD_HOST_SCRIPT}=await import('./relay-card-host.js');assert.ok(script.includes(CARD_HOST_SCRIPT),'Worker bundling preserves the exact tested host bridge literal');
   const prefix = script.slice(0, script.indexOf('const FEATURES='));
   assert.ok(prefix.includes('const model='), 'test executes the actual embedded model');
   const cases = [
@@ -537,7 +538,7 @@ test('context card actions validate native and browser results, preserve failed 
     const before=await frame.locator('body').evaluate(()=>window.calls.filter(call=>call.name==='relay_runner_progress').length);
     await frame.locator('#refresh').click();await frame.locator('#refresh').filter({hasText:'Try refresh again'}).waitFor({timeout:5000});
     assert.equal(await frame.locator('#title').textContent(),'Refreshed canonical work');
-    assert.match(await frame.locator('#card-freshness').textContent(),/Connection unavailable.*retrying automatically/);
+    assert.match(await frame.locator('#card-freshness').textContent(),mode==='provider-error'?/Relay could not read.*Retrying automatically/:/assignment was missing.*Retrying automatically/);
     assert.equal(await frame.locator('body').evaluate(()=>window.calls.filter(call=>call.name==='relay_runner_progress').length),before+1,'a provider failure is not replayed through another host');
    }
    await frame.locator('#open-relay').click();
