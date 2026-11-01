@@ -122,3 +122,12 @@ test('canonical tool presentation selects all four compact product brands withou
   }finally{await browser.close();}
  }
 });
+
+test('overview to single preserves reachable keyboard focus and restores overview plan on expansion',async()=>{
+ for(const target of ['button','track']){const {browser,page}=await mount(fixture(3));try{
+  if(target==='button')await page.getByRole('button',{name:'Next updates',exact:true}).focus();else await page.locator('.family-track').focus();
+  await page.evaluate(data=>render(data),fixture(1));await page.clock.runFor(50);
+  assert.equal(await page.locator('.family-update-details summary').evaluate(n=>n===document.activeElement),true);assert.equal(await page.locator('#plan-panel').isVisible(),false);assert.equal(await page.locator('.family-nav').count(),0);
+  await page.evaluate(data=>render(data),fixture(3));await page.clock.runFor(50);assert.equal(await page.locator('#plan-panel').isVisible(),true);assert.equal(await page.locator('.family-update-details summary').first().evaluate(n=>n===document.activeElement),true);
+ }finally{await browser.close();}}
+});
