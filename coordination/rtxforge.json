@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T16:55:22.681Z",
+  "updated_at": "2026-11-01T16:56:11.295Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22724,8 +22724,8 @@
       "resources": [
         "rtxforge-desktop-overlay-preview"
       ],
-      "goal": "Make the Desktop Overlay Settings preview compact and refresh per-game accent immediately, independently of screenshot loading.",
-      "acceptance": "A bounded 16:9 inline preview remains compact at normal and large window sizes, with native Layout/Theme/Accent controls beside it when space allows. Selecting a game refreshes its accent without waiting for screenshot I/O; rapid selection cannot apply stale colors or photos. Full preview stays accurate. Windows build and focused native UI verification pass.",
+      "goal": "Compact responsive Desktop Overlay preview with immediate game accents, game selection within the full preview, and persisted Left/Right Side Panel placement.",
+      "acceptance": "Inline 16:9 preview is bounded to a compact size; game accent and theme/layout changes render promptly and stale asynchronous results cannot win. Full native preview can select games from the same real library without OS titlebar or screenshot uploads. Side Panel has persisted Left/Right placement in native overlay, Windows and Linux preferences and inline preview; pop-out panels open inward, free dragging remains. Validation stages: primary implementation owner verifies Windows build and read-only native settings UI; portable settings tests verify default, valid and invalid side persistence; native layout/input tests verify both screen edges and inward placement. Preserve approved materials and user tuning; no new moving-gameplay qualification claimed.",
       "next_action": "Complete compact preview and immediate guarded accent updates; add native full-preview game selection and persisted left/right Side Panel placement across overlay and native desktop preferences. Verify Windows settings, native layout/input and portable preference checks.",
       "category": "implementation",
       "primary_team": "runner",
@@ -22747,11 +22747,37 @@
             "id": "rtxforge-overlay-preview-polish-20261101:acceptance:0",
             "text": "A bounded 16:9 inline preview remains compact at normal and large window sizes, with native Layout/Theme/Accent controls beside it when space allows. Selecting a game refreshes its accent without waiting for screenshot I/O; rapid selection cannot apply stale colors or photos. Full preview stays accurate. Windows build and focused native UI verification pass.",
             "at": "2026-11-01T16:43:23.789Z"
+          },
+          {
+            "id": "rtxforge-overlay-preview-polish-20261101:acceptance:1",
+            "text": "Inline 16:9 preview is bounded to a compact size; game accent and theme/layout changes render promptly and stale asynchronous results cannot win. Full native preview can select games from the same real library without OS titlebar or screenshot uploads. Side Panel has persisted Left/Right placement in native overlay, Windows and Linux preferences and inline preview; pop-out panels open inward, free dragging remains. Validation stages: primary implementation owner verifies Windows build and read-only native settings UI; portable settings tests verify default, valid and invalid side persistence; native layout/input tests verify both screen edges and inward placement. Preserve approved materials and user tuning; no new moving-gameplay qualification claimed.",
+            "at": "2026-11-01T16:56:11.295Z",
+            "reason": "User added game selection inside the full preview and Left/Right Side Panel placement."
           }
         ]
       },
-      "updated_at": "2026-11-01T16:55:22.681Z",
-      "lease_until": "2026-11-02T04:55:22.681Z"
+      "updated_at": "2026-11-01T16:56:11.295Z",
+      "lease_until": "2026-11-02T04:56:11.295Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-01T16:56:11.295Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "User added game selection inside the full preview and Left/Right Side Panel placement.",
+          "fields": [
+            "goal",
+            "acceptance"
+          ],
+          "before": {
+            "goal": "Make the Desktop Overlay Settings preview compact and refresh per-game accent immediately, independently of screenshot loading.",
+            "acceptance": "A bounded 16:9 inline preview remains compact at normal and large window sizes, with native Layout/Theme/Accent controls beside it when space allows. Selecting a game refreshes its accent without waiting for screenshot I/O; rapid selection cannot apply stale colors or photos. Full preview stays accurate. Windows build and focused native UI verification pass."
+          },
+          "after": {
+            "goal": "Compact responsive Desktop Overlay preview with immediate game accents, game selection within the full preview, and persisted Left/Right Side Panel placement.",
+            "acceptance": "Inline 16:9 preview is bounded to a compact size; game accent and theme/layout changes render promptly and stale asynchronous results cannot win. Full native preview can select games from the same real library without OS titlebar or screenshot uploads. Side Panel has persisted Left/Right placement in native overlay, Windows and Linux preferences and inline preview; pop-out panels open inward, free dragging remains. Validation stages: primary implementation owner verifies Windows build and read-only native settings UI; portable settings tests verify default, valid and invalid side persistence; native layout/input tests verify both screen edges and inward placement. Preserve approved materials and user tuning; no new moving-gameplay qualification claimed."
+          }
+        }
+      ]
     }
   ]
 }
