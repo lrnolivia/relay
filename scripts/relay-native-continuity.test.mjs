@@ -137,9 +137,12 @@ test('native delegation emits observed work only after an actual agent receipt, 
  await assert.rejects(recordNativeDelegation(f.directory,p.request.id,{...receipt,agent_id:'/root/other'}),/identity changed/);
  for(let i=0;i<100&&!seen.length;i++)await new Promise(r=>setTimeout(r,5));
  assert.equal(seen[0].state,'running');assert.deepEqual(seen[0].owner,owner);assert.match(seen[0].evidence,/^sha256:[a-f0-9]{64}$/);
- await replyNativeRequest(f.directory,p.request.id,{state:'failed',summary:'Synthetic verifier failure',head_sha:'b'.repeat(40),agent_id:'/root/fixture-integrator'});await running;
+ const update={text:'The bounded review found an issue.',artifacts:[],preview:{state:'unavailable',reason:'This review stage did not render a design.'}};
+ await assert.rejects(replyNativeRequest(f.directory,p.request.id,{state:'failed',summary:'PRIVATE',head_sha:'b'.repeat(40),agent_id:'/root/fixture-integrator',update:{...update,artifacts:[{evidence_id:'vis_wrongsource',source_sha:'c'.repeat(40),caption:'Wrong source',kind:'design'}]}}),/source-bound/);
+ await replyNativeRequest(f.directory,p.request.id,{state:'failed',summary:'Synthetic verifier failure',head_sha:'b'.repeat(40),agent_id:'/root/fixture-integrator',update});await running;
  const recovered=await f.channel.nativeHost.reconcile(work);assert.deepEqual(recovered.observation.owner,owner);assert.equal(recovered.agent_id,'/root/fixture-integrator');
  assert.equal(seen.at(-1).state,'failed');assert.equal(seen.at(-1).source_sha,'b'.repeat(40));assert.deepEqual(seen.at(-1).owner,owner);
+ assert.deepEqual(seen.at(-1).update,update);assert.deepEqual(recovered.observation.update,update);
 });
 
 test('explicit specialist with no routed staff stops before any native launch packet',async t=>{

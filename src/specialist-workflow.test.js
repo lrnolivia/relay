@@ -34,4 +34,5 @@ test('ordinary native guidance supplies canonical objective binding without requ
  const native=specialistWorkflow(assignment).native_mcp;
  assert.deepEqual(native.binding,{assignment:'task',owner:'coordinator',branch:'relay/task',objective_digest:continuityObjectiveDigest(assignment.goal,assignment.acceptance)});
  assert.equal(native.tool,'relay_runner_delegate');assert.deepEqual(native.actions,['prepare','read','started','result']);assert.match(native.next_action,/Keep task prompts private/);
+ assert.match(native.next_action,/public update text separately from private results/);assert.match(native.next_action,/actual design submission/);assert.match(native.next_action,/unavailable reason/);assert.match(native.next_action,/kickoff use pending/);
 });

@@ -45,7 +45,7 @@ const fixtures={
  'product-night-shift':contextualPresentation({ok:true,state:'waiting-for-human'},{operation:{name:'relay_night_shift',kind:'query'}}),
  loading:null,
  'family-full':familyFixture(3),
- 'family-single':familyFixture(1),
+ 'family-single':{...familyFixture(1),presentation_view:'individual',presentation_update_id:'event-0'},
  'family-media':familyFixture(3,{artifact:{evidence_id:'vis_fixturepreview',source_sha:expected,caption:'Fixture overlay capture',kind:'design'}}),
 };
 try {

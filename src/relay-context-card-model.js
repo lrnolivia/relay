@@ -126,7 +126,14 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   const milestone = data.work_card?.milestone && typeof data.work_card.milestone === 'object' ? data.work_card.milestone : null;
   const updates=assignmentCardUpdates(first).map(update=>({...update,person:cardStaff(update.owner?.staff)}));
   const operation=String(data.work_card?.tool||data.presentation_operation?.name||'');
-  Object.assign(card,{updates,updates_truncated:first.card_updates?.truncated===true,product:ci||checks?'inspector':operation==='relay_night_shift'?'night-shift':operation.startsWith('relay_runner_')||operation==='relay_execution'?'runner':operation.startsWith('relay_verify_')?'inspector':'relay',family:data.presentation_view==='explorer'?'explorer':updates.length>1?'assignment':updates.length===1?'single':(isAssignment||identity.lead||Boolean(first.goal))?'assignment-status':'product',plan,identity,project:typeof data.project==='string'?safePresentationText(data.project,80):null,project_icon:cardProjectIcon(data.project_icon,data.project),project_label:safePresentationText(data.project_icon?.project===data.project?data.project_icon?.name:null,80)||data.project});
+  // An update count is history, not the identity of the card. Only an explicitly
+  // selected, assignment-bound message may use the individual presentation.
+  const individual=data.presentation_view==='individual'&&typeof data.presentation_update_id==='string'
+    ? updates.find(update=>update.id===data.presentation_update_id) : null;
+  const assignmentContext=isAssignment||Boolean(identity.lead)||Boolean(first.goal);
+  Object.assign(card,{updates,updates_truncated:first.card_updates?.truncated===true,product:ci||checks?'inspector':operation==='relay_night_shift'?'night-shift':operation.startsWith('relay_runner_')||operation==='relay_execution'?'runner':operation.startsWith('relay_verify_')?'inspector':'relay',plan,identity,project:typeof data.project==='string'?safePresentationText(data.project,80):null,project_icon:cardProjectIcon(data.project_icon,data.project),project_label:safePresentationText(data.project_icon?.project===data.project?data.project_icon?.name:null,80)||data.project});
+  card.family=data.presentation_view==='explorer'?'explorer':individual?'single':assignmentContext?'assignment':'product';
+  if(individual)card.updates=[individual];
   if(identity.speaker){card.primary_staff=identity.speaker.name;card.primary_role=identity.speaker.role;card.staff_unresolved=false;card.staff_note=null;}
   if(identity.team!=='relay')card.feature=identity.team;
   if(plan.steps.length){card.metric=plan.passed+'/'+(plan.total??'?');card.metric_label='steps verified';card.has_metric=plan.total!==null;card.rows=[];}
