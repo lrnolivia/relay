@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T08:45:52.669Z",
+  "updated_at": "2026-11-01T16:43:23.789Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22701,6 +22701,48 @@
       "evidence": "Delivered and merged PR134 as 3370fa1e185193bff3c5c15fa250b9cd4c61b892; its tree f392321455c151b88fc11b4b480caae2d1d2eeea matches reviewed head eb40139868552f600b0b045059f37f14b8c178de. Verified maintainer attribution and clean worktree. Exact reviewed-head checks passed: Windows41286330905 (x64/ARM64, install/update/uninstall), Linux41286330894 (AppImage/Flatpak,214 core tests), PackageUI41286330856 including KDE/Wayland/4K. Native54-layout matrix,6 balanced responsive pages, input/resize/onboarding/sticky-paint and DX11/DX12 SDR/scRGB/PQ fixtures passed. Explicit merged-main publication runs Windows41287834438 and Linux41287836051 succeeded; both Beta14 provenance lines point to merged SHA and all11 Beta13 rollback assets remain. Downloaded x64 installer cfec92ea7dbaa6e5d5f73f8cd0c52cc7dc2251df25ff28f3e1775dca4999de96 verified against checksum file and release digest, installed exit0; registry and VERSION confirm1.0.0-beta.14. Installed required glass revision4 and bundle SHA verified. Startup refresh completed:31 changed installations, all49 checked current,0 blocked;29 root glass DLLs match published a8da2a35719fc7d0e3f963e86d4cec0f25c2cdfe4d622dccac826c81d18af38b, two x86 legacy Feeder locations follow their existing route. Refresh notification receipt updated. Installed native Overlay Settings inline preview and titlebar-free full preview verified; leave app open on Overlay Settings. Receipts C:/Users/lrnol/.codex/tmp/rtxforge-beta14-install/{verified.json,overlay-refresh-verified.json,release.json}. Website delegate separately delivered live90-state SDR showcase at https://loew.fi/rtxforge/ with hover/focus/touch controls; website source not part of PR134. Tauri Game Mode remains separate work. Qualification remains bounded: no new moving-gameplay acceptance; standalone glass x64DX11 only, Vulkan and legacy API routes retain documented limits; private add-on menus and unsupported multi-value settings require adapters/native controls. No unrelated worktree changes or unsolicited tool/vendor attribution.",
       "work_accounted": true,
       "completed_at": "2026-11-01T08:45:52.669Z"
+    },
+    {
+      "id": "rtxforge-overlay-preview-polish-20261101",
+      "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+      "branch": "rtxforge/overlay-preview-polish-20261101",
+      "paths": [
+        "windows/RtxForge.Windows/Controls/OverlayPreviewView.cs",
+        "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
+        "windows/RtxForge.Windows/Services/OverlayAccent.cs",
+        "windows/tests/OverlayArtwork/"
+      ],
+      "resources": [
+        "rtxforge-desktop-overlay-preview"
+      ],
+      "goal": "Make the Desktop Overlay Settings preview compact and refresh per-game accent immediately, independently of screenshot loading.",
+      "acceptance": "A bounded 16:9 inline preview remains compact at normal and large window sizes, with native Layout/Theme/Accent controls beside it when space allows. Selecting a game refreshes its accent without waiting for screenshot I/O; rapid selection cannot apply stale colors or photos. Full preview stays accurate. Windows build and focused native UI verification pass.",
+      "next_action": "Inspect sizing and accent pipeline, implement compact sizing and immediate generation-guarded color updates, build and open a read-only working preview. Preserve all user tuning and unrelated work.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "base_sha": "3370fa1e185193bff3c5c15fa250b9cd4c61b892",
+      "state": "active",
+      "created_at": "2026-11-01T16:43:23.789Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Make the Desktop Overlay Settings preview compact and refresh per-game accent immediately, independently of screenshot loading.",
+          "acceptance": "A bounded 16:9 inline preview remains compact at normal and large window sizes, with native Layout/Theme/Accent controls beside it when space allows. Selecting a game refreshes its accent without waiting for screenshot I/O; rapid selection cannot apply stale colors or photos. Full preview stays accurate. Windows build and focused native UI verification pass.",
+          "at": "2026-11-01T16:43:23.789Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-overlay-preview-polish-20261101:acceptance:0",
+            "text": "A bounded 16:9 inline preview remains compact at normal and large window sizes, with native Layout/Theme/Accent controls beside it when space allows. Selecting a game refreshes its accent without waiting for screenshot I/O; rapid selection cannot apply stale colors or photos. Full preview stays accurate. Windows build and focused native UI verification pass.",
+            "at": "2026-11-01T16:43:23.789Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-01T16:43:23.789Z",
+      "lease_until": "2026-11-02T04:43:23.789Z"
     }
   ]
 }
