@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { chromium } from 'playwright';
 import { contextCardModel, relayContextCardResource } from '../src/relay-chat-ui.js';
@@ -15,6 +15,9 @@ const origin='https://relay-card-fixture.test';
 const clientId=process.env.CF_ACCESS_CLIENT_ID,clientSecret=process.env.CF_ACCESS_CLIENT_SECRET;
 const auth=clientId&&clientSecret?{Authorization:JSON.stringify({'cf-access-client-id':clientId,'cf-access-client-secret':clientSecret}),'CF-Access-Client-Id':clientId,'CF-Access-Client-Secret':clientSecret}:null;
 const revision='a'.repeat(64),source=expected,now=new Date('2026-11-01T00:00:00Z');
+const projectManifest=JSON.parse(await readFile('relay.assets.json','utf8')),projectAsset=projectManifest.variants.primary;
+const projectBytes=await readFile(projectAsset.path);assert.equal(projectBytes.length,projectAsset.bytes);assert.equal(createHash('sha256').update(projectBytes).digest('hex'),projectAsset.sha256);
+const projectIcon={project:'relay',name:'Relay',status:'found',icon:{...projectAsset,repository:'lrnolivia/relay',blob_sha:createHash('sha1').update(Buffer.concat([Buffer.from('blob '+projectBytes.length+'\0'),projectBytes])).digest('hex'),data_url:'data:image/png;base64,'+projectBytes.toString('base64')}};
 function familyFixture(count=3,{id='card-demo',artifact=null}={}){
  let record={id,owner:'fixture-host',branch:'relay/fixture',state:'active',goal:'A clearer overlay, built together',primary_staff:'julian',primary_team:'night-shift',supporting_staff:['valentina','nico','roman'],supporting_teams:['inspector','runner'],lease_until:'2026-11-02T00:00:00Z'};
  const people=['valentina','nico','roman','julian'],teams=['inspector','runner','inspector','night-shift'];
@@ -23,7 +26,7 @@ function familyFixture(count=3,{id='card-demo',artifact=null}={}){
   pub.steps.unshift(...(record.card_steps?.steps||[]));
   const validated=validateCardStepsPublication(pub,record,revision,now);record={...record,card_updates:appendCardUpdates(record,validated,now),card_steps:validated};
  }
- return {project:'relay',claim:assignmentCardContext(record)};
+ return {project:'relay',project_icon:projectIcon,claim:assignmentCardContext(record)};
 }
 const fixtures={
  runner:{project:'relay',claim:{id:'sample-runner',primary_team:'runner',primary_staff:'ellis',goal:'The release is moving',state:'active',progress_percent:68,next_action:'Review the captured desktop and phone layouts.'},human:{what_changed:'The approved interface is built. Verification is checking the last interactions.'}},
@@ -76,11 +79,20 @@ try {
   if(name.startsWith('family-')){assert.equal(await frame.locator('.family-update').count(),name==='family-single'?1:3);assert.equal(await frame.locator('#family-crew').isVisible(),true);assert.equal(await frame.locator('.card-header').isVisible(),false);if(name==='family-media')await frame.locator('.family-capture img').waitFor();}
   if(name==='complete')assert.equal(await frame.locator('#next').isVisible(),false);
   assert.deepEqual(errors,[]);assert.deepEqual(unexpected,[]);
+  // The test host must honor intrinsic card height just like ui/notifications/size-changed.
+  // A fixed iframe silently crops the footer even when element screenshots are requested.
+  await frame.locator('body').evaluate(async()=>{await Promise.all([...document.images].map(img=>img.decode?.().catch(()=>{})||Promise.resolve()));});
+  const captureHeight=await frame.locator('#card').evaluate(card=>Math.ceil(card.getBoundingClientRect().bottom)+2);
+  assert.ok(captureHeight>0&&captureHeight<6000,'card has bounded intrinsic height');
+  await page.locator('iframe').evaluate((node,height)=>node.style.height=height+'px',captureHeight);
+  await page.setViewportSize({width,height:Math.max(1000,captureHeight)});
+  geometry.capture_height=captureHeight;
+  if(name.startsWith('family-')&&width<520){const widths=await frame.locator('.step-copy').evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().width));assert.ok(widths.every(w=>w>=180),'phone priority text has full-row width');}
   const surface=`context-card-${name}-${width}-${theme}`,screenshot=await frame.locator('#card').screenshot();
   await writeFile(directory+'/'+surface+'.png',screenshot);
   const capture={surface,theme,width,fixture:true,source_sha:expected,resource:resource.uri,sha256:createHash('sha256').update(screenshot).digest('hex'),geometry};
   if(auth){
-   const metadata={kind:'pr_preview',target_url:'https://relay.loew.fi/inspector',context:{project:'relay',assignment:fixtures[name]?.claim?.id||null,environment:'preview',surface,commit_sha:expected,...(process.env.PREVIEW_PR?{pr_number:Number(process.env.PREVIEW_PR)}:{})},viewport:{width,height:1000},engine:'github-chromium',engine_reason:'contextual_card_fixture_verification',step_label:surface+' · sample data · native host not verified',title:'Context card visual parity · '+expected.slice(0,7),dom:{fixture:true,resource_uri:resource.uri,geometry,qa_helper:{title:'Context card visual parity',purpose:'Compare the card with the approved Inspector composition. This is sample data in a Chromium host fixture, not proof of native ChatGPT mounting.',artifact:{repository:'lrnolivia/relay',head_sha:expected,environment:'preview'},questions:['Do the larger product mark, Momo title and compact content match the approved card?','Are status, next action and buttons readable on the phone?'],checklist:['Check both light and dark captures.','The existing Linux native-client mounting task remains separate.'],overall_verdict:null,known_issues:['Actual Linux native ChatGPT mount is not verified by these captures.'],visuals:{evidence_ids:[]}}},assertions:[{id:'no-overflow',status:'pass',detail:'Card fits the tested viewport.'},{id:'embedded-assets',status:'pass',detail:'Momo and product artwork render without external network requests.'}],trace:[{action:'render_context_card_fixture',source_sha:expected,resource_uri:resource.uri,state:name}]};
+   const metadata={kind:'pr_preview',target_url:'https://relay.loew.fi/inspector',context:{project:'relay',assignment:fixtures[name]?.claim?.id||null,environment:'preview',surface,commit_sha:expected,...(process.env.PREVIEW_PR?{pr_number:Number(process.env.PREVIEW_PR)}:{})},viewport:{width,height:captureHeight},engine:'github-chromium',engine_reason:'contextual_card_fixture_verification',step_label:surface+' · sample data · native host not verified',title:'Context card visual parity · '+expected.slice(0,7),dom:{fixture:true,resource_uri:resource.uri,geometry,qa_helper:{title:'Context card visual parity',purpose:'Compare the card with the approved Inspector composition. This is sample data in a Chromium host fixture, not proof of native ChatGPT mounting.',artifact:{repository:'lrnolivia/relay',head_sha:expected,environment:'preview'},questions:['Do the larger product mark, Momo title and compact content match the approved card?','Are status, next action and buttons readable on the phone?'],checklist:['Check both light and dark captures.','The existing Linux native-client mounting task remains separate.'],overall_verdict:null,known_issues:['Actual Linux native ChatGPT mount is not verified by these captures.'],visuals:{evidence_ids:[]}}},assertions:[{id:'no-overflow',status:'pass',detail:'Card fits the tested viewport.'},{id:'embedded-assets',status:'pass',detail:'Momo and product artwork render without external network requests.'}],trace:[{action:'render_context_card_fixture',source_sha:expected,resource_uri:resource.uri,state:name}]};
    const form=new FormData();form.set('metadata',JSON.stringify(metadata));form.set('screenshot',new Blob([screenshot],{type:'image/png'}),surface+'.png');
    const uploaded=await fetch('https://relay.loew.fi/evidence/ingest',{method:'POST',headers:auth,body:form,signal:AbortSignal.timeout(45000)});assert.ok(uploaded.ok,'Inspector ingest: '+uploaded.status);const stored=await uploaded.json();capture.evidence_id=stored.evidence_id;
    const image=await fetch('https://relay.loew.fi/api/visual/'+stored.evidence_id+'/image',{headers:auth,signal:AbortSignal.timeout(45000)});assert.ok(image.ok);assert.equal(createHash('sha256').update(new Uint8Array(await image.arrayBuffer())).digest('hex'),capture.sha256);capture.readback_verified=true;

@@ -48,9 +48,13 @@ test('no-plan failure and product messages do not invent a crew, plan or progres
 test('desktop/mobile family fits, uses actual attributed people and surfaced keyboard carousel',async()=>{
  for(const width of [760,360]){const {browser,page}=await mount(fixture(),{width});try{
   assert.equal(await page.locator('.family-brand').evaluate(n=>getComputedStyle(n).color),'rgb(181, 71, 31)','Relay product brand does not inherit the current staff/status accent');
+  assert.equal(await page.locator('.family-message').first().evaluate(n=>getComputedStyle(n).fontSize),'16px');assert.equal(await page.locator('.family-relation').count(),0);assert.equal(await page.locator('.family-step').count(),0);
   assert.equal(await page.locator('.family-update').count(),3);assert.deepEqual(await page.locator('.family-name').allTextContents(),['Valentina','Nico','Roman']);
   assert.equal(await page.locator('.family-media-note').first().textContent(),'No visual is attached to this update.');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  for(const summary of await page.locator('#card summary').all()){assert.equal(await summary.locator('svg').count(),1);assert.equal(await summary.evaluate(n=>getComputedStyle(n).listStyleType),'none');}
+  const railColors=await page.locator('.step-list>li').evaluateAll(nodes=>nodes.map(n=>getComputedStyle(n,'::before').backgroundColor));assert.notEqual(railColors[0],railColors[2],'running and blocked retain distinct semantic rails');
+  if(width<520){for(const copy of await page.locator('.step-copy').all()){const bounds=await copy.boundingBox();assert.ok(bounds.width>=180,'phone priority text has readable full-row width');}}
   const track=page.locator('.family-track');await track.focus();await page.keyboard.press('ArrowRight');await page.clock.runFor(50);assert.ok(await track.evaluate(n=>n.scrollLeft)>0);
   for(const b of await page.locator('.family-nav').all()){const box=await b.boundingBox();assert.ok(box.width>=44&&box.height>=44);assert.equal(await b.locator('svg').count(),1);}
   assert.equal(await page.locator('.family-brand img').evaluate(n=>getComputedStyle(n).animationName),'none');
