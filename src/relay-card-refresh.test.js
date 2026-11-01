@@ -223,3 +223,26 @@ test('changed host assignment is honored when the project snapshot bytes are unc
   await page.locator('#refresh').click();await page.waitForFunction(()=>window.pending.length===1);assert.deepEqual((await calls(page)).at(-1).args,{project:'relay',assignment:'other'});
  }finally{await browser.close();}
 });
+
+test('typed refresh failures preserve evidence and checked clock without leaking raw errors',async()=>{
+ const {browser,page}=await mount(progress());
+ try{
+  await page.clock.runFor(400);await page.locator('#title').filter({hasText:'Fresh task'}).waitFor();const checked=(await page.locator('#card-freshness').textContent()).match(/Checked .*$/)[0];
+  for(const [reply,code]of [[{ok:false,error:{message:'PRIVATE token diagnostic'}},'provider_error'],[{project:'other',progress:[]},'wrong_target'],[{project:'relay',progress:[]},'missing_target'],[progress('task','failed','2026-10-30T01:00:00Z'),'stale_response']]){
+   await page.evaluate(x=>window.next=x,reply);await page.locator('#refresh').click();await page.locator('#refresh').filter({hasText:'Try refresh again'}).waitFor();
+   assert.equal(await page.locator('#title').textContent(),'Fresh task');assert.ok((await page.locator('#card-freshness').textContent()).endsWith(checked));
+   const diag=await page.locator('#card-refresh-diagnostics').textContent();assert.ok(diag.includes(code));assert.ok(!diag.includes('PRIVATE'));assert.equal(await page.locator('#details').evaluate(x=>x.open),false);
+  }
+ }finally{await browser.close();}
+});
+test('native timeout preserves last evidence, ignores its late answer, and never dispatches through MCP',async()=>{
+ const {browser,page}=await mount(progress(),{hold:true});
+ try{
+  await page.evaluate(()=>{window.mcpReads=0;const post=window.postMessage.bind(window);window.postMessage=(msg,...rest)=>{if(msg.method==='tools/call')window.mcpReads++;return post(msg,...rest)};});
+  await page.clock.runFor(400);await page.waitForFunction(()=>window.pending.length===1);await page.clock.runFor(12010);
+  await page.locator('#refresh').filter({hasText:'Try refresh again'}).waitFor();assert.match(await page.locator('#card-freshness').textContent(),/update took too long/);
+  assert.equal(await page.evaluate(()=>window.mcpReads),0);assert.equal((await calls(page)).length,1);
+  await page.evaluate(data=>window.pending.shift()(data),progress('task','failed','2026-10-31T23:05:00Z'));assert.equal(await page.locator('#title').textContent(),'Repair task');
+  await page.evaluate(()=>window.hold=false);await page.locator('#refresh').click();await page.locator('#title').filter({hasText:'Fresh task'}).waitFor();assert.equal(await page.locator('#card-refresh-diagnostics').isVisible(),false);
+ }finally{await browser.close();}
+});
