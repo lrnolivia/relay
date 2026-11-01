@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T04:27:54.472Z",
+  "updated_at": "2026-11-01T05:09:42.608Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8178,6 +8178,42 @@
             "id": "rtxforge-library-overlay-preview-20261031:acceptance:0",
             "text": "Settings > Overlay exposes the same preview in Desktop and Game Mode. Game selection comes from the actual scanned library, not the prototype's fixed four-game catalogue. Load screenshots for that exact game, prefer local/cached screenshots, preserve source attribution, honor existing online-media preferences, and show honest empty/offline states without substituting another game's image. Preview actual Side Panel, Advanced and Bar layouts and current Light/Dark/Clear/Accent themes through shared rendering and appearance settings. Changes are visibly reflected, shared between both settings views, and keyboard/controller accessible. Never attach to a game process, alter game installations, or present demo metrics as live telemetry. Verify native rendering, persistence, exact-game media identity, empty/error states and both navigation modes; qualify platform coverage.",
             "at": "2026-11-01T01:16:18.742Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-website-frost-themes-20261101",
+      "owner": "root:website_frost_themes",
+      "goal": "Update standalone website with the approved light Steam hero and frosted Dark, Light and default Clear themes.",
+      "acceptance": "Use the approved light hero directly without a white cast filter; preserve texture. Share coherent frosted surface hierarchy across all pages. Add accessible Clear/Dark/Light selector, default Clear with slight neutral grey cast over original dark hero. Preserve site content, report flow, native screenshots and existing OS/download behavior. Bounded desktop/mobile visual QA, website checks, source archive and retained rollback before authorized production deployment. Standalone source C:/Users/lrnol/Sites/rtxForge remains outside app Git history per its AGENTS.md.",
+      "next_action": "Read standalone source and current deployment, implement themes and accessible selector, validate and publish within standalone site policy.",
+      "paths": [
+        "website/"
+      ],
+      "resources": [
+        "rtxforge-standalone-website"
+      ],
+      "category": "implementation",
+      "primary_role": "design",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-11-01T05:09:42.608Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Update standalone website with the approved light Steam hero and frosted Dark, Light and default Clear themes.",
+          "acceptance": "Use the approved light hero directly without a white cast filter; preserve texture. Share coherent frosted surface hierarchy across all pages. Add accessible Clear/Dark/Light selector, default Clear with slight neutral grey cast over original dark hero. Preserve site content, report flow, native screenshots and existing OS/download behavior. Bounded desktop/mobile visual QA, website checks, source archive and retained rollback before authorized production deployment. Standalone source C:/Users/lrnol/Sites/rtxForge remains outside app Git history per its AGENTS.md.",
+          "at": "2026-11-01T05:09:42.608Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-website-frost-themes-20261101:acceptance:0",
+            "text": "Use the approved light hero directly without a white cast filter; preserve texture. Share coherent frosted surface hierarchy across all pages. Add accessible Clear/Dark/Light selector, default Clear with slight neutral grey cast over original dark hero. Preserve site content, report flow, native screenshots and existing OS/download behavior. Bounded desktop/mobile visual QA, website checks, source archive and retained rollback before authorized production deployment. Standalone source C:/Users/lrnol/Sites/rtxForge remains outside app Git history per its AGENTS.md.",
+            "at": "2026-11-01T05:09:42.608Z"
           }
         ]
       }
