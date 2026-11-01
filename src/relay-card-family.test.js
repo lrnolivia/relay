@@ -25,7 +25,7 @@ async function mount(data,{width=760,media='valid',hold=false}={}){
   window.calls=[];window.pendingMedia=[];
   window.openai={toolInput:{project:'relay'},toolOutput:data,callTool:async(name,args)=>{
    window.calls.push({name,args});if(name!=='relay_ui_request')return {project:'relay',claims:[data.claim]};
-   const value=args.path.endsWith('/image')?{status:200,content_type:'image/png',base64:png}:{status:200,body:{evidence_id:args.path.split('/').at(-1),context:{project:'relay',assignment:media==='wrong'?'other':data.claim.id,commit_sha:source}}};
+   const value=args.path.endsWith('/image')?{status:200,content_type:'image/png',base64:media==='bad-image'?'not base64':png}:{status:200,body:{evidence_id:args.path.split('/').at(-1),context:{project:'relay',assignment:media==='wrong'?'other':data.claim.id,commit_sha:source}}};
    if(hold)return new Promise(resolve=>window.pendingMedia.push(()=>resolve(value)));return value;
   }};
  },{data,media,hold,png,source});
@@ -89,3 +89,19 @@ test('ordinary failure and no-plan cards keep details collapsed and omit empty c
  assert.equal(m.family,'assignment-status');assert.equal(m.identity.lead.id,'julian');assert.equal(m.identity.relationship,'Assignment lead');assert.equal(m.identity.current_owner,null);assert.deepEqual(m.updates,[]);
  const generic=contextCardModel({project:'relay',primary_staff:'julian',human:{staff:'Julian'}});assert.equal(generic.family,'product');assert.equal(generic.identity.lead,null);assert.deepEqual(generic.updates,[]);
  });
+
+test('pending metadata and images survive same-assignment appends but never revive removed or retargeted updates',async()=>{
+ for(const phase of ['metadata','image'])for(const action of ['append','remove','retarget']){
+  const {browser,page}=await mount(fixture(1,{artifact}),{hold:true});try{
+   await page.waitForFunction(()=>window.pendingMedia.length===1);
+   if(phase==='image'){await page.evaluate(()=>window.pendingMedia.shift()());await page.waitForFunction(()=>window.pendingMedia.length===1);}
+   await page.evaluate(data=>render(data),action==='append'?fixture(2,{artifact}):action==='remove'?fixture(0):fixture(1,{id:'another-assignment'}));
+   await page.evaluate(()=>window.pendingMedia.shift()());
+   if(action==='append'){
+    if(phase==='metadata'){await page.waitForFunction(()=>window.pendingMedia.length===1);await page.evaluate(()=>window.pendingMedia.shift()());}
+    await page.locator('.family-capture').waitFor();assert.equal(await page.locator('.family-capture').count(),1);assert.equal(await page.locator('.family-update').count(),2);
+   }else{await page.clock.runFor(50);assert.equal(await page.locator('.family-capture').count(),0);assert.equal(await page.locator('.family-media-note').filter({hasText:'Loading'}).count(),0);}
+  }finally{await browser.close();}
+ }
+ const bad=await mount(fixture(1,{artifact}),{media:'bad-image'});try{await bad.page.locator('.family-media-note').filter({hasText:'unavailable'}).waitFor();assert.equal(await bad.page.locator('.family-capture').count(),0);}finally{await bad.browser.close();}
+});
