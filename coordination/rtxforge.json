@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-01T05:14:14.413Z",
+  "updated_at": "2026-11-01T05:16:11.761Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22479,6 +22479,46 @@
       ]
     },
     {
+      "id": "rtxforge-website-frost-themes-20261101",
+      "owner": "root:website_frost_themes",
+      "branch": "rtxforge/website-frost-themes-20261101",
+      "paths": [
+        "website/"
+      ],
+      "resources": [
+        "rtxforge-standalone-website"
+      ],
+      "goal": "Update standalone website with approved light Steam hero and frosted Dark, Light and default Clear themes.",
+      "acceptance": "Approved light hero without white cast; accessible three-choice theme selector defaults Clear; coherent frosted hierarchy all pages, intact downloads, report flow and screenshots. Website checks and bounded desktop/mobile visual QA pass. Standalone source outside app Git per site AGENTS, preserve source archive/deployment receipt and rollback before user-authorized publication.",
+      "next_action": "Implement exclusively in standalone website per site AGENTS. Branch name is coordination slot only; no app source commits. Preserve production source archive and current Worker version.",
+      "category": "implementation",
+      "primary_role": "design",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "base_sha": "0ed4eebc374d6fe65765abc3d7d60092e8b1f5f9",
+      "state": "active",
+      "created_at": "2026-11-01T05:13:11.894Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Update standalone website with the approved light Steam hero and frosted Dark, Light and default Clear themes.",
+          "acceptance": "Use the approved light hero directly without a white cast filter; preserve texture. Share coherent frosted surface hierarchy across all pages. Add accessible Clear/Dark/Light selector, default Clear with slight neutral grey cast over original dark hero. Preserve site content, report flow, native screenshots and existing OS/download behavior. Bounded desktop/mobile visual QA, website checks, source archive and retained rollback before authorized production deployment. Standalone source C:/Users/lrnol/Sites/rtxForge remains outside app Git history per its AGENTS.md.",
+          "at": "2026-11-01T05:09:42.608Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-website-frost-themes-20261101:acceptance:0",
+            "text": "Use the approved light hero directly without a white cast filter; preserve texture. Share coherent frosted surface hierarchy across all pages. Add accessible Clear/Dark/Light selector, default Clear with slight neutral grey cast over original dark hero. Preserve site content, report flow, native screenshots and existing OS/download behavior. Bounded desktop/mobile visual QA, website checks, source archive and retained rollback before authorized production deployment. Standalone source C:/Users/lrnol/Sites/rtxForge remains outside app Git history per its AGENTS.md.",
+            "at": "2026-11-01T05:09:42.608Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-01T05:13:11.894Z",
+      "lease_until": "2026-11-01T17:13:11.894Z"
+    },
+    {
       "id": "rtxforge-overlay-layout-repair-20261031",
       "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
       "branch": "rtxforge/overlay-layout-repair-20261031",
@@ -22554,7 +22594,9 @@
         "windows/RtxForge.Windows/Controls/OverlayPreviewView.cs",
         "windows/RtxForge.Windows/RtxForge.Windows.csproj",
         "windows/build/Bundle-Engine.ps1",
-        "tests/test_library_screenshots.py"
+        "tests/test_library_screenshots.py",
+        "windows/overlay-rmlui/CMakeLists.txt",
+        "windows/build/Build-GlassOverlay.ps1"
       ],
       "resources": [
         "rtxforge-overlay-layout",
@@ -22593,8 +22635,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T05:11:45.807Z",
-      "lease_until": "2026-11-01T17:11:45.807Z",
+      "updated_at": "2026-11-01T05:16:11.761Z",
+      "lease_until": "2026-11-01T17:16:11.761Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -22615,46 +22657,6 @@
           }
         }
       ]
-    },
-    {
-      "id": "rtxforge-website-frost-themes-20261101",
-      "owner": "root:website_frost_themes",
-      "branch": "rtxforge/website-frost-themes-20261101",
-      "paths": [
-        "website/"
-      ],
-      "resources": [
-        "rtxforge-standalone-website"
-      ],
-      "goal": "Update standalone website with approved light Steam hero and frosted Dark, Light and default Clear themes.",
-      "acceptance": "Approved light hero without white cast; accessible three-choice theme selector defaults Clear; coherent frosted hierarchy all pages, intact downloads, report flow and screenshots. Website checks and bounded desktop/mobile visual QA pass. Standalone source outside app Git per site AGENTS, preserve source archive/deployment receipt and rollback before user-authorized publication.",
-      "next_action": "Implement exclusively in standalone website per site AGENTS. Branch name is coordination slot only; no app source commits. Preserve production source archive and current Worker version.",
-      "category": "implementation",
-      "primary_role": "design",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "valentina",
-      "supporting_staff": [],
-      "base_sha": "0ed4eebc374d6fe65765abc3d7d60092e8b1f5f9",
-      "state": "active",
-      "created_at": "2026-11-01T05:13:11.894Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Update standalone website with the approved light Steam hero and frosted Dark, Light and default Clear themes.",
-          "acceptance": "Use the approved light hero directly without a white cast filter; preserve texture. Share coherent frosted surface hierarchy across all pages. Add accessible Clear/Dark/Light selector, default Clear with slight neutral grey cast over original dark hero. Preserve site content, report flow, native screenshots and existing OS/download behavior. Bounded desktop/mobile visual QA, website checks, source archive and retained rollback before authorized production deployment. Standalone source C:/Users/lrnol/Sites/rtxForge remains outside app Git history per its AGENTS.md.",
-          "at": "2026-11-01T05:09:42.608Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-website-frost-themes-20261101:acceptance:0",
-            "text": "Use the approved light hero directly without a white cast filter; preserve texture. Share coherent frosted surface hierarchy across all pages. Add accessible Clear/Dark/Light selector, default Clear with slight neutral grey cast over original dark hero. Preserve site content, report flow, native screenshots and existing OS/download behavior. Bounded desktop/mobile visual QA, website checks, source archive and retained rollback before authorized production deployment. Standalone source C:/Users/lrnol/Sites/rtxForge remains outside app Git history per its AGENTS.md.",
-            "at": "2026-11-01T05:09:42.608Z"
-          }
-        ]
-      },
-      "updated_at": "2026-11-01T05:13:11.894Z",
-      "lease_until": "2026-11-01T17:13:11.894Z"
     }
   ]
 }
