@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { chromium } from 'playwright';
-import { contextCardModel, relayContextCardResource } from '../src/relay-chat-ui.js';
+import { contextCardModel, relayContextCardResource, contextualPresentation } from '../src/relay-chat-ui.js';
 import {appendCardUpdates} from '../src/relay-card-updates.js';
 import {assignmentCardContext,validateCardStepsPublication} from '../src/relay-card-steps.js';
 import { webSourceSha } from '../apps/web/generated.js';
@@ -38,6 +38,10 @@ const fixtures={
  complete:{project:'relay',claim:{id:'sample-complete',primary_team:'runner',primary_staff:'ellis',state:'completed',goal:'Verification finished',next_action:'Obsolete next action must stay hidden.'}},
  jobs:{project:'relay',claims:[{id:'relay-card-polish-20261003',primary_team:'runner',primary_staff:'ellis',state:'active',goal:'Continue the full project implementation and review every source and runtime detail. '.repeat(8),next_action:'Review the captured layout and current job status.'},{id:'relay-feedback-delivery-20261003',state:'working',primary_staff:'roman'},{id:'old-task',state:'completed',primary_staff:'nico'}]},
  generic:{ok:true},
+ 'product-relay':contextualPresentation({ok:true,state:'completed'},{operation:{name:'relay_source_inventory',kind:'query'}}),
+ 'product-runner':contextualPresentation({ok:true,state:'working'},{operation:{name:'relay_runner_coordinate',kind:'command'}}),
+ 'product-inspector':contextualPresentation({ok:true,state:'completed'},{operation:{name:'relay_verify_browser_capture',kind:'query'}}),
+ 'product-night-shift':contextualPresentation({ok:true,state:'waiting-for-human'},{operation:{name:'relay_night_shift',kind:'query'}}),
  loading:null,
  'family-full':familyFixture(3),
  'family-single':familyFixture(1),
@@ -45,7 +49,7 @@ const fixtures={
 };
 try {
  const visualPage=await browser.newPage({viewport:{width:640,height:360}});await visualPage.setContent('<!doctype html><style>body{margin:0;background:#151718;color:#eee;font:18px system-ui;padding:28px}main{background:#282b2c;border-radius:20px;padding:24px}h2{color:#92c8bf;font-size:26px}button{border:1px solid #7a9e99;border-radius:9px;background:#303b3b;color:white;padding:12px 18px}</style><main><small>RENDERED TEST FIXTURE · NOT LIVE PRODUCT</small><h2>Overlay controls</h2><p>Preview the spacing, hierarchy and keyboard controls.</p><button>Open settings</button></main>');const fixtureImage=(await visualPage.screenshot()).toString('base64');await visualPage.close();
- const cases=[['runner',768,'dark'],['inspector',768,'light'],['relay',390,'dark'],['night-shift',390,'light'],['blocked',320,'dark'],['empty',320,'light'],['complete',390,'dark'],['loading',390,'light'],['jobs',390,'dark'],['jobs',768,'light'],['generic',360,'dark'],['generic',760,'light'],['family-full',760,'dark'],['family-full',360,'light'],['family-single',760,'light'],['family-single',360,'dark'],['family-media',760,'dark'],['family-media',360,'light']];
+ const cases=[['runner',768,'dark'],['inspector',768,'light'],['relay',390,'dark'],['night-shift',390,'light'],['blocked',320,'dark'],['empty',320,'light'],['complete',390,'dark'],['loading',390,'light'],['jobs',390,'dark'],['jobs',768,'light'],['generic',360,'dark'],['generic',760,'light'],['family-full',760,'dark'],['family-full',360,'light'],['family-single',760,'light'],['family-single',360,'dark'],['family-media',760,'dark'],['family-media',360,'light'],...['product-relay','product-runner','product-inspector','product-night-shift'].flatMap(name=>[[name,360,'dark'],[name,760,'light']])];
  for(const [name,width,theme] of cases){
   const page=await browser.newPage({viewport:{width,height:1000},colorScheme:theme,reducedMotion:'reduce'}),errors=[],unexpected=[];
   page.on('pageerror',error=>errors.push(error.message));
@@ -66,7 +70,7 @@ try {
   });
   await page.goto(origin+'/host');const frame=page.frameLocator('iframe');
   await frame.locator('#feature-title').waitFor({state:'attached'});
-  if(fixtures[name])await frame.locator('#title').filter({hasText:name==='jobs'?'relay card polish':name==='empty'?'Verification':fixtures[name].claim?.goal||'Relay update'}).waitFor();
+  if(fixtures[name]&&!name.startsWith('product-'))await frame.locator('#title').filter({hasText:name==='jobs'?'relay card polish':name==='empty'?'Verification':fixtures[name].claim?.goal||'Relay update'}).waitFor();
   await frame.locator('body').evaluate(async()=>{await document.fonts.load('400 36px "Momo Trust Display"');await document.fonts.load('400 14px Inter');await document.fonts.load('600 14px Inter');await document.fonts.ready;await Promise.all([...document.images].map(img=>img.complete?Promise.resolve():new Promise(resolve=>{img.onload=resolve;img.onerror=resolve})));});
   const geometry=await frame.locator('body').evaluate(()=>({width:innerWidth,overflow:document.documentElement.scrollWidth>innerWidth,font:document.fonts.check('400 36px "Momo Trust Display"'),headingFont:getComputedStyle(document.querySelector('h1')).fontFamily,bodyFont:getComputedStyle(document.body).fontFamily,interLoaded:document.fonts.check('400 14px Inter'),outerPadding:parseFloat(getComputedStyle(document.querySelector('#card')).paddingLeft),actionsAfterHero:Boolean(document.querySelector('.actions #open-relay')&&(document.querySelector('.hero').compareDocumentPosition(document.querySelector('.actions'))&Node.DOCUMENT_POSITION_FOLLOWING)),nextInHero:Boolean(document.querySelector('.hero #next')),buttons:[...document.querySelectorAll('.actions button')].filter(el=>!el.hidden).map(el=>({label:el.textContent,height:el.getBoundingClientRect().height})),images:[...document.querySelectorAll('.feature-mark img')].map(img=>({loaded:img.complete&&img.naturalWidth>0,source:img.src.slice(0,22)})),glyphMotion:getComputedStyle(document.querySelector('.feature-mark'),'::after').animationName,percent:document.querySelector('#meter').hidden?null:document.querySelector('#metric').textContent,diagnosticsExpanded:document.querySelector('#details').open}));
   await writeFile(directory+'/'+name+'-'+width+'-geometry.json',JSON.stringify(geometry,null,2));
@@ -77,6 +81,8 @@ try {
   if(fixtures[name]){const identity=contextCardModel(fixtures[name]).identity;assert.equal(await frame.locator('#feature-title').textContent(),contextCardModel(fixtures[name]).family==='product'?'relay':identity.speaker?.name||identity.team_label);if(identity.speaker){assert.ok((await frame.locator('#team').textContent()).includes(identity.relationship));assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),identity.speaker.id);assert.ok(geometry.images.length>0);}}
   if(name==='generic'){assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),'');assert.equal(await frame.locator('#feature-title').evaluate(el=>getComputedStyle(el).color),theme==='dark'?'rgb(240, 100, 59)':'rgb(181, 71, 31)');}
   if(name.startsWith('family-')){assert.equal(await frame.locator('.family-update').count(),name==='family-single'?1:3);assert.equal(await frame.locator('#family-crew').isVisible(),true);assert.equal(await frame.locator('.card-header').isVisible(),false);if(name==='family-media')await frame.locator('.family-capture img').waitFor();}
+  if(name==='family-single'){assert.equal(await frame.locator('#plan-panel').isVisible(),false);assert.equal(await frame.locator('.family-range').count(),0);assert.equal(await frame.locator('.family-nav').count(),0);assert.equal(await frame.locator('.family-track').count(),0);}
+  if(name.startsWith('product-')){assert.equal(await frame.locator('#feature-title').textContent(),name==='product-night-shift'?'night shift':name.slice(8));assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),'');assert.equal(await frame.locator('.insight').isVisible(),false);assert.equal(await frame.locator('#family-crew').isVisible(),false);}
   if(name==='complete')assert.equal(await frame.locator('#next').isVisible(),false);
   assert.deepEqual(errors,[]);assert.deepEqual(unexpected,[]);
   // The test host must honor intrinsic card height just like ui/notifications/size-changed.
@@ -87,7 +93,7 @@ try {
   await page.locator('iframe').evaluate((node,height)=>node.style.height=height+'px',captureHeight);
   await page.setViewportSize({width,height:Math.max(1000,captureHeight)});
   geometry.capture_height=captureHeight;
-  if(name.startsWith('family-')&&width<520){const widths=await frame.locator('.step-copy').evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().width));assert.ok(widths.every(w=>w>=180),'phone priority text has full-row width');}
+  if(name.startsWith('family-')&&name!=='family-single'&&width<520){const widths=await frame.locator('.step-copy').evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().width));assert.ok(widths.every(w=>w>=180),'phone priority text has full-row width');}
   const surface=`context-card-${name}-${width}-${theme}`,screenshot=await frame.locator('#card').screenshot();
   await writeFile(directory+'/'+surface+'.png',screenshot);
   const capture={surface,theme,width,fixture:true,source_sha:expected,resource:resource.uri,sha256:createHash('sha256').update(screenshot).digest('hex'),geometry};

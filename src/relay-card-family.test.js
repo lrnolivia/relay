@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
-import {contextCardModel,relayContextCardResource} from './relay-chat-ui.js';
+import {contextCardModel,relayContextCardResource,contextualPresentation} from './relay-chat-ui.js';
 import {appendCardUpdates,assignmentCardUpdates} from './relay-card-updates.js';
 import {assignmentCardContext,validateCardStepsPublication} from './relay-card-steps.js';
 import {storeEvidence} from './evidence.js';
@@ -104,4 +104,21 @@ test('pending metadata and images survive same-assignment appends but never revi
   }finally{await browser.close();}
  }
  const bad=await mount(fixture(1,{artifact}),{media:'bad-image'});try{await bad.page.locator('.family-media-note').filter({hasText:'unavailable'}).waitFor();assert.equal(await bad.page.locator('.family-capture').count(),0);}finally{await bad.browser.close();}
+});
+
+test('single-staff variant retains padded portrait and message insets',async()=>{
+ const {browser,page}=await mount(fixture(1),{width:360});try{
+  assert.equal(await page.locator('#plan-panel').isVisible(),false);assert.equal(await page.locator('.family-crew-heading').count(),0);assert.equal(await page.locator('.family-range').count(),0);assert.equal(await page.locator('.family-nav').count(),0);assert.equal(await page.locator('.family-track').count(),0);assert.equal(await page.locator('.insight').isVisible(),false);
+  const card=await page.locator('.family-update').boundingBox(),avatar=await page.locator('.family-avatar').boundingBox(),message=await page.locator('.family-message').boundingBox();
+  assert.ok(avatar.x-card.x>=14&&avatar.y-card.y>=14,'portrait stays inside the surfaced card');assert.ok(message.x-card.x>=14&&card.x+card.width-message.x-message.width>=14,'message preserves both card insets');
+ }finally{await browser.close();}
+});
+
+test('canonical tool presentation selects all four compact product brands without fabricated staff or overview',async()=>{
+ for(const [tool,product]of [['relay_source_inventory','relay'],['relay_runner_coordinate','runner'],['relay_verify_browser_capture','inspector'],['relay_night_shift','night-shift']]){
+  const data=contextualPresentation({ok:true,state:'completed'},{operation:{name:tool,kind:'query'}}),model=contextCardModel(data);assert.equal(model.family,'product');assert.equal(model.product,product);assert.equal(model.identity.lead,null);
+  const {browser,page}=await mount(data,{width:360});try{
+   assert.equal(await page.locator('#feature-title').textContent(),product==='night-shift'?'night shift':product);assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),'');assert.equal(await page.locator('#feature-mark>img').count(),1);assert.equal(await page.locator('#plan-panel').isVisible(),false);assert.equal(await page.locator('#family-crew').isVisible(),false);assert.equal(await page.locator('.insight').isVisible(),false);assert.equal(await page.locator('.summary').evaluate(n=>getComputedStyle(n).fontSize),'16px');
+  }finally{await browser.close();}
+ }
 });

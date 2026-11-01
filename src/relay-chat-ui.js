@@ -17,7 +17,7 @@ const CONTROL_URI = 'ui://relay/control-center/v2.html';
 const DIRECTORY = Object.fromEntries(STAFF.map(p => [p.id, p.display_name]));
 const ROLE_DIRECTORY = Object.fromEntries(STAFF.map(p => [p.id, p.role.title]));
 const CONTEXTUAL_TOOLS = new Set([
-  'relay_runner_project','relay_runner_assignments','relay_runner_progress','relay_runner_resume','relay_runner_updates','relay_runner_coordinate','relay_runner_preflight',
+  'relay_night_shift','relay_runner_delegate','relay_runner_project','relay_runner_assignments','relay_runner_progress','relay_runner_resume','relay_runner_updates','relay_runner_coordinate','relay_runner_preflight',
   'relay_execution','relay_source_inventory','relay_source_pull_request','relay_source_checks','relay_source_pull_request_action','relay_source_open_pull_request',
   'relay_cloud_worker','relay_cloud_project','relay_cloud_deploy_version','relay_cloud_deploy_project_version',
   'relay_verify_browser_snapshot','relay_verify_browser_screenshot','relay_verify_evidence_plan','relay_verify_browser_capture',RELAY_CONTEXT_CARD_TOOL,RELAY_STATUS_CARD_TOOL
@@ -103,6 +103,7 @@ export function compactContextCardResult(result = {}) {
 
 export function contextualPresentation(data, options = {}) {
   data = enrichWorkCard(options.operation?.name, data);
+  if(data&&typeof data==='object'&&typeof options.operation?.name==='string')data={...data,presentation_operation:{name:options.operation.name,kind:options.operation.kind||'query'}};
   const m=contextCardModel({...data,presentation_mode:options.mode==='legacy'?'legacy':'human_v1'});
   return withHumanPresentation({ ...data, human: data.human || { outcome:m.title, health:data.ok===false||data.isError||m.tone==='bad'||m.blocker?'blocked':m.tone==='wait'||m.label==='recorded'?'waiting':'healthy', staff:m.team, what_changed:m.summary, next_step:m.next_step, blocker:m.blocker, qa:m.qa } }, options);
 }
