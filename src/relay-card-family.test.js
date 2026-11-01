@@ -147,7 +147,7 @@ test('card family boundary table distinguishes actual assignment context, explor
   ['single update',fixture(1),'single'],['full overview',fixture(3),'assignment']
  ];
  for(const [label,data,expected]of cases){const m=contextCardModel(data);assert.equal(m.family,expected,label);if(expected==='explorer'){assert.deepEqual(m.updates,[]);assert.deepEqual(m.plan.steps,[]);assert.equal(m.identity.lead,null);assert.equal(m.identity.speaker,null);assert.equal(m.primary_staff,'Relay');assert.equal(m.team,'Relay');}}
- const c=contextCardModel({ci});assert.equal(c.product,'inspector');assert.ok(c.ci);
+ const c=contextCardModel({ci});assert.equal(c.product,'inspector');assert.ok(c.ci);assert.equal(contextCardModel({checks:{check_runs:[]}}).product,'inspector');
 });
 test('explorer overview and project never borrow one assignment crew; explicit assignment view renders its own updates',async()=>{
  const browser=await chromium.launch({headless:true});try{const page=await browser.newPage({viewport:{width:390,height:1000}});const data=fixture(2);
