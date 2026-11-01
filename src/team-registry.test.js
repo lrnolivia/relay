@@ -22,7 +22,7 @@ test('roles and explicit teams route before active staff without granting author
   assert.equal(normalizeAssignmentTeams({resources:['relay-cloud-runtime']}).primary_team,'cloud');
   assert.throws(()=>normalizeAssignmentTeams({primary_team:'admin'}),/Unknown/);
   assert.throws(()=>normalizeAssignmentTeams({primary_team:'runner',supporting_teams:['runner']}),/Duplicate/);
-  assert.equal(normalizeAssignmentStaff({primary_team:'runner',primary_role:'brand-launch'}).primary_staff,null);
+  assert.equal(normalizeAssignmentStaff({primary_team:'runner',primary_role:'brand-launch'}).primary_staff,'bianca');
 });
 test('cross-team support keeps home identity and directory bindings use canonical owners',()=>{
   const assignment={id:'release-task',owner:'machine-owner',branch:'relay/task',state:'active',primary_team:'release',supporting_teams:['inspector'],primary_staff:'luca',supporting_staff:['roman']};

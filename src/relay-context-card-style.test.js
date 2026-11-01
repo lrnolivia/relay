@@ -1,3 +1,4 @@
+import {FAMILY_BRANDS} from './relay-card-family.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -17,7 +18,7 @@ test('versioned legacy bridge preserves the byte-exact host and style shell', ()
 });
 test('context card embeds canonical artwork and Momo without external fonts', () => {
   const html = relayContextCardResource().text;
-  assert.ok(html.includes(contextCardBrandAssets.relay));
+  assert.ok(html.includes(FAMILY_BRANDS.relay));
   assert.match(html, /data:font\/woff;base64,/);
   assert.match(html, /SIL OPEN FONT LICENSE Version 1.1/);
   assert.match(html, /font-family:"Momo Trust Display"/);
@@ -25,7 +26,7 @@ test('context card embeds canonical artwork and Momo without external fonts', ()
   assert.ok(html.indexOf('id="diag"') > html.indexOf('<details id="details"'));
   assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/);
   assert.ok(Buffer.byteLength(html) < 512 * 1024, 'self-contained card remains bounded');
-  assert.equal(html.split(contextCardBrandAssets.relay).length-1,1,'canonical initial icon bytes are embedded once');
+  assert.equal(html.split(FAMILY_BRANDS.relay).length-1,1,'canonical initial icon bytes are embedded once');
   assert.match(html,/CARD_BRAND_ASSETS=\{"relay":document\.querySelector\("#feature-mark img"\)\.getAttribute\("src"\)/);
   assert.match(html, /prefers-reduced-motion/);
   assert.match(html, /visibilitychange/);
@@ -125,7 +126,7 @@ test('suite rings use the suite denominator, settle first observation, and honor
   const page=await browser.newPage({viewport:{width:720,height:900}});await page.clock.install();
   await page.addInitScript(data=>{window.openai={toolOutput:data}},data);
   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
-  await page.locator('#feature-title').filter({hasText:'Design & QA'}).waitFor();
+  await page.locator('#feature-title').filter({hasText:'inspector'}).waitFor();
   assert.equal(await page.locator('#telemetry-ring').isVisible(),true);
   assert.equal(await page.locator('#telemetry-value').getAttribute('stroke-dasharray'),'25 100');
   assert.equal(await page.locator('#metric-label').textContent(),'of 4 suites finished');
@@ -195,7 +196,7 @@ test('assigned leads stay visible and generic Relay has a contrast-safe brand he
    await page.locator('#card').screenshot({path:`${captures}${staff}-${state}-${theme}-${width}.png`});
   }
   await page.evaluate(()=>render({ok:true}));
-  assert.equal(await page.locator('#feature-title').textContent(),'Relay');
+  assert.equal(await page.locator('#feature-title').textContent(),'relay');
   assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),'');
   const colors=await page.locator('h1').evaluate(n=>({text:getComputedStyle(n).color,bg:getComputedStyle(document.getElementById('card')).backgroundColor}));
   assert.equal(colors.text,theme==='dark'?'rgb(240, 100, 59)':'rgb(181, 71, 31)');
@@ -218,7 +219,7 @@ test('successful native result renders awaiting verification through refresh wit
  }finally{await browser.close();}
 });
 
-test('all 17 approved portraits preserve bytes and settle inside clipped small frames; team headings retain readable home-team families',async()=>{
+test('all 21 approved framed portraits preserve bytes and settle inside clipped small frames; team headings retain readable home-team families',async()=>{
  const {chromium}=await import('playwright');const {STAFF_PORTRAITS}=await import('../assets/staff/card-assets.js');const browser=await chromium.launch({headless:true});
  try{
   for(const theme of ['light','dark']){
@@ -230,7 +231,7 @@ test('all 17 approved portraits preserve bytes and settle inside clipped small f
     for(const size of [32,48]){
      const geometry=await page.locator('#feature-mark').evaluate((mark,size)=>{mark.style.width=size+'px';mark.style.height=size+'px';const box=mark.getBoundingClientRect(),crop=mark.querySelector('.portrait-frame'),img=crop.querySelector('img'),r=img.getBoundingClientRect();return {overflow:getComputedStyle(crop).overflow,box:{x:box.x,y:box.y,w:box.width,h:box.height},image:{x:r.x,y:r.y,w:r.width,h:r.height}}},size);
      assert.equal(geometry.overflow,'hidden');const {box,image}=geometry;assert.ok(image.x<=box.x+.5&&image.y<=box.y+.5&&image.x+image.w>=box.x+box.w-.5&&image.y+image.h>=box.y+box.h-.5,'crop fills box without blank edges');
-     if(['julian','rafael'].includes(id)){const focalX=image.x+image.w*(id==='julian'?.40:.35);assert.ok((focalX-box.x)/box.w>=.44&&(focalX-box.x)/box.w<=.56,'visually measured face center stays near the middle for '+id);}
+     if(['julian','rafael'].includes(id)){const focalX=image.x+image.w*.50;assert.ok((focalX-box.x)/box.w>=.44&&(focalX-box.x)/box.w<=.56,'approved preframed face center stays near the middle without a second crop for '+id);}
     }
     const colors=await page.evaluate(()=>{const c=getComputedStyle(document.querySelector('#card')),h=getComputedStyle(document.querySelector('h1'));const rgb=s=>{const ctx=document.createElement('canvas').getContext('2d');ctx.fillStyle=s;ctx.fillRect(0,0,1,1);return Array.from(ctx.getImageData(0,0,1,1).data).slice(0,3)};const lum=s=>rgb(s).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((s,v,i)=>s+v*[.2126,.7152,.0722][i],0);const a=lum(h.color),b=lum(c.backgroundColor);return {color:h.color,ratio:(Math.max(a,b)+.05)/(Math.min(a,b)+.05)}});
     assert.ok(colors.ratio>=4.5,'staff heading normal-text contrast for '+id+' '+theme);

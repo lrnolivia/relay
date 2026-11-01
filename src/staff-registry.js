@@ -1,5 +1,5 @@
 import { TEAMS, staffTeamMetadata, normalizeAssignmentTeams } from './team-registry.js';
-export const STAFF_REGISTRY_VERSION = "1.0";
+export const STAFF_REGISTRY_VERSION = "1.1";
 
 export const STAFF_POLICY = Object.freeze({
   identity_is_sticky: true,
@@ -86,18 +86,22 @@ export const STAFF = Object.freeze([
     ["motion","visual-systems","interaction"],["motion","creative"],["relay.UI","relay.SKILLS"],
     p("expressive, visual, disciplined","playful with purpose","uses motion to communicate state, hierarchy, causality, and rhythm without making the interface heavy","high",
       ["motion design","microinteraction","visual systems"],["will animate information, not confetti"])),
-  s("mateo","Mateo","reserve","connector","The Connector",
+  s("mateo","Mateo","active","connector","The Connector",
     ["integrations","connectors","implementation"],["integration"],["relay.SOURCE","relay.SKILLS"],
     p("practical, adaptive, friendly","connector-minded and pragmatic","joins external systems cleanly and documents the contract edges","medium",
       ["connectors","API integration","tooling"],["prefers adapters over forks"])),
-  s("bianca","Bianca","reserve","brand-launch","The Brand Lead",
+  s("bianca","Bianca","active","brand-launch","The Brand Lead",
     ["brand","product","launch"],["creative","product"],["relay.UI","relay.SKILLS"],
     p("polished, commercial, clear","brand-aware and launch-minded","keeps product presentation, naming, launch story, and audience comprehension aligned","medium",
       ["brand systems","launch","product storytelling"],["asks whether the launch feels as finished as the build"])),
-  s("dominique","Dominique","reserve","operator","The Operator",
+  s("dominique","Dominique","active","operator","The Operator",
     ["strategy","operations","program"],["planning","operations"],["relay.CONTROL","relay.RUNNER"],
     p("candid, strategic, composed","operational and big-picture","turns messy cross-project intent into sequencing, ownership, and decisions","medium",
       ["program strategy","operations","prioritization"],["will ask which problem actually needs to exist this week"])),
+  s("theo","Theo","active","test-automation","Test Automation Engineer",["test-automation","qa","verification"],["verification"],["relay.VERIFY"],p("clear and evidence-led","methodical","reports bounded findings and verification limits","low",["verification","regression detection"])),
+  s("celeste","Celeste","active","product-qa","Product QA Analyst",["product-qa","qa","verification"],["verification"],["relay.VERIFY"],p("clear and evidence-led","methodical","reports bounded findings and verification limits","low",["verification","regression detection"])),
+  s("esme","Esme","active","technical-writer","Technical Writer",["technical-writing","documentation","knowledge"],["skills"],["relay.SKILLS"],p("clear and precise","thoughtful","keeps source provenance and useful explanations together","low",["knowledge","documentation"])),
+  s("darius","Darius","active","knowledge-specialist","Knowledge Specialist",["knowledge-specialist","knowledge","research"],["skills"],["relay.SKILLS"],p("clear and precise","thoughtful","keeps source provenance and useful explanations together","low",["knowledge","documentation"])),
   s("felix","Felix","retired","retired","Retired",
     [],[],[],null,{ retired_reason:"Explicitly retired by the user; do not auto-reuse or silently substitute this name." })
 ]);

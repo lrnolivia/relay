@@ -200,3 +200,16 @@ test('terminal readback keeps historical process time while fresh launch observa
  assert.equal(observations[0].observed_at,at);assert.equal(observations[0].state,'blocked');
  job.state='running';job.revision=3;await assert.rejects(specialistExecutionRpc({...options,terminalReadback:true})('relay_execution',{action:'start',job_id:job.id,executor_id:job.executor_id,expected_revision:2,process:job.process}),/stale/);
 });
+
+test('immutable receipt IDs change with proof/state but preserve unchanged legacy IDs and clocks',async()=>{
+ const {continuityCardProjection}=await import('./relay-continuity.mjs');
+ const p=plan(),hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
+ const claim={id:'fixture',owner:'worker',branch:'relay/fixture',state:'active',lease_until:new Date(Date.now()+3600000).toISOString(),primary_staff:'nico',primary_team:'runner',supporting_staff:['roman'],supporting_teams:['inspector']};
+ const journal={schema:1,plan_digest:hash(p),stages:{a:{state:'passed',receipt:{input_digest:'b'.repeat(64),evidence:'sha256:'+'c'.repeat(64),source_sha:'d'.repeat(40)}}}};
+ let projection=continuityCardProjection({plan:p,journal,assignment:claim});const old=projection.steps[0].receipt;
+ old.id='a:'+old.input_digest.slice(0,32);old.observed_at='2026-10-30T00:00:00Z';claim.card_steps=projection;
+ const recovered=continuityCardProjection({plan:p,journal,assignment:claim});assert.equal(recovered.steps[0].receipt.id,old.id);assert.equal(recovered.steps[0].receipt.observed_at,old.observed_at);
+ journal.stages.a.receipt.evidence='sha256:'+'e'.repeat(64);const different=continuityCardProjection({plan:p,journal,assignment:claim});assert.notEqual(different.steps[0].receipt.id,old.id);
+ journal.stages.a={state:'dispatching',observation:{state:'running',owner:{staff:'roman',team:'inspector'},input_digest:'b'.repeat(64),evidence:'sha256:'+'c'.repeat(64),source_sha:'d'.repeat(40),observed_at:new Date().toISOString()}};
+ const running=continuityCardProjection({plan:p,journal,assignment:claim});claim.card_steps=running;journal.stages.a.observation.state='failed';const failed=continuityCardProjection({plan:p,journal,assignment:claim});assert.notEqual(failed.steps[0].receipt.id,running.steps[0].receipt.id);
+});

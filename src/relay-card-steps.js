@@ -1,3 +1,4 @@
+import {publicCardUpdateSchema,validPublicCardUpdate,assignmentCardUpdates,receiptSnapshot} from './relay-card-updates.js';
 import {STAFF} from './staff-registry.js';
 import { safePresentationText } from './human-presentation.js';
 
@@ -22,7 +23,7 @@ export const cardStepsPublicationSchema={type:'object',additionalProperties:fals
  sequence:{type:'integer',minimum:1,maximum:1000000},complete:{type:'boolean'},
  steps:{type:'array',minItems:1,maxItems:32,items:{type:'object',additionalProperties:false,required:['id','label','depends_on','state','receipt'],properties:{
   id:stableSchema,label:{type:'string',minLength:1,maxLength:160},depends_on:{type:'array',maxItems:32,uniqueItems:true,items:stableSchema},state:{enum:['pending','unknown','running','passed','failed','blocked','cancelled','stale','skipped']},
-  receipt:{anyOf:[{type:'null'},{type:'object',additionalProperties:false,required:['id','assignment','step_id','plan_revision','input_digest','evidence','source_sha','observed_at'],properties:{id:{type:'string',pattern:ID.source},assignment:{type:'string',pattern:ID.source},step_id:stableSchema,plan_revision:digestSchema,input_digest:digestSchema,evidence:{type:'string',pattern:'^sha256:[a-f0-9]{64}$'},source_sha:{type:'string',pattern:'^[a-f0-9]{40}$'},observed_at:{type:'string',maxLength:40},phase:{type:'string',enum:['awaiting-verification']},owner:{type:'object',additionalProperties:false,required:['staff','team'],properties:{staff:{type:['string','null'],maxLength:80},team:{type:'string',enum:['runner','inspector','night-shift','source','cloud','release','skills']}}}}}]}
+  receipt:{anyOf:[{type:'null'},{type:'object',additionalProperties:false,required:['id','assignment','step_id','plan_revision','input_digest','evidence','source_sha','observed_at'],properties:{id:{type:'string',pattern:ID.source},assignment:{type:'string',pattern:ID.source},step_id:stableSchema,plan_revision:digestSchema,input_digest:digestSchema,evidence:{type:'string',pattern:'^sha256:[a-f0-9]{64}$'},source_sha:{type:'string',pattern:'^[a-f0-9]{40}$'},observed_at:{type:'string',maxLength:40},update:publicCardUpdateSchema,phase:{type:'string',enum:['awaiting-verification']},owner:{type:'object',additionalProperties:false,required:['staff','team'],properties:{staff:{type:['string','null'],maxLength:80},team:{type:'string',enum:['runner','inspector','night-shift','source','cloud','release','skills']}}}}}]}
  }}}
 }};
 const exactKeys=(value,keys)=>object(value)&&Object.keys(value).sort().join(',')===[...keys].sort().join(',');
@@ -36,9 +37,13 @@ export function validateCardStepsPublication(value,record,objectiveDigest,now=ne
   if(!exactKeys(step,['id','label','depends_on','state','receipt'])||! /^[a-z][a-z0-9-]{0,63}$/.test(step.id)||ids.has(step.id)||typeof step.label!=='string'||!step.label.trim()||step.label.length>160||/[\x00-\x1f<>]/.test(step.label)||!Array.isArray(step.depends_on)||new Set(step.depends_on).size!==step.depends_on.length||step.depends_on.some(id=>!ids.has(id))||!STATES.has(step.state))fail();
   const r=step.receipt;
   if(!['pending','unknown'].includes(step.state)){
-   if(!exactKeys(r,['id','assignment','step_id','plan_revision','input_digest','evidence','source_sha','observed_at',...(r&&Object.hasOwn(r,'owner')?['owner']:[]),...(r&&Object.hasOwn(r,'phase')?['phase']:[])])||!ID.test(r.id)||r.assignment!==record.id||r.step_id!==step.id||r.plan_revision!==value.revision||!/^[a-f0-9]{64}$/.test(r.input_digest)||!/^sha256:[a-f0-9]{64}$/.test(r.evidence)||!/^[a-f0-9]{40}$/.test(r.source_sha)||typeof r.observed_at!=='string'||r.observed_at.length>40||!Number.isFinite(Date.parse(r.observed_at))||Date.parse(r.observed_at)>+now+60000||(step.state==='passed'||step.state==='running')&&step.depends_on.some(id=>ids.get(id).state!=='passed'))fail();
+   if(!exactKeys(r,['id','assignment','step_id','plan_revision','input_digest','evidence','source_sha','observed_at',...(r&&Object.hasOwn(r,'owner')?['owner']:[]),...(r&&Object.hasOwn(r,'phase')?['phase']:[]),...(r&&Object.hasOwn(r,'update')?['update']:[])])||!ID.test(r.id)||r.assignment!==record.id||r.step_id!==step.id||r.plan_revision!==value.revision||!/^[a-f0-9]{64}$/.test(r.input_digest)||!/^sha256:[a-f0-9]{64}$/.test(r.evidence)||!/^[a-f0-9]{40}$/.test(r.source_sha)||typeof r.observed_at!=='string'||r.observed_at.length>40||!Number.isFinite(Date.parse(r.observed_at))||Date.parse(r.observed_at)>+now+60000||(step.state==='passed'||step.state==='running')&&step.depends_on.some(id=>ids.get(id).state!=='passed'))fail();
    if(r.phase!==undefined&&(r.phase!=='awaiting-verification'||step.state!=='blocked'))fail();
-   if(r.owner!==undefined&&!validCardOwner(r.owner,record))fail();
+   if(r.owner!==undefined&&!validCardOwner(r.owner,record)){
+    const admitted=previous?.steps.find(old=>old.id===step.id);
+    if(!admitted?.receipt||receiptSnapshot(admitted,admitted.receipt)!==receiptSnapshot(step,r))fail();
+   }
+   if(r.update!==undefined&&!validPublicCardUpdate(r.update,r))fail();
   }else if(r!==null)fail();
   ids.set(step.id,step);
  }
@@ -94,6 +99,8 @@ export function assignmentCardSteps(record = {}) {
 // identity and evidence required to render a shared assignment across handoffs.
 export function assignmentCardContext(record = {}) {
   const out = {};
+  const updates=assignmentCardUpdates(record);
+  if(updates.length)out.card_updates={schema:'relay-card-updates/v1',assignment:record.id||record.assignment,revision:record.card_steps.revision,sequence:record.card_updates.sequence,truncated:record.card_updates.truncated===true,items:updates};
   for (const key of ['id','assignment','owner','state','primary_staff','primary_team','branch','updated_at','created_at','completed_at','last_meaningful_progress_at']) if (typeof record[key] === 'string') out[key] = record[key].slice(0,180);
   for (const key of ['goal','next_action','waiting_reason','recovery_action']) if (typeof record[key] === 'string') out[key] = text(record[key],12000);
   for (const key of ['supporting_staff','supporting_teams']) if (Array.isArray(record[key])) out[key]=record[key].filter(x=>typeof x==='string'&&ID.test(x)).slice(0,32);

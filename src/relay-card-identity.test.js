@@ -8,7 +8,7 @@ test('a routing lead is distinct from a receipt-bound current step owner',()=>{
  assert.equal(work.speaker.id,'roman');assert.equal(work.lead.id,'nico');assert.equal(work.team,'inspector');
 });
 test('retired and unknown IDs never inherit an arbitrary portrait identity',()=>{
- assert.equal(cardStaff('felix'),null);assert.equal(cardStaff('unknown'),null);assert.equal(cardIdentity({primary_team:'inspector'}).speaker,null);assert.equal(cardStaff('dominique').status,'reserve');assert.equal(Object.keys(CARD_TEAMS).length,7);
+ assert.equal(cardStaff('felix'),null);assert.equal(cardStaff('unknown'),null);assert.equal(cardIdentity({primary_team:'inspector'}).speaker,null);assert.equal(cardStaff('dominique').status,'active');assert.equal(Object.keys(CARD_TEAMS).length,7);
 });
 test('a named person keeps their canonical team while cross-team work stays explicit across handoff',()=>{
  const record={primary_staff:'nico',primary_team:'runner'};
@@ -24,17 +24,15 @@ test('approved portrait manifest follows the canonical roster and binds every em
  assert.equal(manifest.fictional_ai_staff,true);assert.equal(manifest.identity_is_authority,false);
  assert.deepEqual(manifest.staff.map(p=>p.id).sort(),STAFF.filter(p=>p.status!=='retired').map(p=>p.id).sort());
  const {STAFF_PORTRAITS}=await import('../assets/staff/card-assets.js');
- assert.equal(Object.keys(STAFF_PORTRAITS).length,17);assert.equal(manifest.version,4);assert.equal(manifest.final,true);
- assert.equal(manifest.source_archive_sha256,'4b6177a003d7155db796a9a06723f031aaae78d3309422d93468f69200ea3016');
+ assert.equal(Object.keys(STAFF_PORTRAITS).length,21);assert.equal(manifest.version,6);assert.equal(manifest.final,true);
+ assert.equal(manifest.source_archive_sha256,'0fff6e65f2a7b56b8ede19a58e06b251754f0a8ff35fcc8986822338c5aeceda');
  for(const person of manifest.staff){
   const canonical=STAFF.find(p=>p.id===person.id);assert.equal(person.status,canonical.status);assert.equal(person.home_team,canonical.home_team);
-  assert.equal(person.portrait_status,'approved-v4');
-  assert.equal(person.face_identity_locked,['nico','julian','rafael','dominique'].includes(person.id));
-  assert.equal(person.files.webp512.sha256,person.source_files.webp512.sha256);
+  assert.equal(person.portrait_status,'approved-v6');
   assert.equal(person.files.card128.source_sha256,person.source_files.avatar512.sha256);
   const embedded=Buffer.from(STAFF_PORTRAITS[person.id].split(',')[1],'base64');
   assert.equal(createHash('sha256').update(embedded).digest('hex'),person.files.card128.sha256);
-  for(const file of Object.values(person.files)){const bytes=await readFile(new URL('../assets/staff/'+file.path,import.meta.url));assert.equal(bytes.length,file.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),file.sha256);}
+  for(const file of Object.values(person.files)){assert.equal(file.module,'assets/staff/card-assets.js');const bytes=Buffer.from(STAFF_PORTRAITS[file.embedded_key].split(',')[1],'base64');assert.equal(bytes.length,file.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),file.sha256);}
  }
 });
 
