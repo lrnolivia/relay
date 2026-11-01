@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "ctrl",
-  "updated_at": "2026-11-01T00:45:51.931Z",
+  "updated_at": "2026-11-01T00:57:08.158Z",
   "legacy_branches": [
     "main"
   ],
@@ -875,7 +875,7 @@
         "roman"
       ],
       "base_sha": "e0f931e38f1cf70011822549acbfebbdf25fecad",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-01T00:30:19.179Z",
       "objective_history": {
         "baseline": {
@@ -892,8 +892,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T00:45:51.931Z",
-      "lease_until": "2026-11-01T12:45:51.931Z"
+      "updated_at": "2026-11-01T00:57:08.158Z",
+      "lease_until": "2026-11-01T12:57:08.158Z",
+      "pr": 32,
+      "merged_head_sha": "a246676a3f3cfbeb42bd007ab8c66a0a765025ea",
+      "merge_commit_sha": "57558a722d8f00f42e3bafc92fb1548b965a4e33",
+      "evidence": "PR32 human-merged at 57558a722d8f00f42e3bafc92fb1548b965a4e33 after exact-head a246676 source/pixel review, 164 unit tests and complete typecheck/build/browser suites. Main quality succeeded. Workers Build d639c903-3b05-4bc4-a4db-b3fbc44def28 succeeded; deployment 82f80d78-1a96-4ea5-99e9-b70bf0f49f1c serves version 2a44fb1f-cfba-45de-a9ae-e24022d7fc40 at100%. Live /build.json HTTP200 independently matches merge SHA and tested build digest749d207ea058190d349fc1fba3caaa18d7b4404378dec59021f96f50c9fce572. Browser Run root HTTP200 rendered CTRL DOM evidence vis_e0631227-21ff-4106-a3b7-a416fad90176. Deployed Crew interaction is not independently claimed: fragment URL validation rejected, persistent Browser Run target unavailable; exact-head full interactive QA is Library libfile_47c6165e0f748191b7f9cf97529c63da. Display directory only; messaging/native specialist activation and approved Relay card implementation remain separate. Existing Mac source turn completed clean, no pending writers or uncommitted work; unrelated old telemetry scope preserved.",
+      "work_accounted": true,
+      "completed_at": "2026-11-01T00:57:08.158Z"
     }
   ]
 }
