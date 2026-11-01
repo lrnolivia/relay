@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-01T03:50:15.079Z",
+  "updated_at": "2026-11-01T03:52:55.691Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21233,7 +21233,7 @@
           "next_action": "Fresh authorized Windows child now exposes coordinate.card_steps and relay_runner_delegate after user app restart. Reconcile queued-only record (no branch, private intent or previous publication/launch exists), then admit bounded own-assignment read-only specialist acceptance at fresh source. Preserve actual host agent identity, once-only prepare/start/result, explicitly public bounded update and real source/assignment-bound visual; verify canonical history and rendered card without fabricated work. Existing native-host-activation follow-up and active PR273 release writer remain separate, no overlapping source writes."
         }
       ],
-      "updated_at": "2026-11-01T03:50:15.079Z",
+      "updated_at": "2026-11-01T03:52:55.691Z",
       "lease_until": "2026-11-01T15:48:15.813Z",
       "native_handoffs": [
         {
@@ -21265,10 +21265,10 @@
             "host_available": true,
             "intent_digest": "ee1ba893e471d9ec967f5c03ee1107edddccd3952a853229e327d8300135f172"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-01T03:49:31.569Z",
           "request_digest": "a994674f1bca058f342d2566b80edf667edbcd7ba2a979f3e9621076190dab87",
-          "step_digest": "5024dc6bb7400dd30e0f5ab0666da8f32dea1df06a21fd1bfcbe67ae7fe46ff4",
+          "step_digest": "5062e190b597040d8992a3cf1d9438041ea7e71f74bdcd4351f3e4561c6a4b37",
           "start": {
             "request_digest": "a994674f1bca058f342d2566b80edf667edbcd7ba2a979f3e9621076190dab87",
             "source_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
@@ -21279,7 +21279,27 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-01T03:50:15.079Z"
+          "started_at": "2026-11-01T03:50:15.079Z",
+          "result": {
+            "request_digest": "a994674f1bca058f342d2566b80edf667edbcd7ba2a979f3e9621076190dab87",
+            "source_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
+            "agent_id": "/root/relay_publication_verifier",
+            "observed_at": "2026-11-01T03:52:49Z",
+            "state": "succeeded",
+            "result_digest": "5a666e8d074d60ab809a05750ae48f3df27b6b7f6c94c49f48441a2efd94b921",
+            "update": {
+              "text": "The verifier finished a bounded review of release 289d6b3c and found no concrete defect in the inspected receipt, source-binding and verification boundaries. Inspector captured the live Relay root and its stored metadata matches this assignment and release. Image pixels, native card visibility and full acceptance remain unverified; the result awaits independent verification.",
+              "artifacts": [
+                {
+                  "evidence_id": "vis_5e1dcf0b-166f-4373-b490-ff8eeb659c92",
+                  "source_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
+                  "caption": "Live Relay root capture; pixels not reviewed",
+                  "kind": "verification"
+                }
+              ]
+            }
+          },
+          "reported_at": "2026-11-01T03:52:55.691Z"
         }
       ],
       "card_steps": {
@@ -21291,31 +21311,39 @@
           "owner": "01a19531-c5e7-70b3-87ce-4e193a8ed032",
           "branch": "relay/card-publication-live-acceptance-20261101"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
             "id": "review-shipped-publication",
             "label": "Review shipped public-update evidence and the live connection page",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "relay-card-live-verifier-20261101:started",
+              "id": "relay-card-live-verifier-20261101:result",
               "assignment": "relay-card-publication-live-acceptance-20261101",
               "step_id": "review-shipped-publication",
               "plan_revision": "892fa8f4255bb9cdb5fd64487bbc62d5abc153d7c169d959d3cffe462ce5c615",
               "input_digest": "a994674f1bca058f342d2566b80edf667edbcd7ba2a979f3e9621076190dab87",
-              "evidence": "sha256:96f5494cb4235a6d2e2ca9b42d7ebb6f0e7be2b6d30da8c3f013d9fef4595514",
+              "evidence": "sha256:e0b9e56472ea19661631ea64ba50ac6ff68e27e748f9130ac94292ae3eb0d869",
               "source_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
-              "observed_at": "2026-11-01T03:50:07Z",
+              "observed_at": "2026-11-01T03:52:49Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "A verifier has started a read-only review of the shipped public-update contract and Relay connection page at release 289d6b3c. The review checks receipt and source binding; native card visibility remains unverified.",
-                "artifacts": []
-              }
+                "text": "The verifier finished a bounded review of release 289d6b3c and found no concrete defect in the inspected receipt, source-binding and verification boundaries. Inspector captured the live Relay root and its stored metadata matches this assignment and release. Image pixels, native card visibility and full acceptance remain unverified; the result awaits independent verification.",
+                "artifacts": [
+                  {
+                    "evidence_id": "vis_5e1dcf0b-166f-4373-b490-ff8eeb659c92",
+                    "source_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
+                    "caption": "Live Relay root capture; pixels not reviewed",
+                    "kind": "verification"
+                  }
+                ]
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -21324,10 +21352,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "relay-card-publication-live-acceptance-20261101",
         "revision": "892fa8f4255bb9cdb5fd64487bbc62d5abc153d7c169d959d3cffe462ce5c615",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
-          "relay-card-live-verifier-20261101:started": "2c5cb75bf7493274e1473426aac0e4ab7378de1b8cc48618b034e1b36b7d2bb1"
+          "relay-card-live-verifier-20261101:started": "2c5cb75bf7493274e1473426aac0e4ab7378de1b8cc48618b034e1b36b7d2bb1",
+          "relay-card-live-verifier-20261101:result": "b7778a34812cd24b7b7a37c56738afd25a4464556d6e998ac531d416b9815026"
         },
         "items": [
           {
@@ -21351,6 +21380,35 @@
             "text": "A verifier has started a read-only review of the shipped public-update contract and Relay connection page at release 289d6b3c. The review checks receipt and source binding; native card visibility remains unverified.",
             "text_kind": "owner-published",
             "artifacts": []
+          },
+          {
+            "key": "relay-card-live-verifier-20261101:result:a994674f1bca058f342d2566b80edf667edbcd7ba2a979f3e9621076190dab87:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Review shipped public-update evidence and the live connection page\",\"receipt\":{\"assignment\":\"relay-card-publication-live-acceptance-20261101\",\"evidence\":\"sha256:e0b9e56472ea19661631ea64ba50ac6ff68e27e748f9130ac94292ae3eb0d869\",\"id\":\"relay-card-live-verifier-20261101:result\",\"input_digest\":\"a994674f1bca058f342d2566b80edf667edbcd7ba2a979f3e9621076190dab87\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"892fa8f4255bb9cdb5fd64487bbc62d5abc153d7c169d959d3cffe462ce5c615\",\"source_sha\":\"289d6b3c50cf9c92f2834978c8753fb35b647e22\",\"step_id\":\"review-shipped-publication\",\"update\":{\"artifacts\":[{\"caption\":\"Live Relay root capture; pixels not reviewed\",\"evidence_id\":\"vis_5e1dcf0b-166f-4373-b490-ff8eeb659c92\",\"kind\":\"verification\",\"source_sha\":\"289d6b3c50cf9c92f2834978c8753fb35b647e22\"}],\"text\":\"The verifier finished a bounded review of release 289d6b3c and found no concrete defect in the inspected receipt, source-binding and verification boundaries. Inspector captured the live Relay root and its stored metadata matches this assignment and release. Image pixels, native card visibility and full acceptance remain unverified; the result awaits independent verification.\"}},\"state\":\"blocked\"}",
+            "id": "relay-card-live-verifier-20261101:result",
+            "assignment": "relay-card-publication-live-acceptance-20261101",
+            "step_id": "review-shipped-publication",
+            "revision": "892fa8f4255bb9cdb5fd64487bbc62d5abc153d7c169d959d3cffe462ce5c615",
+            "label": "Review shipped public-update evidence and the live connection page",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
+            "observed_at": "2026-11-01T03:52:49Z",
+            "recorded_at": "2026-11-01T03:52:55.691Z",
+            "receipt_digest": "sha256:e0b9e56472ea19661631ea64ba50ac6ff68e27e748f9130ac94292ae3eb0d869",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The verifier finished a bounded review of release 289d6b3c and found no concrete defect in the inspected receipt, source-binding and verification boundaries. Inspector captured the live Relay root and its stored metadata matches this assignment and release. Image pixels, native card visibility and full acceptance remain unverified; the result awaits independent verification.",
+            "text_kind": "owner-published",
+            "artifacts": [
+              {
+                "evidence_id": "vis_5e1dcf0b-166f-4373-b490-ff8eeb659c92",
+                "source_sha": "289d6b3c50cf9c92f2834978c8753fb35b647e22",
+                "caption": "Live Relay root capture; pixels not reviewed",
+                "kind": "verification"
+              }
+            ]
           }
         ]
       }
