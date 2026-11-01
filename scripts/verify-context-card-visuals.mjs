@@ -15,7 +15,7 @@ const origin='https://relay-card-fixture.test';
 const clientId=process.env.CF_ACCESS_CLIENT_ID,clientSecret=process.env.CF_ACCESS_CLIENT_SECRET;
 const auth=clientId&&clientSecret?{Authorization:JSON.stringify({'cf-access-client-id':clientId,'cf-access-client-secret':clientSecret}),'CF-Access-Client-Id':clientId,'CF-Access-Client-Secret':clientSecret}:null;
 const revision='a'.repeat(64),source=expected,now=new Date('2026-11-01T00:00:00Z');
-const projectManifest=JSON.parse(await readFile('relay.assets.json','utf8')),projectAsset=projectManifest.variants.primary;
+const projectManifest=JSON.parse(await readFile('apps/web/public/relay.assets.json','utf8')),projectAsset=projectManifest.variants.primary;
 const projectBytes=await readFile(projectAsset.path);assert.equal(projectBytes.length,projectAsset.bytes);assert.equal(createHash('sha256').update(projectBytes).digest('hex'),projectAsset.sha256);
 const projectIcon={project:'relay',name:'Relay',status:'found',icon:{...projectAsset,repository:'lrnolivia/relay',blob_sha:createHash('sha1').update(Buffer.concat([Buffer.from('blob '+projectBytes.length+'\0'),projectBytes])).digest('hex'),data_url:'data:image/png;base64,'+projectBytes.toString('base64')}};
 function familyFixture(count=3,{id='card-demo',artifact=null}={}){
