@@ -78,3 +78,9 @@ test('wrong-assignment metadata rejects image before fetch and retarget discards
 test('ordinary failure and no-plan cards keep details collapsed and omit empty crew containers',async()=>{
  for(const data of [{ok:true},{project:'relay',claim:{id:'failed',primary_staff:'nico',primary_team:'runner',state:'failed',goal:'Repair the failed build',next_action:'Inspect the failed check.'}}]){const {browser,page}=await mount(data);try{assert.equal(await page.locator('#family-crew').isVisible(),false);assert.equal(await page.locator('#plan-panel').isVisible(),false);assert.equal(await page.locator('#details').evaluate(n=>n.open),false);assert.ok((await page.locator('#card').boundingBox()).height<850);}finally{await browser.close();}}
 });
+
+ test('partial explicit assignment retains labeled lead without inventing an authored update; generic staff fields stay product-only',()=>{
+ const m=contextCardModel({project:'relay',claim:{primary_staff:'julian',goal:'Coordinate review',state:'active'}});
+ assert.equal(m.family,'assignment-status');assert.equal(m.identity.lead.id,'julian');assert.equal(m.identity.relationship,'Assignment lead');assert.equal(m.identity.current_owner,null);assert.deepEqual(m.updates,[]);
+ const generic=contextCardModel({project:'relay',primary_staff:'julian',human:{staff:'Julian'}});assert.equal(generic.family,'product');assert.equal(generic.identity.lead,null);assert.deepEqual(generic.updates,[]);
+ });
