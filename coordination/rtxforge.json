@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T08:55:26.445Z",
+  "updated_at": "2026-11-02T08:58:32.976Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23469,7 +23469,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T08:28:48.706Z",
+      "updated_at": "2026-11-02T08:58:32.976Z",
       "lease_until": "2026-11-02T20:28:48.706Z",
       "amendment_count": 17,
       "amendments": [
@@ -24677,6 +24677,40 @@
             "observed_at": "2026-11-02T08:18:19.831Z"
           },
           "started_at": "2026-11-02T08:18:23.817Z"
+        },
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "native-confirm-review-1d1b281",
+          "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+          "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "branch": "rtxforge/overlay-accent-toggle-alignment-20261101",
+          "source_sha": "1d1b281dc293066a786734aff1b2b086ee6e78d8",
+          "objective_digest": "2ab4ed4845335fd1e0e0c9747578aba9c965dd81903aae9a1650f836ee80301a",
+          "scope_digest": "dc37a88f661b1fbff45c8a9e52852ea2983bcc92e2f9731cf21e468fe9084be4",
+          "step_id": "native-confirm-review",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "1d1b281dc293066a786734aff1b2b086ee6e78d8",
+            "objective_digest": "2ab4ed4845335fd1e0e0c9747578aba9c965dd81903aae9a1650f836ee80301a",
+            "step_id": "native-confirm-review",
+            "label": "Native confirmation and handoff correction review",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "0abf5da5e4cf94d96835507f40bd27e6d400b8c8eab43b5e545be74e3f257f5b"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-02T08:58:32.976Z",
+          "request_digest": "d8fad358c0d65d14c257dccb51f1beebbeece83fcd9a74d3837d8ba649a4b5b8",
+          "step_digest": "c0459c01010a16cb79e4193c8d7610e1cd2e6df98d39fe8bc27d91d062e2cdba"
         }
       ],
       "card_steps": {
@@ -24688,7 +24722,7 @@
           "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
           "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
         },
-        "sequence": 6,
+        "sequence": 7,
         "complete": false,
         "steps": [
           {
@@ -24750,6 +24784,13 @@
                 "team": "inspector"
               }
             }
+          },
+          {
+            "id": "native-confirm-review",
+            "label": "Native confirmation and handoff correction review",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -24757,7 +24798,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
         "revision": "2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b",
-        "sequence": 6,
+        "sequence": 7,
         "truncated": false,
         "identities": {
           "finish-full-review-95f09bb:started": "ea5492c822b907e73f0a3f228a4fb0b86e2b30efb18edf53b0a2d69ee5df9c9a",
