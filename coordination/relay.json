@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-02T00:38:55.576Z",
+  "updated_at": "2026-11-02T00:42:39.406Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21659,7 +21659,7 @@
         "roman"
       ],
       "base_sha": "dc7dda7a732418e39132a5f8a81ecd41753966bd",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-01T23:54:28.727Z",
       "objective_history": {
         "baseline": {
@@ -21676,8 +21676,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T00:38:55.576Z",
-      "lease_until": "2026-11-02T12:38:55.576Z"
+      "updated_at": "2026-11-02T00:42:39.406Z",
+      "lease_until": "2026-11-02T12:42:39.406Z",
+      "pr": 275,
+      "merged_head_sha": "b7e5a63c1402ce21583ee3647d790926c6fd99ce",
+      "merge_commit_sha": "3be67a3de1a137535ed89f46f7c4c0ee4bdcb8b2",
+      "evidence": "Merge: https://github.com/lrnolivia/relay/commit/3be67a3de1a137535ed89f46f7c4c0ee4bdcb8b2\nProduction smoke: https://github.com/lrnolivia/relay/actions/runs/41368361233\nRecovery assurance: https://github.com/lrnolivia/relay/actions/runs/41368516817",
+      "work_accounted": true,
+      "completed_at": "2026-11-02T00:42:39.406Z"
     }
   ],
   "migrated_from": "loew-inspector"
