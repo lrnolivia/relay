@@ -1,7 +1,20 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
 import { synchronizeProject, synchronizeRegistry } from './runner-sync.mjs';
+
+test('ordinary sync workflow installs locked dependencies unconditionally before shared-control imports',async()=>{
+  const workflow=await readFile(new URL('../.github/workflows/runner.yml',import.meta.url),'utf8');
+  const steps=workflow.split(/^      - /m).slice(1);
+  const checkout=steps.findIndex(step=>/^uses: actions\/checkout@/.test(step));
+  const setup=steps.findIndex(step=>/^uses: actions\/setup-node@/.test(step));
+  const install=steps.findIndex(step=>/^\s+run: npm ci --ignore-scripts\s*$/m.test(step));
+  const sync=steps.findIndex(step=>/^\s+run: node scripts\/runner-sync\.mjs\b/m.test(step));
+  assert.ok(checkout>=0&&setup>checkout,'Use the checked-out lock and pinned Node before installing');
+  assert.ok(install>setup&&sync>install,'Install locked runtime dependencies before sync imports shared control');
+  assert.doesNotMatch(steps[install],/^\s+if:/m,'Ordinary scheduled sync must not skip the dependency install');
+});
 test('sync is model-free, non-owning, exact-artifact aware and recommendations deduplicate',async()=>{
   const head='a'.repeat(40),merge='b'.repeat(40),registration={repository:'lrnolivia/fixture',default_branch:'main'};
   const record={claims:[{id:'completed',owner:'owner',branch:'fixture/task',state:'completed',pr:1,work_accounted:true,merged_head_sha:head,merge_commit_sha:merge},{id:'held',owner:'other',branch:'fixture/held',state:'held'}],queue:[{id:'completed',owner:'owner',state:'claimed'}]};
