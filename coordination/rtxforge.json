@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T04:35:27.103Z",
+  "updated_at": "2026-11-02T04:38:11.548Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23184,7 +23184,8 @@
         "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
         "windows/RtxForge.Windows/Controls/GameOverlayPreferencesView.cs",
         "tests/linux_runtime/test_integration_contracts.py",
-        "windows/RtxForge.Windows/Services/OverlayPreview.cs"
+        "windows/RtxForge.Windows/Services/OverlayPreview.cs",
+        "windows/overlay-rmlui/SmokeTest.cpp"
       ],
       "resources": [
         "rtxforge-desktop-overlay-preview",
@@ -23192,7 +23193,7 @@
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
       "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome.",
-      "next_action": "Complete per-game settings/reset parity and preview preference isolation, validate rendering cost, startup notice and exact-source builds.",
+      "next_action": "Validate per-game persistence in the native smoke fixture, build both renderers, measure the cached-property performance change, then independent exact-source review.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -23253,8 +23254,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T04:35:27.103Z",
-      "lease_until": "2026-11-02T16:35:27.103Z",
+      "updated_at": "2026-11-02T04:38:11.548Z",
+      "lease_until": "2026-11-02T16:38:11.548Z",
       "amendment_count": 9,
       "amendments": [
         {
