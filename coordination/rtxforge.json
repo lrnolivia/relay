@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T06:09:48.244Z",
+  "updated_at": "2026-11-02T06:11:03.693Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23129,7 +23129,7 @@
       ],
       "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
       "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.\n2026-11-02 user additions: import current Steam artwork for each trilogy shortcut without writing Steam images or leaving pending writebacks. Each campaign uses its own game description/developer/genres and original-release information, with Legendary Edition identified separately. Keep collection appid1328670 solely for launch/install identity; metadata IDs17460/24980/1238020 and shortcut-art IDs are separate. Preserve other games/settings/artwork. Steam Prime metadata should make the same distinction on desktop and Game Mode.",
-      "next_action": "Draft PR139 now includes b0014c5 (per-game metadata and current-shortcut artwork reads), with13 focused tests passing. Twelve current Steam images imported and independently hashed; no Steam writes or pending trilogy writebacks. Backend sources installed with backups and both old/new metadata caches primed. Steam Prime shortcut metadata mappings seeded for desktop/Game Mode, with LE edition separate and original ME3 multiplayer flags excluded. Finish the user-driven Steam filter/frosted-tab/logo visual checks and retain unresolved actual Game Mode/ME2/ME3 launch validation; no merge/release claimed.",
+      "next_action": "Finish private Linux handoff of reviewed Steam Prime/SteamGridDB modules and rtxForge source patch, with checksums and native integration notes. PR139 at b0014c56 has all executed CI checks successful and 13 focused tests passing. Preserve pending Linux native/controller validation, final native filter padding confirmation, Downloads/Store visual checks, and ME2/ME3 launch validation; do not merge or release.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -23159,8 +23159,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T05:03:55.379Z",
-      "lease_until": "2026-11-02T17:03:55.379Z",
+      "updated_at": "2026-11-02T06:11:03.693Z",
+      "lease_until": "2026-11-02T18:11:03.693Z",
       "amendment_count": 1,
       "amendments": [
         {
