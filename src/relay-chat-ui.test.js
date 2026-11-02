@@ -9,7 +9,7 @@ async function refreshCard(surface){const menu=surface.locator('#card-menu');if(
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v31.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v32.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -200,11 +200,11 @@ test('card initializes the standard MCP Apps bridge even when window.openai exis
   } finally {await browser.close()}
 });
 
-test('technical canonical notes remain exact evidence and never become the default human summary',async()=>{
+test('technical evidence stays secondary while an explicitly public next action remains visible',async()=>{
   const {contextCardModel,contextualPresentation}=await import('./relay-chat-ui.js');
   const next='PR #72 merged a015761290cf86ada0c48e0537dbede1ce4e6cb2; deploy Worker version 14b11840-1c72-4402-a5da-e47d33e2ac4d then refresh ChatGPT';
   const data={project:'relay',latest:{assignment:{primary_staff:'julian',supporting_staff:['roman']},identities:{merge_commit_sha:'a'.repeat(40)},next_action:next,state:'working'}};
-  const model=contextCardModel(data);assert.doesNotMatch(model.summary,/a015761|PR #72|Worker version/);assert.doesNotMatch(model.next_step,/a015761/);assert.equal(model.evidence.next_action,next);
+  const model=contextCardModel(data);assert.doesNotMatch(model.summary,/a015761|PR #72|Worker version/);assert.equal(model.next_step,next);assert.equal(model.evidence.next_action,next);
   assert.equal(contextualPresentation(data).human.staff,'Julian with Roman');
 });
 
@@ -242,7 +242,7 @@ test('finished work does not repeat stale next actions or redundant single statu
     claim:{primary_staff:'julian',state:'active',goal:'Repair the card',next_action:'Keep going'},
     human:{what_changed:'Keep going',next_step:'Keep going'}
   });
-  assert.equal(duplicated.next_step,null);
+  assert.equal(duplicated.next_step,'Keep going');assert.equal(duplicated.summary,null,'routing boilerplate is omitted rather than duplicated beside the public next message');
 });
 
 
@@ -491,7 +491,7 @@ test('late input after initial recovery window still fetches once and empty glob
 });
 
 
-test("job-focused card rows show work rather than staff and collapse long copy", async () => {
+test("job-focused card rows keep the title compact and the public next message complete", async () => {
   const {contextCardModel} = await import('./relay-chat-ui.js');
   const detail='Review the entire recorded delivery history and every pending check. '.repeat(10);
   const model=contextCardModel({project:'relay',coverage:{active:7},claims:[
@@ -501,8 +501,8 @@ test("job-focused card rows show work rather than staff and collapse long copy",
   ]});
   assert.deepEqual(model.rows,[]);
   assert.equal(model.has_metric,false);assert.equal(model.metric,null);
-  assert.ok(model.title.length<=72); assert.ok(model.summary.length<=150);
-  assert.equal(model.next_step,null); assert.equal(model.evidence.goal,detail.trim());
+  assert.ok(model.title.length<=72);assert.equal(model.summary,null);
+  assert.equal(model.next_step,detail.trim());assert.equal(model.evidence.goal,detail.trim());
   assert.equal(model.primary_staff,'Ellis');
 });
 
@@ -887,9 +887,9 @@ test('mounted card shrinks an oversized iframe and follows repeated evidence tog
     const waitingReason='Waiting for the requested verification result before continuing. '.repeat(18);
     await sendResult({primary_staff:'julian',goal:'Long result card',state:'blocked',waiting_reason:waitingReason});
     await frame.locator('#title').filter({hasText:'Long result card'}).waitFor();
-    await frame.locator('#blocker-full > summary').click();
-    await frame.locator('#blocker-full p').filter({hasText:'Waiting for the requested verification result'}).waitFor();
-    assert.equal(await frame.locator('#blocker-full p').textContent(),waitingReason.trim());
+    assert.equal(await frame.locator('#blocker-full').count(),0);
+    await frame.locator('#blocker').filter({hasText:'Waiting for the requested verification result'}).waitFor();
+    assert.equal(await frame.locator('#blocker').textContent(),waitingReason.trim());assert.equal(await frame.locator('#blocker').isVisible(),true);
     await page.waitForFunction(h=>window.sizes.at(-1)?.height>h,narrowCollapsed);
     const longHeight=await assertFits();
     assert.ok(longHeight>narrowCollapsed,'long tool result grows the mounted card');
@@ -906,6 +906,6 @@ test('ordinary failed/no-plan outcomes retain the real cause and next step witho
  const row={assignment:'rtxforge-overlay-workbench',owner:'worker',state:'failed',goal:'rtxforge overlay workbench',primary_staff:'nico',primary_team:'runner',waiting_reason:'Publish Windows Beta failed',next_action:next};
  const m=contextCardModel({project:'rtxforge',progress:[row],work_card:{milestone:{kind:'step',label:'Step recorded'}}});
  assert.equal(m.has_metric,false);assert.equal(m.metric,null);assert.deepEqual(m.rows,[]);assert.deepEqual(m.plan.steps,[]);assert.equal(m.identity.speaker.id,'nico');assert.equal(m.identity.relationship,'Assignment lead');assert.equal(m.identity.current_owner,null);assert.equal(m.identity.lead.id,'nico');
- assert.equal(m.blocker,'Publish Windows Beta failed');assert.equal(m.evidence.next_action,next);assert.equal(m.next_step,'Read the next step below.');
+ assert.equal(m.blocker,'Publish Windows Beta failed');assert.equal(m.evidence.next_action,next);assert.equal(m.next_step,next);
  for(const state of ['active','queued','possibly-stale','unknown','blocked','completed','cancelled','superseded']){const card=contextCardModel({project:'rtxforge',claim:{...row,state}});assert.equal(card.has_metric,false);assert.equal(card.evidence.next_action,next);if(['completed','cancelled','superseded'].includes(state))assert.equal(card.next_step,null);}
 });

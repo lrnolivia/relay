@@ -74,7 +74,7 @@ test('asset omissions fail the build instead of shipping broken brand images', (
 test('material explanations and actionable next steps remain visible without duplicated status metrics',()=>{
   const html=relayContextCardResource().text;
   assert.match(html,/\.summary\{display:block!important;-webkit-line-clamp:unset!important/);
-  assert.match(html,/longCardCopy\('next','Read the next step'/);
+  assert.match(html,/publicCardCopy\('next',m.next_step/);assert.doesNotMatch(html,/function longCardCopy/);
   assert.match(html,/stat\.hidden=m\.has_metric===false/);
   const failure=contextCardModel({ok:false,error:{class:'uncertain_write'}});
   assert.equal(failure.blocker,null);assert.equal(failure.has_metric,false);

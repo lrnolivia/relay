@@ -103,10 +103,9 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   const normalize = value => String(value || '').trim().replace(/\s+/g,' ').toLowerCase();
   const rawNext = human.next_step || first.next_action || checkpoint.next_action || null;
   const terminal = ['completed','complete','finished','cancelled','superseded'].includes(String(status).toLowerCase());
-  const safeNext=safePresentationText(typeof rawNext==='string'?rawNext:'',2000);
-  const opaqueIdentity=/\b[a-f0-9]{24,40}\b|\b[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\b/i.test(safeNext);
-  let nextStep = presentation.next_step || (terminal || error ? null : safeNext ? (safeNext.length<=140&&!opaqueIdentity&&!technicalNote(safeNext)?safeNext:'Read the next step below.') : null);
-  if (nextStep && !presentation.next_step && (normalize(rawNext)===normalize(first.goal) || normalize(rawNext) === normalize(first.next_action||checkpoint.next_action)&&normalize(rawNext)===normalize(human.what_changed) || normalize(rawNext) === normalize(fullSummary) || normalize(nextStep) === normalize(summary) || normalize(summary).includes(normalize(nextStep)))) nextStep = null;
+  const safeNext=safePresentationText(typeof rawNext==='string'?rawNext:'',12000);
+  let nextStep = presentation.next_step || (terminal || error ? null : safeNext || null);
+  if (nextStep && [title,fullSummary,presentation.summary].some(value=>normalize(value)&&normalize(value)===normalize(nextStep))) nextStep = null;
   if (rows.length === 1 && rows[0].label === primary && normalize(rows[0].text) === normalize(label)) rows = [];
   const primaryTeam = first.primary_team || data.primary_team || (checks ? 'inspector' : pr ? 'source' : 'relay');
   const feature = ['relay','runner','inspector','night-shift','source','cloud','release','skills'].includes(primaryTeam) ? primaryTeam : 'relay';
@@ -117,7 +116,7 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   // arbitrary progress_percent is not evidence of completed work.
   const allVerified=plan.total>0&&plan.passed===plan.total;
   const objectiveVerified=allVerified&&['completed','complete','finished'].includes(status);
-  const percent = plan.total && (!allVerified||objectiveVerified) ? Math.floor(plan.passed/plan.total*100) : null;
+  const percent = null; // Assignment steps are counts, never an estimate of overall completion.
   let metric = percent != null ? percent+'%' : label;
   let metric_label = percent != null ? 'completion' : 'current state';
 
@@ -126,7 +125,7 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   // Keep uncertainty/deadlines intact instead of clipping the only explanation.
   summary=presentation.summary;
   const has_metric=percent!==null||Boolean(checks?.length)||Boolean(pr?.number);
-  const card = { snapshot:data.snapshot||null,card_mode:data.card_mode||'current',objective_verified:objectiveVerified,checklist_percent:percent,title:safePresentationText(title), feature, primary_staff:safePresentationText(primary), primary_role:primaryRole?safePresentationText(primaryRole,60):null, staff_unresolved:unresolvedStaff, staff_note:staffNote?safePresentationText(staffNote,200):null, team:safePresentationText(team), label, tone, signal, summary, rows:rows.map(row=>({label:safePresentationText(row.label,100),text:safePresentationText(row.text,100)})), blocker, qa, handoff, next_step:nextStep, metric, metric_label, has_metric, percent, evidence:Object.fromEntries(Object.entries(evidence).filter(([,v])=>['string','number','boolean'].includes(typeof v)).map(([key,value])=>[key,typeof value==='string'?safePresentationText(value,12000):value])), refresh:Boolean(data.project), human_v1:presentation };
+  const card = { snapshot:data.snapshot||null,card_mode:data.card_mode||'current',objective_verified:objectiveVerified,checklist_percent:null,checklist_progress:plan.total?{passed:plan.passed,total:plan.total}:null,title:safePresentationText(title), feature, primary_staff:safePresentationText(primary), primary_role:primaryRole?safePresentationText(primaryRole,60):null, staff_unresolved:unresolvedStaff, staff_note:staffNote?safePresentationText(staffNote,200):null, team:safePresentationText(team), label, tone, signal, summary, rows:rows.map(row=>({label:safePresentationText(row.label,100),text:safePresentationText(row.text,100)})), blocker, qa, handoff, next_step:nextStep, metric, metric_label, has_metric, percent, evidence:Object.fromEntries(Object.entries(evidence).filter(([,v])=>['string','number','boolean'].includes(typeof v)).map(([key,value])=>[key,typeof value==='string'?safePresentationText(value,12000):value])), refresh:Boolean(data.project), human_v1:presentation };
   if(data.snapshot){card.evidence.snapshot_id=data.snapshot.id;card.evidence.snapshot_as_of=data.snapshot.as_of;card.evidence.plan_revision=plan.revision;card.evidence.snapshot_record_sha=data.snapshot.payload.record_sha||'unavailable';card.evidence.next_snapshot_due=data.snapshot.due?.due_at||'unknown';card.evidence.snapshot_delivery='unknown';card.evidence.source_status=data.snapshot.payload.claim?.source_as_of?.status||'unavailable';}
   const milestone = data.work_card?.milestone && typeof data.work_card.milestone === 'object' ? data.work_card.milestone : null;
   const updates=assignmentCardUpdates(first).map(update=>({...update,person:cardStaff(update.owner?.staff)}));
@@ -172,8 +171,8 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
     }
     // Ordinary outcomes have one state and cause, never a numeric jobs hero.
     card.rows=[];
-    card.ordinary=isAssignment&&!plan.steps.length;
-    if(card.ordinary&&card.blocker)card.summary=null;
+    card.ordinary=card.family==='assignment'&&!plan.steps.length;
+    if(card.ordinary&&(card.blocker||card.label==='Assigned'))card.summary=null;
     if(!plan.steps.length){card.has_metric=false;card.metric=null;card.metric_label=null;}
   }
   if(!ci && isAssignment && ['officially-stale','possibly-stale'].includes(status) && !plan.current){
