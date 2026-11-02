@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T09:14:02.995Z",
+  "updated_at": "2026-11-02T09:14:59.396Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23362,7 +23362,7 @@
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
       "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks. The glass color popover points to its swatch using the existing frosted pointer; it has no X and applies/dismisses immediately after a poster, screen, valid hex, or game-color selection. Add a circular swatch inside the hex field which opens a compact color spectrum within the frosted overlay (user chose this over native dialogs). Spectrum selection applies and dismisses the picker. Latest user refinement: display accent options None / Adaptive / Game, default Adaptive in the middle; theme options Light / Clear / Dark, default Clear in the middle. None hides and disables Accent Tint. Tint defaults on with Adaptive and Clear. Fix shared mosaic spacing and scrollbar gutters across pages; remember dragged overlay/popout positions per game and layout/edge. Built-in preview game selection updates title/poster identity, and adaptive color responds within about a second to changed scene. Gallery tint-on uses Adaptive; tint-off uses actual Library Game colors. Hold screenshots until corrected renderer is validated. Default ordering is None / Adaptive / Game and Light / Clear / Dark, Adaptive+Clear centered and selected. Tint starts on. No Try Accent Tint hint. Preserve scene saturation/hue: vivid scenes remain vivid, muted scenes remain muted, neutral scenes settle neutral; vary Adaptive Clear brightness only subtly. Add edge snapping with remembered positions and automatic placement updates. Audit upstream notice coverage honestly, retain actionable plugin errors, and add friendly glyph-based preset/shortcut/reset feedback. All heading brightness shares the game title background requirement, lightening only. Dropdowns match theme/tint with readable text. Onboarding starts with layout; Appearance is optional disclosure. Use native overlays disables rtxForge only for this game unless the user explicitly checks a global-default option; restore from Desktop/Game Mode Overlay settings or Game Details. Final names: Surface and Surface Tint. Layout-first onboarding has optional Appearance and a subdued native-overlays action. Native opt-out requires a brief confirmation, shows installed native menu shortcuts, has an unchecked global-default checkbox, and concise reversal guidance. Layout onboarding lists rtxForge and already enabled native shortcuts. Dropdowns use actual glass composition while retaining native selection/keyboard behavior. Supporting text uses regular weight before any extra smoothing effects. User authorized final main merge, local install and delivery of fresh SDR gallery to website.",
-      "next_action": "Apply the two final review corrections (explicit native global-default shortcut recovery and canonical LF font-license digest), then required CI, merge, install and fresh screenshot delivery. Native review process succeeded with changes required; documentation recheck was never launched after uncertain prepare response and remains reconciliation-needed.",
+      "next_action": "Final source d263b9d pushed. Quiet neutral native action and confirmation visually pass; corrected explicit global shortcut recovery and canonical LF license digest. Windows build has zero warnings/errors; 26 portable tests pass with one platform skip, native long-menu keyboard/scroll and renderer smoke pass. Waiting exact-source Windows/Linux/package CI, then merge PR138 and install with retained rollback. Fresh 270-image SDR gallery delivered to the resumed original website worker.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -23471,8 +23471,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T09:07:51.278Z",
-      "lease_until": "2026-11-02T21:07:51.278Z",
+      "updated_at": "2026-11-02T09:14:59.396Z",
+      "lease_until": "2026-11-02T21:14:59.396Z",
       "amendment_count": 17,
       "amendments": [
         {
