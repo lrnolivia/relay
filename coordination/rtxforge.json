@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T19:16:28.199Z",
+  "updated_at": "2026-11-02T19:19:57.987Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25722,9 +25722,13 @@
       "acceptance": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.\n2026-11-02 user additions: default 200% at 4K while preserving explicit manual choices; Testing last on Overview in Game Mode and Desktop (Windows Desktop file separately queued behind an existing reservation); Steam shortcuts explicitly open the new Game Mode, and the action reads Update Steam Shortcut when already present; remove old runtime UI. Appearance orders Light, Clear, Dark with Clear default; Surface Tint replaces Accent Tint and shares a strength slider and Adaptive source with Overlay. Batch selection must not enlarge cards or change complete rows, and Library's lower fade should be softer. User requested a screenshot while at work; current 4K/200% development preview delivered, final installed package still requires verification. Another authorized chat owns website screenshots now; no further website capture work in this task.",
       "next_action": "Commit candidate, run exact native/package checks and bounded independent integration review, then install and verify actual Desktop/native handoff. Preserve PR140 overlay changes and held library source.",
       "primary_team": "night-shift",
-      "supporting_teams": [],
+      "supporting_teams": [
+        "inspector"
+      ],
       "primary_staff": "julian",
-      "supporting_staff": [],
+      "supporting_staff": [
+        "roman"
+      ],
       "base_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
       "state": "active",
       "created_at": "2026-11-02T17:46:01.445Z",
@@ -25749,9 +25753,9 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T19:16:28.199Z",
-      "lease_until": "2026-11-03T07:16:28.199Z",
-      "amendment_count": 3,
+      "updated_at": "2026-11-02T19:19:57.987Z",
+      "lease_until": "2026-11-03T07:19:57.987Z",
+      "amendment_count": 4,
       "amendments": [
         {
           "at": "2026-11-02T18:59:50.917Z",
@@ -25801,6 +25805,27 @@
           "after": {
             "supporting_roles": [
               "verifier"
+            ]
+          }
+        },
+        {
+          "at": "2026-11-02T19:19:57.987Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Admit the directory-confirmed verifier Roman and Inspector home team for the bounded independent native integration review.",
+          "fields": [
+            "supporting_staff",
+            "supporting_teams"
+          ],
+          "before": {
+            "supporting_staff": [],
+            "supporting_teams": []
+          },
+          "after": {
+            "supporting_staff": [
+              "roman"
+            ],
+            "supporting_teams": [
+              "inspector"
             ]
           }
         }
