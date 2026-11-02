@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T06:33:25.178Z",
+  "updated_at": "2026-11-02T06:43:40.870Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23219,7 +23219,8 @@
         "providers/glass-overlay/ScreenColorPicker.h",
         "windows/overlay-rmlui/CMakeLists.txt",
         "windows/overlay-rmlui/GlassDx12.cpp",
-        "prototypes/overlay-rmlui/BalancedCards.h"
+        "prototypes/overlay-rmlui/BalancedCards.h",
+        "gui/overlay_layouts.py"
       ],
       "resources": [
         "rtxforge-desktop-overlay-preview",
@@ -23227,7 +23228,7 @@
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
       "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks. The glass color popover points to its swatch using the existing frosted pointer; it has no X and applies/dismisses immediately after a poster, screen, valid hex, or game-color selection. Add a circular swatch inside the hex field which opens a compact color spectrum within the frosted overlay (user chose this over native dialogs). Spectrum selection applies and dismisses the picker.",
-      "next_action": "Fix user-reported shared spacing/scrollbar gutters, scene identity/adaptive response, rename accents None/Game/Adaptive with tint hidden for None, visible placement controls, and per-game panel position persistence before gallery capture.",
+      "next_action": "Finish shared spacing/gutters, fast adaptive scene/title changes, persisted per-game positions and reordered None/Adaptive/Game plus Light/Clear/Dark controls; keep tint off with quiet onboarding hint.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -23312,8 +23313,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T06:33:25.178Z",
-      "lease_until": "2026-11-02T18:33:25.178Z",
+      "updated_at": "2026-11-02T06:43:40.870Z",
+      "lease_until": "2026-11-02T18:43:40.870Z",
       "amendment_count": 13,
       "amendments": [
         {
