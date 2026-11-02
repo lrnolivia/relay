@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T20:48:19.113Z",
+  "updated_at": "2026-11-02T21:37:06.656Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25775,7 +25775,7 @@
       ],
       "goal": "Finish new Game Mode integration into the Windows and Linux Desktop app, package it, install locally and merge to main.",
       "acceptance": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.\n2026-11-02 user additions: default 200% at 4K while preserving explicit manual choices; Testing last on Overview in Game Mode and Desktop (Windows Desktop file separately queued behind an existing reservation); Steam shortcuts explicitly open the new Game Mode, and the action reads Update Steam Shortcut when already present; remove old runtime UI. Appearance orders Light, Clear, Dark with Clear default; Surface Tint replaces Accent Tint and shares a strength slider and Adaptive source with Overlay. Batch selection must not enlarge cards or change complete rows, and Library's lower fade should be softer. User requested a screenshot while at work; current 4K/200% development preview delivered, final installed package still requires verification. Another authorized chat owns website screenshots now; no further website capture work in this task.",
-      "next_action": "Account for the native UI waiter's deliberately local PID namespace in the Flatpak process-reader guard and add a bounded local-process identity regression. Game/Steam/protection host probes remain unchanged. Preserve final installed candidate and existing test evidence; rerun exact-source distribution CI after correction.",
+      "next_action": "Exact head a600682 addresses CI-only artifact staging under ignored dist without weakening the clean-source guard; final native/Windows/Linux CI is running. Build and silently install exact candidate, preserve settings/providers/rollback, then merge PR141 only after green gates. Source34 installed captures are approved by Lauren and now published on website; a600 has identical application source. User resumed capture in website chat; display has been released.",
       "supporting_roles": [
         "verifier"
       ],
@@ -25811,8 +25811,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T20:48:19.113Z",
-      "lease_until": "2026-11-03T08:48:19.113Z",
+      "updated_at": "2026-11-02T21:37:06.656Z",
+      "lease_until": "2026-11-03T09:37:06.656Z",
       "amendment_count": 4,
       "amendments": [
         {
