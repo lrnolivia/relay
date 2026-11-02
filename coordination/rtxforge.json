@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T20:22:57.058Z",
+  "updated_at": "2026-11-02T20:43:06.327Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25756,7 +25756,7 @@
       ],
       "goal": "Finish new Game Mode integration into the Windows and Linux Desktop app, package it, install locally and merge to main.",
       "acceptance": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.\n2026-11-02 user additions: default 200% at 4K while preserving explicit manual choices; Testing last on Overview in Game Mode and Desktop (Windows Desktop file separately queued behind an existing reservation); Steam shortcuts explicitly open the new Game Mode, and the action reads Update Steam Shortcut when already present; remove old runtime UI. Appearance orders Light, Clear, Dark with Clear default; Surface Tint replaces Accent Tint and shares a strength slider and Adaptive source with Overlay. Batch selection must not enlarge cards or change complete rows, and Library's lower fade should be softer. User requested a screenshot while at work; current 4K/200% development preview delivered, final installed package still requires verification. Another authorized chat owns website screenshots now; no further website capture work in this task.",
-      "next_action": "Exact source 007be743 is installed locally; all 2159 published files, 33 native provider files and 66 preview files verified, settings unchanged, migrated Game Mode shortcut targets installed Desktop --game-mode, private engine smoke passed. Native Windows/Linux builds passed; remaining full distribution and Fedora native-review CI pending before merge. Actual Desktop/native handoff passed on 6d60b71; newer app input and website captures remain stopped after Escape. Held Windows Overview ordering remains separately queued.",
+      "next_action": "Exact fd2f6e6 is installed locally with all2155 published files matching, private engine smoke passing, settings unchanged, 33 native providers and66 preview assets preserved, existing Start Menu shortcut migrated to Desktop --game-mode. Exact-source Fedora review41519672599 passed:177 shared tests,214 core hardening tests,7 launcher tests including actual multi-process GTK activation, Desktop artwork ownership and packaged GTK AppImage smoke. Full Windows/Linux distribution builds remain pending before PR141 merge. Preserve held Windows Overview queue and stopped app input/website capture state.",
       "primary_team": "night-shift",
       "supporting_teams": [
         "inspector"
@@ -25789,8 +25789,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T20:12:57.166Z",
-      "lease_until": "2026-11-03T08:12:57.166Z",
+      "updated_at": "2026-11-02T20:43:06.327Z",
+      "lease_until": "2026-11-03T08:43:06.327Z",
       "amendment_count": 4,
       "amendments": [
         {
