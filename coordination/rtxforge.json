@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T08:18:23.817Z",
+  "updated_at": "2026-11-02T08:20:06.341Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22997,7 +22997,7 @@
       ],
       "goal": "Complete the production Game Mode application, finishing a verified shell and interactive local demo first for the screenshot worker, then real engine integration and platform acceptance.",
       "acceptance": "Production Windows/Linux Tauri Game Mode application with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests. Shell-first milestone: full-width 4K at 150%, complete poster rows, responsive Presets, colored platform controller glyphs, verified real-library visual states and an interactive read-only local demo. Do not equate shell or fixture completion with engine/platform acceptance.\nFinal authorization: finish and locally install the validated production Game Mode build, then merge the reviewed exact source to main and supply final real UI screenshots to the website. Automatic clean screenshot admission must work for arbitrary libraries on Windows and Linux; curated lists are only overrides/test cases. Main shell header/navigation must stay fixed on scroll; only Details hero collapses. Preserve rollback and record any platform/gameplay evidence gaps honestly.",
-      "next_action": "Latest UI/source at 5f8940e: shared Desktop art/accent and focal settings, one cached screenshot with palette default, translucent cards isolated from hero fade, controller framing, Light contrast, edge and glow corrections. Build/tests pass. Open exact-source fullscreen package and compare native GPU resources after suppressing inactive glow layers. Finish shell screenshot handoff, then production engine lifecycle/qualification; PR138 d2a85c2 shared overlay integration remains pending.",
+      "next_action": "Finishing authorized production delivery, local install, main merge, website captures. Source now removes shell shrinking, preserves hero collapse, adds portable offline screening, enables native reviewed operations by default with read-only override, drains/reaps hosts on exit, restricts release payload resolution, and adds versioned manifest installers plus Windows/Linux native workflow. 39 Python and 17 JS tests pass. Need exact-source CI, standalone package/install smoke, resource acceptance and final website screenshot handoff. Audit /root/engine_audit ran once; provider started-report failure remains reconciliation-only; never relaunch.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -23045,8 +23045,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T07:49:58.093Z",
-      "lease_until": "2026-11-02T19:45:09.584Z",
+      "updated_at": "2026-11-02T08:20:06.341Z",
+      "lease_until": "2026-11-02T20:20:06.341Z",
       "handoffs": [
         {
           "at": "2026-11-01T03:49:34.330Z",
