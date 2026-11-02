@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T06:11:03.693Z",
+  "updated_at": "2026-11-02T06:12:40.725Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23225,8 +23225,8 @@
         "rtxforge-overlay-renderer"
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
-      "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks. The glass color popover points to its swatch using the existing frosted pointer; it has no X and applies/dismisses immediately after a poster, screen, valid hex, or game-color selection.",
-      "next_action": "Validate the anchored slider-free picker and finish exact-source review without desktop control.",
+      "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks. The glass color popover points to its swatch using the existing frosted pointer; it has no X and applies/dismisses immediately after a poster, screen, valid hex, or game-color selection. Add a circular swatch inside the hex field which opens a compact color spectrum within the frosted overlay (user chose this over native dialogs). Spectrum selection applies and dismisses the picker.",
+      "next_action": "Build and verify the compact spectrum, correct two review cleanup issues, then return exact-source evidence for review.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -23302,12 +23302,18 @@
             "text": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks. The glass color popover points to its swatch using the existing frosted pointer; it has no X and applies/dismisses immediately after a poster, screen, valid hex, or game-color selection.",
             "at": "2026-11-02T05:58:35.320Z",
             "reason": "User refined the popover anchoring and immediate-dismiss interaction."
+          },
+          {
+            "id": "rtxforge-overlay-accent-toggle-alignment-20261101:acceptance:13",
+            "text": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks. The glass color popover points to its swatch using the existing frosted pointer; it has no X and applies/dismisses immediately after a poster, screen, valid hex, or game-color selection. Add a circular swatch inside the hex field which opens a compact color spectrum within the frosted overlay (user chose this over native dialogs). Spectrum selection applies and dismisses the picker.",
+            "at": "2026-11-02T06:12:40.725Z",
+            "reason": "User added a hex-row spectrum swatch and selected the in-overlay spectrum interaction."
           }
         ]
       },
-      "updated_at": "2026-11-02T06:09:48.244Z",
-      "lease_until": "2026-11-02T17:58:35.320Z",
-      "amendment_count": 12,
+      "updated_at": "2026-11-02T06:12:40.725Z",
+      "lease_until": "2026-11-02T18:12:40.725Z",
+      "amendment_count": 13,
       "amendments": [
         {
           "at": "2026-11-02T00:21:15.831Z",
@@ -23613,6 +23619,82 @@
             "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks. The glass color popover points to its swatch using the existing frosted pointer; it has no X and applies/dismisses immediately after a poster, screen, valid hex, or game-color selection.",
             "next_action": "Validate the anchored slider-free picker and finish exact-source review without desktop control."
           }
+        },
+        {
+          "at": "2026-11-02T06:12:40.725Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "User added a hex-row spectrum swatch and selected the in-overlay spectrum interaction.",
+          "fields": [
+            "acceptance",
+            "next_action",
+            "card_steps",
+            "card_updates"
+          ],
+          "before": {
+            "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks. The glass color popover points to its swatch using the existing frosted pointer; it has no X and applies/dismisses immediately after a poster, screen, valid hex, or game-color selection.",
+            "next_action": "Validate the anchored slider-free picker and finish exact-source review without desktop control.",
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+              "revision": "a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6",
+              "objective_digest": "687386fa3f41cd682a45e850b7ccb752b318e27d8db669922cb40d24eb1f0b5a",
+              "publisher": {
+                "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+                "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
+              },
+              "sequence": 4,
+              "complete": false,
+              "steps": [
+                {
+                  "id": "compact-color-full-review",
+                  "label": "Review compact color picking and per-game fixes",
+                  "depends_on": [],
+                  "state": "pending",
+                  "receipt": null
+                },
+                {
+                  "id": "compact-color-unique-final-review",
+                  "label": "Final compact picker review with unique host identity",
+                  "depends_on": [],
+                  "state": "blocked",
+                  "receipt": {
+                    "id": "compact-color-final-review-2c54243-unique:result",
+                    "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+                    "step_id": "compact-color-unique-final-review",
+                    "plan_revision": "a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6",
+                    "input_digest": "647d59a2c281ab41b32015d4a81abee68c296eb7bcce6b8192c3112a6f7af82d",
+                    "evidence": "sha256:d9fa1cb2c521d737e601e9e44172975792efea9798d8acd87af6f8028c45d01b",
+                    "source_sha": "2c54243485cb9f0aee7d47ee52ec42166d7c48d8",
+                    "observed_at": "2026-11-02T06:09:44.720Z",
+                    "owner": {
+                      "staff": "roman",
+                      "team": "inspector"
+                    },
+                    "update": {
+                      "text": "Review found two source cleanup fixes: an unsupported style declaration and native text encoding. Current three-theme button layout passes the narrow visual review; live/gameplay acceptance remains incomplete.",
+                      "artifacts": []
+                    },
+                    "phase": "awaiting-verification"
+                  }
+                }
+              ]
+            },
+            "card_updates": {
+              "schema": "relay-card-updates/v1",
+              "revision": "a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6",
+              "sequence": 4,
+              "retained_count": 2,
+              "identity_count": 2,
+              "truncated": false,
+              "sha256": "2b9869d331428d1f6595592eaebd8e2e33f1dbd310efbbf671d706754e8d0e1f"
+            }
+          },
+          "after": {
+            "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks. The glass color popover points to its swatch using the existing frosted pointer; it has no X and applies/dismisses immediately after a poster, screen, valid hex, or game-color selection. Add a circular swatch inside the hex field which opens a compact color spectrum within the frosted overlay (user chose this over native dialogs). Spectrum selection applies and dismisses the picker.",
+            "next_action": "Build and verify the compact spectrum, correct two review cleanup issues, then return exact-source evidence for review.",
+            "card_steps": null,
+            "card_updates": null
+          }
         }
       ],
       "native_handoffs": [
@@ -23888,110 +23970,7 @@
           },
           "reported_at": "2026-11-02T06:09:48.244Z"
         }
-      ],
-      "card_steps": {
-        "schema": "relay-card-steps/v1",
-        "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-        "revision": "a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6",
-        "objective_digest": "687386fa3f41cd682a45e850b7ccb752b318e27d8db669922cb40d24eb1f0b5a",
-        "publisher": {
-          "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
-          "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
-        },
-        "sequence": 4,
-        "complete": false,
-        "steps": [
-          {
-            "id": "compact-color-full-review",
-            "label": "Review compact color picking and per-game fixes",
-            "depends_on": [],
-            "state": "pending",
-            "receipt": null
-          },
-          {
-            "id": "compact-color-unique-final-review",
-            "label": "Final compact picker review with unique host identity",
-            "depends_on": [],
-            "state": "blocked",
-            "receipt": {
-              "id": "compact-color-final-review-2c54243-unique:result",
-              "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-              "step_id": "compact-color-unique-final-review",
-              "plan_revision": "a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6",
-              "input_digest": "647d59a2c281ab41b32015d4a81abee68c296eb7bcce6b8192c3112a6f7af82d",
-              "evidence": "sha256:d9fa1cb2c521d737e601e9e44172975792efea9798d8acd87af6f8028c45d01b",
-              "source_sha": "2c54243485cb9f0aee7d47ee52ec42166d7c48d8",
-              "observed_at": "2026-11-02T06:09:44.720Z",
-              "owner": {
-                "staff": "roman",
-                "team": "inspector"
-              },
-              "update": {
-                "text": "Review found two source cleanup fixes: an unsupported style declaration and native text encoding. Current three-theme button layout passes the narrow visual review; live/gameplay acceptance remains incomplete.",
-                "artifacts": []
-              },
-              "phase": "awaiting-verification"
-            }
-          }
-        ]
-      },
-      "card_updates": {
-        "schema": "relay-card-updates/v1",
-        "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-        "revision": "a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6",
-        "sequence": 4,
-        "truncated": false,
-        "identities": {
-          "compact-color-final-review-2c54243-unique:started": "46eb07d299613a7e1036bdccff4f1809b9d52046f3d0d787dc5efbf7943016c5",
-          "compact-color-final-review-2c54243-unique:result": "f883acb10e55cdcabb10b7190fd1e2bf1c86eb03f550af5a5c4a11a1224a67e6"
-        },
-        "items": [
-          {
-            "key": "compact-color-final-review-2c54243-unique:started:647d59a2c281ab41b32015d4a81abee68c296eb7bcce6b8192c3112a6f7af82d:running:",
-            "receipt_snapshot": "{\"label\":\"Final compact picker review with unique host identity\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:d23ddd18135c2aaa406597cce86dd039259f7686f91926e9e0411d18043e975a\",\"id\":\"compact-color-final-review-2c54243-unique:started\",\"input_digest\":\"647d59a2c281ab41b32015d4a81abee68c296eb7bcce6b8192c3112a6f7af82d\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6\",\"source_sha\":\"2c54243485cb9f0aee7d47ee52ec42166d7c48d8\",\"step_id\":\"compact-color-unique-final-review\",\"update\":{\"artifacts\":[],\"text\":\"Independent compact-picker and per-game correctness review is running on the pushed revision. Desktop/live-game checks remain stopped.\"}},\"state\":\"running\"}",
-            "id": "compact-color-final-review-2c54243-unique:started",
-            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-            "step_id": "compact-color-unique-final-review",
-            "revision": "a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6",
-            "label": "Final compact picker review with unique host identity",
-            "state": "running",
-            "phase": null,
-            "source_sha": "2c54243485cb9f0aee7d47ee52ec42166d7c48d8",
-            "observed_at": "2026-11-02T06:07:19.357Z",
-            "recorded_at": "2026-11-02T06:07:23.385Z",
-            "receipt_digest": "sha256:d23ddd18135c2aaa406597cce86dd039259f7686f91926e9e0411d18043e975a",
-            "owner": {
-              "staff": "roman",
-              "team": "inspector"
-            },
-            "text": "Independent compact-picker and per-game correctness review is running on the pushed revision. Desktop/live-game checks remain stopped.",
-            "text_kind": "owner-published",
-            "artifacts": []
-          },
-          {
-            "key": "compact-color-final-review-2c54243-unique:result:647d59a2c281ab41b32015d4a81abee68c296eb7bcce6b8192c3112a6f7af82d:blocked:awaiting-verification",
-            "receipt_snapshot": "{\"label\":\"Final compact picker review with unique host identity\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:d9fa1cb2c521d737e601e9e44172975792efea9798d8acd87af6f8028c45d01b\",\"id\":\"compact-color-final-review-2c54243-unique:result\",\"input_digest\":\"647d59a2c281ab41b32015d4a81abee68c296eb7bcce6b8192c3112a6f7af82d\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6\",\"source_sha\":\"2c54243485cb9f0aee7d47ee52ec42166d7c48d8\",\"step_id\":\"compact-color-unique-final-review\",\"update\":{\"artifacts\":[],\"text\":\"Review found two source cleanup fixes: an unsupported style declaration and native text encoding. Current three-theme button layout passes the narrow visual review; live/gameplay acceptance remains incomplete.\"}},\"state\":\"blocked\"}",
-            "id": "compact-color-final-review-2c54243-unique:result",
-            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-            "step_id": "compact-color-unique-final-review",
-            "revision": "a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6",
-            "label": "Final compact picker review with unique host identity",
-            "state": "blocked",
-            "phase": "awaiting-verification",
-            "source_sha": "2c54243485cb9f0aee7d47ee52ec42166d7c48d8",
-            "observed_at": "2026-11-02T06:09:44.720Z",
-            "recorded_at": "2026-11-02T06:09:48.244Z",
-            "receipt_digest": "sha256:d9fa1cb2c521d737e601e9e44172975792efea9798d8acd87af6f8028c45d01b",
-            "owner": {
-              "staff": "roman",
-              "team": "inspector"
-            },
-            "text": "Review found two source cleanup fixes: an unsupported style declaration and native text encoding. Current three-theme button layout passes the narrow visual review; live/gameplay acceptance remains incomplete.",
-            "text_kind": "owner-published",
-            "artifacts": []
-          }
-        ]
-      }
+      ]
     }
   ]
 }
