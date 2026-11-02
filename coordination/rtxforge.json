@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T18:21:12.934Z",
+  "updated_at": "2026-11-02T18:24:26.913Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8321,7 +8321,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-11-02T18:21:12.934Z",
       "objective_history": {
         "baseline": {
@@ -25200,6 +25200,54 @@
       },
       "updated_at": "2026-11-02T18:13:29.462Z",
       "lease_until": "2026-11-03T06:13:29.462Z"
+    },
+    {
+      "id": "rtxforge-onboarding-overlay-notice-20261102",
+      "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
+      "branch": "rtxforge/onboarding-overlay-notice-20261102",
+      "paths": [
+        "prototypes/overlay-rmlui/overlay.rml",
+        "prototypes/overlay-rmlui/overlay.rcss",
+        "prototypes/overlay-rmlui/Prototype.cpp",
+        "providers/glass-overlay/OverlayController.h"
+      ],
+      "resources": [
+        "rtxforge-overlay-renderer",
+        "rtxforge-desktop-overlay-preview"
+      ],
+      "goal": "Polish the onboarding notice showing that native overlays are already active.",
+      "acceptance": "Keep layout-first onboarding and quiet native-overlay opt-out. Give the active-overlay notice a clear grouped hierarchy, readable shortcut rows and comfortable separation from the native action and footer; handle zero, one and multiple native interfaces without crowding. Preserve surface themes, keyboard behavior and per-game policy. Verify rendered Clear/Light/Dark onboarding and refresh the user-opened prototype. User keeps general desktop control stopped; use offscreen verification and reopen only the requested preview.",
+      "next_action": "Refine the crowded active-overlay notice using grouped shortcut rows and separate quiet opt-out action.",
+      "task_class": "maintenance",
+      "category": "design",
+      "primary_role": "frontend",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
+      "state": "active",
+      "created_at": "2026-11-02T18:24:26.913Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Polish the onboarding notice showing that native overlays are already active.",
+          "acceptance": "Keep layout-first onboarding and quiet native-overlay opt-out. Give the active-overlay notice a clear grouped hierarchy, readable shortcut rows and comfortable separation from the native action and footer; handle zero, one and multiple native interfaces without crowding. Preserve surface themes, keyboard behavior and per-game policy. Verify rendered Clear/Light/Dark onboarding and refresh the user-opened prototype. User keeps general desktop control stopped; use offscreen verification and reopen only the requested preview.",
+          "at": "2026-11-02T18:21:12.934Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-onboarding-overlay-notice-20261102:acceptance:0",
+            "text": "Keep layout-first onboarding and quiet native-overlay opt-out. Give the active-overlay notice a clear grouped hierarchy, readable shortcut rows and comfortable separation from the native action and footer; handle zero, one and multiple native interfaces without crowding. Preserve surface themes, keyboard behavior and per-game policy. Verify rendered Clear/Light/Dark onboarding and refresh the user-opened prototype. User keeps general desktop control stopped; use offscreen verification and reopen only the requested preview.",
+            "at": "2026-11-02T18:21:12.934Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-02T18:24:26.913Z",
+      "lease_until": "2026-11-03T06:24:26.913Z"
     }
   ]
 }
