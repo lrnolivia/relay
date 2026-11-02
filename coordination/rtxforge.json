@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T07:49:58.093Z",
+  "updated_at": "2026-11-02T08:09:27.941Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23308,7 +23308,8 @@
         "prototypes/overlay-rmlui/BalancedCards.h",
         "gui/overlay_layouts.py",
         "windows/RtxForge.Windows/Services/OverlayHelper.cs",
-        "providers/skynizz-bridge/ForgePanel.h"
+        "providers/skynizz-bridge/ForgePanel.h",
+        "providers/skynizz-bridge/panel-candidate.json"
       ],
       "resources": [
         "rtxforge-desktop-overlay-preview",
@@ -23316,7 +23317,7 @@
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
       "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks. The glass color popover points to its swatch using the existing frosted pointer; it has no X and applies/dismisses immediately after a poster, screen, valid hex, or game-color selection. Add a circular swatch inside the hex field which opens a compact color spectrum within the frosted overlay (user chose this over native dialogs). Spectrum selection applies and dismisses the picker. Latest user refinement: display accent options None / Adaptive / Game, default Adaptive in the middle; theme options Light / Clear / Dark, default Clear in the middle. None hides and disables Accent Tint. Tint defaults on with Adaptive and Clear. Fix shared mosaic spacing and scrollbar gutters across pages; remember dragged overlay/popout positions per game and layout/edge. Built-in preview game selection updates title/poster identity, and adaptive color responds within about a second to changed scene. Gallery tint-on uses Adaptive; tint-off uses actual Library Game colors. Hold screenshots until corrected renderer is validated. Default ordering is None / Adaptive / Game and Light / Clear / Dark, Adaptive+Clear centered and selected. Tint starts on. No Try Accent Tint hint. Preserve scene saturation/hue: vivid scenes remain vivid, muted scenes remain muted, neutral scenes settle neutral; vary Adaptive Clear brightness only subtly. Add edge snapping with remembered positions and automatic placement updates. Audit upstream notice coverage honestly, retain actionable plugin errors, and add friendly glyph-based preset/shortcut/reset feedback. All heading brightness shares the game title background requirement, lightening only. Dropdowns match theme/tint with readable text. Onboarding starts with layout; Appearance is optional disclosure. Use native overlays disables rtxForge only for this game unless the user explicitly checks a global-default option; restore from Desktop/Game Mode Overlay settings or Game Details.",
-      "next_action": "Finish layout onboarding and native opt-out; add per-executable renderer startup selection so global Native defaults still permit re-enabling individual games. Rename the user-facing tint control Surface Tint.",
+      "next_action": "Validate actual glass dropdowns, native opt-out confirmation with actual enabled shortcut reminders, Surface/Surface Tint names and quieter typography; refresh bridge source digest, independent review, merge/install, and supply website SDR gallery.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -23419,8 +23420,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T07:35:31.495Z",
-      "lease_until": "2026-11-02T19:35:31.495Z",
+      "updated_at": "2026-11-02T08:09:27.941Z",
+      "lease_until": "2026-11-02T20:09:27.941Z",
       "amendment_count": 16,
       "amendments": [
         {
