@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T23:19:32.332Z",
+  "updated_at": "2026-11-02T23:20:09.815Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26528,7 +26528,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T23:19:32.332Z",
+      "updated_at": "2026-11-02T23:20:09.815Z",
       "lease_until": "2026-11-03T11:19:32.332Z",
       "supporting_roles": [
         "verifier"
@@ -26561,7 +26561,73 @@
             ]
           }
         }
-      ]
+      ],
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "overview-order-review-15c496e-20261102",
+          "assignment": "rtxforge-overview-testing-order-20261102",
+          "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "branch": "rtxforge/overview-testing-order-20261102",
+          "source_sha": "15c496e0a15148a565ced1a7ea97dfe2ab73482a",
+          "objective_digest": "e47a4f6c82256579394788f763a62c95fd20d2f01d46493c75660815168a1b06",
+          "scope_digest": "529826e6ec2d10af88184aea033a324b2e3adfe55a2ca7d38c4736d3c0be8197",
+          "step_id": "overview-order-review",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "15c496e0a15148a565ced1a7ea97dfe2ab73482a",
+            "objective_digest": "e47a4f6c82256579394788f763a62c95fd20d2f01d46493c75660815168a1b06",
+            "step_id": "overview-order-review",
+            "label": "Verify Overview Testing order",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "b92e049dd83d6c1a3a6e741a9239a41ad59a6387abe7d76f459785a5099ec080"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-02T23:20:09.815Z",
+          "request_digest": "0fd0d65dab3182ae914d462718f76286669193ce07816e01d6de3c99fdbc8e07",
+          "step_digest": "b74b8c031df7496fa3d30fcfc9a7b224916d2d77c1ac0e06d765f95959e4099c"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "rtxforge-overview-testing-order-20261102",
+        "revision": "316299f74e87b635c6c2bdfbeaee39aa16b4c6a6c1e8925c1b5b4bce61936f61",
+        "objective_digest": "e47a4f6c82256579394788f763a62c95fd20d2f01d46493c75660815168a1b06",
+        "publisher": {
+          "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "branch": "rtxforge/overview-testing-order-20261102"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "overview-order-review",
+            "label": "Verify Overview Testing order",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "rtxforge-overview-testing-order-20261102",
+        "revision": "316299f74e87b635c6c2bdfbeaee39aa16b4c6a6c1e8925c1b5b4bce61936f61",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
