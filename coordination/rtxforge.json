@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T02:54:17.356Z",
+  "updated_at": "2026-11-02T02:55:52.861Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23093,7 +23093,7 @@
         "rtxforge-overlay-renderer"
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
-      "acceptance": "Accent Tint is right aligned in shared native global/Game Details settings. Clear headings retain game hue and stronger saturation without washed-out Screen highlights, no black Clear ink or muddy yellow shades. Control styling preview uses a genuine suitable publisher screenshot with correct game identity/provenance. Focused color regression checks, native renderer and Windows build pass. Publication/install remain held until reviewed Game Mode merge. The five showcase games use their actual native Library accents, resolving saved install-root overrides before the desktop artwork signature, with no invented prototype palette.",
+      "acceptance": "Accent Tint is right aligned in shared native global/Game Details settings. The five showcase games use their actual native Library accents, resolving saved install-root overrides before the desktop artwork signature, without invented prototype colors. All headings within a theme use one consistent game-accent treatment; no per-heading backdrop recoloring and no heavy yellow text shadow. Clear keeps ordinary text and glyphs light and avoids muddy automatic yellow shades. Suitable genuine Control preview scenes retain provenance. Focused renderer/color checks and Windows build pass. Publication/install remain held until the reviewed Game Mode merge and accepted screenshots.",
       "next_action": "Use local Clear heading samples with saturated game hue and validate headless scene sampling; coordinate15scene/270capture website gallery. Hold publication pending Game Mode merge and accepted screenshots.",
       "category": "implementation",
       "primary_team": "runner",
@@ -23131,12 +23131,18 @@
             "text": "Accent Tint is right aligned in shared native global/Game Details settings. Clear headings retain game hue and stronger saturation without washed-out Screen highlights, no black Clear ink or muddy yellow shades. Control styling preview uses a genuine suitable publisher screenshot with correct game identity/provenance. Focused color regression checks, native renderer and Windows build pass. Publication/install remain held until reviewed Game Mode merge. The five showcase games use their actual native Library accents, resolving saved install-root overrides before the desktop artwork signature, with no invented prototype palette.",
             "at": "2026-11-02T01:46:12.241Z",
             "reason": "Lauren explicitly requires the games' real Library accents rather than made-up demonstration colors."
+          },
+          {
+            "id": "rtxforge-overlay-accent-toggle-alignment-20261101:acceptance:7",
+            "text": "Accent Tint is right aligned in shared native global/Game Details settings. The five showcase games use their actual native Library accents, resolving saved install-root overrides before the desktop artwork signature, without invented prototype colors. All headings within a theme use one consistent game-accent treatment; no per-heading backdrop recoloring and no heavy yellow text shadow. Clear keeps ordinary text and glyphs light and avoids muddy automatic yellow shades. Suitable genuine Control preview scenes retain provenance. Focused renderer/color checks and Windows build pass. Publication/install remain held until the reviewed Game Mode merge and accepted screenshots.",
+            "at": "2026-11-02T02:55:52.861Z",
+            "reason": "User rejects the heavy NEURAL RENDERING yellow shadow and confusing variation between dark red, white and salmon headings within one panel. Replace local per-heading adaptation with a consistent theme accent; retain actual Library palette."
           }
         ]
       },
-      "updated_at": "2026-11-02T02:46:55.500Z",
-      "lease_until": "2026-11-02T13:48:09.422Z",
-      "amendment_count": 6,
+      "updated_at": "2026-11-02T02:55:52.861Z",
+      "lease_until": "2026-11-02T14:55:52.861Z",
+      "amendment_count": 7,
       "amendments": [
         {
           "at": "2026-11-02T00:21:15.831Z",
@@ -23233,6 +23239,86 @@
             "supporting_staff": [
               "roman"
             ]
+          }
+        },
+        {
+          "at": "2026-11-02T02:55:52.861Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "User rejects the heavy NEURAL RENDERING yellow shadow and confusing variation between dark red, white and salmon headings within one panel. Replace local per-heading adaptation with a consistent theme accent; retain actual Library palette.",
+          "fields": [
+            "acceptance",
+            "card_steps",
+            "card_updates"
+          ],
+          "before": {
+            "acceptance": "Accent Tint is right aligned in shared native global/Game Details settings. Clear headings retain game hue and stronger saturation without washed-out Screen highlights, no black Clear ink or muddy yellow shades. Control styling preview uses a genuine suitable publisher screenshot with correct game identity/provenance. Focused color regression checks, native renderer and Windows build pass. Publication/install remain held until reviewed Game Mode merge. The five showcase games use their actual native Library accents, resolving saved install-root overrides before the desktop artwork signature, with no invented prototype palette.",
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+              "revision": "41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c",
+              "objective_digest": "8690101380cfbfde4374370a2c8abcd9cff49a94703e3e0adc459cd4e83813d4",
+              "publisher": {
+                "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+                "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
+              },
+              "sequence": 5,
+              "complete": false,
+              "steps": [
+                {
+                  "id": "clear-library-color-review",
+                  "label": "Review Clear contrast with actual Library accents",
+                  "depends_on": [],
+                  "state": "blocked",
+                  "receipt": {
+                    "id": "overlay-library-colors-review-c3d03f3:result",
+                    "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+                    "step_id": "clear-library-color-review",
+                    "plan_revision": "41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c",
+                    "input_digest": "b06323dc9f52d742ca2de7bccf2473092744344f1efeeaf134e14e78069c7e21",
+                    "evidence": "sha256:ff64f51b68038cedcde6509f77b203cd7d1893c69455da3e2b0f0fb578641018",
+                    "source_sha": "c3d03f3cf819de07eaedf7be29cc7aca580a6ac5",
+                    "observed_at": "2026-11-02T02:10:28Z",
+                    "owner": {
+                      "staff": "roman",
+                      "team": "inspector"
+                    },
+                    "update": {
+                      "text": "The review confirmed the five exact Library colors and complete SDR capture coverage. It requested one bounded correction: keep Cyberpunk yellow vivid while improving its local heading contrast on bright gold. Publication remains held.",
+                      "artifacts": []
+                    },
+                    "phase": "awaiting-verification"
+                  }
+                },
+                {
+                  "id": "yellow-heading-verdict",
+                  "label": "Verify vivid yellow heading correction",
+                  "depends_on": [],
+                  "state": "pending",
+                  "receipt": null
+                },
+                {
+                  "id": "incumbent-documentation-check",
+                  "label": "Check extension documentation against existing design",
+                  "depends_on": [],
+                  "state": "pending",
+                  "receipt": null
+                }
+              ]
+            },
+            "card_updates": {
+              "schema": "relay-card-updates/v1",
+              "revision": "41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c",
+              "sequence": 5,
+              "retained_count": 2,
+              "identity_count": 2,
+              "truncated": false,
+              "sha256": "42a0cc2fff77e90379261cc312dabc5a3dba48f5128b14165d5020f1184ec0b1"
+            }
+          },
+          "after": {
+            "acceptance": "Accent Tint is right aligned in shared native global/Game Details settings. The five showcase games use their actual native Library accents, resolving saved install-root overrides before the desktop artwork signature, without invented prototype colors. All headings within a theme use one consistent game-accent treatment; no per-heading backdrop recoloring and no heavy yellow text shadow. Clear keeps ordinary text and glyphs light and avoids muddy automatic yellow shades. Suitable genuine Control preview scenes retain provenance. Focused renderer/color checks and Windows build pass. Publication/install remain held until the reviewed Game Mode merge and accepted screenshots.",
+            "card_steps": null,
+            "card_updates": null
           }
         }
       ],
@@ -23362,117 +23448,7 @@
           "request_digest": "4c8e79ba0a5e91bf603d4ce008ddc5f584964502521f43fc2b88dae086e139bc",
           "step_digest": "73cf578037fe468b378f6d99687978c5a97fc531ccf1a7ae26c3ea7c9be3c2c3"
         }
-      ],
-      "card_steps": {
-        "schema": "relay-card-steps/v1",
-        "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-        "revision": "41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c",
-        "objective_digest": "8690101380cfbfde4374370a2c8abcd9cff49a94703e3e0adc459cd4e83813d4",
-        "publisher": {
-          "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
-          "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
-        },
-        "sequence": 5,
-        "complete": false,
-        "steps": [
-          {
-            "id": "clear-library-color-review",
-            "label": "Review Clear contrast with actual Library accents",
-            "depends_on": [],
-            "state": "blocked",
-            "receipt": {
-              "id": "overlay-library-colors-review-c3d03f3:result",
-              "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-              "step_id": "clear-library-color-review",
-              "plan_revision": "41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c",
-              "input_digest": "b06323dc9f52d742ca2de7bccf2473092744344f1efeeaf134e14e78069c7e21",
-              "evidence": "sha256:ff64f51b68038cedcde6509f77b203cd7d1893c69455da3e2b0f0fb578641018",
-              "source_sha": "c3d03f3cf819de07eaedf7be29cc7aca580a6ac5",
-              "observed_at": "2026-11-02T02:10:28Z",
-              "owner": {
-                "staff": "roman",
-                "team": "inspector"
-              },
-              "update": {
-                "text": "The review confirmed the five exact Library colors and complete SDR capture coverage. It requested one bounded correction: keep Cyberpunk yellow vivid while improving its local heading contrast on bright gold. Publication remains held.",
-                "artifacts": []
-              },
-              "phase": "awaiting-verification"
-            }
-          },
-          {
-            "id": "yellow-heading-verdict",
-            "label": "Verify vivid yellow heading correction",
-            "depends_on": [],
-            "state": "pending",
-            "receipt": null
-          },
-          {
-            "id": "incumbent-documentation-check",
-            "label": "Check extension documentation against existing design",
-            "depends_on": [],
-            "state": "pending",
-            "receipt": null
-          }
-        ]
-      },
-      "card_updates": {
-        "schema": "relay-card-updates/v1",
-        "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-        "revision": "41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c",
-        "sequence": 5,
-        "truncated": false,
-        "identities": {
-          "overlay-library-colors-review-c3d03f3:started": "c31598cd1f55a68d12b03c57496bdf48246af48813f9edcf372f0fd1d870ee2b",
-          "overlay-library-colors-review-c3d03f3:result": "80021371a3b59f917977721eb316978fc5674f036088779159a47dee612af809"
-        },
-        "items": [
-          {
-            "key": "overlay-library-colors-review-c3d03f3:started:b06323dc9f52d742ca2de7bccf2473092744344f1efeeaf134e14e78069c7e21:running:",
-            "receipt_snapshot": "{\"label\":\"Review Clear contrast with actual Library accents\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:08b233073011746662d5fe48f57285b2e558e2e1893d53ea886196009864dad9\",\"id\":\"overlay-library-colors-review-c3d03f3:started\",\"input_digest\":\"b06323dc9f52d742ca2de7bccf2473092744344f1efeeaf134e14e78069c7e21\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c\",\"source_sha\":\"c3d03f3cf819de07eaedf7be29cc7aca580a6ac5\",\"step_id\":\"clear-library-color-review\"},\"state\":\"running\"}",
-            "id": "overlay-library-colors-review-c3d03f3:started",
-            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-            "step_id": "clear-library-color-review",
-            "revision": "41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c",
-            "label": "Review Clear contrast with actual Library accents",
-            "state": "running",
-            "phase": null,
-            "source_sha": "c3d03f3cf819de07eaedf7be29cc7aca580a6ac5",
-            "observed_at": "2026-11-02T02:02:20Z",
-            "recorded_at": "2026-11-02T02:02:23.349Z",
-            "receipt_digest": "sha256:08b233073011746662d5fe48f57285b2e558e2e1893d53ea886196009864dad9",
-            "owner": {
-              "staff": "roman",
-              "team": "inspector"
-            },
-            "text": "Work started.",
-            "text_kind": "recorded-state",
-            "artifacts": []
-          },
-          {
-            "key": "overlay-library-colors-review-c3d03f3:result:b06323dc9f52d742ca2de7bccf2473092744344f1efeeaf134e14e78069c7e21:blocked:awaiting-verification",
-            "receipt_snapshot": "{\"label\":\"Review Clear contrast with actual Library accents\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:ff64f51b68038cedcde6509f77b203cd7d1893c69455da3e2b0f0fb578641018\",\"id\":\"overlay-library-colors-review-c3d03f3:result\",\"input_digest\":\"b06323dc9f52d742ca2de7bccf2473092744344f1efeeaf134e14e78069c7e21\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c\",\"source_sha\":\"c3d03f3cf819de07eaedf7be29cc7aca580a6ac5\",\"step_id\":\"clear-library-color-review\",\"update\":{\"artifacts\":[],\"text\":\"The review confirmed the five exact Library colors and complete SDR capture coverage. It requested one bounded correction: keep Cyberpunk yellow vivid while improving its local heading contrast on bright gold. Publication remains held.\"}},\"state\":\"blocked\"}",
-            "id": "overlay-library-colors-review-c3d03f3:result",
-            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-            "step_id": "clear-library-color-review",
-            "revision": "41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c",
-            "label": "Review Clear contrast with actual Library accents",
-            "state": "blocked",
-            "phase": "awaiting-verification",
-            "source_sha": "c3d03f3cf819de07eaedf7be29cc7aca580a6ac5",
-            "observed_at": "2026-11-02T02:10:28Z",
-            "recorded_at": "2026-11-02T02:10:32.783Z",
-            "receipt_digest": "sha256:ff64f51b68038cedcde6509f77b203cd7d1893c69455da3e2b0f0fb578641018",
-            "owner": {
-              "staff": "roman",
-              "team": "inspector"
-            },
-            "text": "The review confirmed the five exact Library colors and complete SDR capture coverage. It requested one bounded correction: keep Cyberpunk yellow vivid while improving its local heading contrast on bright gold. Publication remains held.",
-            "text_kind": "owner-published",
-            "artifacts": []
-          }
-        ]
-      }
+      ]
     }
   ]
 }
