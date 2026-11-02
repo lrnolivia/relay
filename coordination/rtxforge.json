@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T18:46:07.773Z",
+  "updated_at": "2026-11-02T18:47:41.590Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25305,7 +25305,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T18:46:07.773Z",
+      "updated_at": "2026-11-02T18:47:41.590Z",
       "lease_until": "2026-11-03T06:28:52.437Z",
       "amendment_count": 1,
       "amendments": [
@@ -25464,17 +25464,30 @@
             "host_available": true,
             "intent_digest": "d864890b35c377abc65a05be65f082633d66185bedaf8729cbab52bf9bcb0972"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-02T18:42:51.891Z",
           "request_digest": "0f8a6b547d6235695b6aa2b526b9c1330ddc4059d27e6bbff4cb459a8206b4c1",
-          "step_digest": "8b7f98bb9b03a7a1e484806ffe67e68f085c2a8836507538c380bbcd9a43f860",
+          "step_digest": "d460199a0e88abec63e8c76a9ebe4cf73564da92a2fa7e8b1f53cec7648f81ab",
           "start": {
             "request_digest": "0f8a6b547d6235695b6aa2b526b9c1330ddc4059d27e6bbff4cb459a8206b4c1",
             "source_sha": "0bb5d71ba4a0011268bbf9aad3b12dab465b1b58",
             "agent_id": "/root/impeccable_documenter_onboarding_notice",
             "observed_at": "2026-11-02T18:44:15Z"
           },
-          "started_at": "2026-11-02T18:44:20.519Z"
+          "started_at": "2026-11-02T18:44:20.519Z",
+          "result": {
+            "request_digest": "0f8a6b547d6235695b6aa2b526b9c1330ddc4059d27e6bbff4cb459a8206b4c1",
+            "source_sha": "0bb5d71ba4a0011268bbf9aad3b12dab465b1b58",
+            "agent_id": "/root/impeccable_documenter_onboarding_notice",
+            "observed_at": "2026-11-02T18:47:37Z",
+            "state": "succeeded",
+            "result_digest": "6ea83d41d06462fd6c3ed13d5c49bcfbf5c9e91156aa9c405dcf74abf6488132",
+            "update": {
+              "text": "The narrow onboarding notice polish is consistent with the incumbent frosted design and product contract. No documentation or design-system replacement is needed.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-02T18:47:41.590Z"
         }
       ],
       "card_steps": {
@@ -25486,7 +25499,7 @@
           "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
           "branch": "rtxforge/onboarding-overlay-notice-20261102"
         },
-        "sequence": 8,
+        "sequence": 9,
         "complete": false,
         "steps": [
           {
@@ -25543,20 +25556,25 @@
             "id": "document",
             "label": "Check onboarding notice consistency with incumbent design",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "notice-document-0bb5d71:started",
+              "id": "notice-document-0bb5d71:result",
               "assignment": "rtxforge-onboarding-overlay-notice-20261102",
               "step_id": "document",
               "plan_revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
               "input_digest": "0f8a6b547d6235695b6aa2b526b9c1330ddc4059d27e6bbff4cb459a8206b4c1",
-              "evidence": "sha256:b0d2f0f5aff31746ed3ea0293c07cc032c4ec692e46a24d2134c5974a242050b",
+              "evidence": "sha256:44353552de599b1e49fd8ab5f5d37ff1c5e5b5f600f64a32e9c9788e7115ac0d",
               "source_sha": "0bb5d71ba4a0011268bbf9aad3b12dab465b1b58",
-              "observed_at": "2026-11-02T18:44:15Z",
+              "observed_at": "2026-11-02T18:47:37Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
-              }
+              },
+              "update": {
+                "text": "The narrow onboarding notice polish is consistent with the incumbent frosted design and product contract. No documentation or design-system replacement is needed.",
+                "artifacts": []
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -25565,14 +25583,15 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-onboarding-overlay-notice-20261102",
         "revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
-        "sequence": 8,
+        "sequence": 9,
         "truncated": false,
         "identities": {
           "notice-layout-assess-6f28c28:started": "9115112f2104bbd569a46169b1104c7872c2fa18359bb993d49f18bd44d3887a",
           "notice-layout-assess-6f28c28:result": "cb0a6c6ac56c73acce24d967e0d06ba6246a1fa2a4fe216e9874a37bb9534f3c",
           "notice-full-review-0bb5d71:started": "8ac6483698a43ba95209f4002dd066ddf5852c7105190517c59fc51472520112",
           "notice-document-0bb5d71:started": "e8ae7e08afbbe514fff92a3a640fbd259e2c4fb2f5f5e1a2e4efd4ffaf3ce892",
-          "notice-full-review-0bb5d71:result": "9661bfdc8039847c9ce7daa0ef67e5e891cb0aecf69b740ec663801957990a47"
+          "notice-full-review-0bb5d71:result": "9661bfdc8039847c9ce7daa0ef67e5e891cb0aecf69b740ec663801957990a47",
+          "notice-document-0bb5d71:result": "beb510b6f9830bea2b1584b914822073a4bb78c568ed0556cbe511a31d0989a6"
         },
         "items": [
           {
@@ -25682,6 +25701,28 @@
               "team": "inspector"
             },
             "text": "The revised onboarding resolves the crowded notice; the independent review's disposition is ship for the reviewed Clear/Light/Dark, interface-count and short-window states.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "notice-document-0bb5d71:result:0f8a6b547d6235695b6aa2b526b9c1330ddc4059d27e6bbff4cb459a8206b4c1:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Check onboarding notice consistency with incumbent design\",\"receipt\":{\"assignment\":\"rtxforge-onboarding-overlay-notice-20261102\",\"evidence\":\"sha256:44353552de599b1e49fd8ab5f5d37ff1c5e5b5f600f64a32e9c9788e7115ac0d\",\"id\":\"notice-document-0bb5d71:result\",\"input_digest\":\"0f8a6b547d6235695b6aa2b526b9c1330ddc4059d27e6bbff4cb459a8206b4c1\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032\",\"source_sha\":\"0bb5d71ba4a0011268bbf9aad3b12dab465b1b58\",\"step_id\":\"document\",\"update\":{\"artifacts\":[],\"text\":\"The narrow onboarding notice polish is consistent with the incumbent frosted design and product contract. No documentation or design-system replacement is needed.\"}},\"state\":\"blocked\"}",
+            "id": "notice-document-0bb5d71:result",
+            "assignment": "rtxforge-onboarding-overlay-notice-20261102",
+            "step_id": "document",
+            "revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
+            "label": "Check onboarding notice consistency with incumbent design",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "0bb5d71ba4a0011268bbf9aad3b12dab465b1b58",
+            "observed_at": "2026-11-02T18:47:37Z",
+            "recorded_at": "2026-11-02T18:47:41.590Z",
+            "receipt_digest": "sha256:44353552de599b1e49fd8ab5f5d37ff1c5e5b5f600f64a32e9c9788e7115ac0d",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The narrow onboarding notice polish is consistent with the incumbent frosted design and product contract. No documentation or design-system replacement is needed.",
             "text_kind": "owner-published",
             "artifacts": []
           }
