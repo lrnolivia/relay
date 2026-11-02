@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T18:28:52.437Z",
+  "updated_at": "2026-11-02T18:29:01.253Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25270,7 +25270,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T18:28:52.437Z",
+      "updated_at": "2026-11-02T18:29:01.253Z",
       "lease_until": "2026-11-03T06:28:52.437Z",
       "amendment_count": 1,
       "amendments": [
@@ -25290,7 +25290,73 @@
             ]
           }
         }
-      ]
+      ],
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "notice-layout-assess-6f28c28",
+          "assignment": "rtxforge-onboarding-overlay-notice-20261102",
+          "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
+          "branch": "rtxforge/onboarding-overlay-notice-20261102",
+          "source_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
+          "objective_digest": "b1c36c80c124a30552442ce578593bc6759f19811c933386fa1d8394bbec2869",
+          "scope_digest": "a4dc346a2ce57db90a286e5945fe3dd8afcf3c7d4527b52c667206054a667d7d",
+          "step_id": "layout-assessment",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
+            "objective_digest": "b1c36c80c124a30552442ce578593bc6759f19811c933386fa1d8394bbec2869",
+            "step_id": "layout-assessment",
+            "label": "Assess active-overlay onboarding notice layout",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "9d6b8ea3e9ff4201500cdf15d42abb1aa1f712898c6252b8982ce1ffe7b468fb"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-02T18:29:01.253Z",
+          "request_digest": "c920d3e2a20299c8642761858ccdfe3f5573960043ff378b27b2ff2e286a6e46",
+          "step_digest": "2c43ac5055d3a886e2c90e5ecfc03fd24fa595962f19146128238031933b65b9"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "rtxforge-onboarding-overlay-notice-20261102",
+        "revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
+        "objective_digest": "b1c36c80c124a30552442ce578593bc6759f19811c933386fa1d8394bbec2869",
+        "publisher": {
+          "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
+          "branch": "rtxforge/onboarding-overlay-notice-20261102"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "layout-assessment",
+            "label": "Assess active-overlay onboarding notice layout",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "rtxforge-onboarding-overlay-notice-20261102",
+        "revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
