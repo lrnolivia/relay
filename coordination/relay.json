@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-02T00:42:39.406Z",
+  "updated_at": "2026-11-02T00:43:40.253Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21684,6 +21684,54 @@
       "evidence": "Merge: https://github.com/lrnolivia/relay/commit/3be67a3de1a137535ed89f46f7c4c0ee4bdcb8b2\nProduction smoke: https://github.com/lrnolivia/relay/actions/runs/41368361233\nRecovery assurance: https://github.com/lrnolivia/relay/actions/runs/41368516817",
       "work_accounted": true,
       "completed_at": "2026-11-02T00:42:39.406Z"
+    },
+    {
+      "id": "relay-runner-sync-locked-dependencies-20261102",
+      "owner": "01a19804-e77b-7229-8982-76ae7a4b30c2",
+      "branch": "relay/runner-sync-locked-dependencies-20261102",
+      "paths": [
+        ".github/workflows/runner.yml",
+        "scripts/runner-sync.test.mjs"
+      ],
+      "resources": [
+        "relay-runner-sync-workflow-dependency-install"
+      ],
+      "goal": "Install locked dependencies before ordinary model-free Runner synchronization imports shared control modules.",
+      "acceptance": "Add npm ci --ignore-scripts before runner-sync.mjs in the existing tick workflow, after checkout and pinned Node setup. Add a focused unconditional-install/order regression in existing runner-sync tests. Preserve all workflow permissions, credentials, schedule, concurrency, explicit observer and state-persistence gates; no worker-job invocation, dependency/version upgrade, source or runtime behavior change. Focused tests and unchanged required full Linux checks; separate tested draft PR for parent human merge, no agent merge or approval. After parent confirms exact merge, verify an actual supported ordinary sync run succeeds with no worker_id and observer/persist steps skipped, then complete only this assignment under explicit bundled release/completion authorization. Keep native UI acceptance follow-up and unrelated work untouched.",
+      "next_action": "Independently read back fresh claim/branch and preflight. Add failing workflow-order regression, install locked dependencies before sync, run focused checks and required CI, return separate draft PR. No worker execution or merge.",
+      "category": "maintenance",
+      "primary_role": "builder",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "nico",
+      "supporting_staff": [
+        "roman"
+      ],
+      "base_sha": "66cecbc564dccdf4015caa6a2f21adb9536e8d43",
+      "state": "active",
+      "created_at": "2026-11-02T00:43:40.253Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Install locked dependencies before ordinary model-free Runner synchronization imports shared control modules.",
+          "acceptance": "Add npm ci --ignore-scripts before runner-sync.mjs in the existing tick workflow, after checkout and pinned Node setup. Add a focused unconditional-install/order regression in existing runner-sync tests. Preserve all workflow permissions, credentials, schedule, concurrency, explicit observer and state-persistence gates; no worker-job invocation, dependency/version upgrade, source or runtime behavior change. Focused tests and unchanged required full Linux checks; separate tested draft PR for parent human merge, no agent merge or approval. After parent confirms exact merge, verify an actual supported ordinary sync run succeeds with no worker_id and observer/persist steps skipped, then complete only this assignment under explicit bundled release/completion authorization. Keep native UI acceptance follow-up and unrelated work untouched.",
+          "at": "2026-11-02T00:43:40.253Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-runner-sync-locked-dependencies-20261102:acceptance:0",
+            "text": "Add npm ci --ignore-scripts before runner-sync.mjs in the existing tick workflow, after checkout and pinned Node setup. Add a focused unconditional-install/order regression in existing runner-sync tests. Preserve all workflow permissions, credentials, schedule, concurrency, explicit observer and state-persistence gates; no worker-job invocation, dependency/version upgrade, source or runtime behavior change. Focused tests and unchanged required full Linux checks; separate tested draft PR for parent human merge, no agent merge or approval. After parent confirms exact merge, verify an actual supported ordinary sync run succeeds with no worker_id and observer/persist steps skipped, then complete only this assignment under explicit bundled release/completion authorization. Keep native UI acceptance follow-up and unrelated work untouched.",
+            "at": "2026-11-02T00:43:40.253Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-02T00:43:40.253Z",
+      "lease_until": "2026-11-02T12:43:40.253Z"
     }
   ],
   "migrated_from": "loew-inspector"
