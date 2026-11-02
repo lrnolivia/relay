@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T21:37:06.656Z",
+  "updated_at": "2026-11-02T21:56:43.953Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8402,7 +8402,7 @@
       "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
       "goal": "Complete Lauren's native Game Mode resource and responsiveness audit after app input resumes.",
       "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate.",
-      "next_action": "Keep passive source5cad542 receipts at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json and native-total-idle-sample.json. Native/WebView tree:0.15% of one core, about778MiB private. Combined Desktop/native descendants over21.15s:5.32% of one core /0.66% machine CPU, about1014MiB private peak, stable within this short window. GPU, startup, interaction, sustained scrolling and leak behavior are not measured; do not label this lightweight or full performance acceptance. App control was stopped with Escape; wait for explicit user resume before app input. No worker launch or source change requested by this queued followup.",
+      "next_action": "User resumed captures; installed sourcea600682 was exercised with real Desktop/native entry and return, Library poster/capsule scrolling, Details and all primary pages. G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-final-process-summary.json records105.99s short Library residency: native/WebView private945–1030MiB,4.1% onecore/0.51% machine; combined Desktop/native/helper privatepeak1632MiB,49.77% onecore/6.22% machine during startup/lazy work. This is not a settled idle or sustained interaction benchmark. Investigate WebView image/composition memory and separate initial Desktop/background helper CPU from native UI. GPU allocation, frame latency, sustained scroll and long-term leaks remain unmeasured. Do not label this lightweight or complete. Handoff passed on installed sourcea600682 (handoff-a600682.json); settings restored byte-for-byte. No new worker launch requested.",
       "paths": [
         "prototypes/game-mode-tauri/"
       ],
@@ -8432,7 +8432,7 @@
           }
         ]
       },
-      "amendment_count": 1,
+      "amendment_count": 2,
       "amendments": [
         {
           "at": "2026-11-02T20:43:14.031Z",
@@ -8447,9 +8447,23 @@
           "after": {
             "next_action": "Keep passive source5cad542 receipts at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json and native-total-idle-sample.json. Native/WebView tree:0.15% of one core, about778MiB private. Combined Desktop/native descendants over21.15s:5.32% of one core /0.66% machine CPU, about1014MiB private peak, stable within this short window. GPU, startup, interaction, sustained scrolling and leak behavior are not measured; do not label this lightweight or full performance acceptance. App control was stopped with Escape; wait for explicit user resume before app input. No worker launch or source change requested by this queued followup."
           }
+        },
+        {
+          "at": "2026-11-02T21:56:43.953Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Record resumed installed-build observations and measured costs without claiming a complete performance audit.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Keep passive source5cad542 receipts at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json and native-total-idle-sample.json. Native/WebView tree:0.15% of one core, about778MiB private. Combined Desktop/native descendants over21.15s:5.32% of one core /0.66% machine CPU, about1014MiB private peak, stable within this short window. GPU, startup, interaction, sustained scrolling and leak behavior are not measured; do not label this lightweight or full performance acceptance. App control was stopped with Escape; wait for explicit user resume before app input. No worker launch or source change requested by this queued followup."
+          },
+          "after": {
+            "next_action": "User resumed captures; installed sourcea600682 was exercised with real Desktop/native entry and return, Library poster/capsule scrolling, Details and all primary pages. G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-final-process-summary.json records105.99s short Library residency: native/WebView private945–1030MiB,4.1% onecore/0.51% machine; combined Desktop/native/helper privatepeak1632MiB,49.77% onecore/6.22% machine during startup/lazy work. This is not a settled idle or sustained interaction benchmark. Investigate WebView image/composition memory and separate initial Desktop/background helper CPU from native UI. GPU allocation, frame latency, sustained scroll and long-term leaks remain unmeasured. Do not label this lightweight or complete. Handoff passed on installed sourcea600682 (handoff-a600682.json); settings restored byte-for-byte. No new worker launch requested."
+          }
         }
       ],
-      "updated_at": "2026-11-02T20:43:14.031Z"
+      "updated_at": "2026-11-02T21:56:43.953Z"
     }
   ],
   "claims": [
