@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T08:15:20.627Z",
+  "updated_at": "2026-11-02T08:18:07.466Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23426,7 +23426,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T08:15:20.627Z",
+      "updated_at": "2026-11-02T08:18:07.466Z",
       "lease_until": "2026-11-02T20:13:29.895Z",
       "amendment_count": 17,
       "amendments": [
@@ -24541,10 +24541,17 @@
             "host_available": true,
             "intent_digest": "06b2d8e0143540b91aeb1e0f5268168383b2a97f37cef93189e56d3629677943"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-02T08:15:00.467Z",
           "request_digest": "15c3c22617916c02a325d461e27ce1a82ae44f11836a79b067a9678d5cc1747a",
-          "step_digest": "8db1983f1b6fe8207bf392c33b8770725bd529f90fbedaa84d6091c8472ec369"
+          "step_digest": "5722b76b2bbac38ee2fcf046171324c7cd9a39c94e4febc5b9ea42361f0b73cd",
+          "start": {
+            "request_digest": "15c3c22617916c02a325d461e27ce1a82ae44f11836a79b067a9678d5cc1747a",
+            "source_sha": "95f09bb0ba71c48d8d85da7885ab8aca134a11d8",
+            "agent_id": "/root/impeccable_full_review_95f09bb",
+            "observed_at": "2026-11-02T08:18:03.107Z"
+          },
+          "started_at": "2026-11-02T08:18:07.466Z"
         },
         {
           "schema": 1,
@@ -24624,15 +24631,28 @@
           "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
           "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
         },
-        "sequence": 3,
+        "sequence": 4,
         "complete": false,
         "steps": [
           {
             "id": "finish-full-review-95f09bb",
             "label": "Full read-only review of the final overlay, onboarding, actual-glass menus and per-game native opt-out at 95f09bb.",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "finish-full-review-95f09bb:started",
+              "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+              "step_id": "finish-full-review-95f09bb",
+              "plan_revision": "2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b",
+              "input_digest": "15c3c22617916c02a325d461e27ce1a82ae44f11836a79b067a9678d5cc1747a",
+              "evidence": "sha256:ed086069734d833ef8b1f9638b1841dc2343de8e23520c1b5e1cf1f669150f2d",
+              "source_sha": "95f09bb0ba71c48d8d85da7885ab8aca134a11d8",
+              "observed_at": "2026-11-02T08:18:03.107Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              }
+            }
           },
           {
             "id": "finish-document-95f09bb",
@@ -24654,10 +24674,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
         "revision": "2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b",
-        "sequence": 3,
+        "sequence": 4,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "finish-full-review-95f09bb:started": "ea5492c822b907e73f0a3f228a4fb0b86e2b30efb18edf53b0a2d69ee5df9c9a"
+        },
+        "items": [
+          {
+            "key": "finish-full-review-95f09bb:started:15c3c22617916c02a325d461e27ce1a82ae44f11836a79b067a9678d5cc1747a:running:",
+            "receipt_snapshot": "{\"label\":\"Full read-only review of the final overlay, onboarding, actual-glass menus and per-game native opt-out at 95f09bb.\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:ed086069734d833ef8b1f9638b1841dc2343de8e23520c1b5e1cf1f669150f2d\",\"id\":\"finish-full-review-95f09bb:started\",\"input_digest\":\"15c3c22617916c02a325d461e27ce1a82ae44f11836a79b067a9678d5cc1747a\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b\",\"source_sha\":\"95f09bb0ba71c48d8d85da7885ab8aca134a11d8\",\"step_id\":\"finish-full-review-95f09bb\"},\"state\":\"running\"}",
+            "id": "finish-full-review-95f09bb:started",
+            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+            "step_id": "finish-full-review-95f09bb",
+            "revision": "2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b",
+            "label": "Full read-only review of the final overlay, onboarding, actual-glass menus and per-game native opt-out at 95f09bb.",
+            "state": "running",
+            "phase": null,
+            "source_sha": "95f09bb0ba71c48d8d85da7885ab8aca134a11d8",
+            "observed_at": "2026-11-02T08:18:03.107Z",
+            "recorded_at": "2026-11-02T08:18:07.466Z",
+            "receipt_digest": "sha256:ed086069734d833ef8b1f9638b1841dc2343de8e23520c1b5e1cf1f669150f2d",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Work started.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
