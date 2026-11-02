@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T18:42:39.049Z",
+  "updated_at": "2026-11-02T18:42:51.891Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25305,7 +25305,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T18:42:39.049Z",
+      "updated_at": "2026-11-02T18:42:51.891Z",
       "lease_until": "2026-11-03T06:28:52.437Z",
       "amendment_count": 1,
       "amendments": [
@@ -25421,6 +25421,40 @@
             "observed_at": "2026-11-02T18:42:32Z"
           },
           "started_at": "2026-11-02T18:42:39.049Z"
+        },
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "notice-document-0bb5d71",
+          "assignment": "rtxforge-onboarding-overlay-notice-20261102",
+          "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
+          "branch": "rtxforge/onboarding-overlay-notice-20261102",
+          "source_sha": "0bb5d71ba4a0011268bbf9aad3b12dab465b1b58",
+          "objective_digest": "b1c36c80c124a30552442ce578593bc6759f19811c933386fa1d8394bbec2869",
+          "scope_digest": "a4dc346a2ce57db90a286e5945fe3dd8afcf3c7d4527b52c667206054a667d7d",
+          "step_id": "document",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "0bb5d71ba4a0011268bbf9aad3b12dab465b1b58",
+            "objective_digest": "b1c36c80c124a30552442ce578593bc6759f19811c933386fa1d8394bbec2869",
+            "step_id": "document",
+            "label": "Check onboarding notice consistency with incumbent design",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "d864890b35c377abc65a05be65f082633d66185bedaf8729cbab52bf9bcb0972"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-02T18:42:51.891Z",
+          "request_digest": "0f8a6b547d6235695b6aa2b526b9c1330ddc4059d27e6bbff4cb459a8206b4c1",
+          "step_digest": "383d1eb6c8b78c7572611bffc17d969e40a958134a2cc8ede76b504971ad7484"
         }
       ],
       "card_steps": {
@@ -25432,7 +25466,7 @@
           "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
           "branch": "rtxforge/onboarding-overlay-notice-20261102"
         },
-        "sequence": 5,
+        "sequence": 6,
         "complete": false,
         "steps": [
           {
@@ -25479,6 +25513,13 @@
                 "team": "inspector"
               }
             }
+          },
+          {
+            "id": "document",
+            "label": "Check onboarding notice consistency with incumbent design",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -25486,7 +25527,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-onboarding-overlay-notice-20261102",
         "revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
-        "sequence": 5,
+        "sequence": 6,
         "truncated": false,
         "identities": {
           "notice-layout-assess-6f28c28:started": "9115112f2104bbd569a46169b1104c7872c2fa18359bb993d49f18bd44d3887a",
