@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T03:59:53.313Z",
+  "updated_at": "2026-11-02T04:08:43.340Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23522,7 +23522,9 @@
         "windows/RtxForge.Windows/MainWindow.xaml.cs",
         "windows/RtxForge.Windows/Models/Models.cs",
         "windows/RtxForge.Windows/Services/EngineForgeService.cs",
-        "windows/engine-host/rtxforge_win_host.py"
+        "windows/engine-host/rtxforge_win_host.py",
+        "scripts/steam_artwork.py",
+        "tests/test_steam_artwork.py"
       ],
       "resources": [
         "library-game-names",
@@ -23530,7 +23532,7 @@
       ],
       "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
       "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
-      "next_action": "Wire library names into Windows scan parameters and snapshot keys; validate native UI rename and direct-launch shortcuts with selected artwork.",
+      "next_action": "Finish authorized local setup without computer input: artwork applied, create Steam autoboot shortcuts using existing ME3Tweaks support; bind individual collection artwork to the matching shortcut instead of shared collection appid, then run focused tests and publish draft source.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -23554,8 +23556,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T03:59:53.313Z",
-      "lease_until": "2026-11-02T15:59:53.313Z"
+      "updated_at": "2026-11-02T04:08:43.340Z",
+      "lease_until": "2026-11-02T16:08:43.340Z"
     }
   ]
 }
