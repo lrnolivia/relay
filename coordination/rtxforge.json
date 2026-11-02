@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T05:03:55.379Z",
+  "updated_at": "2026-11-02T05:06:06.867Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23220,7 +23220,7 @@
         "rtxforge-overlay-renderer"
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
-      "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome.",
+      "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls.",
       "next_action": "Correct the three reviewed preference/inheritance defects with resolved helper defaults and refreshed native editing caches; add regression coverage before final verification.",
       "category": "implementation",
       "supporting_roles": [
@@ -23279,12 +23279,18 @@
             "text": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome.",
             "at": "2026-11-02T04:30:48.174Z",
             "reason": "User added performance audit, replacement Feeder activation notice, per-game settings and explicit reset to app defaults."
+          },
+          {
+            "id": "rtxforge-overlay-accent-toggle-alignment-20261101:acceptance:10",
+            "text": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls.",
+            "at": "2026-11-02T05:06:06.867Z",
+            "reason": "User requests a circular Custom color swatch, click-to-open picker, any-screen eyedropper and small poster preview matching Desktop."
           }
         ]
       },
-      "updated_at": "2026-11-02T05:00:07.844Z",
-      "lease_until": "2026-11-02T17:00:07.844Z",
-      "amendment_count": 9,
+      "updated_at": "2026-11-02T05:06:06.867Z",
+      "lease_until": "2026-11-02T17:06:06.867Z",
+      "amendment_count": 10,
       "amendments": [
         {
           "at": "2026-11-02T00:21:15.831Z",
@@ -23490,6 +23496,72 @@
           "after": {
             "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome."
           }
+        },
+        {
+          "at": "2026-11-02T05:06:06.867Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "User requests a circular Custom color swatch, click-to-open picker, any-screen eyedropper and small poster preview matching Desktop.",
+          "fields": [
+            "acceptance",
+            "card_steps",
+            "card_updates"
+          ],
+          "before": {
+            "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome.",
+            "card_steps": {
+              "schema": "relay-card-steps/v1",
+              "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+              "revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
+              "objective_digest": "d6db273b8915c6bbb9658b1d31f75a0dfc5526ac55927cb756267bfe085b5d59",
+              "publisher": {
+                "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+                "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
+              },
+              "sequence": 3,
+              "complete": false,
+              "steps": [
+                {
+                  "id": "pergame-accent-finish-review",
+                  "label": "Review adaptive accents and per-game settings",
+                  "depends_on": [],
+                  "state": "blocked",
+                  "receipt": {
+                    "id": "overlay-pergame-accent-review-a545697:result",
+                    "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+                    "step_id": "pergame-accent-finish-review",
+                    "plan_revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
+                    "input_digest": "42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79",
+                    "evidence": "sha256:f523b20cf352b6663933cc584b5263e566d03b97f3263d429f645ddecc129d84",
+                    "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
+                    "observed_at": "2026-11-02T04:58:58.896Z",
+                    "owner": {
+                      "staff": "roman",
+                      "team": "inspector"
+                    },
+                    "update": {
+                      "text": "The review accepted the heading/material treatment but requested corrections for stale native game caches, inheritance state and empty Linux defaults. Feeder notification behavior still requires live integration evidence.",
+                      "artifacts": []
+                    },
+                    "phase": "awaiting-verification"
+                  }
+                }
+              ]
+            },
+            "card_updates": {
+              "schema": "relay-card-updates/v1",
+              "revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
+              "sequence": 3,
+              "retained_count": 2,
+              "identity_count": 2,
+              "truncated": false,
+              "sha256": "84c2393c891214d4bf4e96cdf0c3117e9f218ab535cd942141d940c0bb3ddc76"
+            }
+          },
+          "after": {
+            "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls.",
+            "card_steps": null,
+            "card_updates": null
+          }
         }
       ],
       "native_handoffs": [
@@ -23673,103 +23745,7 @@
           },
           "reported_at": "2026-11-02T04:59:02.185Z"
         }
-      ],
-      "card_steps": {
-        "schema": "relay-card-steps/v1",
-        "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-        "revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
-        "objective_digest": "d6db273b8915c6bbb9658b1d31f75a0dfc5526ac55927cb756267bfe085b5d59",
-        "publisher": {
-          "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
-          "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
-        },
-        "sequence": 3,
-        "complete": false,
-        "steps": [
-          {
-            "id": "pergame-accent-finish-review",
-            "label": "Review adaptive accents and per-game settings",
-            "depends_on": [],
-            "state": "blocked",
-            "receipt": {
-              "id": "overlay-pergame-accent-review-a545697:result",
-              "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-              "step_id": "pergame-accent-finish-review",
-              "plan_revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
-              "input_digest": "42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79",
-              "evidence": "sha256:f523b20cf352b6663933cc584b5263e566d03b97f3263d429f645ddecc129d84",
-              "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
-              "observed_at": "2026-11-02T04:58:58.896Z",
-              "owner": {
-                "staff": "roman",
-                "team": "inspector"
-              },
-              "update": {
-                "text": "The review accepted the heading/material treatment but requested corrections for stale native game caches, inheritance state and empty Linux defaults. Feeder notification behavior still requires live integration evidence.",
-                "artifacts": []
-              },
-              "phase": "awaiting-verification"
-            }
-          }
-        ]
-      },
-      "card_updates": {
-        "schema": "relay-card-updates/v1",
-        "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-        "revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
-        "sequence": 3,
-        "truncated": false,
-        "identities": {
-          "overlay-pergame-accent-review-a545697:started": "36a4f3ad3f685caf535927a5a819d724cdd851d78ba2e73c264a7142833bd6c3",
-          "overlay-pergame-accent-review-a545697:result": "c0fbd0e893f886ec78e147ad357b0f76a0f401e2b246fb288d85c3b76b65089f"
-        },
-        "items": [
-          {
-            "key": "overlay-pergame-accent-review-a545697:started:42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79:running:",
-            "receipt_snapshot": "{\"label\":\"Review adaptive accents and per-game settings\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:1546deb4371751b623107377a70984263a67368894e61138d33041c23a4b62d7\",\"id\":\"overlay-pergame-accent-review-a545697:started\",\"input_digest\":\"42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe\",\"source_sha\":\"a545697d57353b13dd409858c0ed91a2ef410aa7\",\"step_id\":\"pergame-accent-finish-review\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is checking the exact pushed overlay revision, per-game settings isolation, default reset and notification behavior against the completed native builds and fixture evidence.\"}},\"state\":\"running\"}",
-            "id": "overlay-pergame-accent-review-a545697:started",
-            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-            "step_id": "pergame-accent-finish-review",
-            "revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
-            "label": "Review adaptive accents and per-game settings",
-            "state": "running",
-            "phase": null,
-            "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
-            "observed_at": "2026-11-02T04:53:57.833Z",
-            "recorded_at": "2026-11-02T04:54:01.282Z",
-            "receipt_digest": "sha256:1546deb4371751b623107377a70984263a67368894e61138d33041c23a4b62d7",
-            "owner": {
-              "staff": "roman",
-              "team": "inspector"
-            },
-            "text": "Independent review is checking the exact pushed overlay revision, per-game settings isolation, default reset and notification behavior against the completed native builds and fixture evidence.",
-            "text_kind": "owner-published",
-            "artifacts": []
-          },
-          {
-            "key": "overlay-pergame-accent-review-a545697:result:42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79:blocked:awaiting-verification",
-            "receipt_snapshot": "{\"label\":\"Review adaptive accents and per-game settings\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:f523b20cf352b6663933cc584b5263e566d03b97f3263d429f645ddecc129d84\",\"id\":\"overlay-pergame-accent-review-a545697:result\",\"input_digest\":\"42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe\",\"source_sha\":\"a545697d57353b13dd409858c0ed91a2ef410aa7\",\"step_id\":\"pergame-accent-finish-review\",\"update\":{\"artifacts\":[],\"text\":\"The review accepted the heading/material treatment but requested corrections for stale native game caches, inheritance state and empty Linux defaults. Feeder notification behavior still requires live integration evidence.\"}},\"state\":\"blocked\"}",
-            "id": "overlay-pergame-accent-review-a545697:result",
-            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
-            "step_id": "pergame-accent-finish-review",
-            "revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
-            "label": "Review adaptive accents and per-game settings",
-            "state": "blocked",
-            "phase": "awaiting-verification",
-            "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
-            "observed_at": "2026-11-02T04:58:58.896Z",
-            "recorded_at": "2026-11-02T04:59:02.185Z",
-            "receipt_digest": "sha256:f523b20cf352b6663933cc584b5263e566d03b97f3263d429f645ddecc129d84",
-            "owner": {
-              "staff": "roman",
-              "team": "inspector"
-            },
-            "text": "The review accepted the heading/material treatment but requested corrections for stale native game caches, inheritance state and empty Linux defaults. Feeder notification behavior still requires live integration evidence.",
-            "text_kind": "owner-published",
-            "artifacts": []
-          }
-        ]
-      }
+      ]
     }
   ]
 }
