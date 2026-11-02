@@ -59,6 +59,7 @@ export function enrichWorkCard(name, data) {
   if (record) out.staff_attribution = assignmentStaffAttribution(record);
   if (name === 'relay_source_checks' && data.checks && typeof data.checks === 'object') out.ci = summarizeCiChecks(data.checks);
   const live = name === 'relay_source_checks' ? Boolean(out.ci?.live) : Boolean(record && !TERMINAL.has(String(record.state || '').toLowerCase()) && milestone?.kind !== 'failed');
+  out.card_mode = data.card_mode==='current'?'current':'snapshot';
   out.work_card = { schema: 'relay-work-card/v1', tool: name, milestone, live,
     ...(record?.id ? { assignment: String(record.id).slice(0, 100) } : {}),
     ...(typeof data.project === 'string' ? { project: data.project.slice(0, 80) } : {}) };

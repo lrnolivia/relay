@@ -95,6 +95,7 @@ try {
   if(name==='jobs'){assert.equal(await frame.locator('.insight').isVisible(),false);assert.equal(await frame.locator('#plan-panel').isVisible(),false);assert.equal(await frame.locator('#rows').textContent(),'');assert.match(await frame.locator('#title').textContent(),/relay card polish/);}
   if(fixtures[name]){const model=contextCardModel(fixtures[name]),identity=model.identity;assert.equal(await frame.locator('#feature-title').textContent(),model.family==='product'?(model.product==='night-shift'?'night shift':model.product):model.family==='assignment'?(model.project_label||model.project||'Assignment'):identity.speaker?.name||identity.team_label);if(model.family==='assignment'){assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),'');if(identity.lead){assert.equal(await frame.locator('#family-assignment-lead .family-lead-name').textContent(),identity.lead.name);assert.equal(await frame.locator('#family-assignment-lead').getAttribute('data-staff'),identity.lead.id);assert.ok((await frame.locator('#family-assignment-lead .family-lead-role').textContent()).includes('Assigned lead'));}if(model.project_icon)assert.ok(geometry.images.length>0);}else if(identity.speaker){assert.ok((await frame.locator('#team').textContent()).includes(identity.relationship));assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),identity.speaker.id);assert.ok(geometry.images.length>0);}}
   if(name==='generic'){assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),'');assert.equal(await frame.locator('#feature-title').evaluate(el=>getComputedStyle(el).color),theme==='dark'?'rgb(240, 100, 59)':'rgb(181, 71, 31)');}
+  if(name.startsWith('family-')&&name!=='family-single')await frame.locator('#banner-content').evaluate(n=>n.open=true);
   if(name.startsWith('family-')){assert.equal(await frame.locator('.family-update').count(),name==='family-single'?1:3);assert.equal(await frame.locator('#family-crew').isVisible(),true);assert.equal(await frame.locator('.card-header').isVisible(),false);if(name==='family-media')await frame.locator('.family-capture img').waitFor();}
   if(name==='family-single'){assert.equal(await frame.locator('#plan-panel').isVisible(),false);assert.equal(await frame.locator('.family-range').count(),0);assert.equal(await frame.locator('.family-nav').count(),0);assert.equal(await frame.locator('.family-track').count(),0);}
   if(name.startsWith('product-')){assert.equal(await frame.locator('#feature-title').textContent(),name==='product-night-shift'?'night shift':name.slice(8));assert.equal(await frame.locator('#feature-mark').getAttribute('data-staff'),'');assert.equal(await frame.locator('.insight').isVisible(),false);assert.equal(await frame.locator('#family-crew').isVisible(),false);}
@@ -108,6 +109,7 @@ try {
   await page.locator('iframe').evaluate((node,height)=>node.style.height=height+'px',captureHeight);
   await page.setViewportSize({width,height:Math.max(1000,captureHeight)});
   geometry.capture_height=captureHeight;
+  if(width>=620&&['lead-nico','lead-no-assignee','lead-avatar-unavailable','relay','runner'].includes(name))assert.ok(captureHeight<=Math.min(width*.75,300),'sparse desktop banner stays shallow');
   if(name.startsWith('family-')&&name!=='family-single'&&width<520){const widths=await frame.locator('.step-copy').evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().width));assert.ok(widths.every(w=>w>=180),'phone priority text has full-row width');}
   const surface=`context-card-${name}-${width}-${theme}`,screenshot=await frame.locator('#card').screenshot();
   await writeFile(directory+'/'+surface+'.png',screenshot);
@@ -121,9 +123,9 @@ try {
   captures.push(capture);
   if(name==='runner'){
    await frame.locator('body').evaluate(()=>{window.__calls=[];window.__manualRefresh=true});
-   await frame.locator('#refresh').click();await frame.locator('#title').filter({hasText:'Refreshed canonical state'}).waitFor();await frame.locator('#open-relay').click();
+   await frame.locator('#card-menu').evaluate(n=>n.open=true);await frame.locator('#refresh').click();await frame.locator('#title').filter({hasText:'Refreshed canonical state'}).waitFor();await frame.locator('#open-relay').click();
    const calls=await frame.locator('body').evaluate(()=>window.__calls);assert.deepEqual(calls.map(call=>call.name),['relay_runner_progress','openExternal']);
-   await page.keyboard.press('Shift+Tab');
+   await frame.locator('#card-menu').evaluate(n=>n.open=true);await frame.locator('#refresh').focus();
    assert.equal(await frame.locator('#refresh').evaluate(el=>document.activeElement===el),true);
    assert.equal(await frame.locator('#refresh').evaluate(el=>getComputedStyle(el).outlineStyle),'solid');
   }

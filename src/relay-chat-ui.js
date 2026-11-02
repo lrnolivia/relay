@@ -1,3 +1,4 @@
+import {progressSnapshot} from './progress-snapshots.js';
 import {CARD_HOST_SCRIPT} from './relay-card-host.js';
 import {FAMILY_BRANDS} from './relay-card-family.js';
 import { LIVE_WORK_SCRIPT } from './relay-card-refresh.js';
@@ -10,7 +11,7 @@ import { withHumanPresentation } from './communication-presentation.js';
 import { enrichWorkCard, isWorkCardTool, withWorkCardTemplate } from './work-card-delivery.js';
 import { assignmentCardContext } from './relay-card-steps.js';
 export function contextCardModel(data = {}, directory = DIRECTORY, options = {}) { return sharedContextCardModel(data, directory, { roles: ROLE_DIRECTORY, ...options }); }
-export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v29.html';
+export const RELAY_CONTEXT_CARD_URI = 'ui://relay/context-card/v30.html';
 export const RELAY_CONTEXT_CARD_TOOL = 'relay_render_context_card';
 export const RELAY_STATUS_CARD_URI = 'ui://relay/status-card/v5-legacy-bridge.html';
 export const RELAY_STATUS_CARD_TOOL = 'relay_show_legacy_bridge_card';
@@ -30,10 +31,11 @@ export function relayContextCardTool() {
   return {
     name: RELAY_CONTEXT_CARD_TOOL,
     title: 'Show Relay status card',
-    description: 'RENDER TOOL — visibly mount a compact Relay status card in ChatGPT. Omit project for the overall report; navigate projects and assignments inside the same card, without posting follow-up messages. Optionally show an existing Inspector QA screenshot by exact evidence id, or the latest stored QA screenshot for the project. Relay re-reads canonical Runner state server-side and reuses canonical Inspector evidence; it never invents progress or captures a second image. This is read-only and safe to retry.',
+    description: 'RENDER TOOL - mount a timestamped frozen Relay progress snapshot by default. Use view current only for an explicitly live status view. Historical snapshots never poll or rewrite themselves; Open latest is a separate view. Omit project for the overall report. Existing source-bound public previews are reused, never invented. A tool response alone does not prove a mounted or delivered chat card. Read-only and safe to retry.',
     inputSchema: {
       type: 'object',
       properties: {
+        view: {type:'string',enum:['snapshot','current'],description:'Frozen timestamped history by default. Current explicitly enables live polling.'},
         project: { type: 'string', minLength: 1, maxLength: 80, pattern: '^[a-z0-9-]+$' },
         assignment: { type: 'string', minLength: 1, maxLength: 100, pattern: '^[a-zA-Z0-9][a-zA-Z0-9_.:-]*$' },
         evidence_id: { type: 'string', minLength: 12, maxLength: 132, pattern: '^vis_[a-zA-Z0-9-]{8,128}$', description: 'Optional existing Inspector visual-evidence id to show inside the card.' },
@@ -54,12 +56,13 @@ export function relayContextCardTool() {
 }
 export function validateRelayContextCardArguments(args) {
   if (!args || typeof args !== 'object' || Array.isArray(args)) throw new Error('Card arguments must be an object');
-  for (const key of Object.keys(args)) if (!['project','assignment','evidence_id','show_qa'].includes(key)) throw new Error('Unsupported card argument: '+key);
+  for (const key of Object.keys(args)) if (!['project','assignment','evidence_id','show_qa','view'].includes(key)) throw new Error('Unsupported card argument: '+key);
   if (args.project !== undefined && (typeof args.project !== 'string' || !/^[a-z0-9-]{1,80}$/.test(args.project))) throw new Error('Invalid card project');
   if (args.assignment !== undefined && !args.project) throw new Error('Assignment requires a project');
   if (args.assignment !== undefined && (typeof args.assignment !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,99}$/.test(args.assignment))) throw new Error('Invalid card assignment');
   if (args.evidence_id !== undefined && (typeof args.evidence_id !== 'string' || !/^vis_[a-zA-Z0-9-]{8,128}$/.test(args.evidence_id))) throw new Error('Invalid card evidence id');
   if (args.show_qa !== undefined && typeof args.show_qa !== 'boolean') throw new Error('Invalid card show_qa flag');
+  if(args.view!==undefined&&!['snapshot','current'].includes(args.view))throw Error('Invalid card view');
   return args;
 }
 export function isContextualRelayTool(name) {
@@ -105,6 +108,8 @@ export function compactContextCardResult(result = {}) {
 export function contextualPresentation(data, options = {}) {
   data = enrichWorkCard(options.operation?.name, data);
   if(data&&typeof data==='object'&&typeof options.operation?.name==='string')data={...data,presentation_operation:{name:options.operation.name,kind:options.operation.kind||'query'}};
+  if(options.operation?.name===RELAY_CONTEXT_CARD_TOOL)data={...data,card_mode:data.card_mode||'snapshot'};
+  if(data?.card_mode==='snapshot'&&!data.snapshot)data={...data,snapshot:progressSnapshot(data)};
   const m=contextCardModel({...data,presentation_mode:options.mode==='legacy'?'legacy':'human_v1'});
   return withHumanPresentation({ ...data, human: data.human || { outcome:m.title, health:data.ok===false||data.isError||m.tone==='bad'||m.blocker?'blocked':m.tone==='wait'||m.label==='recorded'?'waiting':'healthy', staff:m.team, what_changed:m.summary, next_step:m.next_step, blocker:m.blocker, qa:m.qa } }, options);
 }
@@ -177,6 +182,8 @@ const STATUS_EXPLORER_SCRIPT = "(()=>{(function(){const c=window.openai?.widgetS
 
 function resilientCardHtml() {
   let html = cardHtml(CONTEXT_CARD_BROWSER_MODEL);
+  html=replaceOnce(html,"let id=toolInput?.evidence_id||data?.evidence_id","let id=(data?.snapshot?null:toolInput?.evidence_id)||data?.evidence_id");
+  html=replaceOnce(html,"if(!id&&toolInput?.show_qa===true","if(!data?.snapshot&&!id&&toolInput?.show_qa===true");
   // Hosts can echo unchanged initial output when only widget state changes.
   // Keep the versioned legacy comparison shell unchanged.
   html = replaceOnce(html, "function hydrateOpenAiGlobals(globals=window.openai){if(!globals)return false;if(globals.toolInput!=null)acceptToolInput(globals.toolInput);return globals.toolOutput!=null?acceptToolResult(globals.toolOutput):false}", "let lastGlobalToolOutput=null;\nfunction hydrateOpenAiGlobals(globals=window.openai){if(!globals)return false;if(globals.toolInput!=null)acceptToolInput(globals.toolInput);if(globals.toolOutput==null)return false;const output=JSON.stringify([toolInput,globals.toolOutput]);if(output===lastGlobalToolOutput)return false;lastGlobalToolOutput=output;return acceptToolResult(globals.toolOutput)}");
@@ -201,10 +208,22 @@ imageButton.addEventListener('click',enlargeScreenshot);imageButton.addEventList
   html = replaceOnce(html, "function render(result){", "function showStaff(m){const named=m.primary_staff&&m.primary_staff!=='Relay';el.team.textContent=named?(m.primary_role?m.primary_staff+' · '+m.primary_role:m.primary_staff):'Relay';el.staff.hidden=!named;el.staff.dataset.unresolved=m.staff_unresolved?'true':'false';el.staff.title=m.staff_note||m.team||m.primary_staff||''}\nfunction render(result){");
   // A late recovery answer must not replace the tool result that arrived while it was pending.
   html = replaceOnce(html, "acceptToolResult(await callTool('relay_runner_progress',args))", "{const recovered=await callTool('relay_runner_progress',args);if(!lastData)acceptToolResult(recovered)}");
-  html=replaceOnce(html,'</script></body>', STATUS_EXPLORER_SCRIPT+LIVE_WORK_SCRIPT+'</script></body>');
+  html=replaceOnce(html,'</script></body>', STATUS_EXPLORER_SCRIPT+LIVE_WORK_SCRIPT+SNAPSHOT_ACTIONS_SCRIPT+'</script></body>');
   return html;
 }
 
+const SNAPSHOT_ACTIONS_SCRIPT=String.raw`(()=>{
+ const button=el['open-relay'];button.textContent='Open latest';let dialog=null,epoch=0,timer=null;
+ window.addEventListener('click',event=>{if(!event.target.closest?.('#open-relay')||!lastData?.snapshot)return;event.preventDefault();event.stopImmediatePropagation();if(dialog?.open)return;
+  const project=lastData.project,assignment=lastData.snapshot.payload.claim?.id||lastData.snapshot.payload.claim?.assignment;
+  const d=document.createElement('dialog');d.className='latest-status';d.setAttribute('aria-label','Current assignment status');dialog=d;
+  const close=document.createElement('button');close.textContent='Close latest';const refresh=document.createElement('button');refresh.textContent='Refresh latest';const content=document.createElement('section'),notice=document.createElement('p');notice.textContent='Current view Â· the historical snapshot stays unchanged.';d.append(close,refresh,notice,content);document.body.append(d);
+  const finish=()=>{epoch++;clearTimeout(timer);d.close();d.remove();dialog=null;button.focus()};close.onclick=finish;d.oncancel=e=>{e.preventDefault();finish()};let newest=0,flight=false,terminal=false;
+  const read=async()=>{if(flight||!d.open)return;flight=true;const generation=epoch;refresh.disabled=true;try{const data=unwrap(await callTool('relay_runner_progress',{project,...(assignment?{assignment}:{})}));if(generation!==epoch||!d.open)return;const rows=data.progress||[],row=assignment?rows.find(x=>(x.assignment||x.id)===assignment):rows[0];if(data.project!==project||!row)throw Error('The latest reply did not match this assignment.');const at=Date.parse(data.generated_at||data.checked_at||'');if(at&&at<newest)throw Error('An older reply was ignored.');newest=Math.max(newest,at||0);terminal=['completed','complete','finished','cancelled','retired','superseded'].includes(row.state);const m=model({...data,progress:[row],queue:[],card_mode:'current'},DIRECTORY);content.replaceChildren();const title=document.createElement('h2');title.textContent=m.title;const state=document.createElement('p');state.textContent=m.label+' Â· '+(m.percent==null?'Checklist total unknown':m.percent+'% verified');const plan=document.createElement('ol');for(const step of m.plan?.steps||[]){const li=document.createElement('li');li.textContent=step.label+' Â· '+step.state;plan.append(li)}content.append(title,state,plan);for(const update of m.updates||[]){const p=document.createElement('p');p.textContent=(update.person?.name||'Team')+': '+update.text;content.append(p);for(const artifact of update.artifacts||[])void familyLoadMedia(content,artifact,update,project,familyGeneration);if(update.preview?.state==='unavailable'){const reason=document.createElement('p');reason.textContent='Design preview unavailable: '+update.preview.reason;content.append(reason)}}notice.textContent='Current view Â· '+(data.generated_at||data.checked_at||'time unavailable')+'. Historical snapshot unchanged.';
+   }catch{notice.textContent='Latest status could not be read. The historical snapshot is unchanged.'}finally{flight=false;refresh.disabled=false;if(d.open&&!terminal&&generation===epoch)timer=setTimeout(read,30000)}};
+  refresh.onclick=()=>{clearTimeout(timer);void read()};d.showModal();void read();
+ },true);
+})();`;
 function compactCardBrandAssets(html) {
   // The initial image keeps the exact canonical bytes and still works without
   // JavaScript. Reuse its src instead of embedding the same 64 KiB a second time.

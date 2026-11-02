@@ -102,7 +102,7 @@ test('staff cards preserve step evidence, keyboard focus and routing distinction
   assert.equal(contextCardModel(card).identity.speaker.team,'source');assert.equal(contextCardModel(card).identity.speaker.emblem,'runner');assert.ok(TEAM_EMBLEMS['runner-dark'],'display emblem remains distinct from runtime home team');
   assert.match(await page.locator('#feature-title').evaluate(node=>getComputedStyle(node).color),/^color\(srgb /,'canonical source-family contrast variant');
   assert.match(await page.locator('#card-roles').textContent(),/Step team: Design & QA/);
-  const details=page.locator('#details');await details.locator(':scope > summary').focus();await page.keyboard.press('Enter');
+  const details=page.locator('#details');await page.getByLabel('Card options',{exact:true}).click();await page.getByRole('button',{name:'Technical evidence',exact:true}).click();await details.locator(':scope > summary').focus();
   await page.evaluate(data=>render(data),card);
   assert.equal(await details.getAttribute('open'),'');
   assert.equal(await details.locator(':scope > summary').evaluate(n=>document.activeElement===n),true);assert.match(await page.locator('#family-plan-proof').textContent(),/Synthetic receipt build/);

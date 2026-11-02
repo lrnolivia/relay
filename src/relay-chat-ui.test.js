@@ -3,10 +3,13 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { RELAY_CONTEXT_CARD_URI, RELAY_CONTEXT_CARD_TOOL, RELAY_STATUS_CARD_URI, RELAY_STATUS_CARD_TOOL, relayContextCardDescriptor, relayContextCardResource, relayContextCardTool, relayStatusCardDescriptor, relayStatusCardResource, relayStatusCardTool, validateRelayContextCardArguments, contextualizeRelayTool, isContextualRelayTool } from "./relay-chat-ui.js";
 
+// Evidence and refresh moved into the surfaced options menu; retain all original assertions.
+async function toggleEvidence(surface){const details=surface.locator('#details');if(await details.evaluate(n=>n.open))await details.locator(':scope > summary').click();else {await surface.getByLabel('Card options',{exact:true}).click();await surface.getByRole('button',{name:'Technical evidence',exact:true}).click();}}
+async function refreshCard(surface){const menu=surface.locator('#card-menu');if(!await menu.evaluate(n=>n.open))await surface.getByLabel('Card options',{exact:true}).click();await surface.locator('#refresh').click();}
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v29.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v30.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");
@@ -405,7 +408,7 @@ test('v9 card reports its height with ui/notifications/size-changed and shows ha
     await frame.locator('#title').filter({hasText:'Height report proof'}).waitFor();
     await page.waitForFunction(()=>window.sizes.some(size=>size.height>0));
     assert.equal(await frame.locator('#diag').isVisible(),false);
-    await frame.locator('#details > summary').click();
+    await toggleEvidence(frame);
     await frame.locator('#diag').filter({hasText:/handshake ok/}).waitFor();
   } finally {await browser.close()}
 });
@@ -533,11 +536,11 @@ test('context card actions validate native and browser results, preserve failed 
    await page.goto(origin+'/host');const frame=page.frameLocator('#widget');
    await frame.locator('#title').filter({hasText:'Original canonical work'}).waitFor();
    await frame.locator('body').evaluate(()=>{window.mode='success';});
-   await frame.locator('#refresh').click();await frame.locator('#title').filter({hasText:'Refreshed canonical work'}).waitFor();
+   await refreshCard(frame);await frame.locator('#title').filter({hasText:'Refreshed canonical work'}).waitFor();
    for(const mode of ['provider-error','malformed']){
     await frame.locator('body').evaluate((_,mode)=>{window.mode=mode;},mode);
     const before=await frame.locator('body').evaluate(()=>window.calls.filter(call=>call.name==='relay_runner_progress').length);
-    await frame.locator('#refresh').click();await frame.locator('#refresh').filter({hasText:'Try refresh again'}).waitFor({timeout:5000});
+    await refreshCard(frame);await frame.locator('#refresh').filter({hasText:'Try refresh again'}).waitFor({timeout:5000});
     assert.equal(await frame.locator('#title').textContent(),'Refreshed canonical work');
     assert.match(await frame.locator('#card-freshness').textContent(),mode==='provider-error'?/Relay could not read.*Retrying automatically/:/assignment was missing.*Retrying automatically/);
     assert.equal(await frame.locator('body').evaluate(()=>window.calls.filter(call=>call.name==='relay_runner_progress').length),before+1,'a provider failure is not replayed through another host');
@@ -603,7 +606,7 @@ test('widget-state globals echoes cannot replace refreshed assignment evidence',
   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
   await page.locator('#title').filter({hasText:'Refresh proof'}).waitFor();
   await page.waitForFunction(()=>window.echoes===1);
-  await page.getByRole('button',{name:'Refresh',exact:true}).click();
+  await refreshCard(page);
   await page.waitForFunction(()=>JSON.parse(document.querySelector('#evidence').textContent).head_sha==='2222222222222222222222222222222222222222');
   assert.equal(JSON.parse(await page.locator('#evidence').textContent()).head_sha,'2222222222222222222222222222222222222222');
   assert.equal(await page.locator('#next').textContent(),'Current action');
@@ -689,7 +692,7 @@ test('human_v1 mobile shows the complete warning and next step without duplicate
    if(error.reason==='coordination_admission'){
     assert.equal(await page.locator('#next').isVisible(),true);
     assert.match(await page.locator('#next').textContent(),/blocking findings/);
-    await page.locator('#details summary').click();
+    await toggleEvidence(page);
     assert.match(await page.locator('#details').textContent(),/missing_branch|relay\/task/);
    }
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
@@ -714,7 +717,7 @@ async function mountWorkCard({toolName,args,result,answers}) {
   const {contextualPresentation}=await import('./relay-chat-ui.js');
   const descriptor=contextualizeRelayTool({name:toolName,inputSchema:{type:'object'}});
   assert.equal(descriptor._meta.ui.resourceUri,RELAY_CONTEXT_CARD_URI);
-  const present=(name,data)=>contextualPresentation(data,{operation:{name,kind:'command'}});
+  const present=(name,data)=>contextualPresentation({...data,card_mode:'current'},{operation:{name,kind:'command'}});
   const browser=await chromium.launch({headless:true});
   const page=await browser.newPage();
   await page.clock.install();
@@ -738,7 +741,7 @@ async function mountWorkCard({toolName,args,result,answers}) {
   return {browser,page,frame:page.frameLocator('#widget'),calls};
 }
 
-test('an ordinary claim mounts a staff-attributed work card that follows the same assignment to completion', async () => {
+test('an explicitly current ordinary claim mounts a staff-attributed work card that follows the same assignment to completion', async () => {
   const claim={id:'relay-live-work-cards-staff-ci-20261023',owner:'claude-code-session_x',state:'active',goal:'Repair normal-work cards',next_action:'Implement milestone delivery',primary_staff:'rafael',supporting_staff:['roman'],primary_team:'source',primary_role:'integrator',updated_at:'2026-10-23T05:16:52.405Z'};
   const done={ok:true,project:'relay',progress:[{...claim,assignment:claim.id,state:'completed'}]};
   const {browser,page,frame,calls}=await mountWorkCard({toolName:'relay_runner_coordinate',args:{project:'relay',action:'claim'},result:{ok:true,project:'relay',action:'claim',claim},answers:[{ok:true,project:'relay',progress:[{...claim,assignment:claim.id}]},{ok:true,project:'relay',progress:[{...claim,assignment:claim.id,state:'held',waiting_reason:'Waiting for a CI rerun'}]},done]});
@@ -864,11 +867,11 @@ test('mounted card shrinks an oversized iframe and follows repeated evidence tog
     await frame.locator('#card').evaluate(async () => { await document.fonts.ready; await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))); });
     const collapsed=await assertFits();
     for(let cycle=0;cycle<3;cycle++){
-      await frame.locator('#details > summary').click();
+      await toggleEvidence(frame);
       await page.waitForFunction(h=>window.sizes.at(-1)?.height>h,collapsed);
       const expanded=await assertFits();
       assert.ok(expanded>collapsed);
-      await frame.locator('#details > summary').click();
+      await toggleEvidence(frame);
       await page.waitForFunction(h=>window.sizes.at(-1)?.height===h,collapsed);
       assert.equal(await assertFits(),collapsed);
     }

@@ -8,12 +8,12 @@ async function mount(output,{input={project:'relay'},hold=false,waitStaff=true}=
  const browser=await chromium.launch({headless:true}),page=await browser.newPage();await page.clock.install({time:new Date('2026-10-31T23:00:00Z')});await page.clock.pauseAt(new Date('2026-10-31T23:00:00.001Z'));
  await page.addInitScript(({output,input,hold})=>{
   window.calls=[];window.pending=[];window.next=null;window.hold=hold;
-  window.openai={toolInput:input,toolOutput:output,callTool:async(name,args)=>{
+  window.openai={toolInput:{...input,view:'current'},toolOutput:{...output,card_mode:'current'},callTool:async(name,args)=>{
    window.calls.push({name,args});if(window.hold)return new Promise(resolve=>window.pending.push(resolve));
    return window.next||{project:args.project,generated_at:new Date().toISOString(),progress:[{assignment:args.assignment,goal:'Fresh '+args.assignment,state:'working',primary_staff:'valentina',primary_team:'inspector'}]};
   }};
  },{output,input,hold});
- await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));if(waitStaff)await page.locator('#family-assignment-lead .family-lead-name').filter({hasText:'Valentina'}).waitFor();
+ await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.locator('#card-menu').evaluate(n=>n.open=true);if(waitStaff)await page.locator('#family-assignment-lead .family-lead-name').filter({hasText:'Valentina'}).waitFor();
  return {browser,page};
 }
 const calls=page=>page.evaluate(()=>window.calls);
@@ -42,7 +42,7 @@ test('automatic/manual reads coalesce, ignore late target answers, and bind assi
   await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);await page.clock.runFor(10);await page.waitForFunction(()=>window.pending.length===1);
   assert.equal((await calls(page)).at(-1).args.assignment,'other');assert.equal(await page.locator('#title').textContent(),'Repair other');
   await page.evaluate(data=>window.pending.shift()(data),progress('other','working','2026-10-31T23:03:00Z'));await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
-  await page.locator('#refresh').click();await page.waitForFunction(()=>window.pending.length===1);assert.equal((await calls(page)).at(-1).args.assignment,'other');
+  await page.locator('#card-menu').evaluate(n=>n.open=true);await page.locator('#refresh').click();await page.waitForFunction(()=>window.pending.length===1);assert.equal((await calls(page)).at(-1).args.assignment,'other');
  }finally{await browser.close();}
 });
 
@@ -56,7 +56,7 @@ test('hidden cards pause transport; resume reads immediately; errors back off, p
   for(const delay of [30000,60000,120000,120000]){const n=(await calls(page)).length;await page.clock.runFor(delay+10);await page.waitForFunction(n=>window.calls.length>n,n);await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);}
   assert.equal((await calls(page)).length,5);assert.match(await page.locator('#card-freshness').textContent(),/Use Refresh to try again/);assert.equal(await page.locator('#title').textContent(),'Repair task');
   await page.clock.runFor(600000);assert.equal((await calls(page)).length,5);
-  await page.evaluate(()=>window.next=null);await page.locator('#refresh').click();await page.locator('#title').filter({hasText:'Fresh task'}).waitFor();assert.match(await page.locator('#card-freshness').textContent(),/Live updates/);
+  await page.evaluate(()=>window.next=null);await page.locator('#card-menu').evaluate(n=>n.open=true);await page.locator('#refresh').click();await page.locator('#title').filter({hasText:'Fresh task'}).waitFor();assert.match(await page.locator('#card-freshness').textContent(),/Live updates/);
  }finally{await browser.close();}
 });
 
@@ -66,7 +66,7 @@ test('malformed, other-assignment and older responses preserve evidence; termina
   await page.clock.runFor(400);await page.waitForFunction(()=>window.pending.length===1);
   for(const bad of [{project:'relay',progress:[]},progress('wrong'),progress('task','failed','2026-10-31T22:00:00Z')]){
    await page.evaluate(data=>window.pending.shift()(data),bad);await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
-   assert.equal(await page.locator('#title').textContent(),'Repair task');await page.locator('#refresh').click();await page.waitForFunction(()=>window.pending.length===1);
+   assert.equal(await page.locator('#title').textContent(),'Repair task');await page.locator('#card-menu').evaluate(n=>n.open=true);await page.locator('#refresh').click();await page.waitForFunction(()=>window.pending.length===1);
   }
   await page.evaluate(data=>window.pending.shift()(data),progress('task','failed','2026-10-31T23:01:00Z'));await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
   await page.clock.runFor(30010);await page.waitForFunction(()=>window.pending.length===1);
@@ -113,7 +113,7 @@ test('real progress producer through mounted refresh keeps source age separate f
   await page.evaluate(data=>window.next=data,current);await page.clock.runFor(400);
   await page.locator('#state-label').filter({hasText:'Waiting for a work update'}).waitFor();
   assert.match(await page.locator('#summary').textContent(),/Worker connected.*22:26 UTC/);
-  await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
+  await page.locator('#card-menu').evaluate(n=>n.open=true);await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
   assert.match(await page.locator('#card-freshness').textContent(),/Checked/);assert.equal(await page.locator('#state-label').textContent(),'Waiting for a work update');
   const evidence=JSON.parse(await page.locator('#evidence').textContent());assert.equal(evidence.progress_freshness,'stale');assert.match(evidence.progress_clock,/check-ins.*not verified progress/);assert.equal(evidence.progress_observed_at,'2026-10-31T22:26:46.000Z');
  }finally{await browser.close();}
@@ -127,11 +127,11 @@ test('new host project and assignment replace hydrated explorer navigation and t
   const next={...progress('next','working','2026-10-31T23:05:00Z'),project:'field'};
   await page.evaluate(data=>{window.openai.toolInput={project:'field',assignment:'next'};window.openai.toolOutput=data;window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolInput:window.openai.toolInput,toolOutput:data}}}));},next);
   assert.equal(await page.locator('#title').textContent(),'Repair next');
-  await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
+  await page.locator('#card-menu').evaluate(n=>n.open=true);await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
   assert.deepEqual((await calls(page)).at(-1).args,{project:'field',assignment:'next'});
   next.progress[0].assignment='third';next.progress[0].goal='Third assignment';next.generated_at='2026-10-31T23:06:00Z';
   await page.evaluate(data=>{window.openai.toolInput={project:'field',assignment:'third'};window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolInput:window.openai.toolInput,toolOutput:data}}}));},next);
-  assert.equal(await page.locator('#title').textContent(),'Third assignment');await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
+  assert.equal(await page.locator('#title').textContent(),'Third assignment');await page.locator('#card-menu').evaluate(n=>n.open=true);await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
   assert.deepEqual((await calls(page)).at(-1).args,{project:'field',assignment:'third'});
  }finally{await browser.close();}
 });
@@ -175,7 +175,7 @@ test('queued explorer hydration honors explicit assignment across queued, claime
   const claimed={...progress('task','working','2026-10-31T23:01:00Z'),queue:[{...queued,state:'claimed'}]};
   await page.evaluate(data=>window.next=data,claimed);await page.clock.runFor(30050);await page.waitForFunction(()=>window.calls.length===2&&!document.querySelector('#refresh').disabled);
   assert.equal(await page.locator('#title').textContent(),'Repair task');assert.match(await page.locator('.status-navigation').textContent(),/Assignment/);
-  await page.evaluate(data=>window.next=data,progress('task','completed','2026-10-31T23:02:00Z'));await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
+  await page.evaluate(data=>window.next=data,progress('task','completed','2026-10-31T23:02:00Z'));await page.locator('#card-menu').evaluate(n=>n.open=true);await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
   assert.match(await page.locator('#card-freshness').textContent(),/Final recorded state/);const count=(await calls(page)).length;await page.clock.runFor(90000);assert.equal((await calls(page)).length,count);
   assert.ok((await calls(page)).every(c=>c.args.assignment==='task'));
  }finally{await browser.close();}
@@ -189,7 +189,7 @@ test('new host assignment invalidates pending explorer project and overview repl
    await page.getByRole('button',{name:'‹ Project',exact:true}).click();
    await page.locator('#title').filter({hasText:/^relay$/}).waitFor();
    if(level==='overview')await page.getByRole('button',{name:'‹ Overall',exact:true}).click();
-   else await page.locator('#refresh').click();
+   else {await page.locator('#card-menu').evaluate(n=>n.open=true);await page.locator('#refresh').click();}
    await page.waitForFunction(()=>window.pending.length===1);
    const latest={...progress('new-task','blocked','2026-10-31T23:05:00Z'),project};
    await page.evaluate(data=>{window.openai.toolInput={project:data.project,assignment:'new-task'};window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolInput:window.openai.toolInput,toolOutput:data}}}));},latest);
@@ -201,7 +201,7 @@ test('new host assignment invalidates pending explorer project and overview repl
    await page.getByRole('button',{name:'‹ Project',exact:true}).click();
    assert.match(await page.locator('#rows').textContent(),/Repair new-task/);
    await page.getByRole('button',{name:/Repair new-task/}).click();
-   await page.locator('#refresh').click();await page.waitForFunction(()=>window.pending.length===1);
+   await page.locator('#card-menu').evaluate(n=>n.open=true);await page.locator('#refresh').click();await page.waitForFunction(()=>window.pending.length===1);
    assert.deepEqual((await calls(page)).at(-1).args,{project,assignment:'new-task'});
    await page.evaluate(async data=>{window.pending.shift()(data);for(let i=0;i<20;i++)await Promise.resolve();},latest);
    await page.getByRole('button',{name:'‹ Project',exact:true}).click();
@@ -220,7 +220,7 @@ test('changed host assignment is honored when the project snapshot bytes are unc
   assert.equal(await page.locator('#title').textContent(),'Repair other');
   await page.evaluate(async data=>{window.pending.shift()(data);for(let i=0;i<20;i++)await Promise.resolve();},progress('task','failed','2026-10-31T23:01:00Z'));
   assert.equal(await page.locator('#title').textContent(),'Repair other');
-  await page.locator('#refresh').click();await page.waitForFunction(()=>window.pending.length===1);assert.deepEqual((await calls(page)).at(-1).args,{project:'relay',assignment:'other'});
+  await page.locator('#card-menu').evaluate(n=>n.open=true);await page.locator('#refresh').click();await page.waitForFunction(()=>window.pending.length===1);assert.deepEqual((await calls(page)).at(-1).args,{project:'relay',assignment:'other'});
  }finally{await browser.close();}
 });
 
@@ -229,7 +229,7 @@ test('typed refresh failures preserve evidence and checked clock without leaking
  try{
   await page.clock.runFor(400);await page.locator('#title').filter({hasText:'Fresh task'}).waitFor();const checked=(await page.locator('#card-freshness').textContent()).match(/Checked .*$/)[0];
   for(const [reply,code]of [[{ok:false,error:{message:'PRIVATE token diagnostic'}},'provider_error'],[{project:'other',progress:[]},'wrong_target'],[{project:'relay',progress:[]},'missing_target'],[progress('task','failed','2026-10-30T01:00:00Z'),'stale_response']]){
-   await page.evaluate(x=>window.next=x,reply);await page.locator('#refresh').click();await page.locator('#refresh').filter({hasText:'Try refresh again'}).waitFor();
+   await page.evaluate(x=>window.next=x,reply);await page.locator('#card-menu').evaluate(n=>n.open=true);await page.locator('#refresh').click();await page.locator('#refresh').filter({hasText:'Try refresh again'}).waitFor();
    assert.equal(await page.locator('#title').textContent(),'Fresh task');assert.ok((await page.locator('#card-freshness').textContent()).endsWith(checked));
    const diag=await page.locator('#card-refresh-diagnostics').textContent();assert.ok(diag.includes(code));assert.ok(!diag.includes('PRIVATE'));assert.equal(await page.locator('#details').evaluate(x=>x.open),false);
   }
@@ -249,7 +249,7 @@ test('native timeout preserves last evidence, ignores its late answer, and never
   await page.locator('#refresh').filter({hasText:'Try refresh again'}).waitFor();assert.match(await page.locator('#card-freshness').textContent(),/update took too long/);
   assert.equal(await page.evaluate(()=>window.mcpReads),0);assert.equal((await calls(page)).length,1);
   await page.evaluate(data=>window.pending.shift()(data),progress('task','failed','2026-10-31T23:05:00Z'));assert.equal(await page.locator('#title').textContent(),'Repair task');
-  await page.evaluate(()=>window.hold=false);await page.locator('#refresh').click();await page.locator('#title').filter({hasText:'Fresh task'}).waitFor();assert.equal(await page.locator('#card-refresh-diagnostics').isVisible(),false);
+  await page.evaluate(()=>window.hold=false);await page.locator('#card-menu').evaluate(n=>n.open=true);await page.locator('#refresh').click();await page.locator('#title').filter({hasText:'Fresh task'}).waitFor();assert.equal(await page.locator('#card-refresh-diagnostics').isVisible(),false);
  }finally{await browser.close();}
 });
 test('changed explorer input is honored before matching old-target error diagnostics',async()=>{
