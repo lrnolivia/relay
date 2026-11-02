@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T19:33:54.236Z",
+  "updated_at": "2026-11-02T19:35:02.739Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25753,7 +25753,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T19:33:54.236Z",
+      "updated_at": "2026-11-02T19:35:02.739Z",
       "lease_until": "2026-11-03T07:19:57.987Z",
       "amendment_count": 4,
       "amendments": [
@@ -25921,10 +25921,21 @@
             "host_available": true,
             "intent_digest": "c457c20084fb71a78d2dbb7c08a36d49e1e1a334049cd9f6f5f2d28e09c68954"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-02T19:33:54.236Z",
           "request_digest": "800eceb3d36ae76271216b655cd6874107287035336d1ff570cae570018f702e",
-          "step_digest": "87fe4bdaa94b190ab7574551636c6a1a7fb36c59985c6930e5096ff2abbe4772"
+          "step_digest": "856e1e1c4ca1df63f83ae7c892779d0cacaa2db8e9d7f39be702c4991dd8f551",
+          "start": {
+            "request_digest": "800eceb3d36ae76271216b655cd6874107287035336d1ff570cae570018f702e",
+            "source_sha": "5cad542107ecdf752e3268f239117bba61a5ef9a",
+            "agent_id": "/root/integration_fixes_review",
+            "observed_at": "2026-11-02T19:34:58.000Z",
+            "update": {
+              "text": "The verifier is checking the corrected startup ownership and package notice paths against the exact revised source.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-02T19:35:02.739Z"
         }
       ],
       "card_steps": {
@@ -25936,7 +25947,7 @@
           "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
           "branch": "rtxforge/game-mode-desktop-integration-20261102"
         },
-        "sequence": 4,
+        "sequence": 5,
         "complete": false,
         "steps": [
           {
@@ -25968,8 +25979,25 @@
             "id": "native-review-fixes",
             "label": "Verify native integration review corrections",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "native-review-fixes-5cad542-20261102:started",
+              "assignment": "rtxforge-game-mode-desktop-integration-20261102",
+              "step_id": "native-review-fixes",
+              "plan_revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
+              "input_digest": "800eceb3d36ae76271216b655cd6874107287035336d1ff570cae570018f702e",
+              "evidence": "sha256:27427722ab3d2bbbe3c7d522d71a0d4912a6dc254cada881f601b6a8a53e5dbb",
+              "source_sha": "5cad542107ecdf752e3268f239117bba61a5ef9a",
+              "observed_at": "2026-11-02T19:34:58.000Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "The verifier is checking the corrected startup ownership and package notice paths against the exact revised source.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -25977,11 +26005,12 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-game-mode-desktop-integration-20261102",
         "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
-        "sequence": 4,
+        "sequence": 5,
         "truncated": false,
         "identities": {
           "native-integration-review-6d60b71-20261102:started": "290a8ca7cc9ec70901bbf10076c27cb388f4a61c0f78d78bf49f59bed2cb27db",
-          "native-integration-review-6d60b71-20261102:result": "d9216df63db74b920ef277ac1addf0b55d42d00dd7a8c4b81e74bf26035c25b6"
+          "native-integration-review-6d60b71-20261102:result": "d9216df63db74b920ef277ac1addf0b55d42d00dd7a8c4b81e74bf26035c25b6",
+          "native-review-fixes-5cad542-20261102:started": "958aa3ada53a7f398102e36bd4fc43a8d2df949f82ad33e06ebbf8a1a23622c7"
         },
         "items": [
           {
@@ -26025,6 +26054,28 @@
               "team": "inspector"
             },
             "text": "The independent review found Linux duplicate Desktop ownership, a Windows startup activation race and missing Linux Rust notices. These are being corrected before promotion.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "native-review-fixes-5cad542-20261102:started:800eceb3d36ae76271216b655cd6874107287035336d1ff570cae570018f702e:running:",
+            "receipt_snapshot": "{\"label\":\"Verify native integration review corrections\",\"receipt\":{\"assignment\":\"rtxforge-game-mode-desktop-integration-20261102\",\"evidence\":\"sha256:27427722ab3d2bbbe3c7d522d71a0d4912a6dc254cada881f601b6a8a53e5dbb\",\"id\":\"native-review-fixes-5cad542-20261102:started\",\"input_digest\":\"800eceb3d36ae76271216b655cd6874107287035336d1ff570cae570018f702e\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d\",\"source_sha\":\"5cad542107ecdf752e3268f239117bba61a5ef9a\",\"step_id\":\"native-review-fixes\",\"update\":{\"artifacts\":[],\"text\":\"The verifier is checking the corrected startup ownership and package notice paths against the exact revised source.\"}},\"state\":\"running\"}",
+            "id": "native-review-fixes-5cad542-20261102:started",
+            "assignment": "rtxforge-game-mode-desktop-integration-20261102",
+            "step_id": "native-review-fixes",
+            "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
+            "label": "Verify native integration review corrections",
+            "state": "running",
+            "phase": null,
+            "source_sha": "5cad542107ecdf752e3268f239117bba61a5ef9a",
+            "observed_at": "2026-11-02T19:34:58.000Z",
+            "recorded_at": "2026-11-02T19:35:02.739Z",
+            "receipt_digest": "sha256:27427722ab3d2bbbe3c7d522d71a0d4912a6dc254cada881f601b6a8a53e5dbb",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The verifier is checking the corrected startup ownership and package notice paths against the exact revised source.",
             "text_kind": "owner-published",
             "artifacts": []
           }
