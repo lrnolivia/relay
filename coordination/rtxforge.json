@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T19:35:02.739Z",
+  "updated_at": "2026-11-02T19:38:58.617Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25753,7 +25753,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T19:35:02.739Z",
+      "updated_at": "2026-11-02T19:38:58.617Z",
       "lease_until": "2026-11-03T07:19:57.987Z",
       "amendment_count": 4,
       "amendments": [
@@ -25921,10 +25921,10 @@
             "host_available": true,
             "intent_digest": "c457c20084fb71a78d2dbb7c08a36d49e1e1a334049cd9f6f5f2d28e09c68954"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-02T19:33:54.236Z",
           "request_digest": "800eceb3d36ae76271216b655cd6874107287035336d1ff570cae570018f702e",
-          "step_digest": "856e1e1c4ca1df63f83ae7c892779d0cacaa2db8e9d7f39be702c4991dd8f551",
+          "step_digest": "03d67b38b945334dbd7f3e41fe7986654e43c0bb0a44930c115f8288a1f3edc0",
           "start": {
             "request_digest": "800eceb3d36ae76271216b655cd6874107287035336d1ff570cae570018f702e",
             "source_sha": "5cad542107ecdf752e3268f239117bba61a5ef9a",
@@ -25935,7 +25935,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-02T19:35:02.739Z"
+          "started_at": "2026-11-02T19:35:02.739Z",
+          "result": {
+            "request_digest": "800eceb3d36ae76271216b655cd6874107287035336d1ff570cae570018f702e",
+            "source_sha": "5cad542107ecdf752e3268f239117bba61a5ef9a",
+            "agent_id": "/root/integration_fixes_review",
+            "observed_at": "2026-11-02T19:38:55.000Z",
+            "state": "succeeded",
+            "result_digest": "ba8d56d2c33affcdbc3b7267b1ec9836495243303cbe26bc30634c588a040ed9",
+            "update": {
+              "text": "The three original review corrections are present. The follow-up found two Linux reactivation/return races to close before release; runtime package acceptance remains with CI.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-02T19:38:58.617Z"
         }
       ],
       "card_steps": {
@@ -25947,7 +25960,7 @@
           "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
           "branch": "rtxforge/game-mode-desktop-integration-20261102"
         },
-        "sequence": 5,
+        "sequence": 6,
         "complete": false,
         "steps": [
           {
@@ -25979,24 +25992,25 @@
             "id": "native-review-fixes",
             "label": "Verify native integration review corrections",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "native-review-fixes-5cad542-20261102:started",
+              "id": "native-review-fixes-5cad542-20261102:result",
               "assignment": "rtxforge-game-mode-desktop-integration-20261102",
               "step_id": "native-review-fixes",
               "plan_revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
               "input_digest": "800eceb3d36ae76271216b655cd6874107287035336d1ff570cae570018f702e",
-              "evidence": "sha256:27427722ab3d2bbbe3c7d522d71a0d4912a6dc254cada881f601b6a8a53e5dbb",
+              "evidence": "sha256:72aa43a7300a54a44373fe42ba97ac59ab1c145185f8ab46a31ea5e6f08709a1",
               "source_sha": "5cad542107ecdf752e3268f239117bba61a5ef9a",
-              "observed_at": "2026-11-02T19:34:58.000Z",
+              "observed_at": "2026-11-02T19:38:55.000Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "The verifier is checking the corrected startup ownership and package notice paths against the exact revised source.",
+                "text": "The three original review corrections are present. The follow-up found two Linux reactivation/return races to close before release; runtime package acceptance remains with CI.",
                 "artifacts": []
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -26005,12 +26019,13 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-game-mode-desktop-integration-20261102",
         "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
-        "sequence": 5,
+        "sequence": 6,
         "truncated": false,
         "identities": {
           "native-integration-review-6d60b71-20261102:started": "290a8ca7cc9ec70901bbf10076c27cb388f4a61c0f78d78bf49f59bed2cb27db",
           "native-integration-review-6d60b71-20261102:result": "d9216df63db74b920ef277ac1addf0b55d42d00dd7a8c4b81e74bf26035c25b6",
-          "native-review-fixes-5cad542-20261102:started": "958aa3ada53a7f398102e36bd4fc43a8d2df949f82ad33e06ebbf8a1a23622c7"
+          "native-review-fixes-5cad542-20261102:started": "958aa3ada53a7f398102e36bd4fc43a8d2df949f82ad33e06ebbf8a1a23622c7",
+          "native-review-fixes-5cad542-20261102:result": "daa09cf485ecdfc16592ff7bf3692eb8e4f1a181e415b6a853294bc097c94e56"
         },
         "items": [
           {
@@ -26076,6 +26091,28 @@
               "team": "inspector"
             },
             "text": "The verifier is checking the corrected startup ownership and package notice paths against the exact revised source.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "native-review-fixes-5cad542-20261102:result:800eceb3d36ae76271216b655cd6874107287035336d1ff570cae570018f702e:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Verify native integration review corrections\",\"receipt\":{\"assignment\":\"rtxforge-game-mode-desktop-integration-20261102\",\"evidence\":\"sha256:72aa43a7300a54a44373fe42ba97ac59ab1c145185f8ab46a31ea5e6f08709a1\",\"id\":\"native-review-fixes-5cad542-20261102:result\",\"input_digest\":\"800eceb3d36ae76271216b655cd6874107287035336d1ff570cae570018f702e\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d\",\"source_sha\":\"5cad542107ecdf752e3268f239117bba61a5ef9a\",\"step_id\":\"native-review-fixes\",\"update\":{\"artifacts\":[],\"text\":\"The three original review corrections are present. The follow-up found two Linux reactivation/return races to close before release; runtime package acceptance remains with CI.\"}},\"state\":\"blocked\"}",
+            "id": "native-review-fixes-5cad542-20261102:result",
+            "assignment": "rtxforge-game-mode-desktop-integration-20261102",
+            "step_id": "native-review-fixes",
+            "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
+            "label": "Verify native integration review corrections",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "5cad542107ecdf752e3268f239117bba61a5ef9a",
+            "observed_at": "2026-11-02T19:38:55.000Z",
+            "recorded_at": "2026-11-02T19:38:58.617Z",
+            "receipt_digest": "sha256:72aa43a7300a54a44373fe42ba97ac59ab1c145185f8ab46a31ea5e6f08709a1",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The three original review corrections are present. The follow-up found two Linux reactivation/return races to close before release; runtime package acceptance remains with CI.",
             "text_kind": "owner-published",
             "artifacts": []
           }
