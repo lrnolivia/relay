@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-02T00:52:51.427Z",
+  "updated_at": "2026-11-02T00:56:07.399Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21698,7 +21698,7 @@
       ],
       "goal": "Install locked dependencies before ordinary model-free Runner synchronization imports shared control modules.",
       "acceptance": "Add npm ci --ignore-scripts before runner-sync.mjs in the existing tick workflow, after checkout and pinned Node setup. Add a focused unconditional-install/order regression in existing runner-sync tests. Preserve all workflow permissions, credentials, schedule, concurrency, explicit observer and state-persistence gates; no worker-job invocation, dependency/version upgrade, source or runtime behavior change. Focused tests and unchanged required full Linux checks; separate tested draft PR for parent human merge, no agent merge or approval. After parent confirms exact merge, verify an actual supported ordinary sync run succeeds with no worker_id and observer/persist steps skipped, then complete only this assignment under explicit bundled release/completion authorization. Keep native UI acceptance follow-up and unrelated work untouched.",
-      "next_action": "Separate draft PR276 exact head1f7624a0c29dbc3809731b6b95baeddceba82736 is tested and awaits parent source review/human merge. Two files,16 additions,0 deletions; final Linux quality41369094552 all5 suites passed1252/failed0/existing skip1 and admission41369094450 passed. New install/order regression failed before fix; all5 sync tests passed afterward at exact head from root and Runner workspace. No worker job invoked. After parent confirms exact merge under existing bundled release/completion authorization, dispatch ordinary runner.yml on main with empty worker_id; verify locked install, sync and receipt preservation succeed, observer and state-persistence steps skipped, report remains model-free/non-owning and any provider gaps stay explicit. Then complete only this assignment using public evidence. Preserve completed badge release and separately queued native UI acceptance. No agent merge/approval or permission/credential changes.",
+      "next_action": "Parent human merged PR276 tested head1f7624a0c29dbc3809731b6b95baeddceba82736 as fbe78e6119bdaa67bcc326f175de5056670f4cc1 under existing explicit release/completion authorization. Verify exact merge CI, then check no equivalent ordinary runner.yml run exists/in progress and dispatch main with NO worker_id once if needed. Verify locked install/sync/receipt preservation succeed and observer/state-persistence skipped; inspect model-free/non-owning receipt truthfully. Complete this claim with public evidence after proof; preserve native UI follow-up and unrelated work. No worker jobs, credentials, source edits or agent merge.",
       "category": "maintenance",
       "primary_role": "builder",
       "supporting_roles": [
@@ -21713,7 +21713,7 @@
         "roman"
       ],
       "base_sha": "66cecbc564dccdf4015caa6a2f21adb9536e8d43",
-      "state": "held",
+      "state": "active",
       "created_at": "2026-11-02T00:43:40.253Z",
       "objective_history": {
         "baseline": {
@@ -21730,8 +21730,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T00:52:51.427Z",
-      "lease_until": "2026-11-02T12:52:51.427Z"
+      "updated_at": "2026-11-02T00:56:07.399Z",
+      "lease_until": "2026-11-02T12:56:07.399Z"
     }
   ],
   "migrated_from": "loew-inspector"
