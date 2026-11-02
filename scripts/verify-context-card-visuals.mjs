@@ -58,6 +58,7 @@ const progressFixture=familyFixture(3);progressFixture.claim.card_steps.complete
 fixtures['banner-progress']=progressFixture;
 const verifiedFixture=structuredClone(progressFixture);verifiedFixture.claim.state='completed';verifiedFixture.claim.card_steps.steps.forEach(s=>s.state='passed');fixtures['banner-verified']=verifiedFixture;
 const longFixture=familyFixture(0);longFixture.claim.goal='A detailed assignment keeps every meaningful requirement available for review. '.repeat(10).trim();longFixture.claim.next_action='Review the complete recorded requirements and evidence before accepting the result. '.repeat(5);fixtures['banner-long']=longFixture;fixtures['banner-long-expanded']=longFixture;
+for(const name of ['banner-progress','banner-verified','banner-long','banner-long-expanded'])fixtures[name]=contextualPresentation({...fixtures[name],checked_at:'2026-11-02T03:06:00.000Z'},{operation:{name:'relay_runner_coordinate',kind:'command'}});
 const leadCases=['nico','valentina','roman','julian','luca','imani'].map(id=>'lead-'+id);
 for(const name of leadCases){const data=familyFixture(0);data.claim.primary_staff=name.slice(5);data.claim.primary_team='source';fixtures[name]=data;}
 fixtures['lead-avatar-unavailable']={...fixtures['lead-nico']};
