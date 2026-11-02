@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T02:45:35.790Z",
+  "updated_at": "2026-11-02T02:46:55.500Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23134,7 +23134,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T02:33:26.453Z",
+      "updated_at": "2026-11-02T02:46:55.500Z",
       "lease_until": "2026-11-02T13:48:09.422Z",
       "amendment_count": 6,
       "amendments": [
@@ -23327,6 +23327,40 @@
           "prepared_at": "2026-11-02T02:33:26.453Z",
           "request_digest": "f8a26f600d5f5adfc66414c4e75b49af57cce97c18e799ad5eec9c325ec2d72e",
           "step_digest": "e94f6b6298f7a723196ea7ef08814e64f985bccac3e2f1b1a4517df9ac32cea5"
+        },
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "overlay-extension-doc-e0cd862",
+          "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+          "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "branch": "rtxforge/overlay-accent-toggle-alignment-20261101",
+          "source_sha": "e0cd86212200af97edd1d341cedf944bd5601383",
+          "objective_digest": "8690101380cfbfde4374370a2c8abcd9cff49a94703e3e0adc459cd4e83813d4",
+          "scope_digest": "04310b927fa3d586838eeb6e0adca7351eb711e7c8592d2cc222fe1979037f69",
+          "step_id": "incumbent-documentation-check",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "e0cd86212200af97edd1d341cedf944bd5601383",
+            "objective_digest": "8690101380cfbfde4374370a2c8abcd9cff49a94703e3e0adc459cd4e83813d4",
+            "step_id": "incumbent-documentation-check",
+            "label": "Check extension documentation against existing design",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "9689ceab303f14588c3e9a77d1d7869c93672c03b65273223aa9594bb3593c3f"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-02T02:46:55.500Z",
+          "request_digest": "4c8e79ba0a5e91bf603d4ce008ddc5f584964502521f43fc2b88dae086e139bc",
+          "step_digest": "73cf578037fe468b378f6d99687978c5a97fc531ccf1a7ae26c3ea7c9be3c2c3"
         }
       ],
       "card_steps": {
@@ -23338,7 +23372,7 @@
           "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
           "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
         },
-        "sequence": 4,
+        "sequence": 5,
         "complete": false,
         "steps": [
           {
@@ -23372,6 +23406,13 @@
             "depends_on": [],
             "state": "pending",
             "receipt": null
+          },
+          {
+            "id": "incumbent-documentation-check",
+            "label": "Check extension documentation against existing design",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -23379,7 +23420,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
         "revision": "41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c",
-        "sequence": 4,
+        "sequence": 5,
         "truncated": false,
         "identities": {
           "overlay-library-colors-review-c3d03f3:started": "c31598cd1f55a68d12b03c57496bdf48246af48813f9edcf372f0fd1d870ee2b",
