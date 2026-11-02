@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T23:29:06.350Z",
+  "updated_at": "2026-11-02T23:43:17.289Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8383,7 +8383,7 @@
       "supporting_staff": [
         "roman"
       ],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-11-02T18:34:48.689Z",
       "objective_history": {
         "baseline": {
@@ -8403,7 +8403,7 @@
       "supporting_roles": [
         "verifier"
       ],
-      "updated_at": "2026-11-02T23:19:32.332Z",
+      "updated_at": "2026-11-02T23:43:17.289Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -8432,7 +8432,8 @@
             ]
           }
         }
-      ]
+      ],
+      "completed_at": "2026-11-02T23:43:17.289Z"
     },
     {
       "id": "rtxforge-native-game-mode-performance-20261102",
@@ -26511,7 +26512,7 @@
         "roman"
       ],
       "base_sha": "56b94bd61336c87fe39c5746031e0179719212ea",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-02T23:14:25.508Z",
       "objective_history": {
         "baseline": {
@@ -26528,8 +26529,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T23:29:06.350Z",
-      "lease_until": "2026-11-03T11:29:06.350Z",
+      "updated_at": "2026-11-02T23:43:17.289Z",
+      "lease_until": "2026-11-03T11:43:17.289Z",
       "supporting_roles": [
         "verifier"
       ],
@@ -26717,7 +26718,13 @@
             "artifacts": []
           }
         ]
-      }
+      },
+      "pr": 142,
+      "merged_head_sha": "15c496e0a15148a565ced1a7ea97dfe2ab73482a",
+      "merge_commit_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57",
+      "evidence": "PR142 merged f7388b6102ade554d5fc4992a715ba9b0fa9da57; merged tree9b68de750665bc21f1384765be50a7e7c9a66256 equals reviewed15c496e0a15148a565ced1a7ea97dfe2ab73482a, human author Lauren Olivia <lrnoliv@gmail.com>. Exact-source native Windows/Linux, WinUI x64/ARM64, AppImage and Flatpak checks passed. Two-line move puts TestingGroup after executable; no testing behavior changed. Local Desktop update installed and actual Overview observed package facts→folder→executable→Testing, saved in G:/BuildScratch/rtxforge-overview-testing-order-20261102/desktop-order-observed.json. All staged files match; settings/provider/preview files and native payload preserved. Game Mode sourcea600682 is unchanged and already ends Overview with Testing in all saved-record variants; bounded review has no findings. Delivery/CI/install/review receipts in G:/BuildScratch/rtxforge-overview-testing-order-20261102/delivery.json. Prior held PR139 b0014c56 source/GamePage hash preserved; restore its temporary GamePage.cs reservation next. No public updater/Beta publication.",
+      "work_accounted": true,
+      "completed_at": "2026-11-02T23:43:17.289Z"
     }
   ]
 }
