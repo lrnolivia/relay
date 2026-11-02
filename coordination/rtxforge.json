@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T18:29:01.253Z",
+  "updated_at": "2026-11-02T18:30:26.286Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25270,7 +25270,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T18:29:01.253Z",
+      "updated_at": "2026-11-02T18:30:26.286Z",
       "lease_until": "2026-11-03T06:28:52.437Z",
       "amendment_count": 1,
       "amendments": [
@@ -25321,10 +25321,17 @@
             "host_available": true,
             "intent_digest": "9d6b8ea3e9ff4201500cdf15d42abb1aa1f712898c6252b8982ce1ffe7b468fb"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-02T18:29:01.253Z",
           "request_digest": "c920d3e2a20299c8642761858ccdfe3f5573960043ff378b27b2ff2e286a6e46",
-          "step_digest": "2c43ac5055d3a886e2c90e5ecfc03fd24fa595962f19146128238031933b65b9"
+          "step_digest": "25d40e4f613c741788e1f44669531421a52d1b4e7379273685c2c56320097770",
+          "start": {
+            "request_digest": "c920d3e2a20299c8642761858ccdfe3f5573960043ff378b27b2ff2e286a6e46",
+            "source_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
+            "agent_id": "/root/onboarding_notice_layout_assess",
+            "observed_at": "2026-11-02T18:30:21Z"
+          },
+          "started_at": "2026-11-02T18:30:26.286Z"
         }
       ],
       "card_steps": {
@@ -25336,15 +25343,28 @@
           "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
           "branch": "rtxforge/onboarding-overlay-notice-20261102"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "layout-assessment",
             "label": "Assess active-overlay onboarding notice layout",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "notice-layout-assess-6f28c28:started",
+              "assignment": "rtxforge-onboarding-overlay-notice-20261102",
+              "step_id": "layout-assessment",
+              "plan_revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
+              "input_digest": "c920d3e2a20299c8642761858ccdfe3f5573960043ff378b27b2ff2e286a6e46",
+              "evidence": "sha256:7be9f29a36986d99fbcb8f8f57b1e280daa9d7129216f630cdffb1b07de3469f",
+              "source_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
+              "observed_at": "2026-11-02T18:30:21Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              }
+            }
           }
         ]
       },
@@ -25352,10 +25372,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-onboarding-overlay-notice-20261102",
         "revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "notice-layout-assess-6f28c28:started": "9115112f2104bbd569a46169b1104c7872c2fa18359bb993d49f18bd44d3887a"
+        },
+        "items": [
+          {
+            "key": "notice-layout-assess-6f28c28:started:c920d3e2a20299c8642761858ccdfe3f5573960043ff378b27b2ff2e286a6e46:running:",
+            "receipt_snapshot": "{\"label\":\"Assess active-overlay onboarding notice layout\",\"receipt\":{\"assignment\":\"rtxforge-onboarding-overlay-notice-20261102\",\"evidence\":\"sha256:7be9f29a36986d99fbcb8f8f57b1e280daa9d7129216f630cdffb1b07de3469f\",\"id\":\"notice-layout-assess-6f28c28:started\",\"input_digest\":\"c920d3e2a20299c8642761858ccdfe3f5573960043ff378b27b2ff2e286a6e46\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032\",\"source_sha\":\"6f28c28bacfd992bd958d1fdce1566291344f903\",\"step_id\":\"layout-assessment\"},\"state\":\"running\"}",
+            "id": "notice-layout-assess-6f28c28:started",
+            "assignment": "rtxforge-onboarding-overlay-notice-20261102",
+            "step_id": "layout-assessment",
+            "revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
+            "label": "Assess active-overlay onboarding notice layout",
+            "state": "running",
+            "phase": null,
+            "source_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
+            "observed_at": "2026-11-02T18:30:21Z",
+            "recorded_at": "2026-11-02T18:30:26.286Z",
+            "receipt_digest": "sha256:7be9f29a36986d99fbcb8f8f57b1e280daa9d7129216f630cdffb1b07de3469f",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Work started.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
