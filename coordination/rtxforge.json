@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T21:56:43.953Z",
+  "updated_at": "2026-11-02T21:57:52.963Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25802,7 +25802,7 @@
         "roman"
       ],
       "base_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-02T17:46:01.445Z",
       "objective_history": {
         "baseline": {
@@ -25825,8 +25825,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T21:37:06.656Z",
-      "lease_until": "2026-11-03T09:37:06.656Z",
+      "updated_at": "2026-11-02T21:57:52.963Z",
+      "lease_until": "2026-11-03T09:57:52.963Z",
       "amendment_count": 4,
       "amendments": [
         {
@@ -26444,7 +26444,13 @@
             "artifacts": []
           }
         ]
-      }
+      },
+      "pr": 141,
+      "merged_head_sha": "a600682fa2d3623306fa13bd008f3f1fed44971a",
+      "merge_commit_sha": "56b94bd61336c87fe39c5746031e0179719212ea",
+      "evidence": "PR141 merged at56b94bd61336c87fe39c5746031e0179719212ea, human author Lauren Olivia <lrnoliv@gmail.com>; merged treeb3cdeb2230e78b427e8de322279f6d1ba376a5bc equals reviewed a600682fa2d3623306fa13bd008f3f1fed44971a. Exact-source native builds, Windows x64/ARM64, AppImage, Flatpak and Fedora package UI/Wayland/KDE checks all green; no public updater/Beta dispatch. Installed exacta600 private payload and engine smoke pass; all staged files match; settings byte-identical,33provider/66preview files retained and existing GameMode link migrated to Desktop --game-mode. Actual installed entry/return restores sameDesktopPID7020/window82120654; verified Library posters/capsules+scroll, Details and all mainpages. ReceiptG:/BuildScratch/rtxforge-game-mode-integration-20261102/delivery.json, handoff-a600682.json, installed-a600682.json; rollback-before-integration retained. Website source34 captures are application-source-identical (finalchangeonly2workflowpaths), published Clear/Light/Dark with26tests/liveimagecheck; deploymenta50269cc-0400-4061-9195-31d62a6bb8bd. Remaining accepted followups retained: Windows Desktop Testing-last behind held GamePage source; full performance audit has105.99s process observations but GPU/frame/sustained/leak evidence incomplete. No physicalcontroller/nativeLinuxmanualacceptance claimed.",
+      "work_accounted": true,
+      "completed_at": "2026-11-02T21:57:52.963Z"
     }
   ]
 }
