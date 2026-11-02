@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T04:54:01.282Z",
+  "updated_at": "2026-11-02T04:59:02.185Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23254,7 +23254,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T04:54:01.282Z",
+      "updated_at": "2026-11-02T04:59:02.185Z",
       "lease_until": "2026-11-02T16:38:11.548Z",
       "amendment_count": 9,
       "amendments": [
@@ -23616,10 +23616,10 @@
             "host_available": true,
             "intent_digest": "1867a1f74624d91b200cc466d08d1e3cec995a2cdfe68d9efc6586bcb3c213b6"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-02T04:53:02.189Z",
           "request_digest": "42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79",
-          "step_digest": "3a7deae542191fac6109447d83c20017aba2d91fe40e782e054b701a1d54d2dd",
+          "step_digest": "da59b7961f6b022f0b6c38a6c07e4225bf169e570e3368fd2f3613c0fe25ae14",
           "start": {
             "request_digest": "42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79",
             "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
@@ -23630,7 +23630,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-02T04:54:01.282Z"
+          "started_at": "2026-11-02T04:54:01.282Z",
+          "result": {
+            "request_digest": "42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79",
+            "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
+            "agent_id": "/root/overlay_pergame_finish_reviewer",
+            "observed_at": "2026-11-02T04:58:58.896Z",
+            "state": "succeeded",
+            "result_digest": "de83b9f41a20f60895a9d53e1dcf0d67dfa8b096a30898907a42b25dee4d9544",
+            "update": {
+              "text": "The review accepted the heading/material treatment but requested corrections for stale native game caches, inheritance state and empty Linux defaults. Feeder notification behavior still requires live integration evidence.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-02T04:59:02.185Z"
         }
       ],
       "card_steps": {
@@ -23642,31 +23655,32 @@
           "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
           "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
             "id": "pergame-accent-finish-review",
             "label": "Review adaptive accents and per-game settings",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "overlay-pergame-accent-review-a545697:started",
+              "id": "overlay-pergame-accent-review-a545697:result",
               "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
               "step_id": "pergame-accent-finish-review",
               "plan_revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
               "input_digest": "42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79",
-              "evidence": "sha256:1546deb4371751b623107377a70984263a67368894e61138d33041c23a4b62d7",
+              "evidence": "sha256:f523b20cf352b6663933cc584b5263e566d03b97f3263d429f645ddecc129d84",
               "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
-              "observed_at": "2026-11-02T04:53:57.833Z",
+              "observed_at": "2026-11-02T04:58:58.896Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "Independent review is checking the exact pushed overlay revision, per-game settings isolation, default reset and notification behavior against the completed native builds and fixture evidence.",
+                "text": "The review accepted the heading/material treatment but requested corrections for stale native game caches, inheritance state and empty Linux defaults. Feeder notification behavior still requires live integration evidence.",
                 "artifacts": []
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -23675,10 +23689,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
         "revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
-          "overlay-pergame-accent-review-a545697:started": "36a4f3ad3f685caf535927a5a819d724cdd851d78ba2e73c264a7142833bd6c3"
+          "overlay-pergame-accent-review-a545697:started": "36a4f3ad3f685caf535927a5a819d724cdd851d78ba2e73c264a7142833bd6c3",
+          "overlay-pergame-accent-review-a545697:result": "c0fbd0e893f886ec78e147ad357b0f76a0f401e2b246fb288d85c3b76b65089f"
         },
         "items": [
           {
@@ -23700,6 +23715,28 @@
               "team": "inspector"
             },
             "text": "Independent review is checking the exact pushed overlay revision, per-game settings isolation, default reset and notification behavior against the completed native builds and fixture evidence.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "overlay-pergame-accent-review-a545697:result:42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Review adaptive accents and per-game settings\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:f523b20cf352b6663933cc584b5263e566d03b97f3263d429f645ddecc129d84\",\"id\":\"overlay-pergame-accent-review-a545697:result\",\"input_digest\":\"42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe\",\"source_sha\":\"a545697d57353b13dd409858c0ed91a2ef410aa7\",\"step_id\":\"pergame-accent-finish-review\",\"update\":{\"artifacts\":[],\"text\":\"The review accepted the heading/material treatment but requested corrections for stale native game caches, inheritance state and empty Linux defaults. Feeder notification behavior still requires live integration evidence.\"}},\"state\":\"blocked\"}",
+            "id": "overlay-pergame-accent-review-a545697:result",
+            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+            "step_id": "pergame-accent-finish-review",
+            "revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
+            "label": "Review adaptive accents and per-game settings",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
+            "observed_at": "2026-11-02T04:58:58.896Z",
+            "recorded_at": "2026-11-02T04:59:02.185Z",
+            "receipt_digest": "sha256:f523b20cf352b6663933cc584b5263e566d03b97f3263d429f645ddecc129d84",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The review accepted the heading/material treatment but requested corrections for stale native game caches, inheritance state and empty Linux defaults. Feeder notification behavior still requires live integration evidence.",
             "text_kind": "owner-published",
             "artifacts": []
           }
