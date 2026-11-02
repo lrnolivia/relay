@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T02:55:52.861Z",
+  "updated_at": "2026-11-02T03:20:34.905Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23081,12 +23081,20 @@
       "branch": "rtxforge/overlay-accent-toggle-alignment-20261101",
       "paths": [
         "windows/RtxForge.Windows/Controls/OverlayPresentationView.cs",
+        "windows/RtxForge.Windows/Controls/OverlayPreviewView.cs",
+        "windows/RtxForge.Windows/Models/GlassAppearance.cs",
         "providers/glass-overlay/OverlayController.h",
         "prototypes/overlay-rmlui/MaterialColor.h",
         "prototypes/overlay-rmlui/Prototype.cpp",
         "prototypes/overlay-rmlui/scenes.json",
         "prototypes/overlay-rmlui/README.md",
-        "prototypes/overlay-rmlui/Backdrop.h"
+        "prototypes/overlay-rmlui/Backdrop.h",
+        "prototypes/overlay-rmlui/overlay.rml",
+        "prototypes/overlay-rmlui/overlay.rcss",
+        "windows/overlay-rmlui/GlassRuntime.cpp",
+        "scripts/glass_preferences.py",
+        "gui/rtxforge_gtk.py",
+        "tests/test_glass_preferences.py"
       ],
       "resources": [
         "rtxforge-desktop-overlay-preview",
@@ -23094,8 +23102,11 @@
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
       "acceptance": "Accent Tint is right aligned in shared native global/Game Details settings. The five showcase games use their actual native Library accents, resolving saved install-root overrides before the desktop artwork signature, without invented prototype colors. All headings within a theme use one consistent game-accent treatment; no per-heading backdrop recoloring and no heavy yellow text shadow. Clear keeps ordinary text and glyphs light and avoids muddy automatic yellow shades. Suitable genuine Control preview scenes retain provenance. Focused renderer/color checks and Windows build pass. Publication/install remain held until the reviewed Game Mode merge and accepted screenshots.",
-      "next_action": "Use local Clear heading samples with saturated game hue and validate headless scene sampling; coordinate15scene/270capture website gallery. Hold publication pending Game Mode merge and accepted screenshots.",
+      "next_action": "Implement Theme, Custom and default Adaptive accent sources with scene sampling and smooth transitions, overlay color editing/persistence, native settings parity and theme-specific consistent heading brightness. Hold gallery replacement and release until this revision is verified and Game Mode merges.",
       "category": "implementation",
+      "supporting_roles": [
+        "verifier"
+      ],
       "primary_team": "runner",
       "supporting_teams": [
         "inspector"
@@ -23140,8 +23151,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T02:55:52.861Z",
-      "lease_until": "2026-11-02T14:55:52.861Z",
+      "updated_at": "2026-11-02T03:20:34.905Z",
+      "lease_until": "2026-11-02T15:20:34.905Z",
       "amendment_count": 7,
       "amendments": [
         {
@@ -23321,9 +23332,6 @@
             "card_updates": null
           }
         }
-      ],
-      "supporting_roles": [
-        "verifier"
       ],
       "native_handoffs": [
         {
