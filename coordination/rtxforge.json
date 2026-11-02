@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T18:09:55.396Z",
+  "updated_at": "2026-11-02T18:13:29.462Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25119,14 +25119,22 @@
         ".github/workflows/linux-build.yml",
         "packaging/",
         "windows/RtxForge.Windows/App.xaml.cs",
-        "windows/RtxForge.Windows/MainWindow.CrossOsReview.cs"
+        "windows/RtxForge.Windows/MainWindow.CrossOsReview.cs",
+        "windows/RtxForge.Windows/MainWindow.Steam.cs",
+        "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+        "scripts/steam_self_install.py",
+        "tests/test_steam_self_install.py",
+        "gui/game_mode.py",
+        "gui/game_mode_presets.py",
+        "gui/game_mode_tools.py",
+        "gui/game_mode_reports.py"
       ],
       "resources": [
         "rtxforge-game-mode-integration"
       ],
       "goal": "Finish new Game Mode integration into the Windows and Linux Desktop app, package it, install locally and merge to main.",
       "acceptance": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.",
-      "next_action": "Implement bundled launch/return plus single-instance Desktop/native activation, preserving active library work. Verify old view only through explicit legacy review entry.",
+      "next_action": "Finish integrated native replacement; user additionally requests removal of legacy Game Mode runtime UI, explicit new Game Mode Steam launch, and Add to Steam becoming Update Steam Shortcut when present. Preserve active library-owner paths; Windows Overview ordering has a prepared two-line change pending its path release.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -25149,8 +25157,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T17:51:14.013Z",
-      "lease_until": "2026-11-03T05:51:14.013Z"
+      "updated_at": "2026-11-02T18:13:29.462Z",
+      "lease_until": "2026-11-03T06:13:29.462Z"
     }
   ]
 }
