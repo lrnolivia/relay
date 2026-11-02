@@ -6,6 +6,8 @@ import {appendCardUpdates,assignmentCardUpdates} from './relay-card-updates.js';
 import {assignmentCardContext,validateCardStepsPublication} from './relay-card-steps.js';
 import {storeEvidence} from './evidence.js';
 import {getVisualEvidence} from '../packages/runner/src/visual-evidence.mjs';
+import {STAFF} from './staff-registry.js';
+import {cardStaff} from './relay-card-identity.js';
 const revision='a'.repeat(64),source='b'.repeat(40),now=new Date('2026-11-01T00:00:00Z');
 const png='iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9WlQZQAAAABJRU5ErkJggg==';
 function fixture(count=3,{id='card-demo',artifact=null}={}){
@@ -35,6 +37,67 @@ async function mount(data,{width=760,media='valid',hold=false,sourceSha=source,i
  return {browser,page};
 }
 const artifact={evidence_id:'vis_abcdefgh',source_sha:source,caption:'Recorded overlay preview',kind:'design'};
+
+const leadFixture=id=>({project:'relay',claim:{id:'lead-badge',state:'active',goal:'Build the project interface',primary_staff:id,primary_team:'source'}});
+test('assignment header badge renders every canonical staff identity without claiming a contributor message',async()=>{
+ const {browser,page}=await mount(leadFixture('nico'));
+ try{for(const staff of STAFF.filter(s=>cardStaff(s.id))){
+  const data=leadFixture(staff.id),person=contextCardModel(data).identity.lead;
+  await page.evaluate(data=>render(data),data);
+  const lead=page.getByRole('group',{name:'Assigned lead',exact:true});
+  assert.equal(await lead.getAttribute('data-staff'),person.id);assert.equal(await lead.getAttribute('data-org'),person.display_team||'');
+  assert.equal(await lead.locator('.family-lead-name').textContent(),person.name);
+  assert.equal((await lead.locator('.family-lead-team').textContent()).trim(),person.display_team_label||person.team);
+  assert.equal(await lead.locator('.family-lead-team svg').count(),2);
+  assert.equal(await lead.locator('.family-lead-role').textContent(),'Assigned lead · '+person.role);
+  assert.equal(await lead.locator('img').getAttribute('alt'),'');assert.equal(await lead.locator('img').evaluate(async img=>{await img.decode();return img.naturalWidth>0}),true);
+  assert.equal(await lead.evaluate(n=>n.parentElement.classList.contains('family-assignment-header')),true);
+  assert.equal(await page.locator('#feature-title').textContent(),contextCardModel(data).project_label||'relay');assert.equal(await page.locator('#title').textContent(),'Build the project interface');
+  assert.equal(await page.locator('.family-update').count(),0);
+ }}finally{await browser.close();}
+});
+
+test('lead badge uses an honest initial fallback for failed and missing approved portraits and clears absent leads',async()=>{
+ const {browser,page}=await mount(leadFixture('nico'));try{
+  const portrait=page.locator('.family-lead-portrait');await portrait.locator('img').evaluate(img=>img.dispatchEvent(new Event('error')));
+  assert.equal(await portrait.getAttribute('data-state'),'unavailable');assert.equal(await portrait.locator('img').count(),0);assert.equal(await portrait.textContent(),'N');
+  await page.evaluate(data=>render(data),leadFixture('nico'));assert.equal(await portrait.locator('img').count(),0);
+  await page.evaluate(data=>{delete STAFF_PORTRAITS.julian;render(data)},leadFixture('julian'));
+  assert.equal(await portrait.getAttribute('data-state'),'unavailable');assert.equal(await portrait.textContent(),'J');assert.equal(await portrait.locator('img').count(),0);
+  for(const id of [null,'unrecorded-person']){await page.evaluate(data=>render(data),leadFixture(id));assert.equal(await page.getByRole('group',{name:'Assigned lead',exact:true}).count(),0);assert.equal(await page.locator('#family-assignment-lead').textContent(),'No assignment lead is recorded.');assert.equal(await page.locator('.family-lead-portrait').count(),0);}
+ }finally{await browser.close();}
+});
+
+test('lead badge retains canonical identity when assignment team and current contributor differ',async()=>{
+ const data=fixture(3);data.claim.primary_team='source';const m=contextCardModel(data);assert.equal(m.identity.lead.id,'julian');assert.equal(m.identity.current_owner.id,'valentina');
+ const {browser,page}=await mount(data);try{
+  const lead=page.getByRole('group',{name:'Assigned lead',exact:true});assert.equal(await lead.getAttribute('data-staff'),'julian');assert.equal(await lead.getAttribute('data-org'),'management-planning');assert.equal((await lead.locator('.family-lead-team').textContent()).trim(),'Management & Planning');
+  assert.equal(await page.locator('.family-update .family-name').last().textContent(),'Roman');assert.equal(await page.locator('#feature-title').textContent(),m.project_label||'relay');assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),'');
+ }finally{await browser.close();}
+});
+
+test('lead badge stays readable and contained at phone and desktop widths in both themes',async()=>{
+ const {browser,page}=await mount(leadFixture('nico'));try{
+  for(const width of [360,760])for(const theme of ['light','dark'])for(const id of ['nico','valentina','roman','julian','luca','imani']){
+   await page.setViewportSize({width,height:1100});await page.emulateMedia({colorScheme:theme,reducedMotion:'reduce'});await page.evaluate(data=>render(data),leadFixture(id));
+   const geometry=await page.locator('.family-lead').evaluate(n=>{const name=n.querySelector('.family-lead-name'),r=n.getBoundingClientRect(),h=document.querySelector('#title');return {left:r.left,right:r.right,width:innerWidth,overflow:document.documentElement.scrollWidth>innerWidth,nameFont:getComputedStyle(name).fontFamily,nameWeight:getComputedStyle(name).fontWeight,nameSize:parseFloat(getComputedStyle(name).fontSize),titleSize:parseFloat(getComputedStyle(h).fontSize),color:getComputedStyle(name).color,roleColor:getComputedStyle(n.querySelector('.family-lead-role')).color,bg:getComputedStyle(n).backgroundColor,iconVisible:[...n.querySelectorAll('.family-lead-team>span')].filter(e=>getComputedStyle(e).display!=='none').length}});
+   assert.equal(geometry.overflow,false);assert.ok(geometry.left>=0&&geometry.right<=geometry.width);assert.match(geometry.nameFont,/Momo/);assert.equal(geometry.nameWeight,'700');assert.ok(geometry.titleSize>geometry.nameSize);assert.equal(geometry.iconVisible,1);
+   const contrast=(a,b)=>{const luminance=x=>{const c=x.match(/[\d.]+/g).slice(0,3).map(Number).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4});return c[0]*.2126+c[1]*.7152+c[2]*.0722};const x=luminance(a),y=luminance(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+   assert.ok(contrast(geometry.color,geometry.bg)>=4.5,id+' '+theme+' name contrast');assert.ok(contrast(geometry.roleColor,geometry.bg)>=4.5,id+' '+theme+' role contrast');
+  }
+ }finally{await browser.close();}
+});
+
+test('lead badge introduces no keyboard stop and follows assignment, individual and product transitions',async()=>{
+ const data=fixture(3),{browser,page}=await mount(data);try{
+  await page.getByRole('button',{name:'Next updates',exact:true}).focus();
+  const changed=structuredClone(data);changed.claim.primary_staff='nico';await page.evaluate(data=>render(data),changed);
+  assert.equal(await page.getByRole('button',{name:'Next updates',exact:true}).evaluate(n=>n===document.activeElement),true);assert.equal(await page.locator('.family-lead button,.family-lead a,.family-lead [tabindex]').count(),0);
+  await page.evaluate(data=>render(data),individual(data));await page.clock.runFor(50);assert.equal(await page.locator('#family-assignment-lead').isHidden(),true);assert.equal(await page.locator('.family-update-details summary').first().evaluate(n=>n===document.activeElement),true);
+  await page.evaluate(()=>render({ok:true}));assert.equal(await page.locator('#family-assignment-lead').isHidden(),true);
+  await page.evaluate(data=>render(data),changed);assert.equal(await page.locator('#family-assignment-lead').isVisible(),true);assert.equal(await page.locator('.family-lead-name').textContent(),'Nico');assert.equal(await page.locator('#feature-title').textContent(),contextCardModel(changed).project_label||'relay');
+ }finally{await browser.close();}
+});
 
 // The ordinary command boundary: real CAS handler and publication validation,
 // rather than placing card_updates directly in a browser fixture.
@@ -87,6 +150,7 @@ test('ordinary coordinate command mounts project shell at zero, one and many upd
   const {browser,page}=await mount(data,{width,theme,imageBytes:preview.toString('base64')});try{
    assert.equal(await page.locator('#card').getAttribute('data-family'),'assignment');assert.equal(await page.locator('#feature-title').textContent(),'relay');assert.equal(await page.locator('#card-project img').count(),1);assert.equal(await page.locator('.family-update').count(),expected);
    assert.equal(await page.locator('#feature-mark [data-staff]').count(),0);assert.equal(await page.locator('#card').evaluate(n=>n.scrollWidth>innerWidth),false);
+   const assignedLead=contextCardModel(data).identity.lead,lead=page.getByRole('group',{name:'Assigned lead',exact:true});assert.equal(await lead.getAttribute('data-staff'),assignedLead.id);assert.equal(await lead.locator('.family-lead-name').textContent(),assignedLead.name);assert.ok((await lead.locator('.family-lead-role').textContent()).includes(assignedLead.role));
    assert.equal((await page.locator('#card').textContent()).includes('PRIVATE'),false);
    if(!expected){assert.equal(await page.locator('.family-empty').textContent(),'No contributor updates have been published.');assert.equal(await page.locator('#family-plan-empty').isVisible(),true);assert.equal(await page.locator('.family-avatar').count(),0);}
    if(name==='submitted'){await page.locator('.family-capture img').waitFor();assert.equal(await page.locator('.family-name').first().textContent(),'Valentina');assert.equal(await page.locator('#plan-panel').isVisible(),true);}

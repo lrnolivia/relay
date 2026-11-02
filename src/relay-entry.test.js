@@ -204,10 +204,10 @@ test("fresh inline status card is listed and readable through the authenticated 
   assert.deepEqual(contents[0]._meta, original._meta);
   assert.deepEqual(contents[0]._meta["openai/ui"].availableDisplayModes, ["inline"]);
   assert.equal(contents[0]._meta["openai/ui"].entrypoints, undefined);
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v28.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v29.html");
   const oldResource = await rpc("resources/read", { uri: RELAY_CONTEXT_CARD_URI });
   assert.deepEqual(oldResource.contents[0], relayContextCardResource());
-  for(const [previousUri,current] of [['ui://relay/context-card/v27.html',relayContextCardResource()],['ui://relay/context-card/v26.html',relayContextCardResource()],['ui://relay/context-card/v25.html',relayContextCardResource()],['ui://relay/context-card/v24.html',relayContextCardResource()],['ui://relay/context-card/v23.html',relayContextCardResource()],['ui://relay/context-card/v22.html',relayContextCardResource()],['ui://relay/context-card/v21.html',relayContextCardResource()],['ui://relay/context-card/v20.html',relayContextCardResource()],['ui://relay/context-card/v19.html',relayContextCardResource()],['ui://relay/context-card/v18.html',relayContextCardResource()],['ui://relay/context-card/v16.html',relayContextCardResource()],['ui://relay/status-card/v4-legacy-bridge.html',relayStatusCardResource()]]){
+  for(const [previousUri,current] of [['ui://relay/context-card/v28.html',relayContextCardResource()],['ui://relay/context-card/v27.html',relayContextCardResource()],['ui://relay/context-card/v26.html',relayContextCardResource()],['ui://relay/context-card/v25.html',relayContextCardResource()],['ui://relay/context-card/v24.html',relayContextCardResource()],['ui://relay/context-card/v23.html',relayContextCardResource()],['ui://relay/context-card/v22.html',relayContextCardResource()],['ui://relay/context-card/v21.html',relayContextCardResource()],['ui://relay/context-card/v20.html',relayContextCardResource()],['ui://relay/context-card/v19.html',relayContextCardResource()],['ui://relay/context-card/v18.html',relayContextCardResource()],['ui://relay/context-card/v16.html',relayContextCardResource()],['ui://relay/status-card/v4-legacy-bridge.html',relayStatusCardResource()]]){
     const alias=await rpc('resources/read',{uri:previousUri});
     assert.equal(alias.contents[0].uri,previousUri);
     assert.equal(alias.contents[0].text,current.text);
