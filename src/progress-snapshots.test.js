@@ -28,3 +28,13 @@ test('ordinary coordinate aliases retain one exact assignment and queued sparse 
  const data=progressSnapshot({project:'relay',claim:row,assignment:row},at);assert.equal(data.payload.claim.id,row.id);assert.equal(data.payload.claims,undefined);
  assert.equal(progressSnapshot({project:'relay',queue:[{...row,state:'queued'}]},at).payload.claim.id,row.id);
 });
+test('snapshot cadence is derived from frozen payload and rejects every altered due field',()=>{
+ const snapshot=progressSnapshot({project:'relay',claim:row},at);assert.equal(validProgressSnapshot(snapshot),true);
+ for(const [key,value]of Object.entries({anchor_at:'2026-11-03T00:00:00Z',due_at:'2026-11-04T00:00:00Z',overdue_at:null,state:'stopped',delivery:'delivered',automatic_delivery:'verified'})){const changed=structuredClone(snapshot);changed.due[key]=value;assert.equal(validProgressSnapshot(changed),false,key);}
+});
+test('nested raw metadata stays outside the public retained projection and missing source is explicit',()=>{
+ const input={project:'relay',claim:{...row,base_sha:'a'.repeat(40)},work_card:{schema:'relay-work-card/v1',tool:'relay_runner_coordinate',private_result:'PRIVATE',milestone:{kind:'step',label:'Recorded',private_log:'PRIVATE'}},ci:{schema:'relay-ci-card/v1',status:'running',private_result:'PRIVATE',tests:{passed:2,private_log:'PRIVATE'},suites:[{id:'ui',status:'running',private_log:'PRIVATE'}]},project_icon:{project:'relay',name:'Relay',status:'found',private_log:'PRIVATE',icon:{path:'icons/relay.png',private_log:'PRIVATE'}}};
+ const snapshot=progressSnapshot(input,at);assert.ok(!JSON.stringify(snapshot).includes('PRIVATE'));assert.equal(validProgressSnapshot(snapshot),true);assert.equal(snapshot.payload.claim.source_as_of.status,'unavailable');assert.equal(snapshot.payload.claim.source_as_of.base_sha,'a'.repeat(40));assert.equal(snapshot.payload.work_card.milestone.label,'Recorded');assert.equal(snapshot.payload.ci.tests.passed,2);
+ assert.equal(progressSnapshot({...input,claim:{...row,identities:{head_sha:'b'.repeat(40)}}},at).payload.claim.source_as_of.status,'recorded');
+ assert.equal(progressSnapshot({project:'relay',claim:row,queue:[{...row,state:'queued'}]},at).payload.claim.state,'active');
+});

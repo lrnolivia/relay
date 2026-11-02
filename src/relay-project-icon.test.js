@@ -36,7 +36,7 @@ test('late refresh cannot restore a previous project icon after the host switche
   const b={project:'relay',project_icon:{project:'relay',status:'unavailable',icon:null},progress:[{assignment:'b',state:'active',goal:'Project B'}]};
   const page=await browser.newPage();await page.addInitScript(({a})=>{window.openai={toolInput:{project:'rtxforge'},toolOutput:a,callTool:()=>new Promise(resolve=>window.finishRefresh=resolve)};},{a});
   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.locator('#card-project img').waitFor();
-  await page.locator('#refresh').click();await page.waitForFunction(()=>typeof window.finishRefresh==='function');
+  if(!await page.locator('#card-menu').evaluate(n=>n.open))await page.getByLabel('Card options',{exact:true}).click();await page.locator('#refresh').click();await page.waitForFunction(()=>typeof window.finishRefresh==='function');
   await page.evaluate(b=>{window.openai.toolInput={project:'relay'};window.openai.toolOutput=b;dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolInput:window.openai.toolInput,toolOutput:b}}}));},b);
   await page.locator('#title').filter({hasText:'Project B'}).waitFor();
   await page.evaluate(a=>window.finishRefresh({structuredContent:a}),a);await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
@@ -52,8 +52,8 @@ test('project explorer retains current icon on refresh and rejects a wrong-proje
   const page=await browser.newPage();await page.addInitScript(a=>{window.reply=a;window.openai={toolOutput:{schema:'relay-status-explorer/v1',projects:[{id:'rtxforge',name:'rtxForge',coordination:'enabled'}]},callTool:async()=>({structuredContent:window.reply})};},a);
   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.getByRole('button',{name:/rtxForge.*1 open/}).click();
   const original=await page.locator('#card-project img').getAttribute('src');assert.equal(original,a.project_icon.icon.data_url);
-  await page.locator('#refresh').click();await page.locator('#state-label').filter({hasText:'Work in progress'}).waitFor();assert.equal(await page.locator('#card-project img').getAttribute('src'),original);
-  await page.evaluate(()=>window.reply={project:'relay',progress:[]});await page.locator('#refresh').click();await page.locator('#blocker').waitFor({state:'visible'});
+  if(!await page.locator('#card-menu').evaluate(n=>n.open))await page.getByLabel('Card options',{exact:true}).click();await page.locator('#refresh').click();await page.locator('#state-label').filter({hasText:'Work in progress'}).waitFor();assert.equal(await page.locator('#card-project img').getAttribute('src'),original);
+  await page.evaluate(()=>window.reply={project:'relay',progress:[]});if(!await page.locator('#card-menu').evaluate(n=>n.open))await page.getByLabel('Card options',{exact:true}).click();await page.locator('#refresh').click();await page.locator('#blocker').waitFor({state:'visible'});
   assert.equal(await page.locator('#card-project img').getAttribute('src'),original);assert.equal(await page.locator('#card-project').textContent(),'rtxforge');
  }finally{await browser.close();}
 });

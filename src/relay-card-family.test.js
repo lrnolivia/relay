@@ -1,3 +1,4 @@
+import {validProgressSnapshot} from './progress-snapshots.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
@@ -21,17 +22,17 @@ function fixture(count=3,{id='card-demo',artifact=null}={}){
  return {project:'relay',claim:assignmentCardContext(record)};
 }
 function individual(data){return {...data,presentation_view:'individual',presentation_update_id:data.claim.card_updates.items[0].id};}
-async function mount(data,{width=760,media='valid',hold=false,sourceSha=source,imageBytes=png,theme='light',expand=true,saved=null}={}){
+async function mount(data,{width=760,media='valid',hold=false,sourceSha=source,imageBytes=png,theme='light',expand=true,saved=null,latest=null,input=null}={}){
  const browser=await chromium.launch({headless:true}),page=await browser.newPage({viewport:{width,height:1100},colorScheme:theme,reducedMotion:'reduce'});
  await page.clock.install({time:now});await page.clock.pauseAt(new Date(+now+1));
- await page.addInitScript(({data,media,hold,png,source,saved})=>{
+ await page.addInitScript(({data,media,hold,png,source,saved,latest,input})=>{
   window.calls=[];window.pendingMedia=[];
-  window.openai={widgetState:saved||{},setWidgetState(state){this.widgetState=state},toolInput:{project:'relay'},toolOutput:data,callTool:async(name,args)=>{
-   window.calls.push({name,args});if(name!=='relay_ui_request')return {project:'relay',claims:[data.claim]};
+  window.openai={widgetState:saved||{},setWidgetState(state){this.widgetState=state},toolInput:input||{project:'relay'},toolOutput:data,callTool:async(name,args)=>{
+   window.calls.push({name,args});if(name!=='relay_ui_request')return latest||{project:'relay',claims:[data.claim]};
    const value=args.path.endsWith('/image')?{status:200,content_type:'image/png',base64:media==='bad-image'?'not base64':png}:{status:200,body:{evidence_id:args.path.split('/').at(-1),context:{project:'relay',assignment:media==='wrong'?'other':data.claim.id,commit_sha:source}}};
    if(hold)return new Promise(resolve=>window.pendingMedia.push(()=>resolve(value)));return value;
   }};
- },{data,media,hold,png:imageBytes,source:sourceSha,saved});
+ },{data,media,hold,png:imageBytes,source:sourceSha,saved,latest,input});
  await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.locator('#card').waitFor();
  if(expand&&data.claim?.card_updates?.items.length){await page.locator('#banner-content').evaluate(n=>n.open=true);await page.locator('.family-update').first().waitFor();}
  return {browser,page};
@@ -70,6 +71,43 @@ test('checklist circle counts verified passes only and waits for full objective 
  const data=fixture(3);data.claim.card_steps.complete=true;data.claim.card_steps.steps.forEach(s=>s.state='passed');
  assert.equal(contextCardModel(data).percent,null,'checklist passes alone are not whole-objective completion');data.claim.state='completed';assert.equal(contextCardModel(data).percent,100);
  data.claim.card_steps.steps[2].state='blocked';assert.equal(contextCardModel(data).percent,66);data.claim.card_steps.steps[1].receipt=null;assert.equal(contextCardModel(data).percent,33);data.claim.card_steps.complete=false;assert.equal(contextCardModel(data).percent,null);
+});
+test('snapshot integrity covers actual plan receipt and bound preview bytes without claiming attestation',()=>{
+ const data=contextualPresentation({...fixture(1,{artifact}),checked_at:now.toISOString()},{operation:{name:'relay_runner_coordinate'}}),snapshot=data.snapshot;
+ assert.equal(validProgressSnapshot(snapshot),true);assert.equal(snapshot.payload.claim.card_steps.revision,revision);assert.equal(snapshot.payload.claim.card_updates.items[0].artifacts[0].evidence_id,artifact.evidence_id);
+ for(const change of [s=>s.payload.claim.card_steps.revision='c'.repeat(64),s=>s.payload.claim.card_steps.steps[0].receipt.source_sha='d'.repeat(40),s=>s.payload.claim.card_steps.steps[0].receipt.evidence='Different proof',s=>s.payload.claim.card_updates.items[0].artifacts[0].evidence_id='vis_wrongpreview',s=>s.payload.claim.card_updates.items[0].artifacts[0].source_sha='e'.repeat(40)]){const altered=structuredClone(snapshot);change(altered);assert.equal(validProgressSnapshot(altered),false);}
+});
+test('invalid or mismatched saved history freezes unavailable rather than substituting a new snapshot',async()=>{
+ const data=contextualPresentation({...fixture(0),checked_at:now.toISOString()},{operation:{name:'relay_runner_coordinate'}});
+ for(const saved of [null,{...data.snapshot,id:'wrong'},contextualPresentation({...fixture(0,{id:'other'}),checked_at:now.toISOString()},{operation:{name:'relay_runner_coordinate'}}).snapshot]){
+  const {browser,page}=await mount(data,{expand:false,saved:{relay_snapshot:saved,statusExplorer:{level:'assignment',project:'relay',assignment:'card-demo'}}});try{assert.equal(await page.locator('#card-freshness').textContent(),'Snapshot unavailable');assert.equal(await page.locator('.status-navigation button').count(),0);await page.clock.runFor(400000);assert.equal(await page.evaluate(()=>window.calls.length),0);}finally{await browser.close();}
+ }
+});
+test('frozen remount fences saved explorer navigation and ignores unverified explicit legacy preview IDs',async()=>{
+ const data=contextualPresentation({...fixture(0),evidence_id:'vis_wrongpreview',checked_at:now.toISOString()},{operation:{name:'relay_runner_coordinate'}});assert.equal(data.snapshot.payload.evidence_id,undefined);
+ const saved={relay_snapshot:data.snapshot,statusExplorer:{level:'assignment',project:'relay',assignment:'card-demo'}},mounted=await mount(data,{saved,expand:false,input:{project:'relay',assignment:'card-demo',evidence_id:'vis_wrongpreview',show_qa:true}});
+ try{const {page}=mounted;assert.equal(await page.locator('.status-navigation button').count(),0);const title=await page.locator('#title').textContent();await page.evaluate(()=>{document.dispatchEvent(new Event('relay:target-change'));window.dispatchEvent(new Event('online'));document.dispatchEvent(new Event('visibilitychange'))});await page.clock.runFor(420000);assert.equal(await page.locator('#title').textContent(),title);assert.equal(await page.evaluate(()=>window.calls.length),0);}finally{await mounted.browser.close();}
+});
+test('freezing a snapshot fences an already pending explorer reply and detached navigation callbacks',async()=>{
+ const initial={schema:'relay-status-explorer/v1',project:'relay',progress:[fixture(0).claim],queue:[]};
+ const {browser,page}=await mount(initial,{expand:false,input:{project:'relay',assignment:'card-demo'}});try{
+  await page.getByRole('button',{name:'‹ Project',exact:true}).click();
+  await page.evaluate(()=>{window.openai.callTool=(name,args)=>{window.calls.push({name,args});return new Promise(resolve=>window.pendingStatus=resolve)};window.detachedNav=document.querySelector('.status-navigation button')});
+  await page.getByLabel('Card options',{exact:true}).click();await page.locator('#refresh').click();await page.waitForFunction(()=>typeof window.pendingStatus==='function');
+  const frozen=contextualPresentation({...fixture(0),checked_at:now.toISOString()},{operation:{name:'relay_runner_coordinate'}});await page.evaluate(data=>render(data),frozen);const before=await page.locator('#title').textContent(),count=await page.evaluate(()=>window.calls.length);
+  await page.evaluate(()=>{window.detachedNav.click();window.pendingStatus({project:'relay',progress:[{assignment:'card-demo',goal:'LATE MUTATION',state:'completed'}],queue:[]})});await page.clock.runFor(420000);
+  assert.equal(await page.locator('#title').textContent(),before);assert.equal(await page.locator('#card').getAttribute('data-snapshot-id'),frozen.snapshot.id);assert.equal(await page.locator('.status-navigation button').count(),0);assert.equal(await page.evaluate(()=>window.calls.length),count);
+ }finally{await browser.close();}
+});
+test('Open latest resolves queued exact targets and keeps project or multiple snapshots project scoped',async()=>{
+ const make=(claim,extra={})=>contextualPresentation({project:'relay',checked_at:now.toISOString(),...extra,...(claim?{claim}:{})},{operation:{name:'relay_runner_coordinate'}});
+ const cases=[{data:make({id:'target',goal:'Snapshot target',state:'queued'}),latest:{project:'relay',progress:[{assignment:'other',goal:'UNRELATED',state:'active'}],queue:[{id:'target',goal:'Latest exact queued target',state:'queued'}]},label:'Current assignment status',want:'Latest exact queued target',avoid:'UNRELATED'}, {data:make(null,{claims:[{id:'a',goal:'A',state:'active'},{id:'b',goal:'B',state:'queued'}]}),latest:{project:'relay',progress:[{assignment:'a',goal:'Current A',state:'active'}],queue:[{id:'b',goal:'Current B',state:'queued'}]},label:'Current project status',want:'2 recorded assignments'}, {data:make(null),latest:{project:'relay',progress:[],queue:[]},label:'Current project status',want:'No assignments returned'}];
+ for(const c of cases){const {browser,page}=await mount(c.data,{latest:c.latest,expand:false});try{await page.getByRole('button',{name:'Open latest',exact:true}).click();const dialog=page.getByRole('dialog',{name:c.label});await dialog.getByText(c.want,{exact:false}).waitFor();if(c.avoid)assert.ok(!(await dialog.textContent()).includes(c.avoid));const call=await page.evaluate(()=>window.calls.find(c=>c.name==='relay_runner_progress'));assert.deepEqual(call.args,c.label==='Current assignment status'?{project:'relay',assignment:'target'}:{project:'relay'});await page.getByRole('button',{name:'Close latest'}).click();}finally{await browser.close();}}
+});
+test('assignment checklist circle is independent of completed or failed CI suite percentages',()=>{
+ const ci={schema:'relay-ci-card/v1',status:'completed',conclusion:'failure',telemetry:'reported',suites_total:2,suites_done:2,run:{id:'1'},tests:{failed:1},jobs:{},suites:[]};
+ const empty=contextCardModel({...leadFixture('nico'),ci});assert.equal(empty.percent,100,'CI telemetry remains separate');assert.equal(empty.checklist_percent,null);
+ const data=fixture(3);data.claim.card_steps.complete=true;data.claim.card_steps.steps[0].state='passed';const m=contextCardModel({...data,ci});assert.equal(m.percent,100);assert.equal(m.checklist_percent,33);
 });
 test('assignment header badge renders every canonical staff identity without claiming a contributor message',async()=>{
  const {browser,page}=await mount(leadFixture('nico'));

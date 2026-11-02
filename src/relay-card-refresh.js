@@ -68,15 +68,17 @@ export const LIVE_WORK_SCRIPT=String.raw`(()=>{
   render=result=>{
     const incoming={...unwrap(result)};
     if(frozen)return;
-    if(toolInput?.view==='current')incoming.card_mode='current';
-    if(incoming?.card_mode==='snapshot'&&!model(incoming,DIRECTORY).snapshot){
-      frozen={as_of:null};stop();generation++;lastData={ok:false,card_mode:'snapshot',error:{message:'The saved snapshot could not be verified. Request a new card.'}};base(lastData);el.refresh.hidden=true;note.textContent='Snapshot unavailable';return;
+    const hasSaved=Object.prototype.hasOwnProperty.call(window.openai?.widgetState||{},'relay_snapshot');
+    if(toolInput?.view==='current'&&!hasSaved)incoming.card_mode='current';if(hasSaved)incoming.card_mode='snapshot';
+    const saved=window.openai?.widgetState?.relay_snapshot;
+    const savedValid=saved&&model({...saved.payload,snapshot:saved},DIRECTORY).snapshot&&saved.payload?.project===incoming.snapshot?.payload?.project&&(saved.payload?.claim?.id||saved.payload?.claim?.assignment||null)===(incoming.snapshot?.payload?.claim?.id||incoming.snapshot?.payload?.claim?.assignment||null);
+    if(incoming?.card_mode==='snapshot'&&(!model(incoming,DIRECTORY).snapshot||(hasSaved&&!savedValid))){
+      frozen={as_of:null};el.card._snapshotFrozen=true;document.querySelector('.status-navigation')?.replaceChildren();const nav=document.querySelector('.status-navigation');if(nav)nav.hidden=true;stop();generation++;lastData={ok:false,card_mode:'snapshot',error:{message:'The saved snapshot could not be verified. Request a new card.'}};renderFrozenSnapshot(lastData);el.refresh.hidden=true;note.textContent='Snapshot unavailable';return;
     }
     if(incoming?.card_mode==='snapshot'&&model(incoming,DIRECTORY).snapshot){
-      const saved=window.openai?.widgetState?.relay_snapshot;
-      const chosen=saved&&model({...saved.payload,snapshot:saved},DIRECTORY).snapshot&&saved.payload?.project===incoming.snapshot.payload?.project&&(saved.payload?.claim?.id||saved.payload?.claim?.assignment||null)===(incoming.snapshot.payload?.claim?.id||incoming.snapshot.payload?.claim?.assignment||null)?saved:incoming.snapshot;
-      frozen=JSON.parse(JSON.stringify(chosen));stop();generation++;
-      const data={...frozen.payload,card_mode:'snapshot',snapshot:frozen};lastData=data;base(data);
+      const chosen=hasSaved?saved:incoming.snapshot;
+      frozen=JSON.parse(JSON.stringify(chosen));el.card._snapshotFrozen=true;document.querySelector('.status-navigation')?.replaceChildren();const nav=document.querySelector('.status-navigation');if(nav)nav.hidden=true;stop();generation++;
+      const data={...frozen.payload,card_mode:'snapshot',snapshot:frozen};lastData=data;renderFrozenSnapshot(data);
       el.card.dataset.snapshotId=frozen.id;el.card.dataset.cardMode='snapshot';
       if(window.openai?.setWidgetState)Promise.resolve(window.openai.setWidgetState({...window.openai.widgetState,relay_snapshot:frozen})).catch(()=>{});
       status();return;
