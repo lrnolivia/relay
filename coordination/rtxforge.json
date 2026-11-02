@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T20:43:06.327Z",
+  "updated_at": "2026-11-02T20:43:14.031Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8402,7 +8402,7 @@
       "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
       "goal": "Complete Lauren's native Game Mode resource and responsiveness audit after app input resumes.",
       "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate.",
-      "next_action": "Retain the passive 20.86-second idle sample at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json: source5cad542, 0.15% of one CPU core, about778 MiB private memory across native/WebView processes, stable within this short window. This is not startup, interaction, GPU or leak acceptance. Computer Use was stopped with Escape; do not resume app input until Lauren explicitly resumes it. No worker launch or source change requested by this queue record.",
+      "next_action": "Keep passive source5cad542 receipts at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json and native-total-idle-sample.json. Native/WebView tree:0.15% of one core, about778MiB private. Combined Desktop/native descendants over21.15s:5.32% of one core /0.66% machine CPU, about1014MiB private peak, stable within this short window. GPU, startup, interaction, sustained scrolling and leak behavior are not measured; do not label this lightweight or full performance acceptance. App control was stopped with Escape; wait for explicit user resume before app input. No worker launch or source change requested by this queued followup.",
       "paths": [
         "prototypes/game-mode-tauri/"
       ],
@@ -8431,7 +8431,25 @@
             "at": "2026-11-02T20:22:57.058Z"
           }
         ]
-      }
+      },
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-02T20:43:14.031Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Add the measured combined Desktop/native baseline without claiming a completed performance audit.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Retain the passive 20.86-second idle sample at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json: source5cad542, 0.15% of one CPU core, about778 MiB private memory across native/WebView processes, stable within this short window. This is not startup, interaction, GPU or leak acceptance. Computer Use was stopped with Escape; do not resume app input until Lauren explicitly resumes it. No worker launch or source change requested by this queue record."
+          },
+          "after": {
+            "next_action": "Keep passive source5cad542 receipts at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json and native-total-idle-sample.json. Native/WebView tree:0.15% of one core, about778MiB private. Combined Desktop/native descendants over21.15s:5.32% of one core /0.66% machine CPU, about1014MiB private peak, stable within this short window. GPU, startup, interaction, sustained scrolling and leak behavior are not measured; do not label this lightweight or full performance acceptance. App control was stopped with Escape; wait for explicit user resume before app input. No worker launch or source change requested by this queued followup."
+          }
+        }
+      ],
+      "updated_at": "2026-11-02T20:43:14.031Z"
     }
   ],
   "claims": [
