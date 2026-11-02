@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T03:42:40.378Z",
+  "updated_at": "2026-11-02T03:47:59.735Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23127,7 +23127,7 @@
         "rtxforge-overlay-renderer"
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
-      "acceptance": "Accent Tint is right aligned in shared native global/Game Details settings. The five showcase games use their actual native Library accents, resolving saved install-root overrides before the desktop artwork signature, without invented prototype colors. All headings within a theme use one consistent game-accent treatment; no per-heading backdrop recoloring and no heavy yellow text shadow. Clear keeps ordinary text and glyphs light and avoids muddy automatic yellow shades. Suitable genuine Control preview scenes retain provenance. Focused renderer/color checks and Windows build pass. Publication/install remain held until the reviewed Game Mode merge and accepted screenshots.",
+      "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks.",
       "next_action": "Implement Theme, Custom and default Adaptive accent sources with scene sampling and smooth transitions, overlay color editing/persistence, native settings parity and theme-specific consistent heading brightness. Hold gallery replacement and release until this revision is verified and Game Mode merges.",
       "category": "implementation",
       "supporting_roles": [
@@ -23174,12 +23174,18 @@
             "text": "Accent Tint is right aligned in shared native global/Game Details settings. The five showcase games use their actual native Library accents, resolving saved install-root overrides before the desktop artwork signature, without invented prototype colors. All headings within a theme use one consistent game-accent treatment; no per-heading backdrop recoloring and no heavy yellow text shadow. Clear keeps ordinary text and glyphs light and avoids muddy automatic yellow shades. Suitable genuine Control preview scenes retain provenance. Focused renderer/color checks and Windows build pass. Publication/install remain held until the reviewed Game Mode merge and accepted screenshots.",
             "at": "2026-11-02T02:55:52.861Z",
             "reason": "User rejects the heavy NEURAL RENDERING yellow shadow and confusing variation between dark red, white and salmon headings within one panel. Replace local per-heading adaptation with a consistent theme accent; retain actual Library palette."
+          },
+          {
+            "id": "rtxforge-overlay-accent-toggle-alignment-20261101:acceptance:8",
+            "text": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks.",
+            "at": "2026-11-02T03:47:59.735Z",
+            "reason": "User finalized three accent sources and explicitly lifted Game Mode release hold."
           }
         ]
       },
-      "updated_at": "2026-11-02T03:20:34.905Z",
-      "lease_until": "2026-11-02T15:20:34.905Z",
-      "amendment_count": 7,
+      "updated_at": "2026-11-02T03:47:59.735Z",
+      "lease_until": "2026-11-02T15:47:59.735Z",
+      "amendment_count": 8,
       "amendments": [
         {
           "at": "2026-11-02T00:21:15.831Z",
@@ -23356,6 +23362,20 @@
             "acceptance": "Accent Tint is right aligned in shared native global/Game Details settings. The five showcase games use their actual native Library accents, resolving saved install-root overrides before the desktop artwork signature, without invented prototype colors. All headings within a theme use one consistent game-accent treatment; no per-heading backdrop recoloring and no heavy yellow text shadow. Clear keeps ordinary text and glyphs light and avoids muddy automatic yellow shades. Suitable genuine Control preview scenes retain provenance. Focused renderer/color checks and Windows build pass. Publication/install remain held until the reviewed Game Mode merge and accepted screenshots.",
             "card_steps": null,
             "card_updates": null
+          }
+        },
+        {
+          "at": "2026-11-02T03:47:59.735Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "User finalized three accent sources and explicitly lifted Game Mode release hold.",
+          "fields": [
+            "acceptance"
+          ],
+          "before": {
+            "acceptance": "Accent Tint is right aligned in shared native global/Game Details settings. The five showcase games use their actual native Library accents, resolving saved install-root overrides before the desktop artwork signature, without invented prototype colors. All headings within a theme use one consistent game-accent treatment; no per-heading backdrop recoloring and no heavy yellow text shadow. Clear keeps ordinary text and glyphs light and avoids muddy automatic yellow shades. Suitable genuine Control preview scenes retain provenance. Focused renderer/color checks and Windows build pass. Publication/install remain held until the reviewed Game Mode merge and accepted screenshots."
+          },
+          "after": {
+            "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks."
           }
         }
       ],
