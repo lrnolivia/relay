@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T04:53:02.189Z",
+  "updated_at": "2026-11-02T04:54:01.282Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23254,7 +23254,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T04:53:02.189Z",
+      "updated_at": "2026-11-02T04:54:01.282Z",
       "lease_until": "2026-11-02T16:38:11.548Z",
       "amendment_count": 9,
       "amendments": [
@@ -23616,10 +23616,21 @@
             "host_available": true,
             "intent_digest": "1867a1f74624d91b200cc466d08d1e3cec995a2cdfe68d9efc6586bcb3c213b6"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-02T04:53:02.189Z",
           "request_digest": "42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79",
-          "step_digest": "c9ce52000b204d32b915e0473d4a224cfb4fdd8a4ea970ab8785efba23e50125"
+          "step_digest": "3a7deae542191fac6109447d83c20017aba2d91fe40e782e054b701a1d54d2dd",
+          "start": {
+            "request_digest": "42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79",
+            "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
+            "agent_id": "/root/overlay_pergame_finish_reviewer",
+            "observed_at": "2026-11-02T04:53:57.833Z",
+            "update": {
+              "text": "Independent review is checking the exact pushed overlay revision, per-game settings isolation, default reset and notification behavior against the completed native builds and fixture evidence.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-02T04:54:01.282Z"
         }
       ],
       "card_steps": {
@@ -23631,15 +23642,32 @@
           "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
           "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "pergame-accent-finish-review",
             "label": "Review adaptive accents and per-game settings",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "overlay-pergame-accent-review-a545697:started",
+              "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+              "step_id": "pergame-accent-finish-review",
+              "plan_revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
+              "input_digest": "42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79",
+              "evidence": "sha256:1546deb4371751b623107377a70984263a67368894e61138d33041c23a4b62d7",
+              "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
+              "observed_at": "2026-11-02T04:53:57.833Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review is checking the exact pushed overlay revision, per-game settings isolation, default reset and notification behavior against the completed native builds and fixture evidence.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -23647,10 +23675,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
         "revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "overlay-pergame-accent-review-a545697:started": "36a4f3ad3f685caf535927a5a819d724cdd851d78ba2e73c264a7142833bd6c3"
+        },
+        "items": [
+          {
+            "key": "overlay-pergame-accent-review-a545697:started:42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79:running:",
+            "receipt_snapshot": "{\"label\":\"Review adaptive accents and per-game settings\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:1546deb4371751b623107377a70984263a67368894e61138d33041c23a4b62d7\",\"id\":\"overlay-pergame-accent-review-a545697:started\",\"input_digest\":\"42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe\",\"source_sha\":\"a545697d57353b13dd409858c0ed91a2ef410aa7\",\"step_id\":\"pergame-accent-finish-review\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is checking the exact pushed overlay revision, per-game settings isolation, default reset and notification behavior against the completed native builds and fixture evidence.\"}},\"state\":\"running\"}",
+            "id": "overlay-pergame-accent-review-a545697:started",
+            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+            "step_id": "pergame-accent-finish-review",
+            "revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
+            "label": "Review adaptive accents and per-game settings",
+            "state": "running",
+            "phase": null,
+            "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
+            "observed_at": "2026-11-02T04:53:57.833Z",
+            "recorded_at": "2026-11-02T04:54:01.282Z",
+            "receipt_digest": "sha256:1546deb4371751b623107377a70984263a67368894e61138d33041c23a4b62d7",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review is checking the exact pushed overlay revision, per-game settings isolation, default reset and notification behavior against the completed native builds and fixture evidence.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
