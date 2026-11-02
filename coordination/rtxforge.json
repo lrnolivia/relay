@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T17:39:44.760Z",
+  "updated_at": "2026-11-02T17:46:01.445Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25081,6 +25081,58 @@
       "evidence": "PR138 merged at0c343b1729c99724724bb59b17fc9e36549d0c44 with verified human author. Final d263b9d checks all green: Windows x64/ARM64 run41418533603, Linux AppImage/Flatpak41418533499, package UI41418533392, attribution and coordination. Main tree36c37fd7e2050544dad4929a4724ceaaea6315c0 equals tested PR merge40e67618c8556c6e326105e570e2d773dc932d3b. Installed exact CI x64 artifact13130575064 locally; installer succeeded with no reboot,29native payload hashes, engine source and preview assets verified; user-settings size/timestamp unchanged; rollback retained. Receipt G:/BuildScratch/rtxforge-overlay-headings-20261101/installed-hotfix-receipt.json. Independent1d review corrections verified by final26portable tests(1platformskip), zero-warning Windows build and canonical source audit030091a87f383b39446bfd60af812feea53ab85567558186851e203cba897978. Quiet neutral native action/Cancel focus and confirmation/long-dropdown visuals approved; final correction leaves UI source unchanged. Fresh270SDR gallery source95f09bb delivered to resumed original website_frost_themes owner and integrated with24site tests passing. Older Desktop Library recapture remains separate and unverified while desktop control stays stopped; live-game and native Linux visual acceptance not claimed. Prior stale/uncertain specialist bookkeeping preserved without relaunch; actual latest review result was read back as reported.",
       "work_accounted": true,
       "completed_at": "2026-11-02T09:39:12.001Z"
+    },
+    {
+      "id": "rtxforge-game-mode-desktop-integration-20261102",
+      "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+      "branch": "rtxforge/game-mode-desktop-integration-20261102",
+      "paths": [
+        "windows/RtxForge.Windows/MainWindow.GameMode.cs",
+        "windows/RtxForge.Windows/Services/GameModeLauncher.cs",
+        "windows/build/",
+        "windows/RtxForge.Windows/RtxForge.Windows.csproj",
+        "windows/installer/",
+        "gui/rtxforge_gtk.py",
+        "scripts/desktop_frontend.py",
+        "scripts/game_mode_launcher.py",
+        "tests/test_game_mode_launcher.py",
+        "windows/tests/GameModeLauncher/",
+        "prototypes/game-mode-tauri/",
+        ".github/workflows/game-mode-preview.yml",
+        ".github/workflows/windows-build.yml",
+        ".github/workflows/linux-build.yml",
+        "packaging/"
+      ],
+      "resources": [
+        "rtxforge-game-mode-integration"
+      ],
+      "goal": "Finish new Game Mode integration into the Windows and Linux Desktop app, package it, install locally and merge to main.",
+      "acceptance": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.",
+      "next_action": "Implement Desktop launch/return and package integration without touching active library identity paths.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
+      "state": "active",
+      "created_at": "2026-11-02T17:46:01.445Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Finish new Game Mode integration into the Windows and Linux Desktop app, package it, install locally and merge to main.",
+          "acceptance": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.",
+          "at": "2026-11-02T17:46:01.445Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-game-mode-desktop-integration-20261102:acceptance:0",
+            "text": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.",
+            "at": "2026-11-02T17:46:01.445Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-02T17:46:01.445Z",
+      "lease_until": "2026-11-03T05:46:01.445Z"
     }
   ]
 }
