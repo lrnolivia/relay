@@ -26,6 +26,9 @@ jobs:
         with:
           node-version-file: .node-version
 
+      - name: Install locked synchronization dependencies
+        run: npm ci --ignore-scripts
+
       - name: Synchronize source and deployment evidence without a model
         env:
           GH_TOKEN: ${{ github.token }}
