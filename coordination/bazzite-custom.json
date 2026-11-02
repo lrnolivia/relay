@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "bazzite-custom",
-  "updated_at": "2026-10-29T03:14:25.338Z",
+  "updated_at": "2026-11-02T06:20:05.169Z",
   "legacy_branches": [
     "docs/move-to-runner",
     "fix/keyd-containerfile-heredocs",
@@ -99,6 +99,52 @@
         }
       ],
       "updated_at": "2026-10-15T03:18:06.591Z"
+    },
+    {
+      "id": "adwaita-steam-final-updates-20261102",
+      "owner": "lauren",
+      "goal": "Update Linux Adwaita Steam and its separate Game Mode theme with the final Steam Prime artwork, filter, logo and sticky-header changes from the 2026-11-02 handoff.",
+      "acceptance": "Retrieve steam-prime-linux-handoff-20261102-final.zip from G:/ or Relay inbox linux-steam-prime transfer tr_649dd1eec7504c711c054de1e60c3583. Verify95973bytes and SHA256 cb6242002d527818c9bcc8afaade03a0814a6f099fe5c9a3925c11afec9931c6, then read INTEGRATION.md and VALIDATION.md. Integrate into the existing Adwaita Steam port, retaining its desktop Adwaita styling and actual native Game Mode controls/black surfaces. Include hero-sampled logo shadow/white glow in both modes; Game Mode alpha-aware proportional logo sizing with stacked-logo allowance; compact working filters/native controls and high-resolution defaults; actual resolution hover/focus labels; no logo preview platter/glow; artwork highlight glow; lighter frosted native sticky tabs with40px side gutters/16px inner padding. Adapt Downloads/Store references to Adwaita while preserving native actions. Preserve user artwork/settings and Linux-specific paths/account/shortcut IDs; do not overwrite the Linux skin.json with the Windows reference. Verify real Linux desktop and Gamescope/controller behavior, native filter padding/footer, logo centering/transparent margins/source refresh, scrolled header width/material, and Downloads/Store actions. Record remaining native acceptance honestly. Coordinate with steam-adwaita-game-page-port/PR14 before claiming overlapping implementation paths; reuse the existing admitted port workflow instead of parallel conflicting writes. rtxForge PR139/patch is a separate repository reference, not permission to modify that repository in this task. Preserve third-party notices and legitimate human attribution; omit voluntary tool/model/vendor credits and use verified human owner Git identity.",
+      "next_action": "Queued follow-up for the existing Linux Adwaita Steam owner. Obtain the checksum-verified final ZIP (durable Windows copy at G:/steam-prime-linux-handoff-20261102-final.zip; Relay transfer ready for72h), verify its manifest and resume/coordinate the existing Linux Steam port before changes. This queues work only; no Linux execution, installation, merge or release is claimed.",
+      "paths": [
+        "steam-theme/"
+      ],
+      "resources": [
+        "steam-theme-linux-adwaita",
+        "steam-game-page-port",
+        "decky-game-mode-theme"
+      ],
+      "task_class": "design",
+      "category": "design",
+      "tags": [
+        "steam",
+        "adwaita",
+        "linux",
+        "game-mode",
+        "steamgriddb",
+        "windows-handoff-ready"
+      ],
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "valentina",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-11-02T06:20:05.169Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Update Linux Adwaita Steam and its separate Game Mode theme with the final Steam Prime artwork, filter, logo and sticky-header changes from the 2026-11-02 handoff.",
+          "acceptance": "Retrieve steam-prime-linux-handoff-20261102-final.zip from G:/ or Relay inbox linux-steam-prime transfer tr_649dd1eec7504c711c054de1e60c3583. Verify95973bytes and SHA256 cb6242002d527818c9bcc8afaade03a0814a6f099fe5c9a3925c11afec9931c6, then read INTEGRATION.md and VALIDATION.md. Integrate into the existing Adwaita Steam port, retaining its desktop Adwaita styling and actual native Game Mode controls/black surfaces. Include hero-sampled logo shadow/white glow in both modes; Game Mode alpha-aware proportional logo sizing with stacked-logo allowance; compact working filters/native controls and high-resolution defaults; actual resolution hover/focus labels; no logo preview platter/glow; artwork highlight glow; lighter frosted native sticky tabs with40px side gutters/16px inner padding. Adapt Downloads/Store references to Adwaita while preserving native actions. Preserve user artwork/settings and Linux-specific paths/account/shortcut IDs; do not overwrite the Linux skin.json with the Windows reference. Verify real Linux desktop and Gamescope/controller behavior, native filter padding/footer, logo centering/transparent margins/source refresh, scrolled header width/material, and Downloads/Store actions. Record remaining native acceptance honestly. Coordinate with steam-adwaita-game-page-port/PR14 before claiming overlapping implementation paths; reuse the existing admitted port workflow instead of parallel conflicting writes. rtxForge PR139/patch is a separate repository reference, not permission to modify that repository in this task. Preserve third-party notices and legitimate human attribution; omit voluntary tool/model/vendor credits and use verified human owner Git identity.",
+          "at": "2026-11-02T06:20:05.169Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "adwaita-steam-final-updates-20261102:acceptance:0",
+            "text": "Retrieve steam-prime-linux-handoff-20261102-final.zip from G:/ or Relay inbox linux-steam-prime transfer tr_649dd1eec7504c711c054de1e60c3583. Verify95973bytes and SHA256 cb6242002d527818c9bcc8afaade03a0814a6f099fe5c9a3925c11afec9931c6, then read INTEGRATION.md and VALIDATION.md. Integrate into the existing Adwaita Steam port, retaining its desktop Adwaita styling and actual native Game Mode controls/black surfaces. Include hero-sampled logo shadow/white glow in both modes; Game Mode alpha-aware proportional logo sizing with stacked-logo allowance; compact working filters/native controls and high-resolution defaults; actual resolution hover/focus labels; no logo preview platter/glow; artwork highlight glow; lighter frosted native sticky tabs with40px side gutters/16px inner padding. Adapt Downloads/Store references to Adwaita while preserving native actions. Preserve user artwork/settings and Linux-specific paths/account/shortcut IDs; do not overwrite the Linux skin.json with the Windows reference. Verify real Linux desktop and Gamescope/controller behavior, native filter padding/footer, logo centering/transparent margins/source refresh, scrolled header width/material, and Downloads/Store actions. Record remaining native acceptance honestly. Coordinate with steam-adwaita-game-page-port/PR14 before claiming overlapping implementation paths; reuse the existing admitted port workflow instead of parallel conflicting writes. rtxForge PR139/patch is a separate repository reference, not permission to modify that repository in this task. Preserve third-party notices and legitimate human attribution; omit voluntary tool/model/vendor credits and use verified human owner Git identity.",
+            "at": "2026-11-02T06:20:05.169Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
