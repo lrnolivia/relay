@@ -38,3 +38,8 @@ test('nested raw metadata stays outside the public retained projection and missi
  assert.equal(progressSnapshot({...input,claim:{...row,identities:{head_sha:'b'.repeat(40)}}},at).payload.claim.source_as_of.status,'recorded');
  assert.equal(progressSnapshot({project:'relay',claim:row,queue:[{...row,state:'queued'}]},at).payload.claim.state,'active');
 });
+test('frozen product notices retain their public scalar state and summary semantics',()=>{
+ const data=contextualPresentation({ok:true,state:'working'},{operation:{name:'relay_runner_coordinate'}});
+ assert.equal(data.snapshot.payload.state,'working');assert.equal(validProgressSnapshot(data.snapshot),true);
+ assert.equal(contextCardModel(data.snapshot.payload).summary,contextCardModel(data).summary);
+});
