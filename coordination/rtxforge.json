@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T03:56:59.844Z",
+  "updated_at": "2026-11-02T03:59:53.313Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23519,7 +23519,10 @@
         "tests/test_library_identity.py",
         "scripts/library_media.py",
         "windows/RtxForge.Windows/Views/GamePage.xaml",
-        "windows/RtxForge.Windows/MainWindow.xaml.cs"
+        "windows/RtxForge.Windows/MainWindow.xaml.cs",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+        "windows/engine-host/rtxforge_win_host.py"
       ],
       "resources": [
         "library-game-names",
@@ -23527,7 +23530,7 @@
       ],
       "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
       "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
-      "next_action": "Implement shared display identity at final Windows scan decoration, persist game_names through existing settings, add Rename to desktop and Game Mode menus; configure authorized local Steam entries and artwork after verification.",
+      "next_action": "Wire library names into Windows scan parameters and snapshot keys; validate native UI rename and direct-launch shortcuts with selected artwork.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -23551,8 +23554,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T03:56:59.844Z",
-      "lease_until": "2026-11-02T15:56:59.844Z"
+      "updated_at": "2026-11-02T03:59:53.313Z",
+      "lease_until": "2026-11-02T15:59:53.313Z"
     }
   ]
 }
