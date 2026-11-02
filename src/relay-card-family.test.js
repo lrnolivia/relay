@@ -59,6 +59,29 @@ test('ordinary zero one and many update responses mount shallow frozen banners w
  }
 });
 
+test('assignment summary shares the desktop lead band with comfortable padding and aligned status',async()=>{
+ const data=fixture(0);data.claim.next_action='Review the source-bound result.';
+ const {browser,page}=await mount(data,{expand:false});try{
+  for(const theme of ['light','dark'])for(const staff of ['nico','valentina','roman','julian','luca','imani',null]){
+   const update=structuredClone(data);update.claim.primary_staff=staff;await page.emulateMedia({colorScheme:theme});await page.evaluate(data=>render(data),update);
+   const g=await page.evaluate(()=>{const rect=s=>{const r=document.querySelector(s).getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,height:r.height}};const badge=getComputedStyle(document.querySelector('#family-assignment-lead')),button=getComputedStyle(document.querySelector('#open-relay'));return {title:rect('#title'),hero:rect('.hero'),lead:rect('#family-assignment-lead'),ring:rect('#assignment-ring'),state:rect('#state'),card:rect('#card'),leadPadding:[parseFloat(badge.paddingTop),parseFloat(badge.paddingLeft)],buttonPadding:[parseFloat(button.paddingTop),parseFloat(button.paddingLeft)]}});
+   assert.ok(g.lead.y>=g.title.bottom&&g.hero.y>=g.title.bottom);assert.ok(g.hero.right+8<=g.lead.x,JSON.stringify(g));assert.ok(Math.min(g.hero.bottom,g.lead.bottom)>Math.max(g.hero.y,g.lead.y),JSON.stringify(g));assert.ok(g.state.x>=g.ring.right&&g.state.x<g.hero.right);assert.ok(g.card.height<=261,JSON.stringify(g));
+   if(staff)assert.ok(g.leadPadding[0]>=8&&g.leadPadding[1]>=12);assert.ok(g.buttonPadding[0]>=8&&g.buttonPadding[1]>=12);
+  }
+ }finally{await browser.close();}
+});
+
+test('stacked summary keeps full next text and restores product and individual layout',async()=>{
+ const data=fixture(1);data.claim.next_action='Review every recorded interaction and source-bound artifact before accepting the result. '.repeat(6).trim();
+ const {browser,page}=await mount(data,{width:360,expand:false});try{
+  const band=page.locator('#assignment-summary-band');assert.equal(await band.isVisible(),true);const hero=await page.locator('.hero').boundingBox(),lead=await page.locator('#family-assignment-lead').boundingBox();assert.ok(lead.y>=hero.y+hero.height);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  const full=page.locator('#next-full');await full.locator('summary').focus();await page.keyboard.press('Enter');assert.equal(await full.locator('p').textContent(),data.claim.next_action);assert.equal(await full.locator('p').isVisible(),true);
+  await page.evaluate(data=>render(data),individual(data));assert.equal(await band.isHidden(),true);assert.equal(await page.locator('.hero').evaluate(n=>n.parentElement.id==='assignment-summary-band'),false);
+  await page.evaluate(()=>render({ok:true}));assert.equal(await band.isHidden(),true);assert.equal(await page.locator('.hero').isVisible(),true);
+  await page.evaluate(data=>render(data),data);assert.equal(await band.locator('.hero').count(),1);assert.equal(await band.locator('#family-assignment-lead').count(),1);assert.equal(await page.locator('#assignment-summary-band').count(),1);
+ }finally{await browser.close();}
+});
+
 const leadFixture=id=>({project:'relay',claim:{id:'lead-badge',state:'active',goal:'Build the project interface',primary_staff:id,primary_team:'source'}});
 test('frozen remount preserves the original snapshot and rejects altered payloads without polling',async()=>{
  const original=contextualPresentation({...fixture(1),checked_at:now.toISOString()},{operation:{name:'relay_runner_coordinate'}});
@@ -121,7 +144,7 @@ test('assignment header badge renders every canonical staff identity without cla
   assert.equal(await lead.locator('.family-lead-team svg').count(),2);
   assert.equal(await lead.locator('.family-lead-role').textContent(),'Assigned lead · '+person.role);
   assert.equal(await lead.locator('img').getAttribute('alt'),'');assert.equal(await lead.locator('img').evaluate(async img=>{await img.decode();return img.naturalWidth>0}),true);
-  assert.equal(await lead.evaluate(n=>n.parentElement.classList.contains('family-assignment-header')),true);
+  assert.equal(await lead.evaluate(n=>n.parentElement.id==='assignment-summary-band'&&n.closest('.family-assignment-header')?.id==='family-assignment-header'),true);
   assert.equal(await page.locator('#feature-title').textContent(),contextCardModel(data).project_label||'relay');assert.equal(await page.locator('#title').textContent(),'Build the project interface');
   assert.equal(await page.locator('.family-update').count(),0);
  }}finally{await browser.close();}
