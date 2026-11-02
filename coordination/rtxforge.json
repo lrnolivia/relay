@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T19:10:41.628Z",
+  "updated_at": "2026-11-02T19:16:28.199Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25749,9 +25749,9 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T19:10:14.729Z",
-      "lease_until": "2026-11-03T07:10:14.729Z",
-      "amendment_count": 2,
+      "updated_at": "2026-11-02T19:16:28.199Z",
+      "lease_until": "2026-11-03T07:16:28.199Z",
+      "amendment_count": 3,
       "amendments": [
         {
           "at": "2026-11-02T18:59:50.917Z",
@@ -25785,10 +25785,28 @@
               "qa-verification"
             ]
           }
+        },
+        {
+          "at": "2026-11-02T19:16:28.199Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Use the canonical verifier role confirmed by the staff directory; qa-verification is a task category, not a specialist role.",
+          "fields": [
+            "supporting_roles"
+          ],
+          "before": {
+            "supporting_roles": [
+              "qa-verification"
+            ]
+          },
+          "after": {
+            "supporting_roles": [
+              "verifier"
+            ]
+          }
         }
       ],
       "supporting_roles": [
-        "qa-verification"
+        "verifier"
       ]
     }
   ]
