@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T19:19:57.987Z",
+  "updated_at": "2026-11-02T19:20:43.416Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25753,7 +25753,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T19:19:57.987Z",
+      "updated_at": "2026-11-02T19:20:43.416Z",
       "lease_until": "2026-11-03T07:19:57.987Z",
       "amendment_count": 4,
       "amendments": [
@@ -25832,7 +25832,73 @@
       ],
       "supporting_roles": [
         "verifier"
-      ]
+      ],
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "native-integration-review-6d60b71-20261102",
+          "assignment": "rtxforge-game-mode-desktop-integration-20261102",
+          "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "branch": "rtxforge/game-mode-desktop-integration-20261102",
+          "source_sha": "6d60b71c906c62cd053cea85307a98e814555c10",
+          "objective_digest": "265e133863d9d3a4532cc2f1d5afd4c5bf89068b13b1f2c17f4b4642fc4f7fc1",
+          "scope_digest": "bc0b442344f3f52c786dab86da85180e8cda76eb2a01f9cf873a4a490efe24e6",
+          "step_id": "native-integration-review",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "6d60b71c906c62cd053cea85307a98e814555c10",
+            "objective_digest": "265e133863d9d3a4532cc2f1d5afd4c5bf89068b13b1f2c17f4b4642fc4f7fc1",
+            "step_id": "native-integration-review",
+            "label": "Independent native handoff and distribution review",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "4427ce49a3dc84f516a8b8b57a1918214b400b84a1b123b2e190359b3f874c72"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-02T19:20:43.416Z",
+          "request_digest": "ecb3c2e1c4571fff32553f4db6702a07b4b5fbe517664c8fe313ef42c3c4c56d",
+          "step_digest": "83fae0ad3a2e3bc7efc0304c653a52860fba38df39412d245c9d562b724dcee6"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "rtxforge-game-mode-desktop-integration-20261102",
+        "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
+        "objective_digest": "265e133863d9d3a4532cc2f1d5afd4c5bf89068b13b1f2c17f4b4642fc4f7fc1",
+        "publisher": {
+          "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "branch": "rtxforge/game-mode-desktop-integration-20261102"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "native-integration-review",
+            "label": "Independent native handoff and distribution review",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "rtxforge-game-mode-desktop-integration-20261102",
+        "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
