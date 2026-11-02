@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T08:18:15.467Z",
+  "updated_at": "2026-11-02T08:18:23.817Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23426,7 +23426,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T08:18:15.467Z",
+      "updated_at": "2026-11-02T08:18:23.817Z",
       "lease_until": "2026-11-02T20:13:29.895Z",
       "amendment_count": 17,
       "amendments": [
@@ -24623,10 +24623,17 @@
             "host_available": true,
             "intent_digest": "b40752836599b222a0720b4f2d1321a61b098a0dfc1d406aad463fe591da17bc"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-02T08:15:20.627Z",
           "request_digest": "2c21f70586c411f1e3982f34bb4388d45790c4d3c80e69084a62a760ba61a438",
-          "step_digest": "a126900d90796e51b9bc82eb97830c7b823134b583254b2d9a80390a96b04814"
+          "step_digest": "b862739e462695e5acf2c118177e977b3e60f336cf567a38f4c3046199a0c498",
+          "start": {
+            "request_digest": "2c21f70586c411f1e3982f34bb4388d45790c4d3c80e69084a62a760ba61a438",
+            "source_sha": "95f09bb0ba71c48d8d85da7885ab8aca134a11d8",
+            "agent_id": "/root/sdr_gallery_95f09bb",
+            "observed_at": "2026-11-02T08:18:19.831Z"
+          },
+          "started_at": "2026-11-02T08:18:23.817Z"
         }
       ],
       "card_steps": {
@@ -24638,7 +24645,7 @@
           "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
           "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
         },
-        "sequence": 5,
+        "sequence": 6,
         "complete": false,
         "steps": [
           {
@@ -24685,8 +24692,21 @@
             "id": "fresh-sdr-capture-95f09bb",
             "label": "Capture fresh SDR overlay gallery at 95f09bb across five games, three scenes, three surfaces, three layouts and Surface Tint on/off.",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "fresh-sdr-capture-95f09bb:started",
+              "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+              "step_id": "fresh-sdr-capture-95f09bb",
+              "plan_revision": "2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b",
+              "input_digest": "2c21f70586c411f1e3982f34bb4388d45790c4d3c80e69084a62a760ba61a438",
+              "evidence": "sha256:2dd43ade5f4cc1b34940c58ba8ed9033fc7dddfbe9fa1456bb9286571fd0a58c",
+              "source_sha": "95f09bb0ba71c48d8d85da7885ab8aca134a11d8",
+              "observed_at": "2026-11-02T08:18:19.831Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              }
+            }
           }
         ]
       },
@@ -24694,11 +24714,12 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
         "revision": "2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b",
-        "sequence": 5,
+        "sequence": 6,
         "truncated": false,
         "identities": {
           "finish-full-review-95f09bb:started": "ea5492c822b907e73f0a3f228a4fb0b86e2b30efb18edf53b0a2d69ee5df9c9a",
-          "finish-document-95f09bb:started": "3c653ee070176be81bc4ee2d5d889092c87b28d4ae98bb8c61dca971e3843d6a"
+          "finish-document-95f09bb:started": "3c653ee070176be81bc4ee2d5d889092c87b28d4ae98bb8c61dca971e3843d6a",
+          "fresh-sdr-capture-95f09bb:started": "16a8c722ace983abe5dd0cde073e422d6a4ce114e80ff58cee16528b3e393921"
         },
         "items": [
           {
@@ -24737,6 +24758,28 @@
             "observed_at": "2026-11-02T08:18:11.843Z",
             "recorded_at": "2026-11-02T08:18:15.467Z",
             "receipt_digest": "sha256:918fed317ac4827285f7813bc5b2ca6e85036f3497d1f460861ef625408bc71a",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Work started.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          },
+          {
+            "key": "fresh-sdr-capture-95f09bb:started:2c21f70586c411f1e3982f34bb4388d45790c4d3c80e69084a62a760ba61a438:running:",
+            "receipt_snapshot": "{\"label\":\"Capture fresh SDR overlay gallery at 95f09bb across five games, three scenes, three surfaces, three layouts and Surface Tint on/off.\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:2dd43ade5f4cc1b34940c58ba8ed9033fc7dddfbe9fa1456bb9286571fd0a58c\",\"id\":\"fresh-sdr-capture-95f09bb:started\",\"input_digest\":\"2c21f70586c411f1e3982f34bb4388d45790c4d3c80e69084a62a760ba61a438\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b\",\"source_sha\":\"95f09bb0ba71c48d8d85da7885ab8aca134a11d8\",\"step_id\":\"fresh-sdr-capture-95f09bb\"},\"state\":\"running\"}",
+            "id": "fresh-sdr-capture-95f09bb:started",
+            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+            "step_id": "fresh-sdr-capture-95f09bb",
+            "revision": "2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b",
+            "label": "Capture fresh SDR overlay gallery at 95f09bb across five games, three scenes, three surfaces, three layouts and Surface Tint on/off.",
+            "state": "running",
+            "phase": null,
+            "source_sha": "95f09bb0ba71c48d8d85da7885ab8aca134a11d8",
+            "observed_at": "2026-11-02T08:18:19.831Z",
+            "recorded_at": "2026-11-02T08:18:23.817Z",
+            "receipt_digest": "sha256:2dd43ade5f4cc1b34940c58ba8ed9033fc7dddfbe9fa1456bb9286571fd0a58c",
             "owner": {
               "staff": "roman",
               "team": "inspector"
