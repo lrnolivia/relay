@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T18:30:26.286Z",
+  "updated_at": "2026-11-02T18:33:30.942Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25270,7 +25270,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T18:30:26.286Z",
+      "updated_at": "2026-11-02T18:33:30.942Z",
       "lease_until": "2026-11-03T06:28:52.437Z",
       "amendment_count": 1,
       "amendments": [
@@ -25321,17 +25321,30 @@
             "host_available": true,
             "intent_digest": "9d6b8ea3e9ff4201500cdf15d42abb1aa1f712898c6252b8982ce1ffe7b468fb"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-02T18:29:01.253Z",
           "request_digest": "c920d3e2a20299c8642761858ccdfe3f5573960043ff378b27b2ff2e286a6e46",
-          "step_digest": "25d40e4f613c741788e1f44669531421a52d1b4e7379273685c2c56320097770",
+          "step_digest": "748e353d408399e1c33df5deb89b306f610494e368c3d2cae4787e5c551755cf",
           "start": {
             "request_digest": "c920d3e2a20299c8642761858ccdfe3f5573960043ff378b27b2ff2e286a6e46",
             "source_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
             "agent_id": "/root/onboarding_notice_layout_assess",
             "observed_at": "2026-11-02T18:30:21Z"
           },
-          "started_at": "2026-11-02T18:30:26.286Z"
+          "started_at": "2026-11-02T18:30:26.286Z",
+          "result": {
+            "request_digest": "c920d3e2a20299c8642761858ccdfe3f5573960043ff378b27b2ff2e286a6e46",
+            "source_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
+            "agent_id": "/root/onboarding_notice_layout_assess",
+            "observed_at": "2026-11-02T18:33:26Z",
+            "state": "succeeded",
+            "result_digest": "19e0288f210ea05363c5090a45b80bdb33164cdbb591f778605d917c4000cae6",
+            "update": {
+              "text": "The active-overlay message and shortcuts need one group, readable rows and separation before the quiet native action. Small onboarding windows must scroll rather than clip the footer.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-02T18:33:30.942Z"
         }
       ],
       "card_steps": {
@@ -25343,27 +25356,32 @@
           "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
           "branch": "rtxforge/onboarding-overlay-notice-20261102"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
             "id": "layout-assessment",
             "label": "Assess active-overlay onboarding notice layout",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "notice-layout-assess-6f28c28:started",
+              "id": "notice-layout-assess-6f28c28:result",
               "assignment": "rtxforge-onboarding-overlay-notice-20261102",
               "step_id": "layout-assessment",
               "plan_revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
               "input_digest": "c920d3e2a20299c8642761858ccdfe3f5573960043ff378b27b2ff2e286a6e46",
-              "evidence": "sha256:7be9f29a36986d99fbcb8f8f57b1e280daa9d7129216f630cdffb1b07de3469f",
+              "evidence": "sha256:a1d6b8e9ccf4303bb1c146d5c9ecf2f632d0b445c4597b4c4c8f20a7d9b82abd",
               "source_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
-              "observed_at": "2026-11-02T18:30:21Z",
+              "observed_at": "2026-11-02T18:33:26Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
-              }
+              },
+              "update": {
+                "text": "The active-overlay message and shortcuts need one group, readable rows and separation before the quiet native action. Small onboarding windows must scroll rather than clip the footer.",
+                "artifacts": []
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -25372,10 +25390,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-onboarding-overlay-notice-20261102",
         "revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
-          "notice-layout-assess-6f28c28:started": "9115112f2104bbd569a46169b1104c7872c2fa18359bb993d49f18bd44d3887a"
+          "notice-layout-assess-6f28c28:started": "9115112f2104bbd569a46169b1104c7872c2fa18359bb993d49f18bd44d3887a",
+          "notice-layout-assess-6f28c28:result": "cb0a6c6ac56c73acce24d967e0d06ba6246a1fa2a4fe216e9874a37bb9534f3c"
         },
         "items": [
           {
@@ -25398,6 +25417,28 @@
             },
             "text": "Work started.",
             "text_kind": "recorded-state",
+            "artifacts": []
+          },
+          {
+            "key": "notice-layout-assess-6f28c28:result:c920d3e2a20299c8642761858ccdfe3f5573960043ff378b27b2ff2e286a6e46:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Assess active-overlay onboarding notice layout\",\"receipt\":{\"assignment\":\"rtxforge-onboarding-overlay-notice-20261102\",\"evidence\":\"sha256:a1d6b8e9ccf4303bb1c146d5c9ecf2f632d0b445c4597b4c4c8f20a7d9b82abd\",\"id\":\"notice-layout-assess-6f28c28:result\",\"input_digest\":\"c920d3e2a20299c8642761858ccdfe3f5573960043ff378b27b2ff2e286a6e46\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032\",\"source_sha\":\"6f28c28bacfd992bd958d1fdce1566291344f903\",\"step_id\":\"layout-assessment\",\"update\":{\"artifacts\":[],\"text\":\"The active-overlay message and shortcuts need one group, readable rows and separation before the quiet native action. Small onboarding windows must scroll rather than clip the footer.\"}},\"state\":\"blocked\"}",
+            "id": "notice-layout-assess-6f28c28:result",
+            "assignment": "rtxforge-onboarding-overlay-notice-20261102",
+            "step_id": "layout-assessment",
+            "revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
+            "label": "Assess active-overlay onboarding notice layout",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
+            "observed_at": "2026-11-02T18:33:26Z",
+            "recorded_at": "2026-11-02T18:33:30.942Z",
+            "receipt_digest": "sha256:a1d6b8e9ccf4303bb1c146d5c9ecf2f632d0b445c4597b4c4c8f20a7d9b82abd",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The active-overlay message and shortcuts need one group, readable rows and separation before the quiet native action. Small onboarding windows must scroll rather than clip the footer.",
+            "text_kind": "owner-published",
             "artifacts": []
           }
         ]
