@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T19:10:14.729Z",
+  "updated_at": "2026-11-02T19:10:41.628Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8323,7 +8323,7 @@
       "supporting_staff": [
         "roman"
       ],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-11-02T18:21:12.934Z",
       "objective_history": {
         "baseline": {
@@ -8340,7 +8340,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T18:28:52.437Z",
+      "updated_at": "2026-11-02T19:10:41.628Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -8359,7 +8359,8 @@
             ]
           }
         }
-      ]
+      ],
+      "completed_at": "2026-11-02T19:10:41.628Z"
     },
     {
       "id": "rtxforge-overview-testing-order-20261102",
@@ -25226,7 +25227,7 @@
         "roman"
       ],
       "base_sha": "6f28c28bacfd992bd958d1fdce1566291344f903",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-02T18:24:26.913Z",
       "objective_history": {
         "baseline": {
@@ -25243,8 +25244,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T18:59:40.825Z",
-      "lease_until": "2026-11-03T06:59:40.825Z",
+      "updated_at": "2026-11-02T19:10:41.628Z",
+      "lease_until": "2026-11-03T07:10:41.628Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -25665,7 +25666,13 @@
             "artifacts": []
           }
         ]
-      }
+      },
+      "pr": 140,
+      "merged_head_sha": "0bb5d71ba4a0011268bbf9aad3b12dab465b1b58",
+      "merge_commit_sha": "c3f7b1dbed1fd3aa21603043dae6f12e7f15a298",
+      "evidence": "User approved the delivered onboarding screenshot: looks perfect. PR140 merged c3f7b1dbed1fd3aa21603043dae6f12e7f15a298; verified human author Lauren Olivia. Approved source0bb5d71 and tested PRmerge0e0ec240 share Git tree300ac563db88dde84622fd4837d61c2658b1d139 with merged main. All required checks green: Windows x64/ARM6441502813102, Linux41502813002 and GameMode native41502812839; attribution/coordination passed. Independent full onboarding review disposition ship at reviewed scope, result6ca952962ae213900697501315e93bcb7e86f49af63e2a434229c1a4ca479689; documenter consistent result6ea83d41d06462fd6c3ed13d5c49bcfbf5c9e91156aa9c405dcf74abf6488132. Five rendered states, short720p/large-text scrolled footer fixture, native interaction suite and detector passed. Updated prototypePID40976; screenshot G:/BuildScratch/rtxforge-onboarding-notice-20261102/onboarding-revised.png and render-manifest.json delivered. Exact CI x64 installer artifact13170439399 locally installed,29payload files and matching preview assets verified; user settings hash unchanged. Receipt G:/BuildScratch/rtxforge-onboarding-notice-20261102/installed-hotfix-receipt.json SHA256956a9b684338d83db0e83d85de033c85fd1a2517a324088f59e2e9b220805504. Rollback app and settings preserved. No unrelated product or website surface edits; general desktop control remains stopped.",
+      "work_accounted": true,
+      "completed_at": "2026-11-02T19:10:41.628Z"
     },
     {
       "id": "rtxforge-game-mode-desktop-integration-20261102",
