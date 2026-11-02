@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T04:14:12.591Z",
+  "updated_at": "2026-11-02T04:21:04.555Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23179,8 +23179,11 @@
         "scripts/overlay_settings.py",
         "scripts/linux_overlay_host.py",
         "windows/feeder-panel/rtxforge-quiet.cpp",
-        "windows/engine-host/panel_helper.py",
-        "tests/test_overlay_settings.py"
+        "tests/test_overlay_settings.py",
+        "windows/RtxForge.Windows/Services/NativePanelCoordinator.cs",
+        "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
+        "windows/RtxForge.Windows/Controls/GameOverlayPreferencesView.cs",
+        "tests/linux_runtime/test_integration_contracts.py"
       ],
       "resources": [
         "rtxforge-desktop-overlay-preview",
@@ -23188,7 +23191,7 @@
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
       "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks.",
-      "next_action": "Finish accent source validation and performance audit; implement per-game in-overlay preference writes, app defaults reset and styled confirmed NR startup notification. User lifted release hold.",
+      "next_action": "Correct per-game in-overlay saves and app-default reset; audit GPU/CPU cost and replace upstream NR startup toast before publishing. Models.cs belongs to concurrent library-name task and will not be touched.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -23243,8 +23246,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T04:13:37.159Z",
-      "lease_until": "2026-11-02T16:13:37.159Z",
+      "updated_at": "2026-11-02T04:21:04.555Z",
+      "lease_until": "2026-11-02T16:21:04.555Z",
       "amendment_count": 8,
       "amendments": [
         {
