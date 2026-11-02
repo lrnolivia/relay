@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T04:08:43.340Z",
+  "updated_at": "2026-11-02T04:13:37.159Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23102,6 +23102,61 @@
       ]
     },
     {
+      "id": "rtxforge-library-names-mass-effect-20261101",
+      "owner": "01a19a65-3f13-7703-bcf7-077145942958",
+      "branch": "rtxforge/library-names-mass-effect-20261101",
+      "paths": [
+        "windows/engine-host/win_features.py",
+        "windows/RtxForge.Windows/MainWindow.Library.cs",
+        "windows/RtxForge.Windows/Views/LibraryPage.xaml.cs",
+        "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.LibraryManagement.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Details.cs",
+        "scripts/library_identity.py",
+        "tests/test_library_identity.py",
+        "scripts/library_media.py",
+        "windows/RtxForge.Windows/Views/GamePage.xaml",
+        "windows/RtxForge.Windows/MainWindow.xaml.cs",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+        "windows/engine-host/rtxforge_win_host.py",
+        "scripts/steam_artwork.py",
+        "tests/test_steam_artwork.py"
+      ],
+      "resources": [
+        "library-game-names",
+        "mass-effect-steam-shortcuts"
+      ],
+      "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
+      "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
+      "next_action": "Finish authorized local setup without computer input: artwork applied, create Steam autoboot shortcuts using existing ME3Tweaks support; bind individual collection artwork to the matching shortcut instead of shared collection appid, then run focused tests and publish draft source.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "55f2d8b54e15165e427add24b05b40e5758d178d",
+      "state": "active",
+      "created_at": "2026-11-02T03:55:35.289Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
+          "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
+          "at": "2026-11-02T03:55:35.289Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-library-names-mass-effect-20261101:acceptance:0",
+            "text": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
+            "at": "2026-11-02T03:55:35.289Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-02T04:08:43.340Z",
+      "lease_until": "2026-11-02T16:08:43.340Z"
+    },
+    {
       "id": "rtxforge-overlay-accent-toggle-alignment-20261101",
       "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
       "branch": "rtxforge/overlay-accent-toggle-alignment-20261101",
@@ -23120,7 +23175,12 @@
         "windows/overlay-rmlui/GlassRuntime.cpp",
         "scripts/glass_preferences.py",
         "gui/rtxforge_gtk.py",
-        "tests/test_glass_preferences.py"
+        "tests/test_glass_preferences.py",
+        "scripts/overlay_settings.py",
+        "scripts/linux_overlay_host.py",
+        "windows/feeder-panel/rtxforge-quiet.cpp",
+        "windows/engine-host/panel_helper.py",
+        "tests/test_overlay_settings.py"
       ],
       "resources": [
         "rtxforge-desktop-overlay-preview",
@@ -23128,7 +23188,7 @@
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
       "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks.",
-      "next_action": "Implement Theme, Custom and default Adaptive accent sources with scene sampling and smooth transitions, overlay color editing/persistence, native settings parity and theme-specific consistent heading brightness. Hold gallery replacement and release until this revision is verified and Game Mode merges.",
+      "next_action": "Finish accent source validation and performance audit; implement per-game in-overlay preference writes, app defaults reset and styled confirmed NR startup notification. User lifted release hold.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -23183,8 +23243,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T03:47:59.735Z",
-      "lease_until": "2026-11-02T15:47:59.735Z",
+      "updated_at": "2026-11-02T04:13:37.159Z",
+      "lease_until": "2026-11-02T16:13:37.159Z",
       "amendment_count": 8,
       "amendments": [
         {
@@ -23503,61 +23563,6 @@
           "step_digest": "73cf578037fe468b378f6d99687978c5a97fc531ccf1a7ae26c3ea7c9be3c2c3"
         }
       ]
-    },
-    {
-      "id": "rtxforge-library-names-mass-effect-20261101",
-      "owner": "01a19a65-3f13-7703-bcf7-077145942958",
-      "branch": "rtxforge/library-names-mass-effect-20261101",
-      "paths": [
-        "windows/engine-host/win_features.py",
-        "windows/RtxForge.Windows/MainWindow.Library.cs",
-        "windows/RtxForge.Windows/Views/LibraryPage.xaml.cs",
-        "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
-        "windows/RtxForge.Windows/GameMode/GameModeView.LibraryManagement.cs",
-        "windows/RtxForge.Windows/GameMode/GameModeView.Details.cs",
-        "scripts/library_identity.py",
-        "tests/test_library_identity.py",
-        "scripts/library_media.py",
-        "windows/RtxForge.Windows/Views/GamePage.xaml",
-        "windows/RtxForge.Windows/MainWindow.xaml.cs",
-        "windows/RtxForge.Windows/Models/Models.cs",
-        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
-        "windows/engine-host/rtxforge_win_host.py",
-        "scripts/steam_artwork.py",
-        "tests/test_steam_artwork.py"
-      ],
-      "resources": [
-        "library-game-names",
-        "mass-effect-steam-shortcuts"
-      ],
-      "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
-      "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
-      "next_action": "Finish authorized local setup without computer input: artwork applied, create Steam autoboot shortcuts using existing ME3Tweaks support; bind individual collection artwork to the matching shortcut instead of shared collection appid, then run focused tests and publish draft source.",
-      "category": "implementation",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "55f2d8b54e15165e427add24b05b40e5758d178d",
-      "state": "active",
-      "created_at": "2026-11-02T03:55:35.289Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
-          "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
-          "at": "2026-11-02T03:55:35.289Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-library-names-mass-effect-20261101:acceptance:0",
-            "text": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
-            "at": "2026-11-02T03:55:35.289Z"
-          }
-        ]
-      },
-      "updated_at": "2026-11-02T04:08:43.340Z",
-      "lease_until": "2026-11-02T16:08:43.340Z"
     }
   ]
 }
