@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T18:59:40.825Z",
+  "updated_at": "2026-11-02T18:59:50.917Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25712,8 +25712,8 @@
         "rtxforge-game-mode-integration"
       ],
       "goal": "Finish new Game Mode integration into the Windows and Linux Desktop app, package it, install locally and merge to main.",
-      "acceptance": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.",
-      "next_action": "Replace legacy Game Mode UI acceptance with current Tauri fixtures and retain native Desktop review. Do not edit held ui_app_completion.py; stop invoking its retired Game Mode flow from package review. Finish distribution, actual native mode switch and local installation, preserving concurrent PR140 overlay source.",
+      "acceptance": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.\n2026-11-02 user additions: default 200% at 4K while preserving explicit manual choices; Testing last on Overview in Game Mode and Desktop (Windows Desktop file separately queued behind an existing reservation); Steam shortcuts explicitly open the new Game Mode, and the action reads Update Steam Shortcut when already present; remove old runtime UI. Appearance orders Light, Clear, Dark with Clear default; Surface Tint replaces Accent Tint and shares a strength slider and Adaptive source with Overlay. Batch selection must not enlarge cards or change complete rows, and Library's lower fade should be softer. User requested a screenshot while at work; current 4K/200% development preview delivered, final installed package still requires verification. Another authorized chat owns website screenshots now; no further website capture work in this task.",
+      "next_action": "Commit candidate, run exact native/package checks and bounded independent integration review, then install and verify actual Desktop/native handoff. Preserve PR140 overlay changes and held library source.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -25733,11 +25733,37 @@
             "id": "rtxforge-game-mode-desktop-integration-20261102:acceptance:0",
             "text": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.",
             "at": "2026-11-02T17:46:01.445Z"
+          },
+          {
+            "id": "rtxforge-game-mode-desktop-integration-20261102:acceptance:1",
+            "text": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.\n2026-11-02 user additions: default 200% at 4K while preserving explicit manual choices; Testing last on Overview in Game Mode and Desktop (Windows Desktop file separately queued behind an existing reservation); Steam shortcuts explicitly open the new Game Mode, and the action reads Update Steam Shortcut when already present; remove old runtime UI. Appearance orders Light, Clear, Dark with Clear default; Surface Tint replaces Accent Tint and shares a strength slider and Adaptive source with Overlay. Batch selection must not enlarge cards or change complete rows, and Library's lower fade should be softer. User requested a screenshot while at work; current 4K/200% development preview delivered, final installed package still requires verification. Another authorized chat owns website screenshots now; no further website capture work in this task.",
+            "at": "2026-11-02T18:59:50.917Z",
+            "reason": "Lauren added explicit product requirements while implementation continued."
           }
         ]
       },
-      "updated_at": "2026-11-02T18:50:53.533Z",
-      "lease_until": "2026-11-03T06:50:53.533Z"
+      "updated_at": "2026-11-02T18:59:50.917Z",
+      "lease_until": "2026-11-03T06:59:50.917Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-02T18:59:50.917Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Lauren added explicit product requirements while implementation continued.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.",
+            "next_action": "Replace legacy Game Mode UI acceptance with current Tauri fixtures and retain native Desktop review. Do not edit held ui_app_completion.py; stop invoking its retired Game Mode flow from package review. Finish distribution, actual native mode switch and local installation, preserving concurrent PR140 overlay source."
+          },
+          "after": {
+            "acceptance": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.\n2026-11-02 user additions: default 200% at 4K while preserving explicit manual choices; Testing last on Overview in Game Mode and Desktop (Windows Desktop file separately queued behind an existing reservation); Steam shortcuts explicitly open the new Game Mode, and the action reads Update Steam Shortcut when already present; remove old runtime UI. Appearance orders Light, Clear, Dark with Clear default; Surface Tint replaces Accent Tint and shares a strength slider and Adaptive source with Overlay. Batch selection must not enlarge cards or change complete rows, and Library's lower fade should be softer. User requested a screenshot while at work; current 4K/200% development preview delivered, final installed package still requires verification. Another authorized chat owns website screenshots now; no further website capture work in this task.",
+            "next_action": "Commit candidate, run exact native/package checks and bounded independent integration review, then install and verify actual Desktop/native handoff. Preserve PR140 overlay changes and held library source."
+          }
+        }
+      ]
     }
   ]
 }
