@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T03:55:35.289Z",
+  "updated_at": "2026-11-02T03:56:59.844Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23509,17 +23509,17 @@
       "owner": "01a19a65-3f13-7703-bcf7-077145942958",
       "branch": "rtxforge/library-names-mass-effect-20261101",
       "paths": [
-        "windows/engine-host/library_scan.py",
         "windows/engine-host/win_features.py",
         "windows/RtxForge.Windows/MainWindow.Library.cs",
-        "windows/RtxForge.Windows/Services/LibraryLocations.cs",
         "windows/RtxForge.Windows/Views/LibraryPage.xaml.cs",
         "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
         "windows/RtxForge.Windows/GameMode/GameModeView.LibraryManagement.cs",
         "windows/RtxForge.Windows/GameMode/GameModeView.Details.cs",
         "scripts/library_identity.py",
-        "windows/tests/test_library_scan.py",
-        "tests/test_library_identity.py"
+        "tests/test_library_identity.py",
+        "scripts/library_media.py",
+        "windows/RtxForge.Windows/Views/GamePage.xaml",
+        "windows/RtxForge.Windows/MainWindow.xaml.cs"
       ],
       "resources": [
         "library-game-names",
@@ -23527,7 +23527,7 @@
       ],
       "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
       "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
-      "next_action": "Implement in isolated checkout after admission; inspect installed library and Steam profiles, verify direct-launch requirements and artwork, test and configure authorized entries.",
+      "next_action": "Implement shared display identity at final Windows scan decoration, persist game_names through existing settings, add Rename to desktop and Game Mode menus; configure authorized local Steam entries and artwork after verification.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -23551,8 +23551,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T03:55:35.289Z",
-      "lease_until": "2026-11-02T15:55:35.289Z"
+      "updated_at": "2026-11-02T03:56:59.844Z",
+      "lease_until": "2026-11-02T15:56:59.844Z"
     }
   ]
 }
