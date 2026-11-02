@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-01T23:54:28.727Z",
+  "updated_at": "2026-11-02T00:03:23.865Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21634,14 +21634,15 @@
         "src/relay-chat-ui.test.js",
         "src/index.js",
         "src/relay-entry.test.js",
-        "scripts/verify-context-card-visuals.mjs"
+        "scripts/verify-context-card-visuals.mjs",
+        "src/relay-card-refresh.test.js"
       ],
       "resources": [
         "relay-assignment-header-lead-badge"
       ],
       "goal": "Replace the plain assigned-lead line with a compact canonical staff ID badge inside the project-owned assignment header.",
       "acceptance": "Project and assignment title stay primary. Show actual assigned lead's existing approved portrait crop with subtle shadow, bold Momo name in canonical contrast-safe team accent, small-caps team label and actual team icon, plus clear lead-role label. Apply every real assigned staff identity; graceful missing or failed avatar fallback; no lead, cross-team/current contributor distinction, keyboard/accessibility, responsive light/dark and layout transitions. Preserve assignment shell, contributor messages, public preview/privacy/workflow contracts, race/reduced-motion safeguards and old resource aliases. Meaningful model-to-DOM tests, appropriate full checks and exact-head locally inspected captures. New draft PR for parent human merge only; no merge/approval or new screenshot export.",
-      "next_action": "Implement header-only lead badge using existing staff identity assets after independent readback/preflight. Test model-to-DOM identity/fallback/transitions and local pixels, publish tested draft PR. Preserve all unrelated reservations and queued native UI acceptance.",
+      "next_action": "Add only the existing refresh fixture readiness selector update for the approved ID badge replacing plain lead text; preserve all refresh polling/race/freshness/target assertions. Finish focused/full checks and local-only exact-head badge captures, then draft PR for parent human review.",
       "category": "implementation",
       "primary_role": "builder",
       "supporting_roles": [
@@ -21673,8 +21674,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-01T23:54:28.727Z",
-      "lease_until": "2026-11-02T11:54:28.727Z"
+      "updated_at": "2026-11-02T00:03:23.865Z",
+      "lease_until": "2026-11-02T12:03:23.865Z"
     }
   ],
   "migrated_from": "loew-inspector"
