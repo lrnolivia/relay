@@ -9,7 +9,7 @@ async function refreshCard(surface){const menu=surface.locator('#card-menu');if(
 test("Relay publishes one versioned compact MCP card resource", () => {
   const descriptor = relayContextCardDescriptor();
   const resource = relayContextCardResource();
-  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v30.html");
+  assert.equal(RELAY_CONTEXT_CARD_URI, "ui://relay/context-card/v31.html");
   assert.equal(descriptor.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.uri, RELAY_CONTEXT_CARD_URI);
   assert.equal(resource.mimeType, "text/html;profile=mcp-app");

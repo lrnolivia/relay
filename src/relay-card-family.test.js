@@ -74,12 +74,27 @@ test('assignment summary shares the desktop lead band with comfortable padding a
 test('stacked summary keeps full next text and restores product and individual layout',async()=>{
  const data=fixture(1);data.claim.next_action='Review every recorded interaction and source-bound artifact before accepting the result. '.repeat(6).trim();
  const {browser,page}=await mount(data,{width:360,expand:false});try{
-  const band=page.locator('#assignment-summary-band');assert.equal(await band.isVisible(),true);const hero=await page.locator('.hero').boundingBox(),lead=await page.locator('#family-assignment-lead').boundingBox();assert.ok(lead.y>=hero.y+hero.height);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  const band=page.locator('#assignment-summary-band');assert.equal(await band.isVisible(),true);assert.equal(await page.locator('#open-relay').evaluate(n=>getComputedStyle(n).whiteSpace),'nowrap');assert.equal((await page.locator('#open-relay').boundingBox()).height,44);const hero=await page.locator('.hero').boundingBox(),lead=await page.locator('#family-assignment-lead').boundingBox();assert.ok(lead.y>=hero.y+hero.height);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   const full=page.locator('#next-full');await full.locator('summary').focus();await page.keyboard.press('Enter');assert.equal(await full.locator('p').textContent(),data.claim.next_action);assert.equal(await full.locator('p').isVisible(),true);
   await page.evaluate(data=>render(data),individual(data));assert.equal(await band.isHidden(),true);assert.equal(await page.locator('.hero').evaluate(n=>n.parentElement.id==='assignment-summary-band'),false);
   await page.evaluate(()=>render({ok:true}));assert.equal(await band.isHidden(),true);assert.equal(await page.locator('.hero').isVisible(),true);
   await page.evaluate(data=>render(data),data);assert.equal(await band.locator('.hero').count(),1);assert.equal(await band.locator('#family-assignment-lead').count(),1);assert.equal(await page.locator('#assignment-summary-band').count(),1);
  }finally{await browser.close();}
+});
+
+test('product check headings render the loaded Momo face with a real sans-serif failure fallback',async()=>{
+ const data={ci:{schema:'relay-ci-card/v1',status:'completed',conclusion:'success',telemetry:'reported',run:{id:'1'},tests:{passed:4,failed:0,skipped:0,total:4},suites:[],jobs:{total:1,passed:1}}};
+ const browser=await chromium.launch({headless:true});try{for(const fonts of ['normal','blocked-css','unavailable']){
+  const page=await browser.newPage({viewport:{width:760,height:900}});
+  await page.addInitScript(({data,fonts})=>{window.openai={widgetState:{},setWidgetState(){},toolOutput:data,toolInput:{},callTool:async()=>({})};if(fonts==='unavailable')FontFace.prototype.load=()=>Promise.reject(new Error('Fixture blocks all font loading'));},{data,fonts});
+  await page.route('https://relay-product-font.test/card',route=>route.fulfill({contentType:'text/html',headers:fonts==='normal'?{}:{'Content-Security-Policy':"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src 'self'"},body:relayContextCardResource().text}));
+  await page.goto('https://relay-product-font.test/card');await page.locator('#card[data-family=product] #title').waitFor();await page.waitForFunction(()=>['loaded-css','loaded-buffer','unavailable'].includes(document.documentElement.dataset.momoFont));
+  const client=await page.context().newCDPSession(page);await client.send('DOM.enable');await client.send('CSS.enable');const {root}=await client.send('DOM.getDocument'),{nodeId}=await client.send('DOM.querySelector',{nodeId:root.nodeId,selector:'#title'}),actual=await client.send('CSS.getPlatformFontsForNode',{nodeId});
+  assert.ok(actual.fonts.some(f=>f.glyphCount>0),JSON.stringify(actual));
+  if(fonts==='unavailable'){assert.equal(await page.evaluate(()=>document.documentElement.dataset.momoFont),'unavailable');assert.ok(actual.fonts.every(f=>!/(serif|times|cambria|georgia)/i.test(f.familyName)),JSON.stringify(actual));}
+  else{assert.ok(actual.fonts.some(f=>f.isCustomFont&&/Momo/i.test(f.familyName)&&f.glyphCount>0),JSON.stringify(actual));assert.equal(await page.evaluate(()=>document.documentElement.dataset.momoFont),fonts==='normal'?'loaded-css':'loaded-buffer');}
+  assert.match(await page.locator('#title').evaluate(n=>getComputedStyle(n).fontFamily),/sans-serif/);await page.close();
+ }}finally{await browser.close();}
 });
 
 const leadFixture=id=>({project:'relay',claim:{id:'lead-badge',state:'active',goal:'Build the project interface',primary_staff:id,primary_team:'source'}});
