@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T17:46:01.445Z",
+  "updated_at": "2026-11-02T17:51:14.013Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25101,14 +25101,16 @@
         ".github/workflows/game-mode-preview.yml",
         ".github/workflows/windows-build.yml",
         ".github/workflows/linux-build.yml",
-        "packaging/"
+        "packaging/",
+        "windows/RtxForge.Windows/App.xaml.cs",
+        "windows/RtxForge.Windows/MainWindow.CrossOsReview.cs"
       ],
       "resources": [
         "rtxforge-game-mode-integration"
       ],
       "goal": "Finish new Game Mode integration into the Windows and Linux Desktop app, package it, install locally and merge to main.",
       "acceptance": "Desktop controls/startup/controller entry launch new Game Mode; return restores Desktop without duplicate processes or hidden windows. Verified native payload included/resolved on Windows/Linux. Existing shared install engine remains authoritative: check UI routing/review/progress/cancel rather than requiring gameplay as new completion gate. Build/install locally, test actual handoff, preserve rollback and merge reviewed source.",
-      "next_action": "Implement Desktop launch/return and package integration without touching active library identity paths.",
+      "next_action": "Implement bundled launch/return plus single-instance Desktop/native activation, preserving active library work. Verify old view only through explicit legacy review entry.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -25131,8 +25133,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T17:46:01.445Z",
-      "lease_until": "2026-11-03T05:46:01.445Z"
+      "updated_at": "2026-11-02T17:51:14.013Z",
+      "lease_until": "2026-11-03T05:51:14.013Z"
     }
   ]
 }
