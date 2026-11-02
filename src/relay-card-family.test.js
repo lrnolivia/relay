@@ -45,10 +45,10 @@ test('ordinary zero one and many update responses mount shallow frozen banners w
   const {browser,page}=await mount(data,{width,expand:false});try{
    await page.locator('#card[data-card-mode=snapshot]').waitFor();
    assert.equal(await page.locator('#card').getAttribute('data-snapshot-id'),data.snapshot.id);
-   const box=await page.locator('#card').boundingBox();assert.ok(box.height<=(width>=620?box.width*.75:360)+1,JSON.stringify({count,width,box}));
+   const box=await page.locator('#card').boundingBox();if(!count)assert.ok(box.height<=(width>=620?box.width*.75:360)+1,JSON.stringify({count,width,box}));else assert.equal(await page.locator('.family-message>p').first().isVisible(),true,'main public update is not collapsed');
    const title=await page.locator('#title').boundingBox(),lead=await page.locator('#family-assignment-lead').boundingBox();assert.ok(lead.y>=title.y+title.height);
    assert.equal(await page.locator('#refresh').isVisible(),false);
-   assert.equal(await page.locator('#assignment-ring').getAttribute('aria-valuenow'),null);
+   assert.equal(await page.locator('#assignment-ring').count(),0);
    await page.clock.runFor(50);const original=await page.locator('#card').textContent();
    await page.evaluate(data=>{window.dispatchEvent(new CustomEvent('openai:set_globals',{detail:{globals:{toolOutput:data}}}));render(data);document.dispatchEvent(new Event('visibilitychange'));window.dispatchEvent(new Event('online'))},{project:'relay',claim:{id:'card-demo',goal:'LATER PRIVATE CHANGE',state:'completed'}});
    await page.clock.fastForward(420000);assert.equal(await page.locator('#card').textContent(),original);assert.equal(await page.evaluate(()=>window.calls.length),0);
@@ -64,8 +64,8 @@ test('assignment summary shares the desktop lead band with comfortable padding a
  const {browser,page}=await mount(data,{expand:false});try{
   for(const theme of ['light','dark'])for(const staff of ['nico','valentina','roman','julian','luca','imani',null]){
    const update=structuredClone(data);update.claim.primary_staff=staff;await page.emulateMedia({colorScheme:theme});await page.evaluate(data=>render(data),update);
-   const g=await page.evaluate(()=>{const rect=s=>{const r=document.querySelector(s).getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,height:r.height}};const badge=getComputedStyle(document.querySelector('#family-assignment-lead')),button=getComputedStyle(document.querySelector('#open-relay'));return {title:rect('#title'),hero:rect('.hero'),lead:rect('#family-assignment-lead'),ring:rect('#assignment-ring'),state:rect('#state'),card:rect('#card'),leadPadding:[parseFloat(badge.paddingTop),parseFloat(badge.paddingLeft)],buttonPadding:[parseFloat(button.paddingTop),parseFloat(button.paddingLeft)]}});
-   assert.ok(g.lead.y>=g.title.bottom&&g.hero.y>=g.title.bottom);assert.ok(g.hero.right+8<=g.lead.x,JSON.stringify(g));assert.ok(Math.min(g.hero.bottom,g.lead.bottom)>Math.max(g.hero.y,g.lead.y),JSON.stringify(g));assert.ok(g.state.x>=g.ring.right&&g.state.x<g.hero.right);assert.ok(g.card.height<=261,JSON.stringify(g));
+   const g=await page.evaluate(()=>{const rect=s=>{const r=document.querySelector(s).getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,height:r.height}};const badge=getComputedStyle(document.querySelector('#family-assignment-lead')),button=getComputedStyle(document.querySelector('#open-relay'));return {title:rect('#title'),hero:rect('.hero'),lead:rect('#family-assignment-lead'),state:rect('#state'),card:rect('#card'),leadPadding:[parseFloat(badge.paddingTop),parseFloat(badge.paddingLeft)],buttonPadding:[parseFloat(button.paddingTop),parseFloat(button.paddingLeft)]}});
+   assert.ok(g.lead.y>=g.title.bottom&&g.hero.y>=g.title.bottom);assert.ok(g.hero.right+8<=g.lead.x,JSON.stringify(g));assert.ok(Math.min(g.hero.bottom,g.lead.bottom)>Math.max(g.hero.y,g.lead.y),JSON.stringify(g));assert.equal(await page.locator('#state').isVisible(),false);assert.equal(await page.locator('#assignment-ring').count(),0);assert.ok(g.card.height<=261,JSON.stringify(g));
    if(staff)assert.ok(g.leadPadding[0]>=8&&g.leadPadding[1]>=12);assert.ok(g.buttonPadding[0]>=8&&g.buttonPadding[1]>=12);
   }
  }finally{await browser.close();}
@@ -75,7 +75,7 @@ test('stacked summary keeps full next text and restores product and individual l
  const data=fixture(1);data.claim.next_action='Review every recorded interaction and source-bound artifact before accepting the result. '.repeat(6).trim();
  const {browser,page}=await mount(data,{width:360,expand:false});try{
   const band=page.locator('#assignment-summary-band');assert.equal(await band.isVisible(),true);assert.equal(await page.locator('#open-relay').evaluate(n=>getComputedStyle(n).whiteSpace),'nowrap');assert.equal((await page.locator('#open-relay').boundingBox()).height,44);const hero=await page.locator('.hero').boundingBox(),lead=await page.locator('#family-assignment-lead').boundingBox();assert.ok(lead.y>=hero.y+hero.height);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
-  const full=page.locator('#next-full');await full.locator('summary').focus();await page.keyboard.press('Enter');assert.equal(await full.locator('p').textContent(),data.claim.next_action);assert.equal(await full.locator('p').isVisible(),true);
+  assert.equal(await page.locator('#next-full').count(),0);assert.equal(await page.locator('#next').textContent(),data.claim.next_action);assert.equal(await page.locator('#next').isVisible(),true);
   await page.evaluate(data=>render(data),individual(data));assert.equal(await band.isHidden(),true);assert.equal(await page.locator('.hero').evaluate(n=>n.parentElement.id==='assignment-summary-band'),false);
   await page.evaluate(()=>render({ok:true}));assert.equal(await band.isHidden(),true);assert.equal(await page.locator('.hero').isVisible(),true);
   await page.evaluate(data=>render(data),data);assert.equal(await band.locator('.hero').count(),1);assert.equal(await band.locator('#family-assignment-lead').count(),1);assert.equal(await page.locator('#assignment-summary-band').count(),1);
@@ -97,6 +97,25 @@ test('product check headings render the loaded Momo face with a real sans-serif 
  }}finally{await browser.close();}
 });
 
+test('main public prose stays visible without disclosure and ordinary Assigned alone is omitted',async()=>{
+ const next=('Review commit_sha '+source+' and relay_runner_progress output before accepting the public result. ').repeat(7).trim();
+ const data=fixture(1);data.claim.next_action=next;const {browser,page}=await mount(data,{width:360,expand:false});try{
+  for(const width of [360,760])for(const theme of ['light','dark']){await page.setViewportSize({width,height:1800});await page.emulateMedia({colorScheme:theme});await page.evaluate(data=>render(data),data);assert.equal(await page.locator('#next').textContent(),next);assert.equal(await page.locator('#next').isVisible(),true);assert.equal(await page.locator('#next-full,#summary-full').count(),0);assert.equal(await page.locator('.family-message>p').first().isVisible(),true);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);}
+  const empty=fixture(0);empty.claim.next_action='A short public next action.';await page.evaluate(data=>render(data),empty);assert.equal(await page.locator('#state').isVisible(),false);assert.equal(await page.getByRole('group',{name:'Assigned lead',exact:true}).isVisible(),true);assert.equal(await page.locator('#next').textContent(),empty.claim.next_action);
+  for(const state of ['blocked','failed','possibly-stale','working']){await page.evaluate(data=>render(data),{...empty,claim:{...empty.claim,state}});assert.equal(await page.locator('#state').isVisible(),true,state);}
+  await page.evaluate(data=>render(data),{...empty,claim:{...empty.claim,next_action:null}});assert.equal(await page.locator('#next').textContent(),'');assert.equal(await page.locator('#assignment-ring').count(),0);
+ }finally{await browser.close();}
+});
+
+test('assignment progress uses verified step counts with no unknown ring or overall percent',async()=>{
+ const data=fixture(3);data.claim.card_steps.complete=true;data.claim.card_steps.steps[0].state='passed';data.claim.card_steps.steps[1].state='passed';const {browser,page}=await mount(data,{expand:false});try{
+  assert.equal(await page.locator('#assignment-step-count').textContent(),'2 of 3 steps verified');assert.equal(await page.locator('#assignment-ring,[role=progressbar]').count(),0);assert.equal(contextCardModel(data).percent,null);
+  data.claim.card_steps.steps[2].state='passed';await page.evaluate(data=>render(data),data);assert.match(await page.locator('#assignment-step-count').textContent(),/objective completion unverified/);assert.equal(contextCardModel(data).objective_verified,false);
+  data.claim.state='completed';await page.evaluate(data=>render(data),data);assert.equal(await page.locator('#assignment-step-count').textContent(),'3 of 3 steps verified');assert.equal(contextCardModel(data).objective_verified,true);assert.equal(contextCardModel(data).percent,null);
+  data.claim.card_steps.complete=false;await page.evaluate(data=>render(data),data);assert.equal(await page.locator('#assignment-step-count').isVisible(),false);assert.equal(await page.locator('#assignment-ring').count(),0);
+ }finally{await browser.close();}
+});
+
 const leadFixture=id=>({project:'relay',claim:{id:'lead-badge',state:'active',goal:'Build the project interface',primary_staff:id,primary_team:'source'}});
 test('frozen remount preserves the original snapshot and rejects altered payloads without polling',async()=>{
  const original=contextualPresentation({...fixture(1),checked_at:now.toISOString()},{operation:{name:'relay_runner_coordinate'}});
@@ -105,10 +124,10 @@ test('frozen remount preserves the original snapshot and rejects altered payload
  const remount=await mount(newer,{saved,expand:false});try{assert.equal(await remount.page.locator('#card').getAttribute('data-snapshot-id'),original.snapshot.id);assert.equal(await remount.page.locator('.family-update').count(),1);await remount.page.clock.runFor(450000);assert.equal(await remount.page.evaluate(()=>window.calls.length),0);}finally{await remount.browser.close();}
  const altered=structuredClone(original);altered.snapshot.payload.claim.goal='Altered history';const bad=await mount(altered,{expand:false});try{assert.equal(await bad.page.locator('#card-freshness').textContent(),'Snapshot unavailable');await bad.page.clock.runFor(450000);assert.equal(await bad.page.evaluate(()=>window.calls.length),0);}finally{await bad.browser.close();}
 });
-test('checklist circle counts verified passes only and waits for full objective confirmation before 100',()=>{
+test('verified checklist counts preserve objective confirmation without an assignment percent',()=>{
  const data=fixture(3);data.claim.card_steps.complete=true;data.claim.card_steps.steps.forEach(s=>s.state='passed');
- assert.equal(contextCardModel(data).percent,null,'checklist passes alone are not whole-objective completion');data.claim.state='completed';assert.equal(contextCardModel(data).percent,100);
- data.claim.card_steps.steps[2].state='blocked';assert.equal(contextCardModel(data).percent,66);data.claim.card_steps.steps[1].receipt=null;assert.equal(contextCardModel(data).percent,33);data.claim.card_steps.complete=false;assert.equal(contextCardModel(data).percent,null);
+ assert.equal(contextCardModel(data).percent,null,'checklist passes alone are not whole-objective completion');data.claim.state='completed';assert.equal(contextCardModel(data).percent,null);assert.deepEqual(contextCardModel(data).checklist_progress,{passed:3,total:3});
+ data.claim.card_steps.steps[2].state='blocked';assert.equal(contextCardModel(data).percent,null);assert.deepEqual(contextCardModel(data).checklist_progress,{passed:2,total:3});data.claim.card_steps.steps[1].receipt=null;assert.equal(contextCardModel(data).percent,null);assert.deepEqual(contextCardModel(data).checklist_progress,{passed:1,total:3});data.claim.card_steps.complete=false;assert.equal(contextCardModel(data).percent,null);
 });
 test('snapshot integrity covers actual plan receipt and bound preview bytes without claiming attestation',()=>{
  const data=contextualPresentation({...fixture(1,{artifact}),checked_at:now.toISOString()},{operation:{name:'relay_runner_coordinate'}}),snapshot=data.snapshot;
@@ -142,10 +161,10 @@ test('Open latest resolves queued exact targets and keeps project or multiple sn
  const cases=[{data:make({id:'target',goal:'Snapshot target',state:'queued'}),latest:{project:'relay',progress:[{assignment:'other',goal:'UNRELATED',state:'active'}],queue:[{id:'target',goal:'Latest exact queued target',state:'queued'}]},label:'Current assignment status',want:'Latest exact queued target',avoid:'UNRELATED'}, {data:make(null,{claims:[{id:'a',goal:'A',state:'active'},{id:'b',goal:'B',state:'queued'}]}),latest:{project:'relay',progress:[{assignment:'a',goal:'Current A',state:'active'}],queue:[{id:'b',goal:'Current B',state:'queued'}]},label:'Current project status',want:'2 recorded assignments'}, {data:make(null),latest:{project:'relay',progress:[],queue:[]},label:'Current project status',want:'No assignments returned'}];
  for(const c of cases){const {browser,page}=await mount(c.data,{latest:c.latest,expand:false});try{await page.getByRole('button',{name:'Open latest',exact:true}).click();const dialog=page.getByRole('dialog',{name:c.label});await dialog.getByText(c.want,{exact:false}).waitFor();assert.ok(!(await dialog.textContent()).includes('\u00c2'),'latest dialog uses correct text encoding');if(c.avoid)assert.ok(!(await dialog.textContent()).includes(c.avoid));const call=await page.evaluate(()=>window.calls.find(c=>c.name==='relay_runner_progress'));assert.deepEqual(call.args,c.label==='Current assignment status'?{project:'relay',assignment:'target'}:{project:'relay'});await page.getByRole('button',{name:'Close latest'}).click();}finally{await browser.close();}}
 });
-test('assignment checklist circle is independent of completed or failed CI suite percentages',()=>{
+test('assignment verified step count is independent of completed or failed CI suite percentages',()=>{
  const ci={schema:'relay-ci-card/v1',status:'completed',conclusion:'failure',telemetry:'reported',suites_total:2,suites_done:2,run:{id:'1'},tests:{failed:1},jobs:{},suites:[]};
  const empty=contextCardModel({...leadFixture('nico'),ci});assert.equal(empty.percent,100,'CI telemetry remains separate');assert.equal(empty.checklist_percent,null);
- const data=fixture(3);data.claim.card_steps.complete=true;data.claim.card_steps.steps[0].state='passed';const m=contextCardModel({...data,ci});assert.equal(m.percent,100);assert.equal(m.checklist_percent,33);
+ const data=fixture(3);data.claim.card_steps.complete=true;data.claim.card_steps.steps[0].state='passed';const m=contextCardModel({...data,ci});assert.equal(m.percent,100);assert.equal(m.checklist_percent,null);assert.deepEqual(m.checklist_progress,{passed:1,total:3});
 });
 test('assignment header badge renders every canonical staff identity without claiming a contributor message',async()=>{
  const {browser,page}=await mount(leadFixture('nico'));
