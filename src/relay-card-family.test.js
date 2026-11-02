@@ -110,7 +110,7 @@ test('main public prose stays visible without disclosure and ordinary Assigned a
 test('assignment progress uses verified step counts with no unknown ring or overall percent',async()=>{
  const data=fixture(3);data.claim.card_steps.complete=true;data.claim.card_steps.steps[0].state='passed';data.claim.card_steps.steps[1].state='passed';const {browser,page}=await mount(data,{expand:false});try{
   assert.equal(await page.locator('#assignment-step-count').textContent(),'2 of 3 steps verified');assert.equal(await page.locator('#assignment-ring,[role=progressbar]').count(),0);assert.equal(contextCardModel(data).percent,null);
-  data.claim.card_steps.steps[2].state='passed';await page.evaluate(data=>render(data),data);assert.match(await page.locator('#assignment-step-count').textContent(),/objective completion unverified/);assert.equal(contextCardModel(data).objective_verified,false);
+  data.claim.card_steps.steps[2].state='passed';await page.evaluate(data=>render(data),data);assert.match(await page.locator('#assignment-step-count').textContent(),/objective completion unverified/);assert.equal(contextCardModel(data).objective_verified,false);assert.equal(await page.locator('#state').isVisible(),false);
   data.claim.state='completed';await page.evaluate(data=>render(data),data);assert.equal(await page.locator('#assignment-step-count').textContent(),'3 of 3 steps verified');assert.equal(contextCardModel(data).objective_verified,true);assert.equal(contextCardModel(data).percent,null);
   data.claim.card_steps.complete=false;await page.evaluate(data=>render(data),data);assert.equal(await page.locator('#assignment-step-count').isVisible(),false);assert.equal(await page.locator('#assignment-ring').count(),0);
  }finally{await browser.close();}
@@ -432,7 +432,7 @@ test('Open latest reports complete verified step counts and keeps partial or abs
   const {browser,page}=await mount(data,{latest:reply,expand:false});try{
    const original=await page.locator('#card').textContent();await page.getByRole('button',{name:'Open latest',exact:true}).click();const dialog=page.getByRole('dialog',{name:'Current assignment status'});await dialog.locator('h2').waitFor();const copy=await dialog.textContent();
    if(kind==='partial'||kind==='unknown'){assert.ok(copy.includes('Checklist total unknown'),copy);assert.ok(!/\d+ of \d+ steps verified/.test(copy),copy);}else{assert.ok(copy.includes((kind==='complete'?'2':'3')+' of 3 steps verified'),copy);assert.ok(!copy.includes('Checklist total unknown'),copy);assert.equal(copy.includes('objective completion unverified'),kind==='all-unverified');}
-   assert.ok(!/% verified/.test(copy),copy);await page.getByRole('button',{name:'Close latest'}).click();assert.equal(await page.locator('#card').textContent(),original);assert.equal(await page.locator('#open-relay').evaluate(n=>n===document.activeElement),true);
+   assert.ok(!/% verified/.test(copy),copy);assert.ok(!copy.includes('Assigned'),copy);await page.getByRole('button',{name:'Close latest'}).click();assert.equal(await page.locator('#card').textContent(),original);assert.equal(await page.locator('#open-relay').evaluate(n=>n===document.activeElement),true);
   }finally{await browser.close();}
  }
 });

@@ -134,7 +134,7 @@ try {
   if(name==='banner-long'){assert.equal(await frame.locator('#next').isVisible(),true);assert.equal(await frame.locator('#next-full').count(),0);assert.equal(await frame.locator('#next').textContent(),longFixture.claim.next_action.trim());}
   if(width>=620&&['lead-nico','lead-no-assignee','lead-avatar-unavailable','relay','runner'].includes(name))assert.ok(captureHeight<=Math.min(width*.75,300),'sparse desktop banner stays shallow');
   if(name.startsWith('family-')&&name!=='family-single'&&width<520){const widths=await frame.locator('.step-copy').evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().width));assert.ok(widths.every(w=>w>=180),'phone priority text has full-row width');}
-  if(name==='banner-unverified')assert.equal(await frame.locator('#assignment-step-count').textContent(),'3 of 3 steps verified - objective completion unverified');
+  if(name==='banner-unverified'){assert.equal(await frame.locator('#assignment-step-count').textContent(),'3 of 3 steps verified - objective completion unverified');assert.equal(await frame.locator('#state').isVisible(),false);}
   if(name==='banner-partial')assert.equal(await frame.locator('#assignment-step-count').isVisible(),false);
   if(name==='latest-counts'){await frame.getByRole('button',{name:'Open latest',exact:true}).click();const dialog=frame.getByRole('dialog',{name:'Current assignment status'});await dialog.getByText('3 of 3 steps verified', {exact:false}).first().waitFor();assert.match(await dialog.textContent(),/3 of 3 steps verified - objective completion unverified/);geometry.latest=await dialog.boundingBox();}
   const surface=`context-card-${name}-${width}-${theme}`,screenshot=await frame.locator(name==='latest-counts'?'dialog.latest-status':'#card').screenshot();
