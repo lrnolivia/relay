@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T01:28:16.154Z",
+  "updated_at": "2026-11-02T01:38:31.558Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23126,9 +23126,9 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T01:19:41.536Z",
-      "lease_until": "2026-11-02T13:19:41.536Z",
-      "amendment_count": 3,
+      "updated_at": "2026-11-02T01:38:31.558Z",
+      "lease_until": "2026-11-02T13:38:31.558Z",
+      "amendment_count": 4,
       "amendments": [
         {
           "at": "2026-11-02T00:21:15.831Z",
@@ -23178,10 +23178,28 @@
               "inspector"
             ]
           }
+        },
+        {
+          "at": "2026-11-02T01:38:31.558Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "Use canonical verifier responsibility for the required independent finish review; inspector was a team name, not a staffed responsibility.",
+          "fields": [
+            "supporting_roles"
+          ],
+          "before": {
+            "supporting_roles": [
+              "inspector"
+            ]
+          },
+          "after": {
+            "supporting_roles": [
+              "verifier"
+            ]
+          }
         }
       ],
       "supporting_roles": [
-        "inspector"
+        "verifier"
       ]
     }
   ]
