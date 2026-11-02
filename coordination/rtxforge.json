@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T06:06:41.066Z",
+  "updated_at": "2026-11-02T06:07:23.385Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23305,7 +23305,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T06:06:41.066Z",
+      "updated_at": "2026-11-02T06:07:23.385Z",
       "lease_until": "2026-11-02T17:58:35.320Z",
       "amendment_count": 12,
       "amendments": [
@@ -23859,10 +23859,21 @@
             "host_available": true,
             "intent_digest": "dc3c681ca926e88064fb703aab49f495a4936c2f540c1a6b9c165566db005d36"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-02T06:06:41.066Z",
           "request_digest": "647d59a2c281ab41b32015d4a81abee68c296eb7bcce6b8192c3112a6f7af82d",
-          "step_digest": "b7e3b0b4852cca02b87933317f0f74993b0f796f089ccf3588f859b0221ee68d"
+          "step_digest": "242f2e6225bf8fd1405671db2fd12c1e2004e2a16866d1bbb3fba8849e22b121",
+          "start": {
+            "request_digest": "647d59a2c281ab41b32015d4a81abee68c296eb7bcce6b8192c3112a6f7af82d",
+            "source_sha": "2c54243485cb9f0aee7d47ee52ec42166d7c48d8",
+            "agent_id": "/root/compact_color_reviewer_2c54243",
+            "observed_at": "2026-11-02T06:07:19.357Z",
+            "update": {
+              "text": "Independent compact-picker and per-game correctness review is running on the pushed revision. Desktop/live-game checks remain stopped.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-02T06:07:23.385Z"
         }
       ],
       "card_steps": {
@@ -23874,7 +23885,7 @@
           "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
           "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
@@ -23888,8 +23899,25 @@
             "id": "compact-color-unique-final-review",
             "label": "Final compact picker review with unique host identity",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "compact-color-final-review-2c54243-unique:started",
+              "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+              "step_id": "compact-color-unique-final-review",
+              "plan_revision": "a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6",
+              "input_digest": "647d59a2c281ab41b32015d4a81abee68c296eb7bcce6b8192c3112a6f7af82d",
+              "evidence": "sha256:d23ddd18135c2aaa406597cce86dd039259f7686f91926e9e0411d18043e975a",
+              "source_sha": "2c54243485cb9f0aee7d47ee52ec42166d7c48d8",
+              "observed_at": "2026-11-02T06:07:19.357Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent compact-picker and per-game correctness review is running on the pushed revision. Desktop/live-game checks remain stopped.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -23897,10 +23925,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
         "revision": "a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "compact-color-final-review-2c54243-unique:started": "46eb07d299613a7e1036bdccff4f1809b9d52046f3d0d787dc5efbf7943016c5"
+        },
+        "items": [
+          {
+            "key": "compact-color-final-review-2c54243-unique:started:647d59a2c281ab41b32015d4a81abee68c296eb7bcce6b8192c3112a6f7af82d:running:",
+            "receipt_snapshot": "{\"label\":\"Final compact picker review with unique host identity\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:d23ddd18135c2aaa406597cce86dd039259f7686f91926e9e0411d18043e975a\",\"id\":\"compact-color-final-review-2c54243-unique:started\",\"input_digest\":\"647d59a2c281ab41b32015d4a81abee68c296eb7bcce6b8192c3112a6f7af82d\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6\",\"source_sha\":\"2c54243485cb9f0aee7d47ee52ec42166d7c48d8\",\"step_id\":\"compact-color-unique-final-review\",\"update\":{\"artifacts\":[],\"text\":\"Independent compact-picker and per-game correctness review is running on the pushed revision. Desktop/live-game checks remain stopped.\"}},\"state\":\"running\"}",
+            "id": "compact-color-final-review-2c54243-unique:started",
+            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+            "step_id": "compact-color-unique-final-review",
+            "revision": "a0bc7400f01d53268299ec5a0f649a41574eaf40535ccb25db2ce5bd725055e6",
+            "label": "Final compact picker review with unique host identity",
+            "state": "running",
+            "phase": null,
+            "source_sha": "2c54243485cb9f0aee7d47ee52ec42166d7c48d8",
+            "observed_at": "2026-11-02T06:07:19.357Z",
+            "recorded_at": "2026-11-02T06:07:23.385Z",
+            "receipt_digest": "sha256:d23ddd18135c2aaa406597cce86dd039259f7686f91926e9e0411d18043e975a",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent compact-picker and per-game correctness review is running on the pushed revision. Desktop/live-game checks remain stopped.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
