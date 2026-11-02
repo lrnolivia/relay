@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T23:24:22.435Z",
+  "updated_at": "2026-11-02T23:29:06.350Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26500,7 +26500,7 @@
       ],
       "goal": "Lauren explicitly requests Testing last on Overview in Desktop as well as new Game Mode.",
       "acceptance": "Move only PageHost.Children.Add(TestingGroup(g)) below the Game executable row in Windows GamePage Overview; keep game facts, location and executable first. Linux Desktop and new native Game Mode already place Testing last.",
-      "next_action": "Move Windows Desktop Testing group after the executable row; verify Game Mode already renders Testing last. Build, publish and install the narrow Desktop update, then exact-source merge. The prior GamePage source owner is quiescent and the reservation was transferred by bounded CAS rescope under Lauren explicit request; preserve PR139 head and all unrelated work.",
+      "next_action": "Source15c496e is installed locally, all staged files match, settings/native payload/providers/preview preserved. Actual Desktop Overview was observed package facts→Game folder→Game executable→Testing; native sourcea600682 is unchanged with Testing already last. Bounded immutable-source review has no findings. PR142 is ready; native Windows/Linux CI passed, distribution jobs await panel dependencies. Merge exact source after all gates, complete this assignment and restore GamePage.cs reservation to held PR139 owner; do not merge/release PR139.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [
@@ -26528,8 +26528,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T23:24:22.435Z",
-      "lease_until": "2026-11-03T11:19:32.332Z",
+      "updated_at": "2026-11-02T23:29:06.350Z",
+      "lease_until": "2026-11-03T11:29:06.350Z",
       "supporting_roles": [
         "verifier"
       ],
