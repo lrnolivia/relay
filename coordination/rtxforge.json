@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T08:15:00.467Z",
+  "updated_at": "2026-11-02T08:15:11.079Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23426,7 +23426,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T08:15:00.467Z",
+      "updated_at": "2026-11-02T08:15:11.079Z",
       "lease_until": "2026-11-02T20:13:29.895Z",
       "amendment_count": 17,
       "amendments": [
@@ -24545,6 +24545,40 @@
           "prepared_at": "2026-11-02T08:15:00.467Z",
           "request_digest": "15c3c22617916c02a325d461e27ce1a82ae44f11836a79b067a9678d5cc1747a",
           "step_digest": "8db1983f1b6fe8207bf392c33b8770725bd529f90fbedaa84d6091c8472ec369"
+        },
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "finish-document-95f09bb",
+          "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+          "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "branch": "rtxforge/overlay-accent-toggle-alignment-20261101",
+          "source_sha": "95f09bb0ba71c48d8d85da7885ab8aca134a11d8",
+          "objective_digest": "2ab4ed4845335fd1e0e0c9747578aba9c965dd81903aae9a1650f836ee80301a",
+          "scope_digest": "0ce5e06fd149dd4df87ca0e04b5ba492ac8c630b743de0a7841b1b8aeb5125ae",
+          "step_id": "finish-document-95f09bb",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "95f09bb0ba71c48d8d85da7885ab8aca134a11d8",
+            "objective_digest": "2ab4ed4845335fd1e0e0c9747578aba9c965dd81903aae9a1650f836ee80301a",
+            "step_id": "finish-document-95f09bb",
+            "label": "Read-only documentation consistency check of the final overlay and incumbent design at 95f09bb.",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "a2654d3f03e7703c038e1c1b0483819274962247eea95bad138b8823c5ee2a93"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-02T08:15:11.079Z",
+          "request_digest": "e9ef3b2abcda4ae5ce03e87bab0de730574e945f3a65525c4a940de5c586a688",
+          "step_digest": "16ce7c2ed894ee07fe577249f2e1d8635cc4b43af45dcd60a58f91438e7e5a88"
         }
       ],
       "card_steps": {
@@ -24556,12 +24590,19 @@
           "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
           "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "finish-full-review-95f09bb",
             "label": "Full read-only review of the final overlay, onboarding, actual-glass menus and per-game native opt-out at 95f09bb.",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          },
+          {
+            "id": "finish-document-95f09bb",
+            "label": "Read-only documentation consistency check of the final overlay and incumbent design at 95f09bb.",
             "depends_on": [],
             "state": "pending",
             "receipt": null
@@ -24572,7 +24613,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
         "revision": "2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
         "identities": {},
         "items": []
