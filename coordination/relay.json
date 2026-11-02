@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-02T04:05:39.049Z",
+  "updated_at": "2026-11-02T05:28:31.536Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21776,7 +21776,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "1443f28d104840afa3bb0ea666aa1410d1d8865b",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-02T02:54:27.864Z",
       "objective_history": {
         "baseline": {
@@ -21793,8 +21793,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T04:05:39.049Z",
-      "lease_until": "2026-11-02T16:05:39.049Z"
+      "updated_at": "2026-11-02T05:28:31.536Z",
+      "lease_until": "2026-11-02T17:28:31.536Z",
+      "pr": 277,
+      "merged_head_sha": "624b6dec92206a08a34fcab2fe9bca98339b5af0",
+      "merge_commit_sha": "0457bd69750b2170934a69397a6a97db5ba77cf0",
+      "evidence": "PR277 merged as 0457bd69750b2170934a69397a6a97db5ba77cf0: https://github.com/lrnolivia/relay/pull/277 . Exact merged main CI passed 1269 tests, 0 failures, 1 existing platform skip: https://github.com/lrnolivia/relay/actions/runs/41393541247 . Workers Build f33be5f4-8ad2-40f2-887b-752352b1101f succeeded and deployed version 81f8e829-869b-4ba9-bfde-bd48ae37e4ea at 100%, deployment 9ba9133a-eb46-4b95-8ba0-228d5e9aac95: https://github.com/lrnolivia/relay/runs/125110190315 . Exact-source production smoke passed MCP tool/resource inventory, contextual card v30, runtime/web source identity and existing QA reads: https://github.com/lrnolivia/relay/actions/runs/41393996178 . Production health returned 200/ok. Card resource SHA256 f755d1465d41609547ba1c3190a79c465ca78e9aabdd232321971bd5a0ea46f8; prior resource aliases preserved. Release assurance passed archive retention/readback and isolated five-file restoration, healthy safety revision110: https://github.com/lrnolivia/relay/actions/runs/41393940622 . Recovery artifact13118178210 archive SHA256 1a59a058da9cbb4f4ae1f7cc304c376c7f9b84f8928edc0ca7b60a4c1f60bb1f, manifest04294f4a84d5d1892c297bf62926c21df6fb811b54f6aabdbd5fec5d43027ec2, restoration f70fa70e9788bb7c6bb4fd72ccc1b9adab5f8fdbc56c6ded5619f932cfdc6f6e. Existing user-approved baseline preserved. Completion covers delivered banner/frozen-snapshot source and release; automatic cross-chat 5-7 minute posting remains unverified, and relay-card-native-ui-acceptance-followup-20261101 remains queued with native mount unknown.",
+      "work_accounted": true,
+      "completed_at": "2026-11-02T05:28:31.536Z"
     }
   ],
   "migrated_from": "loew-inspector"
