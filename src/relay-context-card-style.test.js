@@ -93,7 +93,7 @@ test('staff cards preserve step evidence, keyboard focus and routing distinction
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.addInitScript(data=>{window.openai={toolInput:{project:'relay'},toolOutput:data}},card);
   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
-  await page.locator('#family-assignment-lead').filter({hasText:'Assigned lead: Nico'}).waitFor();
+  await page.locator('#family-assignment-lead .family-lead-name').filter({hasText:'Nico'}).waitFor();
   assert.match(await page.locator('#card-roles').textContent(),/Current step owner: Rafael/);
   assert.match(await page.locator('#card-roles').textContent(),/Assignment lead: Nico/);
   assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),'');assert.equal(await page.locator('.family-avatar').count(),0,'routing cannot fabricate a contributor bubble');
@@ -109,7 +109,7 @@ test('staff cards preserve step evidence, keyboard focus and routing distinction
   const changed=structuredClone(card);changed.claim.primary_staff='julian';changed.claim.card_steps.steps[1].state='passed';
   await page.evaluate(data=>render(data),changed);
   assert.equal(await details.getAttribute('open'),'');
-  assert.equal(await page.locator('#feature-title').textContent(),'relay');assert.equal(await page.locator('#family-assignment-lead').textContent(),'Assigned lead: Julian');
+  assert.equal(await page.locator('#feature-title').textContent(),'relay');assert.equal(await page.locator('#family-assignment-lead .family-lead-name').textContent(),'Julian');assert.match(await page.locator('#family-assignment-lead .family-lead-role').textContent(),/Assigned lead/);
   assert.equal(await page.locator('#card').getAttribute('data-identity-team'),'night-shift');
   assert.match(await page.locator('#card-roles').textContent(),/Assignment lead: Julian/);
   assert.match(await page.locator('#family-assignment-lead').textContent(),/Assigned lead/);
@@ -168,7 +168,7 @@ test('staff heading keeps its identity-team accent when Inspector telemetry is p
  const claim={id:'cards',goal:'Build cards',state:'active',primary_staff:'nico',primary_team:'runner',card_steps:{schema:'relay-card-steps/v1',assignment:'cards',revision:'r1',complete:true,steps:[{id:'build',label:'Build cards',state:'running',depends_on:[],receipt:{id:'start',assignment:'cards',step_id:'build',plan_revision:'r1',observed_at:new Date().toISOString(),evidence:'Synthetic exact start',owner:{staff:'nico',team:'runner'}}}]}};
  try{for(const theme of ['light','dark']){
   const page=await browser.newPage({colorScheme:theme});await page.addInitScript(claim=>{window.openai={toolOutput:{project:'relay',claim}}},claim);
-  await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.locator('#family-assignment-lead').filter({hasText:'Assigned lead: Nico'}).waitFor();
+  await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));await page.locator('#family-assignment-lead .family-lead-name').filter({hasText:'Nico'}).waitFor();
   const before=await page.locator('h1').evaluate(n=>getComputedStyle(n).color);
   await page.evaluate(claim=>render({project:'relay',claim,ci:{schema:'relay-ci-card/v1',status:'running',telemetry:'reported',tests:{},suites:[],suites_done:1,suites_total:2,jobs:{}}}),claim);
   const after=await page.locator('h1').evaluate(n=>getComputedStyle(n).color);assert.equal(after,before);assert.match(after,/^color\(srgb /,'canonical turquoise is mixed only with the theme ink for readable headings');
@@ -187,7 +187,7 @@ test('assigned leads stay visible and generic Relay has a contrast-safe brand he
   await page.goto('data:text/html,'+encodeURIComponent(relayContextCardResource().text));
   for(const [staff,team,state,name] of [['julian','night-shift','active','Julian'],['nico','runner','completed','Nico']]){
    await page.evaluate(data=>render(data),{project:'rtxforge',claim:{id:'ordinary',primary_staff:staff,primary_team:team,state,goal:'Screenshot-shaped assignment'}});
-   assert.equal(await page.locator('#feature-title').textContent(),'rtxforge');assert.equal(await page.locator('#family-assignment-lead').textContent(),'Assigned lead: '+name);
+   assert.equal(await page.locator('#feature-title').textContent(),'rtxforge');assert.equal(await page.locator('#family-assignment-lead .family-lead-name').textContent(),name);assert.match(await page.locator('#family-assignment-lead .family-lead-role').textContent(),/Assigned lead/);
    assert.match(await page.locator('#family-assignment-lead').textContent(),/Assigned lead/);
    assert.equal(await page.locator('#feature-mark').getAttribute('data-staff'),'');
    assert.match(await page.locator('#card-project').textContent(),/rtxforge/);assert.equal(await page.locator('.family-avatar').count(),0);

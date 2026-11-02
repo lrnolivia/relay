@@ -651,7 +651,7 @@ test('real continuity verifier publishes through canonical control, live progres
   if(name==='relay_runner_coordinate'){
    const progress=await callProgress({project:'relay',assignment:'task'},{},f.api);await page.evaluate(data=>render(data),progress);
    const rows=await page.locator('[data-step]').evaluateAll(nodes=>nodes.map(n=>({id:n.dataset.step,state:n.dataset.state})));states.push(rows);
-   assert.deepEqual(rows.map(r=>r.id),['build','verify']);assert.equal(await page.locator('#family-assignment-lead').textContent(),'Assigned lead: Nico');assert.match(await page.locator('#card-project').textContent(),/relay/);assert.doesNotMatch(await page.locator('#card-roles').textContent(),/Current step owner:/);
+   assert.deepEqual(rows.map(r=>r.id),['build','verify']);assert.equal(await page.locator('#family-assignment-lead .family-lead-name').textContent(),'Nico');assert.match(await page.locator('#family-assignment-lead .family-lead-role').textContent(),/Assigned lead/);assert.match(await page.locator('#card-project').textContent(),/relay/);assert.doesNotMatch(await page.locator('#card-roles').textContent(),/Current step owner:/);
    assert.doesNotMatch(JSON.stringify(progress),/PRIVATE|process\.exit|console\.log/);
   }
   return result;
