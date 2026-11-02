@@ -423,3 +423,16 @@ test('explorer overview and project never borrow one assignment crew; explicit a
  await page.getByRole('button',{name:'‹ Project',exact:true}).click();assert.equal(await page.locator('#family-crew').isVisible(),false);assert.equal(await page.locator('#plan-panel').isVisible(),false);await page.getByRole('button',{name:'‹ Overall',exact:true}).click();await page.locator('#title').filter({hasText:'Your projects'}).waitFor();assert.equal(await page.locator('#family-crew').isVisible(),false);
  }finally{await browser.close();}
 });
+
+
+test('Open latest reports complete verified step counts and keeps partial or absent totals unknown',async()=>{
+ for(const kind of ['complete','all-unverified','objective-verified','partial','unknown']){
+  const latest=fixture(kind==='unknown'?0:3);if(latest.claim.card_steps){latest.claim.card_steps.complete=kind!=='partial';latest.claim.card_steps.steps.forEach((s,i)=>s.state=kind==='complete'&&i===2?'running':'passed');}if(kind==='objective-verified')latest.claim.state='completed';
+  const data=contextualPresentation({...fixture(0),checked_at:now.toISOString()},{operation:{name:'relay_runner_coordinate'}}),reply={project:'relay',generated_at:now.toISOString(),progress:[{...latest.claim,assignment:latest.claim.id}]};
+  const {browser,page}=await mount(data,{latest:reply,expand:false});try{
+   const original=await page.locator('#card').textContent();await page.getByRole('button',{name:'Open latest',exact:true}).click();const dialog=page.getByRole('dialog',{name:'Current assignment status'});await dialog.locator('h2').waitFor();const copy=await dialog.textContent();
+   if(kind==='partial'||kind==='unknown'){assert.ok(copy.includes('Checklist total unknown'),copy);assert.ok(!/\d+ of \d+ steps verified/.test(copy),copy);}else{assert.ok(copy.includes((kind==='complete'?'2':'3')+' of 3 steps verified'),copy);assert.ok(!copy.includes('Checklist total unknown'),copy);assert.equal(copy.includes('objective completion unverified'),kind==='all-unverified');}
+   assert.ok(!/% verified/.test(copy),copy);await page.getByRole('button',{name:'Close latest'}).click();assert.equal(await page.locator('#card').textContent(),original);assert.equal(await page.locator('#open-relay').evaluate(n=>n===document.activeElement),true);
+  }finally{await browser.close();}
+ }
+});
