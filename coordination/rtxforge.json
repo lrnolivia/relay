@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T04:59:09.352Z",
+  "updated_at": "2026-11-02T05:00:07.844Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23186,7 +23186,8 @@
         "tests/linux_runtime/test_integration_contracts.py",
         "windows/RtxForge.Windows/Services/OverlayPreview.cs",
         "windows/overlay-rmlui/SmokeTest.cpp",
-        "scripts/proton_overlay.py"
+        "scripts/proton_overlay.py",
+        "windows/tests/Settings/Program.cs"
       ],
       "resources": [
         "rtxforge-desktop-overlay-preview",
@@ -23194,7 +23195,7 @@
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
       "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome.",
-      "next_action": "Apply the review's three settings correctness fixes as one batch, validate default inheritance and per-game caches, then verify the pinned Feeder notification path.",
+      "next_action": "Correct the three reviewed preference/inheritance defects with resolved helper defaults and refreshed native editing caches; add regression coverage before final verification.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -23255,8 +23256,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T04:59:09.352Z",
-      "lease_until": "2026-11-02T16:59:09.352Z",
+      "updated_at": "2026-11-02T05:00:07.844Z",
+      "lease_until": "2026-11-02T17:00:07.844Z",
       "amendment_count": 9,
       "amendments": [
         {
