@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T19:21:44.653Z",
+  "updated_at": "2026-11-02T19:27:04.696Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25753,7 +25753,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T19:21:44.653Z",
+      "updated_at": "2026-11-02T19:27:04.696Z",
       "lease_until": "2026-11-03T07:19:57.987Z",
       "amendment_count": 4,
       "amendments": [
@@ -25863,10 +25863,10 @@
             "host_available": true,
             "intent_digest": "4427ce49a3dc84f516a8b8b57a1918214b400b84a1b123b2e190359b3f874c72"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-02T19:20:43.416Z",
           "request_digest": "ecb3c2e1c4571fff32553f4db6702a07b4b5fbe517664c8fe313ef42c3c4c56d",
-          "step_digest": "62fe77d097b942285a112f0be856dab540856a0ff48f2fd8148562d6ef0057d3",
+          "step_digest": "9c6cad58bedce5cb9f4d8f80825750d88545dd1644d03476ee3631bf38801981",
           "start": {
             "request_digest": "ecb3c2e1c4571fff32553f4db6702a07b4b5fbe517664c8fe313ef42c3c4c56d",
             "source_sha": "6d60b71c906c62cd053cea85307a98e814555c10",
@@ -25877,7 +25877,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-02T19:21:44.653Z"
+          "started_at": "2026-11-02T19:21:44.653Z",
+          "result": {
+            "request_digest": "ecb3c2e1c4571fff32553f4db6702a07b4b5fbe517664c8fe313ef42c3c4c56d",
+            "source_sha": "6d60b71c906c62cd053cea85307a98e814555c10",
+            "agent_id": "/root/native_integration_review",
+            "observed_at": "2026-11-02T19:27:00.000Z",
+            "state": "succeeded",
+            "result_digest": "608796f441af0b9d151df97cbd4a80d4e1c0a844405e65b2e078b5fe5744daaf",
+            "update": {
+              "text": "The independent review found Linux duplicate Desktop ownership, a Windows startup activation race and missing Linux Rust notices. These are being corrected before promotion.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-02T19:27:04.696Z"
         }
       ],
       "card_steps": {
@@ -25889,31 +25902,32 @@
           "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
           "branch": "rtxforge/game-mode-desktop-integration-20261102"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
             "id": "native-integration-review",
             "label": "Independent native handoff and distribution review",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "native-integration-review-6d60b71-20261102:started",
+              "id": "native-integration-review-6d60b71-20261102:result",
               "assignment": "rtxforge-game-mode-desktop-integration-20261102",
               "step_id": "native-integration-review",
               "plan_revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
               "input_digest": "ecb3c2e1c4571fff32553f4db6702a07b4b5fbe517664c8fe313ef42c3c4c56d",
-              "evidence": "sha256:dcc1c578e16c54896fa443b4f9d768dd03ea2b8db8c1f25d8caf19fb21300fd1",
+              "evidence": "sha256:ed6d4446479da1f56bd906603adcbd7364cda6d99ee7fcaa938273e649ae07ad",
               "source_sha": "6d60b71c906c62cd053cea85307a98e814555c10",
-              "observed_at": "2026-11-02T19:21:41.000Z",
+              "observed_at": "2026-11-02T19:27:00.000Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "An independent verifier is reviewing the exact native integration source, with launch, return, Steam migration and package boundaries in scope.",
+                "text": "The independent review found Linux duplicate Desktop ownership, a Windows startup activation race and missing Linux Rust notices. These are being corrected before promotion.",
                 "artifacts": []
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -25922,10 +25936,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-game-mode-desktop-integration-20261102",
         "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
-          "native-integration-review-6d60b71-20261102:started": "290a8ca7cc9ec70901bbf10076c27cb388f4a61c0f78d78bf49f59bed2cb27db"
+          "native-integration-review-6d60b71-20261102:started": "290a8ca7cc9ec70901bbf10076c27cb388f4a61c0f78d78bf49f59bed2cb27db",
+          "native-integration-review-6d60b71-20261102:result": "d9216df63db74b920ef277ac1addf0b55d42d00dd7a8c4b81e74bf26035c25b6"
         },
         "items": [
           {
@@ -25947,6 +25962,28 @@
               "team": "inspector"
             },
             "text": "An independent verifier is reviewing the exact native integration source, with launch, return, Steam migration and package boundaries in scope.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "native-integration-review-6d60b71-20261102:result:ecb3c2e1c4571fff32553f4db6702a07b4b5fbe517664c8fe313ef42c3c4c56d:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Independent native handoff and distribution review\",\"receipt\":{\"assignment\":\"rtxforge-game-mode-desktop-integration-20261102\",\"evidence\":\"sha256:ed6d4446479da1f56bd906603adcbd7364cda6d99ee7fcaa938273e649ae07ad\",\"id\":\"native-integration-review-6d60b71-20261102:result\",\"input_digest\":\"ecb3c2e1c4571fff32553f4db6702a07b4b5fbe517664c8fe313ef42c3c4c56d\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d\",\"source_sha\":\"6d60b71c906c62cd053cea85307a98e814555c10\",\"step_id\":\"native-integration-review\",\"update\":{\"artifacts\":[],\"text\":\"The independent review found Linux duplicate Desktop ownership, a Windows startup activation race and missing Linux Rust notices. These are being corrected before promotion.\"}},\"state\":\"blocked\"}",
+            "id": "native-integration-review-6d60b71-20261102:result",
+            "assignment": "rtxforge-game-mode-desktop-integration-20261102",
+            "step_id": "native-integration-review",
+            "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
+            "label": "Independent native handoff and distribution review",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "6d60b71c906c62cd053cea85307a98e814555c10",
+            "observed_at": "2026-11-02T19:27:00.000Z",
+            "recorded_at": "2026-11-02T19:27:04.696Z",
+            "receipt_digest": "sha256:ed6d4446479da1f56bd906603adcbd7364cda6d99ee7fcaa938273e649ae07ad",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The independent review found Linux duplicate Desktop ownership, a Windows startup activation race and missing Linux Rust notices. These are being corrected before promotion.",
             "text_kind": "owner-published",
             "artifacts": []
           }
