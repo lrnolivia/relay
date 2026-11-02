@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T19:38:58.617Z",
+  "updated_at": "2026-11-02T19:43:08.136Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25753,7 +25753,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T19:38:58.617Z",
+      "updated_at": "2026-11-02T19:43:08.136Z",
       "lease_until": "2026-11-03T07:19:57.987Z",
       "amendment_count": 4,
       "amendments": [
@@ -25949,6 +25949,40 @@
             }
           },
           "reported_at": "2026-11-02T19:38:58.617Z"
+        },
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "native-final-review-bd9113e-20261102",
+          "assignment": "rtxforge-game-mode-desktop-integration-20261102",
+          "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "branch": "rtxforge/game-mode-desktop-integration-20261102",
+          "source_sha": "bd9113e69b134e88e5912ac9536ea5d8bfe05695",
+          "objective_digest": "265e133863d9d3a4532cc2f1d5afd4c5bf89068b13b1f2c17f4b4642fc4f7fc1",
+          "scope_digest": "bc0b442344f3f52c786dab86da85180e8cda76eb2a01f9cf873a4a490efe24e6",
+          "step_id": "native-final-review",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "bd9113e69b134e88e5912ac9536ea5d8bfe05695",
+            "objective_digest": "265e133863d9d3a4532cc2f1d5afd4c5bf89068b13b1f2c17f4b4642fc4f7fc1",
+            "step_id": "native-final-review",
+            "label": "Check final activation and runtime corrections",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "851927537cb8daf3331a7ca11e5a03aa9f50cc2aca27846e759d68248d0546f7"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-02T19:43:08.136Z",
+          "request_digest": "e8ec0cc62b6f21c2ee1ce6c1b892239795387c37b7014e8f1a8d0464e597fd8b",
+          "step_digest": "b0c0b20f3f7859d022ffac0c0ba8ab1a19ee958e0fb7306634b0087cc61612fc"
         }
       ],
       "card_steps": {
@@ -25960,7 +25994,7 @@
           "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
           "branch": "rtxforge/game-mode-desktop-integration-20261102"
         },
-        "sequence": 6,
+        "sequence": 7,
         "complete": false,
         "steps": [
           {
@@ -26012,6 +26046,13 @@
               },
               "phase": "awaiting-verification"
             }
+          },
+          {
+            "id": "native-final-review",
+            "label": "Check final activation and runtime corrections",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -26019,7 +26060,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-game-mode-desktop-integration-20261102",
         "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
-        "sequence": 6,
+        "sequence": 7,
         "truncated": false,
         "identities": {
           "native-integration-review-6d60b71-20261102:started": "290a8ca7cc9ec70901bbf10076c27cb388f4a61c0f78d78bf49f59bed2cb27db",
