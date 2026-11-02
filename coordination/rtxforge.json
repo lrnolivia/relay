@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T23:43:17.289Z",
+  "updated_at": "2026-11-02T23:44:30.724Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26410,86 +26410,6 @@
       "completed_at": "2026-11-02T21:57:52.963Z"
     },
     {
-      "id": "rtxforge-library-names-mass-effect-20261101",
-      "owner": "01a19a65-3f13-7703-bcf7-077145942958",
-      "branch": "rtxforge/library-names-mass-effect-20261101",
-      "paths": [
-        "windows/engine-host/win_features.py",
-        "windows/RtxForge.Windows/MainWindow.Library.cs",
-        "windows/RtxForge.Windows/Views/LibraryPage.xaml.cs",
-        "windows/RtxForge.Windows/GameMode/GameModeView.LibraryManagement.cs",
-        "windows/RtxForge.Windows/GameMode/GameModeView.Details.cs",
-        "scripts/library_identity.py",
-        "tests/test_library_identity.py",
-        "scripts/library_media.py",
-        "windows/RtxForge.Windows/Views/GamePage.xaml",
-        "windows/RtxForge.Windows/MainWindow.xaml.cs",
-        "windows/RtxForge.Windows/Models/Models.cs",
-        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
-        "windows/engine-host/rtxforge_win_host.py",
-        "scripts/steam_artwork.py",
-        "tests/test_steam_artwork.py"
-      ],
-      "resources": [
-        "library-game-names",
-        "mass-effect-steam-shortcuts"
-      ],
-      "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
-      "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.\n2026-11-02 user additions: import current Steam artwork for each trilogy shortcut without writing Steam images or leaving pending writebacks. Each campaign uses its own game description/developer/genres and original-release information, with Legendary Edition identified separately. Keep collection appid1328670 solely for launch/install identity; metadata IDs17460/24980/1238020 and shortcut-art IDs are separate. Preserve other games/settings/artwork. Steam Prime metadata should make the same distinction on desktop and Game Mode.",
-      "next_action": "Finish private Linux handoff of reviewed Steam Prime/SteamGridDB modules and rtxForge source patch, with checksums and native integration notes. PR139 at b0014c56 has all executed CI checks successful and 13 focused tests passing. Preserve pending Linux native/controller validation, final native filter padding confirmation, Downloads/Store visual checks, and ME2/ME3 launch validation; do not merge or release. Lauren explicitly requested Overview Testing reordered now. The owning chat is idle/not loaded, its source tree clean at b0014c56 and no checkout process is running. GamePage.xaml.cs is temporarily transferred only for the two-line Testing-last reorder to rtxforge-overview-testing-order-20261102; prior file preserved at G:/BuildScratch/rtxforge-overview-testing-order-20261102/held-GamePage-before.cs. PR139 and all other objectives stay held; no merge/release authority added. Restore this file reservation after the narrow reorder merges.",
-      "category": "implementation",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "55f2d8b54e15165e427add24b05b40e5758d178d",
-      "state": "active",
-      "created_at": "2026-11-02T03:55:35.289Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
-          "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
-          "at": "2026-11-02T03:55:35.289Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-library-names-mass-effect-20261101:acceptance:0",
-            "text": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
-            "at": "2026-11-02T03:55:35.289Z"
-          },
-          {
-            "id": "rtxforge-library-names-mass-effect-20261101:acceptance:1",
-            "text": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.\n2026-11-02 user additions: import current Steam artwork for each trilogy shortcut without writing Steam images or leaving pending writebacks. Each campaign uses its own game description/developer/genres and original-release information, with Legendary Edition identified separately. Keep collection appid1328670 solely for launch/install identity; metadata IDs17460/24980/1238020 and shortcut-art IDs are separate. Preserve other games/settings/artwork. Steam Prime metadata should make the same distinction on desktop and Game Mode.",
-            "at": "2026-11-02T05:03:55.379Z",
-            "reason": "User asked to replace the app's earlier Mass Effect artwork with the images they just selected in Steam, and to use each actual game's metadata instead of collection metadata."
-          }
-        ]
-      },
-      "updated_at": "2026-11-02T23:13:52.399Z",
-      "lease_until": "2026-11-03T11:13:52.399Z",
-      "amendment_count": 1,
-      "amendments": [
-        {
-          "at": "2026-11-02T05:03:55.379Z",
-          "by": "01a19a65-3f13-7703-bcf7-077145942958",
-          "reason": "User asked to replace the app's earlier Mass Effect artwork with the images they just selected in Steam, and to use each actual game's metadata instead of collection metadata.",
-          "fields": [
-            "acceptance",
-            "next_action"
-          ],
-          "before": {
-            "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
-            "next_action": "Finish authorized local setup without computer input: artwork applied, create Steam autoboot shortcuts using existing ME3Tweaks support; bind individual collection artwork to the matching shortcut instead of shared collection appid, then run focused tests and publish draft source."
-          },
-          "after": {
-            "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.\n2026-11-02 user additions: import current Steam artwork for each trilogy shortcut without writing Steam images or leaving pending writebacks. Each campaign uses its own game description/developer/genres and original-release information, with Legendary Edition identified separately. Keep collection appid1328670 solely for launch/install identity; metadata IDs17460/24980/1238020 and shortcut-art IDs are separate. Preserve other games/settings/artwork. Steam Prime metadata should make the same distinction on desktop and Game Mode.",
-            "next_action": "Draft PR139 now includes b0014c5 (per-game metadata and current-shortcut artwork reads), with13 focused tests passing. Twelve current Steam images imported and independently hashed; no Steam writes or pending trilogy writebacks. Backend sources installed with backups and both old/new metadata caches primed. Steam Prime shortcut metadata mappings seeded for desktop/Game Mode, with LE edition separate and original ME3 multiplayer flags excluded. Finish the user-driven Steam filter/frosted-tab/logo visual checks and retain unresolved actual Game Mode/ME2/ME3 launch validation; no merge/release claimed."
-          }
-        }
-      ]
-    },
-    {
       "id": "rtxforge-overview-testing-order-20261102",
       "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
       "branch": "rtxforge/overview-testing-order-20261102",
@@ -26725,6 +26645,87 @@
       "evidence": "PR142 merged f7388b6102ade554d5fc4992a715ba9b0fa9da57; merged tree9b68de750665bc21f1384765be50a7e7c9a66256 equals reviewed15c496e0a15148a565ced1a7ea97dfe2ab73482a, human author Lauren Olivia <lrnoliv@gmail.com>. Exact-source native Windows/Linux, WinUI x64/ARM64, AppImage and Flatpak checks passed. Two-line move puts TestingGroup after executable; no testing behavior changed. Local Desktop update installed and actual Overview observed package facts→folder→executable→Testing, saved in G:/BuildScratch/rtxforge-overview-testing-order-20261102/desktop-order-observed.json. All staged files match; settings/provider/preview files and native payload preserved. Game Mode sourcea600682 is unchanged and already ends Overview with Testing in all saved-record variants; bounded review has no findings. Delivery/CI/install/review receipts in G:/BuildScratch/rtxforge-overview-testing-order-20261102/delivery.json. Prior held PR139 b0014c56 source/GamePage hash preserved; restore its temporary GamePage.cs reservation next. No public updater/Beta publication.",
       "work_accounted": true,
       "completed_at": "2026-11-02T23:43:17.289Z"
+    },
+    {
+      "id": "rtxforge-library-names-mass-effect-20261101",
+      "owner": "01a19a65-3f13-7703-bcf7-077145942958",
+      "branch": "rtxforge/library-names-mass-effect-20261101",
+      "paths": [
+        "windows/engine-host/win_features.py",
+        "windows/RtxForge.Windows/MainWindow.Library.cs",
+        "windows/RtxForge.Windows/Views/LibraryPage.xaml.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.LibraryManagement.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Details.cs",
+        "scripts/library_identity.py",
+        "tests/test_library_identity.py",
+        "scripts/library_media.py",
+        "windows/RtxForge.Windows/Views/GamePage.xaml",
+        "windows/RtxForge.Windows/MainWindow.xaml.cs",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+        "windows/engine-host/rtxforge_win_host.py",
+        "scripts/steam_artwork.py",
+        "tests/test_steam_artwork.py",
+        "windows/RtxForge.Windows/Views/GamePage.xaml.cs"
+      ],
+      "resources": [
+        "library-game-names",
+        "mass-effect-steam-shortcuts"
+      ],
+      "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
+      "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.\n2026-11-02 user additions: import current Steam artwork for each trilogy shortcut without writing Steam images or leaving pending writebacks. Each campaign uses its own game description/developer/genres and original-release information, with Legendary Edition identified separately. Keep collection appid1328670 solely for launch/install identity; metadata IDs17460/24980/1238020 and shortcut-art IDs are separate. Preserve other games/settings/artwork. Steam Prime metadata should make the same distinction on desktop and Game Mode.",
+      "next_action": "Finish private Linux handoff of reviewed Steam Prime/SteamGridDB modules and rtxForge source patch, with checksums and native integration notes. PR139 at b0014c56 has all executed CI checks successful and 13 focused tests passing. Preserve pending Linux native/controller validation, final native filter padding confirmation, Downloads/Store visual checks, and ME2/ME3 launch validation; do not merge or release. The temporary GamePage.xaml.cs reservation is restored after Lauren requested Testing-last immediately: narrow PR142 merged to mainf7388b6102ade554d5fc4992a715ba9b0fa9da57, exact source15c496e. Desktop Testing now follows facts/folder/executable, matching Game Mode. Your held PR139 headb0014c56 and GamePage hash edf297ce69b195b150c13a66fae68721fbca3e9371340faa83ed14d0f6f76f87 are untouched. Incorporate main and preserve Testing-last when this held work resumes; no new merge/release authority for PR139.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "55f2d8b54e15165e427add24b05b40e5758d178d",
+      "state": "active",
+      "created_at": "2026-11-02T03:55:35.289Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
+          "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
+          "at": "2026-11-02T03:55:35.289Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-library-names-mass-effect-20261101:acceptance:0",
+            "text": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
+            "at": "2026-11-02T03:55:35.289Z"
+          },
+          {
+            "id": "rtxforge-library-names-mass-effect-20261101:acceptance:1",
+            "text": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.\n2026-11-02 user additions: import current Steam artwork for each trilogy shortcut without writing Steam images or leaving pending writebacks. Each campaign uses its own game description/developer/genres and original-release information, with Legendary Edition identified separately. Keep collection appid1328670 solely for launch/install identity; metadata IDs17460/24980/1238020 and shortcut-art IDs are separate. Preserve other games/settings/artwork. Steam Prime metadata should make the same distinction on desktop and Game Mode.",
+            "at": "2026-11-02T05:03:55.379Z",
+            "reason": "User asked to replace the app's earlier Mass Effect artwork with the images they just selected in Steam, and to use each actual game's metadata instead of collection metadata."
+          }
+        ]
+      },
+      "updated_at": "2026-11-02T23:44:30.724Z",
+      "lease_until": "2026-11-03T11:44:30.724Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-02T05:03:55.379Z",
+          "by": "01a19a65-3f13-7703-bcf7-077145942958",
+          "reason": "User asked to replace the app's earlier Mass Effect artwork with the images they just selected in Steam, and to use each actual game's metadata instead of collection metadata.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
+            "next_action": "Finish authorized local setup without computer input: artwork applied, create Steam autoboot shortcuts using existing ME3Tweaks support; bind individual collection artwork to the matching shortcut instead of shared collection appid, then run focused tests and publish draft source."
+          },
+          "after": {
+            "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.\n2026-11-02 user additions: import current Steam artwork for each trilogy shortcut without writing Steam images or leaving pending writebacks. Each campaign uses its own game description/developer/genres and original-release information, with Legendary Edition identified separately. Keep collection appid1328670 solely for launch/install identity; metadata IDs17460/24980/1238020 and shortcut-art IDs are separate. Preserve other games/settings/artwork. Steam Prime metadata should make the same distinction on desktop and Game Mode.",
+            "next_action": "Draft PR139 now includes b0014c5 (per-game metadata and current-shortcut artwork reads), with13 focused tests passing. Twelve current Steam images imported and independently hashed; no Steam writes or pending trilogy writebacks. Backend sources installed with backups and both old/new metadata caches primed. Steam Prime shortcut metadata mappings seeded for desktop/Game Mode, with LE edition separate and original ME3 multiplayer flags excluded. Finish the user-driven Steam filter/frosted-tab/logo visual checks and retain unresolved actual Game Mode/ME2/ME3 launch validation; no merge/release claimed."
+          }
+        }
+      ]
     }
   ]
 }
