@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T23:20:09.815Z",
+  "updated_at": "2026-11-02T23:22:07.021Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26528,7 +26528,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T23:20:09.815Z",
+      "updated_at": "2026-11-02T23:22:07.021Z",
       "lease_until": "2026-11-03T11:19:32.332Z",
       "supporting_roles": [
         "verifier"
@@ -26592,10 +26592,21 @@
             "host_available": true,
             "intent_digest": "b92e049dd83d6c1a3a6e741a9239a41ad59a6387abe7d76f459785a5099ec080"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-02T23:20:09.815Z",
           "request_digest": "0fd0d65dab3182ae914d462718f76286669193ce07816e01d6de3c99fdbc8e07",
-          "step_digest": "b74b8c031df7496fa3d30fcfc9a7b224916d2d77c1ac0e06d765f95959e4099c"
+          "step_digest": "4408f3f487ae7885f213e28b9cc89c3fe4913ec4900c050a765a25ef398026ea",
+          "start": {
+            "request_digest": "0fd0d65dab3182ae914d462718f76286669193ce07816e01d6de3c99fdbc8e07",
+            "source_sha": "15c496e0a15148a565ced1a7ea97dfe2ab73482a",
+            "agent_id": "/root/overview_order_review",
+            "observed_at": "2026-11-02T23:22:02.202Z",
+            "update": {
+              "text": "The bounded verifier is checking the exact Overview insertion order; Windows publish passes and the native Testing box already follows the game facts.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-02T23:22:07.021Z"
         }
       ],
       "card_steps": {
@@ -26607,15 +26618,32 @@
           "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
           "branch": "rtxforge/overview-testing-order-20261102"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "overview-order-review",
             "label": "Verify Overview Testing order",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "overview-order-review-15c496e-20261102:started",
+              "assignment": "rtxforge-overview-testing-order-20261102",
+              "step_id": "overview-order-review",
+              "plan_revision": "316299f74e87b635c6c2bdfbeaee39aa16b4c6a6c1e8925c1b5b4bce61936f61",
+              "input_digest": "0fd0d65dab3182ae914d462718f76286669193ce07816e01d6de3c99fdbc8e07",
+              "evidence": "sha256:d184833929df7041e34f9a988d6704325930b6dc09b1866e2b78615707d8536e",
+              "source_sha": "15c496e0a15148a565ced1a7ea97dfe2ab73482a",
+              "observed_at": "2026-11-02T23:22:02.202Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "The bounded verifier is checking the exact Overview insertion order; Windows publish passes and the native Testing box already follows the game facts.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -26623,10 +26651,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-overview-testing-order-20261102",
         "revision": "316299f74e87b635c6c2bdfbeaee39aa16b4c6a6c1e8925c1b5b4bce61936f61",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "overview-order-review-15c496e-20261102:started": "8548bea2d42c4a6d3eaa78ab79aed71de28ec4965e8516e8f63fa50a687fc71e"
+        },
+        "items": [
+          {
+            "key": "overview-order-review-15c496e-20261102:started:0fd0d65dab3182ae914d462718f76286669193ce07816e01d6de3c99fdbc8e07:running:",
+            "receipt_snapshot": "{\"label\":\"Verify Overview Testing order\",\"receipt\":{\"assignment\":\"rtxforge-overview-testing-order-20261102\",\"evidence\":\"sha256:d184833929df7041e34f9a988d6704325930b6dc09b1866e2b78615707d8536e\",\"id\":\"overview-order-review-15c496e-20261102:started\",\"input_digest\":\"0fd0d65dab3182ae914d462718f76286669193ce07816e01d6de3c99fdbc8e07\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"316299f74e87b635c6c2bdfbeaee39aa16b4c6a6c1e8925c1b5b4bce61936f61\",\"source_sha\":\"15c496e0a15148a565ced1a7ea97dfe2ab73482a\",\"step_id\":\"overview-order-review\",\"update\":{\"artifacts\":[],\"text\":\"The bounded verifier is checking the exact Overview insertion order; Windows publish passes and the native Testing box already follows the game facts.\"}},\"state\":\"running\"}",
+            "id": "overview-order-review-15c496e-20261102:started",
+            "assignment": "rtxforge-overview-testing-order-20261102",
+            "step_id": "overview-order-review",
+            "revision": "316299f74e87b635c6c2bdfbeaee39aa16b4c6a6c1e8925c1b5b4bce61936f61",
+            "label": "Verify Overview Testing order",
+            "state": "running",
+            "phase": null,
+            "source_sha": "15c496e0a15148a565ced1a7ea97dfe2ab73482a",
+            "observed_at": "2026-11-02T23:22:02.202Z",
+            "recorded_at": "2026-11-02T23:22:07.021Z",
+            "receipt_digest": "sha256:d184833929df7041e34f9a988d6704325930b6dc09b1866e2b78615707d8536e",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The bounded verifier is checking the exact Overview insertion order; Windows publish passes and the native Testing box already follows the game facts.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
