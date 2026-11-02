@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-02T05:28:31.536Z",
+  "updated_at": "2026-11-02T05:56:34.289Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21801,6 +21801,50 @@
       "evidence": "PR277 merged as 0457bd69750b2170934a69397a6a97db5ba77cf0: https://github.com/lrnolivia/relay/pull/277 . Exact merged main CI passed 1269 tests, 0 failures, 1 existing platform skip: https://github.com/lrnolivia/relay/actions/runs/41393541247 . Workers Build f33be5f4-8ad2-40f2-887b-752352b1101f succeeded and deployed version 81f8e829-869b-4ba9-bfde-bd48ae37e4ea at 100%, deployment 9ba9133a-eb46-4b95-8ba0-228d5e9aac95: https://github.com/lrnolivia/relay/runs/125110190315 . Exact-source production smoke passed MCP tool/resource inventory, contextual card v30, runtime/web source identity and existing QA reads: https://github.com/lrnolivia/relay/actions/runs/41393996178 . Production health returned 200/ok. Card resource SHA256 f755d1465d41609547ba1c3190a79c465ca78e9aabdd232321971bd5a0ea46f8; prior resource aliases preserved. Release assurance passed archive retention/readback and isolated five-file restoration, healthy safety revision110: https://github.com/lrnolivia/relay/actions/runs/41393940622 . Recovery artifact13118178210 archive SHA256 1a59a058da9cbb4f4ae1f7cc304c376c7f9b84f8928edc0ca7b60a4c1f60bb1f, manifest04294f4a84d5d1892c297bf62926c21df6fb811b54f6aabdbd5fec5d43027ec2, restoration f70fa70e9788bb7c6bb4fd72ccc1b9adab5f8fdbc56c6ded5619f932cfdc6f6e. Existing user-approved baseline preserved. Completion covers delivered banner/frozen-snapshot source and release; automatic cross-chat 5-7 minute posting remains unverified, and relay-card-native-ui-acceptance-followup-20261101 remains queued with native mount unknown.",
       "work_accounted": true,
       "completed_at": "2026-11-02T05:28:31.536Z"
+    },
+    {
+      "id": "relay-banner-band-spacing-20261102",
+      "owner": "01a19804-e77b-7229-8982-76ae7a4b30c2",
+      "branch": "relay/banner-band-spacing-20261102",
+      "paths": [
+        "src/relay-card-family.js",
+        "src/relay-card-family.test.js",
+        "scripts/verify-context-card-visuals.mjs",
+        "src/relay-chat-ui.js",
+        "src/index.js",
+        "src/relay-entry.test.js"
+      ],
+      "resources": [
+        "relay-banner-band-spacing"
+      ],
+      "goal": "Pack assignment progress/next/status left and the compact lead ID badge right in the same band under the title; improve badge/button internal padding without growing the card.",
+      "acceptance": "Preserve assignment/project title hierarchy, Momo/approved avatars/team identity, frozen snapshot/public privacy and verified ring contracts. Desktop summary and right-aligned lead share one band; status remains aligned with progress, footer closes unused whitespace. Comfortable badge and Open latest/menu padding without sparse card height growth. Responsive stacking, complete accessible next text, missing lead, avatar fallback, light/dark, keyboard focus and assignment/individual/product transitions remain correct. Resource v31 preserves v30 and all prior aliases. Focused DOM geometry/identity/accessibility/regression checks, full required Linux CI and exact-head local fictional captures; draft PR for parent review. No new evidence export, merge, deployment, scheduler or unrelated producer work authorized by this task.",
+      "next_action": "Independently read admission and preflight, create the narrow branch from current main, implement the shared summary band and internal padding, then verify focused DOM geometry and family transitions before draft publication.",
+      "category": "implementation",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "8f45b2d932948c92c804b292eff4e387c22d651f",
+      "state": "active",
+      "created_at": "2026-11-02T05:56:34.289Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Pack assignment progress/next/status left and the compact lead ID badge right in the same band under the title; improve badge/button internal padding without growing the card.",
+          "acceptance": "Preserve assignment/project title hierarchy, Momo/approved avatars/team identity, frozen snapshot/public privacy and verified ring contracts. Desktop summary and right-aligned lead share one band; status remains aligned with progress, footer closes unused whitespace. Comfortable badge and Open latest/menu padding without sparse card height growth. Responsive stacking, complete accessible next text, missing lead, avatar fallback, light/dark, keyboard focus and assignment/individual/product transitions remain correct. Resource v31 preserves v30 and all prior aliases. Focused DOM geometry/identity/accessibility/regression checks, full required Linux CI and exact-head local fictional captures; draft PR for parent review. No new evidence export, merge, deployment, scheduler or unrelated producer work authorized by this task.",
+          "at": "2026-11-02T05:56:34.289Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-banner-band-spacing-20261102:acceptance:0",
+            "text": "Preserve assignment/project title hierarchy, Momo/approved avatars/team identity, frozen snapshot/public privacy and verified ring contracts. Desktop summary and right-aligned lead share one band; status remains aligned with progress, footer closes unused whitespace. Comfortable badge and Open latest/menu padding without sparse card height growth. Responsive stacking, complete accessible next text, missing lead, avatar fallback, light/dark, keyboard focus and assignment/individual/product transitions remain correct. Resource v31 preserves v30 and all prior aliases. Focused DOM geometry/identity/accessibility/regression checks, full required Linux CI and exact-head local fictional captures; draft PR for parent review. No new evidence export, merge, deployment, scheduler or unrelated producer work authorized by this task.",
+            "at": "2026-11-02T05:56:34.289Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-02T05:56:34.289Z",
+      "lease_until": "2026-11-02T17:56:34.289Z"
     }
   ],
   "migrated_from": "loew-inspector"
