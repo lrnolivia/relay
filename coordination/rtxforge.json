@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T19:47:39.035Z",
+  "updated_at": "2026-11-02T19:51:10.568Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25753,7 +25753,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T19:47:39.035Z",
+      "updated_at": "2026-11-02T19:51:10.568Z",
       "lease_until": "2026-11-03T07:19:57.987Z",
       "amendment_count": 4,
       "amendments": [
@@ -26007,6 +26007,40 @@
             }
           },
           "reported_at": "2026-11-02T19:47:39.035Z"
+        },
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "windows-activation-review-34f6486-20261102",
+          "assignment": "rtxforge-game-mode-desktop-integration-20261102",
+          "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "branch": "rtxforge/game-mode-desktop-integration-20261102",
+          "source_sha": "34f64867014bfbc025308c8945758c91c447e3d0",
+          "objective_digest": "265e133863d9d3a4532cc2f1d5afd4c5bf89068b13b1f2c17f4b4642fc4f7fc1",
+          "scope_digest": "bc0b442344f3f52c786dab86da85180e8cda76eb2a01f9cf873a4a490efe24e6",
+          "step_id": "windows-activation-review",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "34f64867014bfbc025308c8945758c91c447e3d0",
+            "objective_digest": "265e133863d9d3a4532cc2f1d5afd4c5bf89068b13b1f2c17f4b4642fc4f7fc1",
+            "step_id": "windows-activation-review",
+            "label": "Verify the ordered Windows startup queue",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "098a269be57dca23abc4d84405bdb1d56c8348af222b7a4abc4d3360bb70b19f"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-02T19:51:10.568Z",
+          "request_digest": "11871c6d9e437b1e75d69ba3b2bbbfb4cddde85421cc4432dc36650bddb40c4c",
+          "step_digest": "c69aa1b3da7bac8bfd91ff9e92a2bb06653cc2546a1afdf92f58e98fbea47936"
         }
       ],
       "card_steps": {
@@ -26018,7 +26052,7 @@
           "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
           "branch": "rtxforge/game-mode-desktop-integration-20261102"
         },
-        "sequence": 9,
+        "sequence": 10,
         "complete": false,
         "steps": [
           {
@@ -26095,6 +26129,13 @@
               },
               "phase": "awaiting-verification"
             }
+          },
+          {
+            "id": "windows-activation-review",
+            "label": "Verify the ordered Windows startup queue",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -26102,7 +26143,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-game-mode-desktop-integration-20261102",
         "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
-        "sequence": 9,
+        "sequence": 10,
         "truncated": false,
         "identities": {
           "native-integration-review-6d60b71-20261102:started": "290a8ca7cc9ec70901bbf10076c27cb388f4a61c0f78d78bf49f59bed2cb27db",
