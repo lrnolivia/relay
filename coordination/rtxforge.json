@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T00:14:09.074Z",
+  "updated_at": "2026-11-02T00:21:15.831Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22919,8 +22919,8 @@
       "resources": [
         "rtxforge-desktop-overlay-preview"
       ],
-      "goal": "Right-align the Accent Tint switch within its native Overlay Settings card.",
-      "acceptance": "Accent Tint switch uses its natural width and aligns to the card's right padding in the shared global and Game Details Overlay appearance view. Existing native style and behavior are preserved; Windows build passes.",
+      "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
+      "acceptance": "Accent Tint is right aligned in shared native global/Game Details settings. Clear headings retain game hue and stronger saturation without washed-out Screen highlights, no black Clear ink or muddy yellow shades. Control styling preview uses a genuine suitable publisher screenshot with correct game identity/provenance. Focused color regression checks, native renderer and Windows build pass. Publication/install remain held until reviewed Game Mode merge.",
       "next_action": "User explicitly requires Game Mode merge before hotfix ships. PR138 at5a36885501681d45c196d283108869a86724c609 passes local Windows Release build; await exact-head checks and integrate alignment source, but hold all release publication/installation until Game Mode owner01a19538-4244-7092-b9db-1b2c93a26118 supplies reviewed merged source. Beta16 installation remains unchanged.",
       "category": "implementation",
       "primary_team": "runner",
@@ -22942,11 +22942,37 @@
             "id": "rtxforge-overlay-accent-toggle-alignment-20261101:acceptance:0",
             "text": "Accent Tint switch uses its natural width and aligns to the card's right padding in the shared global and Game Details Overlay appearance view. Existing native style and behavior are preserved; Windows build passes.",
             "at": "2026-11-01T23:18:18.885Z"
+          },
+          {
+            "id": "rtxforge-overlay-accent-toggle-alignment-20261101:acceptance:1",
+            "text": "Accent Tint is right aligned in shared native global/Game Details settings. Clear headings retain game hue and stronger saturation without washed-out Screen highlights, no black Clear ink or muddy yellow shades. Control styling preview uses a genuine suitable publisher screenshot with correct game identity/provenance. Focused color regression checks, native renderer and Windows build pass. Publication/install remain held until reviewed Game Mode merge.",
+            "at": "2026-11-02T00:21:15.831Z",
+            "reason": "User added Clear heading contrast fixes for Witcher and Control, asked for deeper more saturated accents, and rejected the Control preview screenshot. App hotfix release still waits for Game Mode merge."
           }
         ]
       },
-      "updated_at": "2026-11-01T23:30:27.057Z",
-      "lease_until": "2026-11-02T11:30:27.057Z"
+      "updated_at": "2026-11-02T00:21:15.831Z",
+      "lease_until": "2026-11-02T12:21:15.831Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-02T00:21:15.831Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "User added Clear heading contrast fixes for Witcher and Control, asked for deeper more saturated accents, and rejected the Control preview screenshot. App hotfix release still waits for Game Mode merge.",
+          "fields": [
+            "goal",
+            "acceptance"
+          ],
+          "before": {
+            "goal": "Right-align the Accent Tint switch within its native Overlay Settings card.",
+            "acceptance": "Accent Tint switch uses its natural width and aligns to the card's right padding in the shared global and Game Details Overlay appearance view. Existing native style and behavior are preserved; Windows build passes."
+          },
+          "after": {
+            "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
+            "acceptance": "Accent Tint is right aligned in shared native global/Game Details settings. Clear headings retain game hue and stronger saturation without washed-out Screen highlights, no black Clear ink or muddy yellow shades. Control styling preview uses a genuine suitable publisher screenshot with correct game identity/provenance. Focused color regression checks, native renderer and Windows build pass. Publication/install remain held until reviewed Game Mode merge."
+          }
+        }
+      ]
     },
     {
       "id": "rtxforge-tauri-game-mode-20261031",
