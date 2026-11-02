@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T06:20:28.992Z",
+  "updated_at": "2026-11-02T06:21:12.992Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23311,7 +23311,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T06:20:28.992Z",
+      "updated_at": "2026-11-02T06:21:12.992Z",
       "lease_until": "2026-11-02T18:12:40.725Z",
       "amendment_count": 13,
       "amendments": [
@@ -24115,10 +24115,21 @@
             "host_available": true,
             "intent_digest": "92a4582e854ecbb513648c071543bef735659b590896597fca7f256941d225c1"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-02T06:20:28.992Z",
           "request_digest": "ef11204a0d9ebbd8ef26db89d92c99aa518025feaf856cc736c4e22173b134f6",
-          "step_digest": "e1c12c8b1089bd22a272435db1e99001103e52d1f84912aa5e84740fcde53b65"
+          "step_digest": "b1c8a0d91e4ca76a49c17e94744272cc1e152e5caca033def29156033eb565ad",
+          "start": {
+            "request_digest": "ef11204a0d9ebbd8ef26db89d92c99aa518025feaf856cc736c4e22173b134f6",
+            "source_sha": "d2a85c2237882053367a76a9539962ad39368433",
+            "agent_id": "/root/spectrum_keyboard_verdict_d2a85c2",
+            "observed_at": "2026-11-02T06:21:09.170Z",
+            "update": {
+              "text": "The final keyboard fix is under independent verdict checking with exact color assertions and the pointer outside the spectrum.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-02T06:21:12.992Z"
         }
       ],
       "card_steps": {
@@ -24130,7 +24141,7 @@
           "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
           "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
         },
-        "sequence": 7,
+        "sequence": 8,
         "complete": false,
         "steps": [
           {
@@ -24187,8 +24198,25 @@
             "id": "spectrum-keyboard-verdict",
             "label": "Score the spectrum keyboard-selection fix",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "spectrum-keyboard-verdict-d2a85c2:started",
+              "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+              "step_id": "spectrum-keyboard-verdict",
+              "plan_revision": "7f1a50c47ac8c8684092479ac91e05f587ac51b9c37bed8c625e58d58f01b983",
+              "input_digest": "ef11204a0d9ebbd8ef26db89d92c99aa518025feaf856cc736c4e22173b134f6",
+              "evidence": "sha256:66ee5709398d0d467372ced0b1d34568004744a119a5e752f5870df18dc4addb",
+              "source_sha": "d2a85c2237882053367a76a9539962ad39368433",
+              "observed_at": "2026-11-02T06:21:09.170Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "The final keyboard fix is under independent verdict checking with exact color assertions and the pointer outside the spectrum.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -24196,13 +24224,14 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
         "revision": "7f1a50c47ac8c8684092479ac91e05f587ac51b9c37bed8c625e58d58f01b983",
-        "sequence": 7,
+        "sequence": 8,
         "truncated": false,
         "identities": {
           "spectrum-final-review-2d8df28:started": "734d22fa95afbf827b317c866b475dd627e45ccd85ab18bba4bf6abd6ee013a1",
           "spectrum-documentation-check-2d8df28:started": "0176db117db982a6e70f7559f3c8c24269ece9161d81dbb5e11df906bb47ddfc",
           "spectrum-final-review-2d8df28:result": "5d72784381b3fa765d2237be0cc4f9090875bad5fdb817785e4ed6942220c2b6",
-          "spectrum-documentation-check-2d8df28:result": "f6b70936782c1883058c39e3e47d01a6d7f3c77c5d4935ccff9351d3abf9ab2c"
+          "spectrum-documentation-check-2d8df28:result": "f6b70936782c1883058c39e3e47d01a6d7f3c77c5d4935ccff9351d3abf9ab2c",
+          "spectrum-keyboard-verdict-d2a85c2:started": "14efbdc64beca8e7db6a2c6bc34605579c62071331ee5a4f65850595fb1086bf"
         },
         "items": [
           {
@@ -24290,6 +24319,28 @@
               "team": "inspector"
             },
             "text": "Documentation finish check found no new contradiction; existing preview guidance matches the compact spectrum and known validation limits.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "spectrum-keyboard-verdict-d2a85c2:started:ef11204a0d9ebbd8ef26db89d92c99aa518025feaf856cc736c4e22173b134f6:running:",
+            "receipt_snapshot": "{\"label\":\"Score the spectrum keyboard-selection fix\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:66ee5709398d0d467372ced0b1d34568004744a119a5e752f5870df18dc4addb\",\"id\":\"spectrum-keyboard-verdict-d2a85c2:started\",\"input_digest\":\"ef11204a0d9ebbd8ef26db89d92c99aa518025feaf856cc736c4e22173b134f6\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"7f1a50c47ac8c8684092479ac91e05f587ac51b9c37bed8c625e58d58f01b983\",\"source_sha\":\"d2a85c2237882053367a76a9539962ad39368433\",\"step_id\":\"spectrum-keyboard-verdict\",\"update\":{\"artifacts\":[],\"text\":\"The final keyboard fix is under independent verdict checking with exact color assertions and the pointer outside the spectrum.\"}},\"state\":\"running\"}",
+            "id": "spectrum-keyboard-verdict-d2a85c2:started",
+            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+            "step_id": "spectrum-keyboard-verdict",
+            "revision": "7f1a50c47ac8c8684092479ac91e05f587ac51b9c37bed8c625e58d58f01b983",
+            "label": "Score the spectrum keyboard-selection fix",
+            "state": "running",
+            "phase": null,
+            "source_sha": "d2a85c2237882053367a76a9539962ad39368433",
+            "observed_at": "2026-11-02T06:21:09.170Z",
+            "recorded_at": "2026-11-02T06:21:12.992Z",
+            "receipt_digest": "sha256:66ee5709398d0d467372ced0b1d34568004744a119a5e752f5870df18dc4addb",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The final keyboard fix is under independent verdict checking with exact color assertions and the pointer outside the spectrum.",
             "text_kind": "owner-published",
             "artifacts": []
           }
