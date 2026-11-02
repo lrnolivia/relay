@@ -10,6 +10,7 @@ import { testMaintenanceGuidance } from "./test-maintenance.js";
 
 export const RESUME_CONTRACT_VERSION = "1.9.3";
 
+import {progressDueHint} from './progress-snapshots.js';
 const ACTIVE_CADENCE_MS = 5 * 60 * 1000;
 const EXTERNAL_CADENCE_MS = 10 * 60 * 1000;
 const HUMAN_CADENCE_MS = 30 * 60 * 1000;
@@ -156,6 +157,7 @@ export function deriveResumeCheckpoint(input, now = new Date()) {
       worker_age_ms: input.progress?.worker?.age_ms ?? null
     },
     cadence: {
+      public_snapshot:progressDueHint(input.progress||{},now.getTime()),
       target_ms: target,
       next_refresh_at: target === null ? null : new Date(now.getTime() + target).toISOString()
     },

@@ -4,8 +4,10 @@ import { assignmentCardSteps } from './relay-card-steps.js';
 import {assignmentCardUpdates} from './relay-card-updates.js';
 import { cardStaff } from './relay-card-identity.js';
 import { cardIdentity } from './relay-card-identity.js';
+import {validProgressSnapshot} from './progress-snapshots.js';
 
 export function contextCardModel(data = {}, directory = {}, options = {}) {
+  if(data.snapshot&&!validProgressSnapshot(data.snapshot))data={...data,snapshot:null};
   if(data?.presentation_mode==='legacy')return legacyContextCardModel(data,directory);
   if(!data||typeof data!=='object'||Array.isArray(data))data={};
   data={...data};
@@ -113,7 +115,9 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   const identity = cardIdentity({...first,staff_attribution:attribution},plan,ci?'inspector':feature);
   // Only an explicit complete plan has a denominator. A routing assignment or
   // arbitrary progress_percent is not evidence of completed work.
-  const percent = plan.total ? Math.round(plan.passed/plan.total*100) : null;
+  const allVerified=plan.total>0&&plan.passed===plan.total;
+  const objectiveVerified=allVerified&&['completed','complete','finished'].includes(status);
+  const percent = plan.total && (!allVerified||objectiveVerified) ? Math.floor(plan.passed/plan.total*100) : null;
   let metric = percent != null ? percent+'%' : label;
   let metric_label = percent != null ? 'completion' : 'current state';
 
@@ -122,7 +126,8 @@ export function contextCardModel(data = {}, directory = {}, options = {}) {
   // Keep uncertainty/deadlines intact instead of clipping the only explanation.
   summary=presentation.summary;
   const has_metric=percent!==null||Boolean(checks?.length)||Boolean(pr?.number);
-  const card = { title:safePresentationText(title), feature, primary_staff:safePresentationText(primary), primary_role:primaryRole?safePresentationText(primaryRole,60):null, staff_unresolved:unresolvedStaff, staff_note:staffNote?safePresentationText(staffNote,200):null, team:safePresentationText(team), label, tone, signal, summary, rows:rows.map(row=>({label:safePresentationText(row.label,100),text:safePresentationText(row.text,100)})), blocker, qa, handoff, next_step:nextStep, metric, metric_label, has_metric, percent, evidence:Object.fromEntries(Object.entries(evidence).filter(([,v])=>['string','number','boolean'].includes(typeof v)).map(([key,value])=>[key,typeof value==='string'?safePresentationText(value,12000):value])), refresh:Boolean(data.project), human_v1:presentation };
+  const card = { snapshot:data.snapshot||null,card_mode:data.card_mode||'current',objective_verified:objectiveVerified,checklist_percent:percent,title:safePresentationText(title), feature, primary_staff:safePresentationText(primary), primary_role:primaryRole?safePresentationText(primaryRole,60):null, staff_unresolved:unresolvedStaff, staff_note:staffNote?safePresentationText(staffNote,200):null, team:safePresentationText(team), label, tone, signal, summary, rows:rows.map(row=>({label:safePresentationText(row.label,100),text:safePresentationText(row.text,100)})), blocker, qa, handoff, next_step:nextStep, metric, metric_label, has_metric, percent, evidence:Object.fromEntries(Object.entries(evidence).filter(([,v])=>['string','number','boolean'].includes(typeof v)).map(([key,value])=>[key,typeof value==='string'?safePresentationText(value,12000):value])), refresh:Boolean(data.project), human_v1:presentation };
+  if(data.snapshot){card.evidence.snapshot_id=data.snapshot.id;card.evidence.snapshot_as_of=data.snapshot.as_of;card.evidence.plan_revision=plan.revision;card.evidence.snapshot_record_sha=data.snapshot.payload.record_sha||'unavailable';card.evidence.next_snapshot_due=data.snapshot.due?.due_at||'unknown';card.evidence.snapshot_delivery='unknown';card.evidence.source_status=data.snapshot.payload.claim?.source_as_of?.status||'unavailable';}
   const milestone = data.work_card?.milestone && typeof data.work_card.milestone === 'object' ? data.work_card.milestone : null;
   const updates=assignmentCardUpdates(first).map(update=>({...update,person:cardStaff(update.owner?.staff)}));
   const operation=String(data.work_card?.tool||data.presentation_operation?.name||'');

@@ -368,7 +368,7 @@ async function mcp(request, access, env) {
       return rpc(id, { contents: [{...relayControlCenterResource(), uri}] });
     }
     // Hosts can retain older resource URIs after tool metadata advertises a new card version.
-    if (uri === RELAY_CONTEXT_CARD_URI || uri === 'ui://relay/context-card/v28.html' || uri === 'ui://relay/context-card/v27.html' || uri === 'ui://relay/context-card/v26.html' || uri === 'ui://relay/context-card/v25.html' || uri === 'ui://relay/context-card/v24.html' || uri === 'ui://relay/context-card/v23.html' || uri === 'ui://relay/context-card/v22.html' || uri === 'ui://relay/context-card/v21.html' || uri === 'ui://relay/context-card/v20.html' || uri === 'ui://relay/context-card/v19.html' || uri === 'ui://relay/context-card/v18.html' || uri === 'ui://relay/context-card/v17.html' || uri === 'ui://relay/context-card/v16.html' || uri === 'ui://relay/context-card/v15.html' || uri === 'ui://relay/context-card/v13.html' || uri === 'ui://relay/context-card/v12.html' || uri === 'ui://relay/context-card/v11.html') {
+    if (uri === RELAY_CONTEXT_CARD_URI || uri === 'ui://relay/context-card/v29.html' || uri === 'ui://relay/context-card/v28.html' || uri === 'ui://relay/context-card/v27.html' || uri === 'ui://relay/context-card/v26.html' || uri === 'ui://relay/context-card/v25.html' || uri === 'ui://relay/context-card/v24.html' || uri === 'ui://relay/context-card/v23.html' || uri === 'ui://relay/context-card/v22.html' || uri === 'ui://relay/context-card/v21.html' || uri === 'ui://relay/context-card/v20.html' || uri === 'ui://relay/context-card/v19.html' || uri === 'ui://relay/context-card/v18.html' || uri === 'ui://relay/context-card/v17.html' || uri === 'ui://relay/context-card/v16.html' || uri === 'ui://relay/context-card/v15.html' || uri === 'ui://relay/context-card/v13.html' || uri === 'ui://relay/context-card/v12.html' || uri === 'ui://relay/context-card/v11.html') {
       return rpc(id, { contents: [{...relayContextCardResource(), uri}] });
     }
     if (uri === RELAY_STATUS_CARD_URI || uri === 'ui://relay/status-card/v4-legacy-bridge.html' || uri === 'ui://relay/status-card/v3-legacy-bridge.html') {
@@ -951,7 +951,7 @@ async function mcp(request, access, env) {
 
       if (name === RELAY_CONTEXT_CARD_TOOL || name === RELAY_STATUS_CARD_TOOL) {
         const cardArgs = validateRelayContextCardArguments(args);
-        const { evidence_id, show_qa, ...runnerArgs } = cardArgs;
+        const { evidence_id, show_qa, view, ...runnerArgs } = cardArgs;
         if (!runnerArgs.project) {
           const registry = await callRunnerControl("relay_runner_projects", {}, env);
           return relayResult(id, { ...registry, kind: 'overview', schema:'relay-status-explorer/v1' });
@@ -960,6 +960,7 @@ async function mcp(request, access, env) {
         return relayResult(id, {
           ...result,
           schema: 'relay-status-explorer/v1',
+          card_mode:view||'snapshot',
           ...(evidence_id ? { evidence_id } : {}),
           ...(show_qa === true ? { show_qa: true } : {})
         });
