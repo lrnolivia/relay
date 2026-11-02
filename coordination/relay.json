@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-02T06:38:03.392Z",
+  "updated_at": "2026-11-02T07:36:50.596Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21878,6 +21878,55 @@
       "evidence": "PR278 tested head c2ca761f6de38016a168c509002a1003787caf6b merged as 2d94d2cb2de53c91bcdb34189714f7ff74d6f01b: https://github.com/lrnolivia/relay/pull/278 . Exact merged main CI passed 1272 tests, 0 failures, 1 existing platform skip, including exact live-source production verification and retained interactive build: https://github.com/lrnolivia/relay/actions/runs/41400490932 . Workers Build b6499c31-51b9-4f93-badb-944a8f7f8130 succeeded for that merge, deployed version ba998bd4-073a-4d1b-8ad9-601da9ca2917 at 100%, deployment ea49f61e-f1e6-4065-b288-7f2a090fb380: https://github.com/lrnolivia/relay/runs/125131322586 . Exact-source production smoke passed MCP inventory, v31 contextual resource, runtime/web source identity and existing QA reads: https://github.com/lrnolivia/relay/actions/runs/41400705973 . Health returned 200/ok. v31 resource SHA256 313d4bb93bcafc487c15b0b6de3d8fe1b0effd1e49a452ef49b90ba676b383e3; prior aliases preserved and source equality checked. Release assurance retained/read back the archive and verified isolated five-file restoration, recording healthy safety revision111: https://github.com/lrnolivia/relay/actions/runs/41400992680 . Recovery artifact13121675257 archive SHA256 5289b29a79484693a0c5aa929361a9e8b386c37dd04055aaf5962c890391f04e, manifest d22bdf96d635e763b78f2c051f1d0e1d2630487a5cd46e8fc1ba8c5e1e7166a9, restoration ebebdecd4480df1775636b861418483be1ec92707bfc0128cc7cf8fb7a621d52. Prior healthy recovery and existing user-approved baseline preserved. Completion covers the delivered spacing/font source and verified release only. Automatic progress-card posting and native chat mounting remain separate unverified work; relay-card-native-ui-acceptance-followup-20261101 remains queued. Earlier nonrecurrent private-packet failure is not claimed fixed.",
       "work_accounted": true,
       "completed_at": "2026-11-02T06:38:03.392Z"
+    },
+    {
+      "id": "relay-visible-main-card-message-20261102",
+      "owner": "01a19804-e77b-7229-8982-76ae7a4b30c2",
+      "branch": "relay/visible-main-card-message-20261102",
+      "paths": [
+        "src/relay-context-card-model.js",
+        "src/relay-context-card-browser.js",
+        "src/relay-context-card-style.js",
+        "src/relay-context-card-style.test.js",
+        "src/relay-card-family.js",
+        "src/relay-card-family.test.js",
+        "src/relay-chat-ui.js",
+        "src/relay-chat-ui.test.js",
+        "src/index.js",
+        "src/relay-entry.test.js",
+        "scripts/verify-context-card-visuals.mjs"
+      ],
+      "resources": [
+        "relay-visible-main-card-message"
+      ],
+      "goal": "Keep the main public update and next message visible with natural wrapping and remove only redundant ordinary Assigned presentation.",
+      "acceptance": "Show complete bounded public summary/next/update text, including long and technical-looking public prose, without placeholder buttons, silent truncation, duplicate summary/next or private evidence/journal promotion. Only technical proof/checklist details may be secondary disclosures; actual contributor message text remains visible. Hide only the redundant ordinary Assigned chip, retain Assigned lead badge/role and meaningful running/blocked/failed/stale states. Preserve project-owned titles, Momo/Terra, responsive compact layout, focus, current/frozen isolation, source binding and privacy. Percentage/ring/checklist semantics are unchanged. Use resource v32 with v31 and all earlier aliases. Tests cover absent/short/long/technical public text, states, transitions, themes/mobile/focus/privacy and immutable snapshots; full required CI and actual local pixels. Draft PR only; no ready/merge/deploy/completion or new screenshot export.",
+      "next_action": "Independently read claim and preflight after creating the admitted branch from current main; repair public message presentation and corresponding tests, regenerate the shared browser model, then verify exact-source local renders and full CI for a draft PR.",
+      "category": "implementation",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "ab36185130b6bafa6a2c074074b4dead9c56a67c",
+      "state": "active",
+      "created_at": "2026-11-02T07:36:50.596Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Keep the main public update and next message visible with natural wrapping and remove only redundant ordinary Assigned presentation.",
+          "acceptance": "Show complete bounded public summary/next/update text, including long and technical-looking public prose, without placeholder buttons, silent truncation, duplicate summary/next or private evidence/journal promotion. Only technical proof/checklist details may be secondary disclosures; actual contributor message text remains visible. Hide only the redundant ordinary Assigned chip, retain Assigned lead badge/role and meaningful running/blocked/failed/stale states. Preserve project-owned titles, Momo/Terra, responsive compact layout, focus, current/frozen isolation, source binding and privacy. Percentage/ring/checklist semantics are unchanged. Use resource v32 with v31 and all earlier aliases. Tests cover absent/short/long/technical public text, states, transitions, themes/mobile/focus/privacy and immutable snapshots; full required CI and actual local pixels. Draft PR only; no ready/merge/deploy/completion or new screenshot export.",
+          "at": "2026-11-02T07:36:50.596Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "relay-visible-main-card-message-20261102:acceptance:0",
+            "text": "Show complete bounded public summary/next/update text, including long and technical-looking public prose, without placeholder buttons, silent truncation, duplicate summary/next or private evidence/journal promotion. Only technical proof/checklist details may be secondary disclosures; actual contributor message text remains visible. Hide only the redundant ordinary Assigned chip, retain Assigned lead badge/role and meaningful running/blocked/failed/stale states. Preserve project-owned titles, Momo/Terra, responsive compact layout, focus, current/frozen isolation, source binding and privacy. Percentage/ring/checklist semantics are unchanged. Use resource v32 with v31 and all earlier aliases. Tests cover absent/short/long/technical public text, states, transitions, themes/mobile/focus/privacy and immutable snapshots; full required CI and actual local pixels. Draft PR only; no ready/merge/deploy/completion or new screenshot export.",
+            "at": "2026-11-02T07:36:50.596Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-02T07:36:50.596Z",
+      "lease_until": "2026-11-02T19:36:50.596Z"
     }
   ],
   "migrated_from": "loew-inspector"
