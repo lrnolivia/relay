@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T04:38:11.548Z",
+  "updated_at": "2026-11-02T04:53:02.189Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23254,7 +23254,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T04:38:11.548Z",
+      "updated_at": "2026-11-02T04:53:02.189Z",
       "lease_until": "2026-11-02T16:38:11.548Z",
       "amendment_count": 9,
       "amendments": [
@@ -23586,8 +23586,72 @@
           "prepared_at": "2026-11-02T02:46:55.500Z",
           "request_digest": "4c8e79ba0a5e91bf603d4ce008ddc5f584964502521f43fc2b88dae086e139bc",
           "step_digest": "73cf578037fe468b378f6d99687978c5a97fc531ccf1a7ae26c3ea7c9be3c2c3"
+        },
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "overlay-pergame-accent-review-a545697",
+          "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+          "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "branch": "rtxforge/overlay-accent-toggle-alignment-20261101",
+          "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
+          "objective_digest": "d6db273b8915c6bbb9658b1d31f75a0dfc5526ac55927cb756267bfe085b5d59",
+          "scope_digest": "a18ea5ceb19e5f1ea89ab507973557e2d86202130764af3528476f0bc65b7fe0",
+          "step_id": "pergame-accent-finish-review",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "a545697d57353b13dd409858c0ed91a2ef410aa7",
+            "objective_digest": "d6db273b8915c6bbb9658b1d31f75a0dfc5526ac55927cb756267bfe085b5d59",
+            "step_id": "pergame-accent-finish-review",
+            "label": "Review adaptive accents and per-game settings",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "1867a1f74624d91b200cc466d08d1e3cec995a2cdfe68d9efc6586bcb3c213b6"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-02T04:53:02.189Z",
+          "request_digest": "42755c0fec6f54dec97a99b92a0c1f57570458ac6e40451b788c43bdb3b2db79",
+          "step_digest": "c9ce52000b204d32b915e0473d4a224cfb4fdd8a4ea970ab8785efba23e50125"
         }
-      ]
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+        "revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
+        "objective_digest": "d6db273b8915c6bbb9658b1d31f75a0dfc5526ac55927cb756267bfe085b5d59",
+        "publisher": {
+          "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "pergame-accent-finish-review",
+            "label": "Review adaptive accents and per-game settings",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+        "revision": "19b98d3f7c85c1b4eee08bbb2226c637eef719726e24c396fce76c59017d3efe",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
