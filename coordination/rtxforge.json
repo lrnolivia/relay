@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T19:51:10.568Z",
+  "updated_at": "2026-11-02T19:52:14.959Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25753,7 +25753,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T19:51:10.568Z",
+      "updated_at": "2026-11-02T19:52:14.959Z",
       "lease_until": "2026-11-03T07:19:57.987Z",
       "amendment_count": 4,
       "amendments": [
@@ -26037,10 +26037,21 @@
             "host_available": true,
             "intent_digest": "098a269be57dca23abc4d84405bdb1d56c8348af222b7a4abc4d3360bb70b19f"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-02T19:51:10.568Z",
           "request_digest": "11871c6d9e437b1e75d69ba3b2bbbfb4cddde85421cc4432dc36650bddb40c4c",
-          "step_digest": "c69aa1b3da7bac8bfd91ff9e92a2bb06653cc2546a1afdf92f58e98fbea47936"
+          "step_digest": "a761ca0bd3b92a5fa80c6d9c01ec4f532e9d788b0fe1f258e3105313bc3443ab",
+          "start": {
+            "request_digest": "11871c6d9e437b1e75d69ba3b2bbbfb4cddde85421cc4432dc36650bddb40c4c",
+            "source_sha": "34f64867014bfbc025308c8945758c91c447e3d0",
+            "agent_id": "/root/windows_queue_review",
+            "observed_at": "2026-11-02T19:52:11.000Z",
+            "update": {
+              "text": "The ordered Windows activation queue is under a bounded regression review; its console sequencing tests and Windows build pass locally.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-02T19:52:14.959Z"
         }
       ],
       "card_steps": {
@@ -26052,7 +26063,7 @@
           "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
           "branch": "rtxforge/game-mode-desktop-integration-20261102"
         },
-        "sequence": 10,
+        "sequence": 11,
         "complete": false,
         "steps": [
           {
@@ -26134,8 +26145,25 @@
             "id": "windows-activation-review",
             "label": "Verify the ordered Windows startup queue",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "windows-activation-review-34f6486-20261102:started",
+              "assignment": "rtxforge-game-mode-desktop-integration-20261102",
+              "step_id": "windows-activation-review",
+              "plan_revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
+              "input_digest": "11871c6d9e437b1e75d69ba3b2bbbfb4cddde85421cc4432dc36650bddb40c4c",
+              "evidence": "sha256:245144cb8e4e555188c01e1f1155a8dfd4e37f0ecb6b3650b80dcdc35e815850",
+              "source_sha": "34f64867014bfbc025308c8945758c91c447e3d0",
+              "observed_at": "2026-11-02T19:52:11.000Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "The ordered Windows activation queue is under a bounded regression review; its console sequencing tests and Windows build pass locally.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -26143,7 +26171,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-game-mode-desktop-integration-20261102",
         "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
-        "sequence": 10,
+        "sequence": 11,
         "truncated": false,
         "identities": {
           "native-integration-review-6d60b71-20261102:started": "290a8ca7cc9ec70901bbf10076c27cb388f4a61c0f78d78bf49f59bed2cb27db",
@@ -26151,7 +26179,8 @@
           "native-review-fixes-5cad542-20261102:started": "958aa3ada53a7f398102e36bd4fc43a8d2df949f82ad33e06ebbf8a1a23622c7",
           "native-review-fixes-5cad542-20261102:result": "daa09cf485ecdfc16592ff7bf3692eb8e4f1a181e415b6a853294bc097c94e56",
           "native-final-review-bd9113e-20261102:started": "3330943d8de01445cf69c0c095be20eef92dda2f20528154740f9535442b4078",
-          "native-final-review-bd9113e-20261102:result": "331b9dd0b64612b83985d35d762f89dc91f0f396a00c26e89f0771525469af8c"
+          "native-final-review-bd9113e-20261102:result": "331b9dd0b64612b83985d35d762f89dc91f0f396a00c26e89f0771525469af8c",
+          "windows-activation-review-34f6486-20261102:started": "266b71d2e1ccbda4326ffd051d9b240cab2dd63845237983e4e88738967d3c98"
         },
         "items": [
           {
@@ -26283,6 +26312,28 @@
               "team": "inspector"
             },
             "text": "The Linux corrections have no further scoped source findings. Windows activation ordering still needs one shared startup queue and an idle wait for redirected Game Mode requests.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "windows-activation-review-34f6486-20261102:started:11871c6d9e437b1e75d69ba3b2bbbfb4cddde85421cc4432dc36650bddb40c4c:running:",
+            "receipt_snapshot": "{\"label\":\"Verify the ordered Windows startup queue\",\"receipt\":{\"assignment\":\"rtxforge-game-mode-desktop-integration-20261102\",\"evidence\":\"sha256:245144cb8e4e555188c01e1f1155a8dfd4e37f0ecb6b3650b80dcdc35e815850\",\"id\":\"windows-activation-review-34f6486-20261102:started\",\"input_digest\":\"11871c6d9e437b1e75d69ba3b2bbbfb4cddde85421cc4432dc36650bddb40c4c\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d\",\"source_sha\":\"34f64867014bfbc025308c8945758c91c447e3d0\",\"step_id\":\"windows-activation-review\",\"update\":{\"artifacts\":[],\"text\":\"The ordered Windows activation queue is under a bounded regression review; its console sequencing tests and Windows build pass locally.\"}},\"state\":\"running\"}",
+            "id": "windows-activation-review-34f6486-20261102:started",
+            "assignment": "rtxforge-game-mode-desktop-integration-20261102",
+            "step_id": "windows-activation-review",
+            "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
+            "label": "Verify the ordered Windows startup queue",
+            "state": "running",
+            "phase": null,
+            "source_sha": "34f64867014bfbc025308c8945758c91c447e3d0",
+            "observed_at": "2026-11-02T19:52:11.000Z",
+            "recorded_at": "2026-11-02T19:52:14.959Z",
+            "receipt_digest": "sha256:245144cb8e4e555188c01e1f1155a8dfd4e37f0ecb6b3650b80dcdc35e815850",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The ordered Windows activation queue is under a bounded regression review; its console sequencing tests and Windows build pass locally.",
             "text_kind": "owner-published",
             "artifacts": []
           }
