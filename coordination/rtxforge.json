@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T19:44:09.563Z",
+  "updated_at": "2026-11-02T19:47:39.035Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25753,7 +25753,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T19:44:09.563Z",
+      "updated_at": "2026-11-02T19:47:39.035Z",
       "lease_until": "2026-11-03T07:19:57.987Z",
       "amendment_count": 4,
       "amendments": [
@@ -25979,10 +25979,10 @@
             "host_available": true,
             "intent_digest": "851927537cb8daf3331a7ca11e5a03aa9f50cc2aca27846e759d68248d0546f7"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-02T19:43:08.136Z",
           "request_digest": "e8ec0cc62b6f21c2ee1ce6c1b892239795387c37b7014e8f1a8d0464e597fd8b",
-          "step_digest": "9f1a47d05a1fad734fd11b0f60d40a08d312f1463cc86c548fbbe8aba1772814",
+          "step_digest": "d019882dec4a0ede74de12e1b87f53739743a55059cc3e1367c2e38a9271357f",
           "start": {
             "request_digest": "e8ec0cc62b6f21c2ee1ce6c1b892239795387c37b7014e8f1a8d0464e597fd8b",
             "source_sha": "bd9113e69b134e88e5912ac9536ea5d8bfe05695",
@@ -25993,7 +25993,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-02T19:44:09.563Z"
+          "started_at": "2026-11-02T19:44:09.563Z",
+          "result": {
+            "request_digest": "e8ec0cc62b6f21c2ee1ce6c1b892239795387c37b7014e8f1a8d0464e597fd8b",
+            "source_sha": "bd9113e69b134e88e5912ac9536ea5d8bfe05695",
+            "agent_id": "/root/final_activation_review",
+            "observed_at": "2026-11-02T19:47:35.000Z",
+            "state": "succeeded",
+            "result_digest": "d0a0b14569515dd5114660575fe40bde2136c19bc1fd0163aa62ffc22960eb6c",
+            "update": {
+              "text": "The Linux corrections have no further scoped source findings. Windows activation ordering still needs one shared startup queue and an idle wait for redirected Game Mode requests.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-02T19:47:39.035Z"
         }
       ],
       "card_steps": {
@@ -26005,7 +26018,7 @@
           "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
           "branch": "rtxforge/game-mode-desktop-integration-20261102"
         },
-        "sequence": 8,
+        "sequence": 9,
         "complete": false,
         "steps": [
           {
@@ -26062,24 +26075,25 @@
             "id": "native-final-review",
             "label": "Check final activation and runtime corrections",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "native-final-review-bd9113e-20261102:started",
+              "id": "native-final-review-bd9113e-20261102:result",
               "assignment": "rtxforge-game-mode-desktop-integration-20261102",
               "step_id": "native-final-review",
               "plan_revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
               "input_digest": "e8ec0cc62b6f21c2ee1ce6c1b892239795387c37b7014e8f1a8d0464e597fd8b",
-              "evidence": "sha256:4ad27cec4f71fce473a1c96e3510e4bece4e6d82bbebcdadb42c1c069482912c",
+              "evidence": "sha256:5a4c1c715e83b49ae497597a02cfd868e916be2d2c6c2a8b5f0921face5f955a",
               "source_sha": "bd9113e69b134e88e5912ac9536ea5d8bfe05695",
-              "observed_at": "2026-11-02T19:44:05.000Z",
+              "observed_at": "2026-11-02T19:47:35.000Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "The final bounded review covers the corrected activation races and runtime isolation. Release still depends on the actual package checks.",
+                "text": "The Linux corrections have no further scoped source findings. Windows activation ordering still needs one shared startup queue and an idle wait for redirected Game Mode requests.",
                 "artifacts": []
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -26088,14 +26102,15 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-game-mode-desktop-integration-20261102",
         "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
-        "sequence": 8,
+        "sequence": 9,
         "truncated": false,
         "identities": {
           "native-integration-review-6d60b71-20261102:started": "290a8ca7cc9ec70901bbf10076c27cb388f4a61c0f78d78bf49f59bed2cb27db",
           "native-integration-review-6d60b71-20261102:result": "d9216df63db74b920ef277ac1addf0b55d42d00dd7a8c4b81e74bf26035c25b6",
           "native-review-fixes-5cad542-20261102:started": "958aa3ada53a7f398102e36bd4fc43a8d2df949f82ad33e06ebbf8a1a23622c7",
           "native-review-fixes-5cad542-20261102:result": "daa09cf485ecdfc16592ff7bf3692eb8e4f1a181e415b6a853294bc097c94e56",
-          "native-final-review-bd9113e-20261102:started": "3330943d8de01445cf69c0c095be20eef92dda2f20528154740f9535442b4078"
+          "native-final-review-bd9113e-20261102:started": "3330943d8de01445cf69c0c095be20eef92dda2f20528154740f9535442b4078",
+          "native-final-review-bd9113e-20261102:result": "331b9dd0b64612b83985d35d762f89dc91f0f396a00c26e89f0771525469af8c"
         },
         "items": [
           {
@@ -26205,6 +26220,28 @@
               "team": "inspector"
             },
             "text": "The final bounded review covers the corrected activation races and runtime isolation. Release still depends on the actual package checks.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "native-final-review-bd9113e-20261102:result:e8ec0cc62b6f21c2ee1ce6c1b892239795387c37b7014e8f1a8d0464e597fd8b:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Check final activation and runtime corrections\",\"receipt\":{\"assignment\":\"rtxforge-game-mode-desktop-integration-20261102\",\"evidence\":\"sha256:5a4c1c715e83b49ae497597a02cfd868e916be2d2c6c2a8b5f0921face5f955a\",\"id\":\"native-final-review-bd9113e-20261102:result\",\"input_digest\":\"e8ec0cc62b6f21c2ee1ce6c1b892239795387c37b7014e8f1a8d0464e597fd8b\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d\",\"source_sha\":\"bd9113e69b134e88e5912ac9536ea5d8bfe05695\",\"step_id\":\"native-final-review\",\"update\":{\"artifacts\":[],\"text\":\"The Linux corrections have no further scoped source findings. Windows activation ordering still needs one shared startup queue and an idle wait for redirected Game Mode requests.\"}},\"state\":\"blocked\"}",
+            "id": "native-final-review-bd9113e-20261102:result",
+            "assignment": "rtxforge-game-mode-desktop-integration-20261102",
+            "step_id": "native-final-review",
+            "revision": "a277a9e3794e30914bbb98a2c8d86af4497181657e2bace149d119dc785dc70d",
+            "label": "Check final activation and runtime corrections",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "bd9113e69b134e88e5912ac9536ea5d8bfe05695",
+            "observed_at": "2026-11-02T19:47:35.000Z",
+            "recorded_at": "2026-11-02T19:47:39.035Z",
+            "receipt_digest": "sha256:5a4c1c715e83b49ae497597a02cfd868e916be2d2c6c2a8b5f0921face5f955a",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The Linux corrections have no further scoped source findings. Windows activation ordering still needs one shared startup queue and an idle wait for redirected Game Mode requests.",
             "text_kind": "owner-published",
             "artifacts": []
           }
