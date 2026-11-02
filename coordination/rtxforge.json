@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T18:33:30.942Z",
+  "updated_at": "2026-11-02T18:34:48.689Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8360,6 +8360,41 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-overview-testing-order-20261102",
+      "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+      "goal": "Lauren explicitly requests Testing last on Overview in Desktop as well as new Game Mode.",
+      "acceptance": "Move only PageHost.Children.Add(TestingGroup(g)) below the Game executable row in Windows GamePage Overview; keep game facts, location and executable first. Linux Desktop and new native Game Mode already place Testing last.",
+      "next_action": "Apply two-line ordering change after active library-names-mass-effect owner releases GamePage.xaml.cs; no identity, artwork or metadata behavior changes.",
+      "paths": [
+        "windows/RtxForge.Windows/Views/GamePage.xaml.cs"
+      ],
+      "resources": [
+        "desktop-overview-order"
+      ],
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-11-02T18:34:48.689Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Lauren explicitly requests Testing last on Overview in Desktop as well as new Game Mode.",
+          "acceptance": "Move only PageHost.Children.Add(TestingGroup(g)) below the Game executable row in Windows GamePage Overview; keep game facts, location and executable first. Linux Desktop and new native Game Mode already place Testing last.",
+          "at": "2026-11-02T18:34:48.689Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-overview-testing-order-20261102:acceptance:0",
+            "text": "Move only PageHost.Children.Add(TestingGroup(g)) below the Game executable row in Windows GamePage Overview; keep game facts, location and executable first. Linux Desktop and new native Game Mode already place Testing last.",
+            "at": "2026-11-02T18:34:48.689Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
