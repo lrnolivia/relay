@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T08:28:48.706Z",
+  "updated_at": "2026-11-02T08:55:26.445Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23045,7 +23045,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T08:20:06.341Z",
+      "updated_at": "2026-11-02T08:55:26.445Z",
       "lease_until": "2026-11-02T20:20:06.341Z",
       "handoffs": [
         {
@@ -23154,6 +23154,40 @@
           "prepared_at": "2026-11-02T07:49:58.093Z",
           "request_digest": "a9afaf0f13e5c071cc5667426b54d07d2beb3b7e2ed52d4253360ad375078f36",
           "step_digest": "f74208d0539f50b7b034d020f010507b38a539427a4b8023b56c4be2afa9baf6"
+        },
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "game-mode-delivery-review-3e4ad6f",
+          "assignment": "rtxforge-tauri-game-mode-20261031",
+          "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "branch": "rtxforge/tauri-game-mode-20261031",
+          "source_sha": "3e4ad6f1492afe1c08cb14553df809c535d638d8",
+          "objective_digest": "7936b2d2c7092fe33549a575189a549e2cada680ee3fa2746d69cbd6a8475c07",
+          "scope_digest": "df5d2c6d783e813c0184ca97c1e18b2aecc3cb240c91c788300af0b822fbbf56",
+          "step_id": "delivery-defect-review",
+          "specialist": {
+            "role": "implementation",
+            "owner": {
+              "staff": "nico",
+              "team": "runner"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "3e4ad6f1492afe1c08cb14553df809c535d638d8",
+            "objective_digest": "7936b2d2c7092fe33549a575189a549e2cada680ee3fa2746d69cbd6a8475c07",
+            "step_id": "delivery-defect-review",
+            "label": "Review native delivery correctness",
+            "role": "implementation",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "25fb46bbac5f0b8d6e4199aa324ea2871239e96d49d4d9d633857b23ea560874"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-02T08:55:26.445Z",
+          "request_digest": "5bbe3072859fcfaa71cc9e9d680e9ff2bbf28e7767f89020958e41c75e2b1b66",
+          "step_digest": "b2615c2015f89ba0960e03961ef605db77a2962506e86c52d57d5e2fb6db42ab"
         }
       ],
       "card_steps": {
@@ -23165,12 +23199,19 @@
           "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
           "branch": "rtxforge/tauri-game-mode-20261031"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "engine-lifecycle-audit",
             "label": "Review native engine lifecycle and installed qualification",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          },
+          {
+            "id": "delivery-defect-review",
+            "label": "Review native delivery correctness",
             "depends_on": [],
             "state": "pending",
             "receipt": null
@@ -23181,7 +23222,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-tauri-game-mode-20261031",
         "revision": "38768fc0d2f28db89b3e2b12b5eb5fd549a47b23d1a04bea62b72c6eaa47a176",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
         "identities": {},
         "items": []
