@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T01:48:09.422Z",
+  "updated_at": "2026-11-02T01:49:47.658Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23134,7 +23134,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T01:48:09.422Z",
+      "updated_at": "2026-11-02T01:49:47.658Z",
       "lease_until": "2026-11-02T13:48:09.422Z",
       "amendment_count": 6,
       "amendments": [
@@ -23238,7 +23238,73 @@
       ],
       "supporting_roles": [
         "verifier"
-      ]
+      ],
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "overlay-library-colors-review-c3d03f3",
+          "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+          "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "branch": "rtxforge/overlay-accent-toggle-alignment-20261101",
+          "source_sha": "c3d03f3cf819de07eaedf7be29cc7aca580a6ac5",
+          "objective_digest": "8690101380cfbfde4374370a2c8abcd9cff49a94703e3e0adc459cd4e83813d4",
+          "scope_digest": "04310b927fa3d586838eeb6e0adca7351eb711e7c8592d2cc222fe1979037f69",
+          "step_id": "clear-library-color-review",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "c3d03f3cf819de07eaedf7be29cc7aca580a6ac5",
+            "objective_digest": "8690101380cfbfde4374370a2c8abcd9cff49a94703e3e0adc459cd4e83813d4",
+            "step_id": "clear-library-color-review",
+            "label": "Review Clear contrast with actual Library accents",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "007a2457071a4a623fadbd23c0c148385ad6e9b6ef7ff6e87d8913b97f5179ff"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-02T01:49:47.658Z",
+          "request_digest": "b06323dc9f52d742ca2de7bccf2473092744344f1efeeaf134e14e78069c7e21",
+          "step_digest": "3cdd07c8b6888f9492d7206281c95a2a8d38c6965f3bfdae1e02ff1d279279bf"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+        "revision": "41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c",
+        "objective_digest": "8690101380cfbfde4374370a2c8abcd9cff49a94703e3e0adc459cd4e83813d4",
+        "publisher": {
+          "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "clear-library-color-review",
+            "label": "Review Clear contrast with actual Library accents",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+        "revision": "41aed4115950190af6a4e0dcb41e0b76bc89f347f1c06f7ea2d47ea6dd947b7c",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
