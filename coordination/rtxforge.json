@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T06:43:50.858Z",
+  "updated_at": "2026-11-02T06:47:30.732Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22997,7 +22997,7 @@
       ],
       "goal": "Complete the production Game Mode application, finishing a verified shell and interactive local demo first for the screenshot worker, then real engine integration and platform acceptance.",
       "acceptance": "Production Windows/Linux Tauri Game Mode application with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests. Shell-first milestone: full-width 4K at 150%, complete poster rows, responsive Presets, colored platform controller glyphs, verified real-library visual states and an interactive read-only local demo. Do not equate shell or fixture completion with engine/platform acceptance.",
-      "next_action": "User expanded production delivery: native performance audit, independent Library card-size control, more vertical Library space with two complete rows in maximized native window, fullscreen borderless startup and borderless windowed fallback. Shell commits through df16921 verified; native df16921 baseline FCP320ms, combined idle private673MiB/working719MiB and average0.071% total CPU on8 logical cores. Optimizing repeated artwork (19MiB HTML), fixing OS-DPI scale composition, implementing density and borderless controls before final native audit and screenshot-worker source/binary handoff. Browser demo remains read-only at localhost1420. Full engine/platform acceptance still outstanding; preserve accepted game color previews and deferred desktop hero port.",
+      "next_action": "Latest UI/source at 5f8940e: shared Desktop art/accent and focal settings, one cached screenshot with palette default, translucent cards isolated from hero fade, controller framing, Light contrast, edge and glow corrections. Build/tests pass. Open exact-source fullscreen package and compare native GPU resources after suppressing inactive glow layers. Finish shell screenshot handoff, then production engine lifecycle/qualification; PR138 d2a85c2 shared overlay integration remains pending.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -23039,8 +23039,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T04:14:12.591Z",
-      "lease_until": "2026-11-02T16:14:12.591Z",
+      "updated_at": "2026-11-02T06:47:30.732Z",
+      "lease_until": "2026-11-02T18:47:30.732Z",
       "handoffs": [
         {
           "at": "2026-11-01T03:49:34.330Z",
