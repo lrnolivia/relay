@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T03:41:06.847Z",
+  "updated_at": "2026-11-02T03:42:40.378Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -22995,9 +22995,9 @@
       "resources": [
         "rtxforge-tauri-game-mode"
       ],
-      "goal": "Build isolated Windows/Linux Tauri Game Mode prototype using approved overlay glass UI.",
-      "acceptance": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests.",
-      "next_action": "User-directed continuation of GAME_MODE_IMPLEMENTATION_HANDOFF_2026-11-01.md: repair full-width 4K/150% complete-row layout, responsive presets and controller prompts, verify menu/settings/install and engine adapters, record exact native Windows evidence and Linux limitations; preserve untracked paths, desktop deferral and screenshot assignment separation.",
+      "goal": "Complete the production Game Mode application, finishing a verified shell and interactive local demo first for the screenshot worker, then real engine integration and platform acceptance.",
+      "acceptance": "Production Windows/Linux Tauri Game Mode application with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests. Shell-first milestone: full-width 4K at 150%, complete poster rows, responsive Presets, colored platform controller glyphs, verified real-library visual states and an interactive read-only local demo. Do not equate shell or fixture completion with engine/platform acceptance.",
+      "next_action": "Shell milestone implementation after successful preflight at cf4203f; then interactive demo and exact-source screenshot-worker handoff. Production engine completion follows.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -23030,11 +23030,17 @@
             "text": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests.",
             "at": "2026-11-01T17:39:30.715Z",
             "reason": "User explicitly cancelled the Desktop hero port for now; retain Game Mode work and withdraw the port from the preview branch."
+          },
+          {
+            "id": "rtxforge-tauri-game-mode-20261031:acceptance:3",
+            "text": "Production Windows/Linux Tauri Game Mode application with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests. Shell-first milestone: full-width 4K at 150%, complete poster rows, responsive Presets, colored platform controller glyphs, verified real-library visual states and an interactive read-only local demo. Do not equate shell or fixture completion with engine/platform acceptance.",
+            "at": "2026-11-02T03:42:40.378Z",
+            "reason": "Direct user instructions in current chat: this is the real application, finish shell first for screenshot worker and provide interactive demo while completing engine."
           }
         ]
       },
-      "updated_at": "2026-11-02T03:41:06.847Z",
-      "lease_until": "2026-11-02T15:41:06.847Z",
+      "updated_at": "2026-11-02T03:42:40.378Z",
+      "lease_until": "2026-11-02T15:42:40.378Z",
       "handoffs": [
         {
           "at": "2026-11-01T03:49:34.330Z",
@@ -23043,7 +23049,7 @@
           "next_action": "User explicitly requested a separate user-owned chat; prior subagent stopped. New rtxForge Frost Game Mode Redesign chat adopts existing isolated worktree and all untracked Tauri source, current preview and full feedback. Continue desktop parity and read-only preview iteration; parent returns to native overlay."
         }
       ],
-      "amendment_count": 2,
+      "amendment_count": 3,
       "amendments": [
         {
           "at": "2026-11-01T06:32:12.166Z",
@@ -23071,6 +23077,26 @@
           },
           "after": {
             "acceptance": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests."
+          }
+        },
+        {
+          "at": "2026-11-02T03:42:40.378Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Direct user instructions in current chat: this is the real application, finish shell first for screenshot worker and provide interactive demo while completing engine.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Build isolated Windows/Linux Tauri Game Mode prototype using approved overlay glass UI.",
+            "acceptance": "Runnable Windows/Linux Tauri Game Mode prototype with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests.",
+            "next_action": "User-directed continuation of GAME_MODE_IMPLEMENTATION_HANDOFF_2026-11-01.md: repair full-width 4K/150% complete-row layout, responsive presets and controller prompts, verify menu/settings/install and engine adapters, record exact native Windows evidence and Linux limitations; preserve untracked paths, desktop deferral and screenshot assignment separation."
+          },
+          "after": {
+            "goal": "Complete the production Game Mode application, finishing a verified shell and interactive local demo first for the screenshot worker, then real engine integration and platform acceptance.",
+            "acceptance": "Production Windows/Linux Tauri Game Mode application with desktop-parity presentation, read-only real library and artwork, reviewed engine adapters, keyboard/controller navigation, responsive validation and documented gaps. Desktop hero port is deferred at the user's request and excluded from this delivery. User explicitly authorized publishing and installing locally after validation; publish an isolated preview with rollback, preserving the existing production shell and no game mutations during smoke tests. Shell-first milestone: full-width 4K at 150%, complete poster rows, responsive Presets, colored platform controller glyphs, verified real-library visual states and an interactive read-only local demo. Do not equate shell or fixture completion with engine/platform acceptance.",
+            "next_action": "Shell milestone implementation after successful preflight at cf4203f; then interactive demo and exact-source screenshot-worker handoff. Production engine completion follows."
           }
         }
       ]
