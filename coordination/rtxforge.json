@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T03:47:59.735Z",
+  "updated_at": "2026-11-02T03:55:35.289Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23503,6 +23503,56 @@
           "step_digest": "73cf578037fe468b378f6d99687978c5a97fc531ccf1a7ae26c3ea7c9be3c2c3"
         }
       ]
+    },
+    {
+      "id": "rtxforge-library-names-mass-effect-20261101",
+      "owner": "01a19a65-3f13-7703-bcf7-077145942958",
+      "branch": "rtxforge/library-names-mass-effect-20261101",
+      "paths": [
+        "windows/engine-host/library_scan.py",
+        "windows/engine-host/win_features.py",
+        "windows/RtxForge.Windows/MainWindow.Library.cs",
+        "windows/RtxForge.Windows/Services/LibraryLocations.cs",
+        "windows/RtxForge.Windows/Views/LibraryPage.xaml.cs",
+        "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.LibraryManagement.cs",
+        "windows/RtxForge.Windows/GameMode/GameModeView.Details.cs",
+        "scripts/library_identity.py",
+        "windows/tests/test_library_scan.py",
+        "tests/test_library_identity.py"
+      ],
+      "resources": [
+        "library-game-names",
+        "mass-effect-steam-shortcuts"
+      ],
+      "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
+      "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
+      "next_action": "Implement in isolated checkout after admission; inspect installed library and Steam profiles, verify direct-launch requirements and artwork, test and configure authorized entries.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "55f2d8b54e15165e427add24b05b40e5758d178d",
+      "state": "active",
+      "created_at": "2026-11-02T03:55:35.289Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
+          "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
+          "at": "2026-11-02T03:55:35.289Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-library-names-mass-effect-20261101:acceptance:0",
+            "text": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.",
+            "at": "2026-11-02T03:55:35.289Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-02T03:55:35.289Z",
+      "lease_until": "2026-11-02T15:55:35.289Z"
     }
   ]
 }
