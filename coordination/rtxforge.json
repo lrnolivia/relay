@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T09:00:21.733Z",
+  "updated_at": "2026-11-02T09:07:08.454Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23469,7 +23469,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T09:00:21.733Z",
+      "updated_at": "2026-11-02T09:07:08.454Z",
       "lease_until": "2026-11-02T20:28:48.706Z",
       "amendment_count": 17,
       "amendments": [
@@ -24707,17 +24707,30 @@
             "host_available": true,
             "intent_digest": "0abf5da5e4cf94d96835507f40bd27e6d400b8c8eab43b5e545be74e3f257f5b"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-02T08:58:32.976Z",
           "request_digest": "d8fad358c0d65d14c257dccb51f1beebbeece83fcd9a74d3837d8ba649a4b5b8",
-          "step_digest": "2d6a0b13a4e5379095f576d5baa3789f481bc722b8b012c7a0acf3e897a9834d",
+          "step_digest": "7ab4fff579c6d05c9a764cdea785749f7b76a6b431f1a338ca83934ff5f74f43",
           "start": {
             "request_digest": "d8fad358c0d65d14c257dccb51f1beebbeece83fcd9a74d3837d8ba649a4b5b8",
             "source_sha": "1d1b281dc293066a786734aff1b2b086ee6e78d8",
             "agent_id": "/root/native_confirm_review_1d1b281",
             "observed_at": "2026-11-02T09:00:06Z"
           },
-          "started_at": "2026-11-02T09:00:10.869Z"
+          "started_at": "2026-11-02T09:00:10.869Z",
+          "result": {
+            "request_digest": "d8fad358c0d65d14c257dccb51f1beebbeece83fcd9a74d3837d8ba649a4b5b8",
+            "source_sha": "1d1b281dc293066a786734aff1b2b086ee6e78d8",
+            "agent_id": "/root/native_confirm_review_1d1b281",
+            "observed_at": "2026-11-02T09:07:04Z",
+            "state": "succeeded",
+            "result_digest": "b40dd45fb117dba690e9170e85da0df8abc5085041e0c35f3fd3871783046448",
+            "update": {
+              "text": "Confirmation layout and neutral styling pass. Review found two remaining corrections: restore a disabled global shortcut only when explicitly choosing native defaults, and normalize the font-license source digest across platforms.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-02T09:07:08.454Z"
         },
         {
           "schema": 1,
@@ -24763,7 +24776,7 @@
           "owner": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
           "branch": "rtxforge/overlay-accent-toggle-alignment-20261101"
         },
-        "sequence": 9,
+        "sequence": 10,
         "complete": false,
         "steps": [
           {
@@ -24830,20 +24843,25 @@
             "id": "native-confirm-review",
             "label": "Native confirmation and handoff correction review",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "native-confirm-review-1d1b281:started",
+              "id": "native-confirm-review-1d1b281:result",
               "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
               "step_id": "native-confirm-review",
               "plan_revision": "2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b",
               "input_digest": "d8fad358c0d65d14c257dccb51f1beebbeece83fcd9a74d3837d8ba649a4b5b8",
-              "evidence": "sha256:26e769beae31ce3ed0b7bd1efce85ae5a8bdad5983d15cb29d8d93f273ab7d8e",
+              "evidence": "sha256:a304359648a63c77dad70df1eb2972de18a7a25fff111864e578403f404ae614",
               "source_sha": "1d1b281dc293066a786734aff1b2b086ee6e78d8",
-              "observed_at": "2026-11-02T09:00:06Z",
+              "observed_at": "2026-11-02T09:07:04Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
-              }
+              },
+              "update": {
+                "text": "Confirmation layout and neutral styling pass. Review found two remaining corrections: restore a disabled global shortcut only when explicitly choosing native defaults, and normalize the font-license source digest across platforms.",
+                "artifacts": []
+              },
+              "phase": "awaiting-verification"
             }
           },
           {
@@ -24859,13 +24877,14 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
         "revision": "2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b",
-        "sequence": 9,
+        "sequence": 10,
         "truncated": false,
         "identities": {
           "finish-full-review-95f09bb:started": "ea5492c822b907e73f0a3f228a4fb0b86e2b30efb18edf53b0a2d69ee5df9c9a",
           "finish-document-95f09bb:started": "3c653ee070176be81bc4ee2d5d889092c87b28d4ae98bb8c61dca971e3843d6a",
           "fresh-sdr-capture-95f09bb:started": "16a8c722ace983abe5dd0cde073e422d6a4ce114e80ff58cee16528b3e393921",
-          "native-confirm-review-1d1b281:started": "1f8927c0f52c77f6564c63cf154fe8c4a82d1865814b55d3a7b9c78d3144d227"
+          "native-confirm-review-1d1b281:started": "1f8927c0f52c77f6564c63cf154fe8c4a82d1865814b55d3a7b9c78d3144d227",
+          "native-confirm-review-1d1b281:result": "c23e11ba635d7361ba342deff08c23da88c59b162d97bbd2555f79cc31354765"
         },
         "items": [
           {
@@ -24954,6 +24973,28 @@
             },
             "text": "Work started.",
             "text_kind": "recorded-state",
+            "artifacts": []
+          },
+          {
+            "key": "native-confirm-review-1d1b281:result:d8fad358c0d65d14c257dccb51f1beebbeece83fcd9a74d3837d8ba649a4b5b8:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Native confirmation and handoff correction review\",\"receipt\":{\"assignment\":\"rtxforge-overlay-accent-toggle-alignment-20261101\",\"evidence\":\"sha256:a304359648a63c77dad70df1eb2972de18a7a25fff111864e578403f404ae614\",\"id\":\"native-confirm-review-1d1b281:result\",\"input_digest\":\"d8fad358c0d65d14c257dccb51f1beebbeece83fcd9a74d3837d8ba649a4b5b8\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b\",\"source_sha\":\"1d1b281dc293066a786734aff1b2b086ee6e78d8\",\"step_id\":\"native-confirm-review\",\"update\":{\"artifacts\":[],\"text\":\"Confirmation layout and neutral styling pass. Review found two remaining corrections: restore a disabled global shortcut only when explicitly choosing native defaults, and normalize the font-license source digest across platforms.\"}},\"state\":\"blocked\"}",
+            "id": "native-confirm-review-1d1b281:result",
+            "assignment": "rtxforge-overlay-accent-toggle-alignment-20261101",
+            "step_id": "native-confirm-review",
+            "revision": "2bc49fa79905c34d44d1cbf91f5cc3d839bfb79963e758d1b3268a0a637b5d9b",
+            "label": "Native confirmation and handoff correction review",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "1d1b281dc293066a786734aff1b2b086ee6e78d8",
+            "observed_at": "2026-11-02T09:07:04Z",
+            "recorded_at": "2026-11-02T09:07:08.454Z",
+            "receipt_digest": "sha256:a304359648a63c77dad70df1eb2972de18a7a25fff111864e578403f404ae614",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Confirmation layout and neutral styling pass. Review found two remaining corrections: restore a disabled global shortcut only when explicitly choosing native defaults, and normalize the font-license source digest across platforms.",
+            "text_kind": "owner-published",
             "artifacts": []
           }
         ]
