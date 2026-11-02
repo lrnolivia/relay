@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T05:25:49.056Z",
+  "updated_at": "2026-11-02T05:49:57.481Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -23225,8 +23225,8 @@
         "rtxforge-overlay-renderer"
       ],
       "goal": "Polish Overlay appearance alignment and Clear accent readability, replacing the unsuitable Control preview scene.",
-      "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls.",
-      "next_action": "Finish picker and preference regression validation, reduce hidden DX11/DX12 render work on the audited idle path, and verify the Feeder toast integration before final review.",
+      "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks.",
+      "next_action": "Implement compact color picker, run isolated checks, then request fresh exact-source review.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -23290,12 +23290,18 @@
             "text": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls.",
             "at": "2026-11-02T05:06:06.867Z",
             "reason": "User requests a circular Custom color swatch, click-to-open picker, any-screen eyedropper and small poster preview matching Desktop."
+          },
+          {
+            "id": "rtxforge-overlay-accent-toggle-alignment-20261101:acceptance:11",
+            "text": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks.",
+            "at": "2026-11-02T05:49:57.481Z",
+            "reason": "User rejected the expanded color editor and requested removing sliders."
           }
         ]
       },
-      "updated_at": "2026-11-02T05:25:49.056Z",
-      "lease_until": "2026-11-02T17:25:49.056Z",
-      "amendment_count": 10,
+      "updated_at": "2026-11-02T05:49:57.481Z",
+      "lease_until": "2026-11-02T17:49:57.481Z",
+      "amendment_count": 11,
       "amendments": [
         {
           "at": "2026-11-02T00:21:15.831Z",
@@ -23566,6 +23572,23 @@
             "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls.",
             "card_steps": null,
             "card_updates": null
+          }
+        },
+        {
+          "at": "2026-11-02T05:49:57.481Z",
+          "by": "01a18aa0-7d6a-7392-bda1-fc134ad80746",
+          "reason": "User rejected the expanded color editor and requested removing sliders.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls.",
+            "next_action": "Finish picker and preference regression validation, reduce hidden DX11/DX12 render work on the audited idle path, and verify the Feeder toast integration before final review."
+          },
+          "after": {
+            "acceptance": "Accent sources are Theme (neutral per theme), Custom (rtxForge Library color or overlay-edited hex), and default Adaptive (raw scene sampling with smooth transitions). Persist and validate source/color across native Windows, GTK, helper and renderer. Accent Tint stays independent. Headings are consistent soft bright in Clear, medium in Dark, rich in Light without heavy shadows or muddy auto yellow. Shared global/Game Details settings and preview remain aligned. Verify focused tests, native renderer and Windows build. User lifted Game Mode release hold; publish and install after required exact-source checks. All overlay-originated appearance and shortcut edits affect only the current game. Desktop and Game Mode define global defaults with an explicit apply-to-all reset action. Audit render cost and reduce redundant hidden/frame work, reporting measured limits. Suppress the upstream Feeder activation notice only through a verified targeted mechanism and show a styled confirmed-active notice after welcome. Custom color uses a circular swatch that opens a color picker, with a screen eyedropper and a small game-poster preview; preserve the shared native manager and glass-overlay appearance controls. Replace the rejected RGB slider editor with a compact frosted popover: poster sampling, discreet hex input, screen eyedropper and game-color reset, without RGB sliders. Keep desktop control stopped; use build and offscreen checks.",
+            "next_action": "Implement compact color picker, run isolated checks, then request fresh exact-source review."
           }
         }
       ],
