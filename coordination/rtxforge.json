@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-02T18:44:20.519Z",
+  "updated_at": "2026-11-02T18:46:07.773Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -25305,7 +25305,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-02T18:44:20.519Z",
+      "updated_at": "2026-11-02T18:46:07.773Z",
       "lease_until": "2026-11-03T06:28:52.437Z",
       "amendment_count": 1,
       "amendments": [
@@ -25410,17 +25410,30 @@
             "host_available": true,
             "intent_digest": "d9b175adb464f3a0a3ba88c58ccbf10f562cbda57bf471a5d96f31a976175872"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-02T18:41:18.862Z",
           "request_digest": "bcef6edaed79dbfeb710f2912dac9f1b8f29822c27c8845c5bb0633d113d4524",
-          "step_digest": "28ac82a9e609c47b62c69805b5e381817eeeef5881d7ad09425e2ea1380458f0",
+          "step_digest": "3abd043242fefed775eac2131ea52764e99488b09066d24fa5199db53cfce2f3",
           "start": {
             "request_digest": "bcef6edaed79dbfeb710f2912dac9f1b8f29822c27c8845c5bb0633d113d4524",
             "source_sha": "0bb5d71ba4a0011268bbf9aad3b12dab465b1b58",
             "agent_id": "/root/onboarding_notice_full_review_0bb5d71",
             "observed_at": "2026-11-02T18:42:32Z"
           },
-          "started_at": "2026-11-02T18:42:39.049Z"
+          "started_at": "2026-11-02T18:42:39.049Z",
+          "result": {
+            "request_digest": "bcef6edaed79dbfeb710f2912dac9f1b8f29822c27c8845c5bb0633d113d4524",
+            "source_sha": "0bb5d71ba4a0011268bbf9aad3b12dab465b1b58",
+            "agent_id": "/root/onboarding_notice_full_review_0bb5d71",
+            "observed_at": "2026-11-02T18:46:03Z",
+            "state": "succeeded",
+            "result_digest": "6ca952962ae213900697501315e93bcb7e86f49af63e2a434229c1a4ca479689",
+            "update": {
+              "text": "The revised onboarding resolves the crowded notice; the independent review's disposition is ship for the reviewed Clear/Light/Dark, interface-count and short-window states.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-02T18:46:07.773Z"
         },
         {
           "schema": 1,
@@ -25473,7 +25486,7 @@
           "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
           "branch": "rtxforge/onboarding-overlay-notice-20261102"
         },
-        "sequence": 7,
+        "sequence": 8,
         "complete": false,
         "steps": [
           {
@@ -25505,20 +25518,25 @@
             "id": "full-review",
             "label": "Review revised onboarding notice and short-window behavior",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "notice-full-review-0bb5d71:started",
+              "id": "notice-full-review-0bb5d71:result",
               "assignment": "rtxforge-onboarding-overlay-notice-20261102",
               "step_id": "full-review",
               "plan_revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
               "input_digest": "bcef6edaed79dbfeb710f2912dac9f1b8f29822c27c8845c5bb0633d113d4524",
-              "evidence": "sha256:1a0ef1a272e3886c4b0a92d9c8b8f63ffd6a44234cd611ed57ffc44ddc1c3d4f",
+              "evidence": "sha256:33bb8bea62f999ab349c3ce7d0d4d71b7a0b6ef5e983d24387e68187e80e074c",
               "source_sha": "0bb5d71ba4a0011268bbf9aad3b12dab465b1b58",
-              "observed_at": "2026-11-02T18:42:32Z",
+              "observed_at": "2026-11-02T18:46:03Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
-              }
+              },
+              "update": {
+                "text": "The revised onboarding resolves the crowded notice; the independent review's disposition is ship for the reviewed Clear/Light/Dark, interface-count and short-window states.",
+                "artifacts": []
+              },
+              "phase": "awaiting-verification"
             }
           },
           {
@@ -25547,13 +25565,14 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-onboarding-overlay-notice-20261102",
         "revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
-        "sequence": 7,
+        "sequence": 8,
         "truncated": false,
         "identities": {
           "notice-layout-assess-6f28c28:started": "9115112f2104bbd569a46169b1104c7872c2fa18359bb993d49f18bd44d3887a",
           "notice-layout-assess-6f28c28:result": "cb0a6c6ac56c73acce24d967e0d06ba6246a1fa2a4fe216e9874a37bb9534f3c",
           "notice-full-review-0bb5d71:started": "8ac6483698a43ba95209f4002dd066ddf5852c7105190517c59fc51472520112",
-          "notice-document-0bb5d71:started": "e8ae7e08afbbe514fff92a3a640fbd259e2c4fb2f5f5e1a2e4efd4ffaf3ce892"
+          "notice-document-0bb5d71:started": "e8ae7e08afbbe514fff92a3a640fbd259e2c4fb2f5f5e1a2e4efd4ffaf3ce892",
+          "notice-full-review-0bb5d71:result": "9661bfdc8039847c9ce7daa0ef67e5e891cb0aecf69b740ec663801957990a47"
         },
         "items": [
           {
@@ -25642,6 +25661,28 @@
             },
             "text": "Work started.",
             "text_kind": "recorded-state",
+            "artifacts": []
+          },
+          {
+            "key": "notice-full-review-0bb5d71:result:bcef6edaed79dbfeb710f2912dac9f1b8f29822c27c8845c5bb0633d113d4524:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Review revised onboarding notice and short-window behavior\",\"receipt\":{\"assignment\":\"rtxforge-onboarding-overlay-notice-20261102\",\"evidence\":\"sha256:33bb8bea62f999ab349c3ce7d0d4d71b7a0b6ef5e983d24387e68187e80e074c\",\"id\":\"notice-full-review-0bb5d71:result\",\"input_digest\":\"bcef6edaed79dbfeb710f2912dac9f1b8f29822c27c8845c5bb0633d113d4524\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032\",\"source_sha\":\"0bb5d71ba4a0011268bbf9aad3b12dab465b1b58\",\"step_id\":\"full-review\",\"update\":{\"artifacts\":[],\"text\":\"The revised onboarding resolves the crowded notice; the independent review's disposition is ship for the reviewed Clear/Light/Dark, interface-count and short-window states.\"}},\"state\":\"blocked\"}",
+            "id": "notice-full-review-0bb5d71:result",
+            "assignment": "rtxforge-onboarding-overlay-notice-20261102",
+            "step_id": "full-review",
+            "revision": "d532abf2625333f29513a0c767e848a2ba6f2d2e41fca9d2f76596cfb9895032",
+            "label": "Review revised onboarding notice and short-window behavior",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "0bb5d71ba4a0011268bbf9aad3b12dab465b1b58",
+            "observed_at": "2026-11-02T18:46:03Z",
+            "recorded_at": "2026-11-02T18:46:07.773Z",
+            "receipt_digest": "sha256:33bb8bea62f999ab349c3ce7d0d4d71b7a0b6ef5e983d24387e68187e80e074c",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The revised onboarding resolves the crowded notice; the independent review's disposition is ship for the reviewed Clear/Light/Dark, interface-count and short-window states.",
+            "text_kind": "owner-published",
             "artifacts": []
           }
         ]
