@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T06:28:19.453Z",
+  "updated_at": "2026-11-03T06:34:38.288Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -27419,7 +27419,13 @@
         "gui/overview_facts.py",
         "scripts/desktop_service.py",
         "tests/linux_ui/test_overview_facts.py",
-        "windows/RtxForge.Windows/Views/SettingsPage.xaml"
+        "windows/RtxForge.Windows/Views/SettingsPage.xaml",
+        "prototypes/overlay-rmlui/overlay.rcss",
+        "prototypes/overlay-rmlui/overlay.rml",
+        "providers/glass-overlay/ForgeGlassPanel.h",
+        "providers/skynizz-bridge/ForgePanel.h",
+        "windows/feeder-panel/panel.cpp",
+        "windows/overlay-rmlui/GlassRuntime.cpp"
       ],
       "resources": [
         "rtxforge-public-beta-publication",
@@ -27428,7 +27434,7 @@
       ],
       "goal": "Publish the approved adaptive glass overlay and current reviewed native Game Mode in the public Beta updater release.",
       "acceptance": "Publish rtxForge1.5 Beta1 (1.5.0-beta.1) after Game Mode performance/polish fixes merge and exact-source checks pass. Preserve Beta16 rollback, settings, original backups and old-to-new updater behavior. Windows and Linux Desktop settings order: Appearance, Library, Game Mode, Graphics, Overlay, System, Recovery, About. Reorganize Overlay/Game Mode settings around current features; replace broken Appearance handoff with real shared native Game Mode options and lightweight live miniature. Compact Saved feedback. Overlay Status lists installed-overlay games, installed/current provenance and last update with Update all/Close, explicit unknowns. Full overlay preview opens larger/centered/draggable with icon; approved internal preview interface remains unchanged. Native Game Mode worker owns matching native UI and bridge. No new gameplay qualification claim.",
-      "next_action": "Await the validated combined successor for PR 143. Reconcile path ownership with the Game Mode assignment before admitting the combined SHA, then run Windows and Linux checks. Publication remains held.",
+      "next_action": "Validate autosave status and the capability-driven tuning restart notice. Integrate with the combined Beta candidate after validation; publication remains held.",
       "category": "release",
       "supporting_roles": [
         "frontend"
@@ -27465,8 +27471,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-03T06:27:18.543Z",
-      "lease_until": "2026-11-03T18:27:18.543Z",
+      "updated_at": "2026-11-03T06:34:38.288Z",
+      "lease_until": "2026-11-03T18:34:38.288Z",
       "amendment_count": 1,
       "amendments": [
         {
