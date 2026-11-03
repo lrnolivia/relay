@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T03:53:19.833Z",
+  "updated_at": "2026-11-03T04:37:20.940Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8582,6 +8582,41 @@
       "supporting_roles": [
         "verifier"
       ]
+    },
+    {
+      "id": "rtxforge-auto-update-media-receipts-20261103",
+      "owner": "01a189e9-9316-7db2-97e3-597d29d40dbd",
+      "goal": "Register the outstanding native media evidence from the completed auto-update release without reserving an implementation branch.",
+      "acceptance": "Preserve and register the real native screenshot-index / Visuals receipt for run 40986002589 artifact 12947750538 (ZIP SHA256 939ddc1d20bafe9b0816f08030247806368b924aa8b6bde08d92c28774aa941d), plus carried PR124 media from run 40974336657 artifact 12942266963. Do not invent a receipt or describe this requirement as complete while native ingestion is unavailable. Preserve all 69 recovery assets and the original acceptance/history in rtxforge-auto-update-20261029. PR125 is already merged at 3907a1aba00160a7f5926b2349c1778c035138e5; do not redo source, release, or game-file work.",
+      "next_action": "Queued successor for receipt-only work under Lauren's instruction to fix full active-branch capacity. Original owner and retained evidence unchanged. Use a real supported native ingestion capability when available, verify its receipt, then account for the remaining media requirement. Source writers already declared finished in the original durable record; preserve branch rtxforge/auto-update-20261029 at 30faac271f538b3a46c1621a72748c7e103795a9 and TEMP/rtxforge-auto-update-final-release-receipt.json. No execution or source reservation is requested by this queue entry.",
+      "paths": [
+        "tests/ui_app_completion.py"
+      ],
+      "resources": [
+        "rtxforge-native-visuals-registration"
+      ],
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-11-03T04:37:20.940Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Register the outstanding native media evidence from the completed auto-update release without reserving an implementation branch.",
+          "acceptance": "Preserve and register the real native screenshot-index / Visuals receipt for run 40986002589 artifact 12947750538 (ZIP SHA256 939ddc1d20bafe9b0816f08030247806368b924aa8b6bde08d92c28774aa941d), plus carried PR124 media from run 40974336657 artifact 12942266963. Do not invent a receipt or describe this requirement as complete while native ingestion is unavailable. Preserve all 69 recovery assets and the original acceptance/history in rtxforge-auto-update-20261029. PR125 is already merged at 3907a1aba00160a7f5926b2349c1778c035138e5; do not redo source, release, or game-file work.",
+          "at": "2026-11-03T04:37:20.940Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-auto-update-media-receipts-20261103:acceptance:0",
+            "text": "Preserve and register the real native screenshot-index / Visuals receipt for run 40986002589 artifact 12947750538 (ZIP SHA256 939ddc1d20bafe9b0816f08030247806368b924aa8b6bde08d92c28774aa941d), plus carried PR124 media from run 40974336657 artifact 12942266963. Do not invent a receipt or describe this requirement as complete while native ingestion is unavailable. Preserve all 69 recovery assets and the original acceptance/history in rtxforge-auto-update-20261029. PR125 is already merged at 3907a1aba00160a7f5926b2349c1778c035138e5; do not redo source, release, or game-file work.",
+            "at": "2026-11-03T04:37:20.940Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
