@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T01:55:05.170Z",
+  "updated_at": "2026-11-03T03:10:16.133Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26862,7 +26862,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-03T01:55:05.170Z",
+      "updated_at": "2026-11-03T03:10:16.133Z",
       "lease_until": "2026-11-03T13:28:09.220Z",
       "amendments": [
         {
@@ -26986,10 +26986,10 @@
             "host_available": true,
             "intent_digest": "314b6a5cfa5fe743ced9925bee337fc974eba66925b65c3a9f4714fe77cfb2bb"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-03T01:53:12.285Z",
           "request_digest": "9c99473aa0cbf3c39ef5d2ff553fb75332eddbf48a159e0f22b3c31f87372828",
-          "step_digest": "98d262f47f8550cfc0c9059d56bb80eaa3b8bdb0edd9393bd83785950850713f",
+          "step_digest": "244c7bcf66136d26b7f1b98e0a7382879b149b28a223b90bb71d26ae1a7b54cb",
           "start": {
             "request_digest": "9c99473aa0cbf3c39ef5d2ff553fb75332eddbf48a159e0f22b3c31f87372828",
             "source_sha": "9164ef6bf740df639e681ff15823e0d9dd4d532d",
@@ -27000,7 +27000,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-03T01:55:05.170Z"
+          "started_at": "2026-11-03T01:55:05.170Z",
+          "result": {
+            "request_digest": "9c99473aa0cbf3c39ef5d2ff553fb75332eddbf48a159e0f22b3c31f87372828",
+            "source_sha": "9164ef6bf740df639e681ff15823e0d9dd4d532d",
+            "agent_id": "/root/appearance_tools_review",
+            "observed_at": "2026-11-03T03:10:10.550Z",
+            "state": "succeeded",
+            "result_digest": "0dc41e15e4ad1e1448393aa8c14bb2a182ccfb374390d719ced4ba95420a18cf",
+            "update": {
+              "text": "Source review identified controller focus and appearance save issues. Corrections are in validation.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-03T03:10:16.133Z"
         }
       ],
       "card_steps": {
@@ -27012,31 +27025,32 @@
           "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
           "branch": "rtxforge/game-mode-performance-20261102"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
             "id": "appearance-tools-review",
             "label": "Review appearance persistence and unified tools",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "native-appearance-tools-review-9164ef6:started",
+              "id": "native-appearance-tools-review-9164ef6:result",
               "assignment": "rtxforge-native-game-mode-performance-20261102",
               "step_id": "appearance-tools-review",
               "plan_revision": "5c5dd3129d4d372a5551546031b47f938794e2b8c11536bc5dc2e979a9ba0a43",
               "input_digest": "9c99473aa0cbf3c39ef5d2ff553fb75332eddbf48a159e0f22b3c31f87372828",
-              "evidence": "sha256:b5f7d8d9577fcc9129d00ddf3a1c499af578a7a1a8a8464d25ce04e7774a4eba",
+              "evidence": "sha256:9ee30abe7bc5f67c0d1985c5f7ec0e1924d7df3271f8ad61e33cbf42b3945cee",
               "source_sha": "9164ef6bf740df639e681ff15823e0d9dd4d532d",
-              "observed_at": "2026-11-03T01:55:01.301Z",
+              "observed_at": "2026-11-03T03:10:10.550Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "Reviewing native appearance persistence and the unified ReShade controls against the current source.",
+                "text": "Source review identified controller focus and appearance save issues. Corrections are in validation.",
                 "artifacts": []
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -27045,10 +27059,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "rtxforge-native-game-mode-performance-20261102",
         "revision": "5c5dd3129d4d372a5551546031b47f938794e2b8c11536bc5dc2e979a9ba0a43",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
-          "native-appearance-tools-review-9164ef6:started": "88a51af193d3c8f0a870a1dfa40ca7ac6b0de46bf2c68e24244ed5b732da749b"
+          "native-appearance-tools-review-9164ef6:started": "88a51af193d3c8f0a870a1dfa40ca7ac6b0de46bf2c68e24244ed5b732da749b",
+          "native-appearance-tools-review-9164ef6:result": "03f4b875a9d614dd44e61e8460766cfbbd1292834a237a3b83710335a9b866d7"
         },
         "items": [
           {
@@ -27070,6 +27085,28 @@
               "team": "inspector"
             },
             "text": "Reviewing native appearance persistence and the unified ReShade controls against the current source.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "native-appearance-tools-review-9164ef6:result:9c99473aa0cbf3c39ef5d2ff553fb75332eddbf48a159e0f22b3c31f87372828:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Review appearance persistence and unified tools\",\"receipt\":{\"assignment\":\"rtxforge-native-game-mode-performance-20261102\",\"evidence\":\"sha256:9ee30abe7bc5f67c0d1985c5f7ec0e1924d7df3271f8ad61e33cbf42b3945cee\",\"id\":\"native-appearance-tools-review-9164ef6:result\",\"input_digest\":\"9c99473aa0cbf3c39ef5d2ff553fb75332eddbf48a159e0f22b3c31f87372828\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"5c5dd3129d4d372a5551546031b47f938794e2b8c11536bc5dc2e979a9ba0a43\",\"source_sha\":\"9164ef6bf740df639e681ff15823e0d9dd4d532d\",\"step_id\":\"appearance-tools-review\",\"update\":{\"artifacts\":[],\"text\":\"Source review identified controller focus and appearance save issues. Corrections are in validation.\"}},\"state\":\"blocked\"}",
+            "id": "native-appearance-tools-review-9164ef6:result",
+            "assignment": "rtxforge-native-game-mode-performance-20261102",
+            "step_id": "appearance-tools-review",
+            "revision": "5c5dd3129d4d372a5551546031b47f938794e2b8c11536bc5dc2e979a9ba0a43",
+            "label": "Review appearance persistence and unified tools",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "9164ef6bf740df639e681ff15823e0d9dd4d532d",
+            "observed_at": "2026-11-03T03:10:10.550Z",
+            "recorded_at": "2026-11-03T03:10:16.133Z",
+            "receipt_digest": "sha256:9ee30abe7bc5f67c0d1985c5f7ec0e1924d7df3271f8ad61e33cbf42b3945cee",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Source review identified controller focus and appearance save issues. Corrections are in validation.",
             "text_kind": "owner-published",
             "artifacts": []
           }
