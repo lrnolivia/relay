@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T04:44:33.087Z",
+  "updated_at": "2026-11-03T04:45:49.042Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -27428,7 +27428,7 @@
         "roman"
       ],
       "base_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57",
-      "state": "active",
+      "state": "superseded",
       "created_at": "2026-11-03T04:38:32.223Z",
       "objective_history": {
         "baseline": {
@@ -27445,7 +27445,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-03T04:40:34.802Z",
+      "updated_at": "2026-11-03T04:45:49.042Z",
       "lease_until": "2026-11-03T16:38:32.223Z",
       "native_handoffs": [
         {
@@ -27512,6 +27512,19 @@
         "truncated": false,
         "identities": {},
         "items": []
+      },
+      "retirement": {
+        "at": "2026-11-03T04:45:49.042Z",
+        "intent": {
+          "operation_id": "feeder-release-unused-slot-20261103-0445",
+          "owner": "01a19f3c-d7fc-741c-b428-b08321dc601e",
+          "disposition": "superseded",
+          "reason": "Preserve the user-requested live-settings repair in the queue while its consumer API prerequisite is qualified; release an unused implementation slot without claiming the panel fixed.",
+          "evidence": "Current owner and sole source writer is this coordinator; no source edits or commits were made. git status is clean, local HEAD and independently read remote branch both equal admitted base f7388b6102ade554d5fc4992a715ba9b0fa9da57. Branch remains retained, never deleted. Actual read-only reviewer /root/diagnose_overlay_updates/verify_feeder_api returned its final review at 2026-11-03T04:44:09Z with no edits or execution. Its Relay start transition failed without mutation, and corrected historical start was denied because completed review must not be represented as currently running; prepared receipt remains explicitly unresolved, with no canonical acceptance claim or retry. Pinned binary hashes/exports, full source review, safe API contract and tests are preserved in review artifact libfile_1892478da4a4819194b1b37dd8eabf77 and isolated cloud workspace. Core hardening 214 tests and Feeder provider 39 tests pass at unchanged baseline; no runtime success or FPS improvement claimed. Exact goal, acceptance and consumer-interface blocker are preserved in queued successor rtxforge-feeder-runtime-bridge-queued-20261103. Continue upstream qualification read-only; no PC/game interaction, merge, deploy, provider replacement, or PR143 overlap.",
+          "superseded_by": "rtxforge-feeder-runtime-bridge-queued-20261103",
+          "branch": "rtxforge/feeder-live-settings-20261103",
+          "head_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57"
+        }
       }
     }
   ]
