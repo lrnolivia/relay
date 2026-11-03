@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T01:22:20.881Z",
+  "updated_at": "2026-11-03T01:28:09.220Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26727,157 +26727,6 @@
       "completed_at": "2026-11-02T23:43:17.289Z"
     },
     {
-      "id": "rtxforge-native-game-mode-performance-20261102",
-      "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
-      "branch": "rtxforge/game-mode-performance-20261102",
-      "paths": [
-        "prototypes/game-mode-tauri/"
-      ],
-      "resources": [
-        "native-game-mode-performance-audit"
-      ],
-      "goal": "Complete Lauren's native Game Mode resource and responsiveness audit after app input resumes.",
-      "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes. Also fix immediate game accent preview/save shared with Desktop, replace unsupported native eyedropper with controller-usable artwork sampling, remove raw JSON preference reviews for appearance-only writes, balance detail rows, integrate ReShade operations and correct RenoDX labels, and reuse Desktop platter branding. Preserve exact reviews for game-file operations. Resolve Desktop file reservations before parity edits.",
-      "next_action": "Fix newly reported appearance and tools defects in admitted prototype paths; finish native profiling and source validation. Resolve held Desktop GamePage reservation before desktop parity edits. Release publisher holds 1.5 Beta 1.",
-      "category": "implementation",
-      "primary_role": "coordinator",
-      "supporting_roles": [
-        "verifier"
-      ],
-      "primary_team": "night-shift",
-      "supporting_teams": [
-        "inspector"
-      ],
-      "primary_staff": "julian",
-      "supporting_staff": [
-        "roman"
-      ],
-      "base_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57",
-      "state": "active",
-      "created_at": "2026-11-03T01:01:20.804Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Complete Lauren's native Game Mode resource and responsiveness audit after app input resumes.",
-          "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate.",
-          "at": "2026-11-02T20:22:57.058Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-native-game-mode-performance-20261102:acceptance:0",
-            "text": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate.",
-            "at": "2026-11-02T20:22:57.058Z"
-          },
-          {
-            "id": "rtxforge-native-game-mode-performance-20261102:acceptance:3",
-            "text": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes.",
-            "at": "2026-11-03T00:59:40.940Z",
-            "reason": "Lauren asked to wrap up the native performance audit and public release. A separate canonical Beta17 publisher owns release metadata; this task retains only native performance scope."
-          },
-          {
-            "id": "rtxforge-native-game-mode-performance-20261102:acceptance:4",
-            "text": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes. Also fix immediate game accent preview/save shared with Desktop, replace unsupported native eyedropper with controller-usable artwork sampling, remove raw JSON preference reviews for appearance-only writes, balance detail rows, integrate ReShade operations and correct RenoDX labels, and reuse Desktop platter branding. Preserve exact reviews for game-file operations. Resolve Desktop file reservations before parity edits.",
-            "at": "2026-11-03T01:12:49.937Z",
-            "reason": "Lauren supplied release-blocking accent/tool usability defects and requested Desktop parity before 1.5 Beta 1."
-          }
-        ]
-      },
-      "amendments": [
-        {
-          "at": "2026-11-02T20:43:14.031Z",
-          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
-          "reason": "Add the measured combined Desktop/native baseline without claiming a completed performance audit.",
-          "fields": [
-            "next_action"
-          ],
-          "before": {
-            "next_action": "Retain the passive 20.86-second idle sample at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json: source5cad542, 0.15% of one CPU core, about778 MiB private memory across native/WebView processes, stable within this short window. This is not startup, interaction, GPU or leak acceptance. Computer Use was stopped with Escape; do not resume app input until Lauren explicitly resumes it. No worker launch or source change requested by this queue record."
-          },
-          "after": {
-            "next_action": "Keep passive source5cad542 receipts at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json and native-total-idle-sample.json. Native/WebView tree:0.15% of one core, about778MiB private. Combined Desktop/native descendants over21.15s:5.32% of one core /0.66% machine CPU, about1014MiB private peak, stable within this short window. GPU, startup, interaction, sustained scrolling and leak behavior are not measured; do not label this lightweight or full performance acceptance. App control was stopped with Escape; wait for explicit user resume before app input. No worker launch or source change requested by this queued followup."
-          }
-        },
-        {
-          "at": "2026-11-02T21:56:43.953Z",
-          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
-          "reason": "Record resumed installed-build observations and measured costs without claiming a complete performance audit.",
-          "fields": [
-            "next_action"
-          ],
-          "before": {
-            "next_action": "Keep passive source5cad542 receipts at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json and native-total-idle-sample.json. Native/WebView tree:0.15% of one core, about778MiB private. Combined Desktop/native descendants over21.15s:5.32% of one core /0.66% machine CPU, about1014MiB private peak, stable within this short window. GPU, startup, interaction, sustained scrolling and leak behavior are not measured; do not label this lightweight or full performance acceptance. App control was stopped with Escape; wait for explicit user resume before app input. No worker launch or source change requested by this queued followup."
-          },
-          "after": {
-            "next_action": "User resumed captures; installed sourcea600682 was exercised with real Desktop/native entry and return, Library poster/capsule scrolling, Details and all primary pages. G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-final-process-summary.json records105.99s short Library residency: native/WebView private945–1030MiB,4.1% onecore/0.51% machine; combined Desktop/native/helper privatepeak1632MiB,49.77% onecore/6.22% machine during startup/lazy work. This is not a settled idle or sustained interaction benchmark. Investigate WebView image/composition memory and separate initial Desktop/background helper CPU from native UI. GPU allocation, frame latency, sustained scroll and long-term leaks remain unmeasured. Do not label this lightweight or complete. Handoff passed on installed sourcea600682 (handoff-a600682.json); settings restored byte-for-byte. No new worker launch requested."
-          }
-        },
-        {
-          "at": "2026-11-03T00:59:40.940Z",
-          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
-          "reason": "Lauren asked to wrap up the native performance audit and public release. A separate canonical Beta17 publisher owns release metadata; this task retains only native performance scope.",
-          "fields": [
-            "acceptance",
-            "next_action",
-            "category",
-            "primary_role",
-            "supporting_roles",
-            "primary_staff",
-            "supporting_staff",
-            "primary_team",
-            "supporting_teams"
-          ],
-          "before": {
-            "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate.",
-            "next_action": "User resumed captures; installed sourcea600682 was exercised with real Desktop/native entry and return, Library poster/capsule scrolling, Details and all primary pages. G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-final-process-summary.json records105.99s short Library residency: native/WebView private945–1030MiB,4.1% onecore/0.51% machine; combined Desktop/native/helper privatepeak1632MiB,49.77% onecore/6.22% machine during startup/lazy work. This is not a settled idle or sustained interaction benchmark. Investigate WebView image/composition memory and separate initial Desktop/background helper CPU from native UI. GPU allocation, frame latency, sustained scroll and long-term leaks remain unmeasured. Do not label this lightweight or complete. Handoff passed on installed sourcea600682 (handoff-a600682.json); settings restored byte-for-byte. No new worker launch requested.",
-            "category": "qa-verification",
-            "primary_role": "verifier",
-            "supporting_roles": null,
-            "primary_staff": "roman",
-            "supporting_staff": [],
-            "primary_team": "inspector",
-            "supporting_teams": []
-          },
-          "after": {
-            "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes.",
-            "next_action": "Claim isolated source at reviewed mainf7388b6. Measure native GPU/private memory/CPU/frame responsiveness and diagnose artwork/composition cost. Optimize only demonstrated waste, validate keyboard/controller/rendering across views, install verified output, merge green exactsource and provide release-ready source to the existing Beta17 publication assignment. No release metadata or public assets changed by this performance branch.",
-            "category": "implementation",
-            "primary_role": "coordinator",
-            "supporting_roles": [
-              "verifier"
-            ],
-            "primary_staff": "julian",
-            "supporting_staff": [
-              "roman"
-            ],
-            "primary_team": "night-shift",
-            "supporting_teams": [
-              "inspector"
-            ]
-          }
-        },
-        {
-          "at": "2026-11-03T01:12:49.937Z",
-          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
-          "reason": "Lauren supplied release-blocking accent/tool usability defects and requested Desktop parity before 1.5 Beta 1.",
-          "fields": [
-            "acceptance",
-            "next_action"
-          ],
-          "before": {
-            "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes.",
-            "next_action": "Measure and optimize demonstrated native Game Mode resource waste on isolated source. User changed shared public target to1.5Beta1; publisher01a19a5a-af52-7ea2-9412-eb2f1f541ed5 is explicitly messaged to wait for the performance outcome. No VERSION, updater metadata or public asset edits in this task. Preserve approved rendering/controller behavior, audit exact native runtime and merge green source before release handoff."
-          },
-          "after": {
-            "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes. Also fix immediate game accent preview/save shared with Desktop, replace unsupported native eyedropper with controller-usable artwork sampling, remove raw JSON preference reviews for appearance-only writes, balance detail rows, integrate ReShade operations and correct RenoDX labels, and reuse Desktop platter branding. Preserve exact reviews for game-file operations. Resolve Desktop file reservations before parity edits.",
-            "next_action": "Fix newly reported appearance and tools defects in admitted prototype paths; finish native profiling and source validation. Resolve held Desktop GamePage reservation before desktop parity edits. Release publisher holds 1.5 Beta 1."
-          }
-        }
-      ],
-      "amendment_count": 4,
-      "updated_at": "2026-11-03T01:12:49.937Z",
-      "lease_until": "2026-11-03T13:12:49.937Z"
-    },
-    {
       "id": "rtxforge-library-names-mass-effect-20261101",
       "owner": "01a19a65-3f13-7703-bcf7-077145942958",
       "branch": "rtxforge/library-names-mass-effect-20261101",
@@ -27067,6 +26916,159 @@
           }
         }
       ]
+    },
+    {
+      "id": "rtxforge-native-game-mode-performance-20261102",
+      "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+      "branch": "rtxforge/game-mode-performance-20261102",
+      "paths": [
+        "prototypes/game-mode-tauri/",
+        "windows/RtxForge.Windows/Views/GamePage.xaml.cs"
+      ],
+      "resources": [
+        "native-game-mode-performance-audit",
+        "rtxforge-details-reshade-parity"
+      ],
+      "goal": "Complete Lauren's native Game Mode resource and responsiveness audit after app input resumes.",
+      "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes. Also fix immediate game accent preview/save shared with Desktop, replace unsupported native eyedropper with controller-usable artwork sampling, remove raw JSON preference reviews for appearance-only writes, balance detail rows, integrate ReShade operations and correct RenoDX labels, and reuse Desktop platter branding. Preserve exact reviews for game-file operations. Resolve Desktop file reservations before parity edits.",
+      "next_action": "Library owner confirmed GamePage files released with exact backups; implement Desktop ReShade consolidation/labels alongside native changes. Keep PR139 held. Native appearance/status integrate publisher's shared helpers, then tests/review/native profiling and merge for 1.5 Beta 1.",
+      "category": "implementation",
+      "primary_role": "coordinator",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "primary_team": "night-shift",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "julian",
+      "supporting_staff": [
+        "roman"
+      ],
+      "base_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57",
+      "state": "active",
+      "created_at": "2026-11-03T01:01:20.804Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Complete Lauren's native Game Mode resource and responsiveness audit after app input resumes.",
+          "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate.",
+          "at": "2026-11-02T20:22:57.058Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-native-game-mode-performance-20261102:acceptance:0",
+            "text": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate.",
+            "at": "2026-11-02T20:22:57.058Z"
+          },
+          {
+            "id": "rtxforge-native-game-mode-performance-20261102:acceptance:3",
+            "text": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes.",
+            "at": "2026-11-03T00:59:40.940Z",
+            "reason": "Lauren asked to wrap up the native performance audit and public release. A separate canonical Beta17 publisher owns release metadata; this task retains only native performance scope."
+          },
+          {
+            "id": "rtxforge-native-game-mode-performance-20261102:acceptance:4",
+            "text": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes. Also fix immediate game accent preview/save shared with Desktop, replace unsupported native eyedropper with controller-usable artwork sampling, remove raw JSON preference reviews for appearance-only writes, balance detail rows, integrate ReShade operations and correct RenoDX labels, and reuse Desktop platter branding. Preserve exact reviews for game-file operations. Resolve Desktop file reservations before parity edits.",
+            "at": "2026-11-03T01:12:49.937Z",
+            "reason": "Lauren supplied release-blocking accent/tool usability defects and requested Desktop parity before 1.5 Beta 1."
+          }
+        ]
+      },
+      "updated_at": "2026-11-03T01:28:09.220Z",
+      "lease_until": "2026-11-03T13:28:09.220Z",
+      "amendments": [
+        {
+          "at": "2026-11-02T20:43:14.031Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Add the measured combined Desktop/native baseline without claiming a completed performance audit.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Retain the passive 20.86-second idle sample at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json: source5cad542, 0.15% of one CPU core, about778 MiB private memory across native/WebView processes, stable within this short window. This is not startup, interaction, GPU or leak acceptance. Computer Use was stopped with Escape; do not resume app input until Lauren explicitly resumes it. No worker launch or source change requested by this queue record."
+          },
+          "after": {
+            "next_action": "Keep passive source5cad542 receipts at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json and native-total-idle-sample.json. Native/WebView tree:0.15% of one core, about778MiB private. Combined Desktop/native descendants over21.15s:5.32% of one core /0.66% machine CPU, about1014MiB private peak, stable within this short window. GPU, startup, interaction, sustained scrolling and leak behavior are not measured; do not label this lightweight or full performance acceptance. App control was stopped with Escape; wait for explicit user resume before app input. No worker launch or source change requested by this queued followup."
+          }
+        },
+        {
+          "at": "2026-11-02T21:56:43.953Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Record resumed installed-build observations and measured costs without claiming a complete performance audit.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Keep passive source5cad542 receipts at G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-idle-sample.json and native-total-idle-sample.json. Native/WebView tree:0.15% of one core, about778MiB private. Combined Desktop/native descendants over21.15s:5.32% of one core /0.66% machine CPU, about1014MiB private peak, stable within this short window. GPU, startup, interaction, sustained scrolling and leak behavior are not measured; do not label this lightweight or full performance acceptance. App control was stopped with Escape; wait for explicit user resume before app input. No worker launch or source change requested by this queued followup."
+          },
+          "after": {
+            "next_action": "User resumed captures; installed sourcea600682 was exercised with real Desktop/native entry and return, Library poster/capsule scrolling, Details and all primary pages. G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-final-process-summary.json records105.99s short Library residency: native/WebView private945–1030MiB,4.1% onecore/0.51% machine; combined Desktop/native/helper privatepeak1632MiB,49.77% onecore/6.22% machine during startup/lazy work. This is not a settled idle or sustained interaction benchmark. Investigate WebView image/composition memory and separate initial Desktop/background helper CPU from native UI. GPU allocation, frame latency, sustained scroll and long-term leaks remain unmeasured. Do not label this lightweight or complete. Handoff passed on installed sourcea600682 (handoff-a600682.json); settings restored byte-for-byte. No new worker launch requested."
+          }
+        },
+        {
+          "at": "2026-11-03T00:59:40.940Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Lauren asked to wrap up the native performance audit and public release. A separate canonical Beta17 publisher owns release metadata; this task retains only native performance scope.",
+          "fields": [
+            "acceptance",
+            "next_action",
+            "category",
+            "primary_role",
+            "supporting_roles",
+            "primary_staff",
+            "supporting_staff",
+            "primary_team",
+            "supporting_teams"
+          ],
+          "before": {
+            "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate.",
+            "next_action": "User resumed captures; installed sourcea600682 was exercised with real Desktop/native entry and return, Library poster/capsule scrolling, Details and all primary pages. G:/BuildScratch/rtxforge-game-mode-integration-20261102/native-final-process-summary.json records105.99s short Library residency: native/WebView private945–1030MiB,4.1% onecore/0.51% machine; combined Desktop/native/helper privatepeak1632MiB,49.77% onecore/6.22% machine during startup/lazy work. This is not a settled idle or sustained interaction benchmark. Investigate WebView image/composition memory and separate initial Desktop/background helper CPU from native UI. GPU allocation, frame latency, sustained scroll and long-term leaks remain unmeasured. Do not label this lightweight or complete. Handoff passed on installed sourcea600682 (handoff-a600682.json); settings restored byte-for-byte. No new worker launch requested.",
+            "category": "qa-verification",
+            "primary_role": "verifier",
+            "supporting_roles": null,
+            "primary_staff": "roman",
+            "supporting_staff": [],
+            "primary_team": "inspector",
+            "supporting_teams": []
+          },
+          "after": {
+            "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes.",
+            "next_action": "Claim isolated source at reviewed mainf7388b6. Measure native GPU/private memory/CPU/frame responsiveness and diagnose artwork/composition cost. Optimize only demonstrated waste, validate keyboard/controller/rendering across views, install verified output, merge green exactsource and provide release-ready source to the existing Beta17 publication assignment. No release metadata or public assets changed by this performance branch.",
+            "category": "implementation",
+            "primary_role": "coordinator",
+            "supporting_roles": [
+              "verifier"
+            ],
+            "primary_staff": "julian",
+            "supporting_staff": [
+              "roman"
+            ],
+            "primary_team": "night-shift",
+            "supporting_teams": [
+              "inspector"
+            ]
+          }
+        },
+        {
+          "at": "2026-11-03T01:12:49.937Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Lauren supplied release-blocking accent/tool usability defects and requested Desktop parity before 1.5 Beta 1.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes.",
+            "next_action": "Measure and optimize demonstrated native Game Mode resource waste on isolated source. User changed shared public target to1.5Beta1; publisher01a19a5a-af52-7ea2-9412-eb2f1f541ed5 is explicitly messaged to wait for the performance outcome. No VERSION, updater metadata or public asset edits in this task. Preserve approved rendering/controller behavior, audit exact native runtime and merge green source before release handoff."
+          },
+          "after": {
+            "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes. Also fix immediate game accent preview/save shared with Desktop, replace unsupported native eyedropper with controller-usable artwork sampling, remove raw JSON preference reviews for appearance-only writes, balance detail rows, integrate ReShade operations and correct RenoDX labels, and reuse Desktop platter branding. Preserve exact reviews for game-file operations. Resolve Desktop file reservations before parity edits.",
+            "next_action": "Fix newly reported appearance and tools defects in admitted prototype paths; finish native profiling and source validation. Resolve held Desktop GamePage reservation before desktop parity edits. Release publisher holds 1.5 Beta 1."
+          }
+        }
+      ],
+      "amendment_count": 4
     }
   ]
 }
