@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T01:02:25.086Z",
+  "updated_at": "2026-11-03T01:07:53.754Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26926,14 +26926,17 @@
         "tests/test_beta_release_workflows.py",
         "tests/test_app_update.py",
         "windows/tests/test_app_update.py",
-        "docs/linux/BETA-RELEASE.md"
+        "docs/linux/BETA-RELEASE.md",
+        "prototypes/overlay-rmlui/Prototype.cpp",
+        "windows/overlay-rmlui/CMakeLists.txt"
       ],
       "resources": [
-        "rtxforge-public-beta-publication"
+        "rtxforge-public-beta-publication",
+        "rtxforge-overlay-preview-window"
       ],
       "goal": "Publish the approved adaptive glass overlay and current reviewed native Game Mode in the public Beta updater release.",
       "acceptance": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
-      "next_action": "Lauren changed target via authorized Game Mode coordination to 1.5 Beta1; prepare 1.5.0-beta.1 with compatible asset ownership and semantic ordering, verify old-to-new updater behavior. Hold final publication for Game Mode performance pass and merged fixes.",
+      "next_action": "Prepare user-directed 1.5 Beta1 transition and centered larger draggable titlebar-free preview with rtxForge icon in same release PR143. Hold final publication pending native Game Mode performance disposition and merged fixes.",
       "category": "release",
       "primary_team": "release",
       "supporting_teams": [],
@@ -26957,8 +26960,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-03T01:02:25.086Z",
-      "lease_until": "2026-11-03T13:02:25.086Z"
+      "updated_at": "2026-11-03T01:07:53.754Z",
+      "lease_until": "2026-11-03T13:07:53.754Z"
     }
   ]
 }
