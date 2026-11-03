@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T01:42:37.646Z",
+  "updated_at": "2026-11-03T01:50:16.797Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -27035,7 +27035,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-03T01:42:37.646Z",
+      "updated_at": "2026-11-03T01:50:16.797Z",
       "lease_until": "2026-11-03T13:42:37.646Z",
       "amendment_count": 1,
       "amendments": [
@@ -27071,7 +27071,73 @@
             ]
           }
         }
-      ]
+      ],
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "settings-full-review-1a19044",
+          "assignment": "rtxforge-beta17-overlay-release-20261102",
+          "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
+          "branch": "rtxforge/beta17-overlay-release-20261102",
+          "source_sha": "1a19044ea8c3004bc3b9b4613157279109e2b354",
+          "objective_digest": "79fcf582c013bdff8bae23310c24625c5a1aa46d3675abcbc5ea129977e939d5",
+          "scope_digest": "8b76b57497ecdae55281f43105897d47683aa4ccd44afdaa6eb273504b4dc482",
+          "step_id": "full-review",
+          "specialist": {
+            "role": "frontend",
+            "owner": {
+              "staff": "nico",
+              "team": "runner"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "1a19044ea8c3004bc3b9b4613157279109e2b354",
+            "objective_digest": "79fcf582c013bdff8bae23310c24625c5a1aa46d3675abcbc5ea129977e939d5",
+            "step_id": "full-review",
+            "label": "Review Windows and GTK settings parity and shared preference/status behavior",
+            "role": "frontend",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "cde3db69bace1d601a4c4d1a8a79ede83123b0533d531394aa94d83a5c493d0b"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-03T01:50:16.797Z",
+          "request_digest": "6945f70d6bdabbac42662a19ef38147e22d707fb02fbfb62420d8b09915b0610",
+          "step_digest": "ca7b7d128a7b87dc2ba987f39d1274e5a83697d1dcacbc8981a67472e146280a"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "rtxforge-beta17-overlay-release-20261102",
+        "revision": "1f3eba1241f8d95a82c941adc2dad825782ddf9f22f25a1bc1836124e59e0b44",
+        "objective_digest": "79fcf582c013bdff8bae23310c24625c5a1aa46d3675abcbc5ea129977e939d5",
+        "publisher": {
+          "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
+          "branch": "rtxforge/beta17-overlay-release-20261102"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "full-review",
+            "label": "Review Windows and GTK settings parity and shared preference/status behavior",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "rtxforge-beta17-overlay-release-20261102",
+        "revision": "1f3eba1241f8d95a82c941adc2dad825782ddf9f22f25a1bc1836124e59e0b44",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
