@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T04:37:20.940Z",
+  "updated_at": "2026-11-03T04:37:53.810Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -7950,7 +7950,7 @@
       "supporting_teams": [],
       "primary_staff": "nico",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "superseded",
       "created_at": "2026-10-30T00:41:23.182Z",
       "objective_history": {
         "baseline": {
@@ -7966,6 +7966,20 @@
             "at": "2026-10-30T00:41:23.182Z"
           }
         ]
+      },
+      "updated_at": "2026-11-03T04:37:53.810Z",
+      "retirement": {
+        "at": "2026-11-03T04:37:53.810Z",
+        "intent": {
+          "operation_id": "rtxforge-release-completed-reservation-20261103-0437",
+          "owner": "01a189e9-9316-7db2-97e3-597d29d40dbd",
+          "disposition": "superseded",
+          "reason": "Lauren requested fixing full active-branch capacity. Source and release work for this reservation are finished; preserve the unresolved native media receipt as queued work instead of retaining an implementation branch slot.",
+          "evidence": "Actual current owner preserved. The owner's durable 2026-10-30 record states source/release work finished and no source edits to the merged branch. Fresh 2026-11-03 Relay progress reports reserved-not-executing, external.active=false, no active checks; relay_execution status returns job=null. GitHub PR125 is closed and merged at 3907a1aba00160a7f5926b2349c1778c035138e5; current remote branch head remains the exact merged PR head 30faac271f538b3a46c1621a72748c7e103795a9. No PC or private chat inspection performed. Branch, PR, original acceptance/history, all 69 recovery assets, and owner's recorded TEMP/rtxforge-auto-update-final-release-receipt.json are retained. New queued successor rtxforge-auto-update-media-receipts-20261103 preserves run 40986002589/artifact 12947750538 (ZIP SHA256 939ddc1d20bafe9b0816f08030247806368b924aa8b6bde08d92c28774aa941d) and carried PR124 media run 40974336657/artifact 12942266963. Native ingestion is still unavailable: no media-registration or overall-success claim is made. This transaction only supersedes the finished source reservation; no source, release, branch deletion, or process action.",
+          "superseded_by": "rtxforge-auto-update-media-receipts-20261103",
+          "branch": "rtxforge/auto-update-20261029",
+          "head_sha": "30faac271f538b3a46c1621a72748c7e103795a9"
+        }
       }
     },
     {
@@ -22227,7 +22241,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "00c13e71594065c93d814d0bd86c06c17d314dba",
-      "state": "held",
+      "state": "superseded",
       "created_at": "2026-10-30T00:42:09.043Z",
       "objective_history": {
         "baseline": {
@@ -22244,8 +22258,21 @@
           }
         ]
       },
-      "updated_at": "2026-10-30T02:03:50.948Z",
-      "lease_until": "2026-10-30T14:03:50.948Z"
+      "updated_at": "2026-11-03T04:37:53.810Z",
+      "lease_until": "2026-10-30T14:03:50.948Z",
+      "retirement": {
+        "at": "2026-11-03T04:37:53.810Z",
+        "intent": {
+          "operation_id": "rtxforge-release-completed-reservation-20261103-0437",
+          "owner": "01a189e9-9316-7db2-97e3-597d29d40dbd",
+          "disposition": "superseded",
+          "reason": "Lauren requested fixing full active-branch capacity. Source and release work for this reservation are finished; preserve the unresolved native media receipt as queued work instead of retaining an implementation branch slot.",
+          "evidence": "Actual current owner preserved. The owner's durable 2026-10-30 record states source/release work finished and no source edits to the merged branch. Fresh 2026-11-03 Relay progress reports reserved-not-executing, external.active=false, no active checks; relay_execution status returns job=null. GitHub PR125 is closed and merged at 3907a1aba00160a7f5926b2349c1778c035138e5; current remote branch head remains the exact merged PR head 30faac271f538b3a46c1621a72748c7e103795a9. No PC or private chat inspection performed. Branch, PR, original acceptance/history, all 69 recovery assets, and owner's recorded TEMP/rtxforge-auto-update-final-release-receipt.json are retained. New queued successor rtxforge-auto-update-media-receipts-20261103 preserves run 40986002589/artifact 12947750538 (ZIP SHA256 939ddc1d20bafe9b0816f08030247806368b924aa8b6bde08d92c28774aa941d) and carried PR124 media run 40974336657/artifact 12942266963. Native ingestion is still unavailable: no media-registration or overall-success claim is made. This transaction only supersedes the finished source reservation; no source, release, branch deletion, or process action.",
+          "superseded_by": "rtxforge-auto-update-media-receipts-20261103",
+          "branch": "rtxforge/auto-update-20261029",
+          "head_sha": "30faac271f538b3a46c1621a72748c7e103795a9"
+        }
+      }
     },
     {
       "id": "rtxforge-overlay-workbench-20261029",
