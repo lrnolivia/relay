@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T01:07:53.754Z",
+  "updated_at": "2026-11-03T01:09:52.381Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26928,7 +26928,8 @@
         "windows/tests/test_app_update.py",
         "docs/linux/BETA-RELEASE.md",
         "prototypes/overlay-rmlui/Prototype.cpp",
-        "windows/overlay-rmlui/CMakeLists.txt"
+        "windows/overlay-rmlui/CMakeLists.txt",
+        "prototypes/overlay-rmlui/CMakeLists.txt"
       ],
       "resources": [
         "rtxforge-public-beta-publication",
@@ -26936,7 +26937,7 @@
       ],
       "goal": "Publish the approved adaptive glass overlay and current reviewed native Game Mode in the public Beta updater release.",
       "acceptance": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
-      "next_action": "Prepare user-directed 1.5 Beta1 transition and centered larger draggable titlebar-free preview with rtxForge icon in same release PR143. Hold final publication pending native Game Mode performance disposition and merged fixes.",
+      "next_action": "Add shared brand icon resource to both preview build targets, verify centered sizing and background drag without stealing panel/control input. Public release remains held for Game Mode performance.",
       "category": "release",
       "primary_team": "release",
       "supporting_teams": [],
@@ -26960,8 +26961,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-03T01:07:53.754Z",
-      "lease_until": "2026-11-03T13:07:53.754Z"
+      "updated_at": "2026-11-03T01:09:52.381Z",
+      "lease_until": "2026-11-03T13:09:52.381Z"
     }
   ]
 }
