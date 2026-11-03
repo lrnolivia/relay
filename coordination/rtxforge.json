@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T01:09:52.381Z",
+  "updated_at": "2026-11-03T01:12:49.937Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8439,8 +8439,8 @@
       "id": "rtxforge-native-game-mode-performance-20261102",
       "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
       "goal": "Complete Lauren's native Game Mode resource and responsiveness audit after app input resumes.",
-      "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes.",
-      "next_action": "Claim isolated source at reviewed mainf7388b6. Measure native GPU/private memory/CPU/frame responsiveness and diagnose artwork/composition cost. Optimize only demonstrated waste, validate keyboard/controller/rendering across views, install verified output, merge green exactsource and provide release-ready source to the existing Beta17 publication assignment. No release metadata or public assets changed by this performance branch.",
+      "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes. Also fix immediate game accent preview/save shared with Desktop, replace unsupported native eyedropper with controller-usable artwork sampling, remove raw JSON preference reviews for appearance-only writes, balance detail rows, integrate ReShade operations and correct RenoDX labels, and reuse Desktop platter branding. Preserve exact reviews for game-file operations. Resolve Desktop file reservations before parity edits.",
+      "next_action": "Fix newly reported appearance and tools defects in admitted prototype paths; finish native profiling and source validation. Resolve held Desktop GamePage reservation before desktop parity edits. Release publisher holds 1.5 Beta 1.",
       "paths": [
         "prototypes/game-mode-tauri/"
       ],
@@ -8477,10 +8477,16 @@
             "text": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes.",
             "at": "2026-11-03T00:59:40.940Z",
             "reason": "Lauren asked to wrap up the native performance audit and public release. A separate canonical Beta17 publisher owns release metadata; this task retains only native performance scope."
+          },
+          {
+            "id": "rtxforge-native-game-mode-performance-20261102:acceptance:4",
+            "text": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes. Also fix immediate game accent preview/save shared with Desktop, replace unsupported native eyedropper with controller-usable artwork sampling, remove raw JSON preference reviews for appearance-only writes, balance detail rows, integrate ReShade operations and correct RenoDX labels, and reuse Desktop platter branding. Preserve exact reviews for game-file operations. Resolve Desktop file reservations before parity edits.",
+            "at": "2026-11-03T01:12:49.937Z",
+            "reason": "Lauren supplied release-blocking accent/tool usability defects and requested Desktop parity before 1.5 Beta 1."
           }
         ]
       },
-      "amendment_count": 3,
+      "amendment_count": 4,
       "amendments": [
         {
           "at": "2026-11-02T20:43:14.031Z",
@@ -8553,9 +8559,26 @@
               "inspector"
             ]
           }
+        },
+        {
+          "at": "2026-11-03T01:12:49.937Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Lauren supplied release-blocking accent/tool usability defects and requested Desktop parity before 1.5 Beta 1.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes.",
+            "next_action": "Measure and optimize demonstrated native Game Mode resource waste on isolated source. User changed shared public target to1.5Beta1; publisher01a19a5a-af52-7ea2-9412-eb2f1f541ed5 is explicitly messaged to wait for the performance outcome. No VERSION, updater metadata or public asset edits in this task. Preserve approved rendering/controller behavior, audit exact native runtime and merge green source before release handoff."
+          },
+          "after": {
+            "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes. Also fix immediate game accent preview/save shared with Desktop, replace unsupported native eyedropper with controller-usable artwork sampling, remove raw JSON preference reviews for appearance-only writes, balance detail rows, integrate ReShade operations and correct RenoDX labels, and reuse Desktop platter branding. Preserve exact reviews for game-file operations. Resolve Desktop file reservations before parity edits.",
+            "next_action": "Fix newly reported appearance and tools defects in admitted prototype paths; finish native profiling and source validation. Resolve held Desktop GamePage reservation before desktop parity edits. Release publisher holds 1.5 Beta 1."
+          }
         }
       ],
-      "updated_at": "2026-11-03T00:59:40.940Z",
+      "updated_at": "2026-11-03T01:12:49.937Z",
       "supporting_roles": [
         "verifier"
       ]
@@ -26795,8 +26818,8 @@
         "native-game-mode-performance-audit"
       ],
       "goal": "Complete Lauren's native Game Mode resource and responsiveness audit after app input resumes.",
-      "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes.",
-      "next_action": "Measure and optimize demonstrated native Game Mode resource waste on isolated source. User changed shared public target to1.5Beta1; publisher01a19a5a-af52-7ea2-9412-eb2f1f541ed5 is explicitly messaged to wait for the performance outcome. No VERSION, updater metadata or public asset edits in this task. Preserve approved rendering/controller behavior, audit exact native runtime and merge green source before release handoff.",
+      "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes. Also fix immediate game accent preview/save shared with Desktop, replace unsupported native eyedropper with controller-usable artwork sampling, remove raw JSON preference reviews for appearance-only writes, balance detail rows, integrate ReShade operations and correct RenoDX labels, and reuse Desktop platter branding. Preserve exact reviews for game-file operations. Resolve Desktop file reservations before parity edits.",
+      "next_action": "Fix newly reported appearance and tools defects in admitted prototype paths; finish native profiling and source validation. Resolve held Desktop GamePage reservation before desktop parity edits. Release publisher holds 1.5 Beta 1.",
       "category": "implementation",
       "primary_role": "coordinator",
       "supporting_roles": [
@@ -26831,6 +26854,12 @@
             "text": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes.",
             "at": "2026-11-03T00:59:40.940Z",
             "reason": "Lauren asked to wrap up the native performance audit and public release. A separate canonical Beta17 publisher owns release metadata; this task retains only native performance scope."
+          },
+          {
+            "id": "rtxforge-native-game-mode-performance-20261102:acceptance:4",
+            "text": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes. Also fix immediate game accent preview/save shared with Desktop, replace unsupported native eyedropper with controller-usable artwork sampling, remove raw JSON preference reviews for appearance-only writes, balance detail rows, integrate ReShade operations and correct RenoDX labels, and reuse Desktop platter branding. Preserve exact reviews for game-file operations. Resolve Desktop file reservations before parity edits.",
+            "at": "2026-11-03T01:12:49.937Z",
+            "reason": "Lauren supplied release-blocking accent/tool usability defects and requested Desktop parity before 1.5 Beta 1."
           }
         ]
       },
@@ -26906,11 +26935,28 @@
               "inspector"
             ]
           }
+        },
+        {
+          "at": "2026-11-03T01:12:49.937Z",
+          "by": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "reason": "Lauren supplied release-blocking accent/tool usability defects and requested Desktop parity before 1.5 Beta 1.",
+          "fields": [
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes.",
+            "next_action": "Measure and optimize demonstrated native Game Mode resource waste on isolated source. User changed shared public target to1.5Beta1; publisher01a19a5a-af52-7ea2-9412-eb2f1f541ed5 is explicitly messaged to wait for the performance outcome. No VERSION, updater metadata or public asset edits in this task. Preserve approved rendering/controller behavior, audit exact native runtime and merge green source before release handoff."
+          },
+          "after": {
+            "acceptance": "Measure native startup, idle CPU/private memory, WebView process tree, navigation and sustained Library scrolling at 4K/200%, including poster/capsule/list and Details; distinguish native/UI/engine/GPU costs and report regressions with measured evidence. Do not treat gameplay as a new install-engine acceptance gate. Diagnose and correct measured unnecessary rendering or artwork work without changing approved appearance, shared artwork/accent precedence or controller navigation. Preserve settings, install-engine behavior and recovery. Verify exact-source native/package tests and local installed resource behavior; supply measured results and exact source to the shared Beta17 release. Public publication remains owned by rtxforge-beta17-overlay-release-20261102; no competing release changes. Also fix immediate game accent preview/save shared with Desktop, replace unsupported native eyedropper with controller-usable artwork sampling, remove raw JSON preference reviews for appearance-only writes, balance detail rows, integrate ReShade operations and correct RenoDX labels, and reuse Desktop platter branding. Preserve exact reviews for game-file operations. Resolve Desktop file reservations before parity edits.",
+            "next_action": "Fix newly reported appearance and tools defects in admitted prototype paths; finish native profiling and source validation. Resolve held Desktop GamePage reservation before desktop parity edits. Release publisher holds 1.5 Beta 1."
+          }
         }
       ],
-      "amendment_count": 3,
-      "updated_at": "2026-11-03T01:01:20.804Z",
-      "lease_until": "2026-11-03T13:01:20.804Z"
+      "amendment_count": 4,
+      "updated_at": "2026-11-03T01:12:49.937Z",
+      "lease_until": "2026-11-03T13:12:49.937Z"
     },
     {
       "id": "rtxforge-beta17-overlay-release-20261102",
