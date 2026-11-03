@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T04:38:32.223Z",
+  "updated_at": "2026-11-03T04:40:34.802Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -27403,8 +27403,74 @@
           }
         ]
       },
-      "updated_at": "2026-11-03T04:38:32.223Z",
-      "lease_until": "2026-11-03T16:38:32.223Z"
+      "updated_at": "2026-11-03T04:40:34.802Z",
+      "lease_until": "2026-11-03T16:38:32.223Z",
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "feeder-live-api-review-20261103-0440",
+          "assignment": "rtxforge-feeder-live-settings-20261103",
+          "owner": "01a19f3c-d7fc-741c-b428-b08321dc601e",
+          "branch": "rtxforge/feeder-live-settings-20261103",
+          "source_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57",
+          "objective_digest": "497ca6dd19a423eb7d95afca7e26a66372b2f42ccbb4052b76a11daafb5a461a",
+          "scope_digest": "218cc5e348003ca4bea33e2191d19afa8da3ad3bfd54bcc79bb0529578b9617f",
+          "step_id": "verify-consumer-runtime-api",
+          "specialist": {
+            "role": "qa",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57",
+            "objective_digest": "497ca6dd19a423eb7d95afca7e26a66372b2f42ccbb4052b76a11daafb5a461a",
+            "step_id": "verify-consumer-runtime-api",
+            "label": "Verify Feeder runtime API",
+            "role": "qa",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "9bab3c93b85849f3b9e058fba8d3cfa76b630d80496afe2f410224b2b058549c"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-03T04:40:34.802Z",
+          "request_digest": "2ab3034e8906cdf438e1855c4fa7931d2ad3ce90a31a0fdeae7b3ff561a821d1",
+          "step_digest": "8f682a38cc8435833e43f54f12d4373181db5e3d19c61e8fc39447b03cbbb71d"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "rtxforge-feeder-live-settings-20261103",
+        "revision": "f46db3edf30a49e3dae74d7ccd0bcc904cfaf4c8f1d54739e1029248a7c26b98",
+        "objective_digest": "497ca6dd19a423eb7d95afca7e26a66372b2f42ccbb4052b76a11daafb5a461a",
+        "publisher": {
+          "owner": "01a19f3c-d7fc-741c-b428-b08321dc601e",
+          "branch": "rtxforge/feeder-live-settings-20261103"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "verify-consumer-runtime-api",
+            "label": "Verify Feeder runtime API",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "rtxforge-feeder-live-settings-20261103",
+        "revision": "f46db3edf30a49e3dae74d7ccd0bcc904cfaf4c8f1d54739e1029248a7c26b98",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
