@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T06:49:49.294Z",
+  "updated_at": "2026-11-03T06:57:26.658Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8471,7 +8471,7 @@
       "supporting_staff": [
         "roman"
       ],
-      "state": "claimed",
+      "state": "superseded",
       "created_at": "2026-11-02T20:22:57.058Z",
       "objective_history": {
         "baseline": {
@@ -8592,10 +8592,23 @@
           }
         }
       ],
-      "updated_at": "2026-11-03T01:12:49.937Z",
+      "updated_at": "2026-11-03T06:57:26.658Z",
       "supporting_roles": [
         "verifier"
-      ]
+      ],
+      "retirement": {
+        "at": "2026-11-03T06:57:26.658Z",
+        "intent": {
+          "operation_id": "rtxforge-beta1-transfer-1cf8a99",
+          "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "disposition": "superseded",
+          "reason": "All Game Mode source work is preserved in the combined 1.5 Beta 1 successor. Consolidate release ownership so the exact combined build can enter CI.",
+          "evidence": "PR #144 and local integration commit 1cf8a99fcd144b910fca3cbd0c506764e3c85adb preserve the original branch and all successor changes. No branch or review is deleted.",
+          "superseded_by": "rtxforge-beta17-overlay-release-20261102",
+          "branch": "rtxforge/game-mode-performance-20261102",
+          "head_sha": "bd93d3a77855132100594c8bf8696d58aff35735"
+        }
+      }
     },
     {
       "id": "rtxforge-auto-update-media-receipts-20261103",
@@ -27290,7 +27303,7 @@
         "roman"
       ],
       "base_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57",
-      "state": "active",
+      "state": "superseded",
       "created_at": "2026-11-03T01:01:20.804Z",
       "objective_history": {
         "baseline": {
@@ -27319,7 +27332,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-03T06:49:49.294Z",
+      "updated_at": "2026-11-03T06:57:26.658Z",
       "lease_until": "2026-11-03T18:49:49.294Z",
       "amendments": [
         {
@@ -27568,6 +27581,19 @@
             "artifacts": []
           }
         ]
+      },
+      "retirement": {
+        "at": "2026-11-03T06:57:26.658Z",
+        "intent": {
+          "operation_id": "rtxforge-beta1-transfer-1cf8a99",
+          "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "disposition": "superseded",
+          "reason": "All Game Mode source work is preserved in the combined 1.5 Beta 1 successor. Consolidate release ownership so the exact combined build can enter CI.",
+          "evidence": "PR #144 and local integration commit 1cf8a99fcd144b910fca3cbd0c506764e3c85adb preserve the original branch and all successor changes. No branch or review is deleted.",
+          "superseded_by": "rtxforge-beta17-overlay-release-20261102",
+          "branch": "rtxforge/game-mode-performance-20261102",
+          "head_sha": "bd93d3a77855132100594c8bf8696d58aff35735"
+        }
       }
     }
   ]
