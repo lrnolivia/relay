@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T01:30:48.923Z",
+  "updated_at": "2026-11-03T01:42:37.646Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26988,7 +26988,8 @@
         "gui/rtxforge_gtk.py",
         "gui/game_mode_appearance.py",
         "windows/engine-host/overlay_packages.py",
-        "windows/engine-host/global_controls.py"
+        "windows/engine-host/global_controls.py",
+        "gui/native_game_mode_appearance.py"
       ],
       "resources": [
         "rtxforge-public-beta-publication",
@@ -26997,7 +26998,7 @@
       ],
       "goal": "Publish the approved adaptive glass overlay and current reviewed native Game Mode in the public Beta updater release.",
       "acceptance": "Publish rtxForge1.5 Beta1 (1.5.0-beta.1) after Game Mode performance/polish fixes merge and exact-source checks pass. Preserve Beta16 rollback, settings, original backups and old-to-new updater behavior. Windows and Linux Desktop settings order: Appearance, Library, Game Mode, Graphics, Overlay, System, Recovery, About. Reorganize Overlay/Game Mode settings around current features; replace broken Appearance handoff with real shared native Game Mode options and lightweight live miniature. Compact Saved feedback. Overlay Status lists installed-overlay games, installed/current provenance and last update with Update all/Close, explicit unknowns. Full overlay preview opens larger/centered/draggable with icon; approved internal preview interface remains unchanged. Native Game Mode worker owns matching native UI and bridge. No new gameplay qualification claim.",
-      "next_action": "Implement read-only exact-provenance Overlay Status and record successful reviewed overlay update timestamps in app state. Complete shared Appearance/miniatures and Desktop/GTK organization; preserve preview UI. Native Game Mode worker implements matching bridge/UI.",
+      "next_action": "Complete Windows/GTK settings and live native Game Mode appearance miniatures; keep GUI adapter name distinct from shared preferences helper. Preserve preview UI and coordinate exact native Game Mode fixes before publication.",
       "category": "release",
       "supporting_roles": [
         "frontend"
@@ -27034,8 +27035,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-03T01:30:48.923Z",
-      "lease_until": "2026-11-03T13:30:48.923Z",
+      "updated_at": "2026-11-03T01:42:37.646Z",
+      "lease_until": "2026-11-03T13:42:37.646Z",
       "amendment_count": 1,
       "amendments": [
         {
