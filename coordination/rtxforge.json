@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T01:50:16.797Z",
+  "updated_at": "2026-11-03T01:53:12.285Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26862,7 +26862,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-03T01:28:09.220Z",
+      "updated_at": "2026-11-03T01:53:12.285Z",
       "lease_until": "2026-11-03T13:28:09.220Z",
       "amendments": [
         {
@@ -26955,7 +26955,73 @@
           }
         }
       ],
-      "amendment_count": 4
+      "amendment_count": 4,
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "rtxforge",
+          "operation_id": "native-appearance-tools-review-9164ef6",
+          "assignment": "rtxforge-native-game-mode-performance-20261102",
+          "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "branch": "rtxforge/game-mode-performance-20261102",
+          "source_sha": "9164ef6bf740df639e681ff15823e0d9dd4d532d",
+          "objective_digest": "a033160c65c66c8cf84ef3878089bc872e4a763c4aee3b19784f5a5ce800949c",
+          "scope_digest": "7b9b4569c6513814629e7021508e272f8c4da0fce3b1481751a1e762bca6752c",
+          "step_id": "appearance-tools-review",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "9164ef6bf740df639e681ff15823e0d9dd4d532d",
+            "objective_digest": "a033160c65c66c8cf84ef3878089bc872e4a763c4aee3b19784f5a5ce800949c",
+            "step_id": "appearance-tools-review",
+            "label": "Review appearance persistence and unified tools",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "314b6a5cfa5fe743ced9925bee337fc974eba66925b65c3a9f4714fe77cfb2bb"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-03T01:53:12.285Z",
+          "request_digest": "9c99473aa0cbf3c39ef5d2ff553fb75332eddbf48a159e0f22b3c31f87372828",
+          "step_digest": "1c6be6879d49fcb756a3269214a3d12d08cde75885efc3305d2ffddea1a56d71"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "rtxforge-native-game-mode-performance-20261102",
+        "revision": "5c5dd3129d4d372a5551546031b47f938794e2b8c11536bc5dc2e979a9ba0a43",
+        "objective_digest": "a033160c65c66c8cf84ef3878089bc872e4a763c4aee3b19784f5a5ce800949c",
+        "publisher": {
+          "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
+          "branch": "rtxforge/game-mode-performance-20261102"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "appearance-tools-review",
+            "label": "Review appearance persistence and unified tools",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "rtxforge-native-game-mode-performance-20261102",
+        "revision": "5c5dd3129d4d372a5551546031b47f938794e2b8c11536bc5dc2e979a9ba0a43",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     },
     {
       "id": "rtxforge-beta17-overlay-release-20261102",
