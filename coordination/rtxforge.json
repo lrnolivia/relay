@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T04:37:53.810Z",
+  "updated_at": "2026-11-03T04:38:32.223Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -27359,6 +27359,52 @@
         "identities": {},
         "items": []
       }
+    },
+    {
+      "id": "rtxforge-feeder-live-settings-20261103",
+      "owner": "01a19f3c-d7fc-741c-b428-b08321dc601e",
+      "branch": "rtxforge/feeder-live-settings-20261103",
+      "paths": [
+        "windows/feeder-panel/",
+        "tests/test_feeder_live_settings.py"
+      ],
+      "resources": [
+        "rtxforge-feeder-live-settings"
+      ],
+      "goal": "Repair shared Feeder NR panel runtime settings with truthful applied acknowledgment and preserve OptiScaler behavior.",
+      "acceptance": "Verify exact pinned consumer provenance and distinguish saved configuration from renderer-applied values. Implement a safe supported runtime bridge only if the consumer supports or can safely expose an acknowledged API; do not claim live support from config writes alone. Cover capability negotiation, bounds, applied revisions, failed or missing acknowledgment, and existing configuration preservation with tests. Preserve OptiScaler, avoid PR143 build/release paths, and keep all work isolated off Lauren's PC and Gears session. No merge, deployment, provider pin change, or release. If exact consumer source or runtime ABI blocks a working fix, document the precise blocker and deliver reviewable evidence rather than inventing compatibility or performance claims.",
+      "next_action": "Create the isolated cloud checkout after admission and preflight. Inspect the shared Feeder adapter and pinned rc10 consumer export/provenance evidence, then implement only a safe consumer-acknowledged bridge if feasible. Return reviewable code/tests or the exact consumer API blocker; never set liveTuning true without applied acknowledgment.",
+      "category": "implementation",
+      "primary_role": "backend",
+      "supporting_roles": [
+        "qa"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [
+        "roman"
+      ],
+      "base_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57",
+      "state": "active",
+      "created_at": "2026-11-03T04:38:32.223Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Repair shared Feeder NR panel runtime settings with truthful applied acknowledgment and preserve OptiScaler behavior.",
+          "acceptance": "Verify exact pinned consumer provenance and distinguish saved configuration from renderer-applied values. Implement a safe supported runtime bridge only if the consumer supports or can safely expose an acknowledged API; do not claim live support from config writes alone. Cover capability negotiation, bounds, applied revisions, failed or missing acknowledgment, and existing configuration preservation with tests. Preserve OptiScaler, avoid PR143 build/release paths, and keep all work isolated off Lauren's PC and Gears session. No merge, deployment, provider pin change, or release. If exact consumer source or runtime ABI blocks a working fix, document the precise blocker and deliver reviewable evidence rather than inventing compatibility or performance claims.",
+          "at": "2026-11-03T04:38:32.223Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-feeder-live-settings-20261103:acceptance:0",
+            "text": "Verify exact pinned consumer provenance and distinguish saved configuration from renderer-applied values. Implement a safe supported runtime bridge only if the consumer supports or can safely expose an acknowledged API; do not claim live support from config writes alone. Cover capability negotiation, bounds, applied revisions, failed or missing acknowledgment, and existing configuration preservation with tests. Preserve OptiScaler, avoid PR143 build/release paths, and keep all work isolated off Lauren's PC and Gears session. No merge, deployment, provider pin change, or release. If exact consumer source or runtime ABI blocks a working fix, document the precise blocker and deliver reviewable evidence rather than inventing compatibility or performance claims.",
+            "at": "2026-11-03T04:38:32.223Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-03T04:38:32.223Z",
+      "lease_until": "2026-11-03T16:38:32.223Z"
     }
   ]
 }
