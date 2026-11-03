@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T01:28:09.220Z",
+  "updated_at": "2026-11-03T01:30:48.923Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26805,119 +26805,6 @@
       ]
     },
     {
-      "id": "rtxforge-beta17-overlay-release-20261102",
-      "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
-      "branch": "rtxforge/beta17-overlay-release-20261102",
-      "paths": [
-        "VERSION",
-        "docs/releases/1.0-beta.md",
-        "providers/glass-overlay/rollout-policy.json",
-        "packaging/beta_release.py",
-        ".github/workflows/windows-build.yml",
-        ".github/workflows/linux-build.yml",
-        "tests/test_beta_release_workflows.py",
-        "tests/test_app_update.py",
-        "windows/tests/test_app_update.py",
-        "docs/linux/BETA-RELEASE.md",
-        "prototypes/overlay-rmlui/Prototype.cpp",
-        "windows/overlay-rmlui/CMakeLists.txt",
-        "prototypes/overlay-rmlui/CMakeLists.txt",
-        "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
-        "windows/RtxForge.Windows/Controls/GameModeAppearanceView.cs",
-        "windows/RtxForge.Windows/Services/GameModeAppearance.cs",
-        "windows/RtxForge.Windows/Services/EngineForgeService.OverlayStatus.cs",
-        "windows/RtxForge.Windows/MainWindow.OverlayStatus.cs",
-        "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
-        "scripts/overlay_status.py",
-        "scripts/game_mode_appearance.py",
-        "tests/test_overlay_status.py",
-        "tests/test_game_mode_appearance.py",
-        "gui/rtxforge_gtk.py",
-        "gui/game_mode_appearance.py"
-      ],
-      "resources": [
-        "rtxforge-public-beta-publication",
-        "rtxforge-overlay-preview-window",
-        "rtxforge-desktop-overlay-gamemode-settings"
-      ],
-      "goal": "Publish the approved adaptive glass overlay and current reviewed native Game Mode in the public Beta updater release.",
-      "acceptance": "Publish rtxForge1.5 Beta1 (1.5.0-beta.1) after Game Mode performance/polish fixes merge and exact-source checks pass. Preserve Beta16 rollback, settings, original backups and old-to-new updater behavior. Windows and Linux Desktop settings order: Appearance, Library, Game Mode, Graphics, Overlay, System, Recovery, About. Reorganize Overlay/Game Mode settings around current features; replace broken Appearance handoff with real shared native Game Mode options and lightweight live miniature. Compact Saved feedback. Overlay Status lists installed-overlay games, installed/current provenance and last update with Update all/Close, explicit unknowns. Full overlay preview opens larger/centered/draggable with icon; approved internal preview interface remains unchanged. Native Game Mode worker owns matching native UI and bridge. No new gameplay qualification claim.",
-      "next_action": "Prepare isolated read-only layout assessment; implement shared Appearance/status helpers and Desktop parity after preflight. Publication held for combined review and performance fixes.",
-      "category": "release",
-      "primary_team": "release",
-      "supporting_teams": [
-        "inspector"
-      ],
-      "primary_staff": "roman",
-      "supporting_staff": [
-        "nico"
-      ],
-      "base_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57",
-      "state": "active",
-      "created_at": "2026-11-03T00:56:37.694Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Publish the approved adaptive glass overlay and current reviewed native Game Mode in the public Beta updater release.",
-          "acceptance": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
-          "at": "2026-11-03T00:56:37.694Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-beta17-overlay-release-20261102:acceptance:0",
-            "text": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
-            "at": "2026-11-03T00:56:37.694Z"
-          },
-          {
-            "id": "rtxforge-beta17-overlay-release-20261102:acceptance:1",
-            "text": "Publish rtxForge1.5 Beta1 (1.5.0-beta.1) after Game Mode performance/polish fixes merge and exact-source checks pass. Preserve Beta16 rollback, settings, original backups and old-to-new updater behavior. Windows and Linux Desktop settings order: Appearance, Library, Game Mode, Graphics, Overlay, System, Recovery, About. Reorganize Overlay/Game Mode settings around current features; replace broken Appearance handoff with real shared native Game Mode options and lightweight live miniature. Compact Saved feedback. Overlay Status lists installed-overlay games, installed/current provenance and last update with Update all/Close, explicit unknowns. Full overlay preview opens larger/centered/draggable with icon; approved internal preview interface remains unchanged. Native Game Mode worker owns matching native UI and bridge. No new gameplay qualification claim.",
-            "at": "2026-11-03T01:22:20.881Z",
-            "reason": "Direct user expanded release and coordinated target to1.5 Beta1; preserve same assignment and PR143."
-          }
-        ]
-      },
-      "updated_at": "2026-11-03T01:22:20.881Z",
-      "lease_until": "2026-11-03T13:22:20.881Z",
-      "supporting_roles": [
-        "frontend"
-      ],
-      "amendment_count": 1,
-      "amendments": [
-        {
-          "at": "2026-11-03T01:22:20.881Z",
-          "by": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
-          "reason": "Direct user expanded release and coordinated target to1.5 Beta1; preserve same assignment and PR143.",
-          "fields": [
-            "acceptance",
-            "next_action",
-            "supporting_roles",
-            "supporting_staff",
-            "supporting_teams"
-          ],
-          "before": {
-            "acceptance": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
-            "next_action": "User expanded release: reorganize Overlay/Game Mode settings and tab order on Windows+Linux Desktop; inline native Game Mode appearance with lightweight live miniature; compact Saved status; shared read-only Overlay Status inventory with exact versions/timestamps and Update all/Close. Preserve approved preview UI. Native Game Mode worker implements matching UI/bridge. Publication held for combined review/performance fixes.",
-            "supporting_roles": null,
-            "supporting_staff": [],
-            "supporting_teams": []
-          },
-          "after": {
-            "acceptance": "Publish rtxForge1.5 Beta1 (1.5.0-beta.1) after Game Mode performance/polish fixes merge and exact-source checks pass. Preserve Beta16 rollback, settings, original backups and old-to-new updater behavior. Windows and Linux Desktop settings order: Appearance, Library, Game Mode, Graphics, Overlay, System, Recovery, About. Reorganize Overlay/Game Mode settings around current features; replace broken Appearance handoff with real shared native Game Mode options and lightweight live miniature. Compact Saved feedback. Overlay Status lists installed-overlay games, installed/current provenance and last update with Update all/Close, explicit unknowns. Full overlay preview opens larger/centered/draggable with icon; approved internal preview interface remains unchanged. Native Game Mode worker owns matching native UI and bridge. No new gameplay qualification claim.",
-            "next_action": "Prepare isolated read-only layout assessment; implement shared Appearance/status helpers and Desktop parity after preflight. Publication held for combined review and performance fixes.",
-            "supporting_roles": [
-              "frontend"
-            ],
-            "supporting_staff": [
-              "nico"
-            ],
-            "supporting_teams": [
-              "inspector"
-            ]
-          }
-        }
-      ]
-    },
-    {
       "id": "rtxforge-native-game-mode-performance-20261102",
       "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
       "branch": "rtxforge/game-mode-performance-20261102",
@@ -27069,6 +26956,121 @@
         }
       ],
       "amendment_count": 4
+    },
+    {
+      "id": "rtxforge-beta17-overlay-release-20261102",
+      "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
+      "branch": "rtxforge/beta17-overlay-release-20261102",
+      "paths": [
+        "VERSION",
+        "docs/releases/1.0-beta.md",
+        "providers/glass-overlay/rollout-policy.json",
+        "packaging/beta_release.py",
+        ".github/workflows/windows-build.yml",
+        ".github/workflows/linux-build.yml",
+        "tests/test_beta_release_workflows.py",
+        "tests/test_app_update.py",
+        "windows/tests/test_app_update.py",
+        "docs/linux/BETA-RELEASE.md",
+        "prototypes/overlay-rmlui/Prototype.cpp",
+        "windows/overlay-rmlui/CMakeLists.txt",
+        "prototypes/overlay-rmlui/CMakeLists.txt",
+        "windows/RtxForge.Windows/Controls/OverlayPreferencesView.cs",
+        "windows/RtxForge.Windows/Controls/GameModeAppearanceView.cs",
+        "windows/RtxForge.Windows/Services/GameModeAppearance.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.OverlayStatus.cs",
+        "windows/RtxForge.Windows/MainWindow.OverlayStatus.cs",
+        "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+        "scripts/overlay_status.py",
+        "scripts/game_mode_appearance.py",
+        "tests/test_overlay_status.py",
+        "tests/test_game_mode_appearance.py",
+        "gui/rtxforge_gtk.py",
+        "gui/game_mode_appearance.py",
+        "windows/engine-host/overlay_packages.py",
+        "windows/engine-host/global_controls.py"
+      ],
+      "resources": [
+        "rtxforge-public-beta-publication",
+        "rtxforge-overlay-preview-window",
+        "rtxforge-desktop-overlay-gamemode-settings"
+      ],
+      "goal": "Publish the approved adaptive glass overlay and current reviewed native Game Mode in the public Beta updater release.",
+      "acceptance": "Publish rtxForge1.5 Beta1 (1.5.0-beta.1) after Game Mode performance/polish fixes merge and exact-source checks pass. Preserve Beta16 rollback, settings, original backups and old-to-new updater behavior. Windows and Linux Desktop settings order: Appearance, Library, Game Mode, Graphics, Overlay, System, Recovery, About. Reorganize Overlay/Game Mode settings around current features; replace broken Appearance handoff with real shared native Game Mode options and lightweight live miniature. Compact Saved feedback. Overlay Status lists installed-overlay games, installed/current provenance and last update with Update all/Close, explicit unknowns. Full overlay preview opens larger/centered/draggable with icon; approved internal preview interface remains unchanged. Native Game Mode worker owns matching native UI and bridge. No new gameplay qualification claim.",
+      "next_action": "Implement read-only exact-provenance Overlay Status and record successful reviewed overlay update timestamps in app state. Complete shared Appearance/miniatures and Desktop/GTK organization; preserve preview UI. Native Game Mode worker implements matching bridge/UI.",
+      "category": "release",
+      "supporting_roles": [
+        "frontend"
+      ],
+      "primary_team": "release",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "roman",
+      "supporting_staff": [
+        "nico"
+      ],
+      "base_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57",
+      "state": "active",
+      "created_at": "2026-11-03T00:56:37.694Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish the approved adaptive glass overlay and current reviewed native Game Mode in the public Beta updater release.",
+          "acceptance": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
+          "at": "2026-11-03T00:56:37.694Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta17-overlay-release-20261102:acceptance:0",
+            "text": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
+            "at": "2026-11-03T00:56:37.694Z"
+          },
+          {
+            "id": "rtxforge-beta17-overlay-release-20261102:acceptance:1",
+            "text": "Publish rtxForge1.5 Beta1 (1.5.0-beta.1) after Game Mode performance/polish fixes merge and exact-source checks pass. Preserve Beta16 rollback, settings, original backups and old-to-new updater behavior. Windows and Linux Desktop settings order: Appearance, Library, Game Mode, Graphics, Overlay, System, Recovery, About. Reorganize Overlay/Game Mode settings around current features; replace broken Appearance handoff with real shared native Game Mode options and lightweight live miniature. Compact Saved feedback. Overlay Status lists installed-overlay games, installed/current provenance and last update with Update all/Close, explicit unknowns. Full overlay preview opens larger/centered/draggable with icon; approved internal preview interface remains unchanged. Native Game Mode worker owns matching native UI and bridge. No new gameplay qualification claim.",
+            "at": "2026-11-03T01:22:20.881Z",
+            "reason": "Direct user expanded release and coordinated target to1.5 Beta1; preserve same assignment and PR143."
+          }
+        ]
+      },
+      "updated_at": "2026-11-03T01:30:48.923Z",
+      "lease_until": "2026-11-03T13:30:48.923Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-03T01:22:20.881Z",
+          "by": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
+          "reason": "Direct user expanded release and coordinated target to1.5 Beta1; preserve same assignment and PR143.",
+          "fields": [
+            "acceptance",
+            "next_action",
+            "supporting_roles",
+            "supporting_staff",
+            "supporting_teams"
+          ],
+          "before": {
+            "acceptance": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
+            "next_action": "User expanded release: reorganize Overlay/Game Mode settings and tab order on Windows+Linux Desktop; inline native Game Mode appearance with lightweight live miniature; compact Saved status; shared read-only Overlay Status inventory with exact versions/timestamps and Update all/Close. Preserve approved preview UI. Native Game Mode worker implements matching UI/bridge. Publication held for combined review/performance fixes.",
+            "supporting_roles": null,
+            "supporting_staff": [],
+            "supporting_teams": []
+          },
+          "after": {
+            "acceptance": "Publish rtxForge1.5 Beta1 (1.5.0-beta.1) after Game Mode performance/polish fixes merge and exact-source checks pass. Preserve Beta16 rollback, settings, original backups and old-to-new updater behavior. Windows and Linux Desktop settings order: Appearance, Library, Game Mode, Graphics, Overlay, System, Recovery, About. Reorganize Overlay/Game Mode settings around current features; replace broken Appearance handoff with real shared native Game Mode options and lightweight live miniature. Compact Saved feedback. Overlay Status lists installed-overlay games, installed/current provenance and last update with Update all/Close, explicit unknowns. Full overlay preview opens larger/centered/draggable with icon; approved internal preview interface remains unchanged. Native Game Mode worker owns matching native UI and bridge. No new gameplay qualification claim.",
+            "next_action": "Prepare isolated read-only layout assessment; implement shared Appearance/status helpers and Desktop parity after preflight. Publication held for combined review and performance fixes.",
+            "supporting_roles": [
+              "frontend"
+            ],
+            "supporting_staff": [
+              "nico"
+            ],
+            "supporting_teams": [
+              "inspector"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
