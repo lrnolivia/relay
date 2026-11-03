@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T01:15:55.545Z",
+  "updated_at": "2026-11-03T01:20:36.364Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26934,7 +26934,6 @@
       "owner": "01a19a65-3f13-7703-bcf7-077145942958",
       "branch": "rtxforge/library-names-mass-effect-20261101",
       "paths": [
-        "windows/engine-host/win_features.py",
         "windows/RtxForge.Windows/MainWindow.Library.cs",
         "windows/RtxForge.Windows/Views/LibraryPage.xaml.cs",
         "windows/RtxForge.Windows/GameMode/GameModeView.LibraryManagement.cs",
@@ -26955,7 +26954,7 @@
       ],
       "goal": "Add persistent library game renaming, identify the three Mass Effect Legendary Edition games, select individual artwork and create direct-launch Steam shortcuts on Lauren's PC.",
       "acceptance": "Library rename UI persists per installation across rescan; Mass Effect 1/2/3 show Mass Effect # (LE), individual selected artwork; three separate Steam shortcuts point at verified installed game executables and bypass the LE launcher. Preserve Steam records, existing artwork and recovery backups.\n2026-11-02 user additions: import current Steam artwork for each trilogy shortcut without writing Steam images or leaving pending writebacks. Each campaign uses its own game description/developer/genres and original-release information, with Legendary Edition identified separately. Keep collection appid1328670 solely for launch/install identity; metadata IDs17460/24980/1238020 and shortcut-art IDs are separate. Preserve other games/settings/artwork. Steam Prime metadata should make the same distinction on desktop and Game Mode.",
-      "next_action": "Finish private Linux handoff of reviewed Steam Prime/SteamGridDB modules and rtxForge source patch, with checksums and native integration notes. PR139 at b0014c56 has all executed CI checks successful and 13 focused tests passing. Preserve pending Linux native/controller validation, final native filter padding confirmation, Downloads/Store visual checks, and ME2/ME3 launch validation; do not merge or release. The temporary GamePage.xaml.cs reservation is restored after Lauren requested Testing-last immediately: narrow PR142 merged to mainf7388b6102ade554d5fc4992a715ba9b0fa9da57, exact source15c496e. Desktop Testing now follows facts/folder/executable, matching Game Mode. Your held PR139 headb0014c56 and GamePage hash edf297ce69b195b150c13a66fae68721fbca3e9371340faa83ed14d0f6f76f87 are untouched. Incorporate main and preserve Testing-last when this held work resumes; no new merge/release authority for PR139.\n2026-11-02 temporary reservation release: GamePage.xaml.cs and GamePage.xaml released only for the authorized 1.5 Beta1 Desktop ReShade/RenoDX label/layout parity work coordinated by thread01a19a57-0f09-7cf3-9694-8c85476698f0. No writers from this task remain on these files. Held PR139/headb0014c56 and clean isolated worktree are untouched; both exact files independently backed up with SHA256 manifest at G:/BuildScratch/rtxforge-library-names/reservation-release-20261102/. All other paths/resources remain reserved. Work from current main, retain Testing-last from PR142, and return the two reservations after release-fix merge. PR139 remains held and unmerged; no publication authority added.",
+      "next_action": "PR139 remains held/unmerged at b0014c56f3346ab41e66aeb65ae8734a06bfb4af; isolated worktree clean and committed. Preserve its library naming, current Steam artwork and individual campaign metadata. Linux handoff ZIP is on G:/, ready Relay transfer tr_649dd1eec7504c711c054de1e60c3583; Adwaita update queued separately. Actual native/controller acceptance and ME2/ME3 launches remain open.\nGamePage.xaml.cs and GamePage.xaml remain temporarily released for 1.5 Beta1 Desktop ReShade/RenoDX parity (coordinator01a19a57-0f09-7cf3-9694-8c85476698f0). Preserve Testing-last from merged PR142/mainf7388b6; backups at G:/BuildScratch/rtxforge-library-names/reservation-release-20261102/.\n2026-11-02 serial edit window: windows/engine-host/win_features.py reservation released only for Overlay Status read-only handler registration coordinated by thread01a19a5a-af52-7ea2-9412-eb2f1f541ed5, pending release PR143. This task has no active writer on that file. Exact committed file SHA256048b89c4b0318ab8bf9a91181708b3b23c1ab314f0fd59b636f8a7058e08380a independently preserved at G:/BuildScratch/rtxforge-library-names/overlay-status-reservation-release-20261102/win_features.py with manifest. Work from current main; register overlay_status against the new scripts/overlay_status.py snapshot API after its owner defines it. Retain current-main handlers and do not import the held PR139 wholesale or edit Models.cs under this window. Return this single reservation after the coordinated fix is committed/merged. All remaining paths/resources stay reserved; no PR139 merge/publication authority added.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -26985,8 +26984,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-03T01:15:55.545Z",
-      "lease_until": "2026-11-03T13:15:55.545Z",
+      "updated_at": "2026-11-03T01:20:36.364Z",
+      "lease_until": "2026-11-03T13:20:36.364Z",
       "amendment_count": 1,
       "amendments": [
         {
