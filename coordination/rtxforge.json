@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T01:01:20.804Z",
+  "updated_at": "2026-11-03T01:02:25.086Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -26785,47 +26785,6 @@
       ]
     },
     {
-      "id": "rtxforge-beta17-overlay-release-20261102",
-      "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
-      "branch": "rtxforge/beta17-overlay-release-20261102",
-      "paths": [
-        "VERSION",
-        "docs/releases/1.0-beta.md",
-        "providers/glass-overlay/rollout-policy.json"
-      ],
-      "resources": [
-        "rtxforge-public-beta-publication"
-      ],
-      "goal": "Publish the approved adaptive glass overlay and current reviewed native Game Mode in the public Beta updater release.",
-      "acceptance": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
-      "next_action": "Prepare isolated version/release metadata changes from reviewed main f7388b6, validate and merge before explicit Windows/Linux beta publication.",
-      "category": "release",
-      "primary_team": "release",
-      "supporting_teams": [],
-      "primary_staff": "roman",
-      "supporting_staff": [],
-      "base_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57",
-      "state": "active",
-      "created_at": "2026-11-03T00:56:37.694Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Publish the approved adaptive glass overlay and current reviewed native Game Mode in the public Beta updater release.",
-          "acceptance": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
-          "at": "2026-11-03T00:56:37.694Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-beta17-overlay-release-20261102:acceptance:0",
-            "text": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
-            "at": "2026-11-03T00:56:37.694Z"
-          }
-        ]
-      },
-      "updated_at": "2026-11-03T00:56:37.694Z",
-      "lease_until": "2026-11-03T12:56:37.694Z"
-    },
-    {
       "id": "rtxforge-native-game-mode-performance-20261102",
       "owner": "01a19538-4244-7092-b9db-1b2c93a26118",
       "branch": "rtxforge/game-mode-performance-20261102",
@@ -26952,6 +26911,54 @@
       "amendment_count": 3,
       "updated_at": "2026-11-03T01:01:20.804Z",
       "lease_until": "2026-11-03T13:01:20.804Z"
+    },
+    {
+      "id": "rtxforge-beta17-overlay-release-20261102",
+      "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
+      "branch": "rtxforge/beta17-overlay-release-20261102",
+      "paths": [
+        "VERSION",
+        "docs/releases/1.0-beta.md",
+        "providers/glass-overlay/rollout-policy.json",
+        "packaging/beta_release.py",
+        ".github/workflows/windows-build.yml",
+        ".github/workflows/linux-build.yml",
+        "tests/test_beta_release_workflows.py",
+        "tests/test_app_update.py",
+        "windows/tests/test_app_update.py",
+        "docs/linux/BETA-RELEASE.md"
+      ],
+      "resources": [
+        "rtxforge-public-beta-publication"
+      ],
+      "goal": "Publish the approved adaptive glass overlay and current reviewed native Game Mode in the public Beta updater release.",
+      "acceptance": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
+      "next_action": "Lauren changed target via authorized Game Mode coordination to 1.5 Beta1; prepare 1.5.0-beta.1 with compatible asset ownership and semantic ordering, verify old-to-new updater behavior. Hold final publication for Game Mode performance pass and merged fixes.",
+      "category": "release",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "base_sha": "f7388b6102ade554d5fc4992a715ba9b0fa9da57",
+      "state": "active",
+      "created_at": "2026-11-03T00:56:37.694Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish the approved adaptive glass overlay and current reviewed native Game Mode in the public Beta updater release.",
+          "acceptance": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
+          "at": "2026-11-03T00:56:37.694Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta17-overlay-release-20261102:acceptance:0",
+            "text": "Beta17 has accurate release notes, required managed overlay refresh, green exact-source checks, verified Windows and Linux release assets and updater metadata, with prior public assets retained for rollback. Preserve settings and original backups; no new gameplay qualification claim.",
+            "at": "2026-11-03T00:56:37.694Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-03T01:02:25.086Z",
+      "lease_until": "2026-11-03T13:02:25.086Z"
     }
   ]
 }
