@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T04:45:49.042Z",
+  "updated_at": "2026-11-03T04:48:02.890Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8637,7 +8637,7 @@
       "owner": "01a19f3c-d7fc-741c-b428-b08321dc601e",
       "goal": "Repair shared Feeder NR panel runtime settings with truthful applied acknowledgment and preserve OptiScaler behavior.",
       "acceptance": "Verify exact pinned consumer provenance and distinguish saved configuration from renderer-applied values. Implement a safe supported runtime bridge only if the consumer supports or can safely expose an acknowledged API; do not claim live support from config writes alone. Cover capability negotiation, bounds, applied revisions, failed or missing acknowledgment, and existing configuration preservation with tests. Preserve OptiScaler, avoid PR143 build/release paths, and keep all work isolated off Lauren's PC and Gears session. No merge, deployment, provider pin change, or release. If exact consumer source or runtime ABI blocks a working fix, document the precise blocker and deliver reviewable evidence rather than inventing compatibility or performance claims.",
-      "next_action": "Preserve the live-settings task while consumer-interface qualification proceeds read-only. Exact shipped rc10 ZIP/DLL hashes and source adapter were independently checked; both panel renderers only write configuration, and the DLL exports DESCRIPTION/NAME only. Obtain a supported apply/readback API for these bytes or qualify a reproducible licensed consumer build before fresh implementation admission. Retain unchanged branch rtxforge/feeder-live-settings-20261103 at f7388b6102ade554d5fc4992a715ba9b0fa9da57, source review artifact, 214 passing core tests and 39 passing Feeder tests. No PC/game, consumer replacement, PR143 packaging overlap, merge, or deploy authority added. Actual read-only reviewer completed without edits; Relay start receipt remains reconciliation-needed after provider errors, so no canonical acceptance claim. Do not reuse the retired branch or relaunch the completed review.",
+      "next_action": "Blocked on consumer provenance/interface, not branch capacity. Review package libfile_ffba3b4a3e988191ab8abc91dac4c515 contains exact hashes, PE exports, source analysis, safe API/test contract, capacity receipts and upstream qualification. Snapshot 9bb6c0f is MIT add-on source only; original import 3a6cfc6 does not resolve in the two checked repositories, release has no build receipt. Full RenoDX 43c067b7 has a plausible target/dependency structure but compatibility/build is unverified. Obtain exact rc10 full-checkout/dependency/toolchain provenance or explicitly qualify a new licensed candidate on an isolated Windows build/GPU environment before implementation or packaging changes. No suitable Windows environment available here without the prohibited PC. Both panel renderers remain persistence-only; no live fix or FPS guarantee. Preserve unchanged retired branch rtxforge/feeder-live-settings-20261103 at f7388b6 and complete original acceptance; fresh admission must use a new branch. Actual read-only QA completed with no edits; historical Relay start receipt was denied, so no canonical QA acceptance claim and no relaunch. No PC/game, merge, deploy, provider pin change or PR143 overlap.",
       "paths": [
         "windows/feeder-panel/",
         "tests/test_feeder_live_settings.py"
@@ -8672,7 +8672,25 @@
             "at": "2026-11-03T04:44:33.087Z"
           }
         ]
-      }
+      },
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-03T04:48:02.890Z",
+          "by": "01a19f3c-d7fc-741c-b428-b08321dc601e",
+          "reason": "Preserve completed source qualification findings and the final review artifact without reserving capacity or claiming a working fix.",
+          "fields": [
+            "next_action"
+          ],
+          "before": {
+            "next_action": "Preserve the live-settings task while consumer-interface qualification proceeds read-only. Exact shipped rc10 ZIP/DLL hashes and source adapter were independently checked; both panel renderers only write configuration, and the DLL exports DESCRIPTION/NAME only. Obtain a supported apply/readback API for these bytes or qualify a reproducible licensed consumer build before fresh implementation admission. Retain unchanged branch rtxforge/feeder-live-settings-20261103 at f7388b6102ade554d5fc4992a715ba9b0fa9da57, source review artifact, 214 passing core tests and 39 passing Feeder tests. No PC/game, consumer replacement, PR143 packaging overlap, merge, or deploy authority added. Actual read-only reviewer completed without edits; Relay start receipt remains reconciliation-needed after provider errors, so no canonical acceptance claim. Do not reuse the retired branch or relaunch the completed review."
+          },
+          "after": {
+            "next_action": "Blocked on consumer provenance/interface, not branch capacity. Review package libfile_ffba3b4a3e988191ab8abc91dac4c515 contains exact hashes, PE exports, source analysis, safe API/test contract, capacity receipts and upstream qualification. Snapshot 9bb6c0f is MIT add-on source only; original import 3a6cfc6 does not resolve in the two checked repositories, release has no build receipt. Full RenoDX 43c067b7 has a plausible target/dependency structure but compatibility/build is unverified. Obtain exact rc10 full-checkout/dependency/toolchain provenance or explicitly qualify a new licensed candidate on an isolated Windows build/GPU environment before implementation or packaging changes. No suitable Windows environment available here without the prohibited PC. Both panel renderers remain persistence-only; no live fix or FPS guarantee. Preserve unchanged retired branch rtxforge/feeder-live-settings-20261103 at f7388b6 and complete original acceptance; fresh admission must use a new branch. Actual read-only QA completed with no edits; historical Relay start receipt was denied, so no canonical QA acceptance claim and no relaunch. No PC/game, merge, deploy, provider pin change or PR143 overlap."
+          }
+        }
+      ],
+      "updated_at": "2026-11-03T04:48:02.890Z"
     }
   ],
   "claims": [
