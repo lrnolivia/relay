@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-04T22:46:31.741Z",
+  "updated_at": "2026-11-04T23:12:48.058Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8689,7 +8689,7 @@
       "supporting_staff": [
         "roman"
       ],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-11-03T04:44:33.087Z",
       "objective_history": {
         "baseline": {
@@ -8815,7 +8815,7 @@
           }
         }
       ],
-      "updated_at": "2026-11-04T06:17:13.653Z",
+      "updated_at": "2026-11-04T23:12:48.058Z",
       "handoffs": [
         {
           "at": "2026-11-04T06:17:13.653Z",
@@ -8823,7 +8823,8 @@
           "to": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
           "next_action": "Manual handoff: Lauren handed this queued assignment to Claude Code session b7c4523c in chat on 2026-11-04 (\"please pick up the existing Relay assignment rtxforge-feeder-runtime-bridge-queued-20261103\"). Successor will claim on fresh branch rtxforge/overlay-functionality-20261104 from main 7f26b9c (PR143 merged). Retired branch rtxforge/feeder-live-settings-20261103 at f7388b6 stays untouched."
         }
-      ]
+      ],
+      "completed_at": "2026-11-04T23:12:48.058Z"
     }
   ],
   "claims": [
@@ -27846,7 +27847,7 @@
         "roman"
       ],
       "base_sha": "7f26b9c34972f01908f0b497ff910c2fa718a46a",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-04T06:17:40.567Z",
       "objective_history": {
         "baseline": {
@@ -27875,8 +27876,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-04T22:46:31.741Z",
-      "lease_until": "2026-11-05T10:46:31.741Z",
+      "updated_at": "2026-11-04T23:12:48.058Z",
+      "lease_until": "2026-11-05T11:12:48.058Z",
       "amendments": [
         {
           "at": "2026-11-03T04:48:02.890Z",
@@ -27981,7 +27982,13 @@
           "to": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
           "next_action": "Manual handoff: Lauren handed this queued assignment to Claude Code session b7c4523c in chat on 2026-11-04 (\"please pick up the existing Relay assignment rtxforge-feeder-runtime-bridge-queued-20261103\"). Successor will claim on fresh branch rtxforge/overlay-functionality-20261104 from main 7f26b9c (PR143 merged). Retired branch rtxforge/feeder-live-settings-20261103 at f7388b6 stays untouched."
         }
-      ]
+      ],
+      "pr": 145,
+      "merged_head_sha": "574bbc30e4bfcf74777ac42f4d9ce8b7227ca784",
+      "merge_commit_sha": "c1399f40fd1c3f46e51d7fee3a8a10a1065bc9fe",
+      "evidence": "PR 145 merged by lrnolivia as c1399f4 (head 574bbc3, all CI green), on Lauren's explicit instruction 2026-11-04. Shipped: rtxForge-built RenoDX DLSS5 8.5.0-rc10 with live settings interface (release renodx-dlss5-8.5.0-rc10-rtxforge-1, zip 55e62b76, addon 1e482363), pinned for Feeder installs with rc10 kept in previous_assets; rtxForge's download path verified to fetch it. Fixes: panel pass ceiling (Feeder 4), NR toggle readback guard, ReShade edit acknowledgments, PR143 pointer regression, effects page and Effects section (no longer covers HDR), welcome toast alignment, 0.33 resolution floor, restart label. Matrix and proposal in docs/overlay/. Lauren-run ME1 test (RTX 4070, driver 32.0.16.2101): pointer, NR toggle (15-85 ms), 4 passes loaded, and with the rtxForge RenoDX build strength 1.70->1.40, passes 1->2, resolution 0.70->0.50 applied live with RenoDX readback and NR engaged. Not tested in game: effect acks, new effects page, toast, other layouts, OptiScaler regression run. Local 181 scoped tests passed; core hardening runs in Linux CI. ME1 still holds test files (backup at Repos/rtxForge-overlay-functionality-test/me1-backup-20261104).",
+      "work_accounted": true,
+      "completed_at": "2026-11-04T23:12:48.058Z"
     }
   ]
 }
