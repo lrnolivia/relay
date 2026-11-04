@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-04T06:29:05.259Z",
+  "updated_at": "2026-11-04T21:31:44.040Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -27825,7 +27825,7 @@
       ],
       "goal": "Complete an overlay functionality pass across providers and both UIs, with truthful live/restart states and verified runtime application.",
       "acceptance": "Deliver a comprehensive provider/control/surface matrix and a reviewable, tested overlay functionality patch after manual handoff, Relay admission and reconciliation with active owners. Cover OptiScaler and variants; Feeder NR/ReShade; Vulkan NR/MFG; Universal MFG vs RenoDX MFG; RenoDX HDR; generic ReShade effects/add-ons; unknown/custom packages; Windows and Linux/Proton helpers; Desktop/Game Mode entry points; ImGui fallback and glass/RmlUI layouts with explicit unavailable entries.\n\nClassify each control as renderer-applied live, accepted but unverified, next-launch/restart, unsupported or unavailable; separate source evidence, exact-build tests and gameplay proof. Inventory NR enable/style/strength/passes/per-pass/resolution mode+scale/cache/placement, SR/RR presets, sharpening, FG ratios/dynamic, effects/HDR, preset/save/reset/undo/redo/A-B, menu ownership/hotkeys, helper reconnect. Saved values, queued edits, requested multipliers and liveTuning=true must not masquerade as applied rendering or FPS.\n\nPreserve the Feeder objective: verify exact pinned consumer provenance; obtain a supported versioned apply/readback interface or qualify a licensed source-built candidate. The rc10 export/provenance blocker remains unresolved unless proven otherwise. Do not invent an ABI, change provider pins, or mark complete from panel-only changes. Preserve existing/adopted settings and OptiScaler behavior. Startup-only controls may remain so with accurate labels.\n\nRequired tests: capability/ABI negotiation and unknown builds; route/GPU limits and bounds; coherent resolution mode/scale; command IDs, applied revisions/values, stale PID/session/generation, rejection/timeout/disconnect and safe retry; rebuild coalescing and failure rollback; shader reload/preset change; Windows/Proton parity; helper reconnect; menu ownership; unsupported controls disabled; persistence/adopted-config preservation; identical semantics across both UIs. Review glass pass ceiling vs Feeder range, OptiScaler DX12-only pass tuning, Linux/Windows Dynamic checks, queued-vs-applied values, ReShade enqueue acknowledgment.\n\nRun repository core hardening and scoped unit/native/UI checks; compile Windows binaries and test real renderer acknowledgment in an authorized isolated environment. Mock-only tests are insufficient. Report passed, failed, blocked and unrun checks separately with identities. Gameplay/FPS needs separate permission; no 60 FPS guarantee. Preserve retired branch and PR143 changes now on main. No Lauren PC/game use, merge, deploy, release or pin changes without Lauren. Deliver diff, receipts, results, blockers and next steps.",
-      "next_action": "Draft PR 145 at f90c005 (base main 7f26b9c): Glass pass ceiling from runtime (Feeder 4, OptiScaler 3), Feeder NR toggle readback guard with waiting/unconfirmed states, ReShade edit acknowledgments (applied/refused), accurate Feeder restart label, docs/overlay/control-matrix.md, 9 parity tests. Local scoped suites pass; core hardening and native build/self-tests run in hosted CI (not yet read). Feeder live model tuning remains blocked on rc10 API/provenance. Open: CI results, Lauren-authorized GPU/gameplay verification of NR toggle readback, ReShade acks and 4-pass stability. No merge/deploy/pin change.",
+      "next_action": "PR 145 head 1bee027. Fixes: Glass pass ceiling, Feeder NR toggle readback guard, ReShade edit acks, restart label, and a PR143 regression (no pointer over Glass in Feeder games; ImGui cursor pass restored). Lauren-authorized ME1 GPU test 2026-11-04 (RTX 4070, driver 32.0.16.2101, build 491db53 merge 086b058): pointer OK; NR on/off confirmed by RenoDX within 15-85 ms x4; passes=4 saved and loaded (RenoDX effective settings passes=4) but 20 FPS vs 44-55 at 1 pass and poor image, reverted. Not run: effects ack in game, layouts, OptiScaler regression. Key finding: RenoDX v8.5.0-rc10 source (Andarael/RenoDX-DLSS5-Generic v8.5dev 9bb6c0f, MIT; PEQHUB origin now 404) applies all 50 NR settings live via Setting::Commit (11 none, 36 history reset, 3 recreate); only an exported entry point is missing. Proposal in docs/overlay/feeder-live-tuning.md (versioned RenoDXNrSetV1/GetV1). Lauren says the assignment was underscoped: the goal is live NR tuning. Next: Lauren chooses upstream request vs rtxForge-built add-on (pin change needs her approval). ME1 still has the test build; backup at Repos/rtxForge-overlay-functionality-test/me1-backup-20261104. No merge/deploy.",
       "category": "implementation",
       "primary_role": "backend",
       "supporting_roles": [
@@ -27973,8 +27973,8 @@
           "next_action": "Manual handoff: Lauren handed this queued assignment to Claude Code session b7c4523c in chat on 2026-11-04 (\"please pick up the existing Relay assignment rtxforge-feeder-runtime-bridge-queued-20261103\"). Successor will claim on fresh branch rtxforge/overlay-functionality-20261104 from main 7f26b9c (PR143 merged). Retired branch rtxforge/feeder-live-settings-20261103 at f7388b6 stays untouched."
         }
       ],
-      "updated_at": "2026-11-04T06:29:05.259Z",
-      "lease_until": "2026-11-04T18:29:05.259Z"
+      "updated_at": "2026-11-04T21:31:44.040Z",
+      "lease_until": "2026-11-05T09:31:44.040Z"
     }
   ]
 }
