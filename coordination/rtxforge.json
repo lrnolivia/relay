@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-03T08:40:59.053Z",
+  "updated_at": "2026-11-04T06:17:13.653Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8647,10 +8647,10 @@
     },
     {
       "id": "rtxforge-feeder-runtime-bridge-queued-20261103",
-      "owner": "01a19f3c-d7fc-741c-b428-b08321dc601e",
+      "owner": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
       "goal": "Complete an overlay functionality pass across providers and both UIs, with truthful live/restart states and verified runtime application.",
       "acceptance": "Deliver a comprehensive provider/control/surface matrix and a reviewable, tested overlay functionality patch only after manual handoff, supported Relay admission and reconciliation with active owners. Cover Skynizz/OptiScaler and its supported variants; Feeder NR/ReShade; Vulkan NR/MFG; Universal MFG versus RenoDX MFG; RenoDX HDR; generic ReShade effects/add-on settings; unknown/custom packages; Windows and Linux/Proton helpers and Desktop/Game Mode entry points. Cover ImGui fallback and glass/RmlUI layouts, with explicit unavailable-surface entries instead of implying all renderers support all routes.\n\nClassify each control as renderer-applied live, request/config accepted but unverified, next-launch/restart, unsupported, or unavailable, and separate source evidence, exact-build tests and gameplay proof. Inventory NR enable/style/strength/passes/per-pass tuning/resolution mode and scale/cache/placement, SR/RR presets, sharpening/motion sharpening, FG ratios/dynamic mode, effects/HDR, preset/save/reset/undo/redo/A-B, menu ownership/hotkeys and helper reconnect. Installed or loaded files, saved values, queued edits, requested multipliers and liveTuning=true must not masquerade as applied rendering or measured FPS.\n\nPreserve the original Feeder objective: verify exact pinned consumer provenance; obtain a supported, versioned apply/readback interface or qualify a licensed source-built candidate. The rc10 export/provenance blocker remains unresolved. Do not invent an ABI, silently replace provider pins or mark the task functionally complete from panel-only changes. Preserve existing/adopted settings and OptiScaler behavior. Genuine startup-only controls may remain so with accurate labels; add safe live bridges where supported, and document exact blockers otherwise.\n\nRequired tests: capability/ABI/protocol negotiation and unknown builds; route/GPU limits and bounds; coherent resolution mode/scale; command IDs, applied revisions/values, stale PID/session/generation, rejection/timeout/disconnect and safe retry; model rebuild coalescing, resource/history recreation and failure rollback; shader reload/preset change; Windows/Proton parity; helper unavailable/reconnect; original-menu ownership; unsupported controls disabled; persistence/recipe binding/adopted-config preservation; identical semantics across both UIs and every available layout. Review concrete parity risks: glass pass ceiling versus Feeder range, OptiScaler DirectX12-only pass tuning, Linux/Windows Dynamic support checks, queued-versus-applied shared values, and ReShade enqueue acknowledgment.\n\nRun repository-required core hardening and scoped unit/native/UI checks; compile exact Windows binaries and test real renderer acknowledgment/stability in an authorized isolated environment. Mock-only tests are insufficient. Report passed, failed, blocked and unrun checks separately, tied to source/binary/model/driver/GPU identities. Gameplay/FPS validation requires separate permission and never guarantees 60 FPS. Preserve prior evidence and retired branch; do not overlap PR143 or other active work without explicit coordination. No Lauren PC/game access, merge, deployment, release or provider pin changes. Deliver exact diff, source receipt, results, outstanding blockers and next steps.",
-      "next_action": "Prepared for Lauren to hand to Claude herself. Keep queued and retain current owner until the actual receiving session is verified for a supported handoff. Do not start implementation, contact Claude, or duplicate the assignment automatically.\n\nExpanded to one comprehensive overlay functionality pass. Source audit at main f7388b6102ade554d5fc4992a715ba9b0fa9da57: Feeder model settings persist without a consumer apply/readback API; shared UI can expose requested/queued values; OptiScaler has a real live config/mailbox path; Vulkan has live in-game NR/FG but helper preset/live editing is unavailable; ReShade shader edits are queued; HDR and generic add-on INI are startup-only. Audit all providers and both UIs rather than assuming all are broken. Include sharpening, presets, native menu access and Windows/Proton parity.\n\nBefore admission, refresh source and claims. Release owner 01a19a5a-af52-7ea2-9412-eb2f1f541ed5 owns shared panel/glass/Feeder files under rtxforge-beta17-overlay-release-20261102 (PR143; recorded candidate 9371c48). Reconcile overlap; this queue reserves no active branch. Preserve retired branch rtxforge/feeder-live-settings-20261103 at f7388b6; use a fresh branch after admission.\n\nFeeder review artifact libfile_ffba3b4a3e988191ab8abc91dac4c515 preserves exact rc10 hashes, DESCRIPTION/NAME-only exports, provenance gaps and API/test design. No working patch exists. Qualify exact licensed consumer source/API and isolated Windows/GPU environment; development snapshot 9bb6c0f is not a release build receipt. No PC/game use, pin changes, merge, deploy or release. Gameplay needs separate permission.\n\nHistorical checks: 214 core and 39 Feeder passed; two broader tests hit Linux ctypes.WinDLL limitations. Prior read-only QA has no canonical Relay acceptance receipt. Preserve these limits. No 60 FPS guarantee.",
+      "next_action": "Manual handoff: Lauren handed this queued assignment to Claude Code session b7c4523c in chat on 2026-11-04 (\"please pick up the existing Relay assignment rtxforge-feeder-runtime-bridge-queued-20261103\"). Successor will claim on fresh branch rtxforge/overlay-functionality-20261104 from main 7f26b9c (PR143 merged). Retired branch rtxforge/feeder-live-settings-20261103 at f7388b6 stays untouched.",
       "paths": [
         "windows/feeder-panel/",
         "providers/skynizz-bridge/",
@@ -8815,7 +8815,15 @@
           }
         }
       ],
-      "updated_at": "2026-11-03T07:09:27.044Z"
+      "updated_at": "2026-11-04T06:17:13.653Z",
+      "handoffs": [
+        {
+          "at": "2026-11-04T06:17:13.653Z",
+          "from": "01a19f3c-d7fc-741c-b428-b08321dc601e",
+          "to": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
+          "next_action": "Manual handoff: Lauren handed this queued assignment to Claude Code session b7c4523c in chat on 2026-11-04 (\"please pick up the existing Relay assignment rtxforge-feeder-runtime-bridge-queued-20261103\"). Successor will claim on fresh branch rtxforge/overlay-functionality-20261104 from main 7f26b9c (PR143 merged). Retired branch rtxforge/feeder-live-settings-20261103 at f7388b6 stays untouched."
+        }
+      ]
     }
   ],
   "claims": [
