@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-04T21:36:42.674Z",
+  "updated_at": "2026-11-04T22:46:31.741Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -27822,7 +27822,9 @@
         ".github/workflows/renodx-dlss5.yml",
         "scripts/feeder_provider.py",
         "windows/build/Build-FeederPanel.ps1",
-        "tests/test_feeder_provider.py"
+        "tests/test_feeder_provider.py",
+        "providers/feeder.json",
+        "providers/feeder-runtime.json"
       ],
       "resources": [
         "rtxforge-feeder-live-settings",
@@ -27830,7 +27832,7 @@
       ],
       "goal": "Complete an overlay functionality pass across providers and both UIs, with truthful live/restart states and verified runtime application.",
       "acceptance": "Deliver a comprehensive provider/control/surface matrix and a reviewable, tested overlay functionality patch after manual handoff, Relay admission and reconciliation with active owners. Cover OptiScaler and variants; Feeder NR/ReShade; Vulkan NR/MFG; Universal MFG vs RenoDX MFG; RenoDX HDR; generic ReShade effects/add-ons; unknown/custom packages; Windows and Linux/Proton helpers; Desktop/Game Mode entry points; ImGui fallback and glass/RmlUI layouts with explicit unavailable entries.\n\nClassify each control as renderer-applied live, accepted but unverified, next-launch/restart, unsupported or unavailable; separate source evidence, exact-build tests and gameplay proof. Inventory NR enable/style/strength/passes/per-pass/resolution mode+scale/cache/placement, SR/RR presets, sharpening, FG ratios/dynamic, effects/HDR, preset/save/reset/undo/redo/A-B, menu ownership/hotkeys, helper reconnect. Saved values, queued edits, requested multipliers and liveTuning=true must not masquerade as applied rendering or FPS.\n\nPreserve the Feeder objective: verify exact pinned consumer provenance; obtain a supported versioned apply/readback interface or qualify a licensed source-built candidate. The rc10 export/provenance blocker remains unresolved unless proven otherwise. Do not invent an ABI, change provider pins, or mark complete from panel-only changes. Preserve existing/adopted settings and OptiScaler behavior. Startup-only controls may remain so with accurate labels.\n\nRequired tests: capability/ABI negotiation and unknown builds; route/GPU limits and bounds; coherent resolution mode/scale; command IDs, applied revisions/values, stale PID/session/generation, rejection/timeout/disconnect and safe retry; rebuild coalescing and failure rollback; shader reload/preset change; Windows/Proton parity; helper reconnect; menu ownership; unsupported controls disabled; persistence/adopted-config preservation; identical semantics across both UIs. Review glass pass ceiling vs Feeder range, OptiScaler DX12-only pass tuning, Linux/Windows Dynamic checks, queued-vs-applied values, ReShade enqueue acknowledgment.\n\nRun repository core hardening and scoped unit/native/UI checks; compile Windows binaries and test real renderer acknowledgment in an authorized isolated environment. Mock-only tests are insufficient. Report passed, failed, blocked and unrun checks separately with identities. Gameplay/FPS needs separate permission; no 60 FPS guarantee. Preserve retired branch and PR143 changes now on main. No Lauren PC/game use, merge, deploy, release or pin changes without Lauren. Deliver diff, receipts, results, blockers and next steps.",
-      "next_action": "Lauren chose (2026-11-04, in chat: \"Build our own add-on\") to build an rtxForge RenoDX DLSS5 candidate from the MIT v8.5.0-rc10 source (Andarael/RenoDX-DLSS5-Generic 9bb6c0f) with a versioned live set/read export, built on hosted CI. Candidate only: no provider pin change until qualified in ME1 and Lauren approves. Also fix Feeder NRResolutionScale range (RenoDX clamps to 0.33-1.0; rtxForge allowed 0.25).",
+      "next_action": "Lauren authorized (2026-11-04, in chat: \"ship the RenoDX build to other ReShade/RenoDX/Feeder games, make sure the install path uses that obvi, merge 14t\") the provider pin change and the PR 145 merge. Pin Feeder installs to release renodx-dlss5-8.5.0-rc10-rtxforge-1 (zip 55e62b76, addon 1e482363), keep rc10 in previous_assets, get CI green, then merge and complete.",
       "category": "implementation",
       "primary_role": "backend",
       "supporting_roles": [
@@ -27873,8 +27875,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-04T21:36:42.674Z",
-      "lease_until": "2026-11-05T09:36:42.674Z",
+      "updated_at": "2026-11-04T22:46:31.741Z",
+      "lease_until": "2026-11-05T10:46:31.741Z",
       "amendments": [
         {
           "at": "2026-11-03T04:48:02.890Z",
