@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T02:35:45.134Z",
+  "updated_at": "2026-11-05T02:58:08.013Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28188,8 +28188,10 @@
         "gui/feature_presets.py",
         "prototypes/game-mode-tauri/src/main.ts",
         "windows/engine-host/companion_controls.py",
+        "windows/engine-host/feeder_controls.py",
         "windows/engine-host/rtxforge_win_host.py",
         "windows/tests/test_companion_controls.py",
+        "tests/test_overlay_workbench.py",
         "scripts/skynizz_provider.py",
         "scripts/feeder_provider.py",
         "scripts/overlay_refresh.py",
@@ -28223,7 +28225,7 @@
       ],
       "goal": "One - # + passes control across every rtxForge UI, OptiScaler up to 8 passes, and live Feeder per-pass tuning for passes 2-4. Resumes rtxforge-passes-stepper-20261105, paused for the Beta 3 hotfix.",
       "acceptance": "A shared stepper control kind for passes rendered as - count + in the ImGui panel, Desktop (WinUI), Linux GTK and Game Mode, with the in-game panel's existing stepper following each route's ceiling. OptiScaler passes 1-8 (controls.json, mailbox bound in ada-mfg.patch and panel-candidate.patch context, companion validation), with chained hashes updated. Feeder per-pass tuning (strength, tone, structure, skin, style, same-as-pass-1) for passes 2-4 through the RenoDX live interface: export bounds, a new RenoDX release tag, re-pin, Feeder bindings, and a pass 4 tab in the panel. Required overlay revision 10. Tests, CI green, merged as Lauren. Lauren asked in chat 2026-11-04/05 (\"lets to a - # + control for passes\", 8 passes for OptiScaler, per-pass Feeder; \"Resume passes\").",
-      "next_action": "Also (Lauren, 2026-11-05): background work never collides with features. scripts/writer_gate.py makes reviews and writes take turns in-process on Windows and Linux (the engine writer lock is reentrant per process), waiting with a visible 'Waiting for the overlay update to finish' instead of failing, and the Desktop app shows the background overlay update while it runs. Then let CI build RenoDX rtxforge-2, pin it, bump revision and version, merge.",
+      "next_action": "CI on e199289 failed WinUI x64 Python tests: feeder_controls DEFAULTS lacked the pass 2-3 preset keys, and two tests used passes=4 as an invalid value (OptiScaler now allows 8). Fixed; rerun CI, then mark ready and merge.",
       "category": "implementation",
       "primary_role": "backend",
       "primary_team": "runner",
@@ -28248,8 +28250,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T02:35:45.134Z",
-      "lease_until": "2026-11-05T14:35:45.134Z"
+      "updated_at": "2026-11-05T02:58:08.013Z",
+      "lease_until": "2026-11-05T14:58:08.013Z"
     }
   ]
 }
