@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T06:36:37.313Z",
+  "updated_at": "2026-11-05T06:52:16.794Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28434,6 +28434,43 @@
       "evidence": "PR 151 merged to main as 167515311d0f81d46ffa20281b7aa49deb0365b7 (local no-ff merge as Lauren Olivia onto c72f247; merge tree 2b181f2e equals the CI-tested head cabc6c15 tree). All 20 checks green, including WinUI 3 x64/ARM64, native Windows/Ubuntu, Flatpak and AppImage. New tests cover the Mass Effect 1 case (newer published build than the record), a changed file restored by one Repair, Restore with a changed file, and legacy recipes after a scan.",
       "work_accounted": true,
       "completed_at": "2026-11-05T06:36:37.313Z"
+    },
+    {
+      "id": "rtxforge-beta5-notes-20261105",
+      "owner": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
+      "branch": "rtxforge/beta5-notes-20261105",
+      "paths": [
+        "docs/releases/1.0-beta.md"
+      ],
+      "resources": [],
+      "goal": "Beta 5 release notes cover the faster scans (PR 150) and the calm Feeder status with one-click Repair (PR 151), so Beta 5 can be published from main.",
+      "acceptance": "docs/releases/1.0-beta.md describes PRs 150 and 151 under 1.5.0-beta.5; CI green; merged as Lauren; Windows and Linux Beta 5 published from that exact main commit. Lauren asked in chat 2026-11-05 ('Publish with PR 150').",
+      "next_action": "Write the two note lines, push, preflight, draft PR.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "167515311d0f81d46ffa20281b7aa49deb0365b7",
+      "state": "active",
+      "created_at": "2026-11-05T06:52:16.794Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Beta 5 release notes cover the faster scans (PR 150) and the calm Feeder status with one-click Repair (PR 151), so Beta 5 can be published from main.",
+          "acceptance": "docs/releases/1.0-beta.md describes PRs 150 and 151 under 1.5.0-beta.5; CI green; merged as Lauren; Windows and Linux Beta 5 published from that exact main commit. Lauren asked in chat 2026-11-05 ('Publish with PR 150').",
+          "at": "2026-11-05T06:52:16.794Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta5-notes-20261105:acceptance:0",
+            "text": "docs/releases/1.0-beta.md describes PRs 150 and 151 under 1.5.0-beta.5; CI green; merged as Lauren; Windows and Linux Beta 5 published from that exact main commit. Lauren asked in chat 2026-11-05 ('Publish with PR 150').",
+            "at": "2026-11-05T06:52:16.794Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-05T06:52:16.794Z",
+      "lease_until": "2026-11-05T18:52:16.794Z"
     }
   ]
 }
