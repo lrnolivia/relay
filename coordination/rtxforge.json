@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T23:15:06.295Z",
+  "updated_at": "2026-11-05T23:26:24.366Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28647,6 +28647,8 @@
         "scripts/nr_addons.py",
         "scripts/nr_install.py",
         "scripts/feeder_provider.py",
+        "scripts/renodx_hdr.py",
+        "tests/test_renodx_hdr.py",
         "providers/feeder.json",
         "providers/feeder-runtime.json",
         "scripts/engine_bridge.py",
@@ -28674,7 +28676,7 @@
       ],
       "goal": "Per-game DLSS5 NR add-on choice: Environment and Character slots that each take the user's chosen add-on (Lecram 8.5 rtxForge build or 10.8.0, ShortFuse SF 26.1025.0009, GITC Uplift 1.8.0), an Old (310.8) / New (310.9.16) DLSS5 model per package, and saved combos reusable across games, with the Reddit preset (ShortFuse characters + Lecram 10.8 environment) built in.",
       "acceptance": "Every add-on build and model is pinned by SHA-256 and verified before install; only one configuration is installed per game and restore returns the game to its original files. Coexistence is configured, not guessed: Lecram ForeignNr=observe beside another add-on; GITC refuses a second add-on; ShortFuse only in 64-bit games with their own DLSS. Unverified pairs show as not verified with Try Anyway. Combos store both slots and apply across games without changing unrelated settings. Tests pass on Windows and Linux CI; each add-on and the Old/New model are tested on Forge Lab copies (never real installs). Lauren asked in chat 2026-11-05.",
-      "next_action": "Windows UI: Tools > DLSS5 NR add-ons (slots, builds, Old/New, combos, live check, install/remove, save combo) in new partial files; EngineForgeService.cs untouched (PR 139 reservation). Next: Linux GTK, docs, Forge Lab tests.",
+      "next_action": "ReShade route: Streamline games (sl.interposer.dll, e.g. Witcher 3 DX12) import no dxgi/d3d12, so fall back to the Direct3D detection; then install the Characters and World combo on the Witcher 3 Forge Lab copy for Lauren to play-test. Feeder Lecram build/model choice parked by Lauren.",
       "category": "implementation",
       "primary_role": "backend",
       "primary_team": "runner",
@@ -28699,8 +28701,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T23:15:06.295Z",
-      "lease_until": "2026-11-06T11:15:06.295Z"
+      "updated_at": "2026-11-05T23:26:24.366Z",
+      "lease_until": "2026-11-06T11:26:24.366Z"
     }
   ]
 }
