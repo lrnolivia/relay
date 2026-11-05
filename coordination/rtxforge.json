@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T23:34:41.787Z",
+  "updated_at": "2026-11-05T23:47:19.237Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28709,6 +28709,48 @@
       },
       "updated_at": "2026-11-05T23:26:24.366Z",
       "lease_until": "2026-11-06T11:26:24.366Z"
+    },
+    {
+      "id": "rtxforge-renodx-hud-handoff-20261105",
+      "owner": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
+      "branch": "rtxforge/renodx-hud-handoff-20261105",
+      "paths": [
+        "providers/renodx-dlss5/",
+        "windows/overlay-rmlui/GlassRuntime.cpp",
+        "providers/glass-overlay/rollout-policy.json",
+        "tests/test_overlay_control_matrix.py",
+        "docs/overlay/control-matrix.md",
+        "docs/overlay/feeder-live-tuning.md"
+      ],
+      "resources": [],
+      "goal": "RenoDX's in-game corner HUD (NR-not-working pill and health issue notices such as vram_over_budget) is shown as rtxForge glass notifications, and RenoDX skips its own HUD only while glass hosts it.",
+      "acceptance": "rtxforge_live.hpp exports RenoDXNrHudV1Get/RenoDXNrHudV1Host; the build adds one checked OnHudOverlay skip; glass polls the export, toasts each new pill/notice once, hosts only while notifications are on and not OptiScaler, and releases on teardown; release renodx-dlss5-8.5.0-rc10-rtxforge-3 is published by CI and pinned (pins coordinated with rtxforge-nr-addon-choice-20261105); overlay revision 11; tests; CI green; merged as Lauren. Lauren approved in chat 2026-11-05 ('Yes, build it').",
+      "next_action": "Push patch, glass change and source.json bump; let CI publish rtxforge-3.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "41cff760a73cbbf04758a7f88754c26abec0f761",
+      "state": "active",
+      "created_at": "2026-11-05T23:47:19.237Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "RenoDX's in-game corner HUD (NR-not-working pill and health issue notices such as vram_over_budget) is shown as rtxForge glass notifications, and RenoDX skips its own HUD only while glass hosts it.",
+          "acceptance": "rtxforge_live.hpp exports RenoDXNrHudV1Get/RenoDXNrHudV1Host; the build adds one checked OnHudOverlay skip; glass polls the export, toasts each new pill/notice once, hosts only while notifications are on and not OptiScaler, and releases on teardown; release renodx-dlss5-8.5.0-rc10-rtxforge-3 is published by CI and pinned (pins coordinated with rtxforge-nr-addon-choice-20261105); overlay revision 11; tests; CI green; merged as Lauren. Lauren approved in chat 2026-11-05 ('Yes, build it').",
+          "at": "2026-11-05T23:47:19.237Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-renodx-hud-handoff-20261105:acceptance:0",
+            "text": "rtxforge_live.hpp exports RenoDXNrHudV1Get/RenoDXNrHudV1Host; the build adds one checked OnHudOverlay skip; glass polls the export, toasts each new pill/notice once, hosts only while notifications are on and not OptiScaler, and releases on teardown; release renodx-dlss5-8.5.0-rc10-rtxforge-3 is published by CI and pinned (pins coordinated with rtxforge-nr-addon-choice-20261105); overlay revision 11; tests; CI green; merged as Lauren. Lauren approved in chat 2026-11-05 ('Yes, build it').",
+            "at": "2026-11-05T23:47:19.237Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-05T23:47:19.237Z",
+      "lease_until": "2026-11-06T11:47:19.237Z"
     }
   ]
 }
