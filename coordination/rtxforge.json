@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T01:14:10.143Z",
+  "updated_at": "2026-11-05T01:23:49.373Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28086,7 +28086,7 @@
         "roman"
       ],
       "base_sha": "371f458ac5f134d65385390786f14b6edc29f626",
-      "state": "active",
+      "state": "cancelled",
       "created_at": "2026-11-05T01:14:10.143Z",
       "objective_history": {
         "baseline": {
@@ -28103,8 +28103,21 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T01:14:10.143Z",
-      "lease_until": "2026-11-05T13:14:10.143Z"
+      "updated_at": "2026-11-05T01:23:49.373Z",
+      "lease_until": "2026-11-05T13:14:10.143Z",
+      "retirement": {
+        "at": "2026-11-05T01:23:49.373Z",
+        "intent": {
+          "operation_id": "retire-passes-for-beta3-hotfix-20261105",
+          "owner": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
+          "disposition": "cancelled",
+          "reason": "Paused so a Beta 3 hotfix can ship first (Lauren: 'Ship hotfix now'); one active claim per owner. The passes work is unpushed and kept locally; it will be re-claimed under a new id right after the hotfix merges.",
+          "evidence": "Branch rtxforge/passes-stepper-20261105 was never pushed; partial ImGui stepper edits are retained in a local stash in rtxForge-overlay-functionality.",
+          "superseded_by": null,
+          "branch": "rtxforge/passes-stepper-20261105",
+          "head_sha": null
+        }
+      }
     }
   ]
 }
