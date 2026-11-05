@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T06:56:41.629Z",
+  "updated_at": "2026-11-05T07:13:08.030Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28479,14 +28479,19 @@
       "paths": [
         "scripts/transactions.py",
         "scripts/packages.py",
-        "scripts/package_adoption.py"
+        "scripts/package_adoption.py",
+        "scripts/discovery.py",
+        "scripts/feeder_provider.py",
+        "gui/breakpoints.py",
+        "gui/rtxforge_gtk.py",
+        "engine/rtxengine.py"
       ],
       "resources": [
         "rtxforge-scan-path-checks"
       ],
       "goal": "Streamline rtxForge (part 3): trim the scan's remaining repeated work (path safety syscalls, a second full engine walk for offline-route games) and stop re-hashing prepared payload files on every review.",
       "acceptance": "transactions.safe makes one lstat per path component with identical refusals. package_adoption reuses the scan's anti-cheat result for the offline-only display flag instead of a second full engine walk. packages.verify checks app-owned prepared payload files through file_stamps (writes still verify their bytes). Read-only scan output on Lauren's library is byte-identical to main, and the scan is faster. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05 for speed and lightness without losing any function.",
-      "next_action": "Push the branch, preflight, open a draft PR, read CI.",
+      "next_action": "Lauren asked 2026-11-05 to merge the remaining streamlining rounds into one block: fold in dead-code removal, then measure and speed up installs on a Forge Lab copy, calm status for installed OptiScaler games, OptiScaler changed-file repair, stamp-cache warm-up. Rescope as those land.",
       "category": "implementation",
       "primary_role": "backend",
       "primary_team": "runner",
@@ -28511,8 +28516,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T06:56:41.629Z",
-      "lease_until": "2026-11-05T18:56:41.629Z"
+      "updated_at": "2026-11-05T07:13:08.030Z",
+      "lease_until": "2026-11-05T19:13:08.030Z"
     }
   ]
 }
