@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T01:23:49.373Z",
+  "updated_at": "2026-11-05T01:24:04.283Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28118,6 +28118,56 @@
           "head_sha": null
         }
       }
+    },
+    {
+      "id": "rtxforge-beta3-renodx-refresh-hotfix-20261105",
+      "owner": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
+      "branch": "rtxforge/beta3-renodx-refresh-hotfix-20261105",
+      "paths": [
+        "scripts/transactions.py",
+        "scripts/overlay_refresh.py",
+        "windows/engine-host/global_controls.py",
+        "windows/engine-host/overlay_package_routes.py",
+        "windows/tests/test_overlay_packages.py",
+        "windows/tests/test_global_controls.py",
+        "tests/test_overlay_refresh.py",
+        "windows/RtxForge.Windows/Controls/GameModeAppearanceView.cs",
+        "providers/glass-overlay/",
+        "VERSION",
+        "docs/releases/1.0-beta.md"
+      ],
+      "resources": [
+        "rtxforge-overlay-functionality"
+      ],
+      "goal": "Beta 3 hotfix: the required overlay refresh actually moves every Feeder install to rtxForge's live-settings RenoDX, survives a locked file in one game, adopts already-shipped RenoDX builds, and the Game Details settings preview layout/adaptive tint.",
+      "acceptance": "renodx_update reads the stored stack's files map (Beta 2 KeyError left 14 Feeder games on rc10 while reporting them current); a stale RenoDX that cannot be replaced is blocked/pending, never 'already current'. Feeder records whose RenoDX is a published rtxForge build are adopted instead of 'repair first'. atomic_file retries transient PermissionError; a locked game is rolled back and skipped while the rest update, with a plain message, and stays pending in the refresh ledger. Required overlay revision 9 so completed Beta 2 ledgers rerun. Game Details navigation moves to the options column, preview vertically centred, Adaptive/Game preview tint from the game's artwork. VERSION 1.5.0-beta.3 and release notes. Tests and CI green, merged as Lauren, Beta 3 published. Lauren asked in chat 2026-11-05 ('Ship hotfix now').",
+      "next_action": "Branch from main, port the fixes, bump version and overlay revision, push, draft PR, CI, merge, publish Beta 3.",
+      "category": "implementation",
+      "primary_role": "backend",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "371f458ac5f134d65385390786f14b6edc29f626",
+      "state": "active",
+      "created_at": "2026-11-05T01:24:04.283Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Beta 3 hotfix: the required overlay refresh actually moves every Feeder install to rtxForge's live-settings RenoDX, survives a locked file in one game, adopts already-shipped RenoDX builds, and the Game Details settings preview layout/adaptive tint.",
+          "acceptance": "renodx_update reads the stored stack's files map (Beta 2 KeyError left 14 Feeder games on rc10 while reporting them current); a stale RenoDX that cannot be replaced is blocked/pending, never 'already current'. Feeder records whose RenoDX is a published rtxForge build are adopted instead of 'repair first'. atomic_file retries transient PermissionError; a locked game is rolled back and skipped while the rest update, with a plain message, and stays pending in the refresh ledger. Required overlay revision 9 so completed Beta 2 ledgers rerun. Game Details navigation moves to the options column, preview vertically centred, Adaptive/Game preview tint from the game's artwork. VERSION 1.5.0-beta.3 and release notes. Tests and CI green, merged as Lauren, Beta 3 published. Lauren asked in chat 2026-11-05 ('Ship hotfix now').",
+          "at": "2026-11-05T01:24:04.283Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta3-renodx-refresh-hotfix-20261105:acceptance:0",
+            "text": "renodx_update reads the stored stack's files map (Beta 2 KeyError left 14 Feeder games on rc10 while reporting them current); a stale RenoDX that cannot be replaced is blocked/pending, never 'already current'. Feeder records whose RenoDX is a published rtxForge build are adopted instead of 'repair first'. atomic_file retries transient PermissionError; a locked game is rolled back and skipped while the rest update, with a plain message, and stays pending in the refresh ledger. Required overlay revision 9 so completed Beta 2 ledgers rerun. Game Details navigation moves to the options column, preview vertically centred, Adaptive/Game preview tint from the game's artwork. VERSION 1.5.0-beta.3 and release notes. Tests and CI green, merged as Lauren, Beta 3 published. Lauren asked in chat 2026-11-05 ('Ship hotfix now').",
+            "at": "2026-11-05T01:24:04.283Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-05T01:24:04.283Z",
+      "lease_until": "2026-11-05T13:24:04.283Z"
     }
   ]
 }
