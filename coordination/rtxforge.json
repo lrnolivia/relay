@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T22:59:10.107Z",
+  "updated_at": "2026-11-05T23:09:54.538Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28645,6 +28645,7 @@
       "paths": [
         "providers/nr-addons.json",
         "scripts/nr_addons.py",
+        "scripts/nr_install.py",
         "scripts/feeder_provider.py",
         "providers/feeder.json",
         "providers/feeder-runtime.json",
@@ -28652,11 +28653,13 @@
         "engine/rtxengine.py",
         "windows/engine-host/rtxforge_win_host.py",
         "windows/engine-host/provider_candidates.py",
+        "windows/engine-host/win_features.py",
         "windows/RtxForge.Windows/Models/Models.cs",
         "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
         "windows/RtxForge.Windows/Views/PackagesPage.cs",
         "gui/rtxforge_gtk.py",
         "tests/test_nr_addons.py",
+        "tests/test_nr_install.py",
         "windows/tests/test_nr_addons.py",
         "docs/nr-addons.md",
         ".github/workflows/windows-build.yml",
@@ -28667,7 +28670,7 @@
       ],
       "goal": "Per-game DLSS5 NR add-on choice: Environment and Character slots that each take the user's chosen add-on (Lecram 8.5 rtxForge build or 10.8.0, ShortFuse SF 26.1025.0009, GITC Uplift 1.8.0), an Old (310.8) / New (310.9.16) DLSS5 model per package, and saved combos reusable across games, with the Reddit preset (ShortFuse characters + Lecram 10.8 environment) built in.",
       "acceptance": "Every add-on build and model is pinned by SHA-256 and verified before install; only one configuration is installed per game and restore returns the game to its original files. Coexistence is configured, not guessed: Lecram ForeignNr=observe beside another add-on; GITC refuses a second add-on; ShortFuse only in 64-bit games with their own DLSS. Unverified pairs show as not verified with Try Anyway. Combos store both slots and apply across games without changing unrelated settings. Tests pass on Windows and Linux CI; each add-on and the Old/New model are tested on Forge Lab copies (never real installs). Lauren asked in chat 2026-11-05.",
-      "next_action": "Build the add-on catalog (pins, sections, rules) and the per-game slot model first, then install routes, then UI and combos; test on Forge Lab copies. EngineForgeService.cs is reserved by rtxforge-library-names-mass-effect-20261101; queue for it only if needed.",
+      "next_action": "Stage 2: scripts/nr_install.py (pinned fetch, ReShade route reuse from renodx_hdr, receipt, restore that keeps user edits). Next: host endpoints in win_features.py, per-game setup storage and combos, Windows/Linux UI, Forge Lab tests.",
       "category": "implementation",
       "primary_role": "backend",
       "primary_team": "runner",
@@ -28692,8 +28695,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T22:59:10.107Z",
-      "lease_until": "2026-11-06T10:59:10.107Z"
+      "updated_at": "2026-11-05T23:09:54.538Z",
+      "lease_until": "2026-11-06T11:09:54.538Z"
     }
   ]
 }
