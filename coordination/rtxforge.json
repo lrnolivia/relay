@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T01:24:04.283Z",
+  "updated_at": "2026-11-05T01:50:17.150Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28149,7 +28149,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "371f458ac5f134d65385390786f14b6edc29f626",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-05T01:24:04.283Z",
       "objective_history": {
         "baseline": {
@@ -28166,8 +28166,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T01:24:04.283Z",
-      "lease_until": "2026-11-05T13:24:04.283Z"
+      "updated_at": "2026-11-05T01:50:17.150Z",
+      "lease_until": "2026-11-05T13:50:17.150Z",
+      "pr": 147,
+      "merged_head_sha": "9dbc99987d1840743b7fce1a1bf1da84ea6ec390",
+      "merge_commit_sha": "d3e0b9975049f64676627f732f7b098f3c2af1ae",
+      "evidence": "PR 147 merged to main as d3e0b9975049f64676627f732f7b098f3c2af1ae (no-ff as Lauren; merge tree 93782ba6 equals CI-tested head 9dbc999 tree). All PR checks green: native Windows/Ubuntu, WinUI x64/ARM64, panel candidate, Flatpak, AppImage, KDE/Wayland review, admission, attribution. Local: 73 overlay/feeder/refresh tests, test_overlay_packages (incl. real stack shape + RenoDX adoption), test_global_controls OK. Beta 3 publish runs started from main: Windows 41951107131, Linux 41951162068.",
+      "work_accounted": true,
+      "completed_at": "2026-11-05T01:50:17.150Z"
     }
   ]
 }
