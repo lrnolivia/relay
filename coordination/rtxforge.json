@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T06:15:19.412Z",
+  "updated_at": "2026-11-05T06:15:51.308Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28381,6 +28381,53 @@
       "evidence": "PR 150 merged to main as c72f247b69fd120a6c40383bfef0093150060592 (local no-ff merge as Lauren Olivia onto main fa7f1e6; merged diff has the same patch-id as the CI-tested head e5930f25, whose 19 checks were all green including WinUI 3 x64/ARM64, native Windows/Ubuntu, Flatpak and AppImage). Affected tests re-run green on the merged tree. Read-only scans of Lauren's library: 23-31 s before, 6.5-9 s after; unchanged files no longer re-hashed.",
       "work_accounted": true,
       "completed_at": "2026-11-05T06:15:19.412Z"
+    },
+    {
+      "id": "rtxforge-feeder-calm-repair-20261105",
+      "owner": "claude-code-f9afa0e7-24cc-4ddc-843e-3a951ab8945d",
+      "branch": "rtxforge/feeder-calm-repair-20261105",
+      "paths": [
+        "scripts/feeder_provider.py",
+        "scripts/overview_summary.py",
+        "tests/test_feeder_provider.py",
+        "tests/test_feeder_legacy.py",
+        "windows/engine-host/overlay_package_routes.py",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/ViewModels/GameItem.cs",
+        "windows/RtxForge.Windows/Views/GamePage.xaml.cs"
+      ],
+      "resources": [
+        "rtxforge-feeder-drift"
+      ],
+      "goal": "Streamline rtxForge (part 2): one changed managed Feeder file is a calm 'Repair recommended' status with a one-click Repair, not a blocked game, 'Injector not identified', or a Repair that refuses.",
+      "acceptance": "Feeder inspection reports changed owned files (record: a published rtxForge build the record has not caught up with, the Mass Effect 1 case; restore: changed or missing) instead of refusing, while staying strict by default and for setups rtxForge does not own. Scan keeps the game installed with feeder_drift and a calm summary. Repair and Restore no longer refuse on a changed file; Repair restores verified copies, records published builds, and keeps ownership of every previously owned file. Overlay updates adopt any published build. Desktop shows 'Installed · Repair recommended' and a Repair button; shared overview cards show it on Desktop and Linux. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05: 'one little file changing shouldnt be a 10 alarm fire, just offer a one click solution to fix it'.",
+      "next_action": "Push the branch, preflight, open a draft PR, read CI.",
+      "category": "implementation",
+      "primary_role": "backend",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "c72f247b69fd120a6c40383bfef0093150060592",
+      "state": "active",
+      "created_at": "2026-11-05T06:15:51.308Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Streamline rtxForge (part 2): one changed managed Feeder file is a calm 'Repair recommended' status with a one-click Repair, not a blocked game, 'Injector not identified', or a Repair that refuses.",
+          "acceptance": "Feeder inspection reports changed owned files (record: a published rtxForge build the record has not caught up with, the Mass Effect 1 case; restore: changed or missing) instead of refusing, while staying strict by default and for setups rtxForge does not own. Scan keeps the game installed with feeder_drift and a calm summary. Repair and Restore no longer refuse on a changed file; Repair restores verified copies, records published builds, and keeps ownership of every previously owned file. Overlay updates adopt any published build. Desktop shows 'Installed · Repair recommended' and a Repair button; shared overview cards show it on Desktop and Linux. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05: 'one little file changing shouldnt be a 10 alarm fire, just offer a one click solution to fix it'.",
+          "at": "2026-11-05T06:15:51.308Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-feeder-calm-repair-20261105:acceptance:0",
+            "text": "Feeder inspection reports changed owned files (record: a published rtxForge build the record has not caught up with, the Mass Effect 1 case; restore: changed or missing) instead of refusing, while staying strict by default and for setups rtxForge does not own. Scan keeps the game installed with feeder_drift and a calm summary. Repair and Restore no longer refuse on a changed file; Repair restores verified copies, records published builds, and keeps ownership of every previously owned file. Overlay updates adopt any published build. Desktop shows 'Installed · Repair recommended' and a Repair button; shared overview cards show it on Desktop and Linux. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05: 'one little file changing shouldnt be a 10 alarm fire, just offer a one click solution to fix it'.",
+            "at": "2026-11-05T06:15:51.308Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-05T06:15:51.308Z",
+      "lease_until": "2026-11-05T18:15:51.308Z"
     }
   ]
 }
