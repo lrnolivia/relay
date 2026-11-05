@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T06:52:16.794Z",
+  "updated_at": "2026-11-05T06:56:41.629Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28471,6 +28471,48 @@
       },
       "updated_at": "2026-11-05T06:52:16.794Z",
       "lease_until": "2026-11-05T18:52:16.794Z"
+    },
+    {
+      "id": "rtxforge-streamline-scan-payload-20261105",
+      "owner": "claude-code-f9afa0e7-24cc-4ddc-843e-3a951ab8945d",
+      "branch": "rtxforge/streamline-scan-payload-20261105",
+      "paths": [
+        "scripts/transactions.py",
+        "scripts/packages.py",
+        "scripts/package_adoption.py"
+      ],
+      "resources": [
+        "rtxforge-scan-path-checks"
+      ],
+      "goal": "Streamline rtxForge (part 3): trim the scan's remaining repeated work (path safety syscalls, a second full engine walk for offline-route games) and stop re-hashing prepared payload files on every review.",
+      "acceptance": "transactions.safe makes one lstat per path component with identical refusals. package_adoption reuses the scan's anti-cheat result for the offline-only display flag instead of a second full engine walk. packages.verify checks app-owned prepared payload files through file_stamps (writes still verify their bytes). Read-only scan output on Lauren's library is byte-identical to main, and the scan is faster. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05 for speed and lightness without losing any function.",
+      "next_action": "Push the branch, preflight, open a draft PR, read CI.",
+      "category": "implementation",
+      "primary_role": "backend",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "167515311d0f81d46ffa20281b7aa49deb0365b7",
+      "state": "active",
+      "created_at": "2026-11-05T06:56:41.629Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Streamline rtxForge (part 3): trim the scan's remaining repeated work (path safety syscalls, a second full engine walk for offline-route games) and stop re-hashing prepared payload files on every review.",
+          "acceptance": "transactions.safe makes one lstat per path component with identical refusals. package_adoption reuses the scan's anti-cheat result for the offline-only display flag instead of a second full engine walk. packages.verify checks app-owned prepared payload files through file_stamps (writes still verify their bytes). Read-only scan output on Lauren's library is byte-identical to main, and the scan is faster. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05 for speed and lightness without losing any function.",
+          "at": "2026-11-05T06:56:41.629Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-streamline-scan-payload-20261105:acceptance:0",
+            "text": "transactions.safe makes one lstat per path component with identical refusals. package_adoption reuses the scan's anti-cheat result for the offline-only display flag instead of a second full engine walk. packages.verify checks app-owned prepared payload files through file_stamps (writes still verify their bytes). Read-only scan output on Lauren's library is byte-identical to main, and the scan is faster. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05 for speed and lightness without losing any function.",
+            "at": "2026-11-05T06:56:41.629Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-05T06:56:41.629Z",
+      "lease_until": "2026-11-05T18:56:41.629Z"
     }
   ]
 }
