@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T05:43:47.553Z",
+  "updated_at": "2026-11-05T05:49:46.170Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28260,58 +28260,6 @@
       "completed_at": "2026-11-05T03:19:46.167Z"
     },
     {
-      "id": "rtxforge-streamline-scan-cache-20261105",
-      "owner": "claude-code-f9afa0e7-24cc-4ddc-843e-3a951ab8945d",
-      "branch": "rtxforge/streamline-scan-cache-20261105",
-      "paths": [
-        "scripts/file_stamps.py",
-        "tests/test_file_stamps.py",
-        "scripts/cross_os.py",
-        "scripts/discovery.py",
-        "scripts/packages.py",
-        "scripts/feeder_provider.py",
-        "scripts/feeder_legacy.py",
-        "windows/engine-host/library_scan.py",
-        "windows/engine-host/global_controls.py",
-        "windows/engine-host/overlay_packages.py",
-        "windows/engine-host/overlay_package_routes.py",
-        ".github/workflows/windows-build.yml",
-        ".github/workflows/linux-build.yml"
-      ],
-      "resources": [
-        "rtxforge-file-hashing"
-      ],
-      "goal": "Streamline rtxForge (part 1 of several PRs): hash each game file once per version instead of on every library scan, review and package use, without weakening any safety check.",
-      "acceptance": "A stamp-keyed SHA-256 cache (size, mtime, ctime, file identity) persisted across runs is used for status: the other-OS install check, Feeder inspection and the NR model, and cached package archives. Reviews and executions read each file once per phase through file_stamps.Operation; execute keeps a fresh pre-write process check and drift check. Folder walks do per-folder work once and inspect games in parallel. Measured on Lauren's library: scan 25-31 s before, 8.75 GB re-hashed per scan; after, under 15 s and no re-hashing of unchanged files. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05: speed up the library scan, cache download packages, stop verifying everything a million times, do not compromise a single function or feature.",
-      "next_action": "Commit the measured changes, push, open a draft PR, read CI.",
-      "category": "implementation",
-      "primary_role": "backend",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "21494e8a83ffe50851cd26a92e7a24b3b180c309",
-      "state": "active",
-      "created_at": "2026-11-05T05:41:10.058Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Streamline rtxForge (part 1 of several PRs): hash each game file once per version instead of on every library scan, review and package use, without weakening any safety check.",
-          "acceptance": "A stamp-keyed SHA-256 cache (size, mtime, ctime, file identity) persisted across runs is used for status: the other-OS install check, Feeder inspection and the NR model, and cached package archives. Reviews and executions read each file once per phase through file_stamps.Operation; execute keeps a fresh pre-write process check and drift check. Folder walks do per-folder work once and inspect games in parallel. Measured on Lauren's library: scan 25-31 s before, 8.75 GB re-hashed per scan; after, under 15 s and no re-hashing of unchanged files. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05: speed up the library scan, cache download packages, stop verifying everything a million times, do not compromise a single function or feature.",
-          "at": "2026-11-05T05:41:10.058Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-streamline-scan-cache-20261105:acceptance:0",
-            "text": "A stamp-keyed SHA-256 cache (size, mtime, ctime, file identity) persisted across runs is used for status: the other-OS install check, Feeder inspection and the NR model, and cached package archives. Reviews and executions read each file once per phase through file_stamps.Operation; execute keeps a fresh pre-write process check and drift check. Folder walks do per-folder work once and inspect games in parallel. Measured on Lauren's library: scan 25-31 s before, 8.75 GB re-hashed per scan; after, under 15 s and no re-hashing of unchanged files. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05: speed up the library scan, cache download packages, stop verifying everything a million times, do not compromise a single function or feature.",
-            "at": "2026-11-05T05:41:10.058Z"
-          }
-        ]
-      },
-      "updated_at": "2026-11-05T05:41:10.058Z",
-      "lease_until": "2026-11-05T17:41:10.058Z"
-    },
-    {
       "id": "rtxforge-validate-status-forgelab-20261105",
       "owner": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
       "branch": "rtxforge/validate-status-forgelab-20261105",
@@ -28368,6 +28316,59 @@
       },
       "updated_at": "2026-11-05T05:43:47.553Z",
       "lease_until": "2026-11-05T17:43:47.553Z"
+    },
+    {
+      "id": "rtxforge-streamline-scan-cache-20261105",
+      "owner": "claude-code-f9afa0e7-24cc-4ddc-843e-3a951ab8945d",
+      "branch": "rtxforge/streamline-scan-cache-20261105",
+      "paths": [
+        "scripts/file_stamps.py",
+        "tests/test_file_stamps.py",
+        "tests/test_feeder_provider.py",
+        "scripts/cross_os.py",
+        "scripts/discovery.py",
+        "scripts/packages.py",
+        "scripts/feeder_provider.py",
+        "scripts/feeder_legacy.py",
+        "windows/engine-host/library_scan.py",
+        "windows/engine-host/global_controls.py",
+        "windows/engine-host/overlay_packages.py",
+        "windows/engine-host/overlay_package_routes.py",
+        ".github/workflows/windows-build.yml",
+        ".github/workflows/linux-build.yml"
+      ],
+      "resources": [
+        "rtxforge-file-hashing"
+      ],
+      "goal": "Streamline rtxForge (part 1 of several PRs): hash each game file once per version instead of on every library scan, review and package use, without weakening any safety check.",
+      "acceptance": "A stamp-keyed SHA-256 cache (size, mtime, ctime, file identity) persisted across runs is used for status: the other-OS install check, Feeder inspection and the NR model, and cached package archives. Reviews and executions read each file once per phase through file_stamps.Operation; execute keeps a fresh pre-write process check and drift check. Folder walks do per-folder work once and inspect games in parallel. Measured on Lauren's library: scan 25-31 s before, 8.75 GB re-hashed per scan; after, under 15 s and no re-hashing of unchanged files. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05: speed up the library scan, cache download packages, stop verifying everything a million times, do not compromise a single function or feature.",
+      "next_action": "Push the branch, preflight, open a draft PR, read CI.",
+      "category": "implementation",
+      "primary_role": "backend",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "21494e8a83ffe50851cd26a92e7a24b3b180c309",
+      "state": "active",
+      "created_at": "2026-11-05T05:41:10.058Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Streamline rtxForge (part 1 of several PRs): hash each game file once per version instead of on every library scan, review and package use, without weakening any safety check.",
+          "acceptance": "A stamp-keyed SHA-256 cache (size, mtime, ctime, file identity) persisted across runs is used for status: the other-OS install check, Feeder inspection and the NR model, and cached package archives. Reviews and executions read each file once per phase through file_stamps.Operation; execute keeps a fresh pre-write process check and drift check. Folder walks do per-folder work once and inspect games in parallel. Measured on Lauren's library: scan 25-31 s before, 8.75 GB re-hashed per scan; after, under 15 s and no re-hashing of unchanged files. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05: speed up the library scan, cache download packages, stop verifying everything a million times, do not compromise a single function or feature.",
+          "at": "2026-11-05T05:41:10.058Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-streamline-scan-cache-20261105:acceptance:0",
+            "text": "A stamp-keyed SHA-256 cache (size, mtime, ctime, file identity) persisted across runs is used for status: the other-OS install check, Feeder inspection and the NR model, and cached package archives. Reviews and executions read each file once per phase through file_stamps.Operation; execute keeps a fresh pre-write process check and drift check. Folder walks do per-folder work once and inspect games in parallel. Measured on Lauren's library: scan 25-31 s before, 8.75 GB re-hashed per scan; after, under 15 s and no re-hashing of unchanged files. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05: speed up the library scan, cache download packages, stop verifying everything a million times, do not compromise a single function or feature.",
+            "at": "2026-11-05T05:41:10.058Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-05T05:49:46.170Z",
+      "lease_until": "2026-11-05T17:49:46.170Z"
     }
   ]
 }
