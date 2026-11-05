@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T05:49:46.170Z",
+  "updated_at": "2026-11-05T06:10:29.329Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28297,7 +28297,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "21494e8a83ffe50851cd26a92e7a24b3b180c309",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-05T05:43:47.553Z",
       "objective_history": {
         "baseline": {
@@ -28314,8 +28314,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T05:43:47.553Z",
-      "lease_until": "2026-11-05T17:43:47.553Z"
+      "updated_at": "2026-11-05T06:10:29.329Z",
+      "lease_until": "2026-11-05T18:10:29.329Z",
+      "pr": 149,
+      "merged_head_sha": "ac1b7d3b021ffc5f29280f3b505c3dc4dd348456",
+      "merge_commit_sha": "fa7f1e6b0b0bf603eb5a2701dbd72f350bd385ed",
+      "evidence": "PR 149 merged to main as fa7f1e6b0b0bf603eb5a2701dbd72f350bd385ed (no-ff as Lauren; merge tree 99dd9d3 equals CI-tested head ac1b7d3). All 21 checks green: WinUI x64/ARM64, native Windows/Ubuntu, game-mode, panel candidate, Flatpak, AppImage, KDE/Wayland/native review, admission, attribution. Validate/Confirm on Windows and GTK, background validation at start, Overlay Status on Review rows, scripts/forge_lab.py, VERSION 1.5.0-beta.5. Beta 5 not published yet (needs Lauren's go-ahead). Validate not yet exercised against a real game's logs; one-click repair remains with rtxforge-streamline-scan-cache-20261105.",
+      "work_accounted": true,
+      "completed_at": "2026-11-05T06:10:29.329Z"
     },
     {
       "id": "rtxforge-streamline-scan-cache-20261105",
