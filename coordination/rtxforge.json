@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T21:55:30.289Z",
+  "updated_at": "2026-11-05T21:56:19.046Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28556,14 +28556,17 @@
         "windows/RtxForge.Windows/Models/Models.cs",
         "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
         "windows/tests/test_provider_candidates.py",
-        "windows/tests/test_skynizz_provider.py"
+        "windows/tests/test_skynizz_provider.py",
+        "docs/releases/1.0-beta.md",
+        "windows/overlay-rmlui/GlassRuntime.cpp",
+        "windows/overlay-rmlui/SmokeTest.cpp"
       ],
       "resources": [
         "rtxforge-scan-path-checks"
       ],
       "goal": "Streamline rtxForge (part 3): trim the scan's remaining repeated work (path safety syscalls, a second full engine walk for offline-route games) and stop re-hashing prepared payload files on every review.",
       "acceptance": "transactions.safe makes one lstat per path component with identical refusals. package_adoption reuses the scan's anti-cheat result for the offline-only display flag instead of a second full engine walk. packages.verify checks app-owned prepared payload files through file_stamps (writes still verify their bytes). Read-only scan output on Lauren's library is byte-identical to main, and the scan is faster. Tests pass on Windows and Linux CI. Lauren asked in chat 2026-11-05 for speed and lightness without losing any function.",
-      "next_action": "Lauren 2026-11-05 'finish Not Done Yet stuff in one swoop': Linux scan judges installed NR-only games in their own mode; OptiScaler changed files show Repair recommended and Repair keeps a backup then restores. Hold merging until the Relay overlay session confirms Beta 5 is published.",
+      "next_action": "Beta 5 published (relay overlay session confirmed). Main d8c378c merged into the branch (its 3 files listed only for the base-relative admission check; no changes to them here). Merge PR 153 once CI is green on top of current main.",
       "category": "implementation",
       "primary_role": "backend",
       "primary_team": "runner",
@@ -28588,8 +28591,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T21:54:09.448Z",
-      "lease_until": "2026-11-06T09:54:09.448Z"
+      "updated_at": "2026-11-05T21:56:19.046Z",
+      "lease_until": "2026-11-06T09:56:19.046Z"
     }
   ]
 }
