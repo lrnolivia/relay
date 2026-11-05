@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T21:54:09.448Z",
+  "updated_at": "2026-11-05T21:55:30.289Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28452,7 +28452,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "167515311d0f81d46ffa20281b7aa49deb0365b7",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-05T06:52:16.794Z",
       "objective_history": {
         "baseline": {
@@ -28469,8 +28469,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T20:40:46.935Z",
-      "lease_until": "2026-11-06T08:40:46.935Z"
+      "updated_at": "2026-11-05T21:55:30.289Z",
+      "lease_until": "2026-11-06T09:55:30.289Z",
+      "pr": 155,
+      "merged_head_sha": "73eba5cb978024d20dd375e809f96d86a9c6de91",
+      "merge_commit_sha": "d8c378cd7bf0b7bc671afd1dffe2847d2da55b3e",
+      "evidence": "Notes PRs 152 (merge 56dad9c) and 155 (merge d8c378cd7bf0b7bc671afd1dffe2847d2da55b3e), both no-ff as Lauren with merge trees equal to CI-tested heads, all checks green. rtxForge 1.5 Beta 5 published from d8c378c: Windows run 42108807849 and Linux run 42108864458 succeeded; release tag beta lists rtxForge-Setup-1.5.0-beta.5 x64/arm64, rtxForge-windows-1.5.0-beta.5-x64.zip, 1.5.0-beta.5 AppImage and flatpak with sha256 files, rtxforge-beta-linux.json, and Beta 4 retained as .previous-21494e8a83ff. Release notes cover PRs 149, 150, 151 and 154.",
+      "work_accounted": true,
+      "completed_at": "2026-11-05T21:55:30.289Z"
     },
     {
       "id": "rtxforge-me1-advanced-freeze-20261105",
