@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T06:10:29.329Z",
+  "updated_at": "2026-11-05T06:15:19.412Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28356,7 +28356,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "21494e8a83ffe50851cd26a92e7a24b3b180c309",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-05T05:41:10.058Z",
       "objective_history": {
         "baseline": {
@@ -28373,8 +28373,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T05:49:46.170Z",
-      "lease_until": "2026-11-05T17:49:46.170Z"
+      "updated_at": "2026-11-05T06:15:19.412Z",
+      "lease_until": "2026-11-05T18:15:19.412Z",
+      "pr": 150,
+      "merged_head_sha": "e5930f25b091d702f8fb3e31aa6cbbaba65cd9d9",
+      "merge_commit_sha": "c72f247b69fd120a6c40383bfef0093150060592",
+      "evidence": "PR 150 merged to main as c72f247b69fd120a6c40383bfef0093150060592 (local no-ff merge as Lauren Olivia onto main fa7f1e6; merged diff has the same patch-id as the CI-tested head e5930f25, whose 19 checks were all green including WinUI 3 x64/ARM64, native Windows/Ubuntu, Flatpak and AppImage). Affected tests re-run green on the merged tree. Read-only scans of Lauren's library: 23-31 s before, 6.5-9 s after; unchanged files no longer re-hashed.",
+      "work_accounted": true,
+      "completed_at": "2026-11-05T06:15:19.412Z"
     }
   ]
 }
