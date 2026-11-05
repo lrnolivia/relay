@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T00:04:42.637Z",
+  "updated_at": "2026-11-05T01:06:20.505Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28014,7 +28014,7 @@
       "primary_staff": "luca",
       "supporting_staff": [],
       "base_sha": "c1399f40fd1c3f46e51d7fee3a8a10a1065bc9fe",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-05T00:04:42.637Z",
       "objective_history": {
         "baseline": {
@@ -28031,8 +28031,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T00:04:42.637Z",
-      "lease_until": "2026-11-05T12:04:42.637Z"
+      "updated_at": "2026-11-05T01:06:20.505Z",
+      "lease_until": "2026-11-05T13:06:20.505Z",
+      "pr": 146,
+      "merged_head_sha": "4f643cb2e9f2cde288234f6196b74ac1c5e1be7b",
+      "merge_commit_sha": "371f458ac5f134d65385390786f14b6edc29f626",
+      "evidence": "PR 146 merged by lrnolivia as 371f458 (tree equal to CI-tested head 4f643cb, all CI green). Published on Lauren's instruction (\"Publish beta\"): windows-build run 41942335388 and linux-build run 41942393852 with publish_beta and expected_sha=371f458, both success. Release 'beta' = rtxForge 1.5 Beta 2, tag beta -> 371f458; assets: Setup x64/arm64, windows x64 zip, AppImage, Flatpak with .sha256, rtxforge-beta-linux.json (version 1.5.0-beta.2, commit 371f458); 1.5.0-beta.1 assets kept as .previous-7f26b9c34972. Windows build unsigned. Required overlay revision 8 replaces every recorded Feeder RenoDX (main and legacy) with the pinned live build; 95 local tests passed.",
+      "work_accounted": true,
+      "completed_at": "2026-11-05T01:06:20.505Z"
     }
   ]
 }
