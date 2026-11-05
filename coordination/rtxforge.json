@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T05:41:10.058Z",
+  "updated_at": "2026-11-05T05:43:47.553Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28310,6 +28310,64 @@
       },
       "updated_at": "2026-11-05T05:41:10.058Z",
       "lease_until": "2026-11-05T17:41:10.058Z"
+    },
+    {
+      "id": "rtxforge-validate-status-forgelab-20261105",
+      "owner": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
+      "branch": "rtxforge/validate-status-forgelab-20261105",
+      "paths": [
+        "scripts/log_validation.py",
+        "tests/test_log_validation.py",
+        "windows/engine-host/win_features.py",
+        "windows/RtxForge.Windows/Services/ForgeService.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.Features.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.OverlayStatus.cs",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/Views/GamePage.xaml.cs",
+        "windows/RtxForge.Windows/MainWindow.Features.cs",
+        "windows/RtxForge.Windows/MainWindow.OverlayStatus.cs",
+        "windows/RtxForge.Windows/Controls/ReviewDialog.cs",
+        "scripts/overlay_status.py",
+        "tests/test_overlay_status.py",
+        "scripts/forge_lab.py",
+        "tests/test_forge_lab.py",
+        "gui/rtxforge_gtk.py",
+        "VERSION",
+        "docs/releases/1.0-beta.md",
+        "docs/DEVELOPMENT.md"
+      ],
+      "resources": [
+        "rtxforge-overlay-functionality"
+      ],
+      "goal": "Testing gains Validate (proof from the game's own logs) that becomes Confirm, with a quiet validation at app start; Overlay Status uses the Review screen's design; Forge Lab copies launch with their store's authentication. One-click repair stays with rtxforge-streamline-scan-cache-20261105, which owns the install and status files.",
+      "acceptance": "Validate reads only log tails written after the current install (OptiScaler NR GPU windows, Feeder feature 18 evaluations, native Vulkan NR, DLSS-G presented-frame samples, fgvk stats), never settings or DLL presence, never changes the chosen result, and leaves a running test record alone. With proof the row says 'We detected NR/MFG running in this game's logs. If that's right and it ran well, press Confirm to share your compatibility.' and Confirm records Working and opens the share. The same check runs once in the background after the library loads, reading logs only and taking no writer turn. Overlay Status lists games in the Review screen's poster rows grouped by state. Forge Lab copies launch with the store authentication they need. Tests, CI green, merged as Lauren, published. Lauren asked in chat 2026-11-05 ('finish the rest of the work').",
+      "next_action": "Validate/Confirm and background validation are written and tested locally; next Overlay Status and Forge Lab launch.",
+      "category": "implementation",
+      "primary_role": "backend",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "21494e8a83ffe50851cd26a92e7a24b3b180c309",
+      "state": "active",
+      "created_at": "2026-11-05T05:43:47.553Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Testing gains Validate (proof from the game's own logs) that becomes Confirm, with a quiet validation at app start; Overlay Status uses the Review screen's design; Forge Lab copies launch with their store's authentication. One-click repair stays with rtxforge-streamline-scan-cache-20261105, which owns the install and status files.",
+          "acceptance": "Validate reads only log tails written after the current install (OptiScaler NR GPU windows, Feeder feature 18 evaluations, native Vulkan NR, DLSS-G presented-frame samples, fgvk stats), never settings or DLL presence, never changes the chosen result, and leaves a running test record alone. With proof the row says 'We detected NR/MFG running in this game's logs. If that's right and it ran well, press Confirm to share your compatibility.' and Confirm records Working and opens the share. The same check runs once in the background after the library loads, reading logs only and taking no writer turn. Overlay Status lists games in the Review screen's poster rows grouped by state. Forge Lab copies launch with the store authentication they need. Tests, CI green, merged as Lauren, published. Lauren asked in chat 2026-11-05 ('finish the rest of the work').",
+          "at": "2026-11-05T05:43:47.553Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-validate-status-forgelab-20261105:acceptance:0",
+            "text": "Validate reads only log tails written after the current install (OptiScaler NR GPU windows, Feeder feature 18 evaluations, native Vulkan NR, DLSS-G presented-frame samples, fgvk stats), never settings or DLL presence, never changes the chosen result, and leaves a running test record alone. With proof the row says 'We detected NR/MFG running in this game's logs. If that's right and it ran well, press Confirm to share your compatibility.' and Confirm records Working and opens the share. The same check runs once in the background after the library loads, reading logs only and taking no writer turn. Overlay Status lists games in the Review screen's poster rows grouped by state. Forge Lab copies launch with the store authentication they need. Tests, CI green, merged as Lauren, published. Lauren asked in chat 2026-11-05 ('finish the rest of the work').",
+            "at": "2026-11-05T05:43:47.553Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-05T05:43:47.553Z",
+      "lease_until": "2026-11-05T17:43:47.553Z"
     }
   ]
 }
