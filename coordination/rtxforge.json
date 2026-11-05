@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T07:13:08.030Z",
+  "updated_at": "2026-11-05T08:32:26.760Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28518,6 +28518,45 @@
       },
       "updated_at": "2026-11-05T07:13:08.030Z",
       "lease_until": "2026-11-05T19:13:08.030Z"
+    },
+    {
+      "id": "rtxforge-me1-advanced-freeze-20261105",
+      "owner": "01a19a5a-af52-7ea2-9412-eb2f1f541ed5",
+      "branch": "rtxforge/me1-advanced-freeze-20261105",
+      "paths": [
+        "windows/overlay-rmlui/GlassRuntime.cpp",
+        "windows/overlay-rmlui/SmokeTest.cpp"
+      ],
+      "resources": [
+        "rtxforge-glass-advanced-live-session"
+      ],
+      "goal": "Fix the ME1 glass overlay failure switching to Advanced and restarting with Advanced saved.",
+      "acceptance": "Installed-DLL regression reproduces the invalid live status lookup; patched DLL survives repeated layout transitions and saved Advanced startup in isolated game-facing DX11 tests, including 4K HDR. Preserve approved UI and game configuration.",
+      "next_action": "Correct the relocated status-row lookup and add multi-frame game-facing layout regression; validate without controlling or replacing the running game.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "56dad9cb8d65184f30fdd7476a3fc43a5cab0e88",
+      "state": "active",
+      "created_at": "2026-11-05T08:32:26.760Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Fix the ME1 glass overlay failure switching to Advanced and restarting with Advanced saved.",
+          "acceptance": "Installed-DLL regression reproduces the invalid live status lookup; patched DLL survives repeated layout transitions and saved Advanced startup in isolated game-facing DX11 tests, including 4K HDR. Preserve approved UI and game configuration.",
+          "at": "2026-11-05T08:32:26.760Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-me1-advanced-freeze-20261105:acceptance:0",
+            "text": "Installed-DLL regression reproduces the invalid live status lookup; patched DLL survives repeated layout transitions and saved Advanced startup in isolated game-facing DX11 tests, including 4K HDR. Preserve approved UI and game configuration.",
+            "at": "2026-11-05T08:32:26.760Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-05T08:32:26.760Z",
+      "lease_until": "2026-11-05T20:32:26.760Z"
     }
   ]
 }
