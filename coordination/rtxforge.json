@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-04T23:12:48.058Z",
+  "updated_at": "2026-11-05T00:04:42.637Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -27989,6 +27989,50 @@
       "evidence": "PR 145 merged by lrnolivia as c1399f4 (head 574bbc3, all CI green), on Lauren's explicit instruction 2026-11-04. Shipped: rtxForge-built RenoDX DLSS5 8.5.0-rc10 with live settings interface (release renodx-dlss5-8.5.0-rc10-rtxforge-1, zip 55e62b76, addon 1e482363), pinned for Feeder installs with rc10 kept in previous_assets; rtxForge's download path verified to fetch it. Fixes: panel pass ceiling (Feeder 4), NR toggle readback guard, ReShade edit acknowledgments, PR143 pointer regression, effects page and Effects section (no longer covers HDR), welcome toast alignment, 0.33 resolution floor, restart label. Matrix and proposal in docs/overlay/. Lauren-run ME1 test (RTX 4070, driver 32.0.16.2101): pointer, NR toggle (15-85 ms), 4 passes loaded, and with the rtxForge RenoDX build strength 1.70->1.40, passes 1->2, resolution 0.70->0.50 applied live with RenoDX readback and NR engaged. Not tested in game: effect acks, new effects page, toast, other layouts, OptiScaler regression run. Local 181 scoped tests passed; core hardening runs in Linux CI. ME1 still holds test files (backup at Repos/rtxForge-overlay-functionality-test/me1-backup-20261104).",
       "work_accounted": true,
       "completed_at": "2026-11-04T23:12:48.058Z"
+    },
+    {
+      "id": "rtxforge-beta2-live-nr-release-20261104",
+      "owner": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
+      "branch": "rtxforge/beta2-live-nr-20261104",
+      "paths": [
+        "VERSION",
+        "docs/releases/1.0-beta.md",
+        "providers/glass-overlay/rollout-policy.json",
+        "windows/engine-host/overlay_package_routes.py",
+        "windows/tests/test_overlay_packages.py"
+      ],
+      "resources": [
+        "rtxforge-beta-release"
+      ],
+      "goal": "Publish rtxForge 1.5 Beta 2 so installed Feeder games get live NR tuning (PR 145).",
+      "acceptance": "VERSION 1.5.0-beta.2 with release notes; required overlay revision 8; the required Feeder overlay refresh replaces rtxForge's own stock rc10 renodx-dlss5.addon64 with the pinned live build (hash-verified, foreign builds untouched, failure leaves the game unchanged with a Repair note); tests; CI green; merged as Lauren; beta published via windows-build and linux-build workflow_dispatch with expected_sha. Lauren authorized in chat 2026-11-04 (\"Publish beta\").",
+      "next_action": "Bump version and overlay revision, extend the Feeder refresh to ship the live RenoDX build, test, PR, merge, then publish Beta 2.",
+      "category": "release",
+      "primary_role": "release",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": "luca",
+      "supporting_staff": [],
+      "base_sha": "c1399f40fd1c3f46e51d7fee3a8a10a1065bc9fe",
+      "state": "active",
+      "created_at": "2026-11-05T00:04:42.637Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish rtxForge 1.5 Beta 2 so installed Feeder games get live NR tuning (PR 145).",
+          "acceptance": "VERSION 1.5.0-beta.2 with release notes; required overlay revision 8; the required Feeder overlay refresh replaces rtxForge's own stock rc10 renodx-dlss5.addon64 with the pinned live build (hash-verified, foreign builds untouched, failure leaves the game unchanged with a Repair note); tests; CI green; merged as Lauren; beta published via windows-build and linux-build workflow_dispatch with expected_sha. Lauren authorized in chat 2026-11-04 (\"Publish beta\").",
+          "at": "2026-11-05T00:04:42.637Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta2-live-nr-release-20261104:acceptance:0",
+            "text": "VERSION 1.5.0-beta.2 with release notes; required overlay revision 8; the required Feeder overlay refresh replaces rtxForge's own stock rc10 renodx-dlss5.addon64 with the pinned live build (hash-verified, foreign builds untouched, failure leaves the game unchanged with a Repair note); tests; CI green; merged as Lauren; beta published via windows-build and linux-build workflow_dispatch with expected_sha. Lauren authorized in chat 2026-11-04 (\"Publish beta\").",
+            "at": "2026-11-05T00:04:42.637Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-05T00:04:42.637Z",
+      "lease_until": "2026-11-05T12:04:42.637Z"
     }
   ]
 }
