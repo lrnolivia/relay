@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T22:48:41.260Z",
+  "updated_at": "2026-11-05T22:58:07.882Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28574,7 +28574,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "167515311d0f81d46ffa20281b7aa49deb0365b7",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-05T06:56:41.629Z",
       "objective_history": {
         "baseline": {
@@ -28591,8 +28591,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T21:56:19.046Z",
-      "lease_until": "2026-11-06T09:56:19.046Z"
+      "updated_at": "2026-11-05T22:58:07.882Z",
+      "lease_until": "2026-11-06T10:58:07.882Z",
+      "pr": 153,
+      "merged_head_sha": "d4150b0ae9d3976ce95ebd9339af8e5b7ca8d099",
+      "merge_commit_sha": "cfb932467dca9c16275c8531a2a173a351d38ea9",
+      "evidence": "PR 153 merged to main as cfb9324 (local --no-ff as Lauren Olivia; merge tree equals tested branch head d4150b0, which already contained main d8c378c). CI on d4150b0: 17 checks success, 4 skipped (Windows, Linux, Package UI review, Game Mode, admission, attribution). Read-only scan on Lauren's 52-game library: 8.4 s vs 9.5-9.7 s on main; only the intended rows change (6 OptiScaler games no longer Unsupported, The Sims 4 native_dlss false). Full Windows Python suite matches main (same 21 Linux-only files); engine hardening module matches main plus the new repair test.",
+      "work_accounted": true,
+      "completed_at": "2026-11-05T22:58:07.882Z"
     },
     {
       "id": "rtxforge-bar-preset-gap-20261105",
