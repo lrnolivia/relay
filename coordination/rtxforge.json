@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T01:50:17.150Z",
+  "updated_at": "2026-11-05T02:19:45.260Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28174,6 +28174,72 @@
       "evidence": "PR 147 merged to main as d3e0b9975049f64676627f732f7b098f3c2af1ae (no-ff as Lauren; merge tree 93782ba6 equals CI-tested head 9dbc999 tree). All PR checks green: native Windows/Ubuntu, WinUI x64/ARM64, panel candidate, Flatpak, AppImage, KDE/Wayland review, admission, attribution. Local: 73 overlay/feeder/refresh tests, test_overlay_packages (incl. real stack shape + RenoDX adoption), test_global_controls OK. Beta 3 publish runs started from main: Windows 41951107131, Linux 41951162068.",
       "work_accounted": true,
       "completed_at": "2026-11-05T01:50:17.150Z"
+    },
+    {
+      "id": "rtxforge-passes-stepper-20261105b",
+      "owner": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
+      "branch": "rtxforge/passes-stepper-20261105b",
+      "paths": [
+        "providers/skynizz-bridge/",
+        "windows/RtxForge.Windows/Controls/PresetControlsView.cs",
+        "windows/RtxForge.Windows/Models/FeatureControls.cs",
+        "gui/feature_presets.py",
+        "prototypes/game-mode-tauri/src/main.ts",
+        "windows/engine-host/companion_controls.py",
+        "windows/tests/test_companion_controls.py",
+        "scripts/skynizz_provider.py",
+        "scripts/feeder_provider.py",
+        "windows/build/Build-FeederPanel.ps1",
+        "windows/feeder-panel/",
+        "providers/renodx-dlss5/",
+        "providers/feeder.json",
+        "providers/feeder-runtime.json",
+        "providers/glass-overlay/",
+        "prototypes/overlay-rmlui/",
+        "windows/overlay-rmlui/",
+        "tests/test_overlay_control_matrix.py",
+        "tests/test_skynizz_provider.py",
+        "tests/test_feeder_provider.py",
+        "windows/tests/test_skynizz_provider.py",
+        "docs/overlay/",
+        "windows/tests/PanelWorkbench/",
+        "windows/tests/Settings/",
+        ".github/workflows/renodx-dlss5.yml",
+        "VERSION",
+        "docs/releases/1.0-beta.md"
+      ],
+      "resources": [
+        "rtxforge-overlay-functionality"
+      ],
+      "goal": "One - # + passes control across every rtxForge UI, OptiScaler up to 8 passes, and live Feeder per-pass tuning for passes 2-4. Resumes rtxforge-passes-stepper-20261105, paused for the Beta 3 hotfix.",
+      "acceptance": "A shared stepper control kind for passes rendered as - count + in the ImGui panel, Desktop (WinUI), Linux GTK and Game Mode, with the in-game panel's existing stepper following each route's ceiling. OptiScaler passes 1-8 (controls.json, mailbox bound in ada-mfg.patch and panel-candidate.patch context, companion validation), with chained hashes updated. Feeder per-pass tuning (strength, tone, structure, skin, style, same-as-pass-1) for passes 2-4 through the RenoDX live interface: export bounds, a new RenoDX release tag, re-pin, Feeder bindings, and a pass 4 tab in the panel. Required overlay revision 10. Tests, CI green, merged as Lauren. Lauren asked in chat 2026-11-04/05 (\"lets to a - # + control for passes\", 8 passes for OptiScaler, per-pass Feeder; \"Resume passes\").",
+      "next_action": "Branch from main d3e0b99, restore stashed ImGui stepper, finish stepper kind across UIs, OptiScaler 8, Feeder per-pass, RenoDX rtxforge-2, test, PR.",
+      "category": "implementation",
+      "primary_role": "backend",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "d3e0b9975049f64676627f732f7b098f3c2af1ae",
+      "state": "active",
+      "created_at": "2026-11-05T02:19:45.260Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "One - # + passes control across every rtxForge UI, OptiScaler up to 8 passes, and live Feeder per-pass tuning for passes 2-4. Resumes rtxforge-passes-stepper-20261105, paused for the Beta 3 hotfix.",
+          "acceptance": "A shared stepper control kind for passes rendered as - count + in the ImGui panel, Desktop (WinUI), Linux GTK and Game Mode, with the in-game panel's existing stepper following each route's ceiling. OptiScaler passes 1-8 (controls.json, mailbox bound in ada-mfg.patch and panel-candidate.patch context, companion validation), with chained hashes updated. Feeder per-pass tuning (strength, tone, structure, skin, style, same-as-pass-1) for passes 2-4 through the RenoDX live interface: export bounds, a new RenoDX release tag, re-pin, Feeder bindings, and a pass 4 tab in the panel. Required overlay revision 10. Tests, CI green, merged as Lauren. Lauren asked in chat 2026-11-04/05 (\"lets to a - # + control for passes\", 8 passes for OptiScaler, per-pass Feeder; \"Resume passes\").",
+          "at": "2026-11-05T02:19:45.260Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-passes-stepper-20261105b:acceptance:0",
+            "text": "A shared stepper control kind for passes rendered as - count + in the ImGui panel, Desktop (WinUI), Linux GTK and Game Mode, with the in-game panel's existing stepper following each route's ceiling. OptiScaler passes 1-8 (controls.json, mailbox bound in ada-mfg.patch and panel-candidate.patch context, companion validation), with chained hashes updated. Feeder per-pass tuning (strength, tone, structure, skin, style, same-as-pass-1) for passes 2-4 through the RenoDX live interface: export bounds, a new RenoDX release tag, re-pin, Feeder bindings, and a pass 4 tab in the panel. Required overlay revision 10. Tests, CI green, merged as Lauren. Lauren asked in chat 2026-11-04/05 (\"lets to a - # + control for passes\", 8 passes for OptiScaler, per-pass Feeder; \"Resume passes\").",
+            "at": "2026-11-05T02:19:45.260Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-05T02:19:45.260Z",
+      "lease_until": "2026-11-05T14:19:45.260Z"
     }
   ]
 }
