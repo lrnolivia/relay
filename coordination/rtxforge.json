@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-06T05:53:05.238Z",
+  "updated_at": "2026-11-06T16:56:57.676Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28731,7 +28731,7 @@
       ],
       "goal": "Per-game DLSS5 NR add-on choice: Environment and Character slots that each take the user's chosen add-on (Lecram 8.5 rtxForge build or 10.8.0, ShortFuse SF 26.1025.0009, GITC Uplift 1.8.0), an Old (310.8) / New (310.9.16) DLSS5 model per package, and saved combos reusable across games, with the Reddit preset (ShortFuse characters + Lecram 10.8 environment) built in.",
       "acceptance": "Every add-on build and model is pinned by SHA-256 and verified before install; only one configuration is installed per game and restore returns the game to its original files. Coexistence is configured, not guessed: Lecram ForeignNr=observe beside another add-on; GITC refuses a second add-on; ShortFuse only in 64-bit games with their own DLSS. Unverified pairs show as not verified with Try Anyway. Combos store both slots and apply across games without changing unrelated settings. Tests pass on Windows and Linux CI; each add-on and the Old/New model are tested on Forge Lab copies (never real installs). Lauren asked in chat 2026-11-05.",
-      "next_action": "Lecram + ShortFuse beside OptiScaler MFG: set aside OptiScaler's private DLSS copies (identical to the game's), drift check and engine guard aware; then install the Characters and World combo on the Witcher 3 Forge Lab copy for Lauren's test. Overlay panel port is the overlay session's, after merge.",
+      "next_action": "Set-aside workaround dropped. Lecram refused where OptiScaler is installed (Lauren chose keep + block). OptiScaler NR + MFG is the Environment with ShortFuse as Character (no model install, LoadFromDllMain, ProcessingScale percent). Push to PR 157, check CI, then verify the real install path on the Witcher 3 Forge Lab copy.",
       "category": "implementation",
       "primary_role": "backend",
       "primary_team": "runner",
@@ -28756,8 +28756,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-06T05:13:44.969Z",
-      "lease_until": "2026-11-06T17:13:44.969Z"
+      "updated_at": "2026-11-06T16:56:57.676Z",
+      "lease_until": "2026-11-07T04:56:57.676Z"
     },
     {
       "id": "rtxforge-beta5-notes-bar-hud-20261106",
