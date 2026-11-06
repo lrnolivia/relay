@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-06T05:13:44.969Z",
+  "updated_at": "2026-11-06T05:53:05.238Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28695,43 +28695,6 @@
       "completed_at": "2026-11-06T04:59:16.162Z"
     },
     {
-      "id": "rtxforge-beta5-notes-bar-hud-20261106",
-      "owner": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
-      "branch": "rtxforge/beta5-notes-bar-hud-20261106",
-      "paths": [
-        "docs/releases/1.0-beta.md"
-      ],
-      "resources": [],
-      "goal": "Beta 5 release notes cover the Bar preset-row gap fix (PR 156) and RenoDX's in-game warnings shown as rtxForge notifications (PR 158), so Beta 5 can be republished from main.",
-      "acceptance": "docs/releases/1.0-beta.md describes PRs 156 and 158 under 1.5.0-beta.5; CI green; merged as Lauren; Windows and Linux Beta 5 published from that exact main commit. Lauren asked in chat 2026-11-06 ('Publish now').",
-      "next_action": "Add the two notes, PR, CI, merge, then publish Beta 5.",
-      "category": "implementation",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "83a7e772130f8b897f8078a555fb498f0413272a",
-      "state": "active",
-      "created_at": "2026-11-06T05:05:49.341Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Beta 5 release notes cover the Bar preset-row gap fix (PR 156) and RenoDX's in-game warnings shown as rtxForge notifications (PR 158), so Beta 5 can be republished from main.",
-          "acceptance": "docs/releases/1.0-beta.md describes PRs 156 and 158 under 1.5.0-beta.5; CI green; merged as Lauren; Windows and Linux Beta 5 published from that exact main commit. Lauren asked in chat 2026-11-06 ('Publish now').",
-          "at": "2026-11-06T05:05:49.341Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-beta5-notes-bar-hud-20261106:acceptance:0",
-            "text": "docs/releases/1.0-beta.md describes PRs 156 and 158 under 1.5.0-beta.5; CI green; merged as Lauren; Windows and Linux Beta 5 published from that exact main commit. Lauren asked in chat 2026-11-06 ('Publish now').",
-            "at": "2026-11-06T05:05:49.341Z"
-          }
-        ]
-      },
-      "updated_at": "2026-11-06T05:05:49.341Z",
-      "lease_until": "2026-11-06T17:05:49.341Z"
-    },
-    {
       "id": "rtxforge-nr-addon-choice-20261105",
       "owner": "claude-code-f9afa0e7-24cc-4ddc-843e-3a951ab8945d",
       "branch": "rtxforge/nr-addon-choice-20261105",
@@ -28795,6 +28758,44 @@
       },
       "updated_at": "2026-11-06T05:13:44.969Z",
       "lease_until": "2026-11-06T17:13:44.969Z"
+    },
+    {
+      "id": "rtxforge-beta5-notes-bar-hud-20261106",
+      "owner": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
+      "branch": "rtxforge/beta5-notes-bar-hud-20261106",
+      "paths": [
+        "docs/releases/1.0-beta.md",
+        "VERSION"
+      ],
+      "resources": [],
+      "goal": "Beta 5 release notes cover the Bar preset-row gap fix (PR 156) and RenoDX's in-game warnings shown as rtxForge notifications (PR 158), so Beta 5 can be republished from main.",
+      "acceptance": "docs/releases/1.0-beta.md describes PRs 156 and 158 under 1.5.0-beta.5; CI green; merged as Lauren; Windows and Linux Beta 5 published from that exact main commit. Lauren asked in chat 2026-11-06 ('Publish now').",
+      "next_action": "Beta 5 can't be republished (the release refuses a same-version replacement), so bump to 1.5.0-beta.6 with the PR 156/158 notes under Beta 6, PR, CI, merge, publish.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "83a7e772130f8b897f8078a555fb498f0413272a",
+      "state": "active",
+      "created_at": "2026-11-06T05:05:49.341Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Beta 5 release notes cover the Bar preset-row gap fix (PR 156) and RenoDX's in-game warnings shown as rtxForge notifications (PR 158), so Beta 5 can be republished from main.",
+          "acceptance": "docs/releases/1.0-beta.md describes PRs 156 and 158 under 1.5.0-beta.5; CI green; merged as Lauren; Windows and Linux Beta 5 published from that exact main commit. Lauren asked in chat 2026-11-06 ('Publish now').",
+          "at": "2026-11-06T05:05:49.341Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta5-notes-bar-hud-20261106:acceptance:0",
+            "text": "docs/releases/1.0-beta.md describes PRs 156 and 158 under 1.5.0-beta.5; CI green; merged as Lauren; Windows and Linux Beta 5 published from that exact main commit. Lauren asked in chat 2026-11-06 ('Publish now').",
+            "at": "2026-11-06T05:05:49.341Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-06T05:53:05.238Z",
+      "lease_until": "2026-11-06T17:53:05.238Z"
     }
   ]
 }
