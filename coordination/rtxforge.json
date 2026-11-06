@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-06T16:56:57.676Z",
+  "updated_at": "2026-11-06T17:48:31.568Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28777,7 +28777,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "83a7e772130f8b897f8078a555fb498f0413272a",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-06T05:05:49.341Z",
       "objective_history": {
         "baseline": {
@@ -28794,8 +28794,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-06T05:53:05.238Z",
-      "lease_until": "2026-11-06T17:53:05.238Z"
+      "updated_at": "2026-11-06T17:48:31.568Z",
+      "lease_until": "2026-11-07T05:48:31.568Z",
+      "pr": 160,
+      "merged_head_sha": "cd14ad0e5f13eebd2c951e584fb4b1cd1c7b1fcc",
+      "merge_commit_sha": "11c4874a21810393f6880cf2f6be8a32127b3ff5",
+      "evidence": "PR 159 (notes) merged as a82c9db; Beta 5 republish from a82c9db was refused by the release's same-version check before any upload (Windows run 42168505195, Linux run 42168547024; release verified unchanged). PR 160 bumped VERSION to 1.5.0-beta.6 and moved the PR 156/158 notes under Beta 6; merged no-ff as Lauren as 11c4874a21810393f6880cf2f6be8a32127b3ff5, merge tree 61d70fa equals CI-tested head cd14ad0. All checks green (AppImage passed on re-run after a timing flake in tests/test_file_stamps.py:127). Published Beta 6 from 11c4874: Windows run 42260757056 and Linux run 42260848114 succeeded; release 'rtxForge 1.5 Beta 6' carries Setup x64/arm64, Windows zip, AppImage, Flatpak and their sha256 files; rtxforge-beta-linux.json reports version 1.5.0-beta.6 commit 11c4874; Beta 5 kept as .previous-d8c378cd7bf0.",
+      "work_accounted": true,
+      "completed_at": "2026-11-06T17:48:31.568Z"
     }
   ]
 }
