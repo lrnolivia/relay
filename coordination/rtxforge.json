@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-05T23:48:20.156Z",
+  "updated_at": "2026-11-06T04:59:16.162Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28732,7 +28732,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "41cff760a73cbbf04758a7f88754c26abec0f761",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-05T23:47:19.237Z",
       "objective_history": {
         "baseline": {
@@ -28749,8 +28749,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-05T23:48:20.156Z",
-      "lease_until": "2026-11-06T11:48:20.156Z"
+      "updated_at": "2026-11-06T04:59:16.162Z",
+      "lease_until": "2026-11-06T16:59:16.162Z",
+      "pr": 158,
+      "merged_head_sha": "6ec34fa76e84a810b72a15d8b05975a775f173d6",
+      "merge_commit_sha": "83a7e772130f8b897f8078a555fb498f0413272a",
+      "evidence": "PR 158 merged to main as 83a7e772130f8b897f8078a555fb498f0413272a (no-ff as Lauren; merge tree 3915467 equals CI-tested head 6ec34fa). All 22 checks green. Release renodx-dlss5-8.5.0-rc10-rtxforge-3 published by CI (zip ed8cd7bc..., addon 07d306db..., built from the committed patch/compat hashes, both HUD exports present) and pinned in feeder.json/feeder-runtime.json with rtxforge-2 kept as a previous asset; overlay revision 11. Not yet tested in a game (Lauren chose merge now, test later).",
+      "work_accounted": true,
+      "completed_at": "2026-11-06T04:59:16.162Z"
     }
   ]
 }
