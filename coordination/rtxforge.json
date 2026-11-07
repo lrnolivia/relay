@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-07T23:30:01.227Z",
+  "updated_at": "2026-11-07T23:32:44.274Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29106,20 +29106,18 @@
       "paths": [
         "windows/RtxForge.Windows/Services/EngineForgeService.cs",
         "windows/RtxForge.Windows/Models/OperationRoutes.cs",
-        "windows/RtxForge.Windows/Models/Models.cs",
         "windows/tests/OperationScope/Program.cs",
         "windows/tests/OperationScope/OperationScope.csproj",
         "windows/engine-host/rtxforge_win_host.py",
-        "scripts/review_plan.py",
         "tests/test_review_plan.py",
-        "tests/test_win_host_review.py"
+        "windows/tests/test_review_prepare_host.py"
       ],
       "resources": [
         "review-plan"
       ],
       "goal": "Windows Desktop plans reviewed operations through the shared review planner (host review_prepare) instead of its own C# copy, finishing the Desktop/Game Mode unification.",
       "acceptance": "EngineForgeService prepares install/repair/uninstall/reset/apply via review_prepare; RouteFor and OperationRoutes removed; Desktop keeps its engine operations unchanged; WinUI x64/ARM64 build, Python and OperationScope tests pass; CI green on the exact head.",
-      "next_action": "Branch from main 468db65, port PrepareAsync to review_prepare, build and test, draft PR.",
+      "next_action": "Build WinUI x64/ARM64 and run OperationScope/Settings tests, then draft PR.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -29143,8 +29141,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-07T23:30:01.227Z",
-      "lease_until": "2026-11-08T11:30:01.227Z"
+      "updated_at": "2026-11-07T23:32:44.274Z",
+      "lease_until": "2026-11-08T11:32:44.274Z"
     }
   ]
 }
