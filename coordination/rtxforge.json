@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-07T21:53:39.218Z",
+  "updated_at": "2026-11-07T22:26:02.067Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29060,7 +29060,7 @@
       "primary_staff": "ellis",
       "supporting_staff": [],
       "base_sha": "a221c4c290a3f5144400456505f790b64d07db53",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-07T21:53:39.218Z",
       "objective_history": {
         "baseline": {
@@ -29077,8 +29077,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-07T21:53:39.218Z",
-      "lease_until": "2026-11-08T09:53:39.218Z"
+      "updated_at": "2026-11-07T22:26:02.067Z",
+      "lease_until": "2026-11-08T10:26:02.067Z",
+      "pr": 166,
+      "merged_head_sha": "6e173ce8ac70311a5808acb54df6298269a01180",
+      "merge_commit_sha": "468db65ca03c842e8c886928cfc2691197b54757",
+      "evidence": "PR 166 merged into main as 468db65 (no-ff merge as Lauren; merge tree equals CI-tested head 6e173ce). All 21 checks on 6e173ce: 17 success, 4 skipped (publish/hygiene), 0 failed. New tests/test_review_plan.py (11) pass; Game Mode review tests (11) pass against scripts/review_plan.py; Linux supported-subset tests and Windows host tests pass. WinUI switch to review_prepare is follow-up work, blocked by the expired PR 139 claim on EngineForgeService.cs.",
+      "work_accounted": true,
+      "completed_at": "2026-11-07T22:26:02.067Z"
     }
   ]
 }
