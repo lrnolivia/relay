@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-07T21:17:56.197Z",
+  "updated_at": "2026-11-07T21:51:20.215Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29005,7 +29005,7 @@
       "primary_staff": "adrian",
       "supporting_staff": [],
       "base_sha": "a51397e1a06e81c79de21bd4495a364361bc64f4",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-07T21:17:56.197Z",
       "objective_history": {
         "baseline": {
@@ -29022,8 +29022,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-07T21:17:56.197Z",
-      "lease_until": "2026-11-08T09:17:56.197Z"
+      "updated_at": "2026-11-07T21:51:20.215Z",
+      "lease_until": "2026-11-08T09:51:20.215Z",
+      "pr": 165,
+      "merged_head_sha": "2882f7a4f0488b16e012fb00795141a5b9b0b6e7",
+      "merge_commit_sha": "a221c4c290a3f5144400456505f790b64d07db53",
+      "evidence": "PR 165 merged into main as a221c4c (no-ff merge as Lauren; merge tree equals CI-tested head 2882f7a). All 21 checks on 2882f7a: 17 success, 4 skipped (publish/hygiene), 0 failed. Read-only first-ever scan of the 52-game library 62.1 s -> 34.1 s, warm 4.9 s -> 4.1 s; rows byte-identical to main a51397e cold and warm; all 340 cached probe answers identical.",
+      "work_accounted": true,
+      "completed_at": "2026-11-07T21:51:20.215Z"
     }
   ]
 }
