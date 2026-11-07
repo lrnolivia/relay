@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-07T17:02:49.454Z",
+  "updated_at": "2026-11-07T17:29:41.532Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28810,47 +28810,6 @@
       "completed_at": "2026-11-06T17:48:31.568Z"
     },
     {
-      "id": "rtxforge-beta7-20261107",
-      "owner": "claude-code-f9afa0e7-24cc-4ddc-843e-3a951ab8945d",
-      "branch": "rtxforge/beta7-20261107",
-      "paths": [
-        "VERSION",
-        "docs/releases/1.0-beta.md"
-      ],
-      "resources": [
-        "rtxforge-release"
-      ],
-      "goal": "Prepare and publish rtxForge 1.5 Beta 7 so the per-game DLSS5 NR add-ons (PR 157) reach users.",
-      "acceptance": "VERSION is 1.5.0-beta.7 and docs/releases/1.0-beta.md leads with the Beta 7 notes. CI passes, the change merges to main as Lauren, and the Windows and Linux builds publish Beta 7 from that main commit with matching SHA-256 files. Lauren asked in chat 2026-11-07: 'Yes, ship Beta 7'.",
-      "next_action": "Branch, bump VERSION, write notes, open PR, read CI.",
-      "category": "release",
-      "primary_role": "backend",
-      "primary_team": "runner",
-      "supporting_teams": [],
-      "primary_staff": "nico",
-      "supporting_staff": [],
-      "base_sha": "9683928b2c6b48c7d69397564ce97edc02a9a59d",
-      "state": "active",
-      "created_at": "2026-11-07T16:31:49.460Z",
-      "objective_history": {
-        "baseline": {
-          "goal": "Prepare and publish rtxForge 1.5 Beta 7 so the per-game DLSS5 NR add-ons (PR 157) reach users.",
-          "acceptance": "VERSION is 1.5.0-beta.7 and docs/releases/1.0-beta.md leads with the Beta 7 notes. CI passes, the change merges to main as Lauren, and the Windows and Linux builds publish Beta 7 from that main commit with matching SHA-256 files. Lauren asked in chat 2026-11-07: 'Yes, ship Beta 7'.",
-          "at": "2026-11-07T16:31:49.460Z",
-          "source": "assignment-created"
-        },
-        "acceptance_versions": [
-          {
-            "id": "rtxforge-beta7-20261107:acceptance:0",
-            "text": "VERSION is 1.5.0-beta.7 and docs/releases/1.0-beta.md leads with the Beta 7 notes. CI passes, the change merges to main as Lauren, and the Windows and Linux builds publish Beta 7 from that main commit with matching SHA-256 files. Lauren asked in chat 2026-11-07: 'Yes, ship Beta 7'.",
-            "at": "2026-11-07T16:31:49.460Z"
-          }
-        ]
-      },
-      "updated_at": "2026-11-07T16:31:49.460Z",
-      "lease_until": "2026-11-08T04:31:49.460Z"
-    },
-    {
       "id": "rtxforge-nr-addon-panel-20261107",
       "owner": "claude-code-b7c4523c-4430-4e5f-bba6-ab03334fa8b2",
       "branch": "rtxforge/nr-addon-panel-20261107",
@@ -28910,6 +28869,48 @@
       "evidence": "PR 162 merged to main as 3fd8952 (local --no-ff merge as Lauren; merge tree equals head c2233fa tree). All CI checks green on 356f67e; head c2233fa only adds main's Beta 7 VERSION/notes. Lauren said 'Merge it now'. Not yet tested in a game or published.",
       "work_accounted": true,
       "completed_at": "2026-11-07T17:02:49.454Z"
+    },
+    {
+      "id": "rtxforge-beta7-20261107",
+      "owner": "claude-code-f9afa0e7-24cc-4ddc-843e-3a951ab8945d",
+      "branch": "rtxforge/beta7-20261107",
+      "paths": [
+        "VERSION",
+        "docs/releases/1.0-beta.md",
+        "windows/engine-host/companion_controls.py"
+      ],
+      "resources": [
+        "rtxforge-release"
+      ],
+      "goal": "Prepare and publish rtxForge 1.5 Beta 7 so the per-game DLSS5 NR add-ons (PR 157) reach users.",
+      "acceptance": "VERSION is 1.5.0-beta.7 and docs/releases/1.0-beta.md leads with the Beta 7 notes. CI passes, the change merges to main as Lauren, and the Windows and Linux builds publish Beta 7 from that main commit with matching SHA-256 files. Lauren asked in chat 2026-11-07: 'Yes, ship Beta 7'.",
+      "next_action": "Main 3fd8952 (PR 162) fails WinUI 3 x64: test_companion_controls sees a same-size DLL rewrite as unchanged because the verified cache trusts (size, mtime) for files modified within the same timestamp tick. Fix the racy cache, then merge PR 163 and publish Beta 7.",
+      "category": "release",
+      "primary_role": "backend",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "9683928b2c6b48c7d69397564ce97edc02a9a59d",
+      "state": "active",
+      "created_at": "2026-11-07T16:31:49.460Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Prepare and publish rtxForge 1.5 Beta 7 so the per-game DLSS5 NR add-ons (PR 157) reach users.",
+          "acceptance": "VERSION is 1.5.0-beta.7 and docs/releases/1.0-beta.md leads with the Beta 7 notes. CI passes, the change merges to main as Lauren, and the Windows and Linux builds publish Beta 7 from that main commit with matching SHA-256 files. Lauren asked in chat 2026-11-07: 'Yes, ship Beta 7'.",
+          "at": "2026-11-07T16:31:49.460Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta7-20261107:acceptance:0",
+            "text": "VERSION is 1.5.0-beta.7 and docs/releases/1.0-beta.md leads with the Beta 7 notes. CI passes, the change merges to main as Lauren, and the Windows and Linux builds publish Beta 7 from that main commit with matching SHA-256 files. Lauren asked in chat 2026-11-07: 'Yes, ship Beta 7'.",
+            "at": "2026-11-07T16:31:49.460Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-07T17:29:41.532Z",
+      "lease_until": "2026-11-08T05:29:41.532Z"
     }
   ]
 }
