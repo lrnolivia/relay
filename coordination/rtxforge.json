@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-07T17:44:42.156Z",
+  "updated_at": "2026-11-07T17:52:02.128Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28931,7 +28931,8 @@
         "tests/linux_runtime/test_integration_contracts.py",
         "windows/overlay-rmlui/GlassRuntime.cpp",
         "windows/overlay-rmlui/SmokeTest.cpp",
-        "providers/glass-overlay/OverlayController.h"
+        "providers/glass-overlay/OverlayController.h",
+        "docs/overlay/control-matrix.md"
       ],
       "resources": [
         "rtxforge-library-scan",
@@ -28939,7 +28940,7 @@
       ],
       "goal": "Second streamline audit, part 1 (Lauren 2026-11-07: 'another audit for speed overlay and cleanliness'): library scan speed. Cache each executable's import list and PE machine type by file version, write the probe cache once per scan, one-pass renderer-name search, map instead of read for delay imports, and check each parent folder once per read-only scan in transactions.safe. Scan output must stay byte-identical.",
       "acceptance": "Read-only scan output byte-identical to main on Lauren's 52-game library; warm and first-ever scan times measured before and after; affected unit tests pass; CI green.",
-      "next_action": "Audit part 2 (overlay): overlay helper never waits behind a writer for saved-settings flushes; Linux overlay host reads /proc once per poll; Glass skips unchanged per-frame label and state writes; smoke test reports visible-frame cost.",
+      "next_action": "Push the overlay fixes after the smoke-test baseline run; refresh the stale control-matrix rows; report findings and the cleanup list for Lauren.",
       "task_class": "maintenance",
       "category": "maintenance",
       "primary_team": "runner",
@@ -28964,8 +28965,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-07T17:44:42.156Z",
-      "lease_until": "2026-11-08T05:44:42.156Z"
+      "updated_at": "2026-11-07T17:52:02.128Z",
+      "lease_until": "2026-11-08T05:52:02.128Z"
     }
   ]
 }
