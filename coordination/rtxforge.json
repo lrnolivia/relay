@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-06T17:48:31.568Z",
+  "updated_at": "2026-11-07T16:30:55.644Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28739,7 +28739,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "cfb932467dca9c16275c8531a2a173a351d38ea9",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-05T22:59:10.107Z",
       "objective_history": {
         "baseline": {
@@ -28756,8 +28756,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-06T16:56:57.676Z",
-      "lease_until": "2026-11-07T04:56:57.676Z"
+      "updated_at": "2026-11-07T16:30:55.644Z",
+      "lease_until": "2026-11-08T04:30:55.644Z",
+      "pr": 157,
+      "merged_head_sha": "6fccd25a09ed9c50450ddb5afe05e7ee11fa6495",
+      "merge_commit_sha": "9683928b2c6b48c7d69397564ce97edc02a9a59d",
+      "evidence": "PR 157 merged to main as 9683928b2c6b48c7d69397564ce97edc02a9a59d (local no-ff merge as Lauren Olivia onto main 11c4874; merge tree equals the CI-tested head 6fccd25, which already contained 11c4874). CI on 6fccd25: all checks success (WinUI 3 x64/ARM64, native Windows/Ubuntu, Flatpak, AppImage, admission, attribution), publish jobs skipped. 69 local tests green on the merged tree plus windows/tests/test_nr_addons.py. Witcher 3 Forge Lab copy: OptiScaler RR (DLSSD) and frame generation ran with ShortFuse loaded early beside them; ShortFuse confirmed reading [RENODX-DLSS]. Not published: Beta 6 already shipped from 11c4874, so this needs a Beta 7.",
+      "work_accounted": true,
+      "completed_at": "2026-11-07T16:30:55.644Z"
     },
     {
       "id": "rtxforge-beta5-notes-bar-hud-20261106",
