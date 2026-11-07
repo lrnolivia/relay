@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-07T17:52:02.128Z",
+  "updated_at": "2026-11-07T18:29:38.205Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28892,7 +28892,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "9683928b2c6b48c7d69397564ce97edc02a9a59d",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-07T16:31:49.460Z",
       "objective_history": {
         "baseline": {
@@ -28909,8 +28909,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-07T17:29:41.532Z",
-      "lease_until": "2026-11-08T05:29:41.532Z"
+      "updated_at": "2026-11-07T18:29:38.205Z",
+      "lease_until": "2026-11-08T06:29:38.205Z",
+      "pr": 163,
+      "merged_head_sha": "0cf04c5e34e1d928890c5db37d500a938c065813",
+      "merge_commit_sha": "14ead2f23d87a27b671cc304c8038acfcc280df3",
+      "evidence": "rtxForge 1.5 Beta 7 published from main 14ead2f23d87a27b671cc304c8038acfcc280df3 (PR 161 merged as 0f674a6, PR 163 as 14ead2f, both local no-ff merges as Lauren Olivia with merge tree equal to the CI-tested head). Includes PR 157 (NR add-ons) and PR 162 (overlay NR add-ons section). PR 163 also fixes the WinUI 3 x64 failure on main 3fd8952: companion_controls remembered a verified DLL by size+mtime, so a same-tick same-size rewrite stayed 'managed'; a match is now cached only for files older than 2 s. Publish runs Windows 42398482163 and Linux 42398516871 succeeded; all 5 Beta 7 assets (x64/arm64 Setup, portable zip, AppImage, flatpak) match their .sha256 files, and rtxforge-beta-linux.json names 1.5.0-beta.7 at 14ead2f. An earlier Beta 7 publish from 0f674a6 was cancelled before upload.",
+      "work_accounted": true,
+      "completed_at": "2026-11-07T18:29:38.205Z"
     },
     {
       "id": "rtxforge-scan-speed-20261107",
