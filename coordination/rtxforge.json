@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-07T18:29:38.205Z",
+  "updated_at": "2026-11-07T20:44:26.599Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28938,7 +28938,8 @@
         "windows/overlay-rmlui/GlassRuntime.cpp",
         "windows/overlay-rmlui/SmokeTest.cpp",
         "providers/glass-overlay/OverlayController.h",
-        "docs/overlay/control-matrix.md"
+        "docs/overlay/control-matrix.md",
+        "tests/test_file_stamps.py"
       ],
       "resources": [
         "rtxforge-library-scan",
@@ -28946,7 +28947,7 @@
       ],
       "goal": "Second streamline audit, part 1 (Lauren 2026-11-07: 'another audit for speed overlay and cleanliness'): library scan speed. Cache each executable's import list and PE machine type by file version, write the probe cache once per scan, one-pass renderer-name search, map instead of read for delay imports, and check each parent folder once per read-only scan in transactions.safe. Scan output must stay byte-identical.",
       "acceptance": "Read-only scan output byte-identical to main on Lauren's 52-game library; warm and first-ever scan times measured before and after; affected unit tests pass; CI green.",
-      "next_action": "Push the overlay fixes after the smoke-test baseline run; refresh the stale control-matrix rows; report findings and the cleanup list for Lauren.",
+      "next_action": "Fix the racy package-drift stamp test that failed WinUI x64 CI, wait for green CI on the new head, merge PR 164 (Lauren approved), then complete the claim.",
       "task_class": "maintenance",
       "category": "maintenance",
       "primary_team": "runner",
@@ -28971,8 +28972,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-07T17:52:02.128Z",
-      "lease_until": "2026-11-08T05:52:02.128Z"
+      "updated_at": "2026-11-07T20:44:26.599Z",
+      "lease_until": "2026-11-08T08:44:26.599Z"
     }
   ]
 }
