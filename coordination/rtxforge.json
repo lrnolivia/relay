@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-07T17:29:41.532Z",
+  "updated_at": "2026-11-07T17:35:24.016Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -28911,6 +28911,52 @@
       },
       "updated_at": "2026-11-07T17:29:41.532Z",
       "lease_until": "2026-11-08T05:29:41.532Z"
+    },
+    {
+      "id": "rtxforge-scan-speed-20261107",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/scan-speed-20261107",
+      "paths": [
+        "scripts/feeder_provider.py",
+        "scripts/feeder_legacy.py",
+        "scripts/transactions.py",
+        "windows/engine-host/library_scan.py",
+        "windows/engine-host/rtxforge_win_host.py",
+        "tests/test_feeder_provider.py",
+        "tests/test_scan_caches.py"
+      ],
+      "resources": [
+        "rtxforge-library-scan"
+      ],
+      "goal": "Second streamline audit, part 1 (Lauren 2026-11-07: 'another audit for speed overlay and cleanliness'): library scan speed. Cache each executable's import list and PE machine type by file version, write the probe cache once per scan, one-pass renderer-name search, map instead of read for delay imports, and check each parent folder once per read-only scan in transactions.safe. Scan output must stay byte-identical.",
+      "acceptance": "Read-only scan output byte-identical to main on Lauren's 52-game library; warm and first-ever scan times measured before and after; affected unit tests pass; CI green.",
+      "next_action": "Commit the measured scan fixes, add tests, open a draft PR.",
+      "task_class": "maintenance",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "3fd89520765e792834d3bb9acfa0e5a8666a288d",
+      "state": "active",
+      "created_at": "2026-11-07T17:35:24.016Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Second streamline audit, part 1 (Lauren 2026-11-07: 'another audit for speed overlay and cleanliness'): library scan speed. Cache each executable's import list and PE machine type by file version, write the probe cache once per scan, one-pass renderer-name search, map instead of read for delay imports, and check each parent folder once per read-only scan in transactions.safe. Scan output must stay byte-identical.",
+          "acceptance": "Read-only scan output byte-identical to main on Lauren's 52-game library; warm and first-ever scan times measured before and after; affected unit tests pass; CI green.",
+          "at": "2026-11-07T17:35:24.016Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-scan-speed-20261107:acceptance:0",
+            "text": "Read-only scan output byte-identical to main on Lauren's 52-game library; warm and first-ever scan times measured before and after; affected unit tests pass; CI green.",
+            "at": "2026-11-07T17:35:24.016Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-07T17:35:24.016Z",
+      "lease_until": "2026-11-08T05:35:24.016Z"
     }
   ]
 }
