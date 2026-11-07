@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-07T23:32:44.274Z",
+  "updated_at": "2026-11-07T23:59:04.208Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29124,7 +29124,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "468db65ca03c842e8c886928cfc2691197b54757",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-07T23:30:01.227Z",
       "objective_history": {
         "baseline": {
@@ -29141,8 +29141,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-07T23:32:44.274Z",
-      "lease_until": "2026-11-08T11:32:44.274Z"
+      "updated_at": "2026-11-07T23:59:04.208Z",
+      "lease_until": "2026-11-08T11:59:04.208Z",
+      "pr": 167,
+      "merged_head_sha": "2baf034bd525c5daf0679067655f9f957208d8c9",
+      "merge_commit_sha": "c5ac4091a46ea9e26f8946642d3c521141385421",
+      "evidence": "PR 167 head 2baf034 merged into main as c5ac4091 (Lauren, no-ff) after all CI checks completed green on the exact head (WinUI 3 x64/ARM64, native windows/ubuntu, game-mode, panel, Flatpak, AppImage, reviews; publish jobs skipped). Local: WinUI x64/ARM64 build, OperationScope and Settings programs, test_review_plan, test_review_prepare_host and Game Mode test_review_routes pass.",
+      "work_accounted": true,
+      "completed_at": "2026-11-07T23:59:04.208Z"
     }
   ]
 }
