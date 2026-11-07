@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-07T23:27:48.342Z",
+  "updated_at": "2026-11-07T23:30:01.227Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29098,6 +29098,53 @@
       "evidence": "PR 166 merged into main as 468db65 (no-ff merge as Lauren; merge tree equals CI-tested head 6e173ce). All 21 checks on 6e173ce: 17 success, 4 skipped (publish/hygiene), 0 failed. New tests/test_review_plan.py (11) pass; Game Mode review tests (11) pass against scripts/review_plan.py; Linux supported-subset tests and Windows host tests pass. WinUI switch to review_prepare is follow-up work, blocked by the expired PR 139 claim on EngineForgeService.cs.",
       "work_accounted": true,
       "completed_at": "2026-11-07T22:26:02.067Z"
+    },
+    {
+      "id": "rtxforge-winui-review-plan-20261107",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/winui-review-plan-20261107",
+      "paths": [
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+        "windows/RtxForge.Windows/Models/OperationRoutes.cs",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/tests/OperationScope/Program.cs",
+        "windows/tests/OperationScope/OperationScope.csproj",
+        "windows/engine-host/rtxforge_win_host.py",
+        "scripts/review_plan.py",
+        "tests/test_review_plan.py",
+        "tests/test_win_host_review.py"
+      ],
+      "resources": [
+        "review-plan"
+      ],
+      "goal": "Windows Desktop plans reviewed operations through the shared review planner (host review_prepare) instead of its own C# copy, finishing the Desktop/Game Mode unification.",
+      "acceptance": "EngineForgeService prepares install/repair/uninstall/reset/apply via review_prepare; RouteFor and OperationRoutes removed; Desktop keeps its engine operations unchanged; WinUI x64/ARM64 build, Python and OperationScope tests pass; CI green on the exact head.",
+      "next_action": "Branch from main 468db65, port PrepareAsync to review_prepare, build and test, draft PR.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "468db65ca03c842e8c886928cfc2691197b54757",
+      "state": "active",
+      "created_at": "2026-11-07T23:30:01.227Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Windows Desktop plans reviewed operations through the shared review planner (host review_prepare) instead of its own C# copy, finishing the Desktop/Game Mode unification.",
+          "acceptance": "EngineForgeService prepares install/repair/uninstall/reset/apply via review_prepare; RouteFor and OperationRoutes removed; Desktop keeps its engine operations unchanged; WinUI x64/ARM64 build, Python and OperationScope tests pass; CI green on the exact head.",
+          "at": "2026-11-07T23:30:01.227Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-winui-review-plan-20261107:acceptance:0",
+            "text": "EngineForgeService prepares install/repair/uninstall/reset/apply via review_prepare; RouteFor and OperationRoutes removed; Desktop keeps its engine operations unchanged; WinUI x64/ARM64 build, Python and OperationScope tests pass; CI green on the exact head.",
+            "at": "2026-11-07T23:30:01.227Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-07T23:30:01.227Z",
+      "lease_until": "2026-11-08T11:30:01.227Z"
     }
   ]
 }
