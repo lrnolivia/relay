@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-07T23:59:04.208Z",
+  "updated_at": "2026-11-08T00:06:07.450Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29149,6 +29149,47 @@
       "evidence": "PR 167 head 2baf034 merged into main as c5ac4091 (Lauren, no-ff) after all CI checks completed green on the exact head (WinUI 3 x64/ARM64, native windows/ubuntu, game-mode, panel, Flatpak, AppImage, reviews; publish jobs skipped). Local: WinUI x64/ARM64 build, OperationScope and Settings programs, test_review_plan, test_review_prepare_host and Game Mode test_review_routes pass.",
       "work_accounted": true,
       "completed_at": "2026-11-07T23:59:04.208Z"
+    },
+    {
+      "id": "rtxforge-desktop-repair-20261108",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/desktop-repair-20261108",
+      "paths": [
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+        "windows/engine-host/rtxforge_win_host.py",
+        "windows/tests/test_review_prepare_host.py"
+      ],
+      "resources": [
+        "review-plan"
+      ],
+      "goal": "Windows Desktop Repair runs the engine's file repair, as Game Mode does, instead of a preset reset.",
+      "acceptance": "Lauren chose 2026-11-08 to match Game Mode. Desktop sends repair to review_prepare without remapping it; Apply keeps its reset; WinUI x64/ARM64 build and host/planner tests pass; CI green on the exact head.",
+      "next_action": "Drop the repair mapping, update the host test, build, draft PR.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "c5ac4091a46ea9e26f8946642d3c521141385421",
+      "state": "active",
+      "created_at": "2026-11-08T00:06:07.450Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Windows Desktop Repair runs the engine's file repair, as Game Mode does, instead of a preset reset.",
+          "acceptance": "Lauren chose 2026-11-08 to match Game Mode. Desktop sends repair to review_prepare without remapping it; Apply keeps its reset; WinUI x64/ARM64 build and host/planner tests pass; CI green on the exact head.",
+          "at": "2026-11-08T00:06:07.450Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-desktop-repair-20261108:acceptance:0",
+            "text": "Lauren chose 2026-11-08 to match Game Mode. Desktop sends repair to review_prepare without remapping it; Apply keeps its reset; WinUI x64/ARM64 build and host/planner tests pass; CI green on the exact head.",
+            "at": "2026-11-08T00:06:07.450Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-08T00:06:07.450Z",
+      "lease_until": "2026-11-08T12:06:07.450Z"
     }
   ]
 }
