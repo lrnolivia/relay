@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-08T04:35:03.210Z",
+  "updated_at": "2026-11-08T05:09:07.744Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29368,7 +29368,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "a1b30f2bfd56a294533f1f0376544fbd8300d3b6",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-08T04:35:03.210Z",
       "objective_history": {
         "baseline": {
@@ -29385,8 +29385,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-08T04:35:03.210Z",
-      "lease_until": "2026-11-08T16:35:03.210Z"
+      "updated_at": "2026-11-08T05:09:07.744Z",
+      "lease_until": "2026-11-08T17:09:07.744Z",
+      "pr": 172,
+      "merged_head_sha": "e2cf29cff27a78a7041b0e56acbeca83be6af03c",
+      "merge_commit_sha": "18f5a6fa43512f360bc77f4707fec74eb627b239",
+      "evidence": "PR 172 head e2cf29c merged into main as 18f5a6f (Lauren, no-ff) after all 21 CI checks completed with no failures on the exact head (publish and hygiene jobs skipped). Cold read-only scans of the 52-game library, alternating main/branch with empty caches: main 32-43 s, branch 24.6-25.8 s, rows byte-identical every round; warm scans unchanged. RenderersTest checks parity with the old regex; test_scan_caches and test_provider_candidates pass.",
+      "work_accounted": true,
+      "completed_at": "2026-11-08T05:09:07.744Z"
     }
   ]
 }
