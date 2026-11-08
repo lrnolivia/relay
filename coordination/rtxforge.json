@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-08T05:31:29.236Z",
+  "updated_at": "2026-11-08T06:09:53.097Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29445,7 +29445,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "18f5a6fa43512f360bc77f4707fec74eb627b239",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-08T05:31:29.236Z",
       "objective_history": {
         "baseline": {
@@ -29462,8 +29462,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-08T05:31:29.236Z",
-      "lease_until": "2026-11-08T17:31:29.236Z"
+      "updated_at": "2026-11-08T06:09:53.097Z",
+      "lease_until": "2026-11-08T18:09:53.097Z",
+      "pr": 173,
+      "merged_head_sha": "feceed78572e5ae3d1cb381d46eaccff89cdd125",
+      "merge_commit_sha": "7d116f29f5d20ed10a73624779ac375c1a735104",
+      "evidence": "PR 173 head feceed7 merged into main as 7d116f2 (Lauren, no-ff). Latest check runs on the exact head: 17 success, 4 skipped (publish/hygiene), 0 failed; the Ubuntu Game Mode job failed once on a timing race in install-flow.mjs (cancel_routes asserted right after the click) and passed on re-run. Local: test_review_plan, test_review_prepare_host, test_linux_mixed_routes, game-mode test_review_routes pass; WinUI x64 builds.",
+      "work_accounted": true,
+      "completed_at": "2026-11-08T06:09:53.097Z"
     }
   ]
 }
