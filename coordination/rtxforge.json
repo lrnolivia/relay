@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-08T05:28:22.250Z",
+  "updated_at": "2026-11-08T05:31:29.236Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29419,6 +29419,51 @@
       "evidence": "PR 172 head e2cf29c merged into main as 18f5a6f (Lauren, no-ff) after all 21 CI checks completed with no failures on the exact head (publish and hygiene jobs skipped). Cold read-only scans of the 52-game library, alternating main/branch with empty caches: main 32-43 s, branch 24.6-25.8 s, rows byte-identical every round; warm scans unchanged. RenderersTest checks parity with the old regex; test_scan_caches and test_provider_candidates pass.",
       "work_accounted": true,
       "completed_at": "2026-11-08T05:09:07.744Z"
+    },
+    {
+      "id": "rtxforge-apply-presets-20261108",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/apply-presets-20261108",
+      "paths": [
+        "scripts/review_plan.py",
+        "scripts/desktop_service.py",
+        "windows/engine-host/rtxforge_win_host.py",
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+        "tests/test_review_plan.py",
+        "windows/tests/test_review_prepare_host.py",
+        "tests/linux_runtime/test_linux_mixed_routes.py"
+      ],
+      "resources": [
+        "review-plan"
+      ],
+      "goal": "Apply Presets behaves the same in Windows Desktop, Linux Desktop and Game Mode: DLSS package games take the engine's preset reset, Feeder games save their ReShade.ini ('apply'); nothing is reinstalled.",
+      "acceptance": "review_plan.step maps apply to reset for non-Feeder routes; Windows Desktop drops its apply->reset override; Linux desktop sends Feeder presets as apply; tests cover all three; WinUI builds; CI green on the exact head.",
+      "next_action": "Commit the planner/host/desktop_service change with tests and open a draft PR.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "18f5a6fa43512f360bc77f4707fec74eb627b239",
+      "state": "active",
+      "created_at": "2026-11-08T05:31:29.236Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Apply Presets behaves the same in Windows Desktop, Linux Desktop and Game Mode: DLSS package games take the engine's preset reset, Feeder games save their ReShade.ini ('apply'); nothing is reinstalled.",
+          "acceptance": "review_plan.step maps apply to reset for non-Feeder routes; Windows Desktop drops its apply->reset override; Linux desktop sends Feeder presets as apply; tests cover all three; WinUI builds; CI green on the exact head.",
+          "at": "2026-11-08T05:31:29.236Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-apply-presets-20261108:acceptance:0",
+            "text": "review_plan.step maps apply to reset for non-Feeder routes; Windows Desktop drops its apply->reset override; Linux desktop sends Feeder presets as apply; tests cover all three; WinUI builds; CI green on the exact head.",
+            "at": "2026-11-08T05:31:29.236Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-08T05:31:29.236Z",
+      "lease_until": "2026-11-08T17:31:29.236Z"
     }
   ]
 }
