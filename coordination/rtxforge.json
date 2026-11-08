@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-08T06:09:53.097Z",
+  "updated_at": "2026-11-08T06:10:06.754Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29470,6 +29470,46 @@
       "evidence": "PR 173 head feceed7 merged into main as 7d116f2 (Lauren, no-ff). Latest check runs on the exact head: 17 success, 4 skipped (publish/hygiene), 0 failed; the Ubuntu Game Mode job failed once on a timing race in install-flow.mjs (cancel_routes asserted right after the click) and passed on re-run. Local: test_review_plan, test_review_prepare_host, test_linux_mixed_routes, game-mode test_review_routes pass; WinUI x64 builds.",
       "work_accounted": true,
       "completed_at": "2026-11-08T06:09:53.097Z"
+    },
+    {
+      "id": "rtxforge-beta8-20261108",
+      "owner": "claude-code-6f3ee211-7846-4c96-85ac-3c6b1ff1fecd",
+      "branch": "rtxforge/beta8-20261108",
+      "paths": [
+        "VERSION",
+        "docs/releases/1.0-beta.md"
+      ],
+      "resources": [
+        "beta-release"
+      ],
+      "goal": "Prepare and publish rtxForge 1.5 Beta 8 (Lauren asked to publish a beta) with the audit's scan speed, unified review routing, Repair, Apply presets, activity line and overlay fixes.",
+      "acceptance": "VERSION is 1.5.0-beta.8 and the release notes describe the changes; CI green on the exact head; merged to main; Windows and Linux publish workflows run with publish_beta on that exact main commit and the beta release shows version 1.5.0-beta.8 for both OSes.",
+      "next_action": "Bump VERSION, add Beta 8 notes, draft PR, merge, then dispatch the publish workflows.",
+      "category": "release",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": "luca",
+      "supporting_staff": [],
+      "base_sha": "7d116f29f5d20ed10a73624779ac375c1a735104",
+      "state": "active",
+      "created_at": "2026-11-08T06:10:06.754Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Prepare and publish rtxForge 1.5 Beta 8 (Lauren asked to publish a beta) with the audit's scan speed, unified review routing, Repair, Apply presets, activity line and overlay fixes.",
+          "acceptance": "VERSION is 1.5.0-beta.8 and the release notes describe the changes; CI green on the exact head; merged to main; Windows and Linux publish workflows run with publish_beta on that exact main commit and the beta release shows version 1.5.0-beta.8 for both OSes.",
+          "at": "2026-11-08T06:10:06.754Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta8-20261108:acceptance:0",
+            "text": "VERSION is 1.5.0-beta.8 and the release notes describe the changes; CI green on the exact head; merged to main; Windows and Linux publish workflows run with publish_beta on that exact main commit and the beta release shows version 1.5.0-beta.8 for both OSes.",
+            "at": "2026-11-08T06:10:06.754Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-08T06:10:06.754Z",
+      "lease_until": "2026-11-08T18:10:06.754Z"
     }
   ]
 }
