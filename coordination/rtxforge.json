@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-08T01:53:03.838Z",
+  "updated_at": "2026-11-08T02:19:28.240Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29274,7 +29274,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "09ee357f50193fa5251a036425dc564501adb47a",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-08T01:53:03.838Z",
       "objective_history": {
         "baseline": {
@@ -29291,8 +29291,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-08T01:53:03.838Z",
-      "lease_until": "2026-11-08T13:53:03.838Z"
+      "updated_at": "2026-11-08T02:19:28.240Z",
+      "lease_until": "2026-11-08T14:19:28.240Z",
+      "pr": 170,
+      "merged_head_sha": "fed274aa005775332dd2ad0e1bb2ca64b62f2944",
+      "merge_commit_sha": "b41498d0a2cba92ad9d180739f141a6fbc1196b7",
+      "evidence": "PR 170 head fed274a merged into main as b41498d0 (Lauren, no-ff) after all 21 CI checks completed with no failures on the exact head (native ubuntu/windows incl. Linux runtime suite, game-mode, panel, WinUI x64/ARM64, Flatpak, AppImage, native/kde/wayland reviews; publish jobs skipped). Local: test_linux_mixed_routes (5), test_linux_adapt_mixed and test_supported_subsets pass.",
+      "work_accounted": true,
+      "completed_at": "2026-11-08T02:19:28.240Z"
     }
   ]
 }
