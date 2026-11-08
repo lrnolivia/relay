@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-08T06:10:06.754Z",
+  "updated_at": "2026-11-08T07:05:09.704Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29491,7 +29491,7 @@
       "primary_staff": "luca",
       "supporting_staff": [],
       "base_sha": "7d116f29f5d20ed10a73624779ac375c1a735104",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-08T06:10:06.754Z",
       "objective_history": {
         "baseline": {
@@ -29508,8 +29508,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-08T06:10:06.754Z",
-      "lease_until": "2026-11-08T18:10:06.754Z"
+      "updated_at": "2026-11-08T07:05:09.704Z",
+      "lease_until": "2026-11-08T19:05:09.704Z",
+      "pr": 174,
+      "merged_head_sha": "f1b53e46c5635db89fb6e6bad89f314bd7194f37",
+      "merge_commit_sha": "549a65bbe52020caf230b65d2cad0c27c9e653a8",
+      "evidence": "PR 174 head f1b53e4 merged into main as 549a65b (Lauren, no-ff) after all 15 checks completed with no failures on the exact head. Windows build run 42455506230 and Linux build run 42455566643 dispatched with publish_beta and expected_sha 549a65b; both completed with success including Publish Windows Beta and Publish Linux Beta. The 'beta' release is now 'rtxForge 1.5 Beta 8' with Windows and Linux lines 'version 1.5.0-beta.8 · source 549a65bbe52020caf230b65d2cad0c27c9e653a8'.",
+      "work_accounted": true,
+      "completed_at": "2026-11-08T07:05:09.704Z"
     }
   ]
 }
