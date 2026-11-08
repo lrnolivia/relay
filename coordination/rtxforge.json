@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-08T17:13:30.258Z",
+  "updated_at": "2026-11-08T17:18:50.098Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29527,10 +29527,12 @@
         "providers/nr-addons.json",
         "windows/RtxForge.Windows/Views/GamePage.NrAddons.cs",
         "windows/RtxForge.Windows/Services/EngineForgeService.NrAddons.cs",
+        "windows/RtxForge.Windows/Services/ForgeService.cs",
         "windows/engine-host/win_features.py",
         "gui/rtxforge_gtk.py",
         "docs/nr-addons.md",
         "tests/test_nr_addons.py",
+        "tests/test_nr_install.py",
         "windows/tests/test_nr_addons.py"
       ],
       "resources": [
@@ -29538,7 +29540,7 @@
       ],
       "goal": "Lauren asked for Skynizz to be shown as the Environment (world) choice in DLSS5 NR add-ons where it runs NR, with one Characters + world combo that uses whichever world the game has, in Windows and Linux Desktop.",
       "acceptance": "In a Skynizz NR game the Environment slot shows Skynizz; the single built-in Characters + world combo gives Lecram + ShortFuse elsewhere and Skynizz + ShortFuse at 74% with no model beside Skynizz; install behaviour unchanged; tests updated; CI green on the exact head; draft PR open.",
-      "next_action": "Implement on the branch, run NR add-on tests, push and open a draft PR.",
+      "next_action": "Finish the service interface change, push and open a draft PR.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -29562,8 +29564,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-08T17:13:30.258Z",
-      "lease_until": "2026-11-09T05:13:30.258Z"
+      "updated_at": "2026-11-08T17:18:50.098Z",
+      "lease_until": "2026-11-09T05:18:50.098Z"
     }
   ]
 }
