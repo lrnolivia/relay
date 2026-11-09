@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-09T04:48:14.911Z",
+  "updated_at": "2026-11-09T04:56:45.417Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29675,6 +29675,46 @@
       "evidence": "https://github.com/lrnolivia/rtxForge/pull/177 — final head 50ac1ae1d27760ad2e5002f2e75508c3c63bd07b passed all applicable CI checks, including native review and Windows/Linux packaging. Verified merge e4c8022e4885b1ab3d50ba07ce81c178021d2b4d on main. GitHub recorded lrnolivia as merger and the PR opener as the squash author.",
       "work_accounted": true,
       "completed_at": "2026-11-09T04:48:14.911Z"
+    },
+    {
+      "id": "rtxforge-beta10-20261108",
+      "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+      "branch": "rtxforge/beta10-20261108",
+      "paths": [
+        "VERSION",
+        "docs/releases/1.0-beta.md"
+      ],
+      "resources": [
+        "beta-publication"
+      ],
+      "goal": "Publish rtxForge 1.5 Beta 10 with PR #177, then install and open the Windows beta locally.",
+      "acceptance": "Reviewed main includes PR #177. Windows and Linux Beta 10 assets and checksums are published from the exact reviewed commit, rollback assets retained, and the new Windows build is installed and running locally.",
+      "next_action": "Prepare Beta 10 version and notes, verify CI and rollback assets, then publish.",
+      "category": "release",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": "luca",
+      "supporting_staff": [],
+      "base_sha": "e4c8022e4885b1ab3d50ba07ce81c178021d2b4d",
+      "state": "active",
+      "created_at": "2026-11-09T04:56:45.417Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish rtxForge 1.5 Beta 10 with PR #177, then install and open the Windows beta locally.",
+          "acceptance": "Reviewed main includes PR #177. Windows and Linux Beta 10 assets and checksums are published from the exact reviewed commit, rollback assets retained, and the new Windows build is installed and running locally.",
+          "at": "2026-11-09T04:56:45.417Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta10-20261108:acceptance:0",
+            "text": "Reviewed main includes PR #177. Windows and Linux Beta 10 assets and checksums are published from the exact reviewed commit, rollback assets retained, and the new Windows build is installed and running locally.",
+            "at": "2026-11-09T04:56:45.417Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-09T04:56:45.417Z",
+      "lease_until": "2026-11-09T16:56:45.417Z"
     }
   ]
 }
