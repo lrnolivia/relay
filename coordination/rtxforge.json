@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-09T18:09:16.698Z",
+  "updated_at": "2026-11-09T18:10:24.075Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29828,6 +29828,14 @@
         "gui/rtxforge_gtk.py",
         "gui/package_browser.py",
         "scripts/nr_install.py",
+        "scripts/nr_addons.py",
+        "scripts/nr_addon_settings.py",
+        "scripts/desktop_service.py",
+        "engine/rtxengine.py",
+        "providers/nr-addons.json",
+        "prototypes/game-mode-tauri/src/main.ts",
+        "prototypes/game-mode-tauri/tests/install-flow.mjs",
+        "prototypes/overlay-rmlui/overlay.rml",
         "tests/test_nr_install.py",
         "VERSION",
         "docs/releases/1.0-beta.md",
@@ -29840,7 +29848,7 @@
       ],
       "goal": "Simplify the Windows DLSS5 NR add-on picker shown in Packages and install review.",
       "acceptance": "A searchable game list and compact, separate controls for presets, Environment, Character detail and model replace the long combined menu. Review retains exact game and setup choices.",
-      "next_action": "Ship Split Render on Windows and Linux with review-style rows, bulk selection, compatibility filtering and Auto. Validate PR #180, publish both beta platforms, and install on the local Windows desktop.",
+      "next_action": "Ship Split Render on Windows and Linux with review-style rows, bulk selection, compatibility filtering and Auto. Standardize DLSS 5 display text across Desktop, Game Mode and the in-game panel, then validate PR #180 and publish both beta platforms.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -29864,8 +29872,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-09T18:09:16.698Z",
-      "lease_until": "2026-11-10T06:09:16.698Z"
+      "updated_at": "2026-11-09T18:10:24.075Z",
+      "lease_until": "2026-11-10T06:10:24.075Z"
     }
   ]
 }
