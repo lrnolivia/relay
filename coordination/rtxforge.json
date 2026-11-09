@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-09T02:43:45.522Z",
+  "updated_at": "2026-11-09T03:24:50.874Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29632,9 +29632,10 @@
         "gui/",
         "windows/RtxForge.Windows/",
         "windows/engine-host/",
-        "game-mode/",
         "tests/",
-        "docs/nr-addons.md"
+        "docs/nr-addons.md",
+        "scripts/engine_bridge.py",
+        "prototypes/game-mode-tauri/"
       ],
       "resources": [
         "nr-addons",
@@ -29642,7 +29643,7 @@
       ],
       "goal": "Surface DLSS5 NR add-ons in Packages and include optional Environment and Character choices in single-game and batch install reviews.",
       "acceptance": "Opt-in choices appear through normal package install entry points. Reviews explain exact per-game selections and exclusions. Respect provider compatibility and existing ownership, file verification and recovery.",
-      "next_action": "Trace shared review and platform entry points, then implement and validate compatible add-on plans.",
+      "next_action": "Finish exact game identity in the GTK review and add parity for the shipped native Game Mode flow, then verify Feeder exclusions and reviewed add-on transactions.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -29666,8 +29667,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-09T02:43:45.522Z",
-      "lease_until": "2026-11-09T14:43:45.522Z"
+      "updated_at": "2026-11-09T03:24:50.874Z",
+      "lease_until": "2026-11-09T15:24:50.874Z"
     }
   ]
 }
