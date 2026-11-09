@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-09T21:16:38.359Z",
+  "updated_at": "2026-11-09T21:18:10.207Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29896,7 +29896,9 @@
         "prototypes/game-mode-tauri/tests/",
         "tests/",
         "windows/tests/",
-        "docs/nr-addons.md"
+        "docs/nr-addons.md",
+        "engine/rtxengine.py",
+        "prototypes/game-mode-tauri/bridge/"
       ],
       "resources": [
         "nr-addons",
@@ -29905,7 +29907,7 @@
       ],
       "goal": "Integrate Split Render into the main install review and match feature parity wherever Split Render is offered.",
       "acceptance": "Review shows resolved Split Render plans per game before writing. One confirmation executes each main install before that game's Split Render transaction with one progress view and one result. Desktop and Game Mode have matching setup choices, compatibility filtering, bulk controls, and per-game Tools.",
-      "next_action": "Implement the shared reviewed install path and Game Mode parity, then validate the normal entry points.",
+      "next_action": "Extend the engine dry-run projection and Game Mode bridges for a single reviewed Split Render install, with matching controls across surfaces.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -29928,8 +29930,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-09T21:16:38.359Z",
-      "lease_until": "2026-11-10T09:16:38.359Z"
+      "updated_at": "2026-11-09T21:18:10.207Z",
+      "lease_until": "2026-11-10T09:18:10.207Z"
     }
   ]
 }
