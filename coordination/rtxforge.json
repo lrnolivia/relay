@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-09T17:34:11.958Z",
+  "updated_at": "2026-11-09T17:42:58.788Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29823,15 +29823,18 @@
       "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
       "branch": "rtxforge/windows-nr-picker-20261109",
       "paths": [
-        "windows/RtxForge.Windows/"
+        "windows/RtxForge.Windows/",
+        "VERSION",
+        "docs/releases/1.0-beta.md"
       ],
       "resources": [
         "nr-addons",
-        "package-install-review"
+        "package-install-review",
+        "beta-publication"
       ],
       "goal": "Simplify the Windows DLSS5 NR add-on picker shown in Packages and install review.",
       "acceptance": "A searchable game list and compact, separate controls for presets, Environment, Character detail and model replace the long combined menu. Review retains exact game and setup choices.",
-      "next_action": "Build and verify the Windows picker using the existing catalog and review path.",
+      "next_action": "Add the Beta 11 version and Windows picker release notes to PR #180, verify the final tree in CI, then publish the Windows beta from reviewed main and install it locally.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -29855,8 +29858,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-09T17:34:11.958Z",
-      "lease_until": "2026-11-10T05:34:11.958Z"
+      "updated_at": "2026-11-09T17:42:58.788Z",
+      "lease_until": "2026-11-10T05:42:58.788Z"
     }
   ]
 }
