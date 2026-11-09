@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-09T07:12:32.098Z",
+  "updated_at": "2026-11-09T07:12:44.232Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8859,7 +8859,7 @@
       "supporting_teams": [],
       "primary_staff": "luca",
       "supporting_staff": [],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-11-09T07:12:05.708Z",
       "objective_history": {
         "baseline": {
@@ -29759,6 +29759,48 @@
       "evidence": "https://github.com/lrnolivia/rtxForge/pull/178 — version and notes merged as 8dd1e082749f5f26fdf0cc4a0b3f3654f1b973d5. Windows Beta 10 published, rollback retained, and verified x64 installed and opened. Linux Beta 9 preserved after build failures; remaining Linux Beta 10 packaging and publication is queued as rtxforge-linux-beta10-bundle-20261109.",
       "work_accounted": true,
       "completed_at": "2026-11-09T07:12:32.098Z"
+    },
+    {
+      "id": "rtxforge-linux-beta10-bundle-20261109",
+      "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+      "branch": "rtxforge/linux-beta10-bundle-20261109",
+      "paths": [
+        "prototypes/game-mode-tauri/bundle_appimage.py",
+        "prototypes/game-mode-tauri/package_bundle.py",
+        "prototypes/game-mode-tauri/tests/"
+      ],
+      "resources": [
+        "beta-publication",
+        "linux-game-mode-packaging"
+      ],
+      "goal": "Repair Linux Game Mode AppImage packaging and publish Linux Beta 10.",
+      "acceptance": "Linux AppImage and Flatpak from reviewed main pass package/runtime checks, preserve rollback assets, and publish on Beta 10 alongside the shipped Windows build.",
+      "next_action": "Make AppImage bundling diagnosable and resilient to confirmed upstream failure modes, then validate hosted and publish.",
+      "category": "release",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": "luca",
+      "supporting_staff": [],
+      "base_sha": "8dd1e082749f5f26fdf0cc4a0b3f3654f1b973d5",
+      "state": "active",
+      "created_at": "2026-11-09T07:12:44.232Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Repair Linux Game Mode AppImage packaging and publish Linux Beta 10.",
+          "acceptance": "Linux AppImage and Flatpak from reviewed main pass package/runtime checks, preserve rollback assets, and publish on Beta 10 alongside the shipped Windows build.",
+          "at": "2026-11-09T07:12:05.708Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-linux-beta10-bundle-20261109:acceptance:0",
+            "text": "Linux AppImage and Flatpak from reviewed main pass package/runtime checks, preserve rollback assets, and publish on Beta 10 alongside the shipped Windows build.",
+            "at": "2026-11-09T07:12:05.708Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-09T07:12:44.232Z",
+      "lease_until": "2026-11-09T19:12:44.232Z"
     }
   ]
 }
