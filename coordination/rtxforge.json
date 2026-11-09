@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-09T08:46:26.462Z",
+  "updated_at": "2026-11-09T17:34:11.958Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29817,6 +29817,46 @@
       "evidence": "https://github.com/lrnolivia/rtxForge/pull/179 — merged with verified Lauren attribution at 1cc48aeab7a84c5d3b827ae2257820085c5e685b. Linux publish run 42585583093 succeeded with AppImage, Flatpak and installed runtime checks. Verified published checksum assets and updater manifest at https://github.com/lrnolivia/rtxForge/releases/tag/beta, retained Linux Beta 9 rollback copies, and confirmed all Windows asset IDs stayed the same.",
       "work_accounted": true,
       "completed_at": "2026-11-09T08:46:26.462Z"
+    },
+    {
+      "id": "rtxforge-windows-nr-picker-20261109",
+      "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+      "branch": "rtxforge/windows-nr-picker-20261109",
+      "paths": [
+        "windows/RtxForge.Windows/"
+      ],
+      "resources": [
+        "nr-addons",
+        "package-install-review"
+      ],
+      "goal": "Simplify the Windows DLSS5 NR add-on picker shown in Packages and install review.",
+      "acceptance": "A searchable game list and compact, separate controls for presets, Environment, Character detail and model replace the long combined menu. Review retains exact game and setup choices.",
+      "next_action": "Build and verify the Windows picker using the existing catalog and review path.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "1cc48aeab7a84c5d3b827ae2257820085c5e685b",
+      "state": "active",
+      "created_at": "2026-11-09T17:34:11.958Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Simplify the Windows DLSS5 NR add-on picker shown in Packages and install review.",
+          "acceptance": "A searchable game list and compact, separate controls for presets, Environment, Character detail and model replace the long combined menu. Review retains exact game and setup choices.",
+          "at": "2026-11-09T17:34:11.958Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-windows-nr-picker-20261109:acceptance:0",
+            "text": "A searchable game list and compact, separate controls for presets, Environment, Character detail and model replace the long combined menu. Review retains exact game and setup choices.",
+            "at": "2026-11-09T17:34:11.958Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-09T17:34:11.958Z",
+      "lease_until": "2026-11-10T05:34:11.958Z"
     }
   ]
 }
