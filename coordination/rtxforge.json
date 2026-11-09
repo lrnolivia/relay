@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-09T07:22:13.638Z",
+  "updated_at": "2026-11-09T07:40:39.636Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29768,15 +29768,19 @@
         "prototypes/game-mode-tauri/bundle_appimage.py",
         "prototypes/game-mode-tauri/package_bundle.py",
         "prototypes/game-mode-tauri/tests/",
-        ".github/workflows/game-mode-preview.yml"
+        ".github/workflows/game-mode-preview.yml",
+        "providers/vulkan-dlssg/distribution.py",
+        ".github/workflows/linux-build.yml",
+        ".github/workflows/windows-build.yml"
       ],
       "resources": [
         "beta-publication",
-        "linux-game-mode-packaging"
+        "linux-game-mode-packaging",
+        "vulkan-build-artifact"
       ],
       "goal": "Repair Linux Game Mode AppImage packaging and publish Linux Beta 10.",
       "acceptance": "Linux AppImage and Flatpak from reviewed main pass package/runtime checks, preserve rollback assets, and publish on Beta 10 alongside the shipped Windows build.",
-      "next_action": "Stage verified upstream AppImage and Python tools via GitHub asset API to avoid repeated public download gateway failures, then validate and publish.",
+      "next_action": "Route the existing pinned Vulkan build dependency through the authenticated asset endpoint after repeated Linux and Windows 504s; validate and publish the Linux beta.",
       "category": "release",
       "primary_team": "release",
       "supporting_teams": [],
@@ -29800,8 +29804,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-09T07:22:13.638Z",
-      "lease_until": "2026-11-09T19:22:13.638Z"
+      "updated_at": "2026-11-09T07:40:39.636Z",
+      "lease_until": "2026-11-09T19:40:39.636Z"
     }
   ]
 }
