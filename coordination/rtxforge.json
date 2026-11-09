@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-09T07:12:44.232Z",
+  "updated_at": "2026-11-09T07:22:13.638Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29767,7 +29767,8 @@
       "paths": [
         "prototypes/game-mode-tauri/bundle_appimage.py",
         "prototypes/game-mode-tauri/package_bundle.py",
-        "prototypes/game-mode-tauri/tests/"
+        "prototypes/game-mode-tauri/tests/",
+        ".github/workflows/game-mode-preview.yml"
       ],
       "resources": [
         "beta-publication",
@@ -29775,7 +29776,7 @@
       ],
       "goal": "Repair Linux Game Mode AppImage packaging and publish Linux Beta 10.",
       "acceptance": "Linux AppImage and Flatpak from reviewed main pass package/runtime checks, preserve rollback assets, and publish on Beta 10 alongside the shipped Windows build.",
-      "next_action": "Make AppImage bundling diagnosable and resilient to confirmed upstream failure modes, then validate hosted and publish.",
+      "next_action": "Stage verified upstream AppImage and Python tools via GitHub asset API to avoid repeated public download gateway failures, then validate and publish.",
       "category": "release",
       "primary_team": "release",
       "supporting_teams": [],
@@ -29799,8 +29800,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-09T07:12:44.232Z",
-      "lease_until": "2026-11-09T19:12:44.232Z"
+      "updated_at": "2026-11-09T07:22:13.638Z",
+      "lease_until": "2026-11-09T19:22:13.638Z"
     }
   ]
 }
