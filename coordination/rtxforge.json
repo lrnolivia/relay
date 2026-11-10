@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-10T02:43:30.007Z",
+  "updated_at": "2026-11-10T02:48:09.100Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29938,6 +29938,51 @@
       "evidence": "PR 181 passed its Windows and Linux workflows and merged at f886b1be0ee839f441312ff6c7605dbe4d02745d. Windows workflow 42741755138 and Linux workflow 42741760243 published 1.5.0-beta.12 from that commit. Verified the Windows x64 installer checksum, installed the exact build, and observed the open rtxForge window.",
       "work_accounted": true,
       "completed_at": "2026-11-10T02:43:30.007Z"
+    },
+    {
+      "id": "rtxforge-split-render-compatibility-20261109",
+      "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+      "branch": "rtxforge/split-render-compatibility-20261109",
+      "paths": [
+        "scripts/",
+        "tests/",
+        "windows/engine-host/",
+        "windows/RtxForge.Windows/",
+        "windows/tests/",
+        "gui/rtxforge_gtk.py",
+        "prototypes/game-mode-tauri/bridge/",
+        "prototypes/game-mode-tauri/src/",
+        "docs/nr-addons.md"
+      ],
+      "resources": [],
+      "goal": "Show the real Split Render compatibility and usable Feeder Pass 2 directions before install.",
+      "acceptance": "The same live game inspection informs Tools and installation review. Feeder and occupied files show actionable guidance. ShortFuse results reflect the actual reviewed route.",
+      "next_action": "Trace the installed beta and add a targeted fix with regression coverage.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "f886b1be0ee839f441312ff6c7605dbe4d02745d",
+      "state": "active",
+      "created_at": "2026-11-10T02:48:09.100Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Show the real Split Render compatibility and usable Feeder Pass 2 directions before install.",
+          "acceptance": "The same live game inspection informs Tools and installation review. Feeder and occupied files show actionable guidance. ShortFuse results reflect the actual reviewed route.",
+          "at": "2026-11-10T02:48:09.100Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-split-render-compatibility-20261109:acceptance:0",
+            "text": "The same live game inspection informs Tools and installation review. Feeder and occupied files show actionable guidance. ShortFuse results reflect the actual reviewed route.",
+            "at": "2026-11-10T02:48:09.100Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-10T02:48:09.100Z",
+      "lease_until": "2026-11-10T14:48:09.100Z"
     }
   ]
 }
