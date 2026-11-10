@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-09T21:28:29.047Z",
+  "updated_at": "2026-11-10T01:44:09.922Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29900,12 +29900,14 @@
         "engine/rtxengine.py",
         "prototypes/game-mode-tauri/bridge/",
         "prototypes/game-mode-tauri/src-tauri/src/engine.rs",
-        "providers/glass-overlay/OverlayController.h"
+        "providers/glass-overlay/OverlayController.h",
+        "VERSION",
+        "docs/releases/1.0-beta.md"
       ],
       "resources": [],
       "goal": "Integrate Split Render into the main install review and match feature parity wherever Split Render is offered.",
       "acceptance": "Review shows resolved Split Render plans per game before writing. One confirmation executes each main install before that game's Split Render transaction with one progress view and one result. Desktop and Game Mode have matching setup choices, compatibility filtering, bulk controls, and per-game Tools.",
-      "next_action": "Verify pre-install flow and use the Split Render name in the shared in-game panel.",
+      "next_action": "Fix the Feeder NR compatibility verdict on PR 181, validate and merge the exact revision, then publish and install the next beta.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -29928,8 +29930,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-09T21:28:29.047Z",
-      "lease_until": "2026-11-10T09:28:29.047Z"
+      "updated_at": "2026-11-10T01:44:09.922Z",
+      "lease_until": "2026-11-10T13:44:09.922Z"
     }
   ]
 }
