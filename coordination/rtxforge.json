@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-10T07:17:49.455Z",
+  "updated_at": "2026-11-10T07:20:22.386Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30110,14 +30110,17 @@
         "docs/releases/1.0-beta.md",
         "windows/RtxForge.Windows/Services/EngineForgeService.NrAddons.cs",
         "windows/engine-host/win_features.py",
-        "prototypes/game-mode-tauri/bridge/linux_host.py"
+        "prototypes/game-mode-tauri/bridge/linux_host.py",
+        "providers/glass-overlay/NrAddonControls.h",
+        "prototypes/overlay-rmlui/overlay.rcss",
+        "prototypes/game-mode-tauri/src/style.css"
       ],
       "resources": [
         "rtxforge-overlay-split-render"
       ],
       "goal": "Distinguish Feeder full-frame passes from Split Render and expose the main-pass Character mask.",
       "acceptance": "Game Mode, Desktop and overlay explain the difference. The guided setup turns on the main-pass mask without increasing the pass count or changing existing per-pass overrides.",
-      "next_action": "Implement the Feeder pass role picker for Pass 1 through Pass 4, with Character mask and an explicit review of any added passes.",
+      "next_action": "Use glyphs and visual pass choices in Game Mode and refine the Skynizz inspector alongside the Feeder role correction.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -30146,8 +30149,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-10T07:17:49.455Z",
-      "lease_until": "2026-11-10T19:17:49.455Z",
+      "updated_at": "2026-11-10T07:20:22.386Z",
+      "lease_until": "2026-11-10T19:20:22.386Z",
       "amendment_count": 1,
       "amendments": [
         {
