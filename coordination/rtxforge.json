@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-10T07:45:53.505Z",
+  "updated_at": "2026-11-10T08:42:09.714Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30133,7 +30133,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "94a4e5edcd412492253a9064768141ca069d22ce",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-10T07:15:54.171Z",
       "objective_history": {
         "baseline": {
@@ -30156,8 +30156,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-10T07:45:53.505Z",
-      "lease_until": "2026-11-10T19:45:53.505Z",
+      "updated_at": "2026-11-10T08:42:09.714Z",
+      "lease_until": "2026-11-10T20:42:09.714Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -30180,7 +30180,13 @@
             "next_action": "Implement and verify the main-pass mask setup and accurate pass labels."
           }
         }
-      ]
+      ],
+      "pr": 185,
+      "merged_head_sha": "d00877ad3c941eca30b46dc964b87230900915f6",
+      "merge_commit_sha": "63673fbb4434e0ce6ba3c880effa9dce385dffa6",
+      "evidence": "Merged PR #185 at 63673fbb4434e0ce6ba3c880effa9dce385dffa6 after all six hosted workflows passed. Beta 15 Windows and Linux packages were published and checked against the same main commit. Windows installer SHA-256 and installed overlay revision 14 matched the release. The installed Presets page and ShortFuse preview opened. Game Mode and native fixtures cover package-aware preset install, Feeder pass roles, ShortFuse disclosure and live-setter response; gameplay was not exercised.",
+      "work_accounted": true,
+      "completed_at": "2026-11-10T08:42:09.714Z"
     }
   ]
 }
