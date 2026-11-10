@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-10T01:44:09.922Z",
+  "updated_at": "2026-11-10T02:43:30.007Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -29913,7 +29913,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "13f775370672f7f7b7cfb2a23192a5cc3a6440f3",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-09T21:16:38.359Z",
       "objective_history": {
         "baseline": {
@@ -29930,8 +29930,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-10T01:44:09.922Z",
-      "lease_until": "2026-11-10T13:44:09.922Z"
+      "updated_at": "2026-11-10T02:43:30.007Z",
+      "lease_until": "2026-11-10T14:43:30.007Z",
+      "pr": 181,
+      "merged_head_sha": "c84908156d04afdc7fdfbbf0d9d0a86300b4e7c4",
+      "merge_commit_sha": "f886b1be0ee839f441312ff6c7605dbe4d02745d",
+      "evidence": "PR 181 passed its Windows and Linux workflows and merged at f886b1be0ee839f441312ff6c7605dbe4d02745d. Windows workflow 42741755138 and Linux workflow 42741760243 published 1.5.0-beta.12 from that commit. Verified the Windows x64 installer checksum, installed the exact build, and observed the open rtxForge window.",
+      "work_accounted": true,
+      "completed_at": "2026-11-10T02:43:30.007Z"
     }
   ]
 }
