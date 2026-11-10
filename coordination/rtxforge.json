@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-10T07:26:12.681Z",
+  "updated_at": "2026-11-10T07:38:32.127Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30118,14 +30118,15 @@
         "windows/overlay-rmlui/CMakeLists.txt",
         "prototypes/overlay-rmlui/Prototype.cpp",
         "VERSION",
-        "providers/glass-overlay/rollout-policy.json"
+        "providers/glass-overlay/rollout-policy.json",
+        "tests/test_nr_addons.py"
       ],
       "resources": [
         "rtxforge-overlay-split-render"
       ],
       "goal": "Distinguish Feeder full-frame passes from Split Render and expose the main-pass Character mask.",
       "acceptance": "Game Mode, Desktop and overlay explain the difference. The guided setup turns on the main-pass mask without increasing the pass count or changing existing per-pass overrides.",
-      "next_action": "Add live ShortFuse editing for the verified build and root-aware overlay navigation. Validate, publish and install Beta 15 with updated previews.",
+      "next_action": "Update guidance assertions, pass hosted CI, merge and publish Beta 15.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -30154,8 +30155,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-10T07:26:12.681Z",
-      "lease_until": "2026-11-10T19:26:12.681Z",
+      "updated_at": "2026-11-10T07:38:32.127Z",
+      "lease_until": "2026-11-10T19:38:32.127Z",
       "amendment_count": 1,
       "amendments": [
         {
