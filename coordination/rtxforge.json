@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-10T07:15:54.171Z",
+  "updated_at": "2026-11-10T07:16:54.844Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30112,9 +30112,9 @@
       "resources": [
         "rtxforge-overlay-split-render"
       ],
-      "goal": "Distinguish Feeder full-frame passes from Split Render and enable the Pass 2 Character mask in the guided setup.",
-      "acceptance": "Game Mode, Desktop and overlay describe full-frame Feeder passes accurately. The guided setup enables the Pass 2 mask and preserves effective steering defaults, with tests for verified settings and Game Mode.",
-      "next_action": "Update the Feeder setup, user-facing labels and route tests.",
+      "goal": "Distinguish Feeder full-frame passes from Split Render and expose the main-pass Character mask.",
+      "acceptance": "Game Mode, Desktop and overlay explain the difference. The guided setup turns on the main-pass mask without increasing the pass count or changing existing per-pass overrides.",
+      "next_action": "Implement and verify the main-pass mask setup and accurate pass labels.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -30134,11 +30134,40 @@
             "id": "rtxforge-feeder-pass-scope-20261110:acceptance:0",
             "text": "Game Mode, Desktop and overlay describe full-frame Feeder passes accurately. The guided setup enables the Pass 2 mask and preserves effective steering defaults, with tests for verified settings and Game Mode.",
             "at": "2026-11-10T07:15:54.171Z"
+          },
+          {
+            "id": "rtxforge-feeder-pass-scope-20261110:acceptance:1",
+            "text": "Game Mode, Desktop and overlay explain the difference. The guided setup turns on the main-pass mask without increasing the pass count or changing existing per-pass overrides.",
+            "at": "2026-11-10T07:16:54.844Z",
+            "reason": "The pinned runtime applies the Character mask in Pass 1, so the user prefers the single-pass setup."
           }
         ]
       },
-      "updated_at": "2026-11-10T07:15:54.171Z",
-      "lease_until": "2026-11-10T19:15:54.171Z"
+      "updated_at": "2026-11-10T07:16:54.844Z",
+      "lease_until": "2026-11-10T19:16:54.844Z",
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-10T07:16:54.844Z",
+          "by": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+          "reason": "The pinned runtime applies the Character mask in Pass 1, so the user prefers the single-pass setup.",
+          "fields": [
+            "goal",
+            "acceptance",
+            "next_action"
+          ],
+          "before": {
+            "goal": "Distinguish Feeder full-frame passes from Split Render and enable the Pass 2 Character mask in the guided setup.",
+            "acceptance": "Game Mode, Desktop and overlay describe full-frame Feeder passes accurately. The guided setup enables the Pass 2 mask and preserves effective steering defaults, with tests for verified settings and Game Mode.",
+            "next_action": "Update the Feeder setup, user-facing labels and route tests."
+          },
+          "after": {
+            "goal": "Distinguish Feeder full-frame passes from Split Render and expose the main-pass Character mask.",
+            "acceptance": "Game Mode, Desktop and overlay explain the difference. The guided setup turns on the main-pass mask without increasing the pass count or changing existing per-pass overrides.",
+            "next_action": "Implement and verify the main-pass mask setup and accurate pass labels."
+          }
+        }
+      ]
     }
   ]
 }
