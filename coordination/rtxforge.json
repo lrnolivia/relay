@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-10T05:11:28.250Z",
+  "updated_at": "2026-11-10T05:22:06.909Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30037,6 +30037,50 @@
       "evidence": "https://github.com/lrnolivia/rtxForge/releases/tag/beta — Beta 13 published for Windows and Linux from 5a25e3115cebc2bdf3c3c5452e59616150e52f32; release workflows 42757385843 and 42757388917 passed, with Beta 12 rollback assets verified. The official x64 installer matched SHA-256 ABFF7AFB25B85DA2C1F77763EE561F14A782E5FFC2338DCDADC8B83923EFEA1F. Installed the exact source and verified the Mass Effect 1 Split Render controls locally, with 1 to 2 passes, independent Pass 2 tuning and Skin detail 0.50. Left the Apply action for the user.",
       "work_accounted": true,
       "completed_at": "2026-11-10T05:11:28.250Z"
+    },
+    {
+      "id": "rtxforge-overlay-split-render-parity-20261110",
+      "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+      "branch": "rtxforge/overlay-split-render-parity-20261110",
+      "paths": [
+        "providers/glass-overlay/NrAddonControls.h",
+        "providers/glass-overlay/OverlayController.h",
+        "windows/overlay-rmlui/GlassRuntime.cpp",
+        "prototypes/overlay-rmlui/overlay.rml",
+        "prototypes/overlay-rmlui/overlay.rcss",
+        "prototypes/overlay-rmlui/Prototype.cpp",
+        "docs/nr-addons.md"
+      ],
+      "resources": [
+        "rtxforge-overlay-split-render"
+      ],
+      "goal": "Expose Feeder Pass 2 in the overlay Split Render section and refine the existing add-on inspector.",
+      "acceptance": "A supported Feeder session can edit Pass 2 from Split Render through the same existing controls and settings path. Existing add-on settings remain editable and clearer to scan. Native preview verifies both routes and supported layouts.",
+      "next_action": "Use a shared Pass 2 inspector and polish the existing Split Render controls.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "5a25e3115cebc2bdf3c3c5452e59616150e52f32",
+      "state": "active",
+      "created_at": "2026-11-10T05:22:06.909Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Expose Feeder Pass 2 in the overlay Split Render section and refine the existing add-on inspector.",
+          "acceptance": "A supported Feeder session can edit Pass 2 from Split Render through the same existing controls and settings path. Existing add-on settings remain editable and clearer to scan. Native preview verifies both routes and supported layouts.",
+          "at": "2026-11-10T05:22:06.909Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-overlay-split-render-parity-20261110:acceptance:0",
+            "text": "A supported Feeder session can edit Pass 2 from Split Render through the same existing controls and settings path. Existing add-on settings remain editable and clearer to scan. Native preview verifies both routes and supported layouts.",
+            "at": "2026-11-10T05:22:06.909Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-10T05:22:06.909Z",
+      "lease_until": "2026-11-10T17:22:06.909Z"
     }
   ]
 }
