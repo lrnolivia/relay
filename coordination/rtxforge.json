@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-10T05:31:36.133Z",
+  "updated_at": "2026-11-10T05:33:46.816Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30049,14 +30049,17 @@
         "prototypes/overlay-rmlui/overlay.rml",
         "prototypes/overlay-rmlui/overlay.rcss",
         "prototypes/overlay-rmlui/Prototype.cpp",
-        "docs/nr-addons.md"
+        "docs/nr-addons.md",
+        "VERSION",
+        "docs/releases/1.0-beta.md",
+        "providers/glass-overlay/rollout-policy.json"
       ],
       "resources": [
         "rtxforge-overlay-split-render"
       ],
       "goal": "Expose Feeder Pass 2 in the overlay Split Render section and refine the existing add-on inspector.",
       "acceptance": "A supported Feeder session can edit Pass 2 from Split Render through the same existing controls and settings path. Existing add-on settings remain editable and clearer to scan. Native preview verifies both routes and supported layouts.",
-      "next_action": "Draft PR #184 is open at f7c834bbbd831877e02e688a630363974ddd15c5. Local native layout checks cover both Split Render routes, Pass 2 state and all layouts. Await review and CI before integration.",
+      "next_action": "Prepare Beta 14 and the overlay rollout, then verify CI, merge, publish, install and open the Feeder preview.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -30079,8 +30082,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-10T05:31:36.133Z",
-      "lease_until": "2026-11-10T17:31:36.133Z"
+      "updated_at": "2026-11-10T05:33:46.816Z",
+      "lease_until": "2026-11-10T17:33:46.816Z"
     }
   ]
 }
