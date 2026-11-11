@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T07:12:17.449Z",
+  "updated_at": "2026-11-11T07:28:15.259Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30541,14 +30541,17 @@
         "prototypes/game-mode-tauri/tests/install-flow.mjs",
         "prototypes/game-mode-tauri/src/operation-ui.ts",
         "prototypes/game-mode-tauri/src/main.ts",
-        "prototypes/game-mode-tauri/src/motion.ts"
+        "prototypes/game-mode-tauri/src/motion.ts",
+        "VERSION",
+        "docs/releases/1.0-beta.md"
       ],
       "resources": [
-        "rtxforge-game-mode-operation-layout"
+        "rtxforge-game-mode-operation-layout",
+        "rtxforge-beta-release"
       ],
       "goal": "Fit the Game Mode Preparing and other brief operation dialogs to their content.",
       "acceptance": "Preparing uses a centered content-height dialog at desktop and compact sizes. Progress and results fit their content, and longer startup and review screens remain scrollable.",
-      "next_action": "Fix operation sizing, shared step indicators, startup control spacing and focus, and keep the library stationary behind modals. Verify with the Game Mode operation fixture.",
+      "next_action": "Prepare 1.6 Beta 2 on PR 190, merge after CI, publish the Windows and Linux Beta assets from exact main, and install the Windows build.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -30572,8 +30575,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T07:12:17.449Z",
-      "lease_until": "2026-11-11T19:12:17.449Z"
+      "updated_at": "2026-11-11T07:28:15.259Z",
+      "lease_until": "2026-11-11T19:28:15.259Z"
     }
   ]
 }
