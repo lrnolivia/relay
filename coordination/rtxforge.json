@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T07:41:38.032Z",
+  "updated_at": "2026-11-11T07:48:36.570Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30547,15 +30547,20 @@
         "windows/RtxForge.Windows/Controls/OperationDialog.cs",
         "windows/RtxForge.Windows/MainWindow.xaml.cs",
         "gui/rtxforge_gtk.py",
-        "windows/RtxForge.Windows/Controls/ReviewDialog.cs"
+        "windows/RtxForge.Windows/Controls/ReviewDialog.cs",
+        "scripts/nr_install.py",
+        "scripts/feeder_legacy.py",
+        "scripts/feeder_provider.py",
+        "tests/test_feeder_legacy.py"
       ],
       "resources": [
         "rtxforge-game-mode-operation-layout",
-        "rtxforge-beta-release"
+        "rtxforge-beta-release",
+        "rtxforge-feeder-restore"
       ],
       "goal": "Fit the Game Mode Preparing and other brief operation dialogs to their content.",
       "acceptance": "Preparing uses a centered content-height dialog at desktop and compact sizes. Progress and results fit their content, and longer startup and review screens remain scrollable.",
-      "next_action": "Add numbered review steps to Windows and Linux Desktop, use Presets as the first step in all layouts, then merge PR 190 and publish 1.6 Beta 2.",
+      "next_action": "Fix older Split Render files left behind by legacy Feeder restore, verify exact ownership and rollback, then merge and publish Beta 2.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -30579,8 +30584,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T07:41:38.032Z",
-      "lease_until": "2026-11-11T19:41:38.032Z"
+      "updated_at": "2026-11-11T07:48:36.570Z",
+      "lease_until": "2026-11-11T19:48:36.570Z"
     }
   ]
 }
