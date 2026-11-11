@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T07:28:15.259Z",
+  "updated_at": "2026-11-11T07:38:41.624Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30543,7 +30543,10 @@
         "prototypes/game-mode-tauri/src/main.ts",
         "prototypes/game-mode-tauri/src/motion.ts",
         "VERSION",
-        "docs/releases/1.0-beta.md"
+        "docs/releases/1.0-beta.md",
+        "windows/RtxForge.Windows/Controls/OperationDialog.cs",
+        "windows/RtxForge.Windows/MainWindow.xaml.cs",
+        "gui/rtxforge_gtk.py"
       ],
       "resources": [
         "rtxforge-game-mode-operation-layout",
@@ -30551,7 +30554,7 @@
       ],
       "goal": "Fit the Game Mode Preparing and other brief operation dialogs to their content.",
       "acceptance": "Preparing uses a centered content-height dialog at desktop and compact sizes. Progress and results fit their content, and longer startup and review screens remain scrollable.",
-      "next_action": "Prepare 1.6 Beta 2 on PR 190, merge after CI, publish the Windows and Linux Beta assets from exact main, and install the Windows build.",
+      "next_action": "Add numbered review steps to Windows and Linux Desktop, use Presets as the first step in all layouts, then merge PR 190 and publish 1.6 Beta 2.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -30575,8 +30578,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T07:28:15.259Z",
-      "lease_until": "2026-11-11T19:28:15.259Z"
+      "updated_at": "2026-11-11T07:38:41.624Z",
+      "lease_until": "2026-11-11T19:38:41.624Z"
     }
   ]
 }
