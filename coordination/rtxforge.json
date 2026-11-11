@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T10:46:05.349Z",
+  "updated_at": "2026-11-11T21:38:59.597Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30701,6 +30701,55 @@
       "evidence": "PR #190 passed Windows and Linux CI and merged at a74ab333fc2e7fbf1523849ab13c24c01451fb61. rtxForge 1.6 Beta 2 Windows and Linux release assets verified at https://github.com/lrnolivia/rtxForge/releases/tag/beta. Windows x64 installer checksum, installed desktop version and Game Mode binary verified.",
       "work_accounted": true,
       "completed_at": "2026-11-11T10:46:05.349Z"
+    },
+    {
+      "id": "rtxforge-universal-mfg-pin-20261111",
+      "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+      "branch": "rtxforge/universal-mfg-pin-20261111",
+      "paths": [
+        "providers/mfg-unlocker/",
+        "scripts/universal_mfg_provider.py",
+        "scripts/proton_mfg.py",
+        "engine/rtxengine.py",
+        "scripts/cross_os.py",
+        "docs/linux/proton-prerequisites.md",
+        "tests/test_universal_mfg_provider.py",
+        "tests/linux_runtime/test_linux_universal_lifecycle.py",
+        "tests/linux_runtime/test_proton_mfg.py",
+        "windows/RtxForge.Windows/Services/ForgeService.cs",
+        "windows/tests/test_skynizz_provider.py"
+      ],
+      "resources": [
+        "universal-mfg-pin"
+      ],
+      "goal": "Update the Skynizz Universal MFG Unlocker pin to the verified upstream 1.7.0 build and audit the other pinned packages.",
+      "acceptance": "Preserve recorded 1.6.1 installs, the native Vulkan package integration, single ownership of neural rendering, and exact restore. Validate the shared Windows and Proton lifecycle.",
+      "next_action": "Verify the upstream asset and settings contract, update the shared pin and run focused validation.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "a74ab333fc2e7fbf1523849ab13c24c01451fb61",
+      "state": "active",
+      "created_at": "2026-11-11T21:38:59.597Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Update the Skynizz Universal MFG Unlocker pin to the verified upstream 1.7.0 build and audit the other pinned packages.",
+          "acceptance": "Preserve recorded 1.6.1 installs, the native Vulkan package integration, single ownership of neural rendering, and exact restore. Validate the shared Windows and Proton lifecycle.",
+          "at": "2026-11-11T21:38:59.597Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-universal-mfg-pin-20261111:acceptance:0",
+            "text": "Preserve recorded 1.6.1 installs, the native Vulkan package integration, single ownership of neural rendering, and exact restore. Validate the shared Windows and Proton lifecycle.",
+            "at": "2026-11-11T21:38:59.597Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-11T21:38:59.597Z",
+      "lease_until": "2026-11-12T09:38:59.597Z"
     }
   ]
 }
