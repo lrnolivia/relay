@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T04:32:51.309Z",
+  "updated_at": "2026-11-11T05:01:28.635Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8911,6 +8911,41 @@
             "id": "rtxforge-beta-16-20261110:acceptance:0",
             "text": "Main contains PR #186 and Beta 16 version and notes. Exact-main Windows and Linux Beta workflows publish verified assets with Beta 15 rollback assets retained. Install the verified Windows x64 release and open the installed overlay preview.",
             "at": "2026-11-11T04:32:19.431Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rtxforge-beta-16-release-notes",
+      "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+      "goal": "Publish rtxForge 1.5 Beta 16 from reviewed main with PR #186, then install the Windows release and open its overlay preview.",
+      "acceptance": "Main contains PR #186 and Beta 16 version and notes. Exact-main Windows and Linux Beta workflows publish verified assets with Beta 15 rollback assets retained. Install the verified Windows x64 release and open the installed overlay preview.",
+      "next_action": "Clarify Beta 16 preview and ReShade instructions under the verified GitHub maintainer account, then publish the green main revision.",
+      "paths": [
+        "docs/releases/1.0-beta.md"
+      ],
+      "resources": [
+        "rtxforge-beta-publication"
+      ],
+      "category": "release",
+      "primary_team": "release",
+      "supporting_teams": [],
+      "primary_staff": "luca",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-11-11T05:01:28.635Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Publish rtxForge 1.5 Beta 16 from reviewed main with PR #186, then install the Windows release and open its overlay preview.",
+          "acceptance": "Main contains PR #186 and Beta 16 version and notes. Exact-main Windows and Linux Beta workflows publish verified assets with Beta 15 rollback assets retained. Install the verified Windows x64 release and open the installed overlay preview.",
+          "at": "2026-11-11T05:01:28.635Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-beta-16-release-notes:acceptance:0",
+            "text": "Main contains PR #186 and Beta 16 version and notes. Exact-main Windows and Linux Beta workflows publish verified assets with Beta 15 rollback assets retained. Install the verified Windows x64 release and open the installed overlay preview.",
+            "at": "2026-11-11T05:01:28.635Z"
           }
         ]
       }
