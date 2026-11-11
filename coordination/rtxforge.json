@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T21:55:46.088Z",
+  "updated_at": "2026-11-11T22:03:23.841Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30731,14 +30731,17 @@
         "tests/test_feeder_provider.py",
         "tests/test_feeder_legacy.py",
         "tests/test_ada_mfg_provider.py",
-        "tests/test_vulkan_dlssg_provider.py"
+        "tests/test_vulkan_dlssg_provider.py",
+        "VERSION",
+        "docs/releases/1.0-beta.md"
       ],
       "resources": [
-        "universal-mfg-pin"
+        "universal-mfg-pin",
+        "beta-release"
       ],
       "goal": "Update the Skynizz Universal MFG Unlocker pin to the verified upstream 1.7.0 build and audit the other pinned packages.",
       "acceptance": "Preserve recorded 1.6.1 installs, the native Vulkan package integration, single ownership of neural rendering, and exact restore. Validate the shared Windows and Proton lifecycle.",
-      "next_action": "Push the verified package updates to PR #191 and check the Windows and Linux runs for its new head.",
+      "next_action": "Prepare and validate 1.6 Beta 3, merge PR #191, publish Windows and Linux beta assets, and verify the local Windows installation.",
       "category": "maintenance",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -30762,8 +30765,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T21:55:46.088Z",
-      "lease_until": "2026-11-12T09:55:46.088Z"
+      "updated_at": "2026-11-11T22:03:23.841Z",
+      "lease_until": "2026-11-12T10:03:23.841Z"
     }
   ]
 }
