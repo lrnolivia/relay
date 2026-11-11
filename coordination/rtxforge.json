@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T07:59:14.934Z",
+  "updated_at": "2026-11-11T08:25:57.836Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8965,6 +8965,43 @@
       },
       "completed_at": "2026-11-11T05:51:13.483Z",
       "updated_at": "2026-11-11T05:51:13.483Z"
+    },
+    {
+      "id": "rtxforge-gitc-feeder-lab-comparison-20261111",
+      "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+      "goal": "Deferred by maintainer: compare GITC Uplift and Feeder NR on non-native-DLSS Forge Lab copies before considering a provider selector or live switching.",
+      "acceptance": "Record a matched one-pass comparison on a modern no-DLSS DX11 title and a 32-bit DX9 title when supported. Use the same GPU, driver, compatible NR model and working resolution, fixed scene, and frame generation off first. Measure CPU/GPU frame times, 1% lows, VRAM, and character, HUD and motion artifacts. Repeat with matched frame generation where supported and record Uplift's actual stage. If testing coexistence, verify both startup orders and repeated bidirectional handoffs, active-provider readback, stability, VRAM recovery and complete restore. Keep the comparison isolated to Forge Lab.",
+      "next_action": "Wait until the maintainer asks to test. Current pins: Feeder 1.19.0 and GITC Uplift 1.8.0. Feeder 1.19.1-beta.1 is the candidate coexistence pin; upstream issue 153 documents a DX11 shared-device crash on 1.19.0 and one successful retest. Uplift documents exclusive use. Compare the providers separately first, then consider a one-active-provider handoff as an opt-in experiment. Links: https://github.com/jlrouzies-fr/DLSS5-Feeder/issues/153 and https://github.com/ghostinthecamera/GITC-Uplift/wiki/Guide.",
+      "paths": [
+        "providers/feeder-runtime.json",
+        "providers/feeder-legacy.json",
+        "providers/nr-addons.json"
+      ],
+      "resources": [
+        "rtxforge-gtic-feeder-lab-qa"
+      ],
+      "category": "qa-verification",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "roman",
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-11-11T08:25:57.836Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Deferred by maintainer: compare GITC Uplift and Feeder NR on non-native-DLSS Forge Lab copies before considering a provider selector or live switching.",
+          "acceptance": "Record a matched one-pass comparison on a modern no-DLSS DX11 title and a 32-bit DX9 title when supported. Use the same GPU, driver, compatible NR model and working resolution, fixed scene, and frame generation off first. Measure CPU/GPU frame times, 1% lows, VRAM, and character, HUD and motion artifacts. Repeat with matched frame generation where supported and record Uplift's actual stage. If testing coexistence, verify both startup orders and repeated bidirectional handoffs, active-provider readback, stability, VRAM recovery and complete restore. Keep the comparison isolated to Forge Lab.",
+          "at": "2026-11-11T08:25:57.836Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-gitc-feeder-lab-comparison-20261111:acceptance:0",
+            "text": "Record a matched one-pass comparison on a modern no-DLSS DX11 title and a 32-bit DX9 title when supported. Use the same GPU, driver, compatible NR model and working resolution, fixed scene, and frame generation off first. Measure CPU/GPU frame times, 1% lows, VRAM, and character, HUD and motion artifacts. Repeat with matched frame generation where supported and record Uplift's actual stage. If testing coexistence, verify both startup orders and repeated bidirectional handoffs, active-provider readback, stability, VRAM recovery and complete restore. Keep the comparison isolated to Forge Lab.",
+            "at": "2026-11-11T08:25:57.836Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
