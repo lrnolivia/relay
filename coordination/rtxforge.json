@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T05:53:18.581Z",
+  "updated_at": "2026-11-11T06:04:33.233Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30488,14 +30488,18 @@
         "prototypes/overlay-rmlui/Prototype.cpp",
         "prototypes/overlay-rmlui/PreviewLibrary.h",
         "windows/RtxForge.Windows/Services/OverlayPreview.cs",
-        "windows/RtxForge.Windows/Controls/OverlayPreviewView.cs"
+        "windows/RtxForge.Windows/Controls/OverlayPreviewView.cs",
+        "VERSION",
+        "docs/releases/1.0-beta.md",
+        "providers/glass-overlay/rollout-policy.json"
       ],
       "resources": [
-        "rtxforge-overlay-preview"
+        "rtxforge-overlay-preview",
+        "rtxforge-beta-publication"
       ],
       "goal": "Fix the standalone overlay Settings close button, prevent interrupted notification fades, filter the preview picker to verified high-resolution scenes, and size Advanced at about 16:10.",
       "acceptance": "Side Panel and Bar Settings close works with a visible glyph and mouse and keyboard. Toasts reach full opacity after repositioning. The native preview only lists games with verified 1440p or larger screenshots and keeps the chosen scene stable as choices are discovered. Advanced defaults to 16:10 within the viewport and preserves user sizes.",
-      "next_action": "Fix and validate the shared native overlay and preview catalog in an isolated worktree.",
+      "next_action": "Prepare 1.6.0-beta.1 in PR #189, verify exact-head CI, publish the reviewed Windows and Linux build, then install and open the overlay preview.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -30519,8 +30523,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T05:53:18.581Z",
-      "lease_until": "2026-11-11T17:53:18.581Z"
+      "updated_at": "2026-11-11T06:04:33.233Z",
+      "lease_until": "2026-11-11T18:04:33.233Z"
     }
   ]
 }
