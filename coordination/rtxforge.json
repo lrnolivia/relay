@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T07:07:48.232Z",
+  "updated_at": "2026-11-11T07:08:52.945Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30538,14 +30538,15 @@
       "branch": "rtxforge/game-mode-operation-sizing-20261111",
       "paths": [
         "prototypes/game-mode-tauri/src/style.css",
-        "prototypes/game-mode-tauri/tests/install-flow.mjs"
+        "prototypes/game-mode-tauri/tests/install-flow.mjs",
+        "prototypes/game-mode-tauri/src/operation-ui.ts"
       ],
       "resources": [
         "rtxforge-game-mode-operation-layout"
       ],
       "goal": "Fit the Game Mode Preparing and other brief operation dialogs to their content.",
       "acceptance": "Preparing uses a centered content-height dialog at desktop and compact sizes. Progress and results fit their content, and longer startup and review screens remain scrollable.",
-      "next_action": "Adjust modal sizing and verify the shared Game Mode install flow with fixture data.",
+      "next_action": "Fit and center brief Game Mode operation dialogs and show the two DLSS update steps, then validate the shared install flow.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -30569,8 +30570,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T07:07:48.232Z",
-      "lease_until": "2026-11-11T19:07:48.232Z"
+      "updated_at": "2026-11-11T07:08:52.945Z",
+      "lease_until": "2026-11-11T19:08:52.945Z"
     }
   ]
 }
