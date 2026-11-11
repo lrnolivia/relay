@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T05:51:13.483Z",
+  "updated_at": "2026-11-11T05:53:18.581Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30476,6 +30476,51 @@
       "evidence": "Beta 16 published from verified main d95059b21f6fbf27a08a49e03b17aefd7ecbfb2a including PR #186. Attribution run 42965580919, Windows publish 42965648613 and Linux publish 42965648581 succeeded. https://github.com/lrnolivia/rtxForge/releases/tag/beta has 11 current and 11 Beta 15 rollback assets for both OSes. Verified x64 installer SHA-256, local per-user Beta 16 registration and binary source, and opened the installed overlay preview. The newly reported Settings close and toast defects are follow-up source work.",
       "work_accounted": true,
       "completed_at": "2026-11-11T05:51:13.483Z"
+    },
+    {
+      "id": "rtxforge-preview-settings-polish-20261111",
+      "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+      "branch": "rtxforge/preview-settings-polish-20261111",
+      "paths": [
+        "providers/glass-overlay/OverlayController.h",
+        "prototypes/overlay-rmlui/overlay.rcss",
+        "prototypes/overlay-rmlui/overlay.rml",
+        "prototypes/overlay-rmlui/Prototype.cpp",
+        "prototypes/overlay-rmlui/PreviewLibrary.h",
+        "windows/RtxForge.Windows/Services/OverlayPreview.cs",
+        "windows/RtxForge.Windows/Controls/OverlayPreviewView.cs"
+      ],
+      "resources": [
+        "rtxforge-overlay-preview"
+      ],
+      "goal": "Fix the standalone overlay Settings close button, prevent interrupted notification fades, filter the preview picker to verified high-resolution scenes, and size Advanced at about 16:10.",
+      "acceptance": "Side Panel and Bar Settings close works with a visible glyph and mouse and keyboard. Toasts reach full opacity after repositioning. The native preview only lists games with verified 1440p or larger screenshots and keeps the chosen scene stable as choices are discovered. Advanced defaults to 16:10 within the viewport and preserves user sizes.",
+      "next_action": "Fix and validate the shared native overlay and preview catalog in an isolated worktree.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "d95059b21f6fbf27a08a49e03b17aefd7ecbfb2a",
+      "state": "active",
+      "created_at": "2026-11-11T05:53:18.581Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Fix the standalone overlay Settings close button, prevent interrupted notification fades, filter the preview picker to verified high-resolution scenes, and size Advanced at about 16:10.",
+          "acceptance": "Side Panel and Bar Settings close works with a visible glyph and mouse and keyboard. Toasts reach full opacity after repositioning. The native preview only lists games with verified 1440p or larger screenshots and keeps the chosen scene stable as choices are discovered. Advanced defaults to 16:10 within the viewport and preserves user sizes.",
+          "at": "2026-11-11T05:53:18.581Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-preview-settings-polish-20261111:acceptance:0",
+            "text": "Side Panel and Bar Settings close works with a visible glyph and mouse and keyboard. Toasts reach full opacity after repositioning. The native preview only lists games with verified 1440p or larger screenshots and keeps the chosen scene stable as choices are discovered. Advanced defaults to 16:10 within the viewport and preserves user sizes.",
+            "at": "2026-11-11T05:53:18.581Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-11T05:53:18.581Z",
+      "lease_until": "2026-11-11T17:53:18.581Z"
     }
   ]
 }
