@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T21:43:40.053Z",
+  "updated_at": "2026-11-11T21:49:23.474Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30717,14 +30717,28 @@
         "tests/linux_runtime/test_linux_universal_lifecycle.py",
         "tests/linux_runtime/test_proton_mfg.py",
         "windows/RtxForge.Windows/Services/ForgeService.cs",
-        "windows/tests/test_skynizz_provider.py"
+        "windows/tests/test_skynizz_provider.py",
+        "providers/lock.json",
+        "providers/feeder.json",
+        "providers/feeder-runtime.json",
+        "providers/feeder-legacy.json",
+        "providers/bg3fgvk/",
+        "scripts/ada_mfg_provider.py",
+        "scripts/feeder_provider.py",
+        "scripts/feeder_legacy.py",
+        "scripts/vulkan_dlssg_provider.py",
+        "docs/INSTALLATION.md",
+        "tests/test_feeder_provider.py",
+        "tests/test_feeder_legacy.py",
+        "tests/test_ada_mfg_provider.py",
+        "tests/test_vulkan_dlssg_provider.py"
       ],
       "resources": [
         "universal-mfg-pin"
       ],
       "goal": "Update the Skynizz Universal MFG Unlocker pin to the verified upstream 1.7.0 build and audit the other pinned packages.",
       "acceptance": "Preserve recorded 1.6.1 installs, the native Vulkan package integration, single ownership of neural rendering, and exact restore. Validate the shared Windows and Proton lifecycle.",
-      "next_action": "Open the candidate PR and verify Windows and Linux CI for the Skynizz pin.",
+      "next_action": "Update and verify the published DLSS-Unlocked, y4my, RenoDX MFG Unlock, Feeder and standalone BG3 Vulkan package pins.",
       "category": "maintenance",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -30748,8 +30762,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T21:43:40.053Z",
-      "lease_until": "2026-11-12T09:43:40.053Z"
+      "updated_at": "2026-11-11T21:49:23.474Z",
+      "lease_until": "2026-11-12T09:49:23.474Z"
     }
   ]
 }
