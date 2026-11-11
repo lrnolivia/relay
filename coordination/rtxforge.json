@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-10T08:42:09.714Z",
+  "updated_at": "2026-11-11T01:33:10.095Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30187,6 +30187,51 @@
       "evidence": "Merged PR #185 at 63673fbb4434e0ce6ba3c880effa9dce385dffa6 after all six hosted workflows passed. Beta 15 Windows and Linux packages were published and checked against the same main commit. Windows installer SHA-256 and installed overlay revision 14 matched the release. The installed Presets page and ShortFuse preview opened. Game Mode and native fixtures cover package-aware preset install, Feeder pass roles, ShortFuse disclosure and live-setter response; gameplay was not exercised.",
       "work_accounted": true,
       "completed_at": "2026-11-10T08:42:09.714Z"
+    },
+    {
+      "id": "rtxforge-shortfuse-live-bar-20261110",
+      "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+      "branch": "rtxforge/shortfuse-live-bar-20261110",
+      "paths": [
+        "providers/glass-overlay/OverlayController.h",
+        "providers/glass-overlay/NrAddonControls.h",
+        "prototypes/overlay-rmlui/overlay.rml",
+        "prototypes/overlay-rmlui/overlay.rcss",
+        "prototypes/overlay-rmlui/Prototype.cpp",
+        "windows/overlay-rmlui/GlassRuntime.cpp",
+        "docs/nr-addons.md"
+      ],
+      "resources": [
+        "rtxforge-overlay-split-render"
+      ],
+      "goal": "Verify real ShortFuse live edits with Skynizz in Witcher 3 and refine the shared overlay navigation and layout.",
+      "acceptance": "The same running game PID and observed add-on values establish live application. Bar exposes supported core NR controls. Advanced nests Split Render under Neural Rendering, removes duplicate NR/FG cards, places whole-game presets on Overview, opens shorter, and shares its standalone Settings with Side Panel and Bar. Focused native layout fixtures and updated previews verify the routes.",
+      "next_action": "Test the released build in the lab, then implement and validate the reported shared overlay refinements.",
+      "category": "implementation",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "63673fbb4434e0ce6ba3c880effa9dce385dffa6",
+      "state": "active",
+      "created_at": "2026-11-11T01:33:10.095Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Verify real ShortFuse live edits with Skynizz in Witcher 3 and refine the shared overlay navigation and layout.",
+          "acceptance": "The same running game PID and observed add-on values establish live application. Bar exposes supported core NR controls. Advanced nests Split Render under Neural Rendering, removes duplicate NR/FG cards, places whole-game presets on Overview, opens shorter, and shares its standalone Settings with Side Panel and Bar. Focused native layout fixtures and updated previews verify the routes.",
+          "at": "2026-11-11T01:33:10.095Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-shortfuse-live-bar-20261110:acceptance:0",
+            "text": "The same running game PID and observed add-on values establish live application. Bar exposes supported core NR controls. Advanced nests Split Render under Neural Rendering, removes duplicate NR/FG cards, places whole-game presets on Overview, opens shorter, and shares its standalone Settings with Side Panel and Bar. Focused native layout fixtures and updated previews verify the routes.",
+            "at": "2026-11-11T01:33:10.095Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-11T01:33:10.095Z",
+      "lease_until": "2026-11-11T13:33:10.095Z"
     }
   ]
 }
