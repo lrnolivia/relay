@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T03:14:11.864Z",
+  "updated_at": "2026-11-11T03:24:39.811Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30242,7 +30242,8 @@
         "windows/RtxForge.Windows/Controls/GameModeAppearanceView.cs",
         "windows/RtxForge.Windows/Controls/OverlayPreviewView.cs",
         "prototypes/game-mode-tauri/src/settings-content.ts",
-        "prototypes/game-mode-tauri/src/overlay-settings.ts"
+        "prototypes/game-mode-tauri/src/overlay-settings.ts",
+        "windows/RtxForge.Windows/Services/OverlayPreview.cs"
       ],
       "resources": [
         "rtxforge-overlay-split-render",
@@ -30250,7 +30251,7 @@
       ],
       "goal": "Verify real ShortFuse live edits with Skynizz in Witcher 3 and refine the shared overlay navigation and layout.",
       "acceptance": "The same running game PID and observed add-on values establish live application. Bar exposes supported core NR controls. Advanced nests Split Render under Neural Rendering, removes duplicate NR/FG cards, places whole-game presets on Overview, opens shorter, and shares its standalone Settings with Side Panel and Bar. Focused native layout fixtures and updated previews verify the routes.",
-      "next_action": "Apply saved accent tint on initial Game Mode and Overlay preview render and verify the ReShade preferences fix.",
+      "next_action": "Fix native preview picker hit testing, require verified high-resolution scenes, and remove the line across overlay status indicators.",
       "category": "implementation",
       "primary_team": "night-shift",
       "supporting_teams": [],
@@ -30274,8 +30275,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T03:14:11.864Z",
-      "lease_until": "2026-11-11T15:14:11.864Z"
+      "updated_at": "2026-11-11T03:24:39.811Z",
+      "lease_until": "2026-11-11T15:24:39.811Z"
     }
   ]
 }
