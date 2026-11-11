@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T05:01:55.963Z",
+  "updated_at": "2026-11-11T05:51:13.483Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8946,7 +8946,7 @@
       "supporting_teams": [],
       "primary_staff": "luca",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-11-11T05:01:28.635Z",
       "objective_history": {
         "baseline": {
@@ -8962,7 +8962,9 @@
             "at": "2026-11-11T05:01:28.635Z"
           }
         ]
-      }
+      },
+      "completed_at": "2026-11-11T05:51:13.483Z",
+      "updated_at": "2026-11-11T05:51:13.483Z"
     }
   ],
   "claims": [
@@ -30449,7 +30451,7 @@
       "primary_staff": "luca",
       "supporting_staff": [],
       "base_sha": "8767553f3da077e56971f3f9a1904702fdd820ca",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-11T05:01:55.963Z",
       "objective_history": {
         "baseline": {
@@ -30466,8 +30468,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T05:01:55.963Z",
-      "lease_until": "2026-11-11T17:01:55.963Z"
+      "updated_at": "2026-11-11T05:51:13.483Z",
+      "lease_until": "2026-11-11T17:51:13.483Z",
+      "pr": 188,
+      "merged_head_sha": "5de8edd1548e87ddb6969d245e9e674d5fd98a61",
+      "merge_commit_sha": "d95059b21f6fbf27a08a49e03b17aefd7ecbfb2a",
+      "evidence": "Beta 16 published from verified main d95059b21f6fbf27a08a49e03b17aefd7ecbfb2a including PR #186. Attribution run 42965580919, Windows publish 42965648613 and Linux publish 42965648581 succeeded. https://github.com/lrnolivia/rtxForge/releases/tag/beta has 11 current and 11 Beta 15 rollback assets for both OSes. Verified x64 installer SHA-256, local per-user Beta 16 registration and binary source, and opened the installed overlay preview. The newly reported Settings close and toast defects are follow-up source work.",
+      "work_accounted": true,
+      "completed_at": "2026-11-11T05:51:13.483Z"
     }
   ]
 }
