@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T02:52:51.111Z",
+  "updated_at": "2026-11-11T03:05:59.130Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30227,14 +30227,26 @@
         "scripts/user_messages.py",
         "tests/test_user_messages.py",
         "windows/engine-host/review_copy.py",
-        "prototypes/game-mode-tauri/src/input.ts"
+        "prototypes/game-mode-tauri/src/input.ts",
+        "scripts/overlay_policy.py",
+        "scripts/feeder_provider.py",
+        "scripts/reshade_ui_settings.py",
+        "scripts/linux_overlay_host.py",
+        "windows/feeder-panel/rtxforge-quiet.cpp",
+        "windows/engine-host/overlay_ui.py",
+        "windows/engine-host/overlay_package_routes.py",
+        "windows/RtxForge.Windows/Services/NativePanelCoordinator.cs",
+        "windows/RtxForge.Windows/Services/EngineForgeService.Features.cs",
+        "tests/test_overlay_policy.py",
+        "tests/test_reshade_ui_settings.py"
       ],
       "resources": [
-        "rtxforge-overlay-split-render"
+        "rtxforge-overlay-split-render",
+        "rtxforge-reshade-menu-policy"
       ],
       "goal": "Verify real ShortFuse live edits with Skynizz in Witcher 3 and refine the shared overlay navigation and layout.",
       "acceptance": "The same running game PID and observed add-on values establish live application. Bar exposes supported core NR controls. Advanced nests Split Render under Neural Rendering, removes duplicate NR/FG cards, places whole-game presets on Overview, opens shorter, and shares its standalone Settings with Side Panel and Bar. Focused native layout fixtures and updated previews verify the routes.",
-      "next_action": "Verify keyboard and controller navigation in the bulk removal dialog, then merge PR #186 after CI.",
+      "next_action": "Fix the reported ReShade menu and welcome settings while validating the revised overlay and bulk removal.",
       "category": "implementation",
       "primary_team": "night-shift",
       "supporting_teams": [],
@@ -30258,8 +30270,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T02:52:51.111Z",
-      "lease_until": "2026-11-11T14:52:51.111Z"
+      "updated_at": "2026-11-11T03:05:59.130Z",
+      "lease_until": "2026-11-11T15:05:59.130Z"
     }
   ]
 }
