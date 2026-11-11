@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T02:17:41.528Z",
+  "updated_at": "2026-11-11T02:21:16.897Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30202,14 +30202,30 @@
         "docs/nr-addons.md",
         "scripts/nr_addon_settings.py",
         "tests/test_nr_addon_settings.py",
-        "providers/glass-overlay/rollout-policy.json"
+        "providers/glass-overlay/rollout-policy.json",
+        "providers/nr-addons.json",
+        "scripts/nr_addons.py",
+        "scripts/nr_install.py",
+        "tests/test_nr_install.py",
+        "gui/package_browser.py",
+        "gui/rtxforge_gtk.py",
+        "windows/overlay-rmlui/CMakeLists.txt",
+        "windows/RtxForge.Windows/Services/EngineForgeService.cs",
+        "windows/engine-host/rtxforge_win_host.py",
+        "windows/RtxForge.Windows/Controls/OperationDialog.cs",
+        "windows/RtxForge.Windows/Views/PackagesPage.cs",
+        "windows/RtxForge.Windows/Views/PresetsPage.cs",
+        "windows/RtxForge.Windows/Views/GamePage.NrAddons.cs",
+        "prototypes/game-mode-tauri/src/main.ts",
+        "prototypes/game-mode-tauri/src/split-render.ts",
+        "prototypes/game-mode-tauri/tests/install-flow.mjs"
       ],
       "resources": [
         "rtxforge-overlay-split-render"
       ],
       "goal": "Verify real ShortFuse live edits with Skynizz in Witcher 3 and refine the shared overlay navigation and layout.",
       "acceptance": "The same running game PID and observed add-on values establish live application. Bar exposes supported core NR controls. Advanced nests Split Render under Neural Rendering, removes duplicate NR/FG cards, places whole-game presets on Overview, opens shorter, and shares its standalone Settings with Side Panel and Bar. Focused native layout fixtures and updated previews verify the routes.",
-      "next_action": "Advance the shared renderer revision, verify upgrade and CI, then integrate PR 186.",
+      "next_action": "Flag off new Split Render setups and overlay controls across all platforms, retaining removal for existing installs.",
       "category": "implementation",
       "primary_team": "night-shift",
       "supporting_teams": [],
@@ -30233,8 +30249,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T02:17:41.528Z",
-      "lease_until": "2026-11-11T14:17:41.528Z"
+      "updated_at": "2026-11-11T02:21:16.897Z",
+      "lease_until": "2026-11-11T14:21:16.897Z"
     }
   ]
 }
