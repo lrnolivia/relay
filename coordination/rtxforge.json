@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T23:42:35.163Z",
+  "updated_at": "2026-11-11T23:42:58.411Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30786,14 +30786,16 @@
         "windows/engine-host/",
         "windows/tests/",
         "prototypes/game-mode-tauri/",
-        "tests/"
+        "tests/",
+        "VERSION",
+        "docs/releases/1.0-beta.md"
       ],
       "resources": [
         "package-update-lifecycle"
       ],
       "goal": "Add Update Features to the Library primary action and Game Details on Desktop and Game Mode for Windows and Linux.",
       "acceptance": "Use one reviewed batch showing each installed package revision to the available revision, retain the installed package, feature mode, tuning and originals, and skip current games. Keep fresh installs available from the primary action.",
-      "next_action": "Finish CI and merge PR #192, publish 1.6 Beta 4 from main, install the verified Windows installer and open the batch Update Features review.",
+      "next_action": "Add the Beta 4 version and release notes to PR #192, then verify checks, merge, publish and install.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -30817,8 +30819,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T23:42:35.163Z",
-      "lease_until": "2026-11-12T11:42:35.163Z"
+      "updated_at": "2026-11-11T23:42:58.411Z",
+      "lease_until": "2026-11-12T11:42:58.411Z"
     }
   ]
 }
