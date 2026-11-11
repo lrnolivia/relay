@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T08:36:30.734Z",
+  "updated_at": "2026-11-11T08:37:52.716Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30630,7 +30630,23 @@
         "tests/test_feeder_legacy.py",
         "scripts/engine_bridge.py",
         "scripts/vulkan_app.py",
-        "tests/test_nr_addons.py"
+        "tests/test_nr_addons.py",
+        "windows/RtxForge.Windows/App.xaml",
+        "windows/RtxForge.Windows/Controls/AccentResources.cs",
+        "windows/RtxForge.Windows/Services/ThemeController.cs",
+        "windows/RtxForge.Windows/Models/Models.cs",
+        "windows/RtxForge.Windows/Views/SettingsPage.xaml.cs",
+        "windows/RtxForge.Windows/Controls/GameModeAppearanceView.cs",
+        "windows/RtxForge.Windows/Services/GameModeAppearance.cs",
+        "gui/native_game_mode_appearance.py",
+        "scripts/game_mode_appearance.py",
+        "prototypes/game-mode-tauri/src/model.ts",
+        "prototypes/game-mode-tauri/src-tauri/src/main.rs",
+        "prototypes/game-mode-tauri/src-tauri/Cargo.toml",
+        "prototypes/game-mode-tauri/src-tauri/Cargo.lock",
+        "prototypes/game-mode-tauri/bridge/appearance.py",
+        "tests/test_game_mode_appearance.py",
+        "prototypes/game-mode-tauri/tests/appearance.mjs"
       ],
       "resources": [
         "rtxforge-game-mode-operation-layout",
@@ -30639,7 +30655,7 @@
       ],
       "goal": "Fit the Game Mode Preparing and other brief operation dialogs to their content.",
       "acceptance": "Preparing uses a centered content-height dialog at desktop and compact sizes. Progress and results fit their content, and longer startup and review screens remain scrollable.",
-      "next_action": "Use the shared reviewed Split Render restore for every managed package, verify rollback, and finish CI, merge, publish and install of 1.6 Beta 2.",
+      "next_action": "Finish generic Restore Original Files, then add app accent choices in Desktop and Game Mode on both platforms and refine the operation footer and steps before Beta 2 publication.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -30663,8 +30679,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T08:36:30.734Z",
-      "lease_until": "2026-11-11T20:36:30.734Z"
+      "updated_at": "2026-11-11T08:37:52.716Z",
+      "lease_until": "2026-11-11T20:37:52.716Z"
     }
   ]
 }
