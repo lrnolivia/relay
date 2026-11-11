@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-11T05:01:28.635Z",
+  "updated_at": "2026-11-11T05:01:43.732Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -8897,7 +8897,7 @@
       "supporting_teams": [],
       "primary_staff": "luca",
       "supporting_staff": [],
-      "state": "claimed",
+      "state": "superseded",
       "created_at": "2026-11-11T04:32:19.431Z",
       "objective_history": {
         "baseline": {
@@ -8913,6 +8913,20 @@
             "at": "2026-11-11T04:32:19.431Z"
           }
         ]
+      },
+      "updated_at": "2026-11-11T05:01:43.732Z",
+      "retirement": {
+        "at": "2026-11-11T05:01:43.732Z",
+        "intent": {
+          "operation_id": "rtxforge-beta16-release-head-correction",
+          "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+          "disposition": "superseded",
+          "reason": "PR #187 merged the version bump but GitHub attributed the squash to its app-authored pull request. The release must use a newly reviewed, maintainer-authored main head.",
+          "evidence": "PR #187 merged at 8767553f3da077e56971f3f9a1904702fdd820ca. Exact-head Windows and Linux checks passed before merge; main attribution failed in run 42962868629. No Beta publish was dispatched.",
+          "superseded_by": "rtxforge-beta-16-release-notes",
+          "branch": "rtxforge/beta-16-20261110",
+          "head_sha": "7d3ee679af326ec2217271ee7c5ca530be884ed5"
+        }
       }
     },
     {
@@ -30383,7 +30397,7 @@
       "primary_staff": "luca",
       "supporting_staff": [],
       "base_sha": "476f83ab3e0fc20017cf9945dd55ecd3c5988e01",
-      "state": "active",
+      "state": "superseded",
       "created_at": "2026-11-11T04:32:51.309Z",
       "objective_history": {
         "baseline": {
@@ -30400,8 +30414,21 @@
           }
         ]
       },
-      "updated_at": "2026-11-11T04:32:51.309Z",
-      "lease_until": "2026-11-11T16:32:51.309Z"
+      "updated_at": "2026-11-11T05:01:43.732Z",
+      "lease_until": "2026-11-11T16:32:51.309Z",
+      "retirement": {
+        "at": "2026-11-11T05:01:43.732Z",
+        "intent": {
+          "operation_id": "rtxforge-beta16-release-head-correction",
+          "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+          "disposition": "superseded",
+          "reason": "PR #187 merged the version bump but GitHub attributed the squash to its app-authored pull request. The release must use a newly reviewed, maintainer-authored main head.",
+          "evidence": "PR #187 merged at 8767553f3da077e56971f3f9a1904702fdd820ca. Exact-head Windows and Linux checks passed before merge; main attribution failed in run 42962868629. No Beta publish was dispatched.",
+          "superseded_by": "rtxforge-beta-16-release-notes",
+          "branch": "rtxforge/beta-16-20261110",
+          "head_sha": "7d3ee679af326ec2217271ee7c5ca530be884ed5"
+        }
+      }
     }
   ]
 }
