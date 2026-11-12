@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-12T02:46:39.351Z",
+  "updated_at": "2026-11-12T02:47:20.890Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -10632,6 +10632,67 @@
             "id": "steam-prime-project-registration-20261112:acceptance:0",
             "text": "Add the canonical Steam Prime project registration (id steam-prime, display name Steam Prime) and operational index through a metadata-only reviewed change. Scope: OS-native desktop chrome combined with Steam Prime CSS pages for Store, Library, Downloads and related surfaces, plus the Big Picture Mode CSS Loader theme. Record Windows as the user's nearly finished installed Fluently fork plus custom Big Picture theme; record Linux as the user's older Big Picture theme plus Adwaita Steam fork. Verified Linux repository: lrnolivia/Adwaita-for-Steam, default branch master. Verified Windows installed theme paths on 2026-11-12: C:\\Program Files (x86)\\Steam\\millennium\\themes\\steam-prime and C:\\Users\\lrnol\\homebrew\\themes\\Steam Prime. Do not invent a single shared source repository or Linux local path. Preserve the queued Linux parity task steam-prime-linux-parity-20261112 as distinct product work. Registry metadata only: do not implement themes, restart Steam, alter installations, resume the deferred Millennium reconnect task or stopped public-edition work. Do not enable managed source execution until repository and coordination policies are verified. Registration is complete only after the canonical project list reads Steam Prime back.",
             "at": "2026-11-12T02:46:39.351Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "steam-prime-linux-parity-20261112",
+      "owner": "lrnolivia",
+      "goal": "Bring Steam Prime on Linux to parity with the newer Windows Library, Store and Downloads treatments, using native Adwaita styling where possible.",
+      "acceptance": "Keep Steam Prime's broad Linux and Windows project identity separate from this Linux parity assignment. Windows is the user's nearly finished reference: an installed Fluently fork plus custom Big Picture Mode CSS Loader theme. Linux currently has an older Big Picture theme and the user's Adwaita Steam fork. Match the newer Library, Store and Downloads page treatments on Linux while retaining OS-native desktop chrome and using Adwaita-native styling wherever possible; preserve the related Steam Prime Big Picture experience. Verify the actual current Windows reference and Linux sources before implementation, preserve installed customizations and third-party notices, and verify the result in Linux Steam desktop and Big Picture rather than inferring parity from source alone. Verified Linux repository: lrnolivia/Adwaita-for-Steam (master); no Linux checkout/install path has been verified. Windows reference paths verified 2026-11-12: C:\\Program Files (x86)\\Steam\\millennium\\themes\\steam-prime and C:\\Users\\lrnol\\homebrew\\themes\\Steam Prime. This is queued external product work, not Relay implementation. Current authorization is to register/queue only; no implementation, launch, install, restart, or automatic dispatch. Before future execution, resolve Steam Prime's canonical project/source ownership and admit the actual source paths under the correct policy. Keep the deferred Windows Millennium reconnect task steam-prime-millennium-reconnect-20261023 and stopped public-edition work unchanged.",
+      "next_action": "Queued only. Complete project registration steam-prime-project-registration-20261112, then await an explicit implementation instruction. On future start, compare exact Windows/Linux theme sources, identify the Library/Store/Downloads gaps and Adwaita-native chrome boundaries, and obtain the correct source admission without treating these Relay documentation paths as product-edit authority.",
+      "paths": [
+        "docs/steam-prime/LINUX_PARITY.md"
+      ],
+      "resources": [
+        "steam-prime-linux-parity",
+        "external-linux-steam-adwaita",
+        "private-steam-prime-theme-reference"
+      ],
+      "category": "implementation",
+      "labels": [
+        {
+          "key": "target",
+          "value": "external-linux-steam"
+        },
+        {
+          "key": "project",
+          "value": "steam-prime"
+        },
+        {
+          "key": "execution",
+          "value": "not-authorized-yet"
+        }
+      ],
+      "tags": [
+        "steam-prime",
+        "linux",
+        "parity",
+        "adwaita",
+        "library",
+        "store",
+        "downloads",
+        "no-auto-dispatch"
+      ],
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-11-12T02:47:20.890Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Bring Steam Prime on Linux to parity with the newer Windows Library, Store and Downloads treatments, using native Adwaita styling where possible.",
+          "acceptance": "Keep Steam Prime's broad Linux and Windows project identity separate from this Linux parity assignment. Windows is the user's nearly finished reference: an installed Fluently fork plus custom Big Picture Mode CSS Loader theme. Linux currently has an older Big Picture theme and the user's Adwaita Steam fork. Match the newer Library, Store and Downloads page treatments on Linux while retaining OS-native desktop chrome and using Adwaita-native styling wherever possible; preserve the related Steam Prime Big Picture experience. Verify the actual current Windows reference and Linux sources before implementation, preserve installed customizations and third-party notices, and verify the result in Linux Steam desktop and Big Picture rather than inferring parity from source alone. Verified Linux repository: lrnolivia/Adwaita-for-Steam (master); no Linux checkout/install path has been verified. Windows reference paths verified 2026-11-12: C:\\Program Files (x86)\\Steam\\millennium\\themes\\steam-prime and C:\\Users\\lrnol\\homebrew\\themes\\Steam Prime. This is queued external product work, not Relay implementation. Current authorization is to register/queue only; no implementation, launch, install, restart, or automatic dispatch. Before future execution, resolve Steam Prime's canonical project/source ownership and admit the actual source paths under the correct policy. Keep the deferred Windows Millennium reconnect task steam-prime-millennium-reconnect-20261023 and stopped public-edition work unchanged.",
+          "at": "2026-11-12T02:47:20.890Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "steam-prime-linux-parity-20261112:acceptance:0",
+            "text": "Keep Steam Prime's broad Linux and Windows project identity separate from this Linux parity assignment. Windows is the user's nearly finished reference: an installed Fluently fork plus custom Big Picture Mode CSS Loader theme. Linux currently has an older Big Picture theme and the user's Adwaita Steam fork. Match the newer Library, Store and Downloads page treatments on Linux while retaining OS-native desktop chrome and using Adwaita-native styling wherever possible; preserve the related Steam Prime Big Picture experience. Verify the actual current Windows reference and Linux sources before implementation, preserve installed customizations and third-party notices, and verify the result in Linux Steam desktop and Big Picture rather than inferring parity from source alone. Verified Linux repository: lrnolivia/Adwaita-for-Steam (master); no Linux checkout/install path has been verified. Windows reference paths verified 2026-11-12: C:\\Program Files (x86)\\Steam\\millennium\\themes\\steam-prime and C:\\Users\\lrnol\\homebrew\\themes\\Steam Prime. This is queued external product work, not Relay implementation. Current authorization is to register/queue only; no implementation, launch, install, restart, or automatic dispatch. Before future execution, resolve Steam Prime's canonical project/source ownership and admit the actual source paths under the correct policy. Keep the deferred Windows Millennium reconnect task steam-prime-millennium-reconnect-20261023 and stopped public-edition work unchanged.",
+            "at": "2026-11-12T02:47:20.890Z"
           }
         ]
       }
