@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-12T02:42:04.112Z",
+  "updated_at": "2026-11-12T02:46:39.351Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -10578,6 +10578,60 @@
             "id": "relay-card-native-ui-acceptance-followup-20261101:acceptance:0",
             "text": "Preserve the original snapshot branch relay/card-publication-live-acceptance-20261101 at 289d6b3c50cf9c92f2834978c8753fb35b647e22, native launch /root/relay_publication_verifier, operation relay-card-live-verifier-20261101, two Roman public updates and Inspector evidence vis_5e1dcf0b-166f-4373-b490-ff8eeb659c92. Launch/publication/progress/artifact metadata independently verified at edf82d9b7dc757c4741ad0122e27cac5bdd60d57; held record 3c04d44c4c3ddcfaa8c158e853bc4a2fc20826b5. Actual image pixels, native inline mounting/media and automatic refresh remain unverified, not passed. Prove those through supported client capabilities or retain explicit blocker. No source work delivered by the old snapshot claim, and no private results may be published.",
             "at": "2026-11-01T16:57:36.604Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "steam-prime-project-registration-20261112",
+      "owner": "lrnolivia",
+      "goal": "Register Steam Prime as one project with Linux and Windows variants, separate from its Linux parity implementation assignment.",
+      "acceptance": "Add the canonical Steam Prime project registration (id steam-prime, display name Steam Prime) and operational index through a metadata-only reviewed change. Scope: OS-native desktop chrome combined with Steam Prime CSS pages for Store, Library, Downloads and related surfaces, plus the Big Picture Mode CSS Loader theme. Record Windows as the user's nearly finished installed Fluently fork plus custom Big Picture theme; record Linux as the user's older Big Picture theme plus Adwaita Steam fork. Verified Linux repository: lrnolivia/Adwaita-for-Steam, default branch master. Verified Windows installed theme paths on 2026-11-12: C:\\Program Files (x86)\\Steam\\millennium\\themes\\steam-prime and C:\\Users\\lrnol\\homebrew\\themes\\Steam Prime. Do not invent a single shared source repository or Linux local path. Preserve the queued Linux parity task steam-prime-linux-parity-20261112 as distinct product work. Registry metadata only: do not implement themes, restart Steam, alter installations, resume the deferred Millennium reconnect task or stopped public-edition work. Do not enable managed source execution until repository and coordination policies are verified. Registration is complete only after the canonical project list reads Steam Prime back.",
+      "next_action": "Wait for a Relay branch slot, then claim only the metadata registration scope, add projects/steam-prime.json and docs/steam-prime/README.md using the verified multi-source tracking-registration pattern, run required checks, and publish through the normal reviewed path. Do not displace unrelated claims.",
+      "paths": [
+        "projects/steam-prime.json",
+        "docs/steam-prime/README.md"
+      ],
+      "resources": [
+        "steam-prime-project-registration"
+      ],
+      "category": "coordination",
+      "labels": [
+        {
+          "key": "target",
+          "value": "steam-prime-project-registry"
+        },
+        {
+          "key": "implementation",
+          "value": "not-started"
+        }
+      ],
+      "tags": [
+        "steam-prime",
+        "project-registration",
+        "windows",
+        "linux",
+        "metadata-only",
+        "no-auto-dispatch"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": null,
+      "supporting_staff": [],
+      "state": "queued",
+      "created_at": "2026-11-12T02:46:39.351Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Register Steam Prime as one project with Linux and Windows variants, separate from its Linux parity implementation assignment.",
+          "acceptance": "Add the canonical Steam Prime project registration (id steam-prime, display name Steam Prime) and operational index through a metadata-only reviewed change. Scope: OS-native desktop chrome combined with Steam Prime CSS pages for Store, Library, Downloads and related surfaces, plus the Big Picture Mode CSS Loader theme. Record Windows as the user's nearly finished installed Fluently fork plus custom Big Picture theme; record Linux as the user's older Big Picture theme plus Adwaita Steam fork. Verified Linux repository: lrnolivia/Adwaita-for-Steam, default branch master. Verified Windows installed theme paths on 2026-11-12: C:\\Program Files (x86)\\Steam\\millennium\\themes\\steam-prime and C:\\Users\\lrnol\\homebrew\\themes\\Steam Prime. Do not invent a single shared source repository or Linux local path. Preserve the queued Linux parity task steam-prime-linux-parity-20261112 as distinct product work. Registry metadata only: do not implement themes, restart Steam, alter installations, resume the deferred Millennium reconnect task or stopped public-edition work. Do not enable managed source execution until repository and coordination policies are verified. Registration is complete only after the canonical project list reads Steam Prime back.",
+          "at": "2026-11-12T02:46:39.351Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "steam-prime-project-registration-20261112:acceptance:0",
+            "text": "Add the canonical Steam Prime project registration (id steam-prime, display name Steam Prime) and operational index through a metadata-only reviewed change. Scope: OS-native desktop chrome combined with Steam Prime CSS pages for Store, Library, Downloads and related surfaces, plus the Big Picture Mode CSS Loader theme. Record Windows as the user's nearly finished installed Fluently fork plus custom Big Picture theme; record Linux as the user's older Big Picture theme plus Adwaita Steam fork. Verified Linux repository: lrnolivia/Adwaita-for-Steam, default branch master. Verified Windows installed theme paths on 2026-11-12: C:\\Program Files (x86)\\Steam\\millennium\\themes\\steam-prime and C:\\Users\\lrnol\\homebrew\\themes\\Steam Prime. Do not invent a single shared source repository or Linux local path. Preserve the queued Linux parity task steam-prime-linux-parity-20261112 as distinct product work. Registry metadata only: do not implement themes, restart Steam, alter installations, resume the deferred Millennium reconnect task or stopped public-edition work. Do not enable managed source execution until repository and coordination policies are verified. Registration is complete only after the canonical project list reads Steam Prime back.",
+            "at": "2026-11-12T02:46:39.351Z"
           }
         ]
       }
