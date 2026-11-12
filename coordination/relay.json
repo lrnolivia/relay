@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "relay",
-  "updated_at": "2026-11-02T08:27:56.769Z",
+  "updated_at": "2026-11-12T02:42:04.112Z",
   "legacy_branches": [
     "fix/browser-ci-capacity",
     "fix/chatgpt-inspector-oauth-20260929",
@@ -21982,6 +21982,46 @@
       "evidence": "Delivered reviewed PR279 https://github.com/lrnolivia/relay/pull/279 at merge 5447cee1d38c29e30c0ff43ccfb1979b481d649e. Exact merged main CI https://github.com/lrnolivia/relay/actions/runs/41412382706 passed 1275 tests, 0 failures, 1 existing skip; Workers Build afc4692a-c15b-4430-8578-287e81d8ecdc succeeded for that source. Deployment d567d0f6-0a24-4c1d-b3db-4d116092f28b serves version 09d9e476-a33a-4f44-a165-02f787048eed at 100 percent; health passed. Exact-source production smoke https://github.com/lrnolivia/relay/actions/runs/41412871909 passed fresh MCP inventory, context resource v32 equality and production runtime/web identity. v32 SHA256 539a4deaf844e2022a3318c3f1e577ec0328f68014dc6b426596c10be470f7db; earlier resource aliases remain mapped and equality-tested at exact source. Recovery assurance https://github.com/lrnolivia/relay/actions/runs/41412884898 passed retained archive and isolated restoration; healthy revision112 records artifact13126780034, archive ee6a998c270d74778d14b4db99f728098db7b44ae28d39c47c6327350d826dd8, manifest47ace1086476b7c10f4577ab3d25a6a9c0513b36e22163d4e9a92953a0dd3d5f, restore d0a3419361f134078f7e5a68a0b07b87fb5591ec20a543b992b48b7cfa944aa5. Prior healthy baseline and user-approved rollback point preserved. Source/release scope only: native ChatGPT mounting remains separate queued acceptance; automatic trigger remains paused and policy-blocked, not delivered.",
       "work_accounted": true,
       "completed_at": "2026-11-02T08:27:56.769Z"
+    },
+    {
+      "id": "rtxforge-merge-attribution-20261111",
+      "owner": "01a1be2c-b4d2-76e3-9572-688ee4355468",
+      "branch": "relay/rtxforge-merge-attribution-20261111",
+      "paths": [
+        "projects/rtxforge.json",
+        "docs/rtxforge/README.md"
+      ],
+      "resources": [
+        "rtxforge-merge-policy"
+      ],
+      "goal": "Preserve verified authorship in future rtxForge merges without changing rtxForge main history.",
+      "acceptance": "Disable rtxForge squash merges in GitHub, align the live rtxForge registration with author-preserving merge commits, and document exact-head attribution checks and verified human credentials for future merges.",
+      "next_action": "Admit the rtxForge merge policy and maintainer documentation change in the canonical registry, then verify GitHub and registry readback.",
+      "category": "maintenance",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "adrian",
+      "supporting_staff": [],
+      "base_sha": "2a4c364e61d738a3ee6013be7237bacb08e61c3d",
+      "state": "active",
+      "created_at": "2026-11-12T02:42:04.112Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Preserve verified authorship in future rtxForge merges without changing rtxForge main history.",
+          "acceptance": "Disable rtxForge squash merges in GitHub, align the live rtxForge registration with author-preserving merge commits, and document exact-head attribution checks and verified human credentials for future merges.",
+          "at": "2026-11-12T02:42:04.112Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "rtxforge-merge-attribution-20261111:acceptance:0",
+            "text": "Disable rtxForge squash merges in GitHub, align the live rtxForge registration with author-preserving merge commits, and document exact-head attribution checks and verified human credentials for future merges.",
+            "at": "2026-11-12T02:42:04.112Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-12T02:42:04.112Z",
+      "lease_until": "2026-11-12T14:42:04.112Z"
     }
   ],
   "migrated_from": "loew-inspector"
