@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-13T01:17:24.359Z",
+  "updated_at": "2026-11-13T02:23:35.289Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30846,14 +30846,17 @@
         "scripts/desktop_service.py",
         "tests/test_review_plan.py",
         "prototypes/game-mode-tauri/bridge/",
-        "prototypes/game-mode-tauri/src-tauri/src/engine.rs"
+        "prototypes/game-mode-tauri/src-tauri/src/engine.rs",
+        "VERSION",
+        "docs/releases/1.0-beta.md"
       ],
       "resources": [
-        "overlay-update-review"
+        "overlay-update-review",
+        "beta-release"
       ],
       "goal": "Use the standard overlay update review with actionable repair reporting and restore Desktop Game Details menu parity.",
       "acceptance": "Overlay report uses normal review rows and a lower attention section, with verified fixes for supported issues. Equivalent Desktop actions match across Windows and Linux.",
-      "next_action": "Show the same saved overlay report and repair actions in Game Mode.",
+      "next_action": "Bump to 1.6 Beta 5, validate the final PR commit, then merge and publish both platforms from reviewed main.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -30877,8 +30880,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-13T01:17:24.359Z",
-      "lease_until": "2026-11-13T13:17:24.359Z"
+      "updated_at": "2026-11-13T02:23:35.289Z",
+      "lease_until": "2026-11-13T14:23:35.289Z"
     }
   ]
 }
