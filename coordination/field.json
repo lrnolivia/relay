@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-13T18:34:04.368Z",
+  "updated_at": "2026-11-13T21:55:12.571Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1837,7 +1837,7 @@
       ],
       "goal": "Finish the remaining next-release work after PR149 shipped: open acceptance carried from field-document-media-search-20261004, pre-existing failing browser coverage, and Figma parity gaps.",
       "acceptance": "Carried from field-document-media-search-20261004 (see its context revisions 32-40). Repair or explain every pre-existing failing browser spec (harness rot vs product) without weakening assertions; fix demonstrated product defects (flex sibling reparent, replica exits, copied-page first undo) with regressions; Dashboard can open a project's settings; cross-document camera lag between editor chrome and canvas content resolved or proven infeasible with evidence; Figma parity pending audits (group bounds, frame from selection, group/ungroup, Layers hover) verified with tests. Device-only checks (physical iOS keyboard/IME/rotation, physical Safari BFCache, authenticated R2 persistence) remain human QA. Gates: npm ci, build:all, test:run, lint; exact-main comparisons; release with Lauren's standing approval from 2026-10-20 ('make it live', 'keep working until you finish it all').",
-      "next_action": "Draft Field PR151 at a6f55e4: page duplication undo/redo verified, 27 of 82 full-main browser failures now pass, 55 full-main cases remain plus 2 reproduced on both revisions in paired reruns. No reproducible candidate-only failure in paired reruns. Admission passed; verify final Cloudflare Preview. Keep promotion pending until remaining evidence is resolved. First investigate rotated flex lift and Frame creation using pointer/overlay/source traces, then confirm updated entry points before classifying the remaining inherited tests. Physical Safari and authenticated persistence remain open.",
+      "next_action": "Field PR151 follow-up restores iframe pointer routing for SVG/text editing, compact Inspector locale actions, and CMS text binding controls. Initial focused runs passed SVG/rotation/reorder, CMS, desktop smoke and current chrome. Full Chromium run and targeted reruns underway. Promote only after exact candidate validation and refreshed production rollback evidence; physical-device and signed-in persistence remain human QA.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1860,8 +1860,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-13T18:34:04.368Z",
-      "lease_until": "2026-11-14T06:34:04.368Z",
+      "updated_at": "2026-11-13T21:55:12.571Z",
+      "lease_until": "2026-11-14T09:55:12.571Z",
       "handoffs": [
         {
           "at": "2026-11-13T17:50:14.975Z",
