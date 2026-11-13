@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-13T02:54:50.788Z",
+  "updated_at": "2026-11-13T03:01:57.824Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30898,7 +30898,7 @@
       ],
       "goal": "Exclude winhttp.dll as an rtxForge-selected injection loader for every game while preserving recovery of existing installs.",
       "acceptance": "All selection routes avoid winhttp.dll for new and refreshed installs; legacy files remain discoverable and restorable; focused tests pass.",
-      "next_action": "Inspect loader selection paths and implement regression coverage.",
+      "next_action": "Draft PR #194 at ed2be3a excludes WinHTTP from loader selection; six focused tests passed on Windows with fcntl stub. Cyberpunk's tested winmm loader and local/shared records were reconciled. Await required Linux CI and review.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -30922,8 +30922,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-13T02:54:50.788Z",
-      "lease_until": "2026-11-13T14:54:50.788Z"
+      "updated_at": "2026-11-13T03:01:57.824Z",
+      "lease_until": "2026-11-13T15:01:57.824Z"
     }
   ]
 }
