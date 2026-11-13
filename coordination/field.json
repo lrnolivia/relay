@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-13T21:55:12.571Z",
+  "updated_at": "2026-11-13T22:12:32.110Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1837,7 +1837,7 @@
       ],
       "goal": "Finish the remaining next-release work after PR149 shipped: open acceptance carried from field-document-media-search-20261004, pre-existing failing browser coverage, and Figma parity gaps.",
       "acceptance": "Carried from field-document-media-search-20261004 (see its context revisions 32-40). Repair or explain every pre-existing failing browser spec (harness rot vs product) without weakening assertions; fix demonstrated product defects (flex sibling reparent, replica exits, copied-page first undo) with regressions; Dashboard can open a project's settings; cross-document camera lag between editor chrome and canvas content resolved or proven infeasible with evidence; Figma parity pending audits (group bounds, frame from selection, group/ungroup, Layers hover) verified with tests. Device-only checks (physical iOS keyboard/IME/rotation, physical Safari BFCache, authenticated R2 persistence) remain human QA. Gates: npm ci, build:all, test:run, lint; exact-main comparisons; release with Lauren's standing approval from 2026-10-20 ('make it live', 'keep working until you finish it all').",
-      "next_action": "Field PR151 follow-up restores iframe pointer routing for SVG/text editing, compact Inspector locale actions, and CMS text binding controls. Initial focused runs passed SVG/rotation/reorder, CMS, desktop smoke and current chrome. Full Chromium run and targeted reruns underway. Promote only after exact candidate validation and refreshed production rollback evidence; physical-device and signed-in persistence remain human QA.",
+      "next_action": "PR 151 exact candidate 1edca39. Cloudflare Preview b653c483 served the exact SHA and a read-only saved project with 11 visible nodes and all four Canvas isolation headers. Node 22 build, typecheck, lint and 13,356 unit tests passed against matching product inputs. Final full Chromium comparison is running with unchanged source after repairing the last three browser test fixtures. Then refresh production identity, merge exact validated head, verify rollout and record any remaining native QA.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1860,8 +1860,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-13T21:55:12.571Z",
-      "lease_until": "2026-11-14T09:55:12.571Z",
+      "updated_at": "2026-11-13T22:12:32.110Z",
+      "lease_until": "2026-11-14T10:12:32.110Z",
       "handoffs": [
         {
           "at": "2026-11-13T17:50:14.975Z",
