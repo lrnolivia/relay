@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "rtxforge",
-  "updated_at": "2026-11-13T01:07:05.211Z",
+  "updated_at": "2026-11-13T01:08:44.584Z",
   "legacy_branches": [
     "backup/github-main-before-0.5.8",
     "backup/main-0.5.8-ada",
@@ -30838,14 +30838,17 @@
         "windows/tests/",
         "scripts/vulkan_dlssg_provider.py",
         "gui/rtxforge_gtk.py",
-        "prototypes/game-mode-tauri/src/"
+        "prototypes/game-mode-tauri/src/",
+        "scripts/overlay_refresh.py",
+        "scripts/linux_runtime.py",
+        "tests/test_overlay_refresh.py"
       ],
       "resources": [
         "overlay-update-review"
       ],
       "goal": "Use the standard overlay update review with actionable repair reporting and restore Desktop Game Details menu parity.",
       "acceptance": "Overlay report uses normal review rows and a lower attention section, with verified fixes for supported issues. Equivalent Desktop actions match across Windows and Linux.",
-      "next_action": "Use canonical installation identity for Vulkan overlay refresh and route verified repair candidates through the existing review flow.",
+      "next_action": "Keep the shared overlay refresh report keyed by game, skip archived Vulkan records, and reuse each platform’s reviewed repair action.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -30869,8 +30872,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-13T01:07:05.211Z",
-      "lease_until": "2026-11-13T13:07:05.211Z"
+      "updated_at": "2026-11-13T01:08:44.584Z",
+      "lease_until": "2026-11-13T13:08:44.584Z"
     }
   ]
 }
