@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "loewfi",
-  "updated_at": "2026-11-13T05:23:09.932Z",
+  "updated_at": "2026-11-13T05:23:50.707Z",
   "legacy_branches": [
     "main",
     "runner/universal-authority"
@@ -375,7 +375,9 @@
       "paths": [
         "src/",
         "public/",
-        "index.html"
+        "index.html",
+        "company-guide/",
+        "vite.config.js"
       ],
       "resources": [
         "loewfi-company-guide",
@@ -383,7 +385,7 @@
       ],
       "goal": "Build a small, useful founder's guide on loew.fi titled 'making loew fidelity official', covering low-cost Florida company formation and adult-app launch readiness. User authorization, 2026-11-13: 'can you create a little guide on loew.fi’s website for me? you can start a cloud codex worker', followed by 'you may just have to create the assignment i may have to start the codex cloud worker'. Queue now for user-launched Codex Cloud; do not report a running worker. The queue owner is this ChatGPT coordinator label, not an employee or executor. Continue this same assignment after supported handoff/claim, not a duplicate. Proposed business is one solely owned Florida operating LLC owning multiple products, not separate subsidiary LLCs. Formation, trademark availability and store enrollment are NOT completed or verified. The family product is not for children; do not add child-account requirements or invent an approved minimum age. Build and verify the guide through the existing authorized project release path, preserving the current approved Terra Prime landing and rollback. No government filings, purchases, financial-account access, credential changes, domain transfers or legal commitments are authorized.",
       "acceptance": "1. Add /company-guide without replacing the homepage or reviving the CMS/portfolio. Keep it unlisted, out of navigation/sitemap, with route-scoped noindex. Public-safe guidance only: no personal legal name, address, EIN, account details or private operations. Explain unlisted/noindex is not private. Reuse existing protection only if available; no new auth service. Never claim incorporation is complete.\n2. Preserve Terra Prime typography, colors, assets, spacing and motion. Mobile-first, readable, natural scrolling. Cost summary; phases 'before filing', 'form the company', 'before launch', 'keep it current'; expandable optional detail. Accessible checkboxes, versioned browser-local progress, confirmed reset, storage-error fallback. Explain device-only progress and that checking a box submits nothing. No sensitive notes fields or tracking.\n3. Recheck official sources when implementing; show actual checked date and source links near claims. Research checked 2026-11-13: LLC $125 ($100 articles + $25 agent designation, not agent subscription); annual report $138.75, Jan 1-May 1, $400 late fee after May 1. EIN free after entity formation. Optional Jan 1, 2027 effective date only with no earlier LLC operation; first report due May 1, 2028. Explain 90-day date limit and annual renewals. $249 = LLC + Apple $99/year + Google Play $25 once, excluding address/agent services, taxes, insurance, hosting, payment fees and operations. Stores can wait.\n4. Before filing: Sunbiz plus broader trademark search; domains/state acceptance do not clear trademarks. Legal LLC suffix versus branding; other trading names may need $50 fictitious-name filing plus newspaper ad, but do not assume all product names need DBAs. Decide public filing address and compliant Florida street-address registered agent; self-agent is an option, not anonymity. Verify applicable county/city zoning and home-business rules, without assuming city-limit status.\n5. Include single-member operating agreement, ownership records, assignment/licensing of code/domains/designs and third-party/open-source rights. Separate business banking, receipts and product-level books. Default single-member federal pass-through; self-employment/estimated taxes may apply. Review sales-tax/payment obligations before charging. Recheck current FinCEN domestic BOI exemption; no paid filing upsell. No automatic S-corp election or LLC per app. Shared product liability, limited liability caveats, and risk-based insurance/professional review.\n6. App readiness: organization verification/D-U-N-S, consistent business identity, support contact, accurate privacy policy/terms, account/data deletion, store privacy disclosures, security/backups, applicable reporting/blocking/moderation. Adult audience still has privacy obligations; no invented approved minimum age or child features. Review billing/refund/subscription rules, licenses and actual-device behavior. Checklist cannot guarantee store approval or legal compliance.\n7. Focused tests then required frozen install/typecheck/tests/build and exact-source desktop/mobile browser QA. Verify direct URL/reload/back, progress/storage/reset, keyboard/focus, print, source links and preserved homepage viewport/menu/mailto/indexing. One candidate/PR; existing release mechanism with verified healthy rollback. Save exact source/check/deployment/runtime evidence in Relay; process/source success is not release. Educational-not-legal-advice note. Preserve next-pass items; no unrelated rewrites or paid dependencies.",
-      "next_action": "Preflight admitted scope, create claimed branch from live main; verify official source claims; implement private-link-only guide without nav or sitemap entry; required validation and desktop/mobile QA before release.",
+      "next_action": "Add dedicated guide HTML entry with server-delivered noindex and route-scoped X-Robots-Tag; build config change needed because publicDir is disabled. Preserve homepage and inactive legacy routes. Verify primary sources, local progress, focused/full tests and desktop/mobile before authorized release.",
       "category": "implementation",
       "tags": [
         "company-guide",
@@ -412,6 +414,8 @@
           }
         ]
       },
+      "updated_at": "2026-11-13T05:23:50.707Z",
+      "lease_until": "2026-11-13T17:23:50.707Z",
       "handoffs": [
         {
           "at": "2026-11-13T05:22:56.378Z",
@@ -419,9 +423,7 @@
           "to": "6af69e24-d200-8191-b53b-50dad552f0fe",
           "next_action": "User-launched Codex Cloud thread 6af69e24-d200-8191-b53b-50dad552f0fe has bootstrapped current contracts and live queued record; no prior worker or branch exists. Claim same assignment, preflight, verify official sources, build unlisted /company-guide with no navigation/sitemap link per user's clarification, then exact-source QA and authorized release with verified rollback."
         }
-      ],
-      "updated_at": "2026-11-13T05:23:09.932Z",
-      "lease_until": "2026-11-13T17:23:09.932Z"
+      ]
     }
   ]
 }
