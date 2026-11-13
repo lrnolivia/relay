@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-13T22:12:32.110Z",
+  "updated_at": "2026-11-13T22:17:45.429Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1843,7 +1843,7 @@
       "primary_staff": "julian",
       "supporting_staff": [],
       "base_sha": "709ab685539ff6a751099d7d6458ac1b5cc42473",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-10-20T17:39:28.475Z",
       "objective_history": {
         "baseline": {
@@ -1860,8 +1860,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-13T22:12:32.110Z",
-      "lease_until": "2026-11-14T10:12:32.110Z",
+      "updated_at": "2026-11-13T22:17:45.429Z",
+      "lease_until": "2026-11-14T10:17:45.429Z",
       "handoffs": [
         {
           "at": "2026-11-13T17:50:14.975Z",
@@ -1869,7 +1869,13 @@
           "to": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "next_action": "Lauren directed completion on November 13. Prior Claude checkout is clean on main at 8b988063; prior job absent in Relay and no local Claude process or active Field CI observed. PR150 and prior branch head 2a995173 preserved. Restore the existing assignment branch from verified main after admission, reproduce and fix replica exits and copied-page first undo, audit Figma behavior, classify inherited E2E failures, and run release gates. Keep device and authenticated QA explicitly tracked."
         }
-      ]
+      ],
+      "pr": 151,
+      "merged_head_sha": "1edca39efb44dd99553ebc7dfb44111e049a1edd",
+      "merge_commit_sha": "98e38c4b995e4a8553223f9e738630b558d12d2d",
+      "evidence": "Relay context ctx_ec893a36590b986257e8c06ff112230c93b9238d9913a041efe3dbb78da0eaf0; https://github.com/lrnolivia/field/pull/151; production SHA 98e38c4b995e4a8553223f9e738630b558d12d2d at 100%; final exact Chromium 255 passing with zero failures; physical iPhone, Safari BFCache edits and authenticated R2 remain tracked as human QA in this disposition.",
+      "work_accounted": true,
+      "completed_at": "2026-11-13T22:17:45.429Z"
     }
   ]
 }
