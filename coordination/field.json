@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-10-20T23:04:29.100Z",
+  "updated_at": "2026-11-13T17:50:14.975Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1804,7 +1804,7 @@
     },
     {
       "id": "field-next-release-continuation-20261020",
-      "owner": "b0d6555f-c978-4d25-8fda-7399ef4ddc35",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
       "branch": "field/next-release-continuation-20261020",
       "paths": [
         "src/canvas/",
@@ -1836,7 +1836,7 @@
       ],
       "goal": "Finish the remaining next-release work after PR149 shipped: open acceptance carried from field-document-media-search-20261004, pre-existing failing browser coverage, and Figma parity gaps.",
       "acceptance": "Carried from field-document-media-search-20261004 (see its context revisions 32-40). Repair or explain every pre-existing failing browser spec (harness rot vs product) without weakening assertions; fix demonstrated product defects (flex sibling reparent, replica exits, copied-page first undo) with regressions; Dashboard can open a project's settings; cross-document camera lag between editor chrome and canvas content resolved or proven infeasible with evidence; Figma parity pending audits (group bounds, frame from selection, group/ungroup, Layers hover) verified with tests. Device-only checks (physical iOS keyboard/IME/rotation, physical Safari BFCache, authenticated R2 persistence) remain human QA. Gates: npm ci, build:all, test:run, lint; exact-main comparisons; release with Lauren's standing approval from 2026-10-20 ('make it live', 'keep working until you finish it all').",
-      "next_action": "PR #150 merged as 8b988063 (author Lauren Olivia <lrnoliv@gmail.com>, committer GitHub squash); production Worker version 3a9c9511 serves commitSha 8b988063 (fetch evidence + vis_d945c76e-daa9-4707-adae-6c1aaf85560e); rollback version d6182d20. Remaining acceptance: repair or explain the 85 e2e specs that also fail on main 709ab685; copied-page first undo; replica exits; Figma parity audits; device QA for iOS landscape input zoom and tap/double-tap is Lauren's.",
+      "next_action": "Lauren directed completion on November 13. Prior Claude checkout is clean on main at 8b988063; prior job absent in Relay and no local Claude process or active Field CI observed. PR150 and prior branch head 2a995173 preserved. Restore the existing assignment branch from verified main after admission, reproduce and fix replica exits and copied-page first undo, audit Figma behavior, classify inherited E2E failures, and run release gates. Keep device and authenticated QA explicitly tracked.",
       "primary_team": "night-shift",
       "supporting_teams": [],
       "primary_staff": "julian",
@@ -1859,8 +1859,16 @@
           }
         ]
       },
-      "updated_at": "2026-10-20T23:04:29.100Z",
-      "lease_until": "2026-10-21T11:04:29.100Z"
+      "updated_at": "2026-11-13T17:50:14.975Z",
+      "lease_until": "2026-11-14T05:50:14.975Z",
+      "handoffs": [
+        {
+          "at": "2026-11-13T17:50:14.975Z",
+          "from": "b0d6555f-c978-4d25-8fda-7399ef4ddc35",
+          "to": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "next_action": "Lauren directed completion on November 13. Prior Claude checkout is clean on main at 8b988063; prior job absent in Relay and no local Claude process or active Field CI observed. PR150 and prior branch head 2a995173 preserved. Restore the existing assignment branch from verified main after admission, reproduce and fix replica exits and copied-page first undo, audit Figma behavior, classify inherited E2E failures, and run release gates. Keep device and authenticated QA explicitly tracked."
+        }
+      ]
     }
   ]
 }
