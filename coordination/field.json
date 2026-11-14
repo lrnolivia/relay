@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T05:08:42.852Z",
+  "updated_at": "2026-11-14T05:19:06.374Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2000,7 +2000,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "d215628a1109f81012574ad80767586e7196554a",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-14T04:59:48.413Z",
       "objective_history": {
         "baseline": {
@@ -2017,8 +2017,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T05:08:42.852Z",
-      "lease_until": "2026-11-14T17:08:42.852Z"
+      "updated_at": "2026-11-14T05:19:06.374Z",
+      "lease_until": "2026-11-14T17:19:06.374Z",
+      "pr": 153,
+      "merged_head_sha": "b42fb6973b16f5f0ba7f69c234ac4dbef5cab3e5",
+      "merge_commit_sha": "1ae653d1c228d8ba89a0bbea3d879851e81dd604",
+      "evidence": "Merged and deployed PR #153, exact commit 1ae653d1c228d8ba89a0bbea3d879851e81dd604. Relay context revision 47 records signed-in native Safari production duplicate/open without dashboard refresh, UI autosave backed by the cloud, fresh editor reopen and Safari Back/Forward success. Cross-document Back rendered a fresh document and restored saved content. BFCache had no hit under the current HTTPS no-store policy and was measured separately. Production read-only smoke passed. Mobile parked.",
+      "work_accounted": true,
+      "completed_at": "2026-11-14T05:19:06.374Z"
     }
   ]
 }
