@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T20:53:06.824Z",
+  "updated_at": "2026-11-14T20:56:11.749Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2782,7 +2782,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T20:53:06.824Z",
+      "updated_at": "2026-11-14T20:56:11.749Z",
       "lease_until": "2026-11-15T08:51:26.448Z",
       "supporting_roles": [
         "verifier"
@@ -2857,10 +2857,10 @@
             "host_available": true,
             "intent_digest": "3e450ae21d628177bcdcf60c91bfa79bfff68ffce210ae2ef19e66514e33736e"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-14T20:52:12.240Z",
           "request_digest": "e7aae2afb8e474e95258157b4732e27d4cee3fc76daacda28e0a644337e8c142",
-          "step_digest": "9aacd603f40f6072933eb96474f91c012469ac8d02497bf2a14983b3f3da9eb2",
+          "step_digest": "bd630e8f84d4bcc111a566ec10fd9af425dff7a861c8c1818fe2c77c3b188cc6",
           "start": {
             "request_digest": "e7aae2afb8e474e95258157b4732e27d4cee3fc76daacda28e0a644337e8c142",
             "source_sha": "6c6c89e4e6afd640b21f5e5029b3de359fac328c",
@@ -2871,7 +2871,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-14T20:53:06.824Z"
+          "started_at": "2026-11-14T20:53:06.824Z",
+          "result": {
+            "request_digest": "e7aae2afb8e474e95258157b4732e27d4cee3fc76daacda28e0a644337e8c142",
+            "source_sha": "6c6c89e4e6afd640b21f5e5029b3de359fac328c",
+            "agent_id": "/root/nested_guide_review",
+            "observed_at": "2026-11-14T20:56:07Z",
+            "state": "failed",
+            "result_digest": "5081479363f6edad65b2a3ae437ea0f624bbff85a1901f08e766bec6ae4663ff",
+            "update": {
+              "text": "Review identified three regressions involving temporary Shift, viewport resize, and snap priority; the branch is being corrected.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-14T20:56:11.749Z"
         }
       ],
       "card_steps": {
@@ -2883,29 +2896,29 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/nested-guide-resize-20261114"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
             "id": "review-nested-guide-resize",
             "label": "Review nested guide resize",
             "depends_on": [],
-            "state": "running",
+            "state": "failed",
             "receipt": {
-              "id": "nested-guide-exact-source-review-20261114:started",
+              "id": "nested-guide-exact-source-review-20261114:result",
               "assignment": "field-nested-guide-resize-20261114",
               "step_id": "review-nested-guide-resize",
               "plan_revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
               "input_digest": "e7aae2afb8e474e95258157b4732e27d4cee3fc76daacda28e0a644337e8c142",
-              "evidence": "sha256:daeb74a27d5c92a769c7b6eecc59d39eb3c7ce275e91ea89c0bfd8cf5977447e",
+              "evidence": "sha256:88a936513700a51c0778cda2efc096e3b8faa5563930164b2206255ad9715954",
               "source_sha": "6c6c89e4e6afd640b21f5e5029b3de359fac328c",
-              "observed_at": "2026-11-14T20:53:04Z",
+              "observed_at": "2026-11-14T20:56:07Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "Independent review is checking the saved resize geometry and source writes.",
+                "text": "Review identified three regressions involving temporary Shift, viewport resize, and snap priority; the branch is being corrected.",
                 "artifacts": []
               }
             }
@@ -2916,10 +2929,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-nested-guide-resize-20261114",
         "revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
-          "nested-guide-exact-source-review-20261114:started": "6773a146b338e0ce5994318c509130393cbcbba9138c8319f8e55df2420885ae"
+          "nested-guide-exact-source-review-20261114:started": "6773a146b338e0ce5994318c509130393cbcbba9138c8319f8e55df2420885ae",
+          "nested-guide-exact-source-review-20261114:result": "066e24fb7aae0ba32bd584bfcfc20c5a0766d79590a3595d78775fa765a203d9"
         },
         "items": [
           {
@@ -2941,6 +2955,28 @@
               "team": "inspector"
             },
             "text": "Independent review is checking the saved resize geometry and source writes.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "nested-guide-exact-source-review-20261114:result:e7aae2afb8e474e95258157b4732e27d4cee3fc76daacda28e0a644337e8c142:failed:",
+            "receipt_snapshot": "{\"label\":\"Review nested guide resize\",\"receipt\":{\"assignment\":\"field-nested-guide-resize-20261114\",\"evidence\":\"sha256:88a936513700a51c0778cda2efc096e3b8faa5563930164b2206255ad9715954\",\"id\":\"nested-guide-exact-source-review-20261114:result\",\"input_digest\":\"e7aae2afb8e474e95258157b4732e27d4cee3fc76daacda28e0a644337e8c142\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b\",\"source_sha\":\"6c6c89e4e6afd640b21f5e5029b3de359fac328c\",\"step_id\":\"review-nested-guide-resize\",\"update\":{\"artifacts\":[],\"text\":\"Review identified three regressions involving temporary Shift, viewport resize, and snap priority; the branch is being corrected.\"}},\"state\":\"failed\"}",
+            "id": "nested-guide-exact-source-review-20261114:result",
+            "assignment": "field-nested-guide-resize-20261114",
+            "step_id": "review-nested-guide-resize",
+            "revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
+            "label": "Review nested guide resize",
+            "state": "failed",
+            "phase": null,
+            "source_sha": "6c6c89e4e6afd640b21f5e5029b3de359fac328c",
+            "observed_at": "2026-11-14T20:56:07Z",
+            "recorded_at": "2026-11-14T20:56:11.749Z",
+            "receipt_digest": "sha256:88a936513700a51c0778cda2efc096e3b8faa5563930164b2206255ad9715954",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Review identified three regressions involving temporary Shift, viewport resize, and snap priority; the branch is being corrected.",
             "text_kind": "owner-published",
             "artifacts": []
           }
