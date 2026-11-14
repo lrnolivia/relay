@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T16:43:34.094Z",
+  "updated_at": "2026-11-14T16:57:32.933Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2463,7 +2463,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "546f073a58f8e4645e559911df17c3ec1af4476d",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-14T16:43:34.094Z",
       "objective_history": {
         "baseline": {
@@ -2480,8 +2480,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T16:43:34.094Z",
-      "lease_until": "2026-11-15T04:43:34.094Z"
+      "updated_at": "2026-11-14T16:57:32.933Z",
+      "lease_until": "2026-11-15T04:57:32.933Z",
+      "pr": 162,
+      "merged_head_sha": "ffa4ac05ded74d503afb9c4ce47bd455c9cfe020",
+      "merge_commit_sha": "510b45ada849837ba8c5d871eb409120a63ba176",
+      "evidence": "Merged and deployed 510b45ada849837ba8c5d871eb409120a63ba176 at 100%. Boundary smoke passed exact preview and production. 12 Chromium and 12 WebKit, 13,373 unit tests, build, typecheck, lint passed.",
+      "work_accounted": true,
+      "completed_at": "2026-11-14T16:57:32.933Z"
     }
   ]
 }
