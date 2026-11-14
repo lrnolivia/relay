@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T08:10:49.916Z",
+  "updated_at": "2026-11-14T16:29:31.382Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2380,6 +2380,52 @@
       "evidence": "Exact main 126033c3a0d93db2ef24811f6535930ac8bdc543 deployed at 100% Worker cc906026-ab22-4f44-b86d-e4e3cdf5a4b7. Exact preview and live Canvas smoke passed. Chromium and WebKit each passed 10 ruler cases, 13,370 unit tests and desktop opening, plus Chromium 14 earlier desktop checks. Types, lint and build passed.",
       "work_accounted": true,
       "completed_at": "2026-11-14T08:10:49.916Z"
+    },
+    {
+      "id": "field-grid-mask-paint-20261114",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/grid-mask-paint-20261114",
+      "paths": [
+        "src/editor/ui/pattern-fill-utils.ts",
+        "src/editor/ui/pattern-fill-utils.test.ts",
+        "src/editor/ui/managed-fill-styles.ts",
+        "src/editor/e2e/fill-effects-apply.spec.ts",
+        "src/code/project/project-fs.ts",
+        "src/code/project/grid-mask-migration.ts",
+        "src/code/project/grid-mask-migration.test.ts"
+      ],
+      "resources": [
+        "inspector-custom-fill-lifecycle",
+        "project-grid-mask-compatibility"
+      ],
+      "goal": "Make Grid + Mask fade only its background paint in desktop Canvas, Preview and saved source.",
+      "acceptance": "Keep editable grid scale, color, background and opacity, independent masks, foreground content, frame style, Undo and reload. Recognize the old frame-wide mask and migrate only its managed values. Verify in Chromium and WebKit and release. Mobile parked.",
+      "next_action": "Replace the frame mask with a single background image and verify existing file compatibility.",
+      "category": "implementation",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "126033c3a0d93db2ef24811f6535930ac8bdc543",
+      "state": "active",
+      "created_at": "2026-11-14T16:29:31.382Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Make Grid + Mask fade only its background paint in desktop Canvas, Preview and saved source.",
+          "acceptance": "Keep editable grid scale, color, background and opacity, independent masks, foreground content, frame style, Undo and reload. Recognize the old frame-wide mask and migrate only its managed values. Verify in Chromium and WebKit and release. Mobile parked.",
+          "at": "2026-11-14T16:29:31.382Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-grid-mask-paint-20261114:acceptance:0",
+            "text": "Keep editable grid scale, color, background and opacity, independent masks, foreground content, frame style, Undo and reload. Recognize the old frame-wide mask and migrate only its managed values. Verify in Chromium and WebKit and release. Mobile parked.",
+            "at": "2026-11-14T16:29:31.382Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-14T16:29:31.382Z",
+      "lease_until": "2026-11-15T04:29:31.382Z"
     }
   ]
 }
