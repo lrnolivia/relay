@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T02:49:45.021Z",
+  "updated_at": "2026-11-14T02:50:50.566Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1918,7 +1918,8 @@
         "src/editor/controls/InspectorZoomControl.tsx",
         "src/editor/BottomToolbar.tsx",
         "src/editor/figui3-toolbar-resources-view-controls.test.ts",
-        "src/canvas/drag/e2e/camera-commands.spec.ts"
+        "src/canvas/drag/e2e/camera-commands.spec.ts",
+        "src/canvas/drag/e2e/layer-stack-preview-parity.spec.ts"
       ],
       "resources": [
         "media-canvas-placement",
@@ -1930,7 +1931,7 @@
       ],
       "goal": "Fix blank or missing Canvas images when dragging from desktop Media and keep original image proportions on drag and click placement.",
       "acceptance": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
-      "next_action": "PR #152 at 0753ca217b0fc8845d7d9eab75e885c9568377f2: GitHub and exact Preview build passed; real saved frame fill preserved its bytes and decoded in WebKit. Finish exact-head desktop regression tests, then promote and verify production under standing release authority. Native signed-in desktop QA remains separate; mobile remains parked.",
+      "next_action": "Update the old workspace collapse regression to verify automatic camera centering with its new preference enabled. The separate desktop test covers the new default. Rebuild and confirm the exact candidate Preview.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1954,8 +1955,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T02:49:45.021Z",
-      "lease_until": "2026-11-14T14:49:45.021Z"
+      "updated_at": "2026-11-14T02:50:50.566Z",
+      "lease_until": "2026-11-14T14:50:50.566Z"
     }
   ]
 }
