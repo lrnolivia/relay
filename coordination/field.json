@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T05:38:59.288Z",
+  "updated_at": "2026-11-14T05:43:35.705Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2051,7 +2051,7 @@
       "primary_staff": "rafael",
       "supporting_staff": [],
       "base_sha": "1ae653d1c228d8ba89a0bbea3d879851e81dd604",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-14T05:25:35.509Z",
       "objective_history": {
         "baseline": {
@@ -2068,8 +2068,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T05:38:59.288Z",
-      "lease_until": "2026-11-14T17:38:59.288Z"
+      "updated_at": "2026-11-14T05:43:35.705Z",
+      "lease_until": "2026-11-14T17:43:35.705Z",
+      "pr": 154,
+      "merged_head_sha": "510b37831107a1f9ff639a1e0e8e80a450bb1090",
+      "merge_commit_sha": "21028b685004456179cf8268d5a93f7112a641f3",
+      "evidence": "Candidate 510b37831107a1f9ff639a1e0e8e80a450bb1090 merged at 21028b685004456179cf8268d5a93f7112a641f3, deployed and verified 100% at e28acf2a-2f88-4da9-9dba-ed98b137c7c0. Production first paint, isolation and Full/Float/Focus rulers passed. Relay context revision 48 includes tests and the old-guide coordinate caveat.",
+      "work_accounted": true,
+      "completed_at": "2026-11-14T05:43:35.705Z"
     }
   ]
 }
