@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:31:23.681Z",
+  "updated_at": "2026-11-14T21:35:08.847Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3729,9 +3729,13 @@
       "next_action": "Pass the existing snap feedback callback to the flow strategy so measured slot alignment can render after the sandbox response; keep ruler feedback visible alongside the insertion affordance.",
       "category": "implementation",
       "primary_team": "runner",
-      "supporting_teams": [],
+      "supporting_teams": [
+        "inspector"
+      ],
       "primary_staff": "nico",
-      "supporting_staff": [],
+      "supporting_staff": [
+        "roman"
+      ],
       "base_sha": "ba498fb7d946d0da9f1a83da4dde7622a49f8f84",
       "state": "active",
       "created_at": "2026-11-14T21:30:40.469Z",
@@ -3750,8 +3754,40 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:31:23.681Z",
-      "lease_until": "2026-11-15T09:31:23.681Z"
+      "updated_at": "2026-11-14T21:35:08.847Z",
+      "lease_until": "2026-11-15T09:35:08.847Z",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-14T21:35:08.847Z",
+          "by": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "reason": "Assign exact-source review of the asynchronous flow-slot measurement, drag cancellation and transition safety.",
+          "fields": [
+            "supporting_roles",
+            "supporting_staff",
+            "supporting_teams"
+          ],
+          "before": {
+            "supporting_roles": null,
+            "supporting_staff": [],
+            "supporting_teams": []
+          },
+          "after": {
+            "supporting_roles": [
+              "verifier"
+            ],
+            "supporting_staff": [
+              "roman"
+            ],
+            "supporting_teams": [
+              "inspector"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
