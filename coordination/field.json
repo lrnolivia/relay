@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T16:57:32.933Z",
+  "updated_at": "2026-11-14T16:57:56.569Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2488,6 +2488,50 @@
       "evidence": "Merged and deployed 510b45ada849837ba8c5d871eb409120a63ba176 at 100%. Boundary smoke passed exact preview and production. 12 Chromium and 12 WebKit, 13,373 unit tests, build, typecheck, lint passed.",
       "work_accounted": true,
       "completed_at": "2026-11-14T16:57:32.933Z"
+    },
+    {
+      "id": "field-custom-fill-controls-capture-20261114",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/custom-fill-controls-capture-20261114",
+      "paths": [
+        "src/editor/controls/ControlActionRow.tsx",
+        "src/editor/controls/EntryList.tsx",
+        "src/editor/e2e/fill-effects-apply.spec.ts",
+        "src/preview-sandbox/capture-thumbnail.ts",
+        "src/preview-sandbox/capture-thumbnail.test.ts"
+      ],
+      "resources": [
+        "inspector-entry-list",
+        "preview-dashboard-thumbnails"
+      ],
+      "goal": "Fix independently identified Mask control and video thumbnail failures in the desktop custom fill audit.",
+      "acceptance": "Separate edit and remove focus targets. Capture a usable thumbnail through an unreadable remote video without modifying playback or source. Verify in desktop Chromium and WebKit, build, and release. Mobile remains parked.",
+      "next_action": "Fix compound entry controls and filter unreadable media during thumbnail rasterization.",
+      "category": "implementation",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "510b45ada849837ba8c5d871eb409120a63ba176",
+      "state": "active",
+      "created_at": "2026-11-14T16:57:56.569Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Fix independently identified Mask control and video thumbnail failures in the desktop custom fill audit.",
+          "acceptance": "Separate edit and remove focus targets. Capture a usable thumbnail through an unreadable remote video without modifying playback or source. Verify in desktop Chromium and WebKit, build, and release. Mobile remains parked.",
+          "at": "2026-11-14T16:57:56.569Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-custom-fill-controls-capture-20261114:acceptance:0",
+            "text": "Separate edit and remove focus targets. Capture a usable thumbnail through an unreadable remote video without modifying playback or source. Verify in desktop Chromium and WebKit, build, and release. Mobile remains parked.",
+            "at": "2026-11-14T16:57:56.569Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-14T16:57:56.569Z",
+      "lease_until": "2026-11-15T04:57:56.569Z"
     }
   ]
 }
