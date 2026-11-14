@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T07:42:23.920Z",
+  "updated_at": "2026-11-14T07:44:22.572Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2279,14 +2279,20 @@
         "src/code/generation/generator-video.ts",
         "src/code/generation/generator-video.test.ts",
         "src/canvas/Renderer.ts",
-        "src/editor/e2e/fill-effects-apply.spec.ts"
+        "src/editor/e2e/fill-effects-apply.spec.ts",
+        "src/code/parsing/parser.ts",
+        "src/code/features/paste-engine/types.ts",
+        "src/code/features/paste-engine/copy/index.ts",
+        "src/code/features/paste-engine/core/node-creator.ts",
+        "src/code/generation/generator-crud.ts"
       ],
       "resources": [
-        "inspector-video-fill-lifecycle"
+        "inspector-video-fill-lifecycle",
+        "desktop-canvas-clipboard-video-fill"
       ],
       "goal": "Keep desktop frame clipping and positioning intact when adding or removing Video Fill.",
       "acceptance": "Apply a video without changing frame overflow. Remove only host position/isolation the fill added, preserving pre-existing or later edits. Legacy files remain readable, Canvas and Preview reflect the same video radius. Focused desktop browser and source tests and release.",
-      "next_action": "Stop styling host overflow, record ownership of missing positioning properties at insertion, and restore only unchanged generated values on removal.",
+      "next_action": "Repair lifecycle and preserve the managed video, options and style ownership on desktop duplicate/paste. Cover content frames and free Canvas.",
       "category": "implementation",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -2310,8 +2316,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T07:42:23.920Z",
-      "lease_until": "2026-11-14T19:42:23.920Z"
+      "updated_at": "2026-11-14T07:44:22.572Z",
+      "lease_until": "2026-11-14T19:44:22.572Z"
     }
   ]
 }
