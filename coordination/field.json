@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:08:05.536Z",
+  "updated_at": "2026-11-14T21:09:53.526Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2782,7 +2782,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:08:05.536Z",
+      "updated_at": "2026-11-14T21:09:53.526Z",
       "lease_until": "2026-11-15T08:57:25.381Z",
       "supporting_roles": [
         "verifier"
@@ -3031,10 +3031,10 @@
             "host_available": true,
             "intent_digest": "295400a8fc6f2af7d3673ee3c23fd2d1dd1d45dc6442dcec896ca3fd1d271955"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-14T21:07:38.364Z",
           "request_digest": "8f362e92ab75e8ea3e282162b23aae9381fcb0f3d9c95cad747285088057372c",
-          "step_digest": "fc6d526f3db275e08092da95741fed66ec3e9f88f562157cd1b926731870d0d8",
+          "step_digest": "6fbcaabfb1c1757fa5f4646d124dcd22b3328e1f092f661e0234ae3babaaa958",
           "start": {
             "request_digest": "8f362e92ab75e8ea3e282162b23aae9381fcb0f3d9c95cad747285088057372c",
             "source_sha": "c4c6407c7566ee1ad38b7a761d7ba78cdefb61ea",
@@ -3045,7 +3045,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-14T21:08:05.536Z"
+          "started_at": "2026-11-14T21:08:05.536Z",
+          "result": {
+            "request_digest": "8f362e92ab75e8ea3e282162b23aae9381fcb0f3d9c95cad747285088057372c",
+            "source_sha": "c4c6407c7566ee1ad38b7a761d7ba78cdefb61ea",
+            "agent_id": "/root/nested_guide_ship_verify",
+            "observed_at": "2026-11-14T21:09:50Z",
+            "state": "succeeded",
+            "result_digest": "84ad0c6784db095ec42e0948c574bd6e310dca2fcfcb64c57636c0f8a8d27827",
+            "update": {
+              "text": "The independent review confirmed the inactive edge stays anchored and the new Chromium cases preserve the saved sizing and position.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-14T21:09:53.526Z"
         }
       ],
       "card_steps": {
@@ -3057,7 +3070,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/nested-guide-resize-20261114"
         },
-        "sequence": 11,
+        "sequence": 12,
         "complete": false,
         "steps": [
           {
@@ -3136,24 +3149,25 @@
             "id": "review-nested-guide-resize-ship",
             "label": "Verify inactive resize anchor",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "nested-guide-exact-source-review-ship-20261114:started",
+              "id": "nested-guide-exact-source-review-ship-20261114:result",
               "assignment": "field-nested-guide-resize-20261114",
               "step_id": "review-nested-guide-resize-ship",
               "plan_revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
               "input_digest": "8f362e92ab75e8ea3e282162b23aae9381fcb0f3d9c95cad747285088057372c",
-              "evidence": "sha256:07c33b166fcfacdedcc73bed4791717e92148ba2a506699e8514c9cd348fdf98",
+              "evidence": "sha256:f59f98d17da5291fc47e625932519a33c4cd77bdafb0733169937216e44c497d",
               "source_sha": "c4c6407c7566ee1ad38b7a761d7ba78cdefb61ea",
-              "observed_at": "2026-11-14T21:08:02Z",
+              "observed_at": "2026-11-14T21:09:50Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "Independent review is checking the saved position when a resize crosses the opposite edge.",
+                "text": "The independent review confirmed the inactive edge stays anchored and the new Chromium cases preserve the saved sizing and position.",
                 "artifacts": []
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -3162,7 +3176,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-nested-guide-resize-20261114",
         "revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
-        "sequence": 11,
+        "sequence": 12,
         "truncated": false,
         "identities": {
           "nested-guide-exact-source-review-20261114:started": "6773a146b338e0ce5994318c509130393cbcbba9138c8319f8e55df2420885ae",
@@ -3171,7 +3185,8 @@
           "nested-guide-exact-source-review-revision-20261114:result": "d8f266022e1df5ca0a322010e2fdf63f61da66b11ace0105a61a533702cad52b",
           "nested-guide-exact-source-review-head-20261114:started": "308d4a9a1329ccdbce8184e32c37404bf80bb2b6e26c6672668f65a780cb2048",
           "nested-guide-exact-source-review-head-20261114:result": "70e799df9bd527ea5e138f169003e51f1d89c3a7081da7380c16ebfd76fbf5b2",
-          "nested-guide-exact-source-review-ship-20261114:started": "f11b48ad28712c16f2b5281d20e829db2087d2eb9e4f5f55c6f0529ed46b36f4"
+          "nested-guide-exact-source-review-ship-20261114:started": "f11b48ad28712c16f2b5281d20e829db2087d2eb9e4f5f55c6f0529ed46b36f4",
+          "nested-guide-exact-source-review-ship-20261114:result": "03e54aea589f95347fa7e2ebbe23d53d4d07ac049e58abd34435771db56dd6d1"
         },
         "items": [
           {
@@ -3325,6 +3340,28 @@
               "team": "inspector"
             },
             "text": "Independent review is checking the saved position when a resize crosses the opposite edge.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "nested-guide-exact-source-review-ship-20261114:result:8f362e92ab75e8ea3e282162b23aae9381fcb0f3d9c95cad747285088057372c:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Verify inactive resize anchor\",\"receipt\":{\"assignment\":\"field-nested-guide-resize-20261114\",\"evidence\":\"sha256:f59f98d17da5291fc47e625932519a33c4cd77bdafb0733169937216e44c497d\",\"id\":\"nested-guide-exact-source-review-ship-20261114:result\",\"input_digest\":\"8f362e92ab75e8ea3e282162b23aae9381fcb0f3d9c95cad747285088057372c\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b\",\"source_sha\":\"c4c6407c7566ee1ad38b7a761d7ba78cdefb61ea\",\"step_id\":\"review-nested-guide-resize-ship\",\"update\":{\"artifacts\":[],\"text\":\"The independent review confirmed the inactive edge stays anchored and the new Chromium cases preserve the saved sizing and position.\"}},\"state\":\"blocked\"}",
+            "id": "nested-guide-exact-source-review-ship-20261114:result",
+            "assignment": "field-nested-guide-resize-20261114",
+            "step_id": "review-nested-guide-resize-ship",
+            "revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
+            "label": "Verify inactive resize anchor",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "c4c6407c7566ee1ad38b7a761d7ba78cdefb61ea",
+            "observed_at": "2026-11-14T21:09:50Z",
+            "recorded_at": "2026-11-14T21:09:53.526Z",
+            "receipt_digest": "sha256:f59f98d17da5291fc47e625932519a33c4cd77bdafb0733169937216e44c497d",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The independent review confirmed the inactive edge stays anchored and the new Chromium cases preserve the saved sizing and position.",
             "text_kind": "owner-published",
             "artifacts": []
           }
