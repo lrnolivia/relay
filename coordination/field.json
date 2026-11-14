@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T20:44:35.641Z",
+  "updated_at": "2026-11-14T20:48:46.418Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2778,8 +2778,30 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T20:44:35.641Z",
-      "lease_until": "2026-11-15T08:44:35.641Z"
+      "updated_at": "2026-11-14T20:48:46.418Z",
+      "lease_until": "2026-11-15T08:48:46.418Z",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-14T20:48:46.418Z",
+          "by": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "reason": "Admit a read-only verifier to check the desktop guide resize fix against exact source and existing Canvas behavior.",
+          "fields": [
+            "supporting_roles"
+          ],
+          "before": {
+            "supporting_roles": null
+          },
+          "after": {
+            "supporting_roles": [
+              "verifier"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
