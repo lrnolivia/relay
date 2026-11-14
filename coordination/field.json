@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T02:39:07.579Z",
+  "updated_at": "2026-11-14T02:42:18.585Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1917,7 +1917,8 @@
         "src/canvas/shortcuts.ts",
         "src/editor/controls/InspectorZoomControl.tsx",
         "src/editor/BottomToolbar.tsx",
-        "src/editor/figui3-toolbar-resources-view-controls.test.ts"
+        "src/editor/figui3-toolbar-resources-view-controls.test.ts",
+        "src/canvas/drag/e2e/camera-commands.spec.ts"
       ],
       "resources": [
         "media-canvas-placement",
@@ -1929,7 +1930,7 @@
       ],
       "goal": "Fix blank or missing Canvas images when dragging from desktop Media and keep original image proportions on drag and click placement.",
       "acceptance": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
-      "next_action": "Finish the floating Inspector zoom menu layering and have keyboard, menu and toolbar Fit Selection use the entire current selection and the canvas area between visible panels.",
+      "next_action": "Fix the zoom-pivot fixture to put the pointer demonstrably far from center with panel recentering off, then run desktop Canvas and Preview verification.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1953,8 +1954,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T02:39:07.579Z",
-      "lease_until": "2026-11-14T14:39:07.579Z"
+      "updated_at": "2026-11-14T02:42:18.585Z",
+      "lease_until": "2026-11-14T14:42:18.585Z"
     }
   ]
 }
