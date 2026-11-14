@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T17:59:28.412Z",
+  "updated_at": "2026-11-14T17:59:49.660Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2693,6 +2693,46 @@
       "evidence": "Merged exact tested tree b72e7e7bdd96b5139d9370738a9b9844188ffbd7; Workers Build 9574522b-509f-4a28-b08e-0b562a9489d1 succeeded, version 2ea440d3-36f3-4e04-b662-8a737f2cd6ca deployed at 100%. Chromium/WebKit verified 5 layouts each and two packaged Gallery workflows per browser. 13,380 unit tests passed. Read-only live Canvas and Media dialog smoke passed.",
       "work_accounted": true,
       "completed_at": "2026-11-14T17:59:28.412Z"
+    },
+    {
+      "id": "field-rotated-guide-resize-20261114",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/rotated-guide-resize-20261114",
+      "paths": [
+        "src/canvas/resize/ResizeManager.ts",
+        "src/canvas/drag/e2e/ruler-guides.spec.ts"
+      ],
+      "resources": [
+        "desktop-ruler-guide-resize"
+      ],
+      "goal": "Snap the resizing edge of a positioned child to guides within its rotated parent frame.",
+      "acceptance": "Desktop Chromium and WebKit reproduce the direct positioned-child case and preserve the opposite edge, history, and existing snapping. Mobile parked.",
+      "next_action": "Apply transformed ruler guides in the directly enclosing frame’s coordinate space during box resize.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "b72e7e7bdd96b5139d9370738a9b9844188ffbd7",
+      "state": "active",
+      "created_at": "2026-11-14T17:59:49.660Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Snap the resizing edge of a positioned child to guides within its rotated parent frame.",
+          "acceptance": "Desktop Chromium and WebKit reproduce the direct positioned-child case and preserve the opposite edge, history, and existing snapping. Mobile parked.",
+          "at": "2026-11-14T17:59:49.660Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-rotated-guide-resize-20261114:acceptance:0",
+            "text": "Desktop Chromium and WebKit reproduce the direct positioned-child case and preserve the opposite edge, history, and existing snapping. Mobile parked.",
+            "at": "2026-11-14T17:59:49.660Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-14T17:59:49.660Z",
+      "lease_until": "2026-11-15T05:59:49.660Z"
     }
   ]
 }
