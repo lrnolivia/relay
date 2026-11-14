@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T02:13:39.189Z",
+  "updated_at": "2026-11-14T02:20:49.137Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1888,15 +1888,21 @@
         "src/canvas/insert-toolbar-item.ts",
         "src/editor/e2e/media-canvas-placement.spec.ts",
         "src/editor/tools/ImageTool.tsx",
-        "src/canvas/drag/DragCoordinator.ts"
+        "src/canvas/drag/DragCoordinator.ts",
+        "src/editor/tools/SelectionTool.tsx",
+        "src/editor/e2e/selection-color-swatches.spec.ts",
+        "src/editor/tools/TextStyleTool/atoms/TextColorControl.tsx",
+        "src/editor/hooks/useTextStyles.ts",
+        "src/editor/e2e/text-fill-rendered.spec.ts"
       ],
       "resources": [
         "media-canvas-placement",
-        "canvas-toolbar-insertion"
+        "canvas-toolbar-insertion",
+        "inspector-paint-controls"
       ],
       "goal": "Fix blank or missing Canvas images when dragging from desktop Media and keep original image proportions on drag and click placement.",
       "acceptance": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
-      "next_action": "Fix desktop Media drag and original image sizing on click and drag, align Image Inspector Source/Alt Text/Fit/Position controls as requested in the screenshot, and verify cancelled pointer gestures create no node.",
+      "next_action": "Fix and verify the user-reported desktop Media drag, image proportions, Image Inspector alignment, Selection colors swatch select-and-edit, and discrepancy between displayed and painted text fill.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1920,8 +1926,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T02:13:39.189Z",
-      "lease_until": "2026-11-14T14:13:39.189Z"
+      "updated_at": "2026-11-14T02:20:49.137Z",
+      "lease_until": "2026-11-14T14:20:49.137Z"
     }
   ]
 }
