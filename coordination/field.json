@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T02:36:46.198Z",
+  "updated_at": "2026-11-14T02:38:31.714Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1912,18 +1912,21 @@
         "src/editor/e2e/left-pane-auto-hide.spec.ts",
         "src/App.tsx",
         "src/code/stores/workspace-panels-store.ts",
-        "src/editor/overlays/SettingsOverlay.tsx"
+        "src/editor/overlays/SettingsOverlay.tsx",
+        "src/canvas/transform/CameraCommands.ts",
+        "src/canvas/shortcuts.ts"
       ],
       "resources": [
         "media-canvas-placement",
         "canvas-toolbar-insertion",
         "inspector-paint-controls",
         "preview-navigation",
-        "workspace-left-chrome"
+        "workspace-left-chrome",
+        "canvas-camera"
       ],
       "goal": "Fix blank or missing Canvas images when dragging from desktop Media and keep original image proportions on drag and click placement.",
       "acceptance": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
-      "next_action": "Finish desktop auto-hide and add a default-off Workspace preference for moving the Canvas when left/right rails or panels change in Full or Focus.",
+      "next_action": "Respect the positions and bounds of the currently visible floating side panels when the user invokes Fit All or Fit Selection; keep passive camera movement default-off.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1947,8 +1950,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T02:36:46.198Z",
-      "lease_until": "2026-11-14T14:36:46.198Z"
+      "updated_at": "2026-11-14T02:38:31.714Z",
+      "lease_until": "2026-11-14T14:38:31.714Z"
     }
   ]
 }
