@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T02:27:50.112Z",
+  "updated_at": "2026-11-14T02:31:36.841Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1906,7 +1906,8 @@
         "src/editor/figui3-inspector-parity.test.ts",
         "src/editor/figui3-inspector-header-selection.test.ts",
         "src/editor/media/media-browser-types.test.ts",
-        "src/editor/e2e/image-fill-lifecycle.spec.ts"
+        "src/editor/e2e/image-fill-lifecycle.spec.ts",
+        "src/editor/media/media-placement.test.ts"
       ],
       "resources": [
         "media-canvas-placement",
@@ -1916,7 +1917,7 @@
       ],
       "goal": "Fix blank or missing Canvas images when dragging from desktop Media and keep original image proportions on drag and click placement.",
       "acceptance": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
-      "next_action": "Fix the observed corruption of frame image data URLs by Canvas viewport-unit substitution. Add Preview zoom on click, keyboard, modified wheel and pinch, preserving the authored viewport dimensions and plain page scroll. Validate the prior desktop Canvas and Inspector fixes as one batch.",
+      "next_action": "Verify the full desktop repair against current main with Chromium and WebKit. Account for the remaining signed-in persistence and native Safari history checks separately from local coverage.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1940,8 +1941,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T02:27:50.112Z",
-      "lease_until": "2026-11-14T14:27:50.112Z"
+      "updated_at": "2026-11-14T02:31:36.841Z",
+      "lease_until": "2026-11-14T14:31:36.841Z"
     }
   ]
 }
