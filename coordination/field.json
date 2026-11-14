@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T05:25:35.509Z",
+  "updated_at": "2026-11-14T05:34:28.891Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2044,7 +2044,7 @@
       ],
       "goal": "Fix desktop ruler guide alignment and drag history across workspace layouts.",
       "acceptance": "Rulers respect current desktop docked widths and can be used in the other desktop layouts. A guide dropped at a screen position represents the same world coordinate as snapping and stays aligned after a camera change. Moving or removing a guide is one undoable committed edit; click-only, cancellation and switching pages do not write. Run the desktop Canvas regression batch and exact candidate gates. Mobile remains parked.",
-      "next_action": "Reproduce desk ruler misalignment and guide writes with browser regression coverage, then fix ruler placement and guide gesture commit.",
+      "next_action": "Ruler geometry and guide edits implemented; run focused desktop interactions, release candidate verification and production readback.",
       "category": "implementation",
       "primary_team": "source",
       "supporting_teams": [],
@@ -2068,8 +2068,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T05:25:35.509Z",
-      "lease_until": "2026-11-14T17:25:35.509Z"
+      "updated_at": "2026-11-14T05:34:28.891Z",
+      "lease_until": "2026-11-14T17:34:28.891Z"
     }
   ]
 }
