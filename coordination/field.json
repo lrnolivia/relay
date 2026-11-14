@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:12:54.009Z",
+  "updated_at": "2026-11-14T21:16:48.016Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3390,9 +3390,13 @@
       "next_action": "Port the reproduced two-case nested move regression, then correct the immediate-parent snap projection.",
       "category": "implementation",
       "primary_team": "runner",
-      "supporting_teams": [],
+      "supporting_teams": [
+        "inspector"
+      ],
       "primary_staff": "nico",
-      "supporting_staff": [],
+      "supporting_staff": [
+        "roman"
+      ],
       "base_sha": "7092124ddbc6b10b0dfbaf5f66831f9c9ef7d2a1",
       "state": "active",
       "created_at": "2026-11-14T21:12:54.009Z",
@@ -3411,8 +3415,40 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:12:54.009Z",
-      "lease_until": "2026-11-15T09:12:54.009Z"
+      "updated_at": "2026-11-14T21:16:48.016Z",
+      "lease_until": "2026-11-15T09:16:48.016Z",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-14T21:16:48.016Z",
+          "by": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "reason": "Assign read-only exact-source review of nested drag geometry, ordinary nearest snap behavior, axis lock, and source restoration.",
+          "fields": [
+            "supporting_roles",
+            "supporting_staff",
+            "supporting_teams"
+          ],
+          "before": {
+            "supporting_roles": null,
+            "supporting_staff": [],
+            "supporting_teams": []
+          },
+          "after": {
+            "supporting_roles": [
+              "verifier"
+            ],
+            "supporting_staff": [
+              "roman"
+            ],
+            "supporting_teams": [
+              "inspector"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
