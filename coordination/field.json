@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:18:59.367Z",
+  "updated_at": "2026-11-14T21:19:50.489Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3380,15 +3380,19 @@
       "branch": "field/nested-guide-move-20261114",
       "paths": [
         "src/canvas/drag/strategies/AbsoluteInFrameStrategy.ts",
-        "src/canvas/drag/e2e/ruler-guides.spec.ts"
+        "src/canvas/drag/e2e/ruler-guides.spec.ts",
+        "src/canvas/drag/strategies/AbsoluteInFrameStrategy.test.ts"
       ],
       "resources": [
         "canvas-frame-guide-move"
       ],
       "goal": "Snap moved desktop positioned descendants to guides in rotated and scaled ancestor frames.",
       "acceptance": "Test exact saved position, visible ruler feedback and Undo for a scaled nested layer with and without ancestor rotation; preserve ordinary nearest-target behavior and axis lock across Chromium and WebKit.",
-      "next_action": "Publish exact nested guide move revision for review, then verify desktop browser suites and immutable Preview.",
+      "next_action": "Current source is in exact-head review. Extend file scope to the existing strategy suite so its mock can provide the new ancestor-guide dependency after the review receipt is saved.",
       "category": "implementation",
+      "supporting_roles": [
+        "verifier"
+      ],
       "primary_team": "runner",
       "supporting_teams": [
         "inspector"
@@ -3415,11 +3419,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:18:59.367Z",
-      "lease_until": "2026-11-15T09:17:48.620Z",
-      "supporting_roles": [
-        "verifier"
-      ],
+      "updated_at": "2026-11-14T21:19:50.489Z",
+      "lease_until": "2026-11-15T09:19:50.489Z",
       "amendment_count": 1,
       "amendments": [
         {
