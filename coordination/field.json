@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T07:44:22.572Z",
+  "updated_at": "2026-11-14T07:51:10.798Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2284,7 +2284,9 @@
         "src/code/features/paste-engine/types.ts",
         "src/code/features/paste-engine/copy/index.ts",
         "src/code/features/paste-engine/core/node-creator.ts",
-        "src/code/generation/generator-crud.ts"
+        "src/code/generation/generator-crud.ts",
+        "src/code/oracle/checks/style-object.ts",
+        "src/code/oracle/check-file.test.ts"
       ],
       "resources": [
         "inspector-video-fill-lifecycle",
@@ -2292,7 +2294,7 @@
       ],
       "goal": "Keep desktop frame clipping and positioning intact when adding or removing Video Fill.",
       "acceptance": "Apply a video without changing frame overflow. Remove only host position/isolation the fill added, preserving pre-existing or later edits. Legacy files remain readable, Canvas and Preview reflect the same video radius. Focused desktop browser and source tests and release.",
-      "next_action": "Repair lifecycle and preserve the managed video, options and style ownership on desktop duplicate/paste. Cover content frames and free Canvas.",
+      "next_action": "Teach the source checker that a managed background video inherits radius from its editable frame, then rerun capability and browser checks on the final source.",
       "category": "implementation",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -2316,8 +2318,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T07:44:22.572Z",
-      "lease_until": "2026-11-14T19:44:22.572Z"
+      "updated_at": "2026-11-14T07:51:10.798Z",
+      "lease_until": "2026-11-14T19:51:10.798Z"
     }
   ]
 }
