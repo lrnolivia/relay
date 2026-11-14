@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T16:33:48.459Z",
+  "updated_at": "2026-11-14T16:43:15.922Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2408,7 +2408,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "126033c3a0d93db2ef24811f6535930ac8bdc543",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-14T16:29:31.382Z",
       "objective_history": {
         "baseline": {
@@ -2425,8 +2425,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T16:33:48.459Z",
-      "lease_until": "2026-11-15T04:33:48.459Z"
+      "updated_at": "2026-11-14T16:43:15.922Z",
+      "lease_until": "2026-11-15T04:43:15.922Z",
+      "pr": 161,
+      "merged_head_sha": "f5458cb61a76ec20b19f6a95074977392e987316",
+      "merge_commit_sha": "546f073a58f8e4645e559911df17c3ec1af4476d",
+      "evidence": "Exact merged/live source 546f073a58f8e4645e559911df17c3ec1af4476d, production first paint and isolation smoke passed. Chromium and WebKit verify Canvas and Preview paint and foreground opacity. Unit/build/types/lint passed and rollback Worker retained.",
+      "work_accounted": true,
+      "completed_at": "2026-11-14T16:43:15.922Z"
     }
   ]
 }
