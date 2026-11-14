@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T02:31:36.841Z",
+  "updated_at": "2026-11-14T02:35:37.126Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1907,17 +1907,20 @@
         "src/editor/figui3-inspector-header-selection.test.ts",
         "src/editor/media/media-browser-types.test.ts",
         "src/editor/e2e/image-fill-lifecycle.spec.ts",
-        "src/editor/media/media-placement.test.ts"
+        "src/editor/media/media-placement.test.ts",
+        "src/editor/ChromeIslands.tsx",
+        "src/editor/e2e/left-pane-auto-hide.spec.ts"
       ],
       "resources": [
         "media-canvas-placement",
         "canvas-toolbar-insertion",
         "inspector-paint-controls",
-        "preview-navigation"
+        "preview-navigation",
+        "workspace-left-chrome"
       ],
       "goal": "Fix blank or missing Canvas images when dragging from desktop Media and keep original image proportions on drag and click placement.",
       "acceptance": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
-      "next_action": "Verify the full desktop repair against current main with Chromium and WebKit. Account for the remaining signed-in persistence and native Safari history checks separately from local coverage.",
+      "next_action": "Finish the desktop Canvas and Preview batch, including the new report that expanded left chrome remains in Full and Focus when auto-hide hides the controls.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1941,8 +1944,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T02:31:36.841Z",
-      "lease_until": "2026-11-14T14:31:36.841Z"
+      "updated_at": "2026-11-14T02:35:37.126Z",
+      "lease_until": "2026-11-14T14:35:37.126Z"
     }
   ]
 }
