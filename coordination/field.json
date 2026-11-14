@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:27:13.880Z",
+  "updated_at": "2026-11-14T21:30:24.755Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3403,7 +3403,7 @@
         "roman"
       ],
       "base_sha": "7092124ddbc6b10b0dfbaf5f66831f9c9ef7d2a1",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-14T21:12:54.009Z",
       "objective_history": {
         "baseline": {
@@ -3420,8 +3420,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:27:13.880Z",
-      "lease_until": "2026-11-15T09:27:13.880Z",
+      "updated_at": "2026-11-14T21:30:24.755Z",
+      "lease_until": "2026-11-15T09:30:24.755Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -3698,7 +3698,13 @@
             "artifacts": []
           }
         ]
-      }
+      },
+      "pr": 169,
+      "merged_head_sha": "7f07ad6f20e94d1b634fe24d4ea54eaaa26be64a",
+      "merge_commit_sha": "ba498fb7d946d0da9f1a83da4dde7622a49f8f84",
+      "evidence": "https://github.com/lrnolivia/field/pull/169 merged ba498fb7d946d0da9f1a83da4dde7622a49f8f84; exact reviewed head 7f07ad6f20e94d1b634fe24d4ea54eaaa26be64a and main share tree 8390a5548a89a16664806bf211c55225fd2a436d. 31 Chromium and 31 WebKit tests, 13,380 unit tests, types/lint/build passed. Exact immutable Preview aafdcc27-9a6c-4323-8c58-223cea70da27 passed saved QA project, Canvas isolation and first paint. Production postflight pending. Flex-flow slot feedback is separately reproduced; mobile parked.",
+      "work_accounted": true,
+      "completed_at": "2026-11-14T21:30:24.755Z"
     }
   ]
 }
