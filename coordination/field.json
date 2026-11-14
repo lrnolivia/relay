@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T16:29:31.382Z",
+  "updated_at": "2026-11-14T16:33:48.459Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2392,7 +2392,8 @@
         "src/editor/e2e/fill-effects-apply.spec.ts",
         "src/code/project/project-fs.ts",
         "src/code/project/grid-mask-migration.ts",
-        "src/code/project/grid-mask-migration.test.ts"
+        "src/code/project/grid-mask-migration.test.ts",
+        "src/code/project/default-code-components/Pattern.ts"
       ],
       "resources": [
         "inspector-custom-fill-lifecycle",
@@ -2400,7 +2401,7 @@
       ],
       "goal": "Make Grid + Mask fade only its background paint in desktop Canvas, Preview and saved source.",
       "acceptance": "Keep editable grid scale, color, background and opacity, independent masks, foreground content, frame style, Undo and reload. Recognize the old frame-wide mask and migrate only its managed values. Verify in Chromium and WebKit and release. Mobile parked.",
-      "next_action": "Replace the frame mask with a single background image and verify existing file compatibility.",
+      "next_action": "Use the same paint-only SVG compiler in the built-in Pattern component. Verify fill and insert entry points with identical paint behavior.",
       "category": "implementation",
       "primary_team": "inspector",
       "supporting_teams": [],
@@ -2424,8 +2425,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T16:29:31.382Z",
-      "lease_until": "2026-11-15T04:29:31.382Z"
+      "updated_at": "2026-11-14T16:33:48.459Z",
+      "lease_until": "2026-11-15T04:33:48.459Z"
     }
   ]
 }
