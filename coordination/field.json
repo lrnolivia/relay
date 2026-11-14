@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:01:59.504Z",
+  "updated_at": "2026-11-14T21:03:18.953Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2782,7 +2782,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:01:59.504Z",
+      "updated_at": "2026-11-14T21:03:18.953Z",
       "lease_until": "2026-11-15T08:57:25.381Z",
       "supporting_roles": [
         "verifier"
@@ -2943,6 +2943,40 @@
             }
           },
           "reported_at": "2026-11-14T21:01:59.504Z"
+        },
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "nested-guide-exact-source-review-head-20261114",
+          "assignment": "field-nested-guide-resize-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/nested-guide-resize-20261114",
+          "source_sha": "0b94516cb21cefd07e8e465ff6e65a4d90ae91d0",
+          "objective_digest": "14739c3da7a4f46f9f0818a13f361ea17d0314af6f2acb9cb02cf371882576f7",
+          "scope_digest": "50681f8a7b1d396bdcfb809517e013a86620d7ee0b2080f22ee8240596c36871",
+          "step_id": "review-nested-guide-resize-head",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "0b94516cb21cefd07e8e465ff6e65a4d90ae91d0",
+            "objective_digest": "14739c3da7a4f46f9f0818a13f361ea17d0314af6f2acb9cb02cf371882576f7",
+            "step_id": "review-nested-guide-resize-head",
+            "label": "Verify final resize behavior",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "e34ca253535ca356b5c607566581f0b1703c4edbfc3b980e45e1fbd156bbabf2"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-14T21:03:18.953Z",
+          "request_digest": "6e5e73f7d5e84d65bc9f00c1f78f4debb2857bb3c6a392fc08139aa3ca74b46f",
+          "step_digest": "21364a2c286cd6470df9c25a3d1c6052ac63c140da6deedfe757af663bc36111"
         }
       ],
       "card_steps": {
@@ -2954,7 +2988,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/nested-guide-resize-20261114"
         },
-        "sequence": 6,
+        "sequence": 7,
         "complete": false,
         "steps": [
           {
@@ -3004,6 +3038,13 @@
                 "artifacts": []
               }
             }
+          },
+          {
+            "id": "review-nested-guide-resize-head",
+            "label": "Verify final resize behavior",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -3011,7 +3052,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-nested-guide-resize-20261114",
         "revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
-        "sequence": 6,
+        "sequence": 7,
         "truncated": false,
         "identities": {
           "nested-guide-exact-source-review-20261114:started": "6773a146b338e0ce5994318c509130393cbcbba9138c8319f8e55df2420885ae",
