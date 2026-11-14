@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T02:22:43.403Z",
+  "updated_at": "2026-11-14T02:27:50.112Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1896,16 +1896,27 @@
         "src/editor/e2e/text-fill-rendered.spec.ts",
         "src/canvas-sandbox/text-edit-host.ts",
         "src/editor/tools/LayoutPaddingControl.tsx",
-        "src/editor/ui/universal-chrome-corrections.structure.test.ts"
+        "src/editor/ui/universal-chrome-corrections.structure.test.ts",
+        "src/shared/responsive-units.ts",
+        "src/shared/responsive-units.test.ts",
+        "src/editor/header/PreviewOverlay.tsx",
+        "src/preview-sandbox/main.tsx",
+        "src/preview/preview-zoom.ts",
+        "src/editor/e2e/preview-zoom.spec.ts",
+        "src/editor/figui3-inspector-parity.test.ts",
+        "src/editor/figui3-inspector-header-selection.test.ts",
+        "src/editor/media/media-browser-types.test.ts",
+        "src/editor/e2e/image-fill-lifecycle.spec.ts"
       ],
       "resources": [
         "media-canvas-placement",
         "canvas-toolbar-insertion",
-        "inspector-paint-controls"
+        "inspector-paint-controls",
+        "preview-navigation"
       ],
       "goal": "Fix blank or missing Canvas images when dragging from desktop Media and keep original image proportions on drag and click placement.",
       "acceptance": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
-      "next_action": "Verify desktop image placement, Image Inspector alignment, Selection colors swatch editing, text glyph fill, and compact one-row Padding for equal or two-axis values.",
+      "next_action": "Fix the observed corruption of frame image data URLs by Canvas viewport-unit substitution. Add Preview zoom on click, keyboard, modified wheel and pinch, preserving the authored viewport dimensions and plain page scroll. Validate the prior desktop Canvas and Inspector fixes as one batch.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1929,8 +1940,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T02:22:43.403Z",
-      "lease_until": "2026-11-14T14:22:43.403Z"
+      "updated_at": "2026-11-14T02:27:50.112Z",
+      "lease_until": "2026-11-14T14:27:50.112Z"
     }
   ]
 }
