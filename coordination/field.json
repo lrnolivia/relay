@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T17:22:12.143Z",
+  "updated_at": "2026-11-14T17:22:40.336Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2588,6 +2588,48 @@
       "evidence": "Deployed e6b1fea124e16ae8217185869e64761dd4877bdf at 100%, exact preview and live boundary smoke passed. Desktop Chromium and WebKit wizard and Preview navigation passed. 13,377 units, full build/types/lint and exact GitHub checks passed.",
       "work_accounted": true,
       "completed_at": "2026-11-14T17:22:12.143Z"
+    },
+    {
+      "id": "field-stock-pattern-migration-20261114",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/stock-pattern-migration-20261114",
+      "paths": [
+        "src/code/project/default-code-components/Pattern.ts",
+        "src/code/project/grid-mask-migration.ts",
+        "src/code/project/grid-mask-migration.test.ts",
+        "src/editor/e2e/fill-effects-apply.spec.ts"
+      ],
+      "resources": [
+        "project-grid-mask-compatibility"
+      ],
+      "goal": "Upgrade the previously shipped unmodified stock Pattern component to paint-only Grid + Mask.",
+      "acceptance": "Recognize exact old stock bytes, preserve customized project files, compile new image paint and verify snapshot and desktop rendering. Mobile parked.",
+      "next_action": "Add an exact legacy template match to the existing Grid + Mask migration.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "e6b1fea124e16ae8217185869e64761dd4877bdf",
+      "state": "active",
+      "created_at": "2026-11-14T17:22:40.336Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Upgrade the previously shipped unmodified stock Pattern component to paint-only Grid + Mask.",
+          "acceptance": "Recognize exact old stock bytes, preserve customized project files, compile new image paint and verify snapshot and desktop rendering. Mobile parked.",
+          "at": "2026-11-14T17:22:40.336Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-stock-pattern-migration-20261114:acceptance:0",
+            "text": "Recognize exact old stock bytes, preserve customized project files, compile new image paint and verify snapshot and desktop rendering. Mobile parked.",
+            "at": "2026-11-14T17:22:40.336Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-14T17:22:40.336Z",
+      "lease_until": "2026-11-15T05:22:40.336Z"
     }
   ]
 }
