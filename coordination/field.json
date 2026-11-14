@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T05:02:23.159Z",
+  "updated_at": "2026-11-14T05:08:42.852Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1993,7 +1993,7 @@
       ],
       "goal": "Fix Safari editor opening, including a project opened immediately after Dashboard duplication, and verify desktop autosave, reopen, and Back/Forward cache behavior.",
       "acceptance": "A newly duplicated project opens at its own URL without refreshing Dashboard. Existing projects and fresh tabs retain editor startup, including delayed Canvas readiness. An actual Editor edit persists and reopens in signed-in desktop Safari, and native Back/Forward cache behavior is measured. Keep mobile work parked.",
-      "next_action": "Fix the observed Dashboard handoff stall with a visibility-aware fallback for animation waits; exercise a freshly duplicated card, direct reopen, and Back/Forward.",
+      "next_action": "Exact branch PR #153 has passing browser checks and build. After exact Preview and fresh CI confirmation, merge and run signed-in native Safari duplicate, editor autosave and reopen, and measure native history cache outcome with current document cache policy.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2017,8 +2017,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T05:02:23.159Z",
-      "lease_until": "2026-11-14T17:02:23.159Z"
+      "updated_at": "2026-11-14T05:08:42.852Z",
+      "lease_until": "2026-11-14T17:08:42.852Z"
     }
   ]
 }
