@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:24:16.205Z",
+  "updated_at": "2026-11-14T21:24:45.041Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3420,7 +3420,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:24:16.205Z",
+      "updated_at": "2026-11-14T21:24:45.041Z",
       "lease_until": "2026-11-15T09:21:59.004Z",
       "amendment_count": 1,
       "amendments": [
@@ -3526,10 +3526,21 @@
             "host_available": true,
             "intent_digest": "8a5e8ebb10087c5c06ae93c2d863e6126643e9ab88857f071a26b054bfe1dc34"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-14T21:24:16.205Z",
           "request_digest": "ff45338fcf3390f773780cbf36d57a1a6273e2a29c796d11b5653aeb586341cc",
-          "step_digest": "d77a4ba8253d7b4c5c14d38f9c0c80bbe22e3b925b79cd7496597d4cd7946a6c"
+          "step_digest": "259b76d7f2fcf8d8fccc2b146e196099ee6113fe7f9d624aeb7445498442324c",
+          "start": {
+            "request_digest": "ff45338fcf3390f773780cbf36d57a1a6273e2a29c796d11b5653aeb586341cc",
+            "source_sha": "7f07ad6f20e94d1b634fe24d4ea54eaaa26be64a",
+            "agent_id": "/root/nested_guide_move_recheck",
+            "observed_at": "2026-11-14T21:24:42Z",
+            "update": {
+              "text": "Independent review is checking the existing snap candidates and fractional saved placement.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-14T21:24:45.041Z"
         }
       ],
       "card_steps": {
@@ -3541,7 +3552,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/nested-guide-move-20261114"
         },
-        "sequence": 3,
+        "sequence": 4,
         "complete": false,
         "steps": [
           {
@@ -3572,8 +3583,25 @@
             "id": "review-nested-move-precision",
             "label": "Verify projected snap precision",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "nested-guide-move-preview-review-20261114:started",
+              "assignment": "field-nested-guide-move-20261114",
+              "step_id": "review-nested-move-precision",
+              "plan_revision": "3607459bb0de435ae9abedc8ce960c6d9d266868d460e26c51b295be1e128461",
+              "input_digest": "ff45338fcf3390f773780cbf36d57a1a6273e2a29c796d11b5653aeb586341cc",
+              "evidence": "sha256:190b5208663f2c34835227dc48874395f7e6cbe6da67263f5712a347c1933b4d",
+              "source_sha": "7f07ad6f20e94d1b634fe24d4ea54eaaa26be64a",
+              "observed_at": "2026-11-14T21:24:42Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review is checking the existing snap candidates and fractional saved placement.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -3581,10 +3609,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-nested-guide-move-20261114",
         "revision": "3607459bb0de435ae9abedc8ce960c6d9d266868d460e26c51b295be1e128461",
-        "sequence": 3,
+        "sequence": 4,
         "truncated": false,
         "identities": {
-          "nested-guide-move-exact-source-review-20261114:started": "3f4fc1a782417b8b2ea4613e8877aac6925d8bb96b9d12585b5e854e7af3463b"
+          "nested-guide-move-exact-source-review-20261114:started": "3f4fc1a782417b8b2ea4613e8877aac6925d8bb96b9d12585b5e854e7af3463b",
+          "nested-guide-move-preview-review-20261114:started": "78e09b9241d5b28f38e6f1cafca93c86d7b6c3b8b364fc0666885ab8db009543"
         },
         "items": [
           {
@@ -3606,6 +3635,28 @@
               "team": "inspector"
             },
             "text": "Independent review is checking the guide and drag coordinates, saved position, and Shift behavior.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "nested-guide-move-preview-review-20261114:started:ff45338fcf3390f773780cbf36d57a1a6273e2a29c796d11b5653aeb586341cc:running:",
+            "receipt_snapshot": "{\"label\":\"Verify projected snap precision\",\"receipt\":{\"assignment\":\"field-nested-guide-move-20261114\",\"evidence\":\"sha256:190b5208663f2c34835227dc48874395f7e6cbe6da67263f5712a347c1933b4d\",\"id\":\"nested-guide-move-preview-review-20261114:started\",\"input_digest\":\"ff45338fcf3390f773780cbf36d57a1a6273e2a29c796d11b5653aeb586341cc\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"3607459bb0de435ae9abedc8ce960c6d9d266868d460e26c51b295be1e128461\",\"source_sha\":\"7f07ad6f20e94d1b634fe24d4ea54eaaa26be64a\",\"step_id\":\"review-nested-move-precision\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is checking the existing snap candidates and fractional saved placement.\"}},\"state\":\"running\"}",
+            "id": "nested-guide-move-preview-review-20261114:started",
+            "assignment": "field-nested-guide-move-20261114",
+            "step_id": "review-nested-move-precision",
+            "revision": "3607459bb0de435ae9abedc8ce960c6d9d266868d460e26c51b295be1e128461",
+            "label": "Verify projected snap precision",
+            "state": "running",
+            "phase": null,
+            "source_sha": "7f07ad6f20e94d1b634fe24d4ea54eaaa26be64a",
+            "observed_at": "2026-11-14T21:24:42Z",
+            "recorded_at": "2026-11-14T21:24:45.041Z",
+            "receipt_digest": "sha256:190b5208663f2c34835227dc48874395f7e6cbe6da67263f5712a347c1933b4d",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review is checking the existing snap candidates and fractional saved placement.",
             "text_kind": "owner-published",
             "artifacts": []
           }
