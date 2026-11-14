@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T07:58:32.027Z",
+  "updated_at": "2026-11-14T08:02:37.202Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2340,14 +2340,15 @@
         "src/canvas/drag/e2e/ruler-guides.spec.ts",
         "docs/FIGMA_BEHAVIOR_PARITY.md",
         "src/canvas/drag/strategies/AbsoluteInFrameStrategy.ts",
-        "src/canvas/resize/ResizeManager.ts"
+        "src/canvas/resize/ResizeManager.ts",
+        "src/canvas/ui/SnapGuidesOverlay.tsx"
       ],
       "resources": [
         "desktop-canvas-ruler-geometry"
       ],
       "goal": "Support desktop ruler guides attached to a frame.",
       "acceptance": "Pull a ruler guide onto a selected frame and store its frame-local position. It tracks the visible frame, renders within its bounds, persists, supports move/delete/duplicate/undo, and snaps in frame scope. Existing global guides and view-only behavior remain intact.",
-      "next_action": "Scope guides to the selected regular frame and tile; resolve frame bounds for rendering, absolute drag and resize snapping; keep global guides in free Canvas paths.",
+      "next_action": "Keep the active snap indicator inside its guide's frame. Verify drag snapping, drawing, move, zoom, reload, duplication and read-only behavior.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2371,8 +2372,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T07:58:32.027Z",
-      "lease_until": "2026-11-14T19:58:32.027Z"
+      "updated_at": "2026-11-14T08:02:37.202Z",
+      "lease_until": "2026-11-14T20:02:37.202Z"
     }
   ]
 }
