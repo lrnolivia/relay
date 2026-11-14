@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T07:56:40.995Z",
+  "updated_at": "2026-11-14T07:57:27.532Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2326,6 +2326,52 @@
       "evidence": "Exact main f4dca33ea15054530d83bf3bc39ff64517d47659 deployed at 100% Worker 879a99ec-f3b0-46ba-a153-69bde2edf6d3. Exact preview and live Canvas smoke passed. Chromium 15 desktop cases, WebKit fill cases, Preview in both, 13,370 unit tests, type checking, lint and build passed.",
       "work_accounted": true,
       "completed_at": "2026-11-14T07:56:40.995Z"
+    },
+    {
+      "id": "field-frame-ruler-guides-20261114",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/frame-ruler-guides-20261114",
+      "paths": [
+        "src/code/project/ruler-guides-config.ts",
+        "src/code/stores/ruler-guides-store.ts",
+        "src/canvas/ui/CanvasRulers.tsx",
+        "src/canvas/ui/RulerGuides.tsx",
+        "src/canvas/ui/frame-ruler-guides.ts",
+        "src/canvas/drag/handlers/snap-handler.ts",
+        "src/canvas/drag/e2e/ruler-guides.spec.ts",
+        "docs/FIGMA_BEHAVIOR_PARITY.md"
+      ],
+      "resources": [
+        "desktop-canvas-ruler-geometry"
+      ],
+      "goal": "Support desktop ruler guides attached to a frame.",
+      "acceptance": "Pull a ruler guide onto a selected frame and store its frame-local position. It tracks the visible frame, renders within its bounds, persists, supports move/delete/duplicate/undo, and snaps in frame scope. Existing global guides and view-only behavior remain intact.",
+      "next_action": "Implement frame-bound guide metadata, geometry and desktop regression checks.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "f4dca33ea15054530d83bf3bc39ff64517d47659",
+      "state": "active",
+      "created_at": "2026-11-14T07:57:27.532Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Support desktop ruler guides attached to a frame.",
+          "acceptance": "Pull a ruler guide onto a selected frame and store its frame-local position. It tracks the visible frame, renders within its bounds, persists, supports move/delete/duplicate/undo, and snaps in frame scope. Existing global guides and view-only behavior remain intact.",
+          "at": "2026-11-14T07:57:27.532Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-frame-ruler-guides-20261114:acceptance:0",
+            "text": "Pull a ruler guide onto a selected frame and store its frame-local position. It tracks the visible frame, renders within its bounds, persists, supports move/delete/duplicate/undo, and snaps in frame scope. Existing global guides and view-only behavior remain intact.",
+            "at": "2026-11-14T07:57:27.532Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-14T07:57:27.532Z",
+      "lease_until": "2026-11-14T19:57:27.532Z"
     }
   ]
 }
