@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T20:52:12.240Z",
+  "updated_at": "2026-11-14T20:53:06.824Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2782,7 +2782,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T20:52:12.240Z",
+      "updated_at": "2026-11-14T20:53:06.824Z",
       "lease_until": "2026-11-15T08:51:26.448Z",
       "supporting_roles": [
         "verifier"
@@ -2857,10 +2857,21 @@
             "host_available": true,
             "intent_digest": "3e450ae21d628177bcdcf60c91bfa79bfff68ffce210ae2ef19e66514e33736e"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-14T20:52:12.240Z",
           "request_digest": "e7aae2afb8e474e95258157b4732e27d4cee3fc76daacda28e0a644337e8c142",
-          "step_digest": "fc76ea681151b123ce846f0ea10b75f8cbf22c596166def44a294ad004f2139c"
+          "step_digest": "9aacd603f40f6072933eb96474f91c012469ac8d02497bf2a14983b3f3da9eb2",
+          "start": {
+            "request_digest": "e7aae2afb8e474e95258157b4732e27d4cee3fc76daacda28e0a644337e8c142",
+            "source_sha": "6c6c89e4e6afd640b21f5e5029b3de359fac328c",
+            "agent_id": "/root/nested_guide_review",
+            "observed_at": "2026-11-14T20:53:04Z",
+            "update": {
+              "text": "Independent review is checking the saved resize geometry and source writes.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-14T20:53:06.824Z"
         }
       ],
       "card_steps": {
@@ -2872,15 +2883,32 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/nested-guide-resize-20261114"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "review-nested-guide-resize",
             "label": "Review nested guide resize",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "nested-guide-exact-source-review-20261114:started",
+              "assignment": "field-nested-guide-resize-20261114",
+              "step_id": "review-nested-guide-resize",
+              "plan_revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
+              "input_digest": "e7aae2afb8e474e95258157b4732e27d4cee3fc76daacda28e0a644337e8c142",
+              "evidence": "sha256:daeb74a27d5c92a769c7b6eecc59d39eb3c7ce275e91ea89c0bfd8cf5977447e",
+              "source_sha": "6c6c89e4e6afd640b21f5e5029b3de359fac328c",
+              "observed_at": "2026-11-14T20:53:04Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review is checking the saved resize geometry and source writes.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -2888,10 +2916,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-nested-guide-resize-20261114",
         "revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "nested-guide-exact-source-review-20261114:started": "6773a146b338e0ce5994318c509130393cbcbba9138c8319f8e55df2420885ae"
+        },
+        "items": [
+          {
+            "key": "nested-guide-exact-source-review-20261114:started:e7aae2afb8e474e95258157b4732e27d4cee3fc76daacda28e0a644337e8c142:running:",
+            "receipt_snapshot": "{\"label\":\"Review nested guide resize\",\"receipt\":{\"assignment\":\"field-nested-guide-resize-20261114\",\"evidence\":\"sha256:daeb74a27d5c92a769c7b6eecc59d39eb3c7ce275e91ea89c0bfd8cf5977447e\",\"id\":\"nested-guide-exact-source-review-20261114:started\",\"input_digest\":\"e7aae2afb8e474e95258157b4732e27d4cee3fc76daacda28e0a644337e8c142\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b\",\"source_sha\":\"6c6c89e4e6afd640b21f5e5029b3de359fac328c\",\"step_id\":\"review-nested-guide-resize\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is checking the saved resize geometry and source writes.\"}},\"state\":\"running\"}",
+            "id": "nested-guide-exact-source-review-20261114:started",
+            "assignment": "field-nested-guide-resize-20261114",
+            "step_id": "review-nested-guide-resize",
+            "revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
+            "label": "Review nested guide resize",
+            "state": "running",
+            "phase": null,
+            "source_sha": "6c6c89e4e6afd640b21f5e5029b3de359fac328c",
+            "observed_at": "2026-11-14T20:53:04Z",
+            "recorded_at": "2026-11-14T20:53:06.824Z",
+            "receipt_digest": "sha256:daeb74a27d5c92a769c7b6eecc59d39eb3c7ce275e91ea89c0bfd8cf5977447e",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review is checking the saved resize geometry and source writes.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
