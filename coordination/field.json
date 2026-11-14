@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T20:58:40.889Z",
+  "updated_at": "2026-11-14T21:01:59.504Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2782,7 +2782,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T20:58:40.889Z",
+      "updated_at": "2026-11-14T21:01:59.504Z",
       "lease_until": "2026-11-15T08:57:25.381Z",
       "supporting_roles": [
         "verifier"
@@ -2915,10 +2915,10 @@
             "host_available": true,
             "intent_digest": "103289aa4796ef75a3711764a8140e6516f67a443219e9ee33d07c50abe7d23b"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-14T20:58:10.314Z",
           "request_digest": "00f5103a48db613426d9dbe2c15aab2f0125efa4f23fffdd5c2b6b8435b3a20e",
-          "step_digest": "9d687d5730bff4bf86743a6e5809677b7200d2dd8c410f880d57511ae08e44e2",
+          "step_digest": "37cb3d32fdb3b320d517163853bb8f7f1f3c9dbccf1e54edcc7b1b473a31bc67",
           "start": {
             "request_digest": "00f5103a48db613426d9dbe2c15aab2f0125efa4f23fffdd5c2b6b8435b3a20e",
             "source_sha": "96e7cae236d19a602676ca358cecb48c5d07caa0",
@@ -2929,7 +2929,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-14T20:58:40.889Z"
+          "started_at": "2026-11-14T20:58:40.889Z",
+          "result": {
+            "request_digest": "00f5103a48db613426d9dbe2c15aab2f0125efa4f23fffdd5c2b6b8435b3a20e",
+            "source_sha": "96e7cae236d19a602676ca358cecb48c5d07caa0",
+            "agent_id": "/root/nested_guide_recheck",
+            "observed_at": "2026-11-14T21:01:55Z",
+            "state": "failed",
+            "result_digest": "e1dd395d95a79e78ef4f60333d2a72f135a6284653606a5ec02fb516e47e8ef6",
+            "update": {
+              "text": "The review found two more cases: releasing Shift without moving again and resizing under scale without rotation. Both have targeted regressions.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-14T21:01:59.504Z"
         }
       ],
       "card_steps": {
@@ -2941,7 +2954,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/nested-guide-resize-20261114"
         },
-        "sequence": 5,
+        "sequence": 6,
         "complete": false,
         "steps": [
           {
@@ -2972,22 +2985,22 @@
             "id": "review-nested-guide-resize-revision",
             "label": "Recheck resize review fixes",
             "depends_on": [],
-            "state": "running",
+            "state": "failed",
             "receipt": {
-              "id": "nested-guide-exact-source-review-revision-20261114:started",
+              "id": "nested-guide-exact-source-review-revision-20261114:result",
               "assignment": "field-nested-guide-resize-20261114",
               "step_id": "review-nested-guide-resize-revision",
               "plan_revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
               "input_digest": "00f5103a48db613426d9dbe2c15aab2f0125efa4f23fffdd5c2b6b8435b3a20e",
-              "evidence": "sha256:71e85266096e4040bedff641baffc66cd3cb3608ecd8d4a32af830d42b6df2d1",
+              "evidence": "sha256:8907126fc6e22508affd60ee0b290aa979bbacc5da66525d8d85d9e2a8882ee5",
               "source_sha": "96e7cae236d19a602676ca358cecb48c5d07caa0",
-              "observed_at": "2026-11-14T20:58:37Z",
+              "observed_at": "2026-11-14T21:01:55Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "The verifier is checking the revised gesture and source behavior.",
+                "text": "The review found two more cases: releasing Shift without moving again and resizing under scale without rotation. Both have targeted regressions.",
                 "artifacts": []
               }
             }
@@ -2998,12 +3011,13 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-nested-guide-resize-20261114",
         "revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
-        "sequence": 5,
+        "sequence": 6,
         "truncated": false,
         "identities": {
           "nested-guide-exact-source-review-20261114:started": "6773a146b338e0ce5994318c509130393cbcbba9138c8319f8e55df2420885ae",
           "nested-guide-exact-source-review-20261114:result": "066e24fb7aae0ba32bd584bfcfc20c5a0766d79590a3595d78775fa765a203d9",
-          "nested-guide-exact-source-review-revision-20261114:started": "c2ed00ec5f18fedb5b27846a9166db96b41ac4ce2d865c71c28308c055c2969e"
+          "nested-guide-exact-source-review-revision-20261114:started": "c2ed00ec5f18fedb5b27846a9166db96b41ac4ce2d865c71c28308c055c2969e",
+          "nested-guide-exact-source-review-revision-20261114:result": "d8f266022e1df5ca0a322010e2fdf63f61da66b11ace0105a61a533702cad52b"
         },
         "items": [
           {
@@ -3069,6 +3083,28 @@
               "team": "inspector"
             },
             "text": "The verifier is checking the revised gesture and source behavior.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "nested-guide-exact-source-review-revision-20261114:result:00f5103a48db613426d9dbe2c15aab2f0125efa4f23fffdd5c2b6b8435b3a20e:failed:",
+            "receipt_snapshot": "{\"label\":\"Recheck resize review fixes\",\"receipt\":{\"assignment\":\"field-nested-guide-resize-20261114\",\"evidence\":\"sha256:8907126fc6e22508affd60ee0b290aa979bbacc5da66525d8d85d9e2a8882ee5\",\"id\":\"nested-guide-exact-source-review-revision-20261114:result\",\"input_digest\":\"00f5103a48db613426d9dbe2c15aab2f0125efa4f23fffdd5c2b6b8435b3a20e\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b\",\"source_sha\":\"96e7cae236d19a602676ca358cecb48c5d07caa0\",\"step_id\":\"review-nested-guide-resize-revision\",\"update\":{\"artifacts\":[],\"text\":\"The review found two more cases: releasing Shift without moving again and resizing under scale without rotation. Both have targeted regressions.\"}},\"state\":\"failed\"}",
+            "id": "nested-guide-exact-source-review-revision-20261114:result",
+            "assignment": "field-nested-guide-resize-20261114",
+            "step_id": "review-nested-guide-resize-revision",
+            "revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
+            "label": "Recheck resize review fixes",
+            "state": "failed",
+            "phase": null,
+            "source_sha": "96e7cae236d19a602676ca358cecb48c5d07caa0",
+            "observed_at": "2026-11-14T21:01:55Z",
+            "recorded_at": "2026-11-14T21:01:59.504Z",
+            "receipt_digest": "sha256:8907126fc6e22508affd60ee0b290aa979bbacc5da66525d8d85d9e2a8882ee5",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The review found two more cases: releasing Shift without moving again and resizing under scale without rotation. Both have targeted regressions.",
             "text_kind": "owner-published",
             "artifacts": []
           }
