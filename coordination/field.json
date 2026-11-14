@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T02:50:50.566Z",
+  "updated_at": "2026-11-14T02:55:36.632Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1931,7 +1931,7 @@
       ],
       "goal": "Fix blank or missing Canvas images when dragging from desktop Media and keep original image proportions on drag and click placement.",
       "acceptance": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
-      "next_action": "Update the old workspace collapse regression to verify automatic camera centering with its new preference enabled. The separate desktop test covers the new default. Rebuild and confirm the exact candidate Preview.",
+      "next_action": "PR #152 merged at d215628a1109f81012574ad80767586e7196554a; merge tree equals exact candidate 45f62ce. Wait for canonical main Workers build 39fdbb86-99d7-4bb6-9566-5b2cea42ebfa and verify deployed identity, read-only Canvas first paint and exact embedded image decode. Keep native authenticated QA and mobile dispositions separate.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1955,8 +1955,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T02:50:50.566Z",
-      "lease_until": "2026-11-14T14:50:50.566Z"
+      "updated_at": "2026-11-14T02:55:36.632Z",
+      "lease_until": "2026-11-14T14:55:36.632Z"
     }
   ]
 }
