@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T07:41:57.137Z",
+  "updated_at": "2026-11-14T07:42:23.920Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2270,6 +2270,48 @@
       "evidence": "Exact merge 5ca72259bde6c230c06a97bec81ad34bcc736c13 deployed at 100% Worker 8e28084b-2f8c-453d-a3b3-25446b9d02b0, delivery c3249c84-1cf4-42cb-a75a-edfe8059097d. Chromium/WebKit 8 fill cases and 2 Preview cases per browser. All 13,366 unit tests, types, lint, builds and exact branch/live Canvas smoke passed.",
       "work_accounted": true,
       "completed_at": "2026-11-14T07:41:57.137Z"
+    },
+    {
+      "id": "field-video-fill-lifecycle-20261114",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/video-fill-lifecycle-20261114",
+      "paths": [
+        "src/code/generation/generator-video.ts",
+        "src/code/generation/generator-video.test.ts",
+        "src/canvas/Renderer.ts",
+        "src/editor/e2e/fill-effects-apply.spec.ts"
+      ],
+      "resources": [
+        "inspector-video-fill-lifecycle"
+      ],
+      "goal": "Keep desktop frame clipping and positioning intact when adding or removing Video Fill.",
+      "acceptance": "Apply a video without changing frame overflow. Remove only host position/isolation the fill added, preserving pre-existing or later edits. Legacy files remain readable, Canvas and Preview reflect the same video radius. Focused desktop browser and source tests and release.",
+      "next_action": "Stop styling host overflow, record ownership of missing positioning properties at insertion, and restore only unchanged generated values on removal.",
+      "category": "implementation",
+      "primary_team": "inspector",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "5ca72259bde6c230c06a97bec81ad34bcc736c13",
+      "state": "active",
+      "created_at": "2026-11-14T07:42:23.920Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Keep desktop frame clipping and positioning intact when adding or removing Video Fill.",
+          "acceptance": "Apply a video without changing frame overflow. Remove only host position/isolation the fill added, preserving pre-existing or later edits. Legacy files remain readable, Canvas and Preview reflect the same video radius. Focused desktop browser and source tests and release.",
+          "at": "2026-11-14T07:42:23.920Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-video-fill-lifecycle-20261114:acceptance:0",
+            "text": "Apply a video without changing frame overflow. Remove only host position/isolation the fill added, preserving pre-existing or later edits. Legacy files remain readable, Canvas and Preview reflect the same video radius. Focused desktop browser and source tests and release.",
+            "at": "2026-11-14T07:42:23.920Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-14T07:42:23.920Z",
+      "lease_until": "2026-11-14T19:42:23.920Z"
     }
   ]
 }
