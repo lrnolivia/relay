@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T02:35:37.126Z",
+  "updated_at": "2026-11-14T02:36:46.198Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1909,7 +1909,10 @@
         "src/editor/e2e/image-fill-lifecycle.spec.ts",
         "src/editor/media/media-placement.test.ts",
         "src/editor/ChromeIslands.tsx",
-        "src/editor/e2e/left-pane-auto-hide.spec.ts"
+        "src/editor/e2e/left-pane-auto-hide.spec.ts",
+        "src/App.tsx",
+        "src/code/stores/workspace-panels-store.ts",
+        "src/editor/overlays/SettingsOverlay.tsx"
       ],
       "resources": [
         "media-canvas-placement",
@@ -1920,7 +1923,7 @@
       ],
       "goal": "Fix blank or missing Canvas images when dragging from desktop Media and keep original image proportions on drag and click placement.",
       "acceptance": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
-      "next_action": "Finish the desktop Canvas and Preview batch, including the new report that expanded left chrome remains in Full and Focus when auto-hide hides the controls.",
+      "next_action": "Finish desktop auto-hide and add a default-off Workspace preference for moving the Canvas when left/right rails or panels change in Full or Focus.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1944,8 +1947,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T02:35:37.126Z",
-      "lease_until": "2026-11-14T14:35:37.126Z"
+      "updated_at": "2026-11-14T02:36:46.198Z",
+      "lease_until": "2026-11-14T14:36:46.198Z"
     }
   ]
 }
