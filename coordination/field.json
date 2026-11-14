@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:09:53.526Z",
+  "updated_at": "2026-11-14T21:10:18.346Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2754,7 +2754,7 @@
       ],
       "goal": "Close desktop Canvas guide snap gaps when resizing positioned descendants of transformed frames.",
       "acceptance": "Nested positioned layers snap their parallel active edges to frame-local ruler guides with the opposite edge anchored, including inherited scale, aspect-locked gesture and Undo; existing desktop Canvas ruler coverage passes in Chromium and WebKit.",
-      "next_action": "Verify the independent review fixes, including temporary Shift source preservation, on the updated exact source; then verify Workers Preview and desktop Canvas.",
+      "next_action": "Chromium, unit, build, lint, independent review and exact Preview Canvas smoke pass; finish sequential WebKit and promote the verified head.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [
@@ -2782,8 +2782,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:09:53.526Z",
-      "lease_until": "2026-11-15T08:57:25.381Z",
+      "updated_at": "2026-11-14T21:10:18.346Z",
+      "lease_until": "2026-11-15T09:10:18.346Z",
       "supporting_roles": [
         "verifier"
       ],
