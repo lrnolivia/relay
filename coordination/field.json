@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T17:37:17.616Z",
+  "updated_at": "2026-11-14T17:45:22.827Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2618,7 +2618,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "e6b1fea124e16ae8217185869e64761dd4877bdf",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-14T17:22:40.336Z",
       "objective_history": {
         "baseline": {
@@ -2635,8 +2635,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T17:37:17.616Z",
-      "lease_until": "2026-11-15T05:37:17.616Z"
+      "updated_at": "2026-11-14T17:45:22.827Z",
+      "lease_until": "2026-11-15T05:45:22.827Z",
+      "pr": 165,
+      "merged_head_sha": "70e9f87a6cabeebec99257e37c44dea4a178791d",
+      "merge_commit_sha": "35a637d52e1158d66eee712a91d2ed6e099e3002",
+      "evidence": "PR #165 deployed as 35a637d52e1158d66eee712a91d2ed6e099e3002. Cloudflare version 22399f55-c705-47c1-9585-4a2e09e54e56 at 100%, read-only deployed Canvas smoke passed. Centered Media passed Chromium and WebKit docked/Float workflows; legacy stock Pattern passed Canvas and Preview in both. 13,379 unit tests passed.",
+      "work_accounted": true,
+      "completed_at": "2026-11-14T17:45:22.827Z"
     }
   ]
 }
