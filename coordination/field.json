@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-13T22:17:45.429Z",
+  "updated_at": "2026-11-14T02:11:33.858Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1876,6 +1876,50 @@
       "evidence": "Relay context ctx_ec893a36590b986257e8c06ff112230c93b9238d9913a041efe3dbb78da0eaf0; https://github.com/lrnolivia/field/pull/151; production SHA 98e38c4b995e4a8553223f9e738630b558d12d2d at 100%; final exact Chromium 255 passing with zero failures; physical iPhone, Safari BFCache edits and authenticated R2 remain tracked as human QA in this disposition.",
       "work_accounted": true,
       "completed_at": "2026-11-13T22:17:45.429Z"
+    },
+    {
+      "id": "field-media-canvas-placement-20261113",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/media-canvas-placement-20261113",
+      "paths": [
+        "src/editor/left-toolbar/panels/MediaGalleryPanel.tsx",
+        "src/editor/media/MediaPanelController.tsx",
+        "src/editor/media/media-canvas-placement.ts",
+        "src/canvas/insert-toolbar-item.ts",
+        "src/editor/e2e/media-canvas-placement.spec.ts"
+      ],
+      "resources": [
+        "media-canvas-placement",
+        "canvas-toolbar-insertion"
+      ],
+      "goal": "Fix blank or missing Canvas images when dragging from desktop Media and keep original image proportions on drag and click placement.",
+      "acceptance": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
+      "next_action": "Reproduce desktop Media-to-Canvas drag and image aspect ratio using synthetic project media; share the same image descriptor for click and drag and verify affected paths.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "98e38c4b995e4a8553223f9e738630b558d12d2d",
+      "state": "active",
+      "created_at": "2026-11-14T02:11:33.858Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Fix blank or missing Canvas images when dragging from desktop Media and keep original image proportions on drag and click placement.",
+          "acceptance": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
+          "at": "2026-11-14T02:11:33.858Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-media-canvas-placement-20261113:acceptance:0",
+            "text": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
+            "at": "2026-11-14T02:11:33.858Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-14T02:11:33.858Z",
+      "lease_until": "2026-11-14T14:11:33.858Z"
     }
   ]
 }
