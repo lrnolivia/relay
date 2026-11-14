@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T17:22:40.336Z",
+  "updated_at": "2026-11-14T17:30:36.310Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2597,14 +2597,19 @@
         "src/code/project/default-code-components/Pattern.ts",
         "src/code/project/grid-mask-migration.ts",
         "src/code/project/grid-mask-migration.test.ts",
-        "src/editor/e2e/fill-effects-apply.spec.ts"
+        "src/editor/e2e/fill-effects-apply.spec.ts",
+        "src/design-system/Modal.tsx",
+        "src/editor/media/MediaPanelController.tsx",
+        "src/editor/left-toolbar/panels/MediaGalleryPanel.tsx",
+        "src/editor/e2e/radius-panel-corrections.spec.ts"
       ],
       "resources": [
-        "project-grid-mask-compatibility"
+        "project-grid-mask-compatibility",
+        "desktop-media-launcher"
       ],
       "goal": "Upgrade the previously shipped unmodified stock Pattern component to paint-only Grid + Mask.",
       "acceptance": "Recognize exact old stock bytes, preserve customized project files, compile new image paint and verify snapshot and desktop rendering. Mobile parked.",
-      "next_action": "Add an exact legacy template match to the existing Grid + Mask migration.",
+      "next_action": "Finish exact stock Pattern migration and route desktop sidebar Gallery and Add media through centered dialogs. Verify editor workflows in Chromium and WebKit.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2628,8 +2633,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T17:22:40.336Z",
-      "lease_until": "2026-11-15T05:22:40.336Z"
+      "updated_at": "2026-11-14T17:30:36.310Z",
+      "lease_until": "2026-11-15T05:30:36.310Z"
     }
   ]
 }
