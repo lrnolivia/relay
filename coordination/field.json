@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:17:48.620Z",
+  "updated_at": "2026-11-14T21:18:32.642Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3415,7 +3415,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:17:48.620Z",
+      "updated_at": "2026-11-14T21:18:32.642Z",
       "lease_until": "2026-11-15T09:17:48.620Z",
       "supporting_roles": [
         "verifier"
@@ -3448,7 +3448,73 @@
             ]
           }
         }
-      ]
+      ],
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "nested-guide-move-exact-source-review-20261114",
+          "assignment": "field-nested-guide-move-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/nested-guide-move-20261114",
+          "source_sha": "66acd110424e73e6aa51e1e74c8ea077f11521b1",
+          "objective_digest": "09d5c2feea92a599564a751c06ea29c22577e2784948d1be077605bcfdb9d5e9",
+          "scope_digest": "dfa1e7b3bf3006b2bc7d26062cbae2a5f7eecdec058f792393e20842881088ee",
+          "step_id": "review-nested-move-guides",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "66acd110424e73e6aa51e1e74c8ea077f11521b1",
+            "objective_digest": "09d5c2feea92a599564a751c06ea29c22577e2784948d1be077605bcfdb9d5e9",
+            "step_id": "review-nested-move-guides",
+            "label": "Review nested guide drag",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "10a6dabe0e788ea3806290bbbcd3d309e4290645a3cc0347498e1fc453894d17"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-14T21:18:32.642Z",
+          "request_digest": "99543cbbe03d0970e4501968659b4059fc803e8134cdb936c6ac988e69ac6d7a",
+          "step_digest": "8251a029325cb5ef976043810644016f1026b607126e001733f676a7c2e12cdc"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "field-nested-guide-move-20261114",
+        "revision": "3607459bb0de435ae9abedc8ce960c6d9d266868d460e26c51b295be1e128461",
+        "objective_digest": "09d5c2feea92a599564a751c06ea29c22577e2784948d1be077605bcfdb9d5e9",
+        "publisher": {
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/nested-guide-move-20261114"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "review-nested-move-guides",
+            "label": "Review nested guide drag",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "field-nested-guide-move-20261114",
+        "revision": "3607459bb0de435ae9abedc8ce960c6d9d266868d460e26c51b295be1e128461",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
