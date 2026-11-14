@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:03:18.953Z",
+  "updated_at": "2026-11-14T21:03:47.187Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2782,7 +2782,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:03:18.953Z",
+      "updated_at": "2026-11-14T21:03:47.187Z",
       "lease_until": "2026-11-15T08:57:25.381Z",
       "supporting_roles": [
         "verifier"
@@ -2973,10 +2973,21 @@
             "host_available": true,
             "intent_digest": "e34ca253535ca356b5c607566581f0b1703c4edbfc3b980e45e1fbd156bbabf2"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-14T21:03:18.953Z",
           "request_digest": "6e5e73f7d5e84d65bc9f00c1f78f4debb2857bb3c6a392fc08139aa3ca74b46f",
-          "step_digest": "21364a2c286cd6470df9c25a3d1c6052ac63c140da6deedfe757af663bc36111"
+          "step_digest": "5f6de5b7840069890f027316d8cc4e69e2155a6ac4014794c33272733f1de1e4",
+          "start": {
+            "request_digest": "6e5e73f7d5e84d65bc9f00c1f78f4debb2857bb3c6a392fc08139aa3ca74b46f",
+            "source_sha": "0b94516cb21cefd07e8e465ff6e65a4d90ae91d0",
+            "agent_id": "/root/nested_guide_head_verify",
+            "observed_at": "2026-11-14T21:03:44Z",
+            "update": {
+              "text": "The final source review is checking modifiers and guide placement.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-14T21:03:47.187Z"
         }
       ],
       "card_steps": {
@@ -2988,7 +2999,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/nested-guide-resize-20261114"
         },
-        "sequence": 7,
+        "sequence": 8,
         "complete": false,
         "steps": [
           {
@@ -3043,8 +3054,25 @@
             "id": "review-nested-guide-resize-head",
             "label": "Verify final resize behavior",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "nested-guide-exact-source-review-head-20261114:started",
+              "assignment": "field-nested-guide-resize-20261114",
+              "step_id": "review-nested-guide-resize-head",
+              "plan_revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
+              "input_digest": "6e5e73f7d5e84d65bc9f00c1f78f4debb2857bb3c6a392fc08139aa3ca74b46f",
+              "evidence": "sha256:d3e9d5adbb8a857cdcf24801795babf0cd703b99315e9401faf844698c9bbab7",
+              "source_sha": "0b94516cb21cefd07e8e465ff6e65a4d90ae91d0",
+              "observed_at": "2026-11-14T21:03:44Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "The final source review is checking modifiers and guide placement.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -3052,13 +3080,14 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-nested-guide-resize-20261114",
         "revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
-        "sequence": 7,
+        "sequence": 8,
         "truncated": false,
         "identities": {
           "nested-guide-exact-source-review-20261114:started": "6773a146b338e0ce5994318c509130393cbcbba9138c8319f8e55df2420885ae",
           "nested-guide-exact-source-review-20261114:result": "066e24fb7aae0ba32bd584bfcfc20c5a0766d79590a3595d78775fa765a203d9",
           "nested-guide-exact-source-review-revision-20261114:started": "c2ed00ec5f18fedb5b27846a9166db96b41ac4ce2d865c71c28308c055c2969e",
-          "nested-guide-exact-source-review-revision-20261114:result": "d8f266022e1df5ca0a322010e2fdf63f61da66b11ace0105a61a533702cad52b"
+          "nested-guide-exact-source-review-revision-20261114:result": "d8f266022e1df5ca0a322010e2fdf63f61da66b11ace0105a61a533702cad52b",
+          "nested-guide-exact-source-review-head-20261114:started": "308d4a9a1329ccdbce8184e32c37404bf80bb2b6e26c6672668f65a780cb2048"
         },
         "items": [
           {
@@ -3146,6 +3175,28 @@
               "team": "inspector"
             },
             "text": "The review found two more cases: releasing Shift without moving again and resizing under scale without rotation. Both have targeted regressions.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "nested-guide-exact-source-review-head-20261114:started:6e5e73f7d5e84d65bc9f00c1f78f4debb2857bb3c6a392fc08139aa3ca74b46f:running:",
+            "receipt_snapshot": "{\"label\":\"Verify final resize behavior\",\"receipt\":{\"assignment\":\"field-nested-guide-resize-20261114\",\"evidence\":\"sha256:d3e9d5adbb8a857cdcf24801795babf0cd703b99315e9401faf844698c9bbab7\",\"id\":\"nested-guide-exact-source-review-head-20261114:started\",\"input_digest\":\"6e5e73f7d5e84d65bc9f00c1f78f4debb2857bb3c6a392fc08139aa3ca74b46f\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b\",\"source_sha\":\"0b94516cb21cefd07e8e465ff6e65a4d90ae91d0\",\"step_id\":\"review-nested-guide-resize-head\",\"update\":{\"artifacts\":[],\"text\":\"The final source review is checking modifiers and guide placement.\"}},\"state\":\"running\"}",
+            "id": "nested-guide-exact-source-review-head-20261114:started",
+            "assignment": "field-nested-guide-resize-20261114",
+            "step_id": "review-nested-guide-resize-head",
+            "revision": "4e65f1ee8c57476c599ed243d4bcd0ff4214c87b7392c94f611966a0e7dc646b",
+            "label": "Verify final resize behavior",
+            "state": "running",
+            "phase": null,
+            "source_sha": "0b94516cb21cefd07e8e465ff6e65a4d90ae91d0",
+            "observed_at": "2026-11-14T21:03:44Z",
+            "recorded_at": "2026-11-14T21:03:47.187Z",
+            "receipt_digest": "sha256:d3e9d5adbb8a857cdcf24801795babf0cd703b99315e9401faf844698c9bbab7",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The final source review is checking modifiers and guide placement.",
             "text_kind": "owner-published",
             "artifacts": []
           }
