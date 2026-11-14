@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T20:48:46.418Z",
+  "updated_at": "2026-11-14T20:49:29.071Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2757,9 +2757,13 @@
       "next_action": "Reproduce the nested and locked edge resize failures in the desktop guide suite, then fix frame-local projection.",
       "category": "implementation",
       "primary_team": "runner",
-      "supporting_teams": [],
+      "supporting_teams": [
+        "inspector"
+      ],
       "primary_staff": "nico",
-      "supporting_staff": [],
+      "supporting_staff": [
+        "roman"
+      ],
       "base_sha": "c661bfb6b577c14db03040de21b8fa2bea6a7feb",
       "state": "active",
       "created_at": "2026-11-14T20:44:35.641Z",
@@ -2778,12 +2782,12 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T20:48:46.418Z",
-      "lease_until": "2026-11-15T08:48:46.418Z",
+      "updated_at": "2026-11-14T20:49:29.071Z",
+      "lease_until": "2026-11-15T08:49:29.071Z",
       "supporting_roles": [
         "verifier"
       ],
-      "amendment_count": 1,
+      "amendment_count": 2,
       "amendments": [
         {
           "at": "2026-11-14T20:48:46.418Z",
@@ -2798,6 +2802,27 @@
           "after": {
             "supporting_roles": [
               "verifier"
+            ]
+          }
+        },
+        {
+          "at": "2026-11-14T20:49:29.071Z",
+          "by": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "reason": "Route the required exact-source independent desktop Canvas review to the registered verifier.",
+          "fields": [
+            "supporting_staff",
+            "supporting_teams"
+          ],
+          "before": {
+            "supporting_staff": [],
+            "supporting_teams": []
+          },
+          "after": {
+            "supporting_staff": [
+              "roman"
+            ],
+            "supporting_teams": [
+              "inspector"
             ]
           }
         }
