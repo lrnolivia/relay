@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T06:57:39.584Z",
+  "updated_at": "2026-11-14T07:07:44.978Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2091,7 +2091,7 @@
       ],
       "goal": "Finish desktop Canvas move, resize, snapping, guides and duplication parity batch by fixing paste placement into smaller frames.",
       "acceptance": "Ordinary object paste into a selected non-layout Frame retains each local axis when it fits and centers axes that cannot fit. Keep same-frame duplication, cut/paste semantics, explicit positions, and layout flows. Browser regression must reproduce baseline and verify candidate, undo, and normal entry points. Record remaining Canvas parity from current evidence, keep mobile parked, and carry authorized changes through canonical release.",
-      "next_action": "Reproduce out-of-bounds paste in a clipped destination Frame and implement per-axis placement through the existing paste engine.",
+      "next_action": "PR 155 candidate 1e463d34bfa952e98c17d494a261073d9962591e passed 24 Chromium and four WebKit checks, unit/build/lint/types and exact read-only branch Preview. Current healthy production 21028b6, rollback version 47b6b680-7cd4-43ba-aa6e-42d4a237d3ee verified available. Merge exact head and verify production.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2115,8 +2115,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T06:57:39.584Z",
-      "lease_until": "2026-11-14T18:57:39.584Z"
+      "updated_at": "2026-11-14T07:07:44.978Z",
+      "lease_until": "2026-11-14T19:07:44.978Z"
     }
   ]
 }
