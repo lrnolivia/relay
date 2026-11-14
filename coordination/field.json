@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T07:20:38.296Z",
+  "updated_at": "2026-11-14T07:29:48.358Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2196,7 +2196,7 @@
       "primary_staff": "nico",
       "supporting_staff": [],
       "base_sha": "5363e6aa398bc593679edcef2ccaf2c1d5de1256",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-14T07:20:38.296Z",
       "objective_history": {
         "baseline": {
@@ -2213,8 +2213,14 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T07:20:38.296Z",
-      "lease_until": "2026-11-14T19:20:38.296Z"
+      "updated_at": "2026-11-14T07:29:48.358Z",
+      "lease_until": "2026-11-14T19:29:48.358Z",
+      "pr": 157,
+      "merged_head_sha": "3b84294290d5bb037af36f4e894e9d1ad68d0c54",
+      "merge_commit_sha": "b1d21576bd0b18097f46077a3241940bf93ea234",
+      "evidence": "Merged b1d21576bd0b18097f46077a3241940bf93ea234, deployed canonical Worker build 94def9a6-0502-4d1b-be33-c1008fceaaf3, Worker version 5ef95fcf-3931-41d2-b848-c239c194be05 at 100%. Chromium 8 and WebKit 8 ruler cases, 13,366 unit tests, lint, types, builds and exact preview/production Canvas smoke passed.",
+      "work_accounted": true,
+      "completed_at": "2026-11-14T07:29:48.358Z"
     }
   ]
 }
