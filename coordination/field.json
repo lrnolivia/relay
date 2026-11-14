@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:21:59.004Z",
+  "updated_at": "2026-11-14T21:24:16.205Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3420,7 +3420,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:21:59.004Z",
+      "updated_at": "2026-11-14T21:24:16.205Z",
       "lease_until": "2026-11-15T09:21:59.004Z",
       "amendment_count": 1,
       "amendments": [
@@ -3496,6 +3496,40 @@
             }
           },
           "started_at": "2026-11-14T21:18:59.367Z"
+        },
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "nested-guide-move-preview-review-20261114",
+          "assignment": "field-nested-guide-move-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/nested-guide-move-20261114",
+          "source_sha": "7f07ad6f20e94d1b634fe24d4ea54eaaa26be64a",
+          "objective_digest": "09d5c2feea92a599564a751c06ea29c22577e2784948d1be077605bcfdb9d5e9",
+          "scope_digest": "1c148987f4c8e5ce48e6f20955c8bec1847f6416f72ed4528bdab4a0929b0619",
+          "step_id": "review-nested-move-precision",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "7f07ad6f20e94d1b634fe24d4ea54eaaa26be64a",
+            "objective_digest": "09d5c2feea92a599564a751c06ea29c22577e2784948d1be077605bcfdb9d5e9",
+            "step_id": "review-nested-move-precision",
+            "label": "Verify projected snap precision",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "8a5e8ebb10087c5c06ae93c2d863e6126643e9ab88857f071a26b054bfe1dc34"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-14T21:24:16.205Z",
+          "request_digest": "ff45338fcf3390f773780cbf36d57a1a6273e2a29c796d11b5653aeb586341cc",
+          "step_digest": "d77a4ba8253d7b4c5c14d38f9c0c80bbe22e3b925b79cd7496597d4cd7946a6c"
         }
       ],
       "card_steps": {
@@ -3507,7 +3541,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/nested-guide-move-20261114"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
@@ -3533,6 +3567,13 @@
                 "artifacts": []
               }
             }
+          },
+          {
+            "id": "review-nested-move-precision",
+            "label": "Verify projected snap precision",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -3540,7 +3581,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-nested-guide-move-20261114",
         "revision": "3607459bb0de435ae9abedc8ce960c6d9d266868d460e26c51b295be1e128461",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
           "nested-guide-move-exact-source-review-20261114:started": "3f4fc1a782417b8b2ea4613e8877aac6925d8bb96b9d12585b5e854e7af3463b"
