@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T02:20:49.137Z",
+  "updated_at": "2026-11-14T02:22:11.070Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1893,7 +1893,8 @@
         "src/editor/e2e/selection-color-swatches.spec.ts",
         "src/editor/tools/TextStyleTool/atoms/TextColorControl.tsx",
         "src/editor/hooks/useTextStyles.ts",
-        "src/editor/e2e/text-fill-rendered.spec.ts"
+        "src/editor/e2e/text-fill-rendered.spec.ts",
+        "src/canvas-sandbox/text-edit-host.ts"
       ],
       "resources": [
         "media-canvas-placement",
@@ -1902,7 +1903,7 @@
       ],
       "goal": "Fix blank or missing Canvas images when dragging from desktop Media and keep original image proportions on drag and click placement.",
       "acceptance": "A project image dragged from desktop docked Media or the toolbar Media browser makes one visible asset at the drop target, with the original proportions. Toolbar click still inserts or replaces normally; new images preserve their original proportions. Pointer cancellation creates no node. Existing Gallery, video/audio, and portrait placement semantics are preserved.",
-      "next_action": "Fix and verify the user-reported desktop Media drag, image proportions, Image Inspector alignment, Selection colors swatch select-and-edit, and discrepancy between displayed and painted text fill.",
+      "next_action": "Match text Fill to the painted glyph channel during text editing and normal selection, while preserving gradients and independently colored runs. Validate those changes with Media placement, the Image Inspector and Selection colors.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -1926,8 +1927,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T02:20:49.137Z",
-      "lease_until": "2026-11-14T14:20:49.137Z"
+      "updated_at": "2026-11-14T02:22:11.070Z",
+      "lease_until": "2026-11-14T14:22:11.070Z"
     }
   ]
 }
