@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T07:11:13.675Z",
+  "updated_at": "2026-11-14T07:16:28.908Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2142,7 +2142,7 @@
       ],
       "goal": "Finish desktop Canvas view-only selection and enforce read-only ruler guides.",
       "acceptance": "Mouse marquee selects for inspection in view-only without moving objects or writing source. Ruler create, move and remove cannot change source in a view-only context. Reproduce and verify on isolated desktop fixtures and a read-only snapshot. Update current parity evidence and verify release. Keep mobile parked.",
-      "next_action": "Protect guide writes at their source and verify desktop selection and ruler interaction with view-only state.",
+      "next_action": "PR 156 ffa8018cd5cebca4c6d7252b130a7bc9146b48f0 passed 10 Chromium, three WebKit, 13,366 units, typecheck, lint and build. Current healthy rollback Worker 5ad838e8-be71-4cce-ad52-8b86daa4cdb4 verified available. Check exact branch read-only viewer behavior and promote. Remaining desktop layout/vector checks in progress.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [],
@@ -2166,8 +2166,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T07:11:13.675Z",
-      "lease_until": "2026-11-14T19:11:13.675Z"
+      "updated_at": "2026-11-14T07:16:28.908Z",
+      "lease_until": "2026-11-14T19:16:28.908Z"
     }
   ]
 }
