@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T18:10:04.831Z",
+  "updated_at": "2026-11-14T20:44:35.641Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -2739,6 +2739,47 @@
       "evidence": "Merged tested tree c661bfb6b577c14db03040de21b8fa2bea6a7feb; Workers Build 13f4ba9a-cf4f-4b21-abb8-e09947a62dfc succeeded, version 332dfd8c-8958-46e3-9efa-20de8f10d81d at 100%. 19 ruler and centered resize cases passed in each engine; 13,380 unit tests. Live read-only first paint and four isolation headers verified.",
       "work_accounted": true,
       "completed_at": "2026-11-14T18:10:04.831Z"
+    },
+    {
+      "id": "field-nested-guide-resize-20261114",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/nested-guide-resize-20261114",
+      "paths": [
+        "src/canvas/resize/ResizeManager.ts",
+        "src/canvas/drag/e2e/ruler-guides.spec.ts",
+        "src/code/stores/ruler-guides-store.ts"
+      ],
+      "resources": [
+        "canvas-frame-guide-resize"
+      ],
+      "goal": "Close desktop Canvas guide snap gaps when resizing positioned descendants of transformed frames.",
+      "acceptance": "Nested positioned layers snap their parallel active edges to frame-local ruler guides with the opposite edge anchored, including inherited scale, aspect-locked gesture and Undo; existing desktop Canvas ruler coverage passes in Chromium and WebKit.",
+      "next_action": "Reproduce the nested and locked edge resize failures in the desktop guide suite, then fix frame-local projection.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "c661bfb6b577c14db03040de21b8fa2bea6a7feb",
+      "state": "active",
+      "created_at": "2026-11-14T20:44:35.641Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Close desktop Canvas guide snap gaps when resizing positioned descendants of transformed frames.",
+          "acceptance": "Nested positioned layers snap their parallel active edges to frame-local ruler guides with the opposite edge anchored, including inherited scale, aspect-locked gesture and Undo; existing desktop Canvas ruler coverage passes in Chromium and WebKit.",
+          "at": "2026-11-14T20:44:35.641Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-nested-guide-resize-20261114:acceptance:0",
+            "text": "Nested positioned layers snap their parallel active edges to frame-local ruler guides with the opposite edge anchored, including inherited scale, aspect-locked gesture and Undo; existing desktop Canvas ruler coverage passes in Chromium and WebKit.",
+            "at": "2026-11-14T20:44:35.641Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-14T20:44:35.641Z",
+      "lease_until": "2026-11-15T08:44:35.641Z"
     }
   ]
 }
