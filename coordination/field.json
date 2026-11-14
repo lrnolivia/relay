@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T02:58:06.293Z",
+  "updated_at": "2026-11-14T04:59:48.413Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -1963,6 +1963,60 @@
       "evidence": "PR #152 merged d215628a1109f81012574ad80767586e7196554a after exact Preview and Chromium/WebKit functional checks. Production 100% deployment e1109290-7b5a-4fff-932e-65f5079254c8, Worker version 1b47ce86-9344-4301-8b5f-bd6efa7330fd; production source identity, seven saved layers, all four isolation headers, and exact saved frame image bytes and WebKit decode verified. Context revision 46 preserves remaining native authenticated Safari persistence, BFCache and physical pinch limitations separately from the completed desktop repair. Mobile remains parked.",
       "work_accounted": true,
       "completed_at": "2026-11-14T02:58:06.293Z"
+    },
+    {
+      "id": "field-safari-project-opening-20261113",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/safari-project-opening-20261113",
+      "paths": [
+        "src/canvas/hooks/useSandboxBridge.ts",
+        "src/canvas/SandboxBridgeManager.ts",
+        "src/canvas/SandboxBridgeManager.test.ts",
+        "src/canvas-sandbox/bridge-host.ts",
+        "src/canvas-sandbox/bridge-sandbox.ts",
+        "src/canvas-sandbox/protocol.ts",
+        "src/FieldShell.tsx",
+        "src/ProjectLoader.tsx",
+        "src/Dashboard.tsx",
+        "src/backend/project-events.ts",
+        "src/backend/project-events.test.ts",
+        "src/backend/autosave.ts",
+        "src/backend/autosave.unload.test.ts",
+        "src/editor/e2e/safari-project-opening.spec.ts"
+      ],
+      "resources": [
+        "desktop-project-opening",
+        "canvas-sandbox-handshake",
+        "desktop-project-persistence"
+      ],
+      "goal": "Fix Safari editor opening, including a project opened immediately after Dashboard duplication, and verify desktop autosave, reopen, and Back/Forward cache behavior.",
+      "acceptance": "A newly duplicated project opens at its own URL without refreshing Dashboard. Existing projects and fresh tabs retain editor startup, including delayed Canvas readiness. An actual Editor edit persists and reopens in signed-in desktop Safari, and native Back/Forward cache behavior is measured. Keep mobile work parked.",
+      "next_action": "Reproduce Safari startup with a controlled Canvas load timing and compare the native sandbox diagnostics, then repair the confirmed failure.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "d215628a1109f81012574ad80767586e7196554a",
+      "state": "active",
+      "created_at": "2026-11-14T04:59:48.413Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Fix Safari editor opening, including a project opened immediately after Dashboard duplication, and verify desktop autosave, reopen, and Back/Forward cache behavior.",
+          "acceptance": "A newly duplicated project opens at its own URL without refreshing Dashboard. Existing projects and fresh tabs retain editor startup, including delayed Canvas readiness. An actual Editor edit persists and reopens in signed-in desktop Safari, and native Back/Forward cache behavior is measured. Keep mobile work parked.",
+          "at": "2026-11-14T04:59:48.413Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-safari-project-opening-20261113:acceptance:0",
+            "text": "A newly duplicated project opens at its own URL without refreshing Dashboard. Existing projects and fresh tabs retain editor startup, including delayed Canvas readiness. An actual Editor edit persists and reopens in signed-in desktop Safari, and native Back/Forward cache behavior is measured. Keep mobile work parked.",
+            "at": "2026-11-14T04:59:48.413Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-14T04:59:48.413Z",
+      "lease_until": "2026-11-14T16:59:48.413Z"
     }
   ]
 }
