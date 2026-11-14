@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:36:27.420Z",
+  "updated_at": "2026-11-14T21:36:56.806Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3754,7 +3754,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:36:27.420Z",
+      "updated_at": "2026-11-14T21:36:56.806Z",
       "lease_until": "2026-11-15T09:35:08.847Z",
       "supporting_roles": [
         "verifier"
@@ -3818,10 +3818,21 @@
             "host_available": true,
             "intent_digest": "9619bb239df81414d9508373657eff7f1d20d73e37dcf9c81123434c5cb1b497"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-14T21:36:27.420Z",
           "request_digest": "c317eb6ea218c80a6f0696ebf5c4683c6e98c115a9ff6ef46e04cf0925f20cc7",
-          "step_digest": "50733e0bda62ca973a19c6548d9b1ee23c1c0aa490b307e649ff02a0610bf52a"
+          "step_digest": "ee3a526209d0879ba6cddd2024d92d5bb3231379c5a783de741a0fa6bcd424e3",
+          "start": {
+            "request_digest": "c317eb6ea218c80a6f0696ebf5c4683c6e98c115a9ff6ef46e04cf0925f20cc7",
+            "source_sha": "07bb9d71793af1182ef772c94c38eba791821278",
+            "agent_id": "/root/flow_slot_guide_verify",
+            "observed_at": "2026-11-14T21:36:54Z",
+            "update": {
+              "text": "Independent review is checking how the slot cue updates and clears during a drag.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-14T21:36:56.806Z"
         }
       ],
       "card_steps": {
@@ -3833,15 +3844,32 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/flow-guide-feedback-20261114"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "review-flow-slot-guides",
             "label": "Verify flow slot guide feedback",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "field-flow-slot-exact-source-review-20261114:started",
+              "assignment": "field-flow-guide-feedback-20261114",
+              "step_id": "review-flow-slot-guides",
+              "plan_revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
+              "input_digest": "c317eb6ea218c80a6f0696ebf5c4683c6e98c115a9ff6ef46e04cf0925f20cc7",
+              "evidence": "sha256:67a2a60fcf94fb257c7df36927ac6ebae4250049a5e3a976c6e4619f19178252",
+              "source_sha": "07bb9d71793af1182ef772c94c38eba791821278",
+              "observed_at": "2026-11-14T21:36:54Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review is checking how the slot cue updates and clears during a drag.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -3849,10 +3877,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-flow-guide-feedback-20261114",
         "revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "field-flow-slot-exact-source-review-20261114:started": "87eb6ee7945fa7a3b7054faa74d09a6c3d076eb1e5c8b824e467e998ef555d05"
+        },
+        "items": [
+          {
+            "key": "field-flow-slot-exact-source-review-20261114:started:c317eb6ea218c80a6f0696ebf5c4683c6e98c115a9ff6ef46e04cf0925f20cc7:running:",
+            "receipt_snapshot": "{\"label\":\"Verify flow slot guide feedback\",\"receipt\":{\"assignment\":\"field-flow-guide-feedback-20261114\",\"evidence\":\"sha256:67a2a60fcf94fb257c7df36927ac6ebae4250049a5e3a976c6e4619f19178252\",\"id\":\"field-flow-slot-exact-source-review-20261114:started\",\"input_digest\":\"c317eb6ea218c80a6f0696ebf5c4683c6e98c115a9ff6ef46e04cf0925f20cc7\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044\",\"source_sha\":\"07bb9d71793af1182ef772c94c38eba791821278\",\"step_id\":\"review-flow-slot-guides\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is checking how the slot cue updates and clears during a drag.\"}},\"state\":\"running\"}",
+            "id": "field-flow-slot-exact-source-review-20261114:started",
+            "assignment": "field-flow-guide-feedback-20261114",
+            "step_id": "review-flow-slot-guides",
+            "revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
+            "label": "Verify flow slot guide feedback",
+            "state": "running",
+            "phase": null,
+            "source_sha": "07bb9d71793af1182ef772c94c38eba791821278",
+            "observed_at": "2026-11-14T21:36:54Z",
+            "recorded_at": "2026-11-14T21:36:56.806Z",
+            "receipt_digest": "sha256:67a2a60fcf94fb257c7df36927ac6ebae4250049a5e3a976c6e4619f19178252",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review is checking how the slot cue updates and clears during a drag.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
