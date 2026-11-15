@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-14T21:36:56.806Z",
+  "updated_at": "2026-11-15T00:23:52.234Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3754,7 +3754,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-14T21:36:56.806Z",
+      "updated_at": "2026-11-15T00:23:52.234Z",
       "lease_until": "2026-11-15T09:35:08.847Z",
       "supporting_roles": [
         "verifier"
@@ -3818,10 +3818,10 @@
             "host_available": true,
             "intent_digest": "9619bb239df81414d9508373657eff7f1d20d73e37dcf9c81123434c5cb1b497"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-14T21:36:27.420Z",
           "request_digest": "c317eb6ea218c80a6f0696ebf5c4683c6e98c115a9ff6ef46e04cf0925f20cc7",
-          "step_digest": "ee3a526209d0879ba6cddd2024d92d5bb3231379c5a783de741a0fa6bcd424e3",
+          "step_digest": "14a5ad3ecd46484e332dc9888040c5b2bf012511ab6d283d2af5b7566a25a51f",
           "start": {
             "request_digest": "c317eb6ea218c80a6f0696ebf5c4683c6e98c115a9ff6ef46e04cf0925f20cc7",
             "source_sha": "07bb9d71793af1182ef772c94c38eba791821278",
@@ -3832,7 +3832,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-14T21:36:56.806Z"
+          "started_at": "2026-11-14T21:36:56.806Z",
+          "result": {
+            "request_digest": "c317eb6ea218c80a6f0696ebf5c4683c6e98c115a9ff6ef46e04cf0925f20cc7",
+            "source_sha": "07bb9d71793af1182ef772c94c38eba791821278",
+            "agent_id": "/root/flow_slot_guide_verify",
+            "observed_at": "2026-11-15T00:23:48.607Z",
+            "state": "failed",
+            "result_digest": "4f294847562a467fca4c628834b3243c282bea3aabae5a109a1e321d63e6541b",
+            "update": {
+              "text": "Review found that placeholder resizing and auto-pan can leave an obsolete alignment cue visible. The changes will be reverified.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-15T00:23:52.234Z"
         }
       ],
       "card_steps": {
@@ -3844,29 +3857,29 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/flow-guide-feedback-20261114"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
             "id": "review-flow-slot-guides",
             "label": "Verify flow slot guide feedback",
             "depends_on": [],
-            "state": "running",
+            "state": "failed",
             "receipt": {
-              "id": "field-flow-slot-exact-source-review-20261114:started",
+              "id": "field-flow-slot-exact-source-review-20261114:result",
               "assignment": "field-flow-guide-feedback-20261114",
               "step_id": "review-flow-slot-guides",
               "plan_revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
               "input_digest": "c317eb6ea218c80a6f0696ebf5c4683c6e98c115a9ff6ef46e04cf0925f20cc7",
-              "evidence": "sha256:67a2a60fcf94fb257c7df36927ac6ebae4250049a5e3a976c6e4619f19178252",
+              "evidence": "sha256:82dc2e844e419372cbf4d2d83b141e414b0264a31b4c8b0d3d5cbca10bf2aa8b",
               "source_sha": "07bb9d71793af1182ef772c94c38eba791821278",
-              "observed_at": "2026-11-14T21:36:54Z",
+              "observed_at": "2026-11-15T00:23:48.607Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "Independent review is checking how the slot cue updates and clears during a drag.",
+                "text": "Review found that placeholder resizing and auto-pan can leave an obsolete alignment cue visible. The changes will be reverified.",
                 "artifacts": []
               }
             }
@@ -3877,10 +3890,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-flow-guide-feedback-20261114",
         "revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
-          "field-flow-slot-exact-source-review-20261114:started": "87eb6ee7945fa7a3b7054faa74d09a6c3d076eb1e5c8b824e467e998ef555d05"
+          "field-flow-slot-exact-source-review-20261114:started": "87eb6ee7945fa7a3b7054faa74d09a6c3d076eb1e5c8b824e467e998ef555d05",
+          "field-flow-slot-exact-source-review-20261114:result": "43479f788d89b28af42870bd1b2586039986e625a63a53b1740234ab17f9494d"
         },
         "items": [
           {
@@ -3902,6 +3916,28 @@
               "team": "inspector"
             },
             "text": "Independent review is checking how the slot cue updates and clears during a drag.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "field-flow-slot-exact-source-review-20261114:result:c317eb6ea218c80a6f0696ebf5c4683c6e98c115a9ff6ef46e04cf0925f20cc7:failed:",
+            "receipt_snapshot": "{\"label\":\"Verify flow slot guide feedback\",\"receipt\":{\"assignment\":\"field-flow-guide-feedback-20261114\",\"evidence\":\"sha256:82dc2e844e419372cbf4d2d83b141e414b0264a31b4c8b0d3d5cbca10bf2aa8b\",\"id\":\"field-flow-slot-exact-source-review-20261114:result\",\"input_digest\":\"c317eb6ea218c80a6f0696ebf5c4683c6e98c115a9ff6ef46e04cf0925f20cc7\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044\",\"source_sha\":\"07bb9d71793af1182ef772c94c38eba791821278\",\"step_id\":\"review-flow-slot-guides\",\"update\":{\"artifacts\":[],\"text\":\"Review found that placeholder resizing and auto-pan can leave an obsolete alignment cue visible. The changes will be reverified.\"}},\"state\":\"failed\"}",
+            "id": "field-flow-slot-exact-source-review-20261114:result",
+            "assignment": "field-flow-guide-feedback-20261114",
+            "step_id": "review-flow-slot-guides",
+            "revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
+            "label": "Verify flow slot guide feedback",
+            "state": "failed",
+            "phase": null,
+            "source_sha": "07bb9d71793af1182ef772c94c38eba791821278",
+            "observed_at": "2026-11-15T00:23:48.607Z",
+            "recorded_at": "2026-11-15T00:23:52.234Z",
+            "receipt_digest": "sha256:82dc2e844e419372cbf4d2d83b141e414b0264a31b4c8b0d3d5cbca10bf2aa8b",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Review found that placeholder resizing and auto-pan can leave an obsolete alignment cue visible. The changes will be reverified.",
             "text_kind": "owner-published",
             "artifacts": []
           }
