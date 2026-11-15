@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:39:12.296Z",
+  "updated_at": "2026-11-15T05:00:17.339Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7214,6 +7214,60 @@
       "evidence": "Field #179 production e573451d13fbd42f8d75ce752616a74b5a990e94 with Worker 7bdc8136-1151-46e0-85aa-8d2f21b9b2fe at 100%; exact branch alias and deployed origin, saved-project native Chromium/WebKit, depth reload, production desktop/phone and mixed-fill audit passed. Relay ctx_312f7df3523e3a7ac45ac065ed291e219ac983badc19838c7d30b7faad3c5ccf.",
       "work_accounted": true,
       "completed_at": "2026-11-15T04:39:12.296Z"
+    },
+    {
+      "id": "field-custom-fill-production-20261115",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/custom-fill-production-20261115",
+      "paths": [
+        "src/code/generation/responsive-managed-fill.ts",
+        "src/code/generation/responsive-managed-fill.test.ts",
+        "src/code/generation/responsive-fill-hydration.ts",
+        "src/code/project/project-fs.ts",
+        "src/code/project/shader-runtime-migration.ts",
+        "src/code/project/shader-runtime-migration.test.ts",
+        "src/code/project/default-code-components/MeshGradient.ts",
+        "src/code/project/default-code-components/GemSmoke.ts",
+        "src/code/project/default-code-components/GrainGradient.ts",
+        "src/code/project/default-code-components/LiquidMetal.ts",
+        "src/code/project/default-code-components/Metaballs.ts",
+        "src/code/project/default-code-components/SmokeRing.ts",
+        "src/code/project/default-code-components/paper-webgl-mount.ts",
+        "src/code/project/default-code-components/shaders.test.ts",
+        "src/editor/e2e/fill-effects-apply.spec.ts"
+      ],
+      "resources": [
+        "managed-fill-source",
+        "responsive-fill-lifecycle",
+        "managed-shader-runtime"
+      ],
+      "goal": "Fix the production build and hydration of Field custom fills",
+      "acceptance": "A normal Next.js production build type-checks generated stock shaders and previously saved matching shader files. Responsive Shader and Video fill layers hydrate without client recovery, switch correctly at breakpoint boundaries, and preserve Canvas and Preview visuals. Keep mobile editor behind its existing flag. Continue a bounded desktop custom fill audit.",
+      "next_action": "Repair the generated Paper shader helper and hydration-gate responsive media fills. Verify a normal production build and test Canvas, Preview, and server-rendered production output.",
+      "primary_team": "source",
+      "supporting_teams": [],
+      "primary_staff": "rafael",
+      "supporting_staff": [],
+      "base_sha": "e573451d13fbd42f8d75ce752616a74b5a990e94",
+      "state": "active",
+      "created_at": "2026-11-15T05:00:17.339Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Fix the production build and hydration of Field custom fills",
+          "acceptance": "A normal Next.js production build type-checks generated stock shaders and previously saved matching shader files. Responsive Shader and Video fill layers hydrate without client recovery, switch correctly at breakpoint boundaries, and preserve Canvas and Preview visuals. Keep mobile editor behind its existing flag. Continue a bounded desktop custom fill audit.",
+          "at": "2026-11-15T05:00:17.339Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-custom-fill-production-20261115:acceptance:0",
+            "text": "A normal Next.js production build type-checks generated stock shaders and previously saved matching shader files. Responsive Shader and Video fill layers hydrate without client recovery, switch correctly at breakpoint boundaries, and preserve Canvas and Preview visuals. Keep mobile editor behind its existing flag. Continue a bounded desktop custom fill audit.",
+            "at": "2026-11-15T05:00:17.339Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-15T05:00:17.339Z",
+      "lease_until": "2026-11-15T17:00:17.339Z"
     }
   ]
 }
