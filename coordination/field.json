@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:22:32.252Z",
+  "updated_at": "2026-11-15T01:25:18.943Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5354,7 +5354,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:22:32.252Z",
+      "updated_at": "2026-11-15T01:25:18.943Z",
       "lease_until": "2026-11-15T13:21:51.402Z",
       "supporting_roles": [
         "verifier"
@@ -5418,10 +5418,10 @@
             "host_available": true,
             "intent_digest": "ce1832962104a9b756893f15681dfc12d9eac648c3eaf016e9e6e6195f6fb757"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-15T01:22:10.337Z",
           "request_digest": "bcd714b7de53234dad9775a4d4647e3eb1e55b62ea1eff73459868091e282971",
-          "step_digest": "24a7a5f95b078dd58df857fca68db23efe492fb35c8783212d1a54d81d3cd3ec",
+          "step_digest": "10451b8ae2068a1e0edfcc76864623f65e34da9800bc57a944878778782510c0",
           "start": {
             "request_digest": "bcd714b7de53234dad9775a4d4647e3eb1e55b62ea1eff73459868091e282971",
             "source_sha": "b06e20c4265800f433881d183dcfc74fbe6f00e0",
@@ -5432,7 +5432,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-15T01:22:32.252Z"
+          "started_at": "2026-11-15T01:22:32.252Z",
+          "result": {
+            "request_digest": "bcd714b7de53234dad9775a4d4647e3eb1e55b62ea1eff73459868091e282971",
+            "source_sha": "b06e20c4265800f433881d183dcfc74fbe6f00e0",
+            "agent_id": "/root/grid_ruler_verify",
+            "observed_at": "2026-11-15T01:25:14Z",
+            "state": "failed",
+            "result_digest": "902672f2385f3eb9b509518717d9ef1845d98892e0bec8bc487a81318cea2f43",
+            "update": {
+              "text": "Review found one remaining case where Option-drag can move an aligned Grid slot without changing the hovered cell.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-15T01:25:18.943Z"
         }
       ],
       "card_steps": {
@@ -5444,29 +5457,29 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/grid-slot-ruler-feedback-20261114"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
             "id": "review-grid-slot-rulers",
             "label": "Verify Grid and flex ruler feedback",
             "depends_on": [],
-            "state": "running",
+            "state": "failed",
             "receipt": {
-              "id": "field-grid-slot-ruler-final-review-20261114:started",
+              "id": "field-grid-slot-ruler-final-review-20261114:result",
               "assignment": "field-grid-slot-ruler-feedback-20261114",
               "step_id": "review-grid-slot-rulers",
               "plan_revision": "3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9",
               "input_digest": "bcd714b7de53234dad9775a4d4647e3eb1e55b62ea1eff73459868091e282971",
-              "evidence": "sha256:9905af9a8fc2f2e80d24cfe1a6c9b439d4081cd7e264a1acb4195332a870c1c6",
+              "evidence": "sha256:fb9de7fff8fc1d51ff9be6c4dde7bc93a67efda66955b147cdbd6f4187158e0c",
               "source_sha": "b06e20c4265800f433881d183dcfc74fbe6f00e0",
-              "observed_at": "2026-11-15T01:22:29Z",
+              "observed_at": "2026-11-15T01:25:14Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "Independent review is checking Grid ruler feedback and when it clears.",
+                "text": "Review found one remaining case where Option-drag can move an aligned Grid slot without changing the hovered cell.",
                 "artifacts": []
               }
             }
@@ -5477,10 +5490,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-grid-slot-ruler-feedback-20261114",
         "revision": "3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
-          "field-grid-slot-ruler-final-review-20261114:started": "b641a19d84b18558ea5d9629586d3ae585cb26ee471bfde767e331622c3f9c32"
+          "field-grid-slot-ruler-final-review-20261114:started": "b641a19d84b18558ea5d9629586d3ae585cb26ee471bfde767e331622c3f9c32",
+          "field-grid-slot-ruler-final-review-20261114:result": "754e274d5b7e09a5e48f7273b9e75bc571081fec44b7f384e960ab118df95ba5"
         },
         "items": [
           {
@@ -5502,6 +5516,28 @@
               "team": "inspector"
             },
             "text": "Independent review is checking Grid ruler feedback and when it clears.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "field-grid-slot-ruler-final-review-20261114:result:bcd714b7de53234dad9775a4d4647e3eb1e55b62ea1eff73459868091e282971:failed:",
+            "receipt_snapshot": "{\"label\":\"Verify Grid and flex ruler feedback\",\"receipt\":{\"assignment\":\"field-grid-slot-ruler-feedback-20261114\",\"evidence\":\"sha256:fb9de7fff8fc1d51ff9be6c4dde7bc93a67efda66955b147cdbd6f4187158e0c\",\"id\":\"field-grid-slot-ruler-final-review-20261114:result\",\"input_digest\":\"bcd714b7de53234dad9775a4d4647e3eb1e55b62ea1eff73459868091e282971\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9\",\"source_sha\":\"b06e20c4265800f433881d183dcfc74fbe6f00e0\",\"step_id\":\"review-grid-slot-rulers\",\"update\":{\"artifacts\":[],\"text\":\"Review found one remaining case where Option-drag can move an aligned Grid slot without changing the hovered cell.\"}},\"state\":\"failed\"}",
+            "id": "field-grid-slot-ruler-final-review-20261114:result",
+            "assignment": "field-grid-slot-ruler-feedback-20261114",
+            "step_id": "review-grid-slot-rulers",
+            "revision": "3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9",
+            "label": "Verify Grid and flex ruler feedback",
+            "state": "failed",
+            "phase": null,
+            "source_sha": "b06e20c4265800f433881d183dcfc74fbe6f00e0",
+            "observed_at": "2026-11-15T01:25:14Z",
+            "recorded_at": "2026-11-15T01:25:18.943Z",
+            "receipt_digest": "sha256:fb9de7fff8fc1d51ff9be6c4dde7bc93a67efda66955b147cdbd6f4187158e0c",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Review found one remaining case where Option-drag can move an aligned Grid slot without changing the hovered cell.",
             "text_kind": "owner-published",
             "artifacts": []
           }
