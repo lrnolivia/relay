@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:31:00.918Z",
+  "updated_at": "2026-11-15T00:34:48.492Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3737,7 +3737,7 @@
         "roman"
       ],
       "base_sha": "ba498fb7d946d0da9f1a83da4dde7622a49f8f84",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-14T21:30:40.469Z",
       "objective_history": {
         "baseline": {
@@ -3754,8 +3754,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:31:00.918Z",
-      "lease_until": "2026-11-15T12:31:00.918Z",
+      "updated_at": "2026-11-15T00:34:48.492Z",
+      "lease_until": "2026-11-15T12:34:48.492Z",
       "supporting_roles": [
         "verifier"
       ],
@@ -4199,7 +4199,13 @@
             "artifacts": []
           }
         ]
-      }
+      },
+      "pr": 170,
+      "merged_head_sha": "8796f8dc7e6b04796a5214f9f57662cba08eebc7",
+      "merge_commit_sha": "820f68d5159b3d12422f972807f1fada57864e68",
+      "evidence": "Merged 820f68d5159b3d12422f972807f1fada57864e68, identical tree to independently reviewed 8796f8dc7e6b04796a5214f9f57662cba08eebc7. Chromium and WebKit validated flex slots, rotation, camera, placement and Undo. 13,380 unit tests, type check, lint and build. Workers build cc0fad8a-17af-4f21-9ff9-b4c25197485b and 91f40001-a770-4473-a4b9-525514b62d49 at 100%. Live saved QA project first paint and all four Canvas isolation headers verified.",
+      "work_accounted": true,
+      "completed_at": "2026-11-15T00:34:48.492Z"
     }
   ]
 }
