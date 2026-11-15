@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:17:43.926Z",
+  "updated_at": "2026-11-15T01:18:01.964Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5308,6 +5308,50 @@
       "evidence": "Merged d02e46c82fac56ee6380caa80a2187b540bf4b67 with the same tree as independently reviewed 146a3b94dabe57166520825c7c42404f4edb9e41. 12 Chromium and 12 WebKit cases passed, including numbered/named cells, a distinct compact desktop override, authored-order Escape, detachment and Undo. 13,380 unit tests, type check, lint and builds passed. Workers build 616ccd5e-de22-44e6-abc7-81fbfd3c3caf deployed 19fd3ec9-e241-418b-9921-497fb896dec6 at 100%. The real saved QA project painted Canvas with all four isolation headers.",
       "work_accounted": true,
       "completed_at": "2026-11-15T01:17:43.926Z"
+    },
+    {
+      "id": "field-grid-slot-ruler-feedback-20261114",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/grid-slot-ruler-feedback-20261114",
+      "paths": [
+        "src/canvas/drag/helpers/layout-slot-rulers.ts",
+        "src/canvas/drag/strategies/GridDragStrategy.ts",
+        "src/canvas/drag/strategies/LayoutLiftedStrategy.ts",
+        "src/canvas/drag/DragCoordinator.ts",
+        "src/canvas/drag/e2e/ruler-guides.spec.ts"
+      ],
+      "resources": [
+        "canvas-flow-guide-feedback",
+        "canvas-grid-ruler-guides"
+      ],
+      "goal": "Show desktop ruler alignment for Grid insertion slots.",
+      "acceptance": "A desktop drag into an attainable Grid cell highlights matching frame ruler guides on either axis, with no highlight for a nearby ruler between cells. Leaving the Grid clears a stale cue, and actual slot placement plus Undo remain correct. Existing flex ruler feedback is preserved.",
+      "next_action": "Share the flex slot measurement with Grid and verify alignment feedback independently of placement.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "d02e46c82fac56ee6380caa80a2187b540bf4b67",
+      "state": "active",
+      "created_at": "2026-11-15T01:18:01.964Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Show desktop ruler alignment for Grid insertion slots.",
+          "acceptance": "A desktop drag into an attainable Grid cell highlights matching frame ruler guides on either axis, with no highlight for a nearby ruler between cells. Leaving the Grid clears a stale cue, and actual slot placement plus Undo remain correct. Existing flex ruler feedback is preserved.",
+          "at": "2026-11-15T01:18:01.964Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-grid-slot-ruler-feedback-20261114:acceptance:0",
+            "text": "A desktop drag into an attainable Grid cell highlights matching frame ruler guides on either axis, with no highlight for a nearby ruler between cells. Leaving the Grid clears a stale cue, and actual slot placement plus Undo remain correct. Existing flex ruler feedback is preserved.",
+            "at": "2026-11-15T01:18:01.964Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-15T01:18:01.964Z",
+      "lease_until": "2026-11-15T13:18:01.964Z"
     }
   ]
 }
