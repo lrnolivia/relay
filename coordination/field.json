@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:47:04.997Z",
+  "updated_at": "2026-11-15T00:47:48.446Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4488,7 +4488,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:47:04.997Z",
+      "updated_at": "2026-11-15T00:47:48.446Z",
       "lease_until": "2026-11-15T12:47:04.997Z",
       "supporting_roles": [
         "verifier"
@@ -4521,7 +4521,73 @@
             ]
           }
         }
-      ]
+      ],
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "field-grid-drag-viewport-review-20261114",
+          "assignment": "field-grid-drag-viewport-bounds-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/grid-drag-viewport-bounds-20261114",
+          "source_sha": "cf73d25ab83c189a8cd71a9964c02f2cdcd07bfc",
+          "objective_digest": "b32d26b12d9034a14eb8e5e1b7685c611b8a47ab4e4ce5d676ea053d51c1988c",
+          "scope_digest": "201696f20fec90e0ca7cc7cc23910ec8c6384a76c5b261ce44a5cc8a2d862d74",
+          "step_id": "review-grid-drag-bounds",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "cf73d25ab83c189a8cd71a9964c02f2cdcd07bfc",
+            "objective_digest": "b32d26b12d9034a14eb8e5e1b7685c611b8a47ab4e4ce5d676ea053d51c1988c",
+            "step_id": "review-grid-drag-bounds",
+            "label": "Verify Grid viewport boundaries",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "15aa2c60d8d6f9f061ff58a2b10141bd58ce0da5a66a9c5c2f533b814fa69afc"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T00:47:48.446Z",
+          "request_digest": "93bd801e4c5e52455ec6a8b3a20be8c0ffb940c70e20de3a6313109100494b31",
+          "step_digest": "91077b5d48e2ead679684bf72c6223968006b493a3ea27253c58a1433ba70387"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "field-grid-drag-viewport-bounds-20261114",
+        "revision": "14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e",
+        "objective_digest": "b32d26b12d9034a14eb8e5e1b7685c611b8a47ab4e4ce5d676ea053d51c1988c",
+        "publisher": {
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/grid-drag-viewport-bounds-20261114"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "review-grid-drag-bounds",
+            "label": "Verify Grid viewport boundaries",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "field-grid-drag-viewport-bounds-20261114",
+        "revision": "14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
