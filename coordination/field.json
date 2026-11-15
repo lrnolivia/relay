@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T03:09:41.546Z",
+  "updated_at": "2026-11-15T03:11:41.154Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6057,7 +6057,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T03:09:41.546Z",
+      "updated_at": "2026-11-15T03:11:41.154Z",
       "lease_until": "2026-11-15T15:04:24.872Z",
       "native_handoffs": [
         {
@@ -6139,17 +6139,26 @@
             "host_available": true,
             "intent_digest": "b31f681b046c0cc9d34a81781ed19bc9494aca2b05c5a9f1bbe17faffc8acaad"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-15T03:09:22.565Z",
           "request_digest": "d379a85a1275f60b0273f250e0663272106cbd0d68cd8224512933cd1033005c",
-          "step_digest": "0983fead8f696024cda404f34d1eb9a585020e040e816b46de8b91ac1d94b2af",
+          "step_digest": "53d4390afd10e43f99f8a848b2998992771e4e75f430598f5364ef11dfb66882",
           "start": {
             "request_digest": "d379a85a1275f60b0273f250e0663272106cbd0d68cd8224512933cd1033005c",
             "source_sha": "6656335f84498622983f3602ce751cce92b08f98",
             "agent_id": "/root/shader_fit_verify",
             "observed_at": "2026-11-15T03:09:38Z"
           },
-          "started_at": "2026-11-15T03:09:41.546Z"
+          "started_at": "2026-11-15T03:09:41.546Z",
+          "result": {
+            "request_digest": "d379a85a1275f60b0273f250e0663272106cbd0d68cd8224512933cd1033005c",
+            "source_sha": "6656335f84498622983f3602ce751cce92b08f98",
+            "agent_id": "/root/shader_fit_verify",
+            "observed_at": "2026-11-15T03:11:36Z",
+            "state": "succeeded",
+            "result_digest": "29966d88e3c6f772f2adb31baedae48c1aaf0776354ebb8a5be0a4b39212ef4d"
+          },
+          "reported_at": "2026-11-15T03:11:41.154Z"
         }
       ],
       "card_steps": {
@@ -6161,7 +6170,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/shader-duplicate-and-webgl-20261115"
         },
-        "sequence": 5,
+        "sequence": 6,
         "complete": false,
         "steps": [
           {
@@ -6188,20 +6197,21 @@
             "id": "review-same-size-webgl-program",
             "label": "Verify WebGL sizing after edits",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "desktop-shader-context-fit-review-20261115:started",
+              "id": "desktop-shader-context-fit-review-20261115:result",
               "assignment": "field-shader-duplicate-and-webgl-20261115",
               "step_id": "review-same-size-webgl-program",
               "plan_revision": "8a8ebc1f139549ebd35143ce68f30c31bff2bad2f36c155dfb7c6e1919fcbace",
               "input_digest": "d379a85a1275f60b0273f250e0663272106cbd0d68cd8224512933cd1033005c",
-              "evidence": "sha256:0e7578579bfd3d6cff03a7bbb50a29a4e7770808b91991edfa4a7f7fe12b036d",
+              "evidence": "sha256:a88b6fb6e6a4a9674303baea2165c5829eb0df955c7c56b6c711006a12f6c2f2",
               "source_sha": "6656335f84498622983f3602ce751cce92b08f98",
-              "observed_at": "2026-11-15T03:09:38Z",
+              "observed_at": "2026-11-15T03:11:36Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -6210,12 +6220,13 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-shader-duplicate-and-webgl-20261115",
         "revision": "8a8ebc1f139549ebd35143ce68f30c31bff2bad2f36c155dfb7c6e1919fcbace",
-        "sequence": 5,
+        "sequence": 6,
         "truncated": false,
         "identities": {
           "desktop-shader-copy-context-review-20261115:started": "59ed15b990074efa33a2363684e3f67dd36f0b7404eaa5f22c15b92c5a0f2191",
           "desktop-shader-copy-context-review-20261115:result": "7e31e91ffdb460ba52320b7a3d0e5cc21ac752ebb99f2298363ec152f241959d",
-          "desktop-shader-context-fit-review-20261115:started": "425189404546e692e07660911178ab76b0da7778dff8c416c39e3229263918c2"
+          "desktop-shader-context-fit-review-20261115:started": "425189404546e692e07660911178ab76b0da7778dff8c416c39e3229263918c2",
+          "desktop-shader-context-fit-review-20261115:result": "e483d431592cc84ecad979e3667de84441df7781a6f4a13e2956f69120e6bb85"
         },
         "items": [
           {
@@ -6281,6 +6292,28 @@
               "team": "inspector"
             },
             "text": "Work started.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          },
+          {
+            "key": "desktop-shader-context-fit-review-20261115:result:d379a85a1275f60b0273f250e0663272106cbd0d68cd8224512933cd1033005c:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Verify WebGL sizing after edits\",\"receipt\":{\"assignment\":\"field-shader-duplicate-and-webgl-20261115\",\"evidence\":\"sha256:a88b6fb6e6a4a9674303baea2165c5829eb0df955c7c56b6c711006a12f6c2f2\",\"id\":\"desktop-shader-context-fit-review-20261115:result\",\"input_digest\":\"d379a85a1275f60b0273f250e0663272106cbd0d68cd8224512933cd1033005c\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"8a8ebc1f139549ebd35143ce68f30c31bff2bad2f36c155dfb7c6e1919fcbace\",\"source_sha\":\"6656335f84498622983f3602ce751cce92b08f98\",\"step_id\":\"review-same-size-webgl-program\"},\"state\":\"blocked\"}",
+            "id": "desktop-shader-context-fit-review-20261115:result",
+            "assignment": "field-shader-duplicate-and-webgl-20261115",
+            "step_id": "review-same-size-webgl-program",
+            "revision": "8a8ebc1f139549ebd35143ce68f30c31bff2bad2f36c155dfb7c6e1919fcbace",
+            "label": "Verify WebGL sizing after edits",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "6656335f84498622983f3602ce751cce92b08f98",
+            "observed_at": "2026-11-15T03:11:36Z",
+            "recorded_at": "2026-11-15T03:11:41.154Z",
+            "receipt_digest": "sha256:a88b6fb6e6a4a9674303baea2165c5829eb0df955c7c56b6c711006a12f6c2f2",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The work is ready for verification.",
             "text_kind": "recorded-state",
             "artifacts": []
           }
