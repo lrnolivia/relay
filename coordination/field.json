@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T05:08:39.922Z",
+  "updated_at": "2026-11-15T05:14:29.428Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7234,16 +7234,19 @@
         "src/code/project/default-code-components/SmokeRing.ts",
         "src/code/project/default-code-components/paper-webgl-mount.ts",
         "src/code/project/default-code-components/shaders.test.ts",
-        "src/editor/e2e/fill-effects-apply.spec.ts"
+        "src/editor/e2e/fill-effects-apply.spec.ts",
+        "src/code/generation/metadata-gen.ts",
+        "src/code/generation/metadata-gen.test.ts"
       ],
       "resources": [
         "managed-fill-source",
         "responsive-fill-lifecycle",
-        "managed-shader-runtime"
+        "managed-shader-runtime",
+        "generated-layout-site-settings"
       ],
       "goal": "Fix the production build and hydration of Field custom fills",
       "acceptance": "A normal Next.js production build type-checks generated stock shaders and previously saved matching shader files. Responsive Shader and Video fill layers hydrate without client recovery, switch correctly at breakpoint boundaries, and preserve Canvas and Preview visuals. Keep mobile editor behind its existing flag. Continue a bounded desktop custom fill audit.",
-      "next_action": "Both local production builds passed with type checking. Complete desktop custom fill regression checks and publish a draft review on this branch.",
+      "next_action": "Remove the invalid siteConfig route-module export discovered on the second normal TypeScript-enabled Next.js build. Preserve editor settings and repair saved layouts. Retain existing fill fixes and repeat production build and runtime verification.",
       "primary_team": "source",
       "supporting_teams": [],
       "primary_staff": "rafael",
@@ -7266,8 +7269,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T05:08:39.922Z",
-      "lease_until": "2026-11-15T17:08:39.922Z"
+      "updated_at": "2026-11-15T05:14:29.428Z",
+      "lease_until": "2026-11-15T17:14:29.428Z"
     }
   ]
 }
