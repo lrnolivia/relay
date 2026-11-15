@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:40:03.674Z",
+  "updated_at": "2026-11-15T00:40:18.471Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4220,7 +4220,7 @@
       ],
       "goal": "Preserve perpendicular inset pins when releasing Shift during an edge resize.",
       "acceptance": "An unrotated absolute layer pinned on both sides of its perpendicular axis restores its initial position, size, and source inset values when Shift is released, including after crossing the opposite edge and mouseup without another move. The active dimension still resizes and one Undo restores the prior source.",
-      "next_action": "Reproduce the bug on a pinned desktop frame, then restore the inset-derived axis when the temporary aspect lock ends.",
+      "next_action": "Verify clean browser reruns and the immutable preview, then promote and smoke test production.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [
@@ -4248,8 +4248,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:40:03.674Z",
-      "lease_until": "2026-11-15T12:36:34.774Z",
+      "updated_at": "2026-11-15T00:40:18.471Z",
+      "lease_until": "2026-11-15T12:40:18.471Z",
       "supporting_roles": [
         "verifier"
       ],
