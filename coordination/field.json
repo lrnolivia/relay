@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T02:05:53.154Z",
+  "updated_at": "2026-11-15T02:18:18.813Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5684,10 +5684,9 @@
         "src/code/mutation/mutation-queue.ts",
         "src/code/parsing/parser.ts",
         "src/canvas/Renderer.ts",
-        "src/code/project/default-code-components/MeshGradient.ts",
-        "src/editor/controls/ControlProvider.tsx",
         "src/editor/ui/create-shader-fill.ts",
-        "src/canvas/renderer-patch-key.ts"
+        "src/shared/managed-fill-breakpoints.ts",
+        "src/code/features/paste-engine/copy/index.ts"
       ],
       "resources": [
         "managed-fill-source",
@@ -5695,7 +5694,7 @@
       ],
       "goal": "Fix active breakpoint isolation for Pattern, Shader and Video and implement shader creation in the library.",
       "acceptance": "On multiple desktop breakpoints, adding, editing, clearing and switching managed fills affects only the selected breakpoint in Canvas and Preview, with save/reopen, Undo, existing paints and masks preserved. Create shader saves an editable and reusable project shader and applies it to the selected breakpoint. Audit adjacent fill workflows on desktop.",
-      "next_action": "Implement scoped managed paints using authored breakpoint bands and existing shader installers, then verify multi-breakpoint changes, Preview and save/reopen in desktop Chromium and WebKit.",
+      "next_action": "Finish isolated fill rendering and verify copy from the active tile matches existing clipboard semantics.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -5726,8 +5725,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T02:05:53.154Z",
-      "lease_until": "2026-11-15T14:05:53.154Z"
+      "updated_at": "2026-11-15T02:18:18.813Z",
+      "lease_until": "2026-11-15T14:18:18.813Z"
     }
   ]
 }
