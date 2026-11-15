@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:12:25.465Z",
+  "updated_at": "2026-11-15T04:12:54.814Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6743,7 +6743,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T04:12:25.465Z",
+      "updated_at": "2026-11-15T04:12:54.814Z",
       "lease_until": "2026-11-15T16:12:25.465Z",
       "native_handoffs": [
         {
@@ -6795,6 +6795,40 @@
             "result_digest": "5978d0cea306a9db02359e7ccf4819519721816755adb8dcef4d9ef6971c6e9e"
           },
           "reported_at": "2026-11-15T04:09:54.651Z"
+        },
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "mobile-project-preview-transition-review-20261115",
+          "assignment": "field-mobile-preview-only-20261115",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/mobile-preview-only-20261115",
+          "source_sha": "db07953bd5016f306d221919313bdf294848c8aa",
+          "objective_digest": "6de6ee566d8ad2e38c9e02b4857915cec57993e9355557173e60f32930afee95",
+          "scope_digest": "4b9c55a394876bd1929bc93372d2ec4fd613f7436f246aa9fe394f550f172663",
+          "step_id": "verify-phone-preview-text-transition",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "db07953bd5016f306d221919313bdf294848c8aa",
+            "objective_digest": "6de6ee566d8ad2e38c9e02b4857915cec57993e9355557173e60f32930afee95",
+            "step_id": "verify-phone-preview-text-transition",
+            "label": "Verify text commit before switching to phone Preview",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "c869594a707541cf01d8ce26d732acb51e4a2f98dc2f5c92095d776f069bc4e5"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T04:12:54.814Z",
+          "request_digest": "bf8c021d60f7bb0a00073a83b112f08e33fd19c27b111d502349bbf6997c8e9e",
+          "step_digest": "e8475ba1e2c7648413af378a9ab781da0a7b95ffdf224d0dd704357a1434a10c"
         }
       ],
       "card_steps": {
@@ -6806,7 +6840,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/mobile-preview-only-20261115"
         },
-        "sequence": 3,
+        "sequence": 4,
         "complete": false,
         "steps": [
           {
@@ -6828,6 +6862,13 @@
                 "team": "inspector"
               }
             }
+          },
+          {
+            "id": "verify-phone-preview-text-transition",
+            "label": "Verify text commit before switching to phone Preview",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -6835,7 +6876,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-mobile-preview-only-20261115",
         "revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
-        "sequence": 3,
+        "sequence": 4,
         "truncated": false,
         "identities": {
           "mobile-project-preview-review-20261115:started": "316b9558c38f20506c2bcbf532383c5574b98d311a834bd69dfd17a45f045735",
