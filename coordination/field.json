@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:26:05.313Z",
+  "updated_at": "2026-11-15T00:26:46.213Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3754,7 +3754,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:26:05.313Z",
+      "updated_at": "2026-11-15T00:26:46.213Z",
       "lease_until": "2026-11-15T09:35:08.847Z",
       "supporting_roles": [
         "verifier"
@@ -3876,10 +3876,21 @@
             "host_available": true,
             "intent_digest": "0777a31207d1de086b076df22569e8af87e297f4c06f737b6e74cec6f960b8b3"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T00:26:05.313Z",
           "request_digest": "573133e1f6f4c6de62a6670fa5a74888f60368ac689b595fa72cd205acefc451",
-          "step_digest": "416891349d5db8b9c150831adb2aa26beb0036507d23ea5b6de15c63f1d7cd6c"
+          "step_digest": "7af6e91e5af495e6452a8c374c0cc33285895dd4e76f4f8cdb9eb702e09a32ca",
+          "start": {
+            "request_digest": "573133e1f6f4c6de62a6670fa5a74888f60368ac689b595fa72cd205acefc451",
+            "source_sha": "2d6d738bd0cb6c0940a33dd8b117c373a2f8be6c",
+            "agent_id": "/root/flow_snapshot_verify",
+            "observed_at": "2026-11-15T00:26:43Z",
+            "update": {
+              "text": "Independent review is checking the new slot measurement and when the ruler cue clears.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-15T00:26:46.213Z"
         }
       ],
       "card_steps": {
@@ -3891,7 +3902,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/flow-guide-feedback-20261114"
         },
-        "sequence": 4,
+        "sequence": 5,
         "complete": false,
         "steps": [
           {
@@ -3922,8 +3933,25 @@
             "id": "review-flow-slot-snapshot",
             "label": "Reverify ruler cues during flex reorders",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "field-flow-slot-snapshot-review-20261114:started",
+              "assignment": "field-flow-guide-feedback-20261114",
+              "step_id": "review-flow-slot-snapshot",
+              "plan_revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
+              "input_digest": "573133e1f6f4c6de62a6670fa5a74888f60368ac689b595fa72cd205acefc451",
+              "evidence": "sha256:a67dfe91e67ce8c9c4546f716470d77c06768751a198cc7b5d9f06a141f33cbe",
+              "source_sha": "2d6d738bd0cb6c0940a33dd8b117c373a2f8be6c",
+              "observed_at": "2026-11-15T00:26:43Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review is checking the new slot measurement and when the ruler cue clears.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -3931,11 +3959,12 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-flow-guide-feedback-20261114",
         "revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
-        "sequence": 4,
+        "sequence": 5,
         "truncated": false,
         "identities": {
           "field-flow-slot-exact-source-review-20261114:started": "87eb6ee7945fa7a3b7054faa74d09a6c3d076eb1e5c8b824e467e998ef555d05",
-          "field-flow-slot-exact-source-review-20261114:result": "43479f788d89b28af42870bd1b2586039986e625a63a53b1740234ab17f9494d"
+          "field-flow-slot-exact-source-review-20261114:result": "43479f788d89b28af42870bd1b2586039986e625a63a53b1740234ab17f9494d",
+          "field-flow-slot-snapshot-review-20261114:started": "528e41054d5793eb31e10ca6a4eabf946c9343f8e03c3866b798e40e40762a18"
         },
         "items": [
           {
@@ -3979,6 +4008,28 @@
               "team": "inspector"
             },
             "text": "Review found that placeholder resizing and auto-pan can leave an obsolete alignment cue visible. The changes will be reverified.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "field-flow-slot-snapshot-review-20261114:started:573133e1f6f4c6de62a6670fa5a74888f60368ac689b595fa72cd205acefc451:running:",
+            "receipt_snapshot": "{\"label\":\"Reverify ruler cues during flex reorders\",\"receipt\":{\"assignment\":\"field-flow-guide-feedback-20261114\",\"evidence\":\"sha256:a67dfe91e67ce8c9c4546f716470d77c06768751a198cc7b5d9f06a141f33cbe\",\"id\":\"field-flow-slot-snapshot-review-20261114:started\",\"input_digest\":\"573133e1f6f4c6de62a6670fa5a74888f60368ac689b595fa72cd205acefc451\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044\",\"source_sha\":\"2d6d738bd0cb6c0940a33dd8b117c373a2f8be6c\",\"step_id\":\"review-flow-slot-snapshot\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is checking the new slot measurement and when the ruler cue clears.\"}},\"state\":\"running\"}",
+            "id": "field-flow-slot-snapshot-review-20261114:started",
+            "assignment": "field-flow-guide-feedback-20261114",
+            "step_id": "review-flow-slot-snapshot",
+            "revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
+            "label": "Reverify ruler cues during flex reorders",
+            "state": "running",
+            "phase": null,
+            "source_sha": "2d6d738bd0cb6c0940a33dd8b117c373a2f8be6c",
+            "observed_at": "2026-11-15T00:26:43Z",
+            "recorded_at": "2026-11-15T00:26:46.213Z",
+            "receipt_digest": "sha256:a67dfe91e67ce8c9c4546f716470d77c06768751a198cc7b5d9f06a141f33cbe",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review is checking the new slot measurement and when the ruler cue clears.",
             "text_kind": "owner-published",
             "artifacts": []
           }
