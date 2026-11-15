@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T05:55:08.061Z",
+  "updated_at": "2026-11-15T05:57:23.515Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7293,7 +7293,7 @@
       ],
       "goal": "Prevent viewer-role thumbnail captures and uploads in desktop Preview and background capture; continue the custom-fill audit with mobile editor gated.",
       "acceptance": "Viewer sessions schedule no thumbnail captures and upload no thumbnail payloads, including stale in-flight responses after a role change; editable sessions retain both capture paths. Required checks and exact-source saved-project Preview QA pass. Audit legacy custom fills through breakpoint edits/reopening and preserve mobile Preview-only gating.",
-      "next_action": "Implement the scoped viewer-role gates and regression coverage in an isolated checkout; verify both editable capture and viewer suppression. User authorization: make sure thread 01a1d5fb-d9df-7130-b680-ce514dfecb9a keeps working while I sleep; I authorize you to do whatever it takes to clear any blockers, start a new session/chat if needed.",
+      "next_action": "PR181 exact head f6977e1034c53814e3e21332fdaba7c173217c90 passed install/build/full 13391 tests/lint, independent read-only review, exact-source saved-project viewer/legacy-fill/phone QA in Chromium and WebKit, and 2 local authored-breakpoint reopen tests. Refresh current production health and retained version c9eb1389-d7e5-4b40-b844-de488ec9c71e; promote through existing main Workers Builds path if all gates remain current, then verify production zero viewer writes. Full mobile editor remains flagged off.",
       "primary_team": "night-shift",
       "supporting_teams": [
         "inspector"
@@ -7320,8 +7320,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T05:55:08.061Z",
-      "lease_until": "2026-11-15T17:51:35.228Z",
+      "updated_at": "2026-11-15T05:57:23.515Z",
+      "lease_until": "2026-11-15T17:57:23.515Z",
       "supporting_roles": [
         "verifier"
       ],
