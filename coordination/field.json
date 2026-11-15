@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T05:14:29.428Z",
+  "updated_at": "2026-11-15T05:19:55.243Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7246,7 +7246,7 @@
       ],
       "goal": "Fix the production build and hydration of Field custom fills",
       "acceptance": "A normal Next.js production build type-checks generated stock shaders and previously saved matching shader files. Responsive Shader and Video fill layers hydrate without client recovery, switch correctly at breakpoint boundaries, and preserve Canvas and Preview visuals. Keep mobile editor behind its existing flag. Continue a bounded desktop custom fill audit.",
-      "next_action": "Remove the invalid siteConfig route-module export discovered on the second normal TypeScript-enabled Next.js build. Preserve editor settings and repair saved layouts. Retain existing fill fixes and repeat production build and runtime verification.",
+      "next_action": "Draft Field PR #180 at 2cce3690e0d105b75b7e88f0ab279df2de19f369 is ready for review. Local authored and migrated projects each passed route type generation and two type-checked production builds, Chromium/WebKit production and runtime probes passed, 16 fill lifecycle cases passed, and exact hosted branch saved-project Preview passed in both engines. Keep mobile behind its flag.",
       "primary_team": "source",
       "supporting_teams": [],
       "primary_staff": "rafael",
@@ -7269,8 +7269,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T05:14:29.428Z",
-      "lease_until": "2026-11-15T17:14:29.428Z"
+      "updated_at": "2026-11-15T05:19:55.243Z",
+      "lease_until": "2026-11-15T17:19:55.243Z"
     }
   ]
 }
