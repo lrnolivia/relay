@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T05:50:27.771Z",
+  "updated_at": "2026-11-15T05:51:35.228Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7295,9 +7295,13 @@
       "acceptance": "Viewer sessions schedule no thumbnail captures and upload no thumbnail payloads, including stale in-flight responses after a role change; editable sessions retain both capture paths. Required checks and exact-source saved-project Preview QA pass. Audit legacy custom fills through breakpoint edits/reopening and preserve mobile Preview-only gating.",
       "next_action": "Implement the scoped viewer-role gates and regression coverage in an isolated checkout; verify both editable capture and viewer suppression. User authorization: make sure thread 01a1d5fb-d9df-7130-b680-ce514dfecb9a keeps working while I sleep; I authorize you to do whatever it takes to clear any blockers, start a new session/chat if needed.",
       "primary_team": "night-shift",
-      "supporting_teams": [],
+      "supporting_teams": [
+        "inspector"
+      ],
       "primary_staff": "julian",
-      "supporting_staff": [],
+      "supporting_staff": [
+        "roman"
+      ],
       "base_sha": "9c2fdc513bf801c03b0ef5d5f099fe6283ebc518",
       "state": "active",
       "created_at": "2026-11-15T05:46:46.054Z",
@@ -7316,12 +7320,12 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T05:50:27.771Z",
-      "lease_until": "2026-11-15T17:50:27.771Z",
+      "updated_at": "2026-11-15T05:51:35.228Z",
+      "lease_until": "2026-11-15T17:51:35.228Z",
       "supporting_roles": [
         "verifier"
       ],
-      "amendment_count": 1,
+      "amendment_count": 2,
       "amendments": [
         {
           "at": "2026-11-15T05:50:27.771Z",
@@ -7336,6 +7340,27 @@
           "after": {
             "supporting_roles": [
               "verifier"
+            ]
+          }
+        },
+        {
+          "at": "2026-11-15T05:51:35.228Z",
+          "by": "field-overnight-20261115",
+          "reason": "Bind the canonical verifier staff identity for the required independent read-only snapshot review.",
+          "fields": [
+            "supporting_staff",
+            "supporting_teams"
+          ],
+          "before": {
+            "supporting_staff": [],
+            "supporting_teams": []
+          },
+          "after": {
+            "supporting_staff": [
+              "roman"
+            ],
+            "supporting_teams": [
+              "inspector"
             ]
           }
         }
