@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:13:47.032Z",
+  "updated_at": "2026-11-15T01:17:43.926Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4842,7 +4842,7 @@
         "roman"
       ],
       "base_sha": "0acfc98b5062a2b33da108510e61571757705d75",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-15T00:56:41.851Z",
       "objective_history": {
         "baseline": {
@@ -4859,8 +4859,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:13:47.032Z",
-      "lease_until": "2026-11-15T13:13:47.032Z",
+      "updated_at": "2026-11-15T01:17:43.926Z",
+      "lease_until": "2026-11-15T13:17:43.926Z",
       "amendment_count": 1,
       "amendments": [
         {
@@ -5301,7 +5301,13 @@
             "artifacts": []
           }
         ]
-      }
+      },
+      "pr": 173,
+      "merged_head_sha": "146a3b94dabe57166520825c7c42404f4edb9e41",
+      "merge_commit_sha": "d02e46c82fac56ee6380caa80a2187b540bf4b67",
+      "evidence": "Merged d02e46c82fac56ee6380caa80a2187b540bf4b67 with the same tree as independently reviewed 146a3b94dabe57166520825c7c42404f4edb9e41. 12 Chromium and 12 WebKit cases passed, including numbered/named cells, a distinct compact desktop override, authored-order Escape, detachment and Undo. 13,380 unit tests, type check, lint and builds passed. Workers build 616ccd5e-de22-44e6-abc7-81fbfd3c3caf deployed 19fd3ec9-e241-418b-9921-497fb896dec6 at 100%. The real saved QA project painted Canvas with all four isolation headers.",
+      "work_accounted": true,
+      "completed_at": "2026-11-15T01:17:43.926Z"
     }
   ]
 }
