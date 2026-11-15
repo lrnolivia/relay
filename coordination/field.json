@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T03:21:05.870Z",
+  "updated_at": "2026-11-15T03:25:19.477Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6043,7 +6043,7 @@
         "roman"
       ],
       "base_sha": "4633c9915542cad7d5582cc1b1b2a1472cfc0a83",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-15T02:57:41.322Z",
       "objective_history": {
         "baseline": {
@@ -6060,8 +6060,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T03:21:05.870Z",
-      "lease_until": "2026-11-15T15:21:05.870Z",
+      "updated_at": "2026-11-15T03:25:19.477Z",
+      "lease_until": "2026-11-15T15:25:19.477Z",
       "native_handoffs": [
         {
           "schema": 1,
@@ -6438,7 +6438,13 @@
             "artifacts": []
           }
         ]
-      }
+      },
+      "pr": 176,
+      "merged_head_sha": "f5efabfbaba1037b66bb733281244af147760ed0",
+      "merge_commit_sha": "50747bf4877624bf725eed12f546e516a061dd9f",
+      "evidence": "Field #176 exact production 50747bf4877624bf725eed12f546e516a061dd9f; 100% Worker 939a74b8-7fd7-4240-91b8-34f50d30f34f; saved-project smoke, two browser fill suites and Preview pixel checks verified; Relay context ctx_30a719148dcef3ea210aa1eb5da63d87132eca442011af371c4e2e1d93945b38 preserves audit and acceptance.",
+      "work_accounted": true,
+      "completed_at": "2026-11-15T03:25:19.477Z"
     }
   ]
 }
