@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:02:27.212Z",
+  "updated_at": "2026-11-15T04:02:41.280Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -723,7 +723,7 @@
       "supporting_staff": [
         "roman"
       ],
-      "state": "queued",
+      "state": "claimed",
       "created_at": "2026-11-15T03:56:20.528Z",
       "objective_history": {
         "baseline": {
@@ -6692,6 +6692,58 @@
       "evidence": "Field #177 production a95c6918535b8abcceca1034564b3b6ebd172c41 with 81020995-ef23-4d14-bf1e-3d64276283c8 at 100%, 23 Chromium and 23 WebKit tests, 6 custom fill breakpoint expansion checks, and both production Preview engines plus saved Canvas project verified. Relay ctx_f450befbe081d543e9c662e97907faa77997665470650bd4e149b999f7bf5f4a.",
       "work_accounted": true,
       "completed_at": "2026-11-15T04:02:27.212Z"
+    },
+    {
+      "id": "field-mobile-preview-only-20261115",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/mobile-preview-only-20261115",
+      "paths": [
+        ".env.example",
+        "src/ProjectLoader.tsx",
+        "src/editor/header/PreviewOverlay.tsx",
+        "src/editor/mobile-workspace-presentation.ts",
+        "src/editor/e2e/mobile-project-preview.spec.ts",
+        "playwright.config.ts"
+      ],
+      "resources": [
+        "mobile-preview-gating",
+        "preview-shell"
+      ],
+      "goal": "Make Field projects open in Preview on phones and gate the full mobile editor behind an opt-in feature flag.",
+      "acceptance": "On phone-sized viewports in both orientations, opening a project from Dashboard or a direct URL renders the project's interactive, device-width Preview without mounting editing controls. People can reload Preview and return to their projects. Desktop editing remains available and an explicitly enabled build flag restores the existing mobile editor.",
+      "next_action": "After the JSX release completes, claim the phone Preview gate and verify the Dashboard and direct-open paths.",
+      "category": "implementation",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "nico",
+      "supporting_staff": [
+        "roman"
+      ],
+      "base_sha": "a95c6918535b8abcceca1034564b3b6ebd172c41",
+      "state": "active",
+      "created_at": "2026-11-15T04:02:41.280Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Make Field projects open in Preview on phones and gate the full mobile editor behind an opt-in feature flag.",
+          "acceptance": "On phone-sized viewports in both orientations, opening a project from Dashboard or a direct URL renders the project's interactive, device-width Preview without mounting editing controls. People can reload Preview and return to their projects. Desktop editing remains available and an explicitly enabled build flag restores the existing mobile editor.",
+          "at": "2026-11-15T03:56:20.528Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-mobile-preview-only-20261115:acceptance:0",
+            "text": "On phone-sized viewports in both orientations, opening a project from Dashboard or a direct URL renders the project's interactive, device-width Preview without mounting editing controls. People can reload Preview and return to their projects. Desktop editing remains available and an explicitly enabled build flag restores the existing mobile editor.",
+            "at": "2026-11-15T03:56:20.528Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-15T04:02:41.280Z",
+      "lease_until": "2026-11-15T16:02:41.280Z"
     }
   ]
 }
