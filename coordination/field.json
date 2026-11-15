@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T03:20:47.139Z",
+  "updated_at": "2026-11-15T03:21:05.870Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6029,7 +6029,7 @@
       ],
       "goal": "Preserve every edited shader control when duplicating or pasting a shader and investigate multi-tile WebGL warnings.",
       "acceptance": "Desktop copy and duplication retain authored shader control values with their JSX types and preserve active breakpoint semantics. Reproduce and fix the cause of transient shader warnings if confirmed, preserve existing user shader edits, and verify Canvas and Preview visually in Chromium and WebKit.",
-      "next_action": "Route Option-drag duplication through the same selected-breakpoint shader and typed control capture, then verify both duplication entry points.",
+      "next_action": "Verify the exact release build, squash the admitted desktop shader fix, and smoke-test the production deployment.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -6060,8 +6060,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T03:20:47.139Z",
-      "lease_until": "2026-11-15T15:12:00.227Z",
+      "updated_at": "2026-11-15T03:21:05.870Z",
+      "lease_until": "2026-11-15T15:21:05.870Z",
       "native_handoffs": [
         {
           "schema": 1,
