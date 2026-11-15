@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:13:31.202Z",
+  "updated_at": "2026-11-15T01:13:47.032Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4828,7 +4828,7 @@
       ],
       "goal": "Make desktop drags swap explicitly placed Grid items between cells.",
       "acceptance": "Within a desktop Grid whose items are explicitly pinned to both tracks, dragging between fixed cells swaps the painted and saved placements without rewriting JSX order. Named grid areas and numbered row/column placements work. Escape, detach and Undo preserve unrelated items, and span-only or auto-flow grids retain their existing reorder behavior.",
-      "next_action": "Verify breakpoint-specific swaps and supply the existing Grid unit harness with authored style source.",
+      "next_action": "Promote reviewed Grid placement and cancellation after clean regression and preview checks.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -4859,8 +4859,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:13:31.202Z",
-      "lease_until": "2026-11-15T13:07:55.981Z",
+      "updated_at": "2026-11-15T01:13:47.032Z",
+      "lease_until": "2026-11-15T13:13:47.032Z",
       "amendment_count": 1,
       "amendments": [
         {
