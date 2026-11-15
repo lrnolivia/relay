@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T02:26:41.471Z",
+  "updated_at": "2026-11-15T02:27:53.555Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5696,7 +5696,7 @@
       ],
       "goal": "Fix active breakpoint isolation for Pattern, Shader and Video and implement shader creation in the library.",
       "acceptance": "On multiple desktop breakpoints, adding, editing, clearing and switching managed fills affects only the selected breakpoint in Canvas and Preview, with save/reopen, Undo, existing paints and masks preserved. Create shader saves an editable and reusable project shader and applies it to the selected breakpoint. Audit adjacent fill workflows on desktop.",
-      "next_action": "Update the existing fill shell contract to require semantic fill detection on the active breakpoint.",
+      "next_action": "Publish the isolated implementation as a draft for exact-source review, run desktop regression and release checks.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -5727,8 +5727,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T02:26:41.471Z",
-      "lease_until": "2026-11-15T14:26:41.471Z"
+      "updated_at": "2026-11-15T02:27:53.555Z",
+      "lease_until": "2026-11-15T14:27:53.555Z"
     }
   ]
 }
