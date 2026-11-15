@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T05:46:46.054Z",
+  "updated_at": "2026-11-15T05:50:27.771Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7316,8 +7316,30 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T05:46:46.054Z",
-      "lease_until": "2026-11-15T17:46:46.054Z"
+      "updated_at": "2026-11-15T05:50:27.771Z",
+      "lease_until": "2026-11-15T17:50:27.771Z",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-15T05:50:27.771Z",
+          "by": "field-overnight-20261115",
+          "reason": "Required independent read-only review of viewer-role suppression and preserved editable thumbnail behavior on the exact commit.",
+          "fields": [
+            "supporting_roles"
+          ],
+          "before": {
+            "supporting_roles": null
+          },
+          "after": {
+            "supporting_roles": [
+              "verifier"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
