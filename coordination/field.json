@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:49:48.128Z",
+  "updated_at": "2026-11-15T00:50:23.270Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4488,7 +4488,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:49:48.128Z",
+      "updated_at": "2026-11-15T00:50:23.270Z",
       "lease_until": "2026-11-15T12:47:04.997Z",
       "supporting_roles": [
         "verifier"
@@ -4580,6 +4580,40 @@
             }
           },
           "reported_at": "2026-11-15T00:49:48.128Z"
+        },
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "field-grid-drag-viewport-final-review-20261114",
+          "assignment": "field-grid-drag-viewport-bounds-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/grid-drag-viewport-bounds-20261114",
+          "source_sha": "2040b428a8e9ce25c2d56a43ca3fde8d810b6d76",
+          "objective_digest": "b32d26b12d9034a14eb8e5e1b7685c611b8a47ab4e4ce5d676ea053d51c1988c",
+          "scope_digest": "201696f20fec90e0ca7cc7cc23910ec8c6384a76c5b261ce44a5cc8a2d862d74",
+          "step_id": "review-grid-bounds-contract",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "2040b428a8e9ce25c2d56a43ca3fde8d810b6d76",
+            "objective_digest": "b32d26b12d9034a14eb8e5e1b7685c611b8a47ab4e4ce5d676ea053d51c1988c",
+            "step_id": "review-grid-bounds-contract",
+            "label": "Verify shared bounds compatibility",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "f9cef1af4b2ef8887334dd82da0c286af978d9b1ce1f8746c932c081a654f766"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T00:50:23.270Z",
+          "request_digest": "dc86f03116aa44d2415e695a3a37e626c2b73fc023e1b58eb16993ef931e87db",
+          "step_digest": "93ff4aa17a70113228d57a2a33051a3983cae01915ab08552826487466b92de9"
         }
       ],
       "card_steps": {
@@ -4591,7 +4625,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/grid-drag-viewport-bounds-20261114"
         },
-        "sequence": 3,
+        "sequence": 4,
         "complete": false,
         "steps": [
           {
@@ -4617,6 +4651,13 @@
                 "artifacts": []
               }
             }
+          },
+          {
+            "id": "review-grid-bounds-contract",
+            "label": "Verify shared bounds compatibility",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -4624,7 +4665,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-grid-drag-viewport-bounds-20261114",
         "revision": "14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e",
-        "sequence": 3,
+        "sequence": 4,
         "truncated": false,
         "identities": {
           "field-grid-drag-viewport-review-20261114:started": "2dca95ecd2c2e89d46f69881e5d41b058a593fb0eca36733817e0faf74e6b4f5",
