@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:27:50.014Z",
+  "updated_at": "2026-11-15T01:30:55.651Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5354,7 +5354,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:27:50.014Z",
+      "updated_at": "2026-11-15T01:30:55.651Z",
       "lease_until": "2026-11-15T13:21:51.402Z",
       "supporting_roles": [
         "verifier"
@@ -5476,10 +5476,17 @@
             "host_available": true,
             "intent_digest": "822001fb0bfb1b80751a7bf5c5c7bcce940872095c27c5b2b0f3055b2c4a06b6"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T01:27:50.014Z",
           "request_digest": "edd5aa01d64f42b261130e62c4c9026761ea87e9c4296496a3d7e4073b4678bd",
-          "step_digest": "11a03442f9a9c7a6d482bf9c4a8c6a320f00735fe9b7432e122731a7c2d80b11"
+          "step_digest": "baee6b318697699dea30b127390f80400b1156bb5bd0e2ae400740ce0e5d5673",
+          "start": {
+            "request_digest": "edd5aa01d64f42b261130e62c4c9026761ea87e9c4296496a3d7e4073b4678bd",
+            "source_sha": "69e4a6fd82a1a558d323a13d7666517363ce2f46",
+            "agent_id": "/root/grid_ruler_option_verify",
+            "observed_at": "2026-11-15T01:30:52Z"
+          },
+          "started_at": "2026-11-15T01:30:55.651Z"
         }
       ],
       "card_steps": {
@@ -5491,7 +5498,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/grid-slot-ruler-feedback-20261114"
         },
-        "sequence": 4,
+        "sequence": 5,
         "complete": false,
         "steps": [
           {
@@ -5522,8 +5529,21 @@
             "id": "review-grid-slot-option-feedback",
             "label": "Verify Option-drag Grid ruler feedback",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "field-grid-slot-ruler-option-final-review-20261114:started",
+              "assignment": "field-grid-slot-ruler-feedback-20261114",
+              "step_id": "review-grid-slot-option-feedback",
+              "plan_revision": "3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9",
+              "input_digest": "edd5aa01d64f42b261130e62c4c9026761ea87e9c4296496a3d7e4073b4678bd",
+              "evidence": "sha256:dd964371ce9048638e09509bb3520ffefc30be0d4c307c5a5058376114ccdd22",
+              "source_sha": "69e4a6fd82a1a558d323a13d7666517363ce2f46",
+              "observed_at": "2026-11-15T01:30:52Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              }
+            }
           }
         ]
       },
@@ -5531,11 +5551,12 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-grid-slot-ruler-feedback-20261114",
         "revision": "3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9",
-        "sequence": 4,
+        "sequence": 5,
         "truncated": false,
         "identities": {
           "field-grid-slot-ruler-final-review-20261114:started": "b641a19d84b18558ea5d9629586d3ae585cb26ee471bfde767e331622c3f9c32",
-          "field-grid-slot-ruler-final-review-20261114:result": "754e274d5b7e09a5e48f7273b9e75bc571081fec44b7f384e960ab118df95ba5"
+          "field-grid-slot-ruler-final-review-20261114:result": "754e274d5b7e09a5e48f7273b9e75bc571081fec44b7f384e960ab118df95ba5",
+          "field-grid-slot-ruler-option-final-review-20261114:started": "afd7c7eaf766359f961c7368a58165a461b0d5d7746a462eb7993b9196f969f4"
         },
         "items": [
           {
@@ -5580,6 +5601,28 @@
             },
             "text": "Review found one remaining case where Option-drag can move an aligned Grid slot without changing the hovered cell.",
             "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "field-grid-slot-ruler-option-final-review-20261114:started:edd5aa01d64f42b261130e62c4c9026761ea87e9c4296496a3d7e4073b4678bd:running:",
+            "receipt_snapshot": "{\"label\":\"Verify Option-drag Grid ruler feedback\",\"receipt\":{\"assignment\":\"field-grid-slot-ruler-feedback-20261114\",\"evidence\":\"sha256:dd964371ce9048638e09509bb3520ffefc30be0d4c307c5a5058376114ccdd22\",\"id\":\"field-grid-slot-ruler-option-final-review-20261114:started\",\"input_digest\":\"edd5aa01d64f42b261130e62c4c9026761ea87e9c4296496a3d7e4073b4678bd\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9\",\"source_sha\":\"69e4a6fd82a1a558d323a13d7666517363ce2f46\",\"step_id\":\"review-grid-slot-option-feedback\"},\"state\":\"running\"}",
+            "id": "field-grid-slot-ruler-option-final-review-20261114:started",
+            "assignment": "field-grid-slot-ruler-feedback-20261114",
+            "step_id": "review-grid-slot-option-feedback",
+            "revision": "3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9",
+            "label": "Verify Option-drag Grid ruler feedback",
+            "state": "running",
+            "phase": null,
+            "source_sha": "69e4a6fd82a1a558d323a13d7666517363ce2f46",
+            "observed_at": "2026-11-15T01:30:52Z",
+            "recorded_at": "2026-11-15T01:30:55.651Z",
+            "receipt_digest": "sha256:dd964371ce9048638e09509bb3520ffefc30be0d4c307c5a5058376114ccdd22",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Work started.",
+            "text_kind": "recorded-state",
             "artifacts": []
           }
         ]
