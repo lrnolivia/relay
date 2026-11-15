@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:29:34.784Z",
+  "updated_at": "2026-11-15T00:29:56.430Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3754,7 +3754,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:29:34.784Z",
+      "updated_at": "2026-11-15T00:29:56.430Z",
       "lease_until": "2026-11-15T09:35:08.847Z",
       "supporting_roles": [
         "verifier"
@@ -3934,10 +3934,21 @@
             "host_available": true,
             "intent_digest": "6c1433a7528bef9c091ea5ce9d671026767e5d82cc329de561b53673ea5dd1f4"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T00:29:34.784Z",
           "request_digest": "369db12fd138d83e1527e02b35cf769da0f29c705f8cfb55d3685ac5e1dde119",
-          "step_digest": "8fb9cd38f24c95219ef60b661ed413f583933074cf130b5b28db7465a97c233c"
+          "step_digest": "c6efd68cb1fca6b20c33a497c60964a7d1b55dcaaec67c04ea433170de188dd8",
+          "start": {
+            "request_digest": "369db12fd138d83e1527e02b35cf769da0f29c705f8cfb55d3685ac5e1dde119",
+            "source_sha": "8796f8dc7e6b04796a5214f9f57662cba08eebc7",
+            "agent_id": "/root/flow_camera_verify",
+            "observed_at": "2026-11-15T00:29:53Z",
+            "update": {
+              "text": "Independent review is checking that the visible ruler cue follows the Canvas camera.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-15T00:29:56.430Z"
         }
       ],
       "card_steps": {
@@ -3949,7 +3960,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/flow-guide-feedback-20261114"
         },
-        "sequence": 7,
+        "sequence": 8,
         "complete": false,
         "steps": [
           {
@@ -4004,8 +4015,25 @@
             "id": "review-flow-slot-camera",
             "label": "Verify ruler cue follows the camera",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "field-flow-slot-camera-review-20261114:started",
+              "assignment": "field-flow-guide-feedback-20261114",
+              "step_id": "review-flow-slot-camera",
+              "plan_revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
+              "input_digest": "369db12fd138d83e1527e02b35cf769da0f29c705f8cfb55d3685ac5e1dde119",
+              "evidence": "sha256:d1e88d31f907464e393b8409994b567296e308d854b95fe3f375be84b8adc150",
+              "source_sha": "8796f8dc7e6b04796a5214f9f57662cba08eebc7",
+              "observed_at": "2026-11-15T00:29:53Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review is checking that the visible ruler cue follows the Canvas camera.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -4013,13 +4041,14 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-flow-guide-feedback-20261114",
         "revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
-        "sequence": 7,
+        "sequence": 8,
         "truncated": false,
         "identities": {
           "field-flow-slot-exact-source-review-20261114:started": "87eb6ee7945fa7a3b7054faa74d09a6c3d076eb1e5c8b824e467e998ef555d05",
           "field-flow-slot-exact-source-review-20261114:result": "43479f788d89b28af42870bd1b2586039986e625a63a53b1740234ab17f9494d",
           "field-flow-slot-snapshot-review-20261114:started": "528e41054d5793eb31e10ca6a4eabf946c9343f8e03c3866b798e40e40762a18",
-          "field-flow-slot-snapshot-review-20261114:result": "0f3aa96aff96aca236428aef827e004ed1304b1210d3a6ca5b92757a468dc8a2"
+          "field-flow-slot-snapshot-review-20261114:result": "0f3aa96aff96aca236428aef827e004ed1304b1210d3a6ca5b92757a468dc8a2",
+          "field-flow-slot-camera-review-20261114:started": "923425a261591a8d760e213750670f37f8222565bb8c273aa29392c3e2c17064"
         },
         "items": [
           {
@@ -4107,6 +4136,28 @@
               "team": "inspector"
             },
             "text": "The slot measurements agree. Review found that an active cue also needs to follow camera motion while the slot stays aligned.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "field-flow-slot-camera-review-20261114:started:369db12fd138d83e1527e02b35cf769da0f29c705f8cfb55d3685ac5e1dde119:running:",
+            "receipt_snapshot": "{\"label\":\"Verify ruler cue follows the camera\",\"receipt\":{\"assignment\":\"field-flow-guide-feedback-20261114\",\"evidence\":\"sha256:d1e88d31f907464e393b8409994b567296e308d854b95fe3f375be84b8adc150\",\"id\":\"field-flow-slot-camera-review-20261114:started\",\"input_digest\":\"369db12fd138d83e1527e02b35cf769da0f29c705f8cfb55d3685ac5e1dde119\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044\",\"source_sha\":\"8796f8dc7e6b04796a5214f9f57662cba08eebc7\",\"step_id\":\"review-flow-slot-camera\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is checking that the visible ruler cue follows the Canvas camera.\"}},\"state\":\"running\"}",
+            "id": "field-flow-slot-camera-review-20261114:started",
+            "assignment": "field-flow-guide-feedback-20261114",
+            "step_id": "review-flow-slot-camera",
+            "revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
+            "label": "Verify ruler cue follows the camera",
+            "state": "running",
+            "phase": null,
+            "source_sha": "8796f8dc7e6b04796a5214f9f57662cba08eebc7",
+            "observed_at": "2026-11-15T00:29:53Z",
+            "recorded_at": "2026-11-15T00:29:56.430Z",
+            "receipt_digest": "sha256:d1e88d31f907464e393b8409994b567296e308d854b95fe3f375be84b8adc150",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review is checking that the visible ruler cue follows the Canvas camera.",
             "text_kind": "owner-published",
             "artifacts": []
           }
