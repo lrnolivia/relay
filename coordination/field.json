@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:30:47.206Z",
+  "updated_at": "2026-11-15T00:31:00.918Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3726,7 +3726,7 @@
       ],
       "goal": "Show desktop ruler alignment for actual Auto Layout reorder slots.",
       "acceptance": "A flex row or column reorder highlights a ruler guide only when the rendered insertion slot aligns, including rotated frames. A guide between slots does not alter flow ordering; Preview geometry and saved reorder stay consistent and Undo restores order.",
-      "next_action": "Pass the existing snap feedback callback to the flow strategy so measured slot alignment can render after the sandbox response; keep ruler feedback visible alongside the insertion affordance.",
+      "next_action": "Promote the verified flex ruler cue after preview smoke and confirm the production build.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [
@@ -3754,8 +3754,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:30:47.206Z",
-      "lease_until": "2026-11-15T09:35:08.847Z",
+      "updated_at": "2026-11-15T00:31:00.918Z",
+      "lease_until": "2026-11-15T12:31:00.918Z",
       "supporting_roles": [
         "verifier"
       ],
