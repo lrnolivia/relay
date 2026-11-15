@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:20:14.508Z",
+  "updated_at": "2026-11-15T04:27:03.046Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7013,6 +7013,57 @@
       "evidence": "Field production 86efa8a4c710e54282ebb9cdd6db08320142be4c with Worker b4a9d92a-54e1-4701-b022-edd4c2edad71 at 100%; phone and desktop saved-project smoke and both local opt-in lanes passed. Relay ctx_10195ea5c323686c1e9ac79cee918426f7b3ba3fa988129d6c1b0fea44d7c5b3.",
       "work_accounted": true,
       "completed_at": "2026-11-15T04:20:14.508Z"
+    },
+    {
+      "id": "field-branch-preview-origin-20261115",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/branch-preview-origin-20261115",
+      "paths": [
+        "cloudflare/worker.js",
+        "cloudflare/field-persistence.test.ts",
+        "src/preview/preview-frame-url.ts",
+        "src/preview/preview-frame-url.test.ts",
+        "src/editor/header/PreviewOverlay.tsx"
+      ],
+      "resources": [
+        "branch-preview-runtime",
+        "preview-shell"
+      ],
+      "goal": "Restore native Preview asset routing for immutable and stable Field branch builds and continue the desktop custom-fill audit.",
+      "acceptance": "Branch Preview loads the matching deployed runtime and root-relative assets on a distinct origin, supports page navigation, and does not serve editor APIs there. Verify a real saved branch project without browser rewrites and retain current desktop Preview and phone editor flag behavior.",
+      "next_action": "Use the corresponding existing Workers Preview URL for the isolated branch Preview runtime and verify the same deployed SHA on both hosts.",
+      "category": "implementation",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "nico",
+      "supporting_staff": [
+        "roman"
+      ],
+      "base_sha": "86efa8a4c710e54282ebb9cdd6db08320142be4c",
+      "state": "active",
+      "created_at": "2026-11-15T04:27:03.046Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Restore native Preview asset routing for immutable and stable Field branch builds and continue the desktop custom-fill audit.",
+          "acceptance": "Branch Preview loads the matching deployed runtime and root-relative assets on a distinct origin, supports page navigation, and does not serve editor APIs there. Verify a real saved branch project without browser rewrites and retain current desktop Preview and phone editor flag behavior.",
+          "at": "2026-11-15T04:27:03.046Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-branch-preview-origin-20261115:acceptance:0",
+            "text": "Branch Preview loads the matching deployed runtime and root-relative assets on a distinct origin, supports page navigation, and does not serve editor APIs there. Verify a real saved branch project without browser rewrites and retain current desktop Preview and phone editor flag behavior.",
+            "at": "2026-11-15T04:27:03.046Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-15T04:27:03.046Z",
+      "lease_until": "2026-11-15T16:27:03.046Z"
     }
   ]
 }
