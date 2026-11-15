@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:12:54.814Z",
+  "updated_at": "2026-11-15T04:13:17.756Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6743,7 +6743,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T04:12:54.814Z",
+      "updated_at": "2026-11-15T04:13:17.756Z",
       "lease_until": "2026-11-15T16:12:25.465Z",
       "native_handoffs": [
         {
@@ -6825,10 +6825,17 @@
             "host_available": true,
             "intent_digest": "c869594a707541cf01d8ce26d732acb51e4a2f98dc2f5c92095d776f069bc4e5"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T04:12:54.814Z",
           "request_digest": "bf8c021d60f7bb0a00073a83b112f08e33fd19c27b111d502349bbf6997c8e9e",
-          "step_digest": "e8475ba1e2c7648413af378a9ab781da0a7b95ffdf224d0dd704357a1434a10c"
+          "step_digest": "ef9484a5b56fbaa2e107776394bb971abf296d4b1f1f4f028d6dbfdb4d8ed7fa",
+          "start": {
+            "request_digest": "bf8c021d60f7bb0a00073a83b112f08e33fd19c27b111d502349bbf6997c8e9e",
+            "source_sha": "db07953bd5016f306d221919313bdf294848c8aa",
+            "agent_id": "/root/mobile_preview_transition_verify",
+            "observed_at": "2026-11-15T04:13:14Z"
+          },
+          "started_at": "2026-11-15T04:13:17.756Z"
         }
       ],
       "card_steps": {
@@ -6840,7 +6847,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/mobile-preview-only-20261115"
         },
-        "sequence": 4,
+        "sequence": 5,
         "complete": false,
         "steps": [
           {
@@ -6867,8 +6874,21 @@
             "id": "verify-phone-preview-text-transition",
             "label": "Verify text commit before switching to phone Preview",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "mobile-project-preview-transition-review-20261115:started",
+              "assignment": "field-mobile-preview-only-20261115",
+              "step_id": "verify-phone-preview-text-transition",
+              "plan_revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
+              "input_digest": "bf8c021d60f7bb0a00073a83b112f08e33fd19c27b111d502349bbf6997c8e9e",
+              "evidence": "sha256:2ee406b343c0ea8bc1a85a45493bfc6f7a59fa8eec07c0916ad4adaceab9dfbe",
+              "source_sha": "db07953bd5016f306d221919313bdf294848c8aa",
+              "observed_at": "2026-11-15T04:13:14Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              }
+            }
           }
         ]
       },
@@ -6876,11 +6896,12 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-mobile-preview-only-20261115",
         "revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
-        "sequence": 4,
+        "sequence": 5,
         "truncated": false,
         "identities": {
           "mobile-project-preview-review-20261115:started": "316b9558c38f20506c2bcbf532383c5574b98d311a834bd69dfd17a45f045735",
-          "mobile-project-preview-review-20261115:result": "bf3cef378e4f3dbfea138cd86e8575e716a4e64aef70690bccdc6384086ef04c"
+          "mobile-project-preview-review-20261115:result": "bf3cef378e4f3dbfea138cd86e8575e716a4e64aef70690bccdc6384086ef04c",
+          "mobile-project-preview-transition-review-20261115:started": "69a7d43c5429b3cebe81765bd6704f4d415f0d12facccfe0060645bf6f68740f"
         },
         "items": [
           {
@@ -6924,6 +6945,28 @@
               "team": "inspector"
             },
             "text": "This step needs attention.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          },
+          {
+            "key": "mobile-project-preview-transition-review-20261115:started:bf8c021d60f7bb0a00073a83b112f08e33fd19c27b111d502349bbf6997c8e9e:running:",
+            "receipt_snapshot": "{\"label\":\"Verify text commit before switching to phone Preview\",\"receipt\":{\"assignment\":\"field-mobile-preview-only-20261115\",\"evidence\":\"sha256:2ee406b343c0ea8bc1a85a45493bfc6f7a59fa8eec07c0916ad4adaceab9dfbe\",\"id\":\"mobile-project-preview-transition-review-20261115:started\",\"input_digest\":\"bf8c021d60f7bb0a00073a83b112f08e33fd19c27b111d502349bbf6997c8e9e\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1\",\"source_sha\":\"db07953bd5016f306d221919313bdf294848c8aa\",\"step_id\":\"verify-phone-preview-text-transition\"},\"state\":\"running\"}",
+            "id": "mobile-project-preview-transition-review-20261115:started",
+            "assignment": "field-mobile-preview-only-20261115",
+            "step_id": "verify-phone-preview-text-transition",
+            "revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
+            "label": "Verify text commit before switching to phone Preview",
+            "state": "running",
+            "phase": null,
+            "source_sha": "db07953bd5016f306d221919313bdf294848c8aa",
+            "observed_at": "2026-11-15T04:13:14Z",
+            "recorded_at": "2026-11-15T04:13:17.756Z",
+            "receipt_digest": "sha256:2ee406b343c0ea8bc1a85a45493bfc6f7a59fa8eec07c0916ad4adaceab9dfbe",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Work started.",
             "text_kind": "recorded-state",
             "artifacts": []
           }
