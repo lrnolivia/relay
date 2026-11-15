@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T02:27:53.555Z",
+  "updated_at": "2026-11-15T02:28:40.127Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5727,8 +5727,74 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T02:27:53.555Z",
-      "lease_until": "2026-11-15T14:27:53.555Z"
+      "updated_at": "2026-11-15T02:28:40.127Z",
+      "lease_until": "2026-11-15T14:27:53.555Z",
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "desktop-managed-fill-source-review-20261114",
+          "assignment": "field-responsive-managed-fills-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/responsive-managed-fills-20261114",
+          "source_sha": "37ca4857b6296a4be88abd3210cddd473e5eece1",
+          "objective_digest": "9b00e4937fa07cdababbc8508840c8ff4624d12f4e630c5fd9c0b2393921ef5c",
+          "scope_digest": "e59ca5e09d111ca8d1fc6ab0e3fb6b348fb2d24b7c85cd5cc0ce1f4e88001357",
+          "step_id": "review-desktop-fill-isolation",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "37ca4857b6296a4be88abd3210cddd473e5eece1",
+            "objective_digest": "9b00e4937fa07cdababbc8508840c8ff4624d12f4e630c5fd9c0b2393921ef5c",
+            "step_id": "review-desktop-fill-isolation",
+            "label": "Review desktop breakpoint fill isolation",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "02164891e68680fa4f3ce4afd26cc869ff8f2833a1c47c508a85d7d2503030e2"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T02:28:40.127Z",
+          "request_digest": "c23239e00f24a195176174a3af12453776deb37122c3e40ffa25c21918501574",
+          "step_digest": "e3ffc3377a2e1502fc0a0be9f7262f80e815703a75e90f9fac66839df2bf4b9d"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "field-responsive-managed-fills-20261114",
+        "revision": "feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a",
+        "objective_digest": "9b00e4937fa07cdababbc8508840c8ff4624d12f4e630c5fd9c0b2393921ef5c",
+        "publisher": {
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/responsive-managed-fills-20261114"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "review-desktop-fill-isolation",
+            "label": "Review desktop breakpoint fill isolation",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "field-responsive-managed-fills-20261114",
+        "revision": "feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
