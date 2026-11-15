@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:07:47.535Z",
+  "updated_at": "2026-11-15T04:08:09.596Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6742,7 +6742,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T04:07:47.535Z",
+      "updated_at": "2026-11-15T04:08:09.596Z",
       "lease_until": "2026-11-15T16:06:47.625Z",
       "native_handoffs": [
         {
@@ -6774,10 +6774,17 @@
             "host_available": true,
             "intent_digest": "74b55718b98f07dcf17dae8c33785a6cf0510ed8bae82304d0cc3058850564b0"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T04:07:47.535Z",
           "request_digest": "62d47205c06d8a9090f770f5b9c41b283a8c5b1ccd62329a9513bed29a86898a",
-          "step_digest": "abcde515917c0259ef350e70bbeabf50df7422cc2456ab4fcbc8ea11adf88581"
+          "step_digest": "9b1ac02c4ac4305fab4f8aa41f4d67f909acdb968fc0207308f9371d52ef8f51",
+          "start": {
+            "request_digest": "62d47205c06d8a9090f770f5b9c41b283a8c5b1ccd62329a9513bed29a86898a",
+            "source_sha": "34710efa08fcb39fcc8d308aaf3682ea4d333fdd",
+            "agent_id": "/root/mobile_preview_gate_review",
+            "observed_at": "2026-11-15T04:08:06Z"
+          },
+          "started_at": "2026-11-15T04:08:09.596Z"
         }
       ],
       "card_steps": {
@@ -6789,15 +6796,28 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/mobile-preview-only-20261115"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "review-phone-preview-gate",
             "label": "Verify the phone Preview entry and editor flag",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "mobile-project-preview-review-20261115:started",
+              "assignment": "field-mobile-preview-only-20261115",
+              "step_id": "review-phone-preview-gate",
+              "plan_revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
+              "input_digest": "62d47205c06d8a9090f770f5b9c41b283a8c5b1ccd62329a9513bed29a86898a",
+              "evidence": "sha256:95ec3040db69543d2b19457b03a28eea1c096dd6092ee7e61b347982941e396e",
+              "source_sha": "34710efa08fcb39fcc8d308aaf3682ea4d333fdd",
+              "observed_at": "2026-11-15T04:08:06Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              }
+            }
           }
         ]
       },
@@ -6805,10 +6825,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-mobile-preview-only-20261115",
         "revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "mobile-project-preview-review-20261115:started": "316b9558c38f20506c2bcbf532383c5574b98d311a834bd69dfd17a45f045735"
+        },
+        "items": [
+          {
+            "key": "mobile-project-preview-review-20261115:started:62d47205c06d8a9090f770f5b9c41b283a8c5b1ccd62329a9513bed29a86898a:running:",
+            "receipt_snapshot": "{\"label\":\"Verify the phone Preview entry and editor flag\",\"receipt\":{\"assignment\":\"field-mobile-preview-only-20261115\",\"evidence\":\"sha256:95ec3040db69543d2b19457b03a28eea1c096dd6092ee7e61b347982941e396e\",\"id\":\"mobile-project-preview-review-20261115:started\",\"input_digest\":\"62d47205c06d8a9090f770f5b9c41b283a8c5b1ccd62329a9513bed29a86898a\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1\",\"source_sha\":\"34710efa08fcb39fcc8d308aaf3682ea4d333fdd\",\"step_id\":\"review-phone-preview-gate\"},\"state\":\"running\"}",
+            "id": "mobile-project-preview-review-20261115:started",
+            "assignment": "field-mobile-preview-only-20261115",
+            "step_id": "review-phone-preview-gate",
+            "revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
+            "label": "Verify the phone Preview entry and editor flag",
+            "state": "running",
+            "phase": null,
+            "source_sha": "34710efa08fcb39fcc8d308aaf3682ea4d333fdd",
+            "observed_at": "2026-11-15T04:08:06Z",
+            "recorded_at": "2026-11-15T04:08:09.596Z",
+            "receipt_digest": "sha256:95ec3040db69543d2b19457b03a28eea1c096dd6092ee7e61b347982941e396e",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Work started.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
