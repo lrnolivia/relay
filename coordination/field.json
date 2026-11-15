@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:09:46.805Z",
+  "updated_at": "2026-11-15T01:10:10.145Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4859,7 +4859,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:09:46.805Z",
+      "updated_at": "2026-11-15T01:10:10.145Z",
       "lease_until": "2026-11-15T13:07:55.981Z",
       "amendment_count": 1,
       "amendments": [
@@ -4978,10 +4978,21 @@
             "host_available": true,
             "intent_digest": "f265793dcfffdd75f3bebea94a6d5a147ada9c4ffa15e85920c3f12a71831cd9"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T01:09:46.805Z",
           "request_digest": "621551fc1a1d940669f8d59b47c6e408c6af5060d2a354d931fa6c8e9b92bc88",
-          "step_digest": "5036376f43b9049e81fa66cded4ec3b44fea3e686a85daf7426c7affd2f85618"
+          "step_digest": "26cc74675a4ffd0f21e0295a6a90204a7b113766abaad3018f41bf3eecaab3d2",
+          "start": {
+            "request_digest": "621551fc1a1d940669f8d59b47c6e408c6af5060d2a354d931fa6c8e9b92bc88",
+            "source_sha": "51d758187f2b1964aca6d20c2ee973cf239d82f9",
+            "agent_id": "/root/explicit_grid_final_verify",
+            "observed_at": "2026-11-15T01:10:07Z",
+            "update": {
+              "text": "Independent review is checking that a desktop breakpoint swap preserves primary placement and source.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-15T01:10:10.145Z"
         }
       ],
       "card_steps": {
@@ -4993,7 +5004,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/explicit-grid-cell-swap-20261114"
         },
-        "sequence": 4,
+        "sequence": 5,
         "complete": false,
         "steps": [
           {
@@ -5024,8 +5035,25 @@
             "id": "review-explicit-grid-scoped-final",
             "label": "Verify desktop breakpoint Grid swaps",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "field-explicit-grid-swap-scoped-final-review-20261114:started",
+              "assignment": "field-explicit-grid-cell-swap-20261114",
+              "step_id": "review-explicit-grid-scoped-final",
+              "plan_revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
+              "input_digest": "621551fc1a1d940669f8d59b47c6e408c6af5060d2a354d931fa6c8e9b92bc88",
+              "evidence": "sha256:f20b120f257bf09bc202599ae3e6cc1498f59d3960cf62e54f05443af4cc690e",
+              "source_sha": "51d758187f2b1964aca6d20c2ee973cf239d82f9",
+              "observed_at": "2026-11-15T01:10:07Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review is checking that a desktop breakpoint swap preserves primary placement and source.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -5033,11 +5061,12 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-explicit-grid-cell-swap-20261114",
         "revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
-        "sequence": 4,
+        "sequence": 5,
         "truncated": false,
         "identities": {
           "field-explicit-grid-cell-swap-review-20261114:started": "69a3add1b57bf8be588216ef61fc359b9519a607ac0516ef317298a316a9054b",
-          "field-explicit-grid-cell-swap-review-20261114:result": "14176814288251d65f42a04832891acf953e3fef9c9e539babac13981f2e7c7b"
+          "field-explicit-grid-cell-swap-review-20261114:result": "14176814288251d65f42a04832891acf953e3fef9c9e539babac13981f2e7c7b",
+          "field-explicit-grid-swap-scoped-final-review-20261114:started": "997575b3b987de521629e546b4bb98b54367174607a75b9716beaf519605f1f4"
         },
         "items": [
           {
@@ -5081,6 +5110,28 @@
               "team": "inspector"
             },
             "text": "Review found that an existing breakpoint can outrank the live swap, and cancellation needs to stay within the Grid gesture before a structural handoff.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "field-explicit-grid-swap-scoped-final-review-20261114:started:621551fc1a1d940669f8d59b47c6e408c6af5060d2a354d931fa6c8e9b92bc88:running:",
+            "receipt_snapshot": "{\"label\":\"Verify desktop breakpoint Grid swaps\",\"receipt\":{\"assignment\":\"field-explicit-grid-cell-swap-20261114\",\"evidence\":\"sha256:f20b120f257bf09bc202599ae3e6cc1498f59d3960cf62e54f05443af4cc690e\",\"id\":\"field-explicit-grid-swap-scoped-final-review-20261114:started\",\"input_digest\":\"621551fc1a1d940669f8d59b47c6e408c6af5060d2a354d931fa6c8e9b92bc88\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28\",\"source_sha\":\"51d758187f2b1964aca6d20c2ee973cf239d82f9\",\"step_id\":\"review-explicit-grid-scoped-final\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is checking that a desktop breakpoint swap preserves primary placement and source.\"}},\"state\":\"running\"}",
+            "id": "field-explicit-grid-swap-scoped-final-review-20261114:started",
+            "assignment": "field-explicit-grid-cell-swap-20261114",
+            "step_id": "review-explicit-grid-scoped-final",
+            "revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
+            "label": "Verify desktop breakpoint Grid swaps",
+            "state": "running",
+            "phase": null,
+            "source_sha": "51d758187f2b1964aca6d20c2ee973cf239d82f9",
+            "observed_at": "2026-11-15T01:10:07Z",
+            "recorded_at": "2026-11-15T01:10:10.145Z",
+            "receipt_digest": "sha256:f20b120f257bf09bc202599ae3e6cc1498f59d3960cf62e54f05443af4cc690e",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review is checking that a desktop breakpoint swap preserves primary placement and source.",
             "text_kind": "owner-published",
             "artifacts": []
           }
