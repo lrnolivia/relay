@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T03:04:24.872Z",
+  "updated_at": "2026-11-15T03:05:14.507Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6057,8 +6057,74 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T03:04:24.872Z",
-      "lease_until": "2026-11-15T15:04:24.872Z"
+      "updated_at": "2026-11-15T03:05:14.507Z",
+      "lease_until": "2026-11-15T15:04:24.872Z",
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "desktop-shader-copy-context-review-20261115",
+          "assignment": "field-shader-duplicate-and-webgl-20261115",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/shader-duplicate-and-webgl-20261115",
+          "source_sha": "f0b5f4e869dc779441d1ba4fb0a269c8863dec82",
+          "objective_digest": "93e2d56eedb648dab9625165fc39c37a02c084d68add6836b9fcb17ef887d03a",
+          "scope_digest": "a7e6b54794cf9f286e77d4609e24c87858abe702cbea6b0d9d1a99b76d9e1190",
+          "step_id": "review-shader-copy-and-context",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "f0b5f4e869dc779441d1ba4fb0a269c8863dec82",
+            "objective_digest": "93e2d56eedb648dab9625165fc39c37a02c084d68add6836b9fcb17ef887d03a",
+            "step_id": "review-shader-copy-and-context",
+            "label": "Review shader copy and WebGL cleanup",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "ab648f7bb2d3b00005beaf2dc6c330b543088ed06677b00eb2570c8b9817bcc5"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T03:05:14.507Z",
+          "request_digest": "5fc41eac84d6b13303f8517799cd413f42deb1eb715a2ce380c5b2223033f806",
+          "step_digest": "e18603ce3bb3d977ed46517238f921dddb0f6a442ccfdddfcc9e00a1a1f573b4"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "field-shader-duplicate-and-webgl-20261115",
+        "revision": "8a8ebc1f139549ebd35143ce68f30c31bff2bad2f36c155dfb7c6e1919fcbace",
+        "objective_digest": "93e2d56eedb648dab9625165fc39c37a02c084d68add6836b9fcb17ef887d03a",
+        "publisher": {
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/shader-duplicate-and-webgl-20261115"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "review-shader-copy-and-context",
+            "label": "Review shader copy and WebGL cleanup",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "field-shader-duplicate-and-webgl-20261115",
+        "revision": "8a8ebc1f139549ebd35143ce68f30c31bff2bad2f36c155dfb7c6e1919fcbace",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
