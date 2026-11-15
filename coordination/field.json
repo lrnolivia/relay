@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:40:18.471Z",
+  "updated_at": "2026-11-15T00:44:13.168Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4231,7 +4231,7 @@
         "roman"
       ],
       "base_sha": "820f68d5159b3d12422f972807f1fada57864e68",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-15T00:34:58.974Z",
       "objective_history": {
         "baseline": {
@@ -4248,8 +4248,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:40:18.471Z",
-      "lease_until": "2026-11-15T12:40:18.471Z",
+      "updated_at": "2026-11-15T00:44:13.168Z",
+      "lease_until": "2026-11-15T12:44:13.168Z",
       "supporting_roles": [
         "verifier"
       ],
@@ -4437,7 +4437,13 @@
             "artifacts": []
           }
         ]
-      }
+      },
+      "pr": 171,
+      "merged_head_sha": "7c77f369a4f92b168091ce5a3eb6ec1230bb6df7",
+      "merge_commit_sha": "63cd8473c8eda6706bf56cde06aa90895c8b99f5",
+      "evidence": "Merged 63cd8473c8eda6706bf56cde06aa90895c8b99f5 with the same tree as reviewed 7c77f369a4f92b168091ce5a3eb6ec1230bb6df7. Both new perpendicular pin regressions passed twice in Chromium and WebKit with no retries. 13,380 unit tests, types, lint and all builds passed. Production Workers Build 778dd02a-217b-44a9-a62a-97888d2db21a deployed Worker ce30947c-7d37-4f97-9e32-3517a124872a at 100%. The live QA project opened and painted Canvas with all four isolation headers.",
+      "work_accounted": true,
+      "completed_at": "2026-11-15T00:44:13.168Z"
     }
   ]
 }
