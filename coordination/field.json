@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T03:19:20.919Z",
+  "updated_at": "2026-11-15T03:19:44.152Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6060,7 +6060,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T03:19:20.919Z",
+      "updated_at": "2026-11-15T03:19:44.152Z",
       "lease_until": "2026-11-15T15:12:00.227Z",
       "native_handoffs": [
         {
@@ -6192,10 +6192,17 @@
             "host_available": true,
             "intent_digest": "330276d433e85033e256031296c2097e699710c5f2fe7df7edaa51e3a76f28fd"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T03:19:20.919Z",
           "request_digest": "684e75a686447399b1b04953c1477461402923b18ba6b0b126f142e8d1556ebe",
-          "step_digest": "0ba5215a136d378d2c12abab247d77521769d990083a0b3400ef1c4f4e03d12e"
+          "step_digest": "89267edbb5c681c4f249595ffd43eb7ff03c2cffe28e905324d44519cb80b503",
+          "start": {
+            "request_digest": "684e75a686447399b1b04953c1477461402923b18ba6b0b126f142e8d1556ebe",
+            "source_sha": "f5efabfbaba1037b66bb733281244af147760ed0",
+            "agent_id": "/root/shader_option_drag_verify",
+            "observed_at": "2026-11-15T03:19:41Z"
+          },
+          "started_at": "2026-11-15T03:19:44.152Z"
         }
       ],
       "card_steps": {
@@ -6207,7 +6214,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/shader-duplicate-and-webgl-20261115"
         },
-        "sequence": 7,
+        "sequence": 8,
         "complete": false,
         "steps": [
           {
@@ -6255,8 +6262,21 @@
             "id": "review-shader-option-duplication",
             "label": "Verify Option-drag shader duplication",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "desktop-shader-option-duplication-review-20261115:started",
+              "assignment": "field-shader-duplicate-and-webgl-20261115",
+              "step_id": "review-shader-option-duplication",
+              "plan_revision": "8a8ebc1f139549ebd35143ce68f30c31bff2bad2f36c155dfb7c6e1919fcbace",
+              "input_digest": "684e75a686447399b1b04953c1477461402923b18ba6b0b126f142e8d1556ebe",
+              "evidence": "sha256:8e3be3bb1dfb1ec46f03d7b07b68de7742f1d5b74f4dd4263a29cbd61015bfdf",
+              "source_sha": "f5efabfbaba1037b66bb733281244af147760ed0",
+              "observed_at": "2026-11-15T03:19:41Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              }
+            }
           }
         ]
       },
@@ -6264,13 +6284,14 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-shader-duplicate-and-webgl-20261115",
         "revision": "8a8ebc1f139549ebd35143ce68f30c31bff2bad2f36c155dfb7c6e1919fcbace",
-        "sequence": 7,
+        "sequence": 8,
         "truncated": false,
         "identities": {
           "desktop-shader-copy-context-review-20261115:started": "59ed15b990074efa33a2363684e3f67dd36f0b7404eaa5f22c15b92c5a0f2191",
           "desktop-shader-copy-context-review-20261115:result": "7e31e91ffdb460ba52320b7a3d0e5cc21ac752ebb99f2298363ec152f241959d",
           "desktop-shader-context-fit-review-20261115:started": "425189404546e692e07660911178ab76b0da7778dff8c416c39e3229263918c2",
-          "desktop-shader-context-fit-review-20261115:result": "e483d431592cc84ecad979e3667de84441df7781a6f4a13e2956f69120e6bb85"
+          "desktop-shader-context-fit-review-20261115:result": "e483d431592cc84ecad979e3667de84441df7781a6f4a13e2956f69120e6bb85",
+          "desktop-shader-option-duplication-review-20261115:started": "cd3bb16482007ae3004b2bb360b2b36c9f64db5d6a263177cd9acbc0a9099ad2"
         },
         "items": [
           {
@@ -6358,6 +6379,28 @@
               "team": "inspector"
             },
             "text": "The work is ready for verification.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          },
+          {
+            "key": "desktop-shader-option-duplication-review-20261115:started:684e75a686447399b1b04953c1477461402923b18ba6b0b126f142e8d1556ebe:running:",
+            "receipt_snapshot": "{\"label\":\"Verify Option-drag shader duplication\",\"receipt\":{\"assignment\":\"field-shader-duplicate-and-webgl-20261115\",\"evidence\":\"sha256:8e3be3bb1dfb1ec46f03d7b07b68de7742f1d5b74f4dd4263a29cbd61015bfdf\",\"id\":\"desktop-shader-option-duplication-review-20261115:started\",\"input_digest\":\"684e75a686447399b1b04953c1477461402923b18ba6b0b126f142e8d1556ebe\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"8a8ebc1f139549ebd35143ce68f30c31bff2bad2f36c155dfb7c6e1919fcbace\",\"source_sha\":\"f5efabfbaba1037b66bb733281244af147760ed0\",\"step_id\":\"review-shader-option-duplication\"},\"state\":\"running\"}",
+            "id": "desktop-shader-option-duplication-review-20261115:started",
+            "assignment": "field-shader-duplicate-and-webgl-20261115",
+            "step_id": "review-shader-option-duplication",
+            "revision": "8a8ebc1f139549ebd35143ce68f30c31bff2bad2f36c155dfb7c6e1919fcbace",
+            "label": "Verify Option-drag shader duplication",
+            "state": "running",
+            "phase": null,
+            "source_sha": "f5efabfbaba1037b66bb733281244af147760ed0",
+            "observed_at": "2026-11-15T03:19:41Z",
+            "recorded_at": "2026-11-15T03:19:44.152Z",
+            "receipt_digest": "sha256:8e3be3bb1dfb1ec46f03d7b07b68de7742f1d5b74f4dd4263a29cbd61015bfdf",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Work started.",
             "text_kind": "recorded-state",
             "artifacts": []
           }
