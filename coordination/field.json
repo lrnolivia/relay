@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:08:09.596Z",
+  "updated_at": "2026-11-15T04:09:54.651Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6742,7 +6742,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T04:08:09.596Z",
+      "updated_at": "2026-11-15T04:09:54.651Z",
       "lease_until": "2026-11-15T16:06:47.625Z",
       "native_handoffs": [
         {
@@ -6774,17 +6774,26 @@
             "host_available": true,
             "intent_digest": "74b55718b98f07dcf17dae8c33785a6cf0510ed8bae82304d0cc3058850564b0"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-15T04:07:47.535Z",
           "request_digest": "62d47205c06d8a9090f770f5b9c41b283a8c5b1ccd62329a9513bed29a86898a",
-          "step_digest": "9b1ac02c4ac4305fab4f8aa41f4d67f909acdb968fc0207308f9371d52ef8f51",
+          "step_digest": "81cc773b782f54cb42170473c0bc46b9e56862755e9a499eff236d0c936fd554",
           "start": {
             "request_digest": "62d47205c06d8a9090f770f5b9c41b283a8c5b1ccd62329a9513bed29a86898a",
             "source_sha": "34710efa08fcb39fcc8d308aaf3682ea4d333fdd",
             "agent_id": "/root/mobile_preview_gate_review",
             "observed_at": "2026-11-15T04:08:06Z"
           },
-          "started_at": "2026-11-15T04:08:09.596Z"
+          "started_at": "2026-11-15T04:08:09.596Z",
+          "result": {
+            "request_digest": "62d47205c06d8a9090f770f5b9c41b283a8c5b1ccd62329a9513bed29a86898a",
+            "source_sha": "34710efa08fcb39fcc8d308aaf3682ea4d333fdd",
+            "agent_id": "/root/mobile_preview_gate_review",
+            "observed_at": "2026-11-15T04:09:50Z",
+            "state": "failed",
+            "result_digest": "5978d0cea306a9db02359e7ccf4819519721816755adb8dcef4d9ef6971c6e9e"
+          },
+          "reported_at": "2026-11-15T04:09:54.651Z"
         }
       ],
       "card_steps": {
@@ -6796,23 +6805,23 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/mobile-preview-only-20261115"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
             "id": "review-phone-preview-gate",
             "label": "Verify the phone Preview entry and editor flag",
             "depends_on": [],
-            "state": "running",
+            "state": "failed",
             "receipt": {
-              "id": "mobile-project-preview-review-20261115:started",
+              "id": "mobile-project-preview-review-20261115:result",
               "assignment": "field-mobile-preview-only-20261115",
               "step_id": "review-phone-preview-gate",
               "plan_revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
               "input_digest": "62d47205c06d8a9090f770f5b9c41b283a8c5b1ccd62329a9513bed29a86898a",
-              "evidence": "sha256:95ec3040db69543d2b19457b03a28eea1c096dd6092ee7e61b347982941e396e",
+              "evidence": "sha256:8d46cf0925b012bb844c066df0076169409a67c30431cf7693bac3f27b7709d9",
               "source_sha": "34710efa08fcb39fcc8d308aaf3682ea4d333fdd",
-              "observed_at": "2026-11-15T04:08:06Z",
+              "observed_at": "2026-11-15T04:09:50Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
@@ -6825,10 +6834,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-mobile-preview-only-20261115",
         "revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
-          "mobile-project-preview-review-20261115:started": "316b9558c38f20506c2bcbf532383c5574b98d311a834bd69dfd17a45f045735"
+          "mobile-project-preview-review-20261115:started": "316b9558c38f20506c2bcbf532383c5574b98d311a834bd69dfd17a45f045735",
+          "mobile-project-preview-review-20261115:result": "bf3cef378e4f3dbfea138cd86e8575e716a4e64aef70690bccdc6384086ef04c"
         },
         "items": [
           {
@@ -6850,6 +6860,28 @@
               "team": "inspector"
             },
             "text": "Work started.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          },
+          {
+            "key": "mobile-project-preview-review-20261115:result:62d47205c06d8a9090f770f5b9c41b283a8c5b1ccd62329a9513bed29a86898a:failed:",
+            "receipt_snapshot": "{\"label\":\"Verify the phone Preview entry and editor flag\",\"receipt\":{\"assignment\":\"field-mobile-preview-only-20261115\",\"evidence\":\"sha256:8d46cf0925b012bb844c066df0076169409a67c30431cf7693bac3f27b7709d9\",\"id\":\"mobile-project-preview-review-20261115:result\",\"input_digest\":\"62d47205c06d8a9090f770f5b9c41b283a8c5b1ccd62329a9513bed29a86898a\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1\",\"source_sha\":\"34710efa08fcb39fcc8d308aaf3682ea4d333fdd\",\"step_id\":\"review-phone-preview-gate\"},\"state\":\"failed\"}",
+            "id": "mobile-project-preview-review-20261115:result",
+            "assignment": "field-mobile-preview-only-20261115",
+            "step_id": "review-phone-preview-gate",
+            "revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
+            "label": "Verify the phone Preview entry and editor flag",
+            "state": "failed",
+            "phase": null,
+            "source_sha": "34710efa08fcb39fcc8d308aaf3682ea4d333fdd",
+            "observed_at": "2026-11-15T04:09:50Z",
+            "recorded_at": "2026-11-15T04:09:54.651Z",
+            "receipt_digest": "sha256:8d46cf0925b012bb844c066df0076169409a67c30431cf7693bac3f27b7709d9",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "This step needs attention.",
             "text_kind": "recorded-state",
             "artifacts": []
           }
