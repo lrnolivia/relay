@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:11:41.596Z",
+  "updated_at": "2026-11-15T01:12:21.932Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4859,7 +4859,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:11:41.596Z",
+      "updated_at": "2026-11-15T01:12:21.932Z",
       "lease_until": "2026-11-15T13:07:55.981Z",
       "amendment_count": 1,
       "amendments": [
@@ -5006,6 +5006,40 @@
             }
           },
           "reported_at": "2026-11-15T01:11:41.596Z"
+        },
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "field-explicit-grid-ordered-cancel-final-review-20261114",
+          "assignment": "field-explicit-grid-cell-swap-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/explicit-grid-cell-swap-20261114",
+          "source_sha": "146a3b94dabe57166520825c7c42404f4edb9e41",
+          "objective_digest": "c4ee0daca14a8533512375e839d9843816fdb2a2bf6322873eacaff8653c3724",
+          "scope_digest": "6f0e30ec2494cb279cf0cfa9533c256cbd2327abd29926547713debdbe42c130",
+          "step_id": "review-grid-ordered-cancel-final",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "146a3b94dabe57166520825c7c42404f4edb9e41",
+            "objective_digest": "c4ee0daca14a8533512375e839d9843816fdb2a2bf6322873eacaff8653c3724",
+            "step_id": "review-grid-ordered-cancel-final",
+            "label": "Verify authored Grid order on Escape",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "770b5f516198e5908bb1e6cdfca646b88f66e656eeeafd8bc4b8935aaf8fd664"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T01:12:21.932Z",
+          "request_digest": "42d27392003628e4fc2fd50d845b1eeec5a182a8bd32d70513b1154a561f490e",
+          "step_digest": "4d786018869ed98ae1bd48aa93aeba33a4d448d737e352f10ddb90b66f6316db"
         }
       ],
       "card_steps": {
@@ -5017,7 +5051,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/explicit-grid-cell-swap-20261114"
         },
-        "sequence": 6,
+        "sequence": 7,
         "complete": false,
         "steps": [
           {
@@ -5067,6 +5101,13 @@
                 "artifacts": []
               }
             }
+          },
+          {
+            "id": "review-grid-ordered-cancel-final",
+            "label": "Verify authored Grid order on Escape",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -5074,7 +5115,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-explicit-grid-cell-swap-20261114",
         "revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
-        "sequence": 6,
+        "sequence": 7,
         "truncated": false,
         "identities": {
           "field-explicit-grid-cell-swap-review-20261114:started": "69a3add1b57bf8be588216ef61fc359b9519a607ac0516ef317298a316a9054b",
