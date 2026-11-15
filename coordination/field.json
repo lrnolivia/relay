@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:22:10.337Z",
+  "updated_at": "2026-11-15T01:22:32.252Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5354,7 +5354,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:22:10.337Z",
+      "updated_at": "2026-11-15T01:22:32.252Z",
       "lease_until": "2026-11-15T13:21:51.402Z",
       "supporting_roles": [
         "verifier"
@@ -5418,10 +5418,21 @@
             "host_available": true,
             "intent_digest": "ce1832962104a9b756893f15681dfc12d9eac648c3eaf016e9e6e6195f6fb757"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T01:22:10.337Z",
           "request_digest": "bcd714b7de53234dad9775a4d4647e3eb1e55b62ea1eff73459868091e282971",
-          "step_digest": "c1ee7794b4085d5c44847841bc8a6f4b3cd47cfe80b328d7fc411b0283ca0d1f"
+          "step_digest": "24a7a5f95b078dd58df857fca68db23efe492fb35c8783212d1a54d81d3cd3ec",
+          "start": {
+            "request_digest": "bcd714b7de53234dad9775a4d4647e3eb1e55b62ea1eff73459868091e282971",
+            "source_sha": "b06e20c4265800f433881d183dcfc74fbe6f00e0",
+            "agent_id": "/root/grid_ruler_verify",
+            "observed_at": "2026-11-15T01:22:29Z",
+            "update": {
+              "text": "Independent review is checking Grid ruler feedback and when it clears.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-15T01:22:32.252Z"
         }
       ],
       "card_steps": {
@@ -5433,15 +5444,32 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/grid-slot-ruler-feedback-20261114"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "review-grid-slot-rulers",
             "label": "Verify Grid and flex ruler feedback",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "field-grid-slot-ruler-final-review-20261114:started",
+              "assignment": "field-grid-slot-ruler-feedback-20261114",
+              "step_id": "review-grid-slot-rulers",
+              "plan_revision": "3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9",
+              "input_digest": "bcd714b7de53234dad9775a4d4647e3eb1e55b62ea1eff73459868091e282971",
+              "evidence": "sha256:9905af9a8fc2f2e80d24cfe1a6c9b439d4081cd7e264a1acb4195332a870c1c6",
+              "source_sha": "b06e20c4265800f433881d183dcfc74fbe6f00e0",
+              "observed_at": "2026-11-15T01:22:29Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review is checking Grid ruler feedback and when it clears.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -5449,10 +5477,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-grid-slot-ruler-feedback-20261114",
         "revision": "3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "field-grid-slot-ruler-final-review-20261114:started": "b641a19d84b18558ea5d9629586d3ae585cb26ee471bfde767e331622c3f9c32"
+        },
+        "items": [
+          {
+            "key": "field-grid-slot-ruler-final-review-20261114:started:bcd714b7de53234dad9775a4d4647e3eb1e55b62ea1eff73459868091e282971:running:",
+            "receipt_snapshot": "{\"label\":\"Verify Grid and flex ruler feedback\",\"receipt\":{\"assignment\":\"field-grid-slot-ruler-feedback-20261114\",\"evidence\":\"sha256:9905af9a8fc2f2e80d24cfe1a6c9b439d4081cd7e264a1acb4195332a870c1c6\",\"id\":\"field-grid-slot-ruler-final-review-20261114:started\",\"input_digest\":\"bcd714b7de53234dad9775a4d4647e3eb1e55b62ea1eff73459868091e282971\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9\",\"source_sha\":\"b06e20c4265800f433881d183dcfc74fbe6f00e0\",\"step_id\":\"review-grid-slot-rulers\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is checking Grid ruler feedback and when it clears.\"}},\"state\":\"running\"}",
+            "id": "field-grid-slot-ruler-final-review-20261114:started",
+            "assignment": "field-grid-slot-ruler-feedback-20261114",
+            "step_id": "review-grid-slot-rulers",
+            "revision": "3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9",
+            "label": "Verify Grid and flex ruler feedback",
+            "state": "running",
+            "phase": null,
+            "source_sha": "b06e20c4265800f433881d183dcfc74fbe6f00e0",
+            "observed_at": "2026-11-15T01:22:29Z",
+            "recorded_at": "2026-11-15T01:22:32.252Z",
+            "receipt_digest": "sha256:9905af9a8fc2f2e80d24cfe1a6c9b439d4081cd7e264a1acb4195332a870c1c6",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review is checking Grid ruler feedback and when it clears.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
