@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:35:34.156Z",
+  "updated_at": "2026-11-15T02:05:53.154Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5666,6 +5666,68 @@
       "evidence": "PR #174 shipped 3478d175d0adc6b1a12ca89a5bd42500bcb5655c, Worker 9765ef3e-ca99-4280-b4d2-d28777fcabb6 at 100% with saved production QA first paint and four isolation headers. Grid ruler feedback now measures the rendered slot for both axes and invalidates on both Option ghost changes. Final Chromium and WebKit each passed seven focused cases, and 13,380 units, typecheck, lint and builds passed. Fixed swaps are scoped to the supported placement forms in #173. Remaining layout semantics are tracked in #24 and blocked on #22 and #25. Custom-fill audit reproduced shared desktop breakpoint writes for Pattern, Shader and Video and the inert Create shader button. Mobile parked.",
       "work_accounted": true,
       "completed_at": "2026-11-15T01:35:34.156Z"
+    },
+    {
+      "id": "field-responsive-managed-fills-20261114",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/responsive-managed-fills-20261114",
+      "paths": [
+        "src/editor/tools/StylesTool/atoms/FillControl.tsx",
+        "src/editor/ui/managed-fill-styles.ts",
+        "src/editor/ui/responsive-managed-fill.ts",
+        "src/editor/ui/ShaderFillTab.tsx",
+        "src/editor/ui/shader-fill-contract.test.ts",
+        "src/editor/ui/pattern-fill-contract.test.ts",
+        "src/editor/e2e/fill-effects-apply.spec.ts",
+        "src/code/generation/generator-video.ts",
+        "src/code/generation/responsive-managed-fill.ts",
+        "src/code/mutation/mutation-queue.ts",
+        "src/code/parsing/parser.ts",
+        "src/canvas/Renderer.ts",
+        "src/code/project/default-code-components/MeshGradient.ts",
+        "src/editor/controls/ControlProvider.tsx",
+        "src/editor/ui/create-shader-fill.ts",
+        "src/canvas/renderer-patch-key.ts"
+      ],
+      "resources": [
+        "managed-fill-source",
+        "responsive-fill-lifecycle"
+      ],
+      "goal": "Fix active breakpoint isolation for Pattern, Shader and Video and implement shader creation in the library.",
+      "acceptance": "On multiple desktop breakpoints, adding, editing, clearing and switching managed fills affects only the selected breakpoint in Canvas and Preview, with save/reopen, Undo, existing paints and masks preserved. Create shader saves an editable and reusable project shader and applies it to the selected breakpoint. Audit adjacent fill workflows on desktop.",
+      "next_action": "Implement scoped managed paints using authored breakpoint bands and existing shader installers, then verify multi-breakpoint changes, Preview and save/reopen in desktop Chromium and WebKit.",
+      "category": "implementation",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "primary_team": "source",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "rafael",
+      "supporting_staff": [
+        "roman"
+      ],
+      "base_sha": "3478d175d0adc6b1a12ca89a5bd42500bcb5655c",
+      "state": "active",
+      "created_at": "2026-11-15T02:05:53.154Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Fix active breakpoint isolation for Pattern, Shader and Video and implement shader creation in the library.",
+          "acceptance": "On multiple desktop breakpoints, adding, editing, clearing and switching managed fills affects only the selected breakpoint in Canvas and Preview, with save/reopen, Undo, existing paints and masks preserved. Create shader saves an editable and reusable project shader and applies it to the selected breakpoint. Audit adjacent fill workflows on desktop.",
+          "at": "2026-11-15T02:05:53.154Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-responsive-managed-fills-20261114:acceptance:0",
+            "text": "On multiple desktop breakpoints, adding, editing, clearing and switching managed fills affects only the selected breakpoint in Canvas and Preview, with save/reopen, Undo, existing paints and masks preserved. Create shader saves an editable and reusable project shader and applies it to the selected breakpoint. Audit adjacent fill workflows on desktop.",
+            "at": "2026-11-15T02:05:53.154Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-15T02:05:53.154Z",
+      "lease_until": "2026-11-15T14:05:53.154Z"
     }
   ]
 }
