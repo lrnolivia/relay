@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:00:24.146Z",
+  "updated_at": "2026-11-15T01:03:32.115Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4858,7 +4858,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:00:24.146Z",
+      "updated_at": "2026-11-15T01:03:32.115Z",
       "lease_until": "2026-11-15T13:00:24.146Z",
       "amendment_count": 1,
       "amendments": [
@@ -4888,7 +4888,73 @@
             ]
           }
         }
-      ]
+      ],
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "field-explicit-grid-cell-swap-review-20261114",
+          "assignment": "field-explicit-grid-cell-swap-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/explicit-grid-cell-swap-20261114",
+          "source_sha": "166d5e27fda16fa9b33f7ebacc3e69bb5e3669aa",
+          "objective_digest": "c4ee0daca14a8533512375e839d9843816fdb2a2bf6322873eacaff8653c3724",
+          "scope_digest": "eb04f58a639cc79e172ef20c160065db9a7d705751ff3a4eee0b20a8ef95f0d2",
+          "step_id": "review-explicit-grid-cell-swap",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "166d5e27fda16fa9b33f7ebacc3e69bb5e3669aa",
+            "objective_digest": "c4ee0daca14a8533512375e839d9843816fdb2a2bf6322873eacaff8653c3724",
+            "step_id": "review-explicit-grid-cell-swap",
+            "label": "Verify explicit Grid swaps and cancellation",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "cea3095a9f90a6b95162cacabbb1264657e29843537967bcc27488a51605ea96"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T01:03:32.115Z",
+          "request_digest": "5d6d70134248ac2e3caf08acc6af9a37dfe6e6b60387e2bab72204106fa40b06",
+          "step_digest": "c45253dead8962be81478783611090cf6deb53d0f9e40c58a416a3bbe5893d8b"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "field-explicit-grid-cell-swap-20261114",
+        "revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
+        "objective_digest": "c4ee0daca14a8533512375e839d9843816fdb2a2bf6322873eacaff8653c3724",
+        "publisher": {
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/explicit-grid-cell-swap-20261114"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "review-explicit-grid-cell-swap",
+            "label": "Verify explicit Grid swaps and cancellation",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "field-explicit-grid-cell-swap-20261114",
+        "revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
