@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T03:06:48.004Z",
+  "updated_at": "2026-11-15T03:09:22.565Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6057,7 +6057,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T03:06:48.004Z",
+      "updated_at": "2026-11-15T03:09:22.565Z",
       "lease_until": "2026-11-15T15:04:24.872Z",
       "native_handoffs": [
         {
@@ -6109,6 +6109,40 @@
             "result_digest": "33d11b814a7c0fcfea5e884d0833672416436b46c89a5a6db58dca150b4bd970"
           },
           "reported_at": "2026-11-15T03:06:48.004Z"
+        },
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "desktop-shader-context-fit-review-20261115",
+          "assignment": "field-shader-duplicate-and-webgl-20261115",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/shader-duplicate-and-webgl-20261115",
+          "source_sha": "6656335f84498622983f3602ce751cce92b08f98",
+          "objective_digest": "93e2d56eedb648dab9625165fc39c37a02c084d68add6836b9fcb17ef887d03a",
+          "scope_digest": "a7e6b54794cf9f286e77d4609e24c87858abe702cbea6b0d9d1a99b76d9e1190",
+          "step_id": "review-same-size-webgl-program",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "6656335f84498622983f3602ce751cce92b08f98",
+            "objective_digest": "93e2d56eedb648dab9625165fc39c37a02c084d68add6836b9fcb17ef887d03a",
+            "step_id": "review-same-size-webgl-program",
+            "label": "Verify WebGL sizing after edits",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "b31f681b046c0cc9d34a81781ed19bc9494aca2b05c5a9f1bbe17faffc8acaad"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T03:09:22.565Z",
+          "request_digest": "d379a85a1275f60b0273f250e0663272106cbd0d68cd8224512933cd1033005c",
+          "step_digest": "7da80dfd7639f2678987c249e76b5480c454ad6766da55f6333ff0ff8d45c168"
         }
       ],
       "card_steps": {
@@ -6120,7 +6154,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/shader-duplicate-and-webgl-20261115"
         },
-        "sequence": 3,
+        "sequence": 4,
         "complete": false,
         "steps": [
           {
@@ -6142,6 +6176,13 @@
                 "team": "inspector"
               }
             }
+          },
+          {
+            "id": "review-same-size-webgl-program",
+            "label": "Verify WebGL sizing after edits",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -6149,7 +6190,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-shader-duplicate-and-webgl-20261115",
         "revision": "8a8ebc1f139549ebd35143ce68f30c31bff2bad2f36c155dfb7c6e1919fcbace",
-        "sequence": 3,
+        "sequence": 4,
         "truncated": false,
         "identities": {
           "desktop-shader-copy-context-review-20261115:started": "59ed15b990074efa33a2363684e3f67dd36f0b7404eaa5f22c15b92c5a0f2191",
