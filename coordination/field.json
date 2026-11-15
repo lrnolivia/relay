@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:06:47.625Z",
+  "updated_at": "2026-11-15T04:07:47.535Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6742,8 +6742,74 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T04:06:47.625Z",
-      "lease_until": "2026-11-15T16:06:47.625Z"
+      "updated_at": "2026-11-15T04:07:47.535Z",
+      "lease_until": "2026-11-15T16:06:47.625Z",
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "mobile-project-preview-review-20261115",
+          "assignment": "field-mobile-preview-only-20261115",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/mobile-preview-only-20261115",
+          "source_sha": "34710efa08fcb39fcc8d308aaf3682ea4d333fdd",
+          "objective_digest": "6de6ee566d8ad2e38c9e02b4857915cec57993e9355557173e60f32930afee95",
+          "scope_digest": "3a19ca0f1a2c5cbf1aefcd60699b838aef90c04f066a75c3975a897f84d31742",
+          "step_id": "review-phone-preview-gate",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "34710efa08fcb39fcc8d308aaf3682ea4d333fdd",
+            "objective_digest": "6de6ee566d8ad2e38c9e02b4857915cec57993e9355557173e60f32930afee95",
+            "step_id": "review-phone-preview-gate",
+            "label": "Verify the phone Preview entry and editor flag",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "74b55718b98f07dcf17dae8c33785a6cf0510ed8bae82304d0cc3058850564b0"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T04:07:47.535Z",
+          "request_digest": "62d47205c06d8a9090f770f5b9c41b283a8c5b1ccd62329a9513bed29a86898a",
+          "step_digest": "abcde515917c0259ef350e70bbeabf50df7422cc2456ab4fcbc8ea11adf88581"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "field-mobile-preview-only-20261115",
+        "revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
+        "objective_digest": "6de6ee566d8ad2e38c9e02b4857915cec57993e9355557173e60f32930afee95",
+        "publisher": {
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/mobile-preview-only-20261115"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "review-phone-preview-gate",
+            "label": "Verify the phone Preview entry and editor flag",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "field-mobile-preview-only-20261115",
+        "revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
