@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:36:34.774Z",
+  "updated_at": "2026-11-15T00:38:33.409Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4248,7 +4248,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:36:34.774Z",
+      "updated_at": "2026-11-15T00:38:33.409Z",
       "lease_until": "2026-11-15T12:36:34.774Z",
       "supporting_roles": [
         "verifier"
@@ -4281,7 +4281,73 @@
             ]
           }
         }
-      ]
+      ],
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "field-resize-opposing-insets-review-20261114",
+          "assignment": "field-resize-release-pins-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/resize-release-pins-20261114",
+          "source_sha": "7c77f369a4f92b168091ce5a3eb6ec1230bb6df7",
+          "objective_digest": "ba8ffa8753549b07337fcf45def803ef903a9e9d6931d6c814f2ea41b5577745",
+          "scope_digest": "623192494252d88ac64f15224f84677a5e1c5bd25ba25b1c5dd936c64595b84e",
+          "step_id": "review-opposing-pin-restore",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "7c77f369a4f92b168091ce5a3eb6ec1230bb6df7",
+            "objective_digest": "ba8ffa8753549b07337fcf45def803ef903a9e9d6931d6c814f2ea41b5577745",
+            "step_id": "review-opposing-pin-restore",
+            "label": "Verify opposing pins after Shift resize",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "cae503c30da07b0e989c6172246b843a7484eb6bd9958da99776b823aee9ad49"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T00:38:33.409Z",
+          "request_digest": "ab19c8eae80050c984644c35e8f2064a366da0da46e623f37811177252612dd0",
+          "step_digest": "79a4fc21fdcaf0086fc780e69eee60b1dbafabd418efec3149d2505464bddf79"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "field-resize-release-pins-20261114",
+        "revision": "ed477bac302a4eecc932d86e25236e20f3cc961201cc18adc6f54b7abeae4591",
+        "objective_digest": "ba8ffa8753549b07337fcf45def803ef903a9e9d6931d6c814f2ea41b5577745",
+        "publisher": {
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/resize-release-pins-20261114"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "review-opposing-pin-restore",
+            "label": "Verify opposing pins after Shift resize",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "field-resize-release-pins-20261114",
+        "revision": "ed477bac302a4eecc932d86e25236e20f3cc961201cc18adc6f54b7abeae4591",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
