@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T05:54:30.872Z",
+  "updated_at": "2026-11-15T05:55:08.061Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7320,7 +7320,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T05:54:30.872Z",
+      "updated_at": "2026-11-15T05:55:08.061Z",
       "lease_until": "2026-11-15T17:51:35.228Z",
       "supporting_roles": [
         "verifier"
@@ -7395,10 +7395,10 @@
             "host_available": true,
             "intent_digest": "470f67ee99273b31191e0e95042149fe31eb70dd8f0160b90131c931f090bacd"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-15T05:51:53.592Z",
           "request_digest": "d0858c579fac27cd8c2ee200abaeaf604f5623dfd4f3086d4ff2ce0f460d46fa",
-          "step_digest": "a0e6f7f7a071c80daabb607e486a2f9ab2b7a2f5820626abc7ecbd12eedf1459",
+          "step_digest": "353129a1acccf23bde5f22e662ae4f3d6f349b37ce31929cfa5c04223fbdf5a0",
           "start": {
             "request_digest": "d0858c579fac27cd8c2ee200abaeaf604f5623dfd4f3086d4ff2ce0f460d46fa",
             "source_sha": "f6977e1034c53814e3e21332fdaba7c173217c90",
@@ -7409,7 +7409,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-15T05:54:30.872Z"
+          "started_at": "2026-11-15T05:54:30.872Z",
+          "result": {
+            "request_digest": "d0858c579fac27cd8c2ee200abaeaf604f5623dfd4f3086d4ff2ce0f460d46fa",
+            "source_sha": "f6977e1034c53814e3e21332fdaba7c173217c90",
+            "agent_id": "/root/viewer_thumbnail_review",
+            "observed_at": "2026-11-15T05:55:01Z",
+            "state": "succeeded",
+            "result_digest": "a18ecb375344f553fbac6207d20ee046e36c4b2e582924f740d667657bbc95a1",
+            "update": {
+              "text": "Independent source review found no blocking findings. Focused tests passed; deployed browser acceptance remains separately verified.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-15T05:55:08.061Z"
         }
       ],
       "card_steps": {
@@ -7421,31 +7434,32 @@
           "owner": "field-overnight-20261115",
           "branch": "field/viewer-thumbnail-20261115"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
             "id": "review",
             "label": "Review viewer thumbnail suppression",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "field-viewer-thumbnail-review-1:started",
+              "id": "field-viewer-thumbnail-review-1:result",
               "assignment": "field-viewer-thumbnail-20261115",
               "step_id": "review",
               "plan_revision": "bded13105830cd328720559653c94f9a67d26caf83dded922c62694d781bb074",
               "input_digest": "d0858c579fac27cd8c2ee200abaeaf604f5623dfd4f3086d4ff2ce0f460d46fa",
-              "evidence": "sha256:99f69f7d45716cc087530d88036be5d5899d04d52ae2d49ce01a257bedf851f0",
+              "evidence": "sha256:5811c1c69d80d3d2114b18a0fcf9a705094b4d7bcb48b3afc255e437804bde90",
               "source_sha": "f6977e1034c53814e3e21332fdaba7c173217c90",
-              "observed_at": "2026-11-15T05:54:23Z",
+              "observed_at": "2026-11-15T05:55:01Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "Independent review ran against the exact review commit; source and tests were inspected without edits.",
+                "text": "Independent source review found no blocking findings. Focused tests passed; deployed browser acceptance remains separately verified.",
                 "artifacts": []
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -7454,10 +7468,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-viewer-thumbnail-20261115",
         "revision": "bded13105830cd328720559653c94f9a67d26caf83dded922c62694d781bb074",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
-          "field-viewer-thumbnail-review-1:started": "17874709168841369f4247f5ee40248aa916516b55408fdfd93e66750ca06980"
+          "field-viewer-thumbnail-review-1:started": "17874709168841369f4247f5ee40248aa916516b55408fdfd93e66750ca06980",
+          "field-viewer-thumbnail-review-1:result": "fcdb8def5c3d8a04c7640557fe046c447c05f5d5134328f450c06c1817726181"
         },
         "items": [
           {
@@ -7479,6 +7494,28 @@
               "team": "inspector"
             },
             "text": "Independent review ran against the exact review commit; source and tests were inspected without edits.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "field-viewer-thumbnail-review-1:result:d0858c579fac27cd8c2ee200abaeaf604f5623dfd4f3086d4ff2ce0f460d46fa:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Review viewer thumbnail suppression\",\"receipt\":{\"assignment\":\"field-viewer-thumbnail-20261115\",\"evidence\":\"sha256:5811c1c69d80d3d2114b18a0fcf9a705094b4d7bcb48b3afc255e437804bde90\",\"id\":\"field-viewer-thumbnail-review-1:result\",\"input_digest\":\"d0858c579fac27cd8c2ee200abaeaf604f5623dfd4f3086d4ff2ce0f460d46fa\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"bded13105830cd328720559653c94f9a67d26caf83dded922c62694d781bb074\",\"source_sha\":\"f6977e1034c53814e3e21332fdaba7c173217c90\",\"step_id\":\"review\",\"update\":{\"artifacts\":[],\"text\":\"Independent source review found no blocking findings. Focused tests passed; deployed browser acceptance remains separately verified.\"}},\"state\":\"blocked\"}",
+            "id": "field-viewer-thumbnail-review-1:result",
+            "assignment": "field-viewer-thumbnail-20261115",
+            "step_id": "review",
+            "revision": "bded13105830cd328720559653c94f9a67d26caf83dded922c62694d781bb074",
+            "label": "Review viewer thumbnail suppression",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "f6977e1034c53814e3e21332fdaba7c173217c90",
+            "observed_at": "2026-11-15T05:55:01Z",
+            "recorded_at": "2026-11-15T05:55:08.061Z",
+            "receipt_digest": "sha256:5811c1c69d80d3d2114b18a0fcf9a705094b4d7bcb48b3afc255e437804bde90",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent source review found no blocking findings. Focused tests passed; deployed browser acceptance remains separately verified.",
             "text_kind": "owner-published",
             "artifacts": []
           }
