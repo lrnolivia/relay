@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:30:42.036Z",
+  "updated_at": "2026-11-15T04:32:12.537Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7062,7 +7062,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T04:30:42.036Z",
+      "updated_at": "2026-11-15T04:32:12.537Z",
       "lease_until": "2026-11-15T16:29:33.335Z",
       "native_handoffs": [
         {
@@ -7094,17 +7094,26 @@
             "host_available": true,
             "intent_digest": "1e483045b0729680595ac57799f681d7886da05490f1c8f3d8b33bf7bba87e0a"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-15T04:30:18.505Z",
           "request_digest": "2f13633a64eea0281cbb2a06f5a451f7d199d62f956e8d30d932b6af8d3524d3",
-          "step_digest": "017f929b24564d68f19dd4d5be50b968939f1bcdf6af03965242ca73a280db66",
+          "step_digest": "d3d3f089a98e42314e0592c6eeb363e2b582d152fe92b52292ab86a3eebb94be",
           "start": {
             "request_digest": "2f13633a64eea0281cbb2a06f5a451f7d199d62f956e8d30d932b6af8d3524d3",
             "source_sha": "e331065e73452cbe23b68189ef3cccb396f814aa",
             "agent_id": "/root/branch_preview_origin_verify",
             "observed_at": "2026-11-15T04:30:39Z"
           },
-          "started_at": "2026-11-15T04:30:42.036Z"
+          "started_at": "2026-11-15T04:30:42.036Z",
+          "result": {
+            "request_digest": "2f13633a64eea0281cbb2a06f5a451f7d199d62f956e8d30d932b6af8d3524d3",
+            "source_sha": "e331065e73452cbe23b68189ef3cccb396f814aa",
+            "agent_id": "/root/branch_preview_origin_verify",
+            "observed_at": "2026-11-15T04:32:08Z",
+            "state": "succeeded",
+            "result_digest": "e7e304a090e30adc5b8b41eddacd6cdf78b9c75a1b1a93780edc69888a774149"
+          },
+          "reported_at": "2026-11-15T04:32:12.537Z"
         }
       ],
       "card_steps": {
@@ -7116,27 +7125,28 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/branch-preview-origin-20261115"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
             "id": "verify-branch-preview-assets",
             "label": "Verify isolated branch Preview routing",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "branch-preview-origin-review-20261115:started",
+              "id": "branch-preview-origin-review-20261115:result",
               "assignment": "field-branch-preview-origin-20261115",
               "step_id": "verify-branch-preview-assets",
               "plan_revision": "cde10169d53da34a34cf898be342bbcb1058c2463a99b9277fe0083680bba5ba",
               "input_digest": "2f13633a64eea0281cbb2a06f5a451f7d199d62f956e8d30d932b6af8d3524d3",
-              "evidence": "sha256:196b4d9bf0e49852bf694288d6995c75982c7d7e26cceeee160d7136aaf87308",
+              "evidence": "sha256:b635d8eecb1c956e51b7ae85d45c18583f832070d88ce6767139542cbebf7dbf",
               "source_sha": "e331065e73452cbe23b68189ef3cccb396f814aa",
-              "observed_at": "2026-11-15T04:30:39Z",
+              "observed_at": "2026-11-15T04:32:08Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -7145,10 +7155,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-branch-preview-origin-20261115",
         "revision": "cde10169d53da34a34cf898be342bbcb1058c2463a99b9277fe0083680bba5ba",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
-          "branch-preview-origin-review-20261115:started": "f1469aa7e5b0959017b6e7169407202cf7d1add9548170d58760bae3353bd6b0"
+          "branch-preview-origin-review-20261115:started": "f1469aa7e5b0959017b6e7169407202cf7d1add9548170d58760bae3353bd6b0",
+          "branch-preview-origin-review-20261115:result": "a2bd93a390c8e85bb400a861bc4910820ca58b0eb1c1641371728c4c0ba66686"
         },
         "items": [
           {
@@ -7170,6 +7181,28 @@
               "team": "inspector"
             },
             "text": "Work started.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          },
+          {
+            "key": "branch-preview-origin-review-20261115:result:2f13633a64eea0281cbb2a06f5a451f7d199d62f956e8d30d932b6af8d3524d3:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Verify isolated branch Preview routing\",\"receipt\":{\"assignment\":\"field-branch-preview-origin-20261115\",\"evidence\":\"sha256:b635d8eecb1c956e51b7ae85d45c18583f832070d88ce6767139542cbebf7dbf\",\"id\":\"branch-preview-origin-review-20261115:result\",\"input_digest\":\"2f13633a64eea0281cbb2a06f5a451f7d199d62f956e8d30d932b6af8d3524d3\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"cde10169d53da34a34cf898be342bbcb1058c2463a99b9277fe0083680bba5ba\",\"source_sha\":\"e331065e73452cbe23b68189ef3cccb396f814aa\",\"step_id\":\"verify-branch-preview-assets\"},\"state\":\"blocked\"}",
+            "id": "branch-preview-origin-review-20261115:result",
+            "assignment": "field-branch-preview-origin-20261115",
+            "step_id": "verify-branch-preview-assets",
+            "revision": "cde10169d53da34a34cf898be342bbcb1058c2463a99b9277fe0083680bba5ba",
+            "label": "Verify isolated branch Preview routing",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "e331065e73452cbe23b68189ef3cccb396f814aa",
+            "observed_at": "2026-11-15T04:32:08Z",
+            "recorded_at": "2026-11-15T04:32:12.537Z",
+            "receipt_digest": "sha256:b635d8eecb1c956e51b7ae85d45c18583f832070d88ce6767139542cbebf7dbf",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The work is ready for verification.",
             "text_kind": "recorded-state",
             "artifacts": []
           }
