@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:12:44.865Z",
+  "updated_at": "2026-11-15T01:13:31.202Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4859,7 +4859,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:12:44.865Z",
+      "updated_at": "2026-11-15T01:13:31.202Z",
       "lease_until": "2026-11-15T13:07:55.981Z",
       "amendment_count": 1,
       "amendments": [
@@ -5036,10 +5036,10 @@
             "host_available": true,
             "intent_digest": "770b5f516198e5908bb1e6cdfca646b88f66e656eeeafd8bc4b8935aaf8fd664"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-15T01:12:21.932Z",
           "request_digest": "42d27392003628e4fc2fd50d845b1eeec5a182a8bd32d70513b1154a561f490e",
-          "step_digest": "931cd98ed62af7bfad4944e940c9356cc2d7ea007e90447a86e7630c3abc7669",
+          "step_digest": "b6798d1401ecb0a86f11c2a9361166a5add2f7810e281829d69569c82cdf9ab7",
           "start": {
             "request_digest": "42d27392003628e4fc2fd50d845b1eeec5a182a8bd32d70513b1154a561f490e",
             "source_sha": "146a3b94dabe57166520825c7c42404f4edb9e41",
@@ -5050,7 +5050,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-15T01:12:44.865Z"
+          "started_at": "2026-11-15T01:12:44.865Z",
+          "result": {
+            "request_digest": "42d27392003628e4fc2fd50d845b1eeec5a182a8bd32d70513b1154a561f490e",
+            "source_sha": "146a3b94dabe57166520825c7c42404f4edb9e41",
+            "agent_id": "/root/explicit_grid_cancel_verify",
+            "observed_at": "2026-11-15T01:13:27Z",
+            "state": "succeeded",
+            "result_digest": "96edcc45639d99f380169b491e3806410889cfcaae2763e77120b695cc7865ec",
+            "update": {
+              "text": "Review confirmed that Escape restores Grid placement and authored order, including when it differs from DOM order.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-15T01:13:31.202Z"
         }
       ],
       "card_steps": {
@@ -5062,7 +5075,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/explicit-grid-cell-swap-20261114"
         },
-        "sequence": 8,
+        "sequence": 9,
         "complete": false,
         "steps": [
           {
@@ -5117,24 +5130,25 @@
             "id": "review-grid-ordered-cancel-final",
             "label": "Verify authored Grid order on Escape",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "field-explicit-grid-ordered-cancel-final-review-20261114:started",
+              "id": "field-explicit-grid-ordered-cancel-final-review-20261114:result",
               "assignment": "field-explicit-grid-cell-swap-20261114",
               "step_id": "review-grid-ordered-cancel-final",
               "plan_revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
               "input_digest": "42d27392003628e4fc2fd50d845b1eeec5a182a8bd32d70513b1154a561f490e",
-              "evidence": "sha256:4121c5f686e7b22e9b8e0e9d86b0331c9c810066ea7a9663f32a46ebc351b0e3",
+              "evidence": "sha256:1a16c6e1188fbbf4668bb549306234a3988194c24e8d182bdd571ccf64277ab9",
               "source_sha": "146a3b94dabe57166520825c7c42404f4edb9e41",
-              "observed_at": "2026-11-15T01:12:40Z",
+              "observed_at": "2026-11-15T01:13:27Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "Independent review is confirming Escape restores the authored Grid order and placement.",
+                "text": "Review confirmed that Escape restores Grid placement and authored order, including when it differs from DOM order.",
                 "artifacts": []
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -5143,14 +5157,15 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-explicit-grid-cell-swap-20261114",
         "revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
-        "sequence": 8,
+        "sequence": 9,
         "truncated": false,
         "identities": {
           "field-explicit-grid-cell-swap-review-20261114:started": "69a3add1b57bf8be588216ef61fc359b9519a607ac0516ef317298a316a9054b",
           "field-explicit-grid-cell-swap-review-20261114:result": "14176814288251d65f42a04832891acf953e3fef9c9e539babac13981f2e7c7b",
           "field-explicit-grid-swap-scoped-final-review-20261114:started": "997575b3b987de521629e546b4bb98b54367174607a75b9716beaf519605f1f4",
           "field-explicit-grid-swap-scoped-final-review-20261114:result": "684481c5f85b79122ebfd968e8c07496a668ea4baf79b69235426f17a3e74b53",
-          "field-explicit-grid-ordered-cancel-final-review-20261114:started": "5569b1fd4436e70ee74c1bcef18a372375a57e5c340529fbffa4936eb5ae5873"
+          "field-explicit-grid-ordered-cancel-final-review-20261114:started": "5569b1fd4436e70ee74c1bcef18a372375a57e5c340529fbffa4936eb5ae5873",
+          "field-explicit-grid-ordered-cancel-final-review-20261114:result": "64fdbffc7ba8c49152436f4651b33a492b1a6f154c49c3b430ecaf76b920ce0f"
         },
         "items": [
           {
@@ -5260,6 +5275,28 @@
               "team": "inspector"
             },
             "text": "Independent review is confirming Escape restores the authored Grid order and placement.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "field-explicit-grid-ordered-cancel-final-review-20261114:result:42d27392003628e4fc2fd50d845b1eeec5a182a8bd32d70513b1154a561f490e:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Verify authored Grid order on Escape\",\"receipt\":{\"assignment\":\"field-explicit-grid-cell-swap-20261114\",\"evidence\":\"sha256:1a16c6e1188fbbf4668bb549306234a3988194c24e8d182bdd571ccf64277ab9\",\"id\":\"field-explicit-grid-ordered-cancel-final-review-20261114:result\",\"input_digest\":\"42d27392003628e4fc2fd50d845b1eeec5a182a8bd32d70513b1154a561f490e\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28\",\"source_sha\":\"146a3b94dabe57166520825c7c42404f4edb9e41\",\"step_id\":\"review-grid-ordered-cancel-final\",\"update\":{\"artifacts\":[],\"text\":\"Review confirmed that Escape restores Grid placement and authored order, including when it differs from DOM order.\"}},\"state\":\"blocked\"}",
+            "id": "field-explicit-grid-ordered-cancel-final-review-20261114:result",
+            "assignment": "field-explicit-grid-cell-swap-20261114",
+            "step_id": "review-grid-ordered-cancel-final",
+            "revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
+            "label": "Verify authored Grid order on Escape",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "146a3b94dabe57166520825c7c42404f4edb9e41",
+            "observed_at": "2026-11-15T01:13:27Z",
+            "recorded_at": "2026-11-15T01:13:31.202Z",
+            "receipt_digest": "sha256:1a16c6e1188fbbf4668bb549306234a3988194c24e8d182bdd571ccf64277ab9",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Review confirmed that Escape restores Grid placement and authored order, including when it differs from DOM order.",
             "text_kind": "owner-published",
             "artifacts": []
           }
