@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:50:23.270Z",
+  "updated_at": "2026-11-15T00:50:44.225Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4488,7 +4488,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:50:23.270Z",
+      "updated_at": "2026-11-15T00:50:44.225Z",
       "lease_until": "2026-11-15T12:47:04.997Z",
       "supporting_roles": [
         "verifier"
@@ -4610,10 +4610,21 @@
             "host_available": true,
             "intent_digest": "f9cef1af4b2ef8887334dd82da0c286af978d9b1ce1f8746c932c081a654f766"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T00:50:23.270Z",
           "request_digest": "dc86f03116aa44d2415e695a3a37e626c2b73fc023e1b58eb16993ef931e87db",
-          "step_digest": "93ff4aa17a70113228d57a2a33051a3983cae01915ab08552826487466b92de9"
+          "step_digest": "033ee51f52e66b7abaa1243fc1c9a1f92c948a6e854f38c7ad55ae2685f8a151",
+          "start": {
+            "request_digest": "dc86f03116aa44d2415e695a3a37e626c2b73fc023e1b58eb16993ef931e87db",
+            "source_sha": "2040b428a8e9ce25c2d56a43ca3fde8d810b6d76",
+            "agent_id": "/root/grid_bounds_final_verify",
+            "observed_at": "2026-11-15T00:50:41Z",
+            "update": {
+              "text": "Independent review is confirming that the new helper preserves the existing flex bounds contract.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-15T00:50:44.225Z"
         }
       ],
       "card_steps": {
@@ -4625,7 +4636,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/grid-drag-viewport-bounds-20261114"
         },
-        "sequence": 4,
+        "sequence": 5,
         "complete": false,
         "steps": [
           {
@@ -4656,8 +4667,25 @@
             "id": "review-grid-bounds-contract",
             "label": "Verify shared bounds compatibility",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "field-grid-drag-viewport-final-review-20261114:started",
+              "assignment": "field-grid-drag-viewport-bounds-20261114",
+              "step_id": "review-grid-bounds-contract",
+              "plan_revision": "14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e",
+              "input_digest": "dc86f03116aa44d2415e695a3a37e626c2b73fc023e1b58eb16993ef931e87db",
+              "evidence": "sha256:c2ca36949c10b9562c8b352bbe23bf96d778407e43cd25a9417cfd24cbe5743f",
+              "source_sha": "2040b428a8e9ce25c2d56a43ca3fde8d810b6d76",
+              "observed_at": "2026-11-15T00:50:41Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review is confirming that the new helper preserves the existing flex bounds contract.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -4665,11 +4693,12 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-grid-drag-viewport-bounds-20261114",
         "revision": "14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e",
-        "sequence": 4,
+        "sequence": 5,
         "truncated": false,
         "identities": {
           "field-grid-drag-viewport-review-20261114:started": "2dca95ecd2c2e89d46f69881e5d41b058a593fb0eca36733817e0faf74e6b4f5",
-          "field-grid-drag-viewport-review-20261114:result": "dd6af3a895d6f0d91f6ae9633f5e86da2bc0d9a1abfb0f0f40d0da7d2eeb4cbb"
+          "field-grid-drag-viewport-review-20261114:result": "dd6af3a895d6f0d91f6ae9633f5e86da2bc0d9a1abfb0f0f40d0da7d2eeb4cbb",
+          "field-grid-drag-viewport-final-review-20261114:started": "e05b1973577062fe6cac67bfdc6b4e2c333cd067aebcff2cbb894794fbd90d68"
         },
         "items": [
           {
@@ -4713,6 +4742,28 @@
               "team": "inspector"
             },
             "text": "Review found an optional argument that the shared bounds helper needs to preserve for existing flex callers.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "field-grid-drag-viewport-final-review-20261114:started:dc86f03116aa44d2415e695a3a37e626c2b73fc023e1b58eb16993ef931e87db:running:",
+            "receipt_snapshot": "{\"label\":\"Verify shared bounds compatibility\",\"receipt\":{\"assignment\":\"field-grid-drag-viewport-bounds-20261114\",\"evidence\":\"sha256:c2ca36949c10b9562c8b352bbe23bf96d778407e43cd25a9417cfd24cbe5743f\",\"id\":\"field-grid-drag-viewport-final-review-20261114:started\",\"input_digest\":\"dc86f03116aa44d2415e695a3a37e626c2b73fc023e1b58eb16993ef931e87db\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e\",\"source_sha\":\"2040b428a8e9ce25c2d56a43ca3fde8d810b6d76\",\"step_id\":\"review-grid-bounds-contract\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is confirming that the new helper preserves the existing flex bounds contract.\"}},\"state\":\"running\"}",
+            "id": "field-grid-drag-viewport-final-review-20261114:started",
+            "assignment": "field-grid-drag-viewport-bounds-20261114",
+            "step_id": "review-grid-bounds-contract",
+            "revision": "14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e",
+            "label": "Verify shared bounds compatibility",
+            "state": "running",
+            "phase": null,
+            "source_sha": "2040b428a8e9ce25c2d56a43ca3fde8d810b6d76",
+            "observed_at": "2026-11-15T00:50:41Z",
+            "recorded_at": "2026-11-15T00:50:44.225Z",
+            "receipt_digest": "sha256:c2ca36949c10b9562c8b352bbe23bf96d778407e43cd25a9417cfd24cbe5743f",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review is confirming that the new helper preserves the existing flex bounds contract.",
             "text_kind": "owner-published",
             "artifacts": []
           }
