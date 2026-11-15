@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:02:41.280Z",
+  "updated_at": "2026-11-15T04:06:47.625Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6711,7 +6711,7 @@
       ],
       "goal": "Make Field projects open in Preview on phones and gate the full mobile editor behind an opt-in feature flag.",
       "acceptance": "On phone-sized viewports in both orientations, opening a project from Dashboard or a direct URL renders the project's interactive, device-width Preview without mounting editing controls. People can reload Preview and return to their projects. Desktop editing remains available and an explicitly enabled build flag restores the existing mobile editor.",
-      "next_action": "After the JSX release completes, claim the phone Preview gate and verify the Dashboard and direct-open paths.",
+      "next_action": "Publish the phone Preview gate as a draft, then verify the default and opt-in paths in desktop browser harnesses.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -6742,8 +6742,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T04:02:41.280Z",
-      "lease_until": "2026-11-15T16:02:41.280Z"
+      "updated_at": "2026-11-15T04:06:47.625Z",
+      "lease_until": "2026-11-15T16:06:47.625Z"
     }
   ]
 }
