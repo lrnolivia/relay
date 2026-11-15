@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:34:58.974Z",
+  "updated_at": "2026-11-15T00:36:34.774Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4223,9 +4223,13 @@
       "next_action": "Reproduce the bug on a pinned desktop frame, then restore the inset-derived axis when the temporary aspect lock ends.",
       "category": "implementation",
       "primary_team": "runner",
-      "supporting_teams": [],
+      "supporting_teams": [
+        "inspector"
+      ],
       "primary_staff": "nico",
-      "supporting_staff": [],
+      "supporting_staff": [
+        "roman"
+      ],
       "base_sha": "820f68d5159b3d12422f972807f1fada57864e68",
       "state": "active",
       "created_at": "2026-11-15T00:34:58.974Z",
@@ -4244,8 +4248,40 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:34:58.974Z",
-      "lease_until": "2026-11-15T12:34:58.974Z"
+      "updated_at": "2026-11-15T00:36:34.774Z",
+      "lease_until": "2026-11-15T12:36:34.774Z",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-15T00:36:34.774Z",
+          "by": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "reason": "Assign independent review of the perpendicular inset restore, pointerup fallback, and source commit.",
+          "fields": [
+            "supporting_roles",
+            "supporting_staff",
+            "supporting_teams"
+          ],
+          "before": {
+            "supporting_roles": null,
+            "supporting_staff": [],
+            "supporting_teams": []
+          },
+          "after": {
+            "supporting_roles": [
+              "verifier"
+            ],
+            "supporting_staff": [
+              "roman"
+            ],
+            "supporting_teams": [
+              "inspector"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
