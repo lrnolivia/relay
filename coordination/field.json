@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T03:47:22.662Z",
+  "updated_at": "2026-11-15T03:47:43.866Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6490,7 +6490,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T03:47:22.662Z",
+      "updated_at": "2026-11-15T03:47:43.866Z",
       "lease_until": "2026-11-15T15:46:19.657Z",
       "native_handoffs": [
         {
@@ -6522,10 +6522,17 @@
             "host_available": true,
             "intent_digest": "642f31f2ddbc378af67534851840f32ac4e11a2ca42ea601934d5944bc08fa32"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T03:47:22.662Z",
           "request_digest": "39c19c217f04464de082e718b727ac30d39b0f4306d037a3604319ebffc6a9db",
-          "step_digest": "2e6771c6ce01454be5392a3575e57867bb398cbae51cd274ffc5c43be8c0d71d"
+          "step_digest": "2fe58a1c1a91731cb34247c879b373b7bccddb2fd271cf14fc874aba655044f2",
+          "start": {
+            "request_digest": "39c19c217f04464de082e718b727ac30d39b0f4306d037a3604319ebffc6a9db",
+            "source_sha": "a2c99033e34a2c3b31441cd970846297de33fcc9",
+            "agent_id": "/root/preview_jsx_key_review",
+            "observed_at": "2026-11-15T03:47:41Z"
+          },
+          "started_at": "2026-11-15T03:47:43.866Z"
         }
       ],
       "card_steps": {
@@ -6537,15 +6544,28 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/preview-react-keys-20261115"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "review-preview-jsx-dispatch",
             "label": "Verify Preview JSX child semantics",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "preview-react-jsx-key-review-20261115:started",
+              "assignment": "field-preview-react-keys-20261115",
+              "step_id": "review-preview-jsx-dispatch",
+              "plan_revision": "aef4f2fbfc789c324ebb8d8682bd5d990a62e41104f3b4cdcd8177662e2eb468",
+              "input_digest": "39c19c217f04464de082e718b727ac30d39b0f4306d037a3604319ebffc6a9db",
+              "evidence": "sha256:c169dc11db97c3725d225285124154bbe1c4aa8f3bbc736f88fae2beeacf54a4",
+              "source_sha": "a2c99033e34a2c3b31441cd970846297de33fcc9",
+              "observed_at": "2026-11-15T03:47:41Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              }
+            }
           }
         ]
       },
@@ -6553,10 +6573,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-preview-react-keys-20261115",
         "revision": "aef4f2fbfc789c324ebb8d8682bd5d990a62e41104f3b4cdcd8177662e2eb468",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "preview-react-jsx-key-review-20261115:started": "7ef25ee3836929719543bca86f5aa9500f2eaf2eaf535663d1d43b6257a6b589"
+        },
+        "items": [
+          {
+            "key": "preview-react-jsx-key-review-20261115:started:39c19c217f04464de082e718b727ac30d39b0f4306d037a3604319ebffc6a9db:running:",
+            "receipt_snapshot": "{\"label\":\"Verify Preview JSX child semantics\",\"receipt\":{\"assignment\":\"field-preview-react-keys-20261115\",\"evidence\":\"sha256:c169dc11db97c3725d225285124154bbe1c4aa8f3bbc736f88fae2beeacf54a4\",\"id\":\"preview-react-jsx-key-review-20261115:started\",\"input_digest\":\"39c19c217f04464de082e718b727ac30d39b0f4306d037a3604319ebffc6a9db\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"aef4f2fbfc789c324ebb8d8682bd5d990a62e41104f3b4cdcd8177662e2eb468\",\"source_sha\":\"a2c99033e34a2c3b31441cd970846297de33fcc9\",\"step_id\":\"review-preview-jsx-dispatch\"},\"state\":\"running\"}",
+            "id": "preview-react-jsx-key-review-20261115:started",
+            "assignment": "field-preview-react-keys-20261115",
+            "step_id": "review-preview-jsx-dispatch",
+            "revision": "aef4f2fbfc789c324ebb8d8682bd5d990a62e41104f3b4cdcd8177662e2eb468",
+            "label": "Verify Preview JSX child semantics",
+            "state": "running",
+            "phase": null,
+            "source_sha": "a2c99033e34a2c3b31441cd970846297de33fcc9",
+            "observed_at": "2026-11-15T03:47:41Z",
+            "recorded_at": "2026-11-15T03:47:43.866Z",
+            "receipt_digest": "sha256:c169dc11db97c3725d225285124154bbe1c4aa8f3bbc736f88fae2beeacf54a4",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Work started.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
