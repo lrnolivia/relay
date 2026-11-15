@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T03:46:19.657Z",
+  "updated_at": "2026-11-15T03:47:22.662Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6490,8 +6490,74 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T03:46:19.657Z",
-      "lease_until": "2026-11-15T15:46:19.657Z"
+      "updated_at": "2026-11-15T03:47:22.662Z",
+      "lease_until": "2026-11-15T15:46:19.657Z",
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "preview-react-jsx-key-review-20261115",
+          "assignment": "field-preview-react-keys-20261115",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/preview-react-keys-20261115",
+          "source_sha": "a2c99033e34a2c3b31441cd970846297de33fcc9",
+          "objective_digest": "8a4fdf34a88b871e0585d3521a7f0f6f7559d48794e056935d68b458388f45ed",
+          "scope_digest": "ee16be3004c9fa010a338360d7bf9230a8b6f81b51c36f3acef1dd8f6d1bffe0",
+          "step_id": "review-preview-jsx-dispatch",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "a2c99033e34a2c3b31441cd970846297de33fcc9",
+            "objective_digest": "8a4fdf34a88b871e0585d3521a7f0f6f7559d48794e056935d68b458388f45ed",
+            "step_id": "review-preview-jsx-dispatch",
+            "label": "Verify Preview JSX child semantics",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "642f31f2ddbc378af67534851840f32ac4e11a2ca42ea601934d5944bc08fa32"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T03:47:22.662Z",
+          "request_digest": "39c19c217f04464de082e718b727ac30d39b0f4306d037a3604319ebffc6a9db",
+          "step_digest": "2e6771c6ce01454be5392a3575e57867bb398cbae51cd274ffc5c43be8c0d71d"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "field-preview-react-keys-20261115",
+        "revision": "aef4f2fbfc789c324ebb8d8682bd5d990a62e41104f3b4cdcd8177662e2eb468",
+        "objective_digest": "8a4fdf34a88b871e0585d3521a7f0f6f7559d48794e056935d68b458388f45ed",
+        "publisher": {
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/preview-react-keys-20261115"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "review-preview-jsx-dispatch",
+            "label": "Verify Preview JSX child semantics",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "field-preview-react-keys-20261115",
+        "revision": "aef4f2fbfc789c324ebb8d8682bd5d990a62e41104f3b4cdcd8177662e2eb468",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
