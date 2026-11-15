@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T05:51:35.228Z",
+  "updated_at": "2026-11-15T05:51:53.592Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7320,7 +7320,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T05:51:35.228Z",
+      "updated_at": "2026-11-15T05:51:53.592Z",
       "lease_until": "2026-11-15T17:51:35.228Z",
       "supporting_roles": [
         "verifier"
@@ -7364,7 +7364,73 @@
             ]
           }
         }
-      ]
+      ],
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "field-viewer-thumbnail-review-1",
+          "assignment": "field-viewer-thumbnail-20261115",
+          "owner": "field-overnight-20261115",
+          "branch": "field/viewer-thumbnail-20261115",
+          "source_sha": "f6977e1034c53814e3e21332fdaba7c173217c90",
+          "objective_digest": "fd2e602ebb9b3b8a17a01af7fb366b9f53c6a52f27336013a70993493ea184a6",
+          "scope_digest": "01b610b5703e2d575e1528166ec895801c93345f0fd236dcd38d5e0d0e6edc52",
+          "step_id": "review",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "f6977e1034c53814e3e21332fdaba7c173217c90",
+            "objective_digest": "fd2e602ebb9b3b8a17a01af7fb366b9f53c6a52f27336013a70993493ea184a6",
+            "step_id": "review",
+            "label": "Review viewer thumbnail suppression",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "470f67ee99273b31191e0e95042149fe31eb70dd8f0160b90131c931f090bacd"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T05:51:53.592Z",
+          "request_digest": "d0858c579fac27cd8c2ee200abaeaf604f5623dfd4f3086d4ff2ce0f460d46fa",
+          "step_digest": "64dc46b582de14574af1d5898c8006601e4cb52a93ae16f62cff7ec176d74439"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "field-viewer-thumbnail-20261115",
+        "revision": "bded13105830cd328720559653c94f9a67d26caf83dded922c62694d781bb074",
+        "objective_digest": "fd2e602ebb9b3b8a17a01af7fb366b9f53c6a52f27336013a70993493ea184a6",
+        "publisher": {
+          "owner": "field-overnight-20261115",
+          "branch": "field/viewer-thumbnail-20261115"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "review",
+            "label": "Review viewer thumbnail suppression",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "field-viewer-thumbnail-20261115",
+        "revision": "bded13105830cd328720559653c94f9a67d26caf83dded922c62694d781bb074",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
