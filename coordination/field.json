@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T05:51:53.592Z",
+  "updated_at": "2026-11-15T05:54:30.872Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7320,7 +7320,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T05:51:53.592Z",
+      "updated_at": "2026-11-15T05:54:30.872Z",
       "lease_until": "2026-11-15T17:51:35.228Z",
       "supporting_roles": [
         "verifier"
@@ -7395,10 +7395,21 @@
             "host_available": true,
             "intent_digest": "470f67ee99273b31191e0e95042149fe31eb70dd8f0160b90131c931f090bacd"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T05:51:53.592Z",
           "request_digest": "d0858c579fac27cd8c2ee200abaeaf604f5623dfd4f3086d4ff2ce0f460d46fa",
-          "step_digest": "64dc46b582de14574af1d5898c8006601e4cb52a93ae16f62cff7ec176d74439"
+          "step_digest": "a0e6f7f7a071c80daabb607e486a2f9ab2b7a2f5820626abc7ecbd12eedf1459",
+          "start": {
+            "request_digest": "d0858c579fac27cd8c2ee200abaeaf604f5623dfd4f3086d4ff2ce0f460d46fa",
+            "source_sha": "f6977e1034c53814e3e21332fdaba7c173217c90",
+            "agent_id": "/root/viewer_thumbnail_review",
+            "observed_at": "2026-11-15T05:54:23Z",
+            "update": {
+              "text": "Independent review ran against the exact review commit; source and tests were inspected without edits.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-15T05:54:30.872Z"
         }
       ],
       "card_steps": {
@@ -7410,15 +7421,32 @@
           "owner": "field-overnight-20261115",
           "branch": "field/viewer-thumbnail-20261115"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "review",
             "label": "Review viewer thumbnail suppression",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "field-viewer-thumbnail-review-1:started",
+              "assignment": "field-viewer-thumbnail-20261115",
+              "step_id": "review",
+              "plan_revision": "bded13105830cd328720559653c94f9a67d26caf83dded922c62694d781bb074",
+              "input_digest": "d0858c579fac27cd8c2ee200abaeaf604f5623dfd4f3086d4ff2ce0f460d46fa",
+              "evidence": "sha256:99f69f7d45716cc087530d88036be5d5899d04d52ae2d49ce01a257bedf851f0",
+              "source_sha": "f6977e1034c53814e3e21332fdaba7c173217c90",
+              "observed_at": "2026-11-15T05:54:23Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review ran against the exact review commit; source and tests were inspected without edits.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -7426,10 +7454,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-viewer-thumbnail-20261115",
         "revision": "bded13105830cd328720559653c94f9a67d26caf83dded922c62694d781bb074",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "field-viewer-thumbnail-review-1:started": "17874709168841369f4247f5ee40248aa916516b55408fdfd93e66750ca06980"
+        },
+        "items": [
+          {
+            "key": "field-viewer-thumbnail-review-1:started:d0858c579fac27cd8c2ee200abaeaf604f5623dfd4f3086d4ff2ce0f460d46fa:running:",
+            "receipt_snapshot": "{\"label\":\"Review viewer thumbnail suppression\",\"receipt\":{\"assignment\":\"field-viewer-thumbnail-20261115\",\"evidence\":\"sha256:99f69f7d45716cc087530d88036be5d5899d04d52ae2d49ce01a257bedf851f0\",\"id\":\"field-viewer-thumbnail-review-1:started\",\"input_digest\":\"d0858c579fac27cd8c2ee200abaeaf604f5623dfd4f3086d4ff2ce0f460d46fa\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"bded13105830cd328720559653c94f9a67d26caf83dded922c62694d781bb074\",\"source_sha\":\"f6977e1034c53814e3e21332fdaba7c173217c90\",\"step_id\":\"review\",\"update\":{\"artifacts\":[],\"text\":\"Independent review ran against the exact review commit; source and tests were inspected without edits.\"}},\"state\":\"running\"}",
+            "id": "field-viewer-thumbnail-review-1:started",
+            "assignment": "field-viewer-thumbnail-20261115",
+            "step_id": "review",
+            "revision": "bded13105830cd328720559653c94f9a67d26caf83dded922c62694d781bb074",
+            "label": "Review viewer thumbnail suppression",
+            "state": "running",
+            "phase": null,
+            "source_sha": "f6977e1034c53814e3e21332fdaba7c173217c90",
+            "observed_at": "2026-11-15T05:54:23Z",
+            "recorded_at": "2026-11-15T05:54:30.872Z",
+            "receipt_digest": "sha256:99f69f7d45716cc087530d88036be5d5899d04d52ae2d49ce01a257bedf851f0",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review ran against the exact review commit; source and tests were inspected without edits.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
