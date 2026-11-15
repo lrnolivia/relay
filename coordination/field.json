@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T02:43:20.639Z",
+  "updated_at": "2026-11-15T02:57:41.322Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5997,6 +5997,68 @@
       "evidence": "PR #175 shipped 4633c9915542cad7d5582cc1b1b2a1472cfc0a83, Worker 3d6bc964-8d54-4dec-9666-4a2a692bd3a2 at 100%. The saved production QA opening rendered seven visible layers and all four isolation headers. Pattern, Shader and Video are scoped to the active page breakpoint, with saved CSS and Canvas/Preview parity. Create shader creates, applies and saves an editable project shader. Chromium and WebKit each passed four exact-head regressions and a Preview pixel test. 13,380 units, types, lint and builds passed. Chromium verified resize and deletion update the Preview boundary. A clipboard audit reproduced numeric Speed falling back to default on Shader copies. Mobile parked.",
       "work_accounted": true,
       "completed_at": "2026-11-15T02:43:20.639Z"
+    },
+    {
+      "id": "field-shader-duplicate-and-webgl-20261115",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/shader-duplicate-and-webgl-20261115",
+      "paths": [
+        "src/code/features/paste-engine/copy/index.ts",
+        "src/code/features/paste-engine/types.ts",
+        "src/code/features/paste-engine/core/node-creator.ts",
+        "src/code/generation/generator-crud.ts",
+        "src/code/generation/generator-utils.ts",
+        "src/code/project/project-fs.ts",
+        "src/code/project/shader-runtime-migration.ts",
+        "src/code/project/shader-runtime-migration.test.ts",
+        "src/code/project/default-code-components/paper-webgl-mount.ts",
+        "src/code/project/default-code-components/MeshGradient.ts",
+        "src/code/project/default-code-components/GemSmoke.ts",
+        "src/code/project/default-code-components/GrainGradient.ts",
+        "src/code/project/default-code-components/LiquidMetal.ts",
+        "src/code/project/default-code-components/Metaballs.ts",
+        "src/code/project/default-code-components/SmokeRing.ts",
+        "src/editor/e2e/fill-effects-apply.spec.ts"
+      ],
+      "resources": [
+        "shader-clipboard",
+        "managed-shader-runtime"
+      ],
+      "goal": "Preserve every edited shader control when duplicating or pasting a shader and investigate multi-tile WebGL warnings.",
+      "acceptance": "Desktop copy and duplication retain authored shader control values with their JSX types and preserve active breakpoint semantics. Reproduce and fix the cause of transient shader warnings if confirmed, preserve existing user shader edits, and verify Canvas and Preview visually in Chromium and WebKit.",
+      "next_action": "Isolate exact source, reproduce the warning on the deployed baseline, then implement typed clipboard props and repair the confirmed lifecycle defect.",
+      "category": "implementation",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "nico",
+      "supporting_staff": [
+        "roman"
+      ],
+      "base_sha": "4633c9915542cad7d5582cc1b1b2a1472cfc0a83",
+      "state": "active",
+      "created_at": "2026-11-15T02:57:41.322Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Preserve every edited shader control when duplicating or pasting a shader and investigate multi-tile WebGL warnings.",
+          "acceptance": "Desktop copy and duplication retain authored shader control values with their JSX types and preserve active breakpoint semantics. Reproduce and fix the cause of transient shader warnings if confirmed, preserve existing user shader edits, and verify Canvas and Preview visually in Chromium and WebKit.",
+          "at": "2026-11-15T02:57:41.322Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-shader-duplicate-and-webgl-20261115:acceptance:0",
+            "text": "Desktop copy and duplication retain authored shader control values with their JSX types and preserve active breakpoint semantics. Reproduce and fix the cause of transient shader warnings if confirmed, preserve existing user shader edits, and verify Canvas and Preview visually in Chromium and WebKit.",
+            "at": "2026-11-15T02:57:41.322Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-15T02:57:41.322Z",
+      "lease_until": "2026-11-15T14:57:41.322Z"
     }
   ]
 }
