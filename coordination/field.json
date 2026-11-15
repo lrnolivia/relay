@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:34:48.492Z",
+  "updated_at": "2026-11-15T00:34:58.974Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4206,6 +4206,46 @@
       "evidence": "Merged 820f68d5159b3d12422f972807f1fada57864e68, identical tree to independently reviewed 8796f8dc7e6b04796a5214f9f57662cba08eebc7. Chromium and WebKit validated flex slots, rotation, camera, placement and Undo. 13,380 unit tests, type check, lint and build. Workers build cc0fad8a-17af-4f21-9ff9-b4c25197485b and 91f40001-a770-4473-a4b9-525514b62d49 at 100%. Live saved QA project first paint and all four Canvas isolation headers verified.",
       "work_accounted": true,
       "completed_at": "2026-11-15T00:34:48.492Z"
+    },
+    {
+      "id": "field-resize-release-pins-20261114",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/resize-release-pins-20261114",
+      "paths": [
+        "src/canvas/resize/ResizeManager.ts",
+        "src/canvas/drag/e2e/aspect-lock-resize.spec.ts"
+      ],
+      "resources": [
+        "canvas-resize-pins"
+      ],
+      "goal": "Preserve perpendicular inset pins when releasing Shift during an edge resize.",
+      "acceptance": "An unrotated absolute layer pinned on both sides of its perpendicular axis restores its initial position, size, and source inset values when Shift is released, including after crossing the opposite edge and mouseup without another move. The active dimension still resizes and one Undo restores the prior source.",
+      "next_action": "Reproduce the bug on a pinned desktop frame, then restore the inset-derived axis when the temporary aspect lock ends.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "820f68d5159b3d12422f972807f1fada57864e68",
+      "state": "active",
+      "created_at": "2026-11-15T00:34:58.974Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Preserve perpendicular inset pins when releasing Shift during an edge resize.",
+          "acceptance": "An unrotated absolute layer pinned on both sides of its perpendicular axis restores its initial position, size, and source inset values when Shift is released, including after crossing the opposite edge and mouseup without another move. The active dimension still resizes and one Undo restores the prior source.",
+          "at": "2026-11-15T00:34:58.974Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-resize-release-pins-20261114:acceptance:0",
+            "text": "An unrotated absolute layer pinned on both sides of its perpendicular axis restores its initial position, size, and source inset values when Shift is released, including after crossing the opposite edge and mouseup without another move. The active dimension still resizes and one Undo restores the prior source.",
+            "at": "2026-11-15T00:34:58.974Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-15T00:34:58.974Z",
+      "lease_until": "2026-11-15T12:34:58.974Z"
     }
   ]
 }
