@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:44:13.168Z",
+  "updated_at": "2026-11-15T00:44:34.426Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4444,6 +4444,48 @@
       "evidence": "Merged 63cd8473c8eda6706bf56cde06aa90895c8b99f5 with the same tree as reviewed 7c77f369a4f92b168091ce5a3eb6ec1230bb6df7. Both new perpendicular pin regressions passed twice in Chromium and WebKit with no retries. 13,380 unit tests, types, lint and all builds passed. Production Workers Build 778dd02a-217b-44a9-a62a-97888d2db21a deployed Worker ce30947c-7d37-4f97-9e32-3517a124872a at 100%. The live QA project opened and painted Canvas with all four isolation headers.",
       "work_accounted": true,
       "completed_at": "2026-11-15T00:44:13.168Z"
+    },
+    {
+      "id": "field-grid-drag-viewport-bounds-20261114",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/grid-drag-viewport-bounds-20261114",
+      "paths": [
+        "src/canvas/drag/helpers/layout-viewport-bounds.ts",
+        "src/canvas/drag/strategies/GridDragStrategy.ts",
+        "src/canvas/drag/strategies/LayoutLiftedStrategy.ts",
+        "src/canvas/drag/e2e/grid-viewport-bounds.spec.ts"
+      ],
+      "resources": [
+        "canvas-flow-viewport-bounds"
+      ],
+      "goal": "Keep desktop Grid reordering inside the visible page content.",
+      "acceptance": "A desktop grid inside or below a collapsed or fixed-height page root retains its placeholder during an in-grid reorder, including leaving and returning to the page during the same gesture. The committed item stays in the grid at the new slot and one Undo restores the prior source. A true exit still hides the placeholder and can detach the item.",
+      "next_action": "Use the same page-content bounds as flex drag and cover the collapsed-root regression and viewport round trip.",
+      "category": "implementation",
+      "primary_team": "runner",
+      "supporting_teams": [],
+      "primary_staff": "nico",
+      "supporting_staff": [],
+      "base_sha": "63cd8473c8eda6706bf56cde06aa90895c8b99f5",
+      "state": "active",
+      "created_at": "2026-11-15T00:44:34.426Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Keep desktop Grid reordering inside the visible page content.",
+          "acceptance": "A desktop grid inside or below a collapsed or fixed-height page root retains its placeholder during an in-grid reorder, including leaving and returning to the page during the same gesture. The committed item stays in the grid at the new slot and one Undo restores the prior source. A true exit still hides the placeholder and can detach the item.",
+          "at": "2026-11-15T00:44:34.426Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-grid-drag-viewport-bounds-20261114:acceptance:0",
+            "text": "A desktop grid inside or below a collapsed or fixed-height page root retains its placeholder during an in-grid reorder, including leaving and returning to the page during the same gesture. The committed item stays in the grid at the new slot and one Undo restores the prior source. A true exit still hides the placeholder and can detach the item.",
+            "at": "2026-11-15T00:44:34.426Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-15T00:44:34.426Z",
+      "lease_until": "2026-11-15T12:44:34.426Z"
     }
   ]
 }
