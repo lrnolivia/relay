@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:10:10.145Z",
+  "updated_at": "2026-11-15T01:11:41.596Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4859,7 +4859,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:10:10.145Z",
+      "updated_at": "2026-11-15T01:11:41.596Z",
       "lease_until": "2026-11-15T13:07:55.981Z",
       "amendment_count": 1,
       "amendments": [
@@ -4978,10 +4978,10 @@
             "host_available": true,
             "intent_digest": "f265793dcfffdd75f3bebea94a6d5a147ada9c4ffa15e85920c3f12a71831cd9"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-15T01:09:46.805Z",
           "request_digest": "621551fc1a1d940669f8d59b47c6e408c6af5060d2a354d931fa6c8e9b92bc88",
-          "step_digest": "26cc74675a4ffd0f21e0295a6a90204a7b113766abaad3018f41bf3eecaab3d2",
+          "step_digest": "07a90af7f45ec73c45de8d94c44870bc66d8b4098056d63868bccfd6ae1341b7",
           "start": {
             "request_digest": "621551fc1a1d940669f8d59b47c6e408c6af5060d2a354d931fa6c8e9b92bc88",
             "source_sha": "51d758187f2b1964aca6d20c2ee973cf239d82f9",
@@ -4992,7 +4992,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-15T01:10:10.145Z"
+          "started_at": "2026-11-15T01:10:10.145Z",
+          "result": {
+            "request_digest": "621551fc1a1d940669f8d59b47c6e408c6af5060d2a354d931fa6c8e9b92bc88",
+            "source_sha": "51d758187f2b1964aca6d20c2ee973cf239d82f9",
+            "agent_id": "/root/explicit_grid_final_verify",
+            "observed_at": "2026-11-15T01:11:37Z",
+            "state": "failed",
+            "result_digest": "33ba91353a8df962f9b468b462184ac1f552a60a513302ba6cbcfbe7ccb5bd3a",
+            "update": {
+              "text": "Review confirmed the breakpoint behavior and found an existing Grid order state that Escape also needs to restore.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-15T01:11:41.596Z"
         }
       ],
       "card_steps": {
@@ -5004,7 +5017,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/explicit-grid-cell-swap-20261114"
         },
-        "sequence": 5,
+        "sequence": 6,
         "complete": false,
         "steps": [
           {
@@ -5035,22 +5048,22 @@
             "id": "review-explicit-grid-scoped-final",
             "label": "Verify desktop breakpoint Grid swaps",
             "depends_on": [],
-            "state": "running",
+            "state": "failed",
             "receipt": {
-              "id": "field-explicit-grid-swap-scoped-final-review-20261114:started",
+              "id": "field-explicit-grid-swap-scoped-final-review-20261114:result",
               "assignment": "field-explicit-grid-cell-swap-20261114",
               "step_id": "review-explicit-grid-scoped-final",
               "plan_revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
               "input_digest": "621551fc1a1d940669f8d59b47c6e408c6af5060d2a354d931fa6c8e9b92bc88",
-              "evidence": "sha256:f20b120f257bf09bc202599ae3e6cc1498f59d3960cf62e54f05443af4cc690e",
+              "evidence": "sha256:9601be0fc99e81ba727d2f81d85f07f8369f61449569b7c70fa1ca1e28f3edec",
               "source_sha": "51d758187f2b1964aca6d20c2ee973cf239d82f9",
-              "observed_at": "2026-11-15T01:10:07Z",
+              "observed_at": "2026-11-15T01:11:37Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "Independent review is checking that a desktop breakpoint swap preserves primary placement and source.",
+                "text": "Review confirmed the breakpoint behavior and found an existing Grid order state that Escape also needs to restore.",
                 "artifacts": []
               }
             }
@@ -5061,12 +5074,13 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-explicit-grid-cell-swap-20261114",
         "revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
-        "sequence": 5,
+        "sequence": 6,
         "truncated": false,
         "identities": {
           "field-explicit-grid-cell-swap-review-20261114:started": "69a3add1b57bf8be588216ef61fc359b9519a607ac0516ef317298a316a9054b",
           "field-explicit-grid-cell-swap-review-20261114:result": "14176814288251d65f42a04832891acf953e3fef9c9e539babac13981f2e7c7b",
-          "field-explicit-grid-swap-scoped-final-review-20261114:started": "997575b3b987de521629e546b4bb98b54367174607a75b9716beaf519605f1f4"
+          "field-explicit-grid-swap-scoped-final-review-20261114:started": "997575b3b987de521629e546b4bb98b54367174607a75b9716beaf519605f1f4",
+          "field-explicit-grid-swap-scoped-final-review-20261114:result": "684481c5f85b79122ebfd968e8c07496a668ea4baf79b69235426f17a3e74b53"
         },
         "items": [
           {
@@ -5132,6 +5146,28 @@
               "team": "inspector"
             },
             "text": "Independent review is checking that a desktop breakpoint swap preserves primary placement and source.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "field-explicit-grid-swap-scoped-final-review-20261114:result:621551fc1a1d940669f8d59b47c6e408c6af5060d2a354d931fa6c8e9b92bc88:failed:",
+            "receipt_snapshot": "{\"label\":\"Verify desktop breakpoint Grid swaps\",\"receipt\":{\"assignment\":\"field-explicit-grid-cell-swap-20261114\",\"evidence\":\"sha256:9601be0fc99e81ba727d2f81d85f07f8369f61449569b7c70fa1ca1e28f3edec\",\"id\":\"field-explicit-grid-swap-scoped-final-review-20261114:result\",\"input_digest\":\"621551fc1a1d940669f8d59b47c6e408c6af5060d2a354d931fa6c8e9b92bc88\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28\",\"source_sha\":\"51d758187f2b1964aca6d20c2ee973cf239d82f9\",\"step_id\":\"review-explicit-grid-scoped-final\",\"update\":{\"artifacts\":[],\"text\":\"Review confirmed the breakpoint behavior and found an existing Grid order state that Escape also needs to restore.\"}},\"state\":\"failed\"}",
+            "id": "field-explicit-grid-swap-scoped-final-review-20261114:result",
+            "assignment": "field-explicit-grid-cell-swap-20261114",
+            "step_id": "review-explicit-grid-scoped-final",
+            "revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
+            "label": "Verify desktop breakpoint Grid swaps",
+            "state": "failed",
+            "phase": null,
+            "source_sha": "51d758187f2b1964aca6d20c2ee973cf239d82f9",
+            "observed_at": "2026-11-15T01:11:37Z",
+            "recorded_at": "2026-11-15T01:11:41.596Z",
+            "receipt_digest": "sha256:9601be0fc99e81ba727d2f81d85f07f8369f61449569b7c70fa1ca1e28f3edec",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Review confirmed the breakpoint behavior and found an existing Grid order state that Escape also needs to restore.",
             "text_kind": "owner-published",
             "artifacts": []
           }
