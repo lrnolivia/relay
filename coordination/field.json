@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:21:51.402Z",
+  "updated_at": "2026-11-15T01:22:10.337Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5354,7 +5354,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:21:51.402Z",
+      "updated_at": "2026-11-15T01:22:10.337Z",
       "lease_until": "2026-11-15T13:21:51.402Z",
       "supporting_roles": [
         "verifier"
@@ -5387,7 +5387,73 @@
             ]
           }
         }
-      ]
+      ],
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "field-grid-slot-ruler-final-review-20261114",
+          "assignment": "field-grid-slot-ruler-feedback-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/grid-slot-ruler-feedback-20261114",
+          "source_sha": "b06e20c4265800f433881d183dcfc74fbe6f00e0",
+          "objective_digest": "be0e37ff45f975b771410a8691630bee85ceda554a289d96350422bc13ad873c",
+          "scope_digest": "6eee49711175a1a15ce1ce9d7bff1946f84143214a1d9ccce0f4be84bb4c1bae",
+          "step_id": "review-grid-slot-rulers",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "b06e20c4265800f433881d183dcfc74fbe6f00e0",
+            "objective_digest": "be0e37ff45f975b771410a8691630bee85ceda554a289d96350422bc13ad873c",
+            "step_id": "review-grid-slot-rulers",
+            "label": "Verify Grid and flex ruler feedback",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "ce1832962104a9b756893f15681dfc12d9eac648c3eaf016e9e6e6195f6fb757"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T01:22:10.337Z",
+          "request_digest": "bcd714b7de53234dad9775a4d4647e3eb1e55b62ea1eff73459868091e282971",
+          "step_digest": "c1ee7794b4085d5c44847841bc8a6f4b3cd47cfe80b328d7fc411b0283ca0d1f"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "field-grid-slot-ruler-feedback-20261114",
+        "revision": "3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9",
+        "objective_digest": "be0e37ff45f975b771410a8691630bee85ceda554a289d96350422bc13ad873c",
+        "publisher": {
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/grid-slot-ruler-feedback-20261114"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "review-grid-slot-rulers",
+            "label": "Verify Grid and flex ruler feedback",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "field-grid-slot-ruler-feedback-20261114",
+        "revision": "3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
