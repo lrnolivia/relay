@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:03:32.115Z",
+  "updated_at": "2026-11-15T01:03:56.642Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4858,7 +4858,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:03:32.115Z",
+      "updated_at": "2026-11-15T01:03:56.642Z",
       "lease_until": "2026-11-15T13:00:24.146Z",
       "amendment_count": 1,
       "amendments": [
@@ -4919,10 +4919,21 @@
             "host_available": true,
             "intent_digest": "cea3095a9f90a6b95162cacabbb1264657e29843537967bcc27488a51605ea96"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T01:03:32.115Z",
           "request_digest": "5d6d70134248ac2e3caf08acc6af9a37dfe6e6b60387e2bab72204106fa40b06",
-          "step_digest": "c45253dead8962be81478783611090cf6deb53d0f9e40c58a416a3bbe5893d8b"
+          "step_digest": "05485961c991f128af9c361f5f8f4799498335960a4740d21e10e4643e808b79",
+          "start": {
+            "request_digest": "5d6d70134248ac2e3caf08acc6af9a37dfe6e6b60387e2bab72204106fa40b06",
+            "source_sha": "166d5e27fda16fa9b33f7ebacc3e69bb5e3669aa",
+            "agent_id": "/root/explicit_grid_verify",
+            "observed_at": "2026-11-15T01:03:53Z",
+            "update": {
+              "text": "Independent review is checking saved placement, Escape, and the scoped style writes.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-15T01:03:56.642Z"
         }
       ],
       "card_steps": {
@@ -4934,15 +4945,32 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/explicit-grid-cell-swap-20261114"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "review-explicit-grid-cell-swap",
             "label": "Verify explicit Grid swaps and cancellation",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "field-explicit-grid-cell-swap-review-20261114:started",
+              "assignment": "field-explicit-grid-cell-swap-20261114",
+              "step_id": "review-explicit-grid-cell-swap",
+              "plan_revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
+              "input_digest": "5d6d70134248ac2e3caf08acc6af9a37dfe6e6b60387e2bab72204106fa40b06",
+              "evidence": "sha256:f3a9853d2f82f32f269f23a2eed3c1ef80d4fa4901a034acc90f62b0d6c222ae",
+              "source_sha": "166d5e27fda16fa9b33f7ebacc3e69bb5e3669aa",
+              "observed_at": "2026-11-15T01:03:53Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review is checking saved placement, Escape, and the scoped style writes.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -4950,10 +4978,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-explicit-grid-cell-swap-20261114",
         "revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "field-explicit-grid-cell-swap-review-20261114:started": "69a3add1b57bf8be588216ef61fc359b9519a607ac0516ef317298a316a9054b"
+        },
+        "items": [
+          {
+            "key": "field-explicit-grid-cell-swap-review-20261114:started:5d6d70134248ac2e3caf08acc6af9a37dfe6e6b60387e2bab72204106fa40b06:running:",
+            "receipt_snapshot": "{\"label\":\"Verify explicit Grid swaps and cancellation\",\"receipt\":{\"assignment\":\"field-explicit-grid-cell-swap-20261114\",\"evidence\":\"sha256:f3a9853d2f82f32f269f23a2eed3c1ef80d4fa4901a034acc90f62b0d6c222ae\",\"id\":\"field-explicit-grid-cell-swap-review-20261114:started\",\"input_digest\":\"5d6d70134248ac2e3caf08acc6af9a37dfe6e6b60387e2bab72204106fa40b06\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28\",\"source_sha\":\"166d5e27fda16fa9b33f7ebacc3e69bb5e3669aa\",\"step_id\":\"review-explicit-grid-cell-swap\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is checking saved placement, Escape, and the scoped style writes.\"}},\"state\":\"running\"}",
+            "id": "field-explicit-grid-cell-swap-review-20261114:started",
+            "assignment": "field-explicit-grid-cell-swap-20261114",
+            "step_id": "review-explicit-grid-cell-swap",
+            "revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
+            "label": "Verify explicit Grid swaps and cancellation",
+            "state": "running",
+            "phase": null,
+            "source_sha": "166d5e27fda16fa9b33f7ebacc3e69bb5e3669aa",
+            "observed_at": "2026-11-15T01:03:53Z",
+            "recorded_at": "2026-11-15T01:03:56.642Z",
+            "receipt_digest": "sha256:f3a9853d2f82f32f269f23a2eed3c1ef80d4fa4901a034acc90f62b0d6c222ae",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review is checking saved placement, Escape, and the scoped style writes.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
