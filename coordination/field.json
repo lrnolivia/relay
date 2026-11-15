@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T02:29:01.542Z",
+  "updated_at": "2026-11-15T02:31:27.603Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5727,7 +5727,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T02:29:01.542Z",
+      "updated_at": "2026-11-15T02:31:27.603Z",
       "lease_until": "2026-11-15T14:27:53.555Z",
       "native_handoffs": [
         {
@@ -5759,17 +5759,26 @@
             "host_available": true,
             "intent_digest": "02164891e68680fa4f3ce4afd26cc869ff8f2833a1c47c508a85d7d2503030e2"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-15T02:28:40.127Z",
           "request_digest": "c23239e00f24a195176174a3af12453776deb37122c3e40ffa25c21918501574",
-          "step_digest": "5eed661f721bdefb836733f3c4e67edad043917d2ae047e8dda4e2f928d464d4",
+          "step_digest": "72cd29b3894854137fa5497291ccccd80fa4bfe8ce0ff5e6256165d4200aa541",
           "start": {
             "request_digest": "c23239e00f24a195176174a3af12453776deb37122c3e40ffa25c21918501574",
             "source_sha": "37ca4857b6296a4be88abd3210cddd473e5eece1",
             "agent_id": "/root/responsive_fill_review",
             "observed_at": "2026-11-15T02:28:58Z"
           },
-          "started_at": "2026-11-15T02:29:01.542Z"
+          "started_at": "2026-11-15T02:29:01.542Z",
+          "result": {
+            "request_digest": "c23239e00f24a195176174a3af12453776deb37122c3e40ffa25c21918501574",
+            "source_sha": "37ca4857b6296a4be88abd3210cddd473e5eece1",
+            "agent_id": "/root/responsive_fill_review",
+            "observed_at": "2026-11-15T02:31:23Z",
+            "state": "failed",
+            "result_digest": "8c785fdbf00b13d95ff22fcf536930defebc77334f050bed716b670277f99b60"
+          },
+          "reported_at": "2026-11-15T02:31:27.603Z"
         }
       ],
       "card_steps": {
@@ -5781,23 +5790,23 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/responsive-managed-fills-20261114"
         },
-        "sequence": 2,
+        "sequence": 3,
         "complete": false,
         "steps": [
           {
             "id": "review-desktop-fill-isolation",
             "label": "Review desktop breakpoint fill isolation",
             "depends_on": [],
-            "state": "running",
+            "state": "failed",
             "receipt": {
-              "id": "desktop-managed-fill-source-review-20261114:started",
+              "id": "desktop-managed-fill-source-review-20261114:result",
               "assignment": "field-responsive-managed-fills-20261114",
               "step_id": "review-desktop-fill-isolation",
               "plan_revision": "feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a",
               "input_digest": "c23239e00f24a195176174a3af12453776deb37122c3e40ffa25c21918501574",
-              "evidence": "sha256:6651b9a232a9a040f9d069035abe0585ef0e0586dc322dbee571e1223064438e",
+              "evidence": "sha256:8447b9c553e6414d3650853ce359ba7ee9953de42c9d5fb010ec7c513d7552fd",
               "source_sha": "37ca4857b6296a4be88abd3210cddd473e5eece1",
-              "observed_at": "2026-11-15T02:28:58Z",
+              "observed_at": "2026-11-15T02:31:23Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
@@ -5810,10 +5819,11 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-responsive-managed-fills-20261114",
         "revision": "feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a",
-        "sequence": 2,
+        "sequence": 3,
         "truncated": false,
         "identities": {
-          "desktop-managed-fill-source-review-20261114:started": "dc4399583dd50937d1c50781724111f60e06963f86d770f6af41335dc260830c"
+          "desktop-managed-fill-source-review-20261114:started": "dc4399583dd50937d1c50781724111f60e06963f86d770f6af41335dc260830c",
+          "desktop-managed-fill-source-review-20261114:result": "32c8fa5342100fa6329138386471489c2862f91f4649089b3992d0000945e7b3"
         },
         "items": [
           {
@@ -5835,6 +5845,28 @@
               "team": "inspector"
             },
             "text": "Work started.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          },
+          {
+            "key": "desktop-managed-fill-source-review-20261114:result:c23239e00f24a195176174a3af12453776deb37122c3e40ffa25c21918501574:failed:",
+            "receipt_snapshot": "{\"label\":\"Review desktop breakpoint fill isolation\",\"receipt\":{\"assignment\":\"field-responsive-managed-fills-20261114\",\"evidence\":\"sha256:8447b9c553e6414d3650853ce359ba7ee9953de42c9d5fb010ec7c513d7552fd\",\"id\":\"desktop-managed-fill-source-review-20261114:result\",\"input_digest\":\"c23239e00f24a195176174a3af12453776deb37122c3e40ffa25c21918501574\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a\",\"source_sha\":\"37ca4857b6296a4be88abd3210cddd473e5eece1\",\"step_id\":\"review-desktop-fill-isolation\"},\"state\":\"failed\"}",
+            "id": "desktop-managed-fill-source-review-20261114:result",
+            "assignment": "field-responsive-managed-fills-20261114",
+            "step_id": "review-desktop-fill-isolation",
+            "revision": "feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a",
+            "label": "Review desktop breakpoint fill isolation",
+            "state": "failed",
+            "phase": null,
+            "source_sha": "37ca4857b6296a4be88abd3210cddd473e5eece1",
+            "observed_at": "2026-11-15T02:31:23Z",
+            "recorded_at": "2026-11-15T02:31:27.603Z",
+            "receipt_digest": "sha256:8447b9c553e6414d3650853ce359ba7ee9953de42c9d5fb010ec7c513d7552fd",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "This step needs attention.",
             "text_kind": "recorded-state",
             "artifacts": []
           }
