@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T03:12:00.227Z",
+  "updated_at": "2026-11-15T03:19:20.919Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6060,7 +6060,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T03:12:00.227Z",
+      "updated_at": "2026-11-15T03:19:20.919Z",
       "lease_until": "2026-11-15T15:12:00.227Z",
       "native_handoffs": [
         {
@@ -6162,6 +6162,40 @@
             "result_digest": "29966d88e3c6f772f2adb31baedae48c1aaf0776354ebb8a5be0a4b39212ef4d"
           },
           "reported_at": "2026-11-15T03:11:41.154Z"
+        },
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "desktop-shader-option-duplication-review-20261115",
+          "assignment": "field-shader-duplicate-and-webgl-20261115",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/shader-duplicate-and-webgl-20261115",
+          "source_sha": "f5efabfbaba1037b66bb733281244af147760ed0",
+          "objective_digest": "93e2d56eedb648dab9625165fc39c37a02c084d68add6836b9fcb17ef887d03a",
+          "scope_digest": "95948b7e3458c74e29a217621ea1e5f67c6354ff1080ebd89c1108648503c081",
+          "step_id": "review-shader-option-duplication",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "f5efabfbaba1037b66bb733281244af147760ed0",
+            "objective_digest": "93e2d56eedb648dab9625165fc39c37a02c084d68add6836b9fcb17ef887d03a",
+            "step_id": "review-shader-option-duplication",
+            "label": "Verify Option-drag shader duplication",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "330276d433e85033e256031296c2097e699710c5f2fe7df7edaa51e3a76f28fd"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T03:19:20.919Z",
+          "request_digest": "684e75a686447399b1b04953c1477461402923b18ba6b0b126f142e8d1556ebe",
+          "step_digest": "0ba5215a136d378d2c12abab247d77521769d990083a0b3400ef1c4f4e03d12e"
         }
       ],
       "card_steps": {
@@ -6173,7 +6207,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/shader-duplicate-and-webgl-20261115"
         },
-        "sequence": 6,
+        "sequence": 7,
         "complete": false,
         "steps": [
           {
@@ -6216,6 +6250,13 @@
               },
               "phase": "awaiting-verification"
             }
+          },
+          {
+            "id": "review-shader-option-duplication",
+            "label": "Verify Option-drag shader duplication",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -6223,7 +6264,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-shader-duplicate-and-webgl-20261115",
         "revision": "8a8ebc1f139549ebd35143ce68f30c31bff2bad2f36c155dfb7c6e1919fcbace",
-        "sequence": 6,
+        "sequence": 7,
         "truncated": false,
         "identities": {
           "desktop-shader-copy-context-review-20261115:started": "59ed15b990074efa33a2363684e3f67dd36f0b7404eaa5f22c15b92c5a0f2191",
