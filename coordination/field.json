@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:07:55.981Z",
+  "updated_at": "2026-11-15T01:09:46.805Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4859,7 +4859,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:07:55.981Z",
+      "updated_at": "2026-11-15T01:09:46.805Z",
       "lease_until": "2026-11-15T13:07:55.981Z",
       "amendment_count": 1,
       "amendments": [
@@ -4948,6 +4948,40 @@
             }
           },
           "reported_at": "2026-11-15T01:05:58.255Z"
+        },
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "field-explicit-grid-swap-scoped-final-review-20261114",
+          "assignment": "field-explicit-grid-cell-swap-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/explicit-grid-cell-swap-20261114",
+          "source_sha": "51d758187f2b1964aca6d20c2ee973cf239d82f9",
+          "objective_digest": "c4ee0daca14a8533512375e839d9843816fdb2a2bf6322873eacaff8653c3724",
+          "scope_digest": "6f0e30ec2494cb279cf0cfa9533c256cbd2327abd29926547713debdbe42c130",
+          "step_id": "review-explicit-grid-scoped-final",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "51d758187f2b1964aca6d20c2ee973cf239d82f9",
+            "objective_digest": "c4ee0daca14a8533512375e839d9843816fdb2a2bf6322873eacaff8653c3724",
+            "step_id": "review-explicit-grid-scoped-final",
+            "label": "Verify desktop breakpoint Grid swaps",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "f265793dcfffdd75f3bebea94a6d5a147ada9c4ffa15e85920c3f12a71831cd9"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T01:09:46.805Z",
+          "request_digest": "621551fc1a1d940669f8d59b47c6e408c6af5060d2a354d931fa6c8e9b92bc88",
+          "step_digest": "5036376f43b9049e81fa66cded4ec3b44fea3e686a85daf7426c7affd2f85618"
         }
       ],
       "card_steps": {
@@ -4959,7 +4993,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/explicit-grid-cell-swap-20261114"
         },
-        "sequence": 3,
+        "sequence": 4,
         "complete": false,
         "steps": [
           {
@@ -4985,6 +5019,13 @@
                 "artifacts": []
               }
             }
+          },
+          {
+            "id": "review-explicit-grid-scoped-final",
+            "label": "Verify desktop breakpoint Grid swaps",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -4992,7 +5033,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-explicit-grid-cell-swap-20261114",
         "revision": "b38a96c68c98367fb97cafa7124666628416d0ad56bdd81da68bfc13fabdaf28",
-        "sequence": 3,
+        "sequence": 4,
         "truncated": false,
         "identities": {
           "field-explicit-grid-cell-swap-review-20261114:started": "69a3add1b57bf8be588216ef61fc359b9519a607ac0516ef317298a316a9054b",
