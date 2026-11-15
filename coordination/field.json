@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:27:57.776Z",
+  "updated_at": "2026-11-15T00:29:34.784Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -3754,7 +3754,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:27:57.776Z",
+      "updated_at": "2026-11-15T00:29:34.784Z",
       "lease_until": "2026-11-15T09:35:08.847Z",
       "supporting_roles": [
         "verifier"
@@ -3904,6 +3904,40 @@
             }
           },
           "reported_at": "2026-11-15T00:27:57.776Z"
+        },
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "field-flow-slot-camera-review-20261114",
+          "assignment": "field-flow-guide-feedback-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/flow-guide-feedback-20261114",
+          "source_sha": "8796f8dc7e6b04796a5214f9f57662cba08eebc7",
+          "objective_digest": "26d01d4a68cac1b2d3458094b527cd04abc24e7fefcdd6ee6f370c1ebfd6fbe4",
+          "scope_digest": "b45be8bd365d515f715647afa58cdad9e5c705599e1a7b340edaf43ab7d286a4",
+          "step_id": "review-flow-slot-camera",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "8796f8dc7e6b04796a5214f9f57662cba08eebc7",
+            "objective_digest": "26d01d4a68cac1b2d3458094b527cd04abc24e7fefcdd6ee6f370c1ebfd6fbe4",
+            "step_id": "review-flow-slot-camera",
+            "label": "Verify ruler cue follows the camera",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "6c1433a7528bef9c091ea5ce9d671026767e5d82cc329de561b53673ea5dd1f4"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T00:29:34.784Z",
+          "request_digest": "369db12fd138d83e1527e02b35cf769da0f29c705f8cfb55d3685ac5e1dde119",
+          "step_digest": "8fb9cd38f24c95219ef60b661ed413f583933074cf130b5b28db7465a97c233c"
         }
       ],
       "card_steps": {
@@ -3915,7 +3949,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/flow-guide-feedback-20261114"
         },
-        "sequence": 6,
+        "sequence": 7,
         "complete": false,
         "steps": [
           {
@@ -3965,6 +3999,13 @@
                 "artifacts": []
               }
             }
+          },
+          {
+            "id": "review-flow-slot-camera",
+            "label": "Verify ruler cue follows the camera",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -3972,7 +4013,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-flow-guide-feedback-20261114",
         "revision": "4b5e832c022b47fdbfda6a050220fdde0d3dc9f7abc662973f839f167964d044",
-        "sequence": 6,
+        "sequence": 7,
         "truncated": false,
         "identities": {
           "field-flow-slot-exact-source-review-20261114:started": "87eb6ee7945fa7a3b7054faa74d09a6c3d076eb1e5c8b824e467e998ef555d05",
