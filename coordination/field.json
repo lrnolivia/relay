@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T02:57:41.322Z",
+  "updated_at": "2026-11-15T03:04:24.872Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6026,7 +6026,7 @@
       ],
       "goal": "Preserve every edited shader control when duplicating or pasting a shader and investigate multi-tile WebGL warnings.",
       "acceptance": "Desktop copy and duplication retain authored shader control values with their JSX types and preserve active breakpoint semantics. Reproduce and fix the cause of transient shader warnings if confirmed, preserve existing user shader edits, and verify Canvas and Preview visually in Chromium and WebKit.",
-      "next_action": "Isolate exact source, reproduce the warning on the deployed baseline, then implement typed clipboard props and repair the confirmed lifecycle defect.",
+      "next_action": "Publish a review draft after Chromium reproduced the forced context loss and passed typed duplication. Run exact desktop and release checks.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -6057,8 +6057,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T02:57:41.322Z",
-      "lease_until": "2026-11-15T14:57:41.322Z"
+      "updated_at": "2026-11-15T03:04:24.872Z",
+      "lease_until": "2026-11-15T15:04:24.872Z"
     }
   ]
 }
