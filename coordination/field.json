@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:32:12.537Z",
+  "updated_at": "2026-11-15T04:35:14.908Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7031,7 +7031,7 @@
       ],
       "goal": "Restore native Preview asset routing for immutable and stable Field branch builds and continue the desktop custom-fill audit.",
       "acceptance": "Branch Preview loads the matching deployed runtime and root-relative assets on a distinct origin, supports page navigation, and does not serve editor APIs there. Verify a real saved branch project without browser rewrites and retain current desktop Preview and phone editor flag behavior.",
-      "next_action": "Publish the isolated routing candidate and exercise the two matching deployed origins in desktop browsers.",
+      "next_action": "Merge the verified branch Preview routing and run the dedicated production Preview and Canvas smoke checks.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -7062,8 +7062,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T04:32:12.537Z",
-      "lease_until": "2026-11-15T16:29:33.335Z",
+      "updated_at": "2026-11-15T04:35:14.908Z",
+      "lease_until": "2026-11-15T16:35:14.908Z",
       "native_handoffs": [
         {
           "schema": 1,
