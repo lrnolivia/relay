@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T02:28:40.127Z",
+  "updated_at": "2026-11-15T02:29:01.542Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5727,7 +5727,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T02:28:40.127Z",
+      "updated_at": "2026-11-15T02:29:01.542Z",
       "lease_until": "2026-11-15T14:27:53.555Z",
       "native_handoffs": [
         {
@@ -5759,10 +5759,17 @@
             "host_available": true,
             "intent_digest": "02164891e68680fa4f3ce4afd26cc869ff8f2833a1c47c508a85d7d2503030e2"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T02:28:40.127Z",
           "request_digest": "c23239e00f24a195176174a3af12453776deb37122c3e40ffa25c21918501574",
-          "step_digest": "e3ffc3377a2e1502fc0a0be9f7262f80e815703a75e90f9fac66839df2bf4b9d"
+          "step_digest": "5eed661f721bdefb836733f3c4e67edad043917d2ae047e8dda4e2f928d464d4",
+          "start": {
+            "request_digest": "c23239e00f24a195176174a3af12453776deb37122c3e40ffa25c21918501574",
+            "source_sha": "37ca4857b6296a4be88abd3210cddd473e5eece1",
+            "agent_id": "/root/responsive_fill_review",
+            "observed_at": "2026-11-15T02:28:58Z"
+          },
+          "started_at": "2026-11-15T02:29:01.542Z"
         }
       ],
       "card_steps": {
@@ -5774,15 +5781,28 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/responsive-managed-fills-20261114"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "review-desktop-fill-isolation",
             "label": "Review desktop breakpoint fill isolation",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "desktop-managed-fill-source-review-20261114:started",
+              "assignment": "field-responsive-managed-fills-20261114",
+              "step_id": "review-desktop-fill-isolation",
+              "plan_revision": "feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a",
+              "input_digest": "c23239e00f24a195176174a3af12453776deb37122c3e40ffa25c21918501574",
+              "evidence": "sha256:6651b9a232a9a040f9d069035abe0585ef0e0586dc322dbee571e1223064438e",
+              "source_sha": "37ca4857b6296a4be88abd3210cddd473e5eece1",
+              "observed_at": "2026-11-15T02:28:58Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              }
+            }
           }
         ]
       },
@@ -5790,10 +5810,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-responsive-managed-fills-20261114",
         "revision": "feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "desktop-managed-fill-source-review-20261114:started": "dc4399583dd50937d1c50781724111f60e06963f86d770f6af41335dc260830c"
+        },
+        "items": [
+          {
+            "key": "desktop-managed-fill-source-review-20261114:started:c23239e00f24a195176174a3af12453776deb37122c3e40ffa25c21918501574:running:",
+            "receipt_snapshot": "{\"label\":\"Review desktop breakpoint fill isolation\",\"receipt\":{\"assignment\":\"field-responsive-managed-fills-20261114\",\"evidence\":\"sha256:6651b9a232a9a040f9d069035abe0585ef0e0586dc322dbee571e1223064438e\",\"id\":\"desktop-managed-fill-source-review-20261114:started\",\"input_digest\":\"c23239e00f24a195176174a3af12453776deb37122c3e40ffa25c21918501574\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a\",\"source_sha\":\"37ca4857b6296a4be88abd3210cddd473e5eece1\",\"step_id\":\"review-desktop-fill-isolation\"},\"state\":\"running\"}",
+            "id": "desktop-managed-fill-source-review-20261114:started",
+            "assignment": "field-responsive-managed-fills-20261114",
+            "step_id": "review-desktop-fill-isolation",
+            "revision": "feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a",
+            "label": "Review desktop breakpoint fill isolation",
+            "state": "running",
+            "phase": null,
+            "source_sha": "37ca4857b6296a4be88abd3210cddd473e5eece1",
+            "observed_at": "2026-11-15T02:28:58Z",
+            "recorded_at": "2026-11-15T02:29:01.542Z",
+            "receipt_digest": "sha256:6651b9a232a9a040f9d069035abe0585ef0e0586dc322dbee571e1223064438e",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Work started.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
