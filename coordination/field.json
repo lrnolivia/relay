@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T05:19:55.243Z",
+  "updated_at": "2026-11-15T05:27:30.126Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7246,7 +7246,7 @@
       ],
       "goal": "Fix the production build and hydration of Field custom fills",
       "acceptance": "A normal Next.js production build type-checks generated stock shaders and previously saved matching shader files. Responsive Shader and Video fill layers hydrate without client recovery, switch correctly at breakpoint boundaries, and preserve Canvas and Preview visuals. Keep mobile editor behind its existing flag. Continue a bounded desktop custom fill audit.",
-      "next_action": "Draft Field PR #180 at 2cce3690e0d105b75b7e88f0ab279df2de19f369 is ready for review. Local authored and migrated projects each passed route type generation and two type-checked production builds, Chromium/WebKit production and runtime probes passed, 16 fill lifecycle cases passed, and exact hosted branch saved-project Preview passed in both engines. Keep mobile behind its flag.",
+      "next_action": "Lauren authorized merging PR #180 if green, verifying production, and continuing the custom fills audit with the mobile editor flagged off. Exact candidate 2cce3690e0d105b75b7e88f0ab279df2de19f369 passed required admission, Workers build, local filled-site builds, and hosted branch smoke. Healthy production rollback is Field Worker version 7bdc8136-1151-46e0-85aa-8d2f21b9b2fe (main e573451d13fbd42f8d75ce752616a74b5a990e94). No Worker config or persistence schema changes. Use normal Workers Builds from main and confirm exact production source, read-only saved-project Preview, and phone flag.",
       "primary_team": "source",
       "supporting_teams": [],
       "primary_staff": "rafael",
@@ -7269,8 +7269,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T05:19:55.243Z",
-      "lease_until": "2026-11-15T17:19:55.243Z"
+      "updated_at": "2026-11-15T05:27:30.126Z",
+      "lease_until": "2026-11-15T17:27:30.126Z"
     }
   ]
 }
