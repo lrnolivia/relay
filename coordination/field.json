@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:59:25.998Z",
+  "updated_at": "2026-11-15T01:00:24.146Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4819,15 +4819,19 @@
       "branch": "field/explicit-grid-cell-swap-20261114",
       "paths": [
         "src/canvas/drag/strategies/GridDragStrategy.ts",
-        "src/canvas/drag/e2e/grid-viewport-bounds.spec.ts"
+        "src/canvas/drag/e2e/grid-viewport-bounds.spec.ts",
+        "src/canvas/drag/DragCoordinator.ts"
       ],
       "resources": [
         "canvas-grid-explicit-placement"
       ],
       "goal": "Make desktop drags swap explicitly placed Grid items between cells.",
       "acceptance": "Within a desktop Grid whose items are explicitly pinned to both tracks, dragging between fixed cells swaps the painted and saved placements without rewriting JSX order. Named grid areas and numbered row/column placements work. Escape, detach and Undo preserve unrelated items, and span-only or auto-flow grids retain their existing reorder behavior.",
-      "next_action": "Connect explicit cell swaps to the current style write path and verify cancellation, placement persistence, and auto-flow regressions.",
+      "next_action": "Connect Escape to existing desktop layer-drag cancellation and verify that explicit cell swaps restore both placements.",
       "category": "implementation",
+      "supporting_roles": [
+        "verifier"
+      ],
       "primary_team": "runner",
       "supporting_teams": [
         "inspector"
@@ -4854,11 +4858,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:59:25.998Z",
-      "lease_until": "2026-11-15T12:59:25.998Z",
-      "supporting_roles": [
-        "verifier"
-      ],
+      "updated_at": "2026-11-15T01:00:24.146Z",
+      "lease_until": "2026-11-15T13:00:24.146Z",
       "amendment_count": 1,
       "amendments": [
         {
