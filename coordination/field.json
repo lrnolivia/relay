@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:51:45.354Z",
+  "updated_at": "2026-11-15T00:56:24.377Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4471,7 +4471,7 @@
         "roman"
       ],
       "base_sha": "63cd8473c8eda6706bf56cde06aa90895c8b99f5",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-15T00:44:34.426Z",
       "objective_history": {
         "baseline": {
@@ -4488,8 +4488,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:51:45.354Z",
-      "lease_until": "2026-11-15T12:51:45.354Z",
+      "updated_at": "2026-11-15T00:56:24.377Z",
+      "lease_until": "2026-11-15T12:56:24.377Z",
       "supporting_roles": [
         "verifier"
       ],
@@ -4805,7 +4805,13 @@
             "artifacts": []
           }
         ]
-      }
+      },
+      "pr": 172,
+      "merged_head_sha": "2040b428a8e9ce25c2d56a43ca3fde8d810b6d76",
+      "merge_commit_sha": "0acfc98b5062a2b33da108510e61571757705d75",
+      "evidence": "Merged 0acfc98b5062a2b33da108510e61571757705d75 with the same tree as independently reviewed 2040b428a8e9ce25c2d56a43ca3fde8d810b6d76. Chromium/WebKit Grid re-entry, detach and Undo passed. The two broader drag suites each had 32 first-pass tests and one unrelated ruler fixture passing on retry. 13,380 units, types, lint and builds passed. Workers Build 4eaeea2a-36aa-4dc2-95ed-445eee908386 deployed 888696dd-e142-4c48-b8e7-d4a75996bab7 at 100%. Live saved QA project Canvas painted with all four isolation headers.",
+      "work_accounted": true,
+      "completed_at": "2026-11-15T00:56:24.377Z"
     }
   ]
 }
