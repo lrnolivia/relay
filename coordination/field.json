@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:31:41.645Z",
+  "updated_at": "2026-11-15T01:35:34.156Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5337,7 +5337,7 @@
         "roman"
       ],
       "base_sha": "d02e46c82fac56ee6380caa80a2187b540bf4b67",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-15T01:18:01.964Z",
       "objective_history": {
         "baseline": {
@@ -5354,8 +5354,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:31:41.645Z",
-      "lease_until": "2026-11-15T13:31:41.645Z",
+      "updated_at": "2026-11-15T01:35:34.156Z",
+      "lease_until": "2026-11-15T13:35:34.156Z",
       "supporting_roles": [
         "verifier"
       ],
@@ -5659,7 +5659,13 @@
             "artifacts": []
           }
         ]
-      }
+      },
+      "pr": 174,
+      "merged_head_sha": "69e4a6fd82a1a558d323a13d7666517363ce2f46",
+      "merge_commit_sha": "3478d175d0adc6b1a12ca89a5bd42500bcb5655c",
+      "evidence": "PR #174 shipped 3478d175d0adc6b1a12ca89a5bd42500bcb5655c, Worker 9765ef3e-ca99-4280-b4d2-d28777fcabb6 at 100% with saved production QA first paint and four isolation headers. Grid ruler feedback now measures the rendered slot for both axes and invalidates on both Option ghost changes. Final Chromium and WebKit each passed seven focused cases, and 13,380 units, typecheck, lint and builds passed. Fixed swaps are scoped to the supported placement forms in #173. Remaining layout semantics are tracked in #24 and blocked on #22 and #25. Custom-fill audit reproduced shared desktop breakpoint writes for Pattern, Shader and Video and the inert Create shader button. Mobile parked.",
+      "work_accounted": true,
+      "completed_at": "2026-11-15T01:35:34.156Z"
     }
   ]
 }
