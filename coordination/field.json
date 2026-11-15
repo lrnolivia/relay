@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:38:33.409Z",
+  "updated_at": "2026-11-15T00:39:00.155Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4248,7 +4248,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:38:33.409Z",
+      "updated_at": "2026-11-15T00:39:00.155Z",
       "lease_until": "2026-11-15T12:36:34.774Z",
       "supporting_roles": [
         "verifier"
@@ -4312,10 +4312,21 @@
             "host_available": true,
             "intent_digest": "cae503c30da07b0e989c6172246b843a7484eb6bd9958da99776b823aee9ad49"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T00:38:33.409Z",
           "request_digest": "ab19c8eae80050c984644c35e8f2064a366da0da46e623f37811177252612dd0",
-          "step_digest": "79a4fc21fdcaf0086fc780e69eee60b1dbafabd418efec3149d2505464bddf79"
+          "step_digest": "7e0611d52cee8c8ac6a3e2b476b19561324d95d055b3aaf473c938eed7770715",
+          "start": {
+            "request_digest": "ab19c8eae80050c984644c35e8f2064a366da0da46e623f37811177252612dd0",
+            "source_sha": "7c77f369a4f92b168091ce5a3eb6ec1230bb6df7",
+            "agent_id": "/root/pin_restore_verify",
+            "observed_at": "2026-11-15T00:38:56Z",
+            "update": {
+              "text": "Independent review is checking the pin restore during drag and when the resize is saved.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-15T00:39:00.155Z"
         }
       ],
       "card_steps": {
@@ -4327,15 +4338,32 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/resize-release-pins-20261114"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "review-opposing-pin-restore",
             "label": "Verify opposing pins after Shift resize",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "field-resize-opposing-insets-review-20261114:started",
+              "assignment": "field-resize-release-pins-20261114",
+              "step_id": "review-opposing-pin-restore",
+              "plan_revision": "ed477bac302a4eecc932d86e25236e20f3cc961201cc18adc6f54b7abeae4591",
+              "input_digest": "ab19c8eae80050c984644c35e8f2064a366da0da46e623f37811177252612dd0",
+              "evidence": "sha256:87fa75d5d1eef48b75b5c07345af081c1f2b4de4b85f076ef9cc70032fd666a6",
+              "source_sha": "7c77f369a4f92b168091ce5a3eb6ec1230bb6df7",
+              "observed_at": "2026-11-15T00:38:56Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review is checking the pin restore during drag and when the resize is saved.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -4343,10 +4371,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-resize-release-pins-20261114",
         "revision": "ed477bac302a4eecc932d86e25236e20f3cc961201cc18adc6f54b7abeae4591",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "field-resize-opposing-insets-review-20261114:started": "fc5f3ef4f7723d96679e52fe7b1b0c69d6af3f0e249fab45d4b097d7c1df1c96"
+        },
+        "items": [
+          {
+            "key": "field-resize-opposing-insets-review-20261114:started:ab19c8eae80050c984644c35e8f2064a366da0da46e623f37811177252612dd0:running:",
+            "receipt_snapshot": "{\"label\":\"Verify opposing pins after Shift resize\",\"receipt\":{\"assignment\":\"field-resize-release-pins-20261114\",\"evidence\":\"sha256:87fa75d5d1eef48b75b5c07345af081c1f2b4de4b85f076ef9cc70032fd666a6\",\"id\":\"field-resize-opposing-insets-review-20261114:started\",\"input_digest\":\"ab19c8eae80050c984644c35e8f2064a366da0da46e623f37811177252612dd0\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"ed477bac302a4eecc932d86e25236e20f3cc961201cc18adc6f54b7abeae4591\",\"source_sha\":\"7c77f369a4f92b168091ce5a3eb6ec1230bb6df7\",\"step_id\":\"review-opposing-pin-restore\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is checking the pin restore during drag and when the resize is saved.\"}},\"state\":\"running\"}",
+            "id": "field-resize-opposing-insets-review-20261114:started",
+            "assignment": "field-resize-release-pins-20261114",
+            "step_id": "review-opposing-pin-restore",
+            "revision": "ed477bac302a4eecc932d86e25236e20f3cc961201cc18adc6f54b7abeae4591",
+            "label": "Verify opposing pins after Shift resize",
+            "state": "running",
+            "phase": null,
+            "source_sha": "7c77f369a4f92b168091ce5a3eb6ec1230bb6df7",
+            "observed_at": "2026-11-15T00:38:56Z",
+            "recorded_at": "2026-11-15T00:39:00.155Z",
+            "receipt_digest": "sha256:87fa75d5d1eef48b75b5c07345af081c1f2b4de4b85f076ef9cc70032fd666a6",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review is checking the pin restore during drag and when the resize is saved.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
