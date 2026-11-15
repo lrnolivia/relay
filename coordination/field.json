@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:16:32.907Z",
+  "updated_at": "2026-11-15T04:20:14.508Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -723,7 +723,7 @@
       "supporting_staff": [
         "roman"
       ],
-      "state": "claimed",
+      "state": "completed",
       "created_at": "2026-11-15T03:56:20.528Z",
       "objective_history": {
         "baseline": {
@@ -739,7 +739,9 @@
             "at": "2026-11-15T03:56:20.528Z"
           }
         ]
-      }
+      },
+      "completed_at": "2026-11-15T04:20:14.508Z",
+      "updated_at": "2026-11-15T04:20:14.508Z"
     }
   ],
   "claims": [
@@ -6726,7 +6728,7 @@
         "roman"
       ],
       "base_sha": "a95c6918535b8abcceca1034564b3b6ebd172c41",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-15T04:02:41.280Z",
       "objective_history": {
         "baseline": {
@@ -6743,8 +6745,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T04:16:32.907Z",
-      "lease_until": "2026-11-15T16:16:32.907Z",
+      "updated_at": "2026-11-15T04:20:14.508Z",
+      "lease_until": "2026-11-15T16:20:14.508Z",
       "native_handoffs": [
         {
           "schema": 1,
@@ -7004,7 +7006,13 @@
             "artifacts": []
           }
         ]
-      }
+      },
+      "pr": 178,
+      "merged_head_sha": "db07953bd5016f306d221919313bdf294848c8aa",
+      "merge_commit_sha": "86efa8a4c710e54282ebb9cdd6db08320142be4c",
+      "evidence": "Field production 86efa8a4c710e54282ebb9cdd6db08320142be4c with Worker b4a9d92a-54e1-4701-b022-edd4c2edad71 at 100%; phone and desktop saved-project smoke and both local opt-in lanes passed. Relay ctx_10195ea5c323686c1e9ac79cee918426f7b3ba3fa988129d6c1b0fea44d7c5b3.",
+      "work_accounted": true,
+      "completed_at": "2026-11-15T04:20:14.508Z"
     }
   ]
 }
