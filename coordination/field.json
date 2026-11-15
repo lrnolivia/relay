@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T02:31:27.603Z",
+  "updated_at": "2026-11-15T02:31:41.133Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5688,7 +5688,9 @@
         "src/shared/managed-fill-breakpoints.ts",
         "src/code/features/paste-engine/copy/index.ts",
         "src/code/project/canvas-config.ts",
-        "src/editor/fill-picker-shell-contract.test.ts"
+        "src/editor/fill-picker-shell-contract.test.ts",
+        "src/code/stores/container-query-store.ts",
+        "src/canvas/renderer/responsive.ts"
       ],
       "resources": [
         "managed-fill-source",
@@ -5696,7 +5698,7 @@
       ],
       "goal": "Fix active breakpoint isolation for Pattern, Shader and Video and implement shader creation in the library.",
       "acceptance": "On multiple desktop breakpoints, adding, editing, clearing and switching managed fills affects only the selected breakpoint in Canvas and Preview, with save/reopen, Undo, existing paints and masks preserved. Create shader saves an editable and reusable project shader and applies it to the selected breakpoint. Audit adjacent fill workflows on desktop.",
-      "next_action": "Publish the isolated implementation as a draft for exact-source review, run desktop regression and release checks.",
+      "next_action": "Preserve authored background precedence and SVG data URLs in both responsive CSS readers, then re-test exact source.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -5727,8 +5729,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T02:31:27.603Z",
-      "lease_until": "2026-11-15T14:27:53.555Z",
+      "updated_at": "2026-11-15T02:31:41.133Z",
+      "lease_until": "2026-11-15T14:31:41.133Z",
       "native_handoffs": [
         {
           "schema": 1,
