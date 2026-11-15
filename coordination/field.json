@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:47:48.446Z",
+  "updated_at": "2026-11-15T00:48:10.951Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4488,7 +4488,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:47:48.446Z",
+      "updated_at": "2026-11-15T00:48:10.951Z",
       "lease_until": "2026-11-15T12:47:04.997Z",
       "supporting_roles": [
         "verifier"
@@ -4552,10 +4552,21 @@
             "host_available": true,
             "intent_digest": "15aa2c60d8d6f9f061ff58a2b10141bd58ce0da5a66a9c5c2f533b814fa69afc"
           },
-          "state": "prepared",
+          "state": "started",
           "prepared_at": "2026-11-15T00:47:48.446Z",
           "request_digest": "93bd801e4c5e52455ec6a8b3a20be8c0ffb940c70e20de3a6313109100494b31",
-          "step_digest": "91077b5d48e2ead679684bf72c6223968006b493a3ea27253c58a1433ba70387"
+          "step_digest": "afb693cbd2c7025f6ba283c642b5bc57ecfc00fafb5377919682d3e0a8f8e19e",
+          "start": {
+            "request_digest": "93bd801e4c5e52455ec6a8b3a20be8c0ffb940c70e20de3a6313109100494b31",
+            "source_sha": "cf73d25ab83c189a8cd71a9964c02f2cdcd07bfc",
+            "agent_id": "/root/grid_bounds_verify",
+            "observed_at": "2026-11-15T00:48:07Z",
+            "update": {
+              "text": "Independent review is checking Grid re-entry, detachment, and the shared page bounds.",
+              "artifacts": []
+            }
+          },
+          "started_at": "2026-11-15T00:48:10.951Z"
         }
       ],
       "card_steps": {
@@ -4567,15 +4578,32 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/grid-drag-viewport-bounds-20261114"
         },
-        "sequence": 1,
+        "sequence": 2,
         "complete": false,
         "steps": [
           {
             "id": "review-grid-drag-bounds",
             "label": "Verify Grid viewport boundaries",
             "depends_on": [],
-            "state": "pending",
-            "receipt": null
+            "state": "running",
+            "receipt": {
+              "id": "field-grid-drag-viewport-review-20261114:started",
+              "assignment": "field-grid-drag-viewport-bounds-20261114",
+              "step_id": "review-grid-drag-bounds",
+              "plan_revision": "14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e",
+              "input_digest": "93bd801e4c5e52455ec6a8b3a20be8c0ffb940c70e20de3a6313109100494b31",
+              "evidence": "sha256:71615f4c127cdb4e2d041e5cebf8621f4339c62306cb1a5b111b4c4215cf551f",
+              "source_sha": "cf73d25ab83c189a8cd71a9964c02f2cdcd07bfc",
+              "observed_at": "2026-11-15T00:48:07Z",
+              "owner": {
+                "staff": "roman",
+                "team": "inspector"
+              },
+              "update": {
+                "text": "Independent review is checking Grid re-entry, detachment, and the shared page bounds.",
+                "artifacts": []
+              }
+            }
           }
         ]
       },
@@ -4583,10 +4611,35 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-grid-drag-viewport-bounds-20261114",
         "revision": "14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e",
-        "sequence": 1,
+        "sequence": 2,
         "truncated": false,
-        "identities": {},
-        "items": []
+        "identities": {
+          "field-grid-drag-viewport-review-20261114:started": "2dca95ecd2c2e89d46f69881e5d41b058a593fb0eca36733817e0faf74e6b4f5"
+        },
+        "items": [
+          {
+            "key": "field-grid-drag-viewport-review-20261114:started:93bd801e4c5e52455ec6a8b3a20be8c0ffb940c70e20de3a6313109100494b31:running:",
+            "receipt_snapshot": "{\"label\":\"Verify Grid viewport boundaries\",\"receipt\":{\"assignment\":\"field-grid-drag-viewport-bounds-20261114\",\"evidence\":\"sha256:71615f4c127cdb4e2d041e5cebf8621f4339c62306cb1a5b111b4c4215cf551f\",\"id\":\"field-grid-drag-viewport-review-20261114:started\",\"input_digest\":\"93bd801e4c5e52455ec6a8b3a20be8c0ffb940c70e20de3a6313109100494b31\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"plan_revision\":\"14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e\",\"source_sha\":\"cf73d25ab83c189a8cd71a9964c02f2cdcd07bfc\",\"step_id\":\"review-grid-drag-bounds\",\"update\":{\"artifacts\":[],\"text\":\"Independent review is checking Grid re-entry, detachment, and the shared page bounds.\"}},\"state\":\"running\"}",
+            "id": "field-grid-drag-viewport-review-20261114:started",
+            "assignment": "field-grid-drag-viewport-bounds-20261114",
+            "step_id": "review-grid-drag-bounds",
+            "revision": "14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e",
+            "label": "Verify Grid viewport boundaries",
+            "state": "running",
+            "phase": null,
+            "source_sha": "cf73d25ab83c189a8cd71a9964c02f2cdcd07bfc",
+            "observed_at": "2026-11-15T00:48:07Z",
+            "recorded_at": "2026-11-15T00:48:10.951Z",
+            "receipt_digest": "sha256:71615f4c127cdb4e2d041e5cebf8621f4339c62306cb1a5b111b4c4215cf551f",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Independent review is checking Grid re-entry, detachment, and the shared page bounds.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          }
+        ]
       }
     }
   ]
