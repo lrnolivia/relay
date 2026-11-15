@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:29:33.335Z",
+  "updated_at": "2026-11-15T04:30:18.505Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7062,8 +7062,74 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T04:29:33.335Z",
-      "lease_until": "2026-11-15T16:29:33.335Z"
+      "updated_at": "2026-11-15T04:30:18.505Z",
+      "lease_until": "2026-11-15T16:29:33.335Z",
+      "native_handoffs": [
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "branch-preview-origin-review-20261115",
+          "assignment": "field-branch-preview-origin-20261115",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/branch-preview-origin-20261115",
+          "source_sha": "e331065e73452cbe23b68189ef3cccb396f814aa",
+          "objective_digest": "18b7ce00b42b42d98b30413a7ef84f16a4a0526f386c69d11813559d57045f6d",
+          "scope_digest": "95fc3ed252065752121fb5773ed0af3cd2255cab790eeed2bfd172008da50f60",
+          "step_id": "verify-branch-preview-assets",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "e331065e73452cbe23b68189ef3cccb396f814aa",
+            "objective_digest": "18b7ce00b42b42d98b30413a7ef84f16a4a0526f386c69d11813559d57045f6d",
+            "step_id": "verify-branch-preview-assets",
+            "label": "Verify isolated branch Preview routing",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "1e483045b0729680595ac57799f681d7886da05490f1c8f3d8b33bf7bba87e0a"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T04:30:18.505Z",
+          "request_digest": "2f13633a64eea0281cbb2a06f5a451f7d199d62f956e8d30d932b6af8d3524d3",
+          "step_digest": "381d99941f9a1c21c0c638cf91c8806cf5561606ca0508436789646acc491a1b"
+        }
+      ],
+      "card_steps": {
+        "schema": "relay-card-steps/v1",
+        "assignment": "field-branch-preview-origin-20261115",
+        "revision": "cde10169d53da34a34cf898be342bbcb1058c2463a99b9277fe0083680bba5ba",
+        "objective_digest": "18b7ce00b42b42d98b30413a7ef84f16a4a0526f386c69d11813559d57045f6d",
+        "publisher": {
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/branch-preview-origin-20261115"
+        },
+        "sequence": 1,
+        "complete": false,
+        "steps": [
+          {
+            "id": "verify-branch-preview-assets",
+            "label": "Verify isolated branch Preview routing",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
+          }
+        ]
+      },
+      "card_updates": {
+        "schema": "relay-card-updates/v1",
+        "assignment": "field-branch-preview-origin-20261115",
+        "revision": "cde10169d53da34a34cf898be342bbcb1058c2463a99b9277fe0083680bba5ba",
+        "sequence": 1,
+        "truncated": false,
+        "identities": {},
+        "items": []
+      }
     }
   ]
 }
