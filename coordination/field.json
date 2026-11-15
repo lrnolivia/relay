@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T07:07:59.480Z",
+  "updated_at": "2026-11-15T07:19:31.106Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -742,6 +742,53 @@
       },
       "completed_at": "2026-11-15T04:20:14.508Z",
       "updated_at": "2026-11-15T04:20:14.508Z"
+    },
+    {
+      "id": "field-pattern-component-variants-20261115",
+      "owner": "field-overnight-20261115",
+      "goal": "Prevent an existing Pattern edit on one component variant from changing sibling/default variants.",
+      "acceptance": "Verified baseline defect at Field main9c2fdc513bf801c03b0ef5d5f099fe6283ebc518: Chromium and WebKit disposable two-variant Card with canonical managed Grid recipe starts Default and Hover at16px; select Hover/variant-1, open visible 2 Layers Fill row, verify Pattern scale16, enter24. Both Default and Hover render background-size24px24px,24px24px and retain24px after reopening. Required fixed result: Default stays16px while Hover becomes24px through edit, undo/reopen and exact-source browser QA in both engines; preserve existing page-breakpoint behavior. Mobile editor stays flagged off. Earlier fixture locator/JSON-attribute failures are excluded from product evidence.",
+      "next_action": "QUEUED ONLY—do not start or create a branch/claim. FillControl.tsx is reserved by field-video-loop-variants-20261115 (owner01a1de08-7836-72c0-ab98-55d61f975fc8), and all4 implementation slots are occupied. Requires serial ownership/handoff or later admission after overlap and budget clear; preserve active Shader scope and held PR181 thumbnail scope. Evidence: /Users/lrnolivia/Codex/2026-11-15/task/artifacts/pattern-variant-browser/finding.md; exact executable fixture existing-pattern.spec.ts; canonical-pattern.log SHA256 af84ef4d4f5da8981e62bec7a5c20809f8a4abb6ddddbb738c910adc8f3abf71. Both baseline reproduction cases passed12.9s; these prove the defect, not a fix. No product source or production data changed.",
+      "paths": [
+        "src/editor/tools/StylesTool/atoms/FillControl.tsx",
+        "src/editor/ui/responsive-managed-fill.ts",
+        "src/editor/ui/managed-fill-styles.ts",
+        "src/editor/ui/pattern-fill-variant-options.ts",
+        "src/editor/ui/pattern-fill-variant-options.test.ts",
+        "src/editor/e2e/pattern-fill-variants.spec.ts"
+      ],
+      "resources": [
+        "pattern-component-variant-edits"
+      ],
+      "category": "implementation",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "nico",
+      "supporting_staff": [
+        "roman"
+      ],
+      "state": "queued",
+      "created_at": "2026-11-15T07:19:31.106Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Prevent an existing Pattern edit on one component variant from changing sibling/default variants.",
+          "acceptance": "Verified baseline defect at Field main9c2fdc513bf801c03b0ef5d5f099fe6283ebc518: Chromium and WebKit disposable two-variant Card with canonical managed Grid recipe starts Default and Hover at16px; select Hover/variant-1, open visible 2 Layers Fill row, verify Pattern scale16, enter24. Both Default and Hover render background-size24px24px,24px24px and retain24px after reopening. Required fixed result: Default stays16px while Hover becomes24px through edit, undo/reopen and exact-source browser QA in both engines; preserve existing page-breakpoint behavior. Mobile editor stays flagged off. Earlier fixture locator/JSON-attribute failures are excluded from product evidence.",
+          "at": "2026-11-15T07:19:31.106Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-pattern-component-variants-20261115:acceptance:0",
+            "text": "Verified baseline defect at Field main9c2fdc513bf801c03b0ef5d5f099fe6283ebc518: Chromium and WebKit disposable two-variant Card with canonical managed Grid recipe starts Default and Hover at16px; select Hover/variant-1, open visible 2 Layers Fill row, verify Pattern scale16, enter24. Both Default and Hover render background-size24px24px,24px24px and retain24px after reopening. Required fixed result: Default stays16px while Hover becomes24px through edit, undo/reopen and exact-source browser QA in both engines; preserve existing page-breakpoint behavior. Mobile editor stays flagged off. Earlier fixture locator/JSON-attribute failures are excluded from product evidence.",
+            "at": "2026-11-15T07:19:31.106Z"
+          }
+        ]
+      }
     }
   ],
   "claims": [
