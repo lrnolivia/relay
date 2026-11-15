@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:51:29.859Z",
+  "updated_at": "2026-11-15T00:51:45.354Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4460,7 +4460,7 @@
       ],
       "goal": "Keep desktop Grid reordering inside the visible page content.",
       "acceptance": "A desktop grid inside or below a collapsed or fixed-height page root retains its placeholder during an in-grid reorder, including leaving and returning to the page during the same gesture. The committed item stays in the grid at the new slot and one Undo restores the prior source. A true exit still hides the placeholder and can detach the item.",
-      "next_action": "Use the same page-content bounds as flex drag and cover the collapsed-root regression and viewport round trip.",
+      "next_action": "Check exact-source regression results and immutable preview, then promote and verify live.",
       "category": "implementation",
       "primary_team": "runner",
       "supporting_teams": [
@@ -4488,8 +4488,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:51:29.859Z",
-      "lease_until": "2026-11-15T12:47:04.997Z",
+      "updated_at": "2026-11-15T00:51:45.354Z",
+      "lease_until": "2026-11-15T12:51:45.354Z",
       "supporting_roles": [
         "verifier"
       ],
