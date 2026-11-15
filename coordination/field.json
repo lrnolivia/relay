@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:44:34.426Z",
+  "updated_at": "2026-11-15T00:47:04.997Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4463,9 +4463,13 @@
       "next_action": "Use the same page-content bounds as flex drag and cover the collapsed-root regression and viewport round trip.",
       "category": "implementation",
       "primary_team": "runner",
-      "supporting_teams": [],
+      "supporting_teams": [
+        "inspector"
+      ],
       "primary_staff": "nico",
-      "supporting_staff": [],
+      "supporting_staff": [
+        "roman"
+      ],
       "base_sha": "63cd8473c8eda6706bf56cde06aa90895c8b99f5",
       "state": "active",
       "created_at": "2026-11-15T00:44:34.426Z",
@@ -4484,8 +4488,40 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:44:34.426Z",
-      "lease_until": "2026-11-15T12:44:34.426Z"
+      "updated_at": "2026-11-15T00:47:04.997Z",
+      "lease_until": "2026-11-15T12:47:04.997Z",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "amendment_count": 1,
+      "amendments": [
+        {
+          "at": "2026-11-15T00:47:04.997Z",
+          "by": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "reason": "Assign independent review of Grid viewport exits, placeholder re-entry, and shared bounds.",
+          "fields": [
+            "supporting_roles",
+            "supporting_staff",
+            "supporting_teams"
+          ],
+          "before": {
+            "supporting_roles": null,
+            "supporting_staff": [],
+            "supporting_teams": []
+          },
+          "after": {
+            "supporting_roles": [
+              "verifier"
+            ],
+            "supporting_staff": [
+              "roman"
+            ],
+            "supporting_teams": [
+              "inspector"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
