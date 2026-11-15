@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T04:13:17.756Z",
+  "updated_at": "2026-11-15T04:14:37.771Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6743,7 +6743,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T04:13:17.756Z",
+      "updated_at": "2026-11-15T04:14:37.771Z",
       "lease_until": "2026-11-15T16:12:25.465Z",
       "native_handoffs": [
         {
@@ -6825,17 +6825,26 @@
             "host_available": true,
             "intent_digest": "c869594a707541cf01d8ce26d732acb51e4a2f98dc2f5c92095d776f069bc4e5"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-15T04:12:54.814Z",
           "request_digest": "bf8c021d60f7bb0a00073a83b112f08e33fd19c27b111d502349bbf6997c8e9e",
-          "step_digest": "ef9484a5b56fbaa2e107776394bb971abf296d4b1f1f4f028d6dbfdb4d8ed7fa",
+          "step_digest": "3aaedc9d02e85935a034d182bb1b4b1d19420e9041a052600cfc1880c1191229",
           "start": {
             "request_digest": "bf8c021d60f7bb0a00073a83b112f08e33fd19c27b111d502349bbf6997c8e9e",
             "source_sha": "db07953bd5016f306d221919313bdf294848c8aa",
             "agent_id": "/root/mobile_preview_transition_verify",
             "observed_at": "2026-11-15T04:13:14Z"
           },
-          "started_at": "2026-11-15T04:13:17.756Z"
+          "started_at": "2026-11-15T04:13:17.756Z",
+          "result": {
+            "request_digest": "bf8c021d60f7bb0a00073a83b112f08e33fd19c27b111d502349bbf6997c8e9e",
+            "source_sha": "db07953bd5016f306d221919313bdf294848c8aa",
+            "agent_id": "/root/mobile_preview_transition_verify",
+            "observed_at": "2026-11-15T04:14:34Z",
+            "state": "succeeded",
+            "result_digest": "b086811cd7cf38673d6401449e89b975be229522d0dd628115fbafde9efee817"
+          },
+          "reported_at": "2026-11-15T04:14:37.771Z"
         }
       ],
       "card_steps": {
@@ -6847,7 +6856,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/mobile-preview-only-20261115"
         },
-        "sequence": 5,
+        "sequence": 6,
         "complete": false,
         "steps": [
           {
@@ -6874,20 +6883,21 @@
             "id": "verify-phone-preview-text-transition",
             "label": "Verify text commit before switching to phone Preview",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "mobile-project-preview-transition-review-20261115:started",
+              "id": "mobile-project-preview-transition-review-20261115:result",
               "assignment": "field-mobile-preview-only-20261115",
               "step_id": "verify-phone-preview-text-transition",
               "plan_revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
               "input_digest": "bf8c021d60f7bb0a00073a83b112f08e33fd19c27b111d502349bbf6997c8e9e",
-              "evidence": "sha256:2ee406b343c0ea8bc1a85a45493bfc6f7a59fa8eec07c0916ad4adaceab9dfbe",
+              "evidence": "sha256:99b0194957a1f4587f42c422aa44ca81725d0e6e1936bf4fa27b40ad53799653",
               "source_sha": "db07953bd5016f306d221919313bdf294848c8aa",
-              "observed_at": "2026-11-15T04:13:14Z",
+              "observed_at": "2026-11-15T04:14:34Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -6896,12 +6906,13 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-mobile-preview-only-20261115",
         "revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
-        "sequence": 5,
+        "sequence": 6,
         "truncated": false,
         "identities": {
           "mobile-project-preview-review-20261115:started": "316b9558c38f20506c2bcbf532383c5574b98d311a834bd69dfd17a45f045735",
           "mobile-project-preview-review-20261115:result": "bf3cef378e4f3dbfea138cd86e8575e716a4e64aef70690bccdc6384086ef04c",
-          "mobile-project-preview-transition-review-20261115:started": "69a7d43c5429b3cebe81765bd6704f4d415f0d12facccfe0060645bf6f68740f"
+          "mobile-project-preview-transition-review-20261115:started": "69a7d43c5429b3cebe81765bd6704f4d415f0d12facccfe0060645bf6f68740f",
+          "mobile-project-preview-transition-review-20261115:result": "31e9eb66b96b3dae881cdfd7267d32b0d6013b752a6e9e105dc7a567366a7aa1"
         },
         "items": [
           {
@@ -6967,6 +6978,28 @@
               "team": "inspector"
             },
             "text": "Work started.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          },
+          {
+            "key": "mobile-project-preview-transition-review-20261115:result:bf8c021d60f7bb0a00073a83b112f08e33fd19c27b111d502349bbf6997c8e9e:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Verify text commit before switching to phone Preview\",\"receipt\":{\"assignment\":\"field-mobile-preview-only-20261115\",\"evidence\":\"sha256:99b0194957a1f4587f42c422aa44ca81725d0e6e1936bf4fa27b40ad53799653\",\"id\":\"mobile-project-preview-transition-review-20261115:result\",\"input_digest\":\"bf8c021d60f7bb0a00073a83b112f08e33fd19c27b111d502349bbf6997c8e9e\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1\",\"source_sha\":\"db07953bd5016f306d221919313bdf294848c8aa\",\"step_id\":\"verify-phone-preview-text-transition\"},\"state\":\"blocked\"}",
+            "id": "mobile-project-preview-transition-review-20261115:result",
+            "assignment": "field-mobile-preview-only-20261115",
+            "step_id": "verify-phone-preview-text-transition",
+            "revision": "3e0b16e91ea3a4a72eb24fad53e9bfb1d46443afed8761798d8c6e42270b80f1",
+            "label": "Verify text commit before switching to phone Preview",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "db07953bd5016f306d221919313bdf294848c8aa",
+            "observed_at": "2026-11-15T04:14:34Z",
+            "recorded_at": "2026-11-15T04:14:37.771Z",
+            "receipt_digest": "sha256:99b0194957a1f4587f42c422aa44ca81725d0e6e1936bf4fa27b40ad53799653",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The work is ready for verification.",
             "text_kind": "recorded-state",
             "artifacts": []
           }
