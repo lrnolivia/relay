@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T03:25:19.477Z",
+  "updated_at": "2026-11-15T03:42:29.095Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6445,6 +6445,53 @@
       "evidence": "Field #176 exact production 50747bf4877624bf725eed12f546e516a061dd9f; 100% Worker 939a74b8-7fd7-4240-91b8-34f50d30f34f; saved-project smoke, two browser fill suites and Preview pixel checks verified; Relay context ctx_30a719148dcef3ea210aa1eb5da63d87132eca442011af371c4e2e1d93945b38 preserves audit and acceptance.",
       "work_accounted": true,
       "completed_at": "2026-11-15T03:25:19.477Z"
+    },
+    {
+      "id": "field-preview-react-keys-20261115",
+      "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+      "branch": "field/preview-react-keys-20261115",
+      "paths": [
+        "src/preview-sandbox/main.tsx",
+        "src/editor/e2e/preview-jsx-runtime.spec.ts"
+      ],
+      "resources": [
+        "preview-jsx-runtime"
+      ],
+      "goal": "Fix the false React list-key warning in Field Preview and continue the desktop custom-fill audit.",
+      "acceptance": "Static JSX siblings render in Preview without spurious key diagnostics, dynamic lists still receive genuine diagnostics, and document and void-element compatibility is preserved. Verify desktop Chromium and WebKit, and audit custom fills with rendered checks. Mobile is parked.",
+      "next_action": "Capture the static-versus-dynamic key regression in desktop Preview, then preserve the JSX runtime's child semantics.",
+      "category": "implementation",
+      "supporting_roles": [
+        "verifier"
+      ],
+      "primary_team": "runner",
+      "supporting_teams": [
+        "inspector"
+      ],
+      "primary_staff": "nico",
+      "supporting_staff": [
+        "roman"
+      ],
+      "base_sha": "50747bf4877624bf725eed12f546e516a061dd9f",
+      "state": "active",
+      "created_at": "2026-11-15T03:42:29.095Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Fix the false React list-key warning in Field Preview and continue the desktop custom-fill audit.",
+          "acceptance": "Static JSX siblings render in Preview without spurious key diagnostics, dynamic lists still receive genuine diagnostics, and document and void-element compatibility is preserved. Verify desktop Chromium and WebKit, and audit custom fills with rendered checks. Mobile is parked.",
+          "at": "2026-11-15T03:42:29.095Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-preview-react-keys-20261115:acceptance:0",
+            "text": "Static JSX siblings render in Preview without spurious key diagnostics, dynamic lists still receive genuine diagnostics, and document and void-element compatibility is preserved. Verify desktop Chromium and WebKit, and audit custom fills with rendered checks. Mobile is parked.",
+            "at": "2026-11-15T03:42:29.095Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-15T03:42:29.095Z",
+      "lease_until": "2026-11-15T15:42:29.095Z"
     }
   ]
 }
