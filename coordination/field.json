@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T01:25:18.943Z",
+  "updated_at": "2026-11-15T01:27:50.014Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5354,7 +5354,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T01:25:18.943Z",
+      "updated_at": "2026-11-15T01:27:50.014Z",
       "lease_until": "2026-11-15T13:21:51.402Z",
       "supporting_roles": [
         "verifier"
@@ -5446,6 +5446,40 @@
             }
           },
           "reported_at": "2026-11-15T01:25:18.943Z"
+        },
+        {
+          "schema": 1,
+          "project": "field",
+          "operation_id": "field-grid-slot-ruler-option-final-review-20261114",
+          "assignment": "field-grid-slot-ruler-feedback-20261114",
+          "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
+          "branch": "field/grid-slot-ruler-feedback-20261114",
+          "source_sha": "69e4a6fd82a1a558d323a13d7666517363ce2f46",
+          "objective_digest": "be0e37ff45f975b771410a8691630bee85ceda554a289d96350422bc13ad873c",
+          "scope_digest": "6eee49711175a1a15ce1ce9d7bff1946f84143214a1d9ccce0f4be84bb4c1bae",
+          "step_id": "review-grid-slot-option-feedback",
+          "specialist": {
+            "role": "verifier",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "instruction": "Perform only this bounded stage. The staff name is a fictional presentation identity, not a real employee or Git identity. Do not create agents or reassign work. Return actual findings and evidence; a successful process is not verified acceptance."
+          },
+          "prepare": {
+            "source_sha": "69e4a6fd82a1a558d323a13d7666517363ce2f46",
+            "objective_digest": "be0e37ff45f975b771410a8691630bee85ceda554a289d96350422bc13ad873c",
+            "step_id": "review-grid-slot-option-feedback",
+            "label": "Verify Option-drag Grid ruler feedback",
+            "role": "verifier",
+            "host_tool": "collaboration.spawn_agent",
+            "host_available": true,
+            "intent_digest": "822001fb0bfb1b80751a7bf5c5c7bcce940872095c27c5b2b0f3055b2c4a06b6"
+          },
+          "state": "prepared",
+          "prepared_at": "2026-11-15T01:27:50.014Z",
+          "request_digest": "edd5aa01d64f42b261130e62c4c9026761ea87e9c4296496a3d7e4073b4678bd",
+          "step_digest": "11a03442f9a9c7a6d482bf9c4a8c6a320f00735fe9b7432e122731a7c2d80b11"
         }
       ],
       "card_steps": {
@@ -5457,7 +5491,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/grid-slot-ruler-feedback-20261114"
         },
-        "sequence": 3,
+        "sequence": 4,
         "complete": false,
         "steps": [
           {
@@ -5483,6 +5517,13 @@
                 "artifacts": []
               }
             }
+          },
+          {
+            "id": "review-grid-slot-option-feedback",
+            "label": "Verify Option-drag Grid ruler feedback",
+            "depends_on": [],
+            "state": "pending",
+            "receipt": null
           }
         ]
       },
@@ -5490,7 +5531,7 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-grid-slot-ruler-feedback-20261114",
         "revision": "3768772ddeaf6e61cbf240d838a013b346a881684e5f86c79bc86ab75880a5d9",
-        "sequence": 3,
+        "sequence": 4,
         "truncated": false,
         "identities": {
           "field-grid-slot-ruler-final-review-20261114:started": "b641a19d84b18558ea5d9629586d3ae585cb26ee471bfde767e331622c3f9c32",
