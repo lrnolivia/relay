@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T02:39:10.914Z",
+  "updated_at": "2026-11-15T02:43:20.639Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5712,7 +5712,7 @@
         "roman"
       ],
       "base_sha": "3478d175d0adc6b1a12ca89a5bd42500bcb5655c",
-      "state": "active",
+      "state": "completed",
       "created_at": "2026-11-15T02:05:53.154Z",
       "objective_history": {
         "baseline": {
@@ -5729,8 +5729,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T02:39:10.914Z",
-      "lease_until": "2026-11-15T14:39:10.914Z",
+      "updated_at": "2026-11-15T02:43:20.639Z",
+      "lease_until": "2026-11-15T14:43:20.639Z",
       "native_handoffs": [
         {
           "schema": 1,
@@ -5990,7 +5990,13 @@
             "artifacts": []
           }
         ]
-      }
+      },
+      "pr": 175,
+      "merged_head_sha": "8ec5d6a89a7bc11b532a2aed46f5b74bd7fd2d06",
+      "merge_commit_sha": "4633c9915542cad7d5582cc1b1b2a1472cfc0a83",
+      "evidence": "PR #175 shipped 4633c9915542cad7d5582cc1b1b2a1472cfc0a83, Worker 3d6bc964-8d54-4dec-9666-4a2a692bd3a2 at 100%. The saved production QA opening rendered seven visible layers and all four isolation headers. Pattern, Shader and Video are scoped to the active page breakpoint, with saved CSS and Canvas/Preview parity. Create shader creates, applies and saves an editable project shader. Chromium and WebKit each passed four exact-head regressions and a Preview pixel test. 13,380 units, types, lint and builds passed. Chromium verified resize and deletion update the Preview boundary. A clipboard audit reproduced numeric Speed falling back to default on Shader copies. Mobile parked.",
+      "work_accounted": true,
+      "completed_at": "2026-11-15T02:43:20.639Z"
     }
   ]
 }
