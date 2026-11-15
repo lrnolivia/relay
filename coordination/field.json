@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T06:00:05.288Z",
+  "updated_at": "2026-11-15T06:23:30.959Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7521,6 +7521,47 @@
           }
         ]
       }
+    },
+    {
+      "id": "field-shader-variant-controls-20261115",
+      "owner": "01a1dddf-8c90-7483-bf54-b64861221936",
+      "branch": "field/shader-variant-controls-20261115",
+      "paths": [
+        "src/editor/ui/ShaderFillTab.tsx",
+        "src/editor/ui/shader-fill-variant-props.ts",
+        "src/editor/ui/shader-fill-variant-props.test.ts",
+        "src/editor/e2e/shader-fill-variants.spec.ts"
+      ],
+      "resources": [
+        "shader-component-variant-props"
+      ],
+      "goal": "Confine Shader control edits and displayed values to the selected component variant without losing other variants or page breakpoint behavior.",
+      "acceptance": "Safe browser fixture reproduces current shared Speed overwrite in Chromium/WebKit. Fixed component-variant controls read/write the selected variant, preserve numeric/boolean types and sibling/default values, and retain undo/reopen and existing page-breakpoint behavior. Required deterministic gates, independent review and exact-source Preview QA pass. Full mobile editor remains behind its flag. Deliver a verified draft PR only; no merge/deploy in this task.",
+      "next_action": "Separate native session 01a1dddf-8c90-7483-bf54-b64861221936 owns this independent task. Browser reproduction already confirmed current main9c2fdc5 in Chromium/WebKit. Create isolated checkout/claimed branch after claim readback, preflight and implement scoped fix. User authorizes overnight blocker clearing and fresh sessions. Preserve held PR181 claim/branch/resource untouched; never retry denied release.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "9c2fdc513bf801c03b0ef5d5f099fe6283ebc518",
+      "state": "active",
+      "created_at": "2026-11-15T06:23:30.959Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Confine Shader control edits and displayed values to the selected component variant without losing other variants or page breakpoint behavior.",
+          "acceptance": "Safe browser fixture reproduces current shared Speed overwrite in Chromium/WebKit. Fixed component-variant controls read/write the selected variant, preserve numeric/boolean types and sibling/default values, and retain undo/reopen and existing page-breakpoint behavior. Required deterministic gates, independent review and exact-source Preview QA pass. Full mobile editor remains behind its flag. Deliver a verified draft PR only; no merge/deploy in this task.",
+          "at": "2026-11-15T06:23:30.959Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-shader-variant-controls-20261115:acceptance:0",
+            "text": "Safe browser fixture reproduces current shared Speed overwrite in Chromium/WebKit. Fixed component-variant controls read/write the selected variant, preserve numeric/boolean types and sibling/default values, and retain undo/reopen and existing page-breakpoint behavior. Required deterministic gates, independent review and exact-source Preview QA pass. Full mobile editor remains behind its flag. Deliver a verified draft PR only; no merge/deploy in this task.",
+            "at": "2026-11-15T06:23:30.959Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-15T06:23:30.959Z",
+      "lease_until": "2026-11-15T18:23:30.959Z"
     }
   ]
 }
