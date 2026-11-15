@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T03:49:21.548Z",
+  "updated_at": "2026-11-15T03:51:32.640Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -6452,14 +6452,17 @@
       "branch": "field/preview-react-keys-20261115",
       "paths": [
         "src/preview-sandbox/main.tsx",
-        "src/editor/e2e/preview-jsx-runtime.spec.ts"
+        "src/editor/e2e/preview-jsx-runtime.spec.ts",
+        "cloudflare/worker.js",
+        "cloudflare/field-persistence.test.ts"
       ],
       "resources": [
-        "preview-jsx-runtime"
+        "preview-jsx-runtime",
+        "immutable-preview-assets"
       ],
       "goal": "Fix the false React list-key warning in Field Preview and continue the desktop custom-fill audit.",
       "acceptance": "Static JSX siblings render in Preview without spurious key diagnostics, dynamic lists still receive genuine diagnostics, and document and void-element compatibility is preserved. Verify desktop Chromium and WebKit, and audit custom fills with rendered checks. Mobile is parked.",
-      "next_action": "Publish the verified JSX regression fix as a draft while desktop fill checks and independent review run.",
+      "next_action": "Repair the missing production JSX bundle routing on immutable Preview so the release can be verified through its real entry point.",
       "category": "implementation",
       "supporting_roles": [
         "verifier"
@@ -6490,8 +6493,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T03:49:21.548Z",
-      "lease_until": "2026-11-15T15:46:19.657Z",
+      "updated_at": "2026-11-15T03:51:32.640Z",
+      "lease_until": "2026-11-15T15:51:32.640Z",
       "native_handoffs": [
         {
           "schema": 1,
