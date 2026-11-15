@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T06:23:30.959Z",
+  "updated_at": "2026-11-15T07:07:59.480Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7562,6 +7562,47 @@
       },
       "updated_at": "2026-11-15T06:23:30.959Z",
       "lease_until": "2026-11-15T18:23:30.959Z"
+    },
+    {
+      "id": "field-video-loop-variants-20261115",
+      "owner": "01a1de08-7836-72c0-ab98-55d61f975fc8",
+      "branch": "field/video-loop-variants-20261115",
+      "paths": [
+        "src/editor/tools/StylesTool/atoms/FillControl.tsx",
+        "src/editor/ui/video-fill-variant-options.ts",
+        "src/editor/ui/video-fill-variant-options.test.ts",
+        "src/editor/e2e/video-fill-variants.spec.ts"
+      ],
+      "resources": [
+        "video-component-variant-loop"
+      ],
+      "goal": "Keep Video Loop option edits and displayed state independent between component variants.",
+      "acceptance": "Browser reproduction on main confirms Hover Loop change updates shared JSX. Fix Loop reads/writes for component variants while preserving Default/sibling values and boolean types, existing page breakpoint behavior, static Canvas playback, undo and reopen. Required install/build/test/lint, meaningful regression tests, independent review and exact-source runtime QA pass. Mobile editor remains flagged off. Deliver draft PR only; no merge/deploy. Preserve held thumbnail and active Shader claims and branches.",
+      "next_action": "Separate real native session01a1de08-7836-72c0-ab98-55d61f975fc8 owns this independent Loop task. Read claim/current controls back, create isolated checkout/claimed branch, preflight, implement scoped Loop fix and verify to draft PR. Evidence /Users/lrnolivia/Codex/2026-11-15/task/artifacts/video-variant-browser/finding.md and source-option.log. User authorized overnight blocker clearing, fresh sessions and keep going. Do not approve Shader's pending native read action or retry PR181's denied release.",
+      "primary_team": "night-shift",
+      "supporting_teams": [],
+      "primary_staff": "julian",
+      "supporting_staff": [],
+      "base_sha": "9c2fdc513bf801c03b0ef5d5f099fe6283ebc518",
+      "state": "active",
+      "created_at": "2026-11-15T07:07:59.480Z",
+      "objective_history": {
+        "baseline": {
+          "goal": "Keep Video Loop option edits and displayed state independent between component variants.",
+          "acceptance": "Browser reproduction on main confirms Hover Loop change updates shared JSX. Fix Loop reads/writes for component variants while preserving Default/sibling values and boolean types, existing page breakpoint behavior, static Canvas playback, undo and reopen. Required install/build/test/lint, meaningful regression tests, independent review and exact-source runtime QA pass. Mobile editor remains flagged off. Deliver draft PR only; no merge/deploy. Preserve held thumbnail and active Shader claims and branches.",
+          "at": "2026-11-15T07:07:59.480Z",
+          "source": "assignment-created"
+        },
+        "acceptance_versions": [
+          {
+            "id": "field-video-loop-variants-20261115:acceptance:0",
+            "text": "Browser reproduction on main confirms Hover Loop change updates shared JSX. Fix Loop reads/writes for component variants while preserving Default/sibling values and boolean types, existing page breakpoint behavior, static Canvas playback, undo and reopen. Required install/build/test/lint, meaningful regression tests, independent review and exact-source runtime QA pass. Mobile editor remains flagged off. Deliver draft PR only; no merge/deploy. Preserve held thumbnail and active Shader claims and branches.",
+            "at": "2026-11-15T07:07:59.480Z"
+          }
+        ]
+      },
+      "updated_at": "2026-11-15T07:07:59.480Z",
+      "lease_until": "2026-11-15T19:07:59.480Z"
     }
   ]
 }
