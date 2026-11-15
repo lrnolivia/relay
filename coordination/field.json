@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T00:50:44.225Z",
+  "updated_at": "2026-11-15T00:51:29.859Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -4488,7 +4488,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T00:50:44.225Z",
+      "updated_at": "2026-11-15T00:51:29.859Z",
       "lease_until": "2026-11-15T12:47:04.997Z",
       "supporting_roles": [
         "verifier"
@@ -4610,10 +4610,10 @@
             "host_available": true,
             "intent_digest": "f9cef1af4b2ef8887334dd82da0c286af978d9b1ce1f8746c932c081a654f766"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-15T00:50:23.270Z",
           "request_digest": "dc86f03116aa44d2415e695a3a37e626c2b73fc023e1b58eb16993ef931e87db",
-          "step_digest": "033ee51f52e66b7abaa1243fc1c9a1f92c948a6e854f38c7ad55ae2685f8a151",
+          "step_digest": "0fceca247708c6bae9980755e649c13a0c35db10802e6cf63be1ecc155b7a1ee",
           "start": {
             "request_digest": "dc86f03116aa44d2415e695a3a37e626c2b73fc023e1b58eb16993ef931e87db",
             "source_sha": "2040b428a8e9ce25c2d56a43ca3fde8d810b6d76",
@@ -4624,7 +4624,20 @@
               "artifacts": []
             }
           },
-          "started_at": "2026-11-15T00:50:44.225Z"
+          "started_at": "2026-11-15T00:50:44.225Z",
+          "result": {
+            "request_digest": "dc86f03116aa44d2415e695a3a37e626c2b73fc023e1b58eb16993ef931e87db",
+            "source_sha": "2040b428a8e9ce25c2d56a43ca3fde8d810b6d76",
+            "agent_id": "/root/grid_bounds_final_verify",
+            "observed_at": "2026-11-15T00:51:26Z",
+            "state": "succeeded",
+            "result_digest": "21e0ab66ac12a353e88f81ea7cf4b9cb97423e30768ade0264c94dc013c3cf20",
+            "update": {
+              "text": "Review confirmed that Grid uses the shared page bounds and existing flex callers keep their behavior.",
+              "artifacts": []
+            }
+          },
+          "reported_at": "2026-11-15T00:51:29.859Z"
         }
       ],
       "card_steps": {
@@ -4636,7 +4649,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/grid-drag-viewport-bounds-20261114"
         },
-        "sequence": 5,
+        "sequence": 6,
         "complete": false,
         "steps": [
           {
@@ -4667,24 +4680,25 @@
             "id": "review-grid-bounds-contract",
             "label": "Verify shared bounds compatibility",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "field-grid-drag-viewport-final-review-20261114:started",
+              "id": "field-grid-drag-viewport-final-review-20261114:result",
               "assignment": "field-grid-drag-viewport-bounds-20261114",
               "step_id": "review-grid-bounds-contract",
               "plan_revision": "14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e",
               "input_digest": "dc86f03116aa44d2415e695a3a37e626c2b73fc023e1b58eb16993ef931e87db",
-              "evidence": "sha256:c2ca36949c10b9562c8b352bbe23bf96d778407e43cd25a9417cfd24cbe5743f",
+              "evidence": "sha256:6ce961b8a254f52cc621b83fa53bf42ba62dbb60b4925f0a0270c4284a553a98",
               "source_sha": "2040b428a8e9ce25c2d56a43ca3fde8d810b6d76",
-              "observed_at": "2026-11-15T00:50:41Z",
+              "observed_at": "2026-11-15T00:51:26Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
               },
               "update": {
-                "text": "Independent review is confirming that the new helper preserves the existing flex bounds contract.",
+                "text": "Review confirmed that Grid uses the shared page bounds and existing flex callers keep their behavior.",
                 "artifacts": []
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -4693,12 +4707,13 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-grid-drag-viewport-bounds-20261114",
         "revision": "14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e",
-        "sequence": 5,
+        "sequence": 6,
         "truncated": false,
         "identities": {
           "field-grid-drag-viewport-review-20261114:started": "2dca95ecd2c2e89d46f69881e5d41b058a593fb0eca36733817e0faf74e6b4f5",
           "field-grid-drag-viewport-review-20261114:result": "dd6af3a895d6f0d91f6ae9633f5e86da2bc0d9a1abfb0f0f40d0da7d2eeb4cbb",
-          "field-grid-drag-viewport-final-review-20261114:started": "e05b1973577062fe6cac67bfdc6b4e2c333cd067aebcff2cbb894794fbd90d68"
+          "field-grid-drag-viewport-final-review-20261114:started": "e05b1973577062fe6cac67bfdc6b4e2c333cd067aebcff2cbb894794fbd90d68",
+          "field-grid-drag-viewport-final-review-20261114:result": "1ae9f83d04d67d8c61caa6f26ad2b3b99a7c6d7fc3f2d359eda6c068ace92462"
         },
         "items": [
           {
@@ -4764,6 +4779,28 @@
               "team": "inspector"
             },
             "text": "Independent review is confirming that the new helper preserves the existing flex bounds contract.",
+            "text_kind": "owner-published",
+            "artifacts": []
+          },
+          {
+            "key": "field-grid-drag-viewport-final-review-20261114:result:dc86f03116aa44d2415e695a3a37e626c2b73fc023e1b58eb16993ef931e87db:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Verify shared bounds compatibility\",\"receipt\":{\"assignment\":\"field-grid-drag-viewport-bounds-20261114\",\"evidence\":\"sha256:6ce961b8a254f52cc621b83fa53bf42ba62dbb60b4925f0a0270c4284a553a98\",\"id\":\"field-grid-drag-viewport-final-review-20261114:result\",\"input_digest\":\"dc86f03116aa44d2415e695a3a37e626c2b73fc023e1b58eb16993ef931e87db\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e\",\"source_sha\":\"2040b428a8e9ce25c2d56a43ca3fde8d810b6d76\",\"step_id\":\"review-grid-bounds-contract\",\"update\":{\"artifacts\":[],\"text\":\"Review confirmed that Grid uses the shared page bounds and existing flex callers keep their behavior.\"}},\"state\":\"blocked\"}",
+            "id": "field-grid-drag-viewport-final-review-20261114:result",
+            "assignment": "field-grid-drag-viewport-bounds-20261114",
+            "step_id": "review-grid-bounds-contract",
+            "revision": "14a662305767d39b84e3233b15b58775b7645b396327645f8b62f79f44e9212e",
+            "label": "Verify shared bounds compatibility",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "2040b428a8e9ce25c2d56a43ca3fde8d810b6d76",
+            "observed_at": "2026-11-15T00:51:26Z",
+            "recorded_at": "2026-11-15T00:51:29.859Z",
+            "receipt_digest": "sha256:6ce961b8a254f52cc621b83fa53bf42ba62dbb60b4925f0a0270c4284a553a98",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "Review confirmed that Grid uses the shared page bounds and existing flex callers keep their behavior.",
             "text_kind": "owner-published",
             "artifacts": []
           }
