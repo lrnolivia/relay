@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T02:36:26.122Z",
+  "updated_at": "2026-11-15T02:37:28.994Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -5729,7 +5729,7 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T02:36:26.122Z",
+      "updated_at": "2026-11-15T02:37:28.994Z",
       "lease_until": "2026-11-15T14:31:41.133Z",
       "native_handoffs": [
         {
@@ -5811,17 +5811,26 @@
             "host_available": true,
             "intent_digest": "87d69501ce06209b935418d5e735cbeb336d45fd311b140d2c7e6f61c9e44718"
           },
-          "state": "started",
+          "state": "reported",
           "prepared_at": "2026-11-15T02:36:08.910Z",
           "request_digest": "4ef6a3e8012b8fde921dbff8fcae379bce77b6befad17e50c647756f042bba0d",
-          "step_digest": "c34ca2e9ef43ee8297ae2efc1dd58ca3c36cd9f0ebd432324f65424a63b543a5",
+          "step_digest": "e2f758829b4f74dccad4e31b56d044ef4195636354df25cb36fb889a39edcd00",
           "start": {
             "request_digest": "4ef6a3e8012b8fde921dbff8fcae379bce77b6befad17e50c647756f042bba0d",
             "source_sha": "8ec5d6a89a7bc11b532a2aed46f5b74bd7fd2d06",
             "agent_id": "/root/responsive_fill_css_verify",
             "observed_at": "2026-11-15T02:36:23Z"
           },
-          "started_at": "2026-11-15T02:36:26.122Z"
+          "started_at": "2026-11-15T02:36:26.122Z",
+          "result": {
+            "request_digest": "4ef6a3e8012b8fde921dbff8fcae379bce77b6befad17e50c647756f042bba0d",
+            "source_sha": "8ec5d6a89a7bc11b532a2aed46f5b74bd7fd2d06",
+            "agent_id": "/root/responsive_fill_css_verify",
+            "observed_at": "2026-11-15T02:37:25Z",
+            "state": "succeeded",
+            "result_digest": "411ff373e451608b17236ac9cff58e0c38243834d6cc0bc9cbffcd093807020f"
+          },
+          "reported_at": "2026-11-15T02:37:28.994Z"
         }
       ],
       "card_steps": {
@@ -5833,7 +5842,7 @@
           "owner": "01a1d5fb-d9df-7130-b680-ce514dfecb9a",
           "branch": "field/responsive-managed-fills-20261114"
         },
-        "sequence": 5,
+        "sequence": 6,
         "complete": false,
         "steps": [
           {
@@ -5860,20 +5869,21 @@
             "id": "review-breakpoint-paint-css-correction",
             "label": "Verify responsive paint CSS correction",
             "depends_on": [],
-            "state": "running",
+            "state": "blocked",
             "receipt": {
-              "id": "desktop-managed-fill-css-final-review-20261114:started",
+              "id": "desktop-managed-fill-css-final-review-20261114:result",
               "assignment": "field-responsive-managed-fills-20261114",
               "step_id": "review-breakpoint-paint-css-correction",
               "plan_revision": "feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a",
               "input_digest": "4ef6a3e8012b8fde921dbff8fcae379bce77b6befad17e50c647756f042bba0d",
-              "evidence": "sha256:a5299abeec922c4273acd6db6b564da8d95c0bc04f450a0bad2f7ae958cc8ced",
+              "evidence": "sha256:a35911dee905467baae0c4f961ed84dc6c10448a99357540d2e652328460d9b4",
               "source_sha": "8ec5d6a89a7bc11b532a2aed46f5b74bd7fd2d06",
-              "observed_at": "2026-11-15T02:36:23Z",
+              "observed_at": "2026-11-15T02:37:25Z",
               "owner": {
                 "staff": "roman",
                 "team": "inspector"
-              }
+              },
+              "phase": "awaiting-verification"
             }
           }
         ]
@@ -5882,12 +5892,13 @@
         "schema": "relay-card-updates/v1",
         "assignment": "field-responsive-managed-fills-20261114",
         "revision": "feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a",
-        "sequence": 5,
+        "sequence": 6,
         "truncated": false,
         "identities": {
           "desktop-managed-fill-source-review-20261114:started": "dc4399583dd50937d1c50781724111f60e06963f86d770f6af41335dc260830c",
           "desktop-managed-fill-source-review-20261114:result": "32c8fa5342100fa6329138386471489c2862f91f4649089b3992d0000945e7b3",
-          "desktop-managed-fill-css-final-review-20261114:started": "8dcb6bc4bd37ae477f27b7d3c6c7cc4cdfb43e331fce975f742a86f5461f9491"
+          "desktop-managed-fill-css-final-review-20261114:started": "8dcb6bc4bd37ae477f27b7d3c6c7cc4cdfb43e331fce975f742a86f5461f9491",
+          "desktop-managed-fill-css-final-review-20261114:result": "99e62e690952650ff9a2c2cb6bcb861e1483545e50a863d04e042b311c5d223c"
         },
         "items": [
           {
@@ -5953,6 +5964,28 @@
               "team": "inspector"
             },
             "text": "Work started.",
+            "text_kind": "recorded-state",
+            "artifacts": []
+          },
+          {
+            "key": "desktop-managed-fill-css-final-review-20261114:result:4ef6a3e8012b8fde921dbff8fcae379bce77b6befad17e50c647756f042bba0d:blocked:awaiting-verification",
+            "receipt_snapshot": "{\"label\":\"Verify responsive paint CSS correction\",\"receipt\":{\"assignment\":\"field-responsive-managed-fills-20261114\",\"evidence\":\"sha256:a35911dee905467baae0c4f961ed84dc6c10448a99357540d2e652328460d9b4\",\"id\":\"desktop-managed-fill-css-final-review-20261114:result\",\"input_digest\":\"4ef6a3e8012b8fde921dbff8fcae379bce77b6befad17e50c647756f042bba0d\",\"owner\":{\"staff\":\"roman\",\"team\":\"inspector\"},\"phase\":\"awaiting-verification\",\"plan_revision\":\"feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a\",\"source_sha\":\"8ec5d6a89a7bc11b532a2aed46f5b74bd7fd2d06\",\"step_id\":\"review-breakpoint-paint-css-correction\"},\"state\":\"blocked\"}",
+            "id": "desktop-managed-fill-css-final-review-20261114:result",
+            "assignment": "field-responsive-managed-fills-20261114",
+            "step_id": "review-breakpoint-paint-css-correction",
+            "revision": "feb3180c06b30ff4ec86d9752dd8e9b57af9ea41c92c894303960f37ecdcd51a",
+            "label": "Verify responsive paint CSS correction",
+            "state": "blocked",
+            "phase": "awaiting-verification",
+            "source_sha": "8ec5d6a89a7bc11b532a2aed46f5b74bd7fd2d06",
+            "observed_at": "2026-11-15T02:37:25Z",
+            "recorded_at": "2026-11-15T02:37:28.994Z",
+            "receipt_digest": "sha256:a35911dee905467baae0c4f961ed84dc6c10448a99357540d2e652328460d9b4",
+            "owner": {
+              "staff": "roman",
+              "team": "inspector"
+            },
+            "text": "The work is ready for verification.",
             "text_kind": "recorded-state",
             "artifacts": []
           }
