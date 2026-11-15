@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "field",
-  "updated_at": "2026-11-15T05:00:17.339Z",
+  "updated_at": "2026-11-15T05:08:39.922Z",
   "legacy_inventory": "docs/field/reorganization/2026-09-30-inventory.json",
   "legacy_branches": [
     "codex/field-chrome-batch-1",
@@ -7243,7 +7243,7 @@
       ],
       "goal": "Fix the production build and hydration of Field custom fills",
       "acceptance": "A normal Next.js production build type-checks generated stock shaders and previously saved matching shader files. Responsive Shader and Video fill layers hydrate without client recovery, switch correctly at breakpoint boundaries, and preserve Canvas and Preview visuals. Keep mobile editor behind its existing flag. Continue a bounded desktop custom fill audit.",
-      "next_action": "Repair the generated Paper shader helper and hydration-gate responsive media fills. Verify a normal production build and test Canvas, Preview, and server-rendered production output.",
+      "next_action": "Both local production builds passed with type checking. Complete desktop custom fill regression checks and publish a draft review on this branch.",
       "primary_team": "source",
       "supporting_teams": [],
       "primary_staff": "rafael",
@@ -7266,8 +7266,8 @@
           }
         ]
       },
-      "updated_at": "2026-11-15T05:00:17.339Z",
-      "lease_until": "2026-11-15T17:00:17.339Z"
+      "updated_at": "2026-11-15T05:08:39.922Z",
+      "lease_until": "2026-11-15T17:08:39.922Z"
     }
   ]
 }
